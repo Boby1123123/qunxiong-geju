@@ -91,5 +91,8 @@ window.CAUSALITY_WORDS = [
     {id:"led_b1_01",type:"设定",desc:"学院入学引导链：自由城/王都/铁门关前线三入口可达学院（acad_road_1~5），开学典礼埋塔灯传说",plant:"acad_road_1",reap:"academy_admission",status:"open",world:"vol_academy"},
     {id:"led_b1_02",type:"伏笔",desc:"塔顶之灯数人之说（acad_tower_rumor）与图书馆塔灯呼应，待学院线回收",plant:"acad_road_4",reap:"academy_graduation",status:"open",world:"vol_academy"},
     {id:"led_b2_01",type:"设定",desc:"学院五学年生活线（acad_life_y1~y5，30 节点：课程ifJob/宿舍/同窗/期中/期末/假期/学年事件），north_academy_gate 生活区入口",plant:"acad_life_y1_open",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"}];
+    {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"},
+    {id:"led_b3_01",type:"人物",desc:"学院人际网：塞西莉娅（东境政务/晨天水）/灰须·莫里（矮人符文/铁门七封印）/伊莲娜（精灵治愈/忘忧草）/老铁（铁门关铁匠），各 4 节点闭环",plant:"acad_people_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b3_03",type:"伏笔",desc:"禁书区地窖铁门（矮人古锁）与莫里所述北矿铁门呼应，书三选一（深渊残卷/封印实录/守夜人手记）",plant:"acad_forbidden_1",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"}];
 /* ===== /v91inj:ledgerwords:end/ ===== */

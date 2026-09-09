@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7089183,
-    "chunked_html_bytes_max": 4427658,
-    "node_total_min": 3903,
+    "game_html_bytes_max": 7136911,
+    "chunked_html_bytes_max": 4487627,
+    "node_total_min": 3937,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7039183,
-    "chunked_html_bytes": 4327658,
-    "node_total": 3953,
+    "game_html_bytes": 7086911,
+    "chunked_html_bytes": 4387627,
+    "node_total": 3987,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "B2 acad-life 34 nodes",
+    "reason": "B3 wording fix +12B",
     "history": [
       {
         "date": "2026-09-09",
@@ -306,6 +306,20 @@
         "chunked_bytes": 4327658,
         "nodes": 3953,
         "reason": "B2 acad-life 34 nodes"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7086899,
+        "chunked_bytes": 4387627,
+        "nodes": 3987,
+        "reason": "B3 acad people/mentors/forbidden 34 nodes"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7086911,
+        "chunked_bytes": 4387627,
+        "nodes": 3987,
+        "reason": "B3 wording fix +12B"
       }
     ]
   },

@@ -44013,6 +44013,7 @@ N["acad_life_y1_open"]={tag:"main",place:"艾尔达魔法学院 · 第一学年"
 "分班名单贴在西厅的公告板上。你挤进人群，看见自己的名字排在一个小班底下——班里有十来个人，来自大陆各地。",
 "课程表发下来，密密麻麻。学院不逼你选主修——但每个人都要有一门“立足的功课”。"
 ],options:[
+{t:"去交朋友——学院里最不缺的就是人（人际网）",go:"acad_people_hub"},
 {t:"【学年小事】赶去参加学院的秋日排水渠劳动（秋季例行）",req:function(){return !S.flags["acad_event_y1_done"];},effects:{flag:"acad_event_y1_done"},go:"acad_event_y1"},
 {t:"【职业·魔法师】选《元素基础·火》（教授：白胡子老教习）",req:function(){return S.job==="mage";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
 {t:"【职业·战士】选《剑道精义》（教授：独臂的戈拉）",req:function(){return S.job==="warrior";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
@@ -44452,6 +44453,403 @@ N["acad_event_y5"]={tag:"event",place:"艾尔达魔法学院 · 毕业年秋",pa
 ]};
 })();
 
+/* /u1inj:data-nodes:dn_acad_mentors.js/ */
+/* ============================================================
+ * B-3 导师支线（4 人 × 2 节点：指导 + 支线结局）+ 禁书区暗线（4 节点）
+ * 导师：墨丘利（灵魂）/ 戈拉（剑道）/ 特蕾莎嬷嬷（神术）/ 老莫里茨（商课）
+ * 禁书区暗线：发现密道 → 偷读三选一 → 被费尔曼撞见 → 抉择（衔接 script_02g 三选一）
+ * 铁律：saveVersion=48 不变；独立键；V66 文风；蓝图+账本；branch_academy_* 判定零改动
+ * ============================================================ */
+(function(){
+/* ---------- 导师区中枢 ---------- */
+N["acad_mentor_hub"]={tag:"main",place:"艾尔达魔法学院 · 导师区",pace:"light",text:[
+"学院的导师们，各有各的脾气：墨丘利温和，戈拉严厉，特蕾莎嬷嬷安静，老莫里茨精明。",
+"你站定，想着今天该去请教谁。"
+],options:[
+{t:"去找墨丘利教授（灵魂魔法）",go:"acad_mentor_mercury"},
+{t:"去找戈拉教授（剑道）",go:"acad_mentor_gora"},
+{t:"去找特蕾莎嬷嬷（神术）",go:"acad_mentor_theresa"},
+{t:"去找老莫里茨（商课）",go:"acad_mentor_moritz"},
+{t:"回生活区",go:"acad_people_hub"}
+]};
+/* ---------- 导师：墨丘利 ---------- */
+N["acad_mentor_mercury"]={tag:"main",place:"艾尔达魔法学院 · 灵魂魔法教室",pace:"normal",text:[
+"墨丘利教授的灵魂课，是学院里最难抢的课。他的教室永远坐满人——不是因为好过，是因为他真的讲得好。",
+"这天下课后，他把你留下：“你的灵魂感知很敏锐。来，试试这个。”",
+"他摊开手掌，掌心浮起一枚极淡的光点：“这是灵魂残响。每个人身上都有——它记得你做过的事。”",
+"“闭上眼睛，去听它的声音。”"
+],options:[
+{t:"静心去听那枚光点",check:{a:"INT",sk:"lore",label:"聆听"},tier:{
+ ok:["你闭眼，静心。光点里传来极细的声音——像雪落，像钟鸣，像很远的地方有人叫你的名字。","墨丘利收回光点，点头：“你的灵魂里，有一道很深的刻痕。不是伤——是记忆。”他顿了顿，“你记得一些……别人不记得的事。”","你想起出发前的那些夜晚。他没追问，只留下一句：“记得的东西，终有一天会有用。”"],
+ fail:["你静不下心，光点在你掌心消散。墨丘利温和地摇头：“不急。灵魂这种东西，急不来。”"],
+ crit:["你不但听到了声音，还“看见”了一幅画面：一个圈，圈里一只竖瞳——和你见过的那图案一模一样。","你睁开眼。墨丘利看着你，目光深了：“你见过这个？”你没回答。他沉默片刻：“……如果你见过，那就更该学我的课了。”"]
+},effects:{xp:15},onCrit:{flag:"acad_mentor_eye"},go:"acad_mentor_mercury_2"}
+]};
+N["acad_mentor_mercury_2"]={tag:"ending",place:"艾尔达魔法学院 · 墨丘利办公室",pace:"normal",text:[
+"毕业前，墨丘利把你叫到办公室，关上门。",
+"他从抽屉里取出那枚银叶徽章——和五年前给你的一模一样：“这是我三十年来送出的第四枚。第三枚的持有人，叫席恩。”",
+"他看着你：“我年轻时，也和你一样，相信封印能守住一切。后来我明白——能守住东西的，从来不是封印，是记得它的人。”",
+"“你是我教过的学生里，最像当年的我，又最不像我的一个。”他笑了笑，“去吧。记得回来看我。”",
+"他把那枚徽章放进你手心：“学院欠你的，会在你需要的时刻还你。”",
+"——和院长说过的话，一模一样。"
+],options:[
+{t:"收下第二枚银叶徽章",effects:{item:"银叶徽章",xp:20},run:function(){changeRelation('mentor_mercury',20,'毕业传徽');},tier:{ok:["你握紧那枚徽章。它的边角，已经被摩挲得发亮。"]},go:"acad_people_hub"}
+]};
+/* ---------- 导师：戈拉 ---------- */
+N["acad_mentor_gora"]={tag:"main",place:"艾尔达魔法学院 · 演武场",pace:"normal",text:[
+"独臂的戈拉教授，是学院战争系最凶的教官。他的剑术课，第一堂课先挨打，第二堂课还是先挨打。",
+"但你渐渐发现，他每次“打”你，都收着力——打的位置，恰好是你防守的破绽。",
+"这天，他把你叫到演武场角落：“你底子不错。但你的剑，太‘正’了。”",
+"“战场上，没有正剑。只有快剑和活剑。”他独臂挥了一下剑，“来，教你一招‘活剑’——借对手的力，走对手的破绽。”"
+],options:[
+{t:"认真学这招‘活剑’",check:{a:"STR",sk:"fight",label:"学剑"},tier:{
+ ok:["你练了一下午，终于摸到那点“借力”的门道。戈拉难得点头：“有悟性。明天继续。”","那一招，后来救了你很多次。"],
+ fail:["你练到脱力，还是没抓住要领。戈拉倒不生气：“学剑急不来。你今天的‘挨打’功底，倒是扎实了。”"],
+ crit:["你不但学会了，还反手用这招，把戈拉逼退了半步。戈拉愣了一瞬，忽然大笑：“好！好！我这条胳膊换来的东西，总算有人接住了！”","他拍了拍你的肩：“你出师了。以后，别说是我徒弟——不然人家会说我教得太少。”"]
+},effects:{xp:15},onCrit:{flag:"acad_mentor_sword"},go:"acad_mentor_gora_2"}
+]};
+N["acad_mentor_gora_2"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，戈拉教授退休了。",
+"他把那柄陪了他三十年的旧剑，挂在办公室墙上，锁了门。",
+"走之前，他叫住你，难得没有用命令的口吻：“你那招‘活剑’，练得不错。”",
+"他从怀里掏出一块铁片，塞给你：“这是我当年打仗时，从铁门关城墙上抠下来的。守城的老兵说，铁门关的城墙，是‘用命垒的’。”",
+"“你将来要是去铁门关……”他顿了顿，“替老兵们，看看那城墙还在不在。”"
+],options:[
+{t:"收下铁片，应下这个嘱托",effects:{item:"铁门关铁片",xp:20},run:function(){changeRelation('mentor_gora',20,'毕业嘱托');},tier:{ok:["你握紧那块铁片，边缘很钝，但很重。","铁门关的城墙——你会去看的。"]},go:"acad_people_hub"}
+]};
+/* ---------- 导师：特蕾莎嬷嬷 ---------- */
+N["acad_mentor_theresa"]={tag:"main",place:"艾尔达魔法学院 · 礼拜堂",pace:"normal",text:[
+"特蕾莎嬷嬷是学院里最安静的人——她管着礼拜堂和一间小药室，几乎不参与学院的事务。",
+"但你的神术课，是她教的。她上课从不用课本：“神术不是背祷词。神术，是‘看见’。”",
+"“看见别人的伤口，看见自己的手，看见光从哪里来。”她顿了顿，“也看见——有些光，是从阴影里来的。”",
+"她教你的第一课，是给一株枯死的老树浇水。你照做了三个月，树没活。"
+],options:[
+{t:"问她：这棵树还能活吗",check:{a:"CHA",sk:"persu",label:"求教"},tier:{
+ ok:["特蕾莎嬷嬷看着那株枯树：“它的根还活着。你浇的水，它都收到了。”她轻轻敲了敲树皮，“它在等——等一个合适的春天。”","她转头看你：“你也是。”"],
+ fail:["特蕾莎嬷嬷温和地笑笑：“活不活，不在树，在于浇水的人信不信。”","你似懂非懂。但第二天，你照旧去浇了水。"],
+ crit:["你问的第二天，那株枯树的枝头，冒出了一点极淡的绿。","特蕾莎嬷嬷看着那点绿，难得笑了：“你看——它等到了。”她看着你，“有些事，浇水的人信了，它就活了。”"]
+},effects:{xp:15},onCrit:{flag:"acad_mentor_tree"},go:"acad_mentor_theresa_2"}
+]};
+N["acad_mentor_theresa_2"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，特蕾莎嬷嬷送了你一枚小小的木十字架——用礼拜堂门口那株枯树的木头刻的。",
+"“它活了，才能做成这个。”她把十字架放进你手心，“带着它。北境的冬天冷，但你知道——根还活着。”",
+"她没有说更多。她转身走进礼拜堂，钟声轻轻响了一下。",
+"那枚木十字架很轻，轻得像一片树叶。但你握着它，觉得它比什么都沉。"
+],options:[
+{t:"收下木十字架",effects:{item:"枯木十字架",xp:20},run:function(){changeRelation('mentor_theresa',20,'毕业赠礼');},tier:{ok:["你收好那枚十字架。根还活着——你记住了。"]},go:"acad_people_hub"}
+]};
+/* ---------- 导师：老莫里茨 ---------- */
+N["acad_mentor_moritz"]={tag:"main",place:"艾尔达魔法学院 · 商课教室",pace:"normal",text:[
+"老莫里茨的商课，是全学院最“势利”的课——他第一堂课就明说：“商人的学问，就是算命的学问。算人心，算行情，算命。”",
+"他讲的不是怎么赚钱，而是怎么“活下来”：“记住，商队死在路上的，十个里有八个，不是死在强盗手里——是死在算错上。”",
+"“算错风向，算错雨季，算错人心。”他敲了敲桌面，“这一课，免费送你们。”"
+],options:[
+{t:"问他：怎么算人心",check:{a:"CHA",sk:"persu",label:"求教"},tier:{
+ ok:["老莫里茨眯起眼：“人心不用算——人心会写在脸上、手上、钱袋上。”他教你看了三样东西：“看一个人，先看他的手，再看他的鞋，最后才看他的脸。”","“手是干活的，鞋是走路的，脸是会骗人的。”"],
+ fail:["老莫里茨摇摇头：“这课可不好教。先回去，把食堂的菜价背下来再说。”"],
+ crit:["老莫里茨压低声音：“真正的商道，不是赚——是‘知道什么时候该撤’。”他顿了顿，“我年轻时在自由城邦，见过一个富可敌国的商人，一夜之间散尽家财，只为躲开一桩‘大生意’。”","“后来那桩大生意，吞了半个商盟。”他看着你，“撤，是商人最贵的本事。”"]
+},effects:{xp:15},onCrit:{flag:"acad_mentor_retreat"},go:"acad_mentor_moritz_2"}
+]};
+N["acad_mentor_moritz_2"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，老莫里茨送你一本账册——不是普通的账册，是他三十年商路的笔记。",
+"扉页上写着一行字：“算对人心的，走不丢。”",
+"他把账册递给你：“你是我教过的学生里，最不像商人的一个。”他笑了，“但最像‘能活下来’的一个。”",
+"“毕业之后，不管你是去铁门关、去沙漠、还是去承天城——记住：钱是死的，路是活的。”",
+"他拍拍你的肩，转身走进教室：“下节课，讲怎么在战乱里保住一条命。你毕业了，听不到了——可惜。”"
+],options:[
+{t:"收下这本商路笔记",effects:{item:"莫里茨商路笔记",xp:20},run:function(){changeRelation('mentor_moritz',20,'毕业赠册');},tier:{ok:["你收好那本笔记。钱是死的，路是活的——你记住了。"]},go:"acad_people_hub"}
+]};
+/* ---------- 禁书区暗线 ---------- */
+N["acad_forbidden_1"]={tag:"branch",place:"艾尔达魔法学院 · 禁书区外",pace:"normal",text:[
+"那扇禁书区的门，你路过过无数次。",
+"直到第三学年的一个冬夜，你巡逻时发现——门侧的排水渠口，被一块松动的石板盖着，掀开，是一条窄得只能侧身通过的缝隙。",
+"缝隙通向禁书区的地下——一股旧纸、铁锈和硫磺的味道，从里面飘出来。",
+"你犹豫了。圣痕司的灰袍执事，每隔一个时辰会巡逻到这里。"
+],options:[
+{t:"侧身钻进缝隙，下去看看",check:{a:"AGI",sk:"stealth",label:"潜入"},tier:{
+ ok:["你侧身钻过缝隙，落进一间低矮的地窖。这里堆着旧书架，落满灰尘。你借着缝隙漏下的光，看见书架深处——有一道新刻的痕迹，像一个仪式图的一角。","你记下形状，原路退回。心跳了一整夜。"],
+ fail:["你刚钻进去一半，就听见脚步声——灰袍执事巡逻来了。你赶紧退出来，把石板盖好，装作蹲在墙根系鞋带。","执事看了你一眼，走了。你手心全是汗。"],
+ crit:["你不但进去了，还在地窖最深处，发现一扇铁门——门锁样式，和符文工坊莫里说过的“矮人古锁”一模一样。","你凑近锁孔，闻到一股硫磺味。锁孔周围，刻着一圈细小的符文。","你没有钥匙。但你记住了锁的样子。"]
+},effects:{xp:12},onCrit:{flag:"acad_maze_iron"},go:"acad_forbidden_2"}
+]};
+N["acad_forbidden_2"]={tag:"branch",place:"艾尔达魔法学院 · 禁书区地窖",pace:"normal",text:[
+"你第二次钻进那道缝隙。这一次，你带了灯。",
+"地窖里，旧书架上的书，大多已经霉烂。但最里面的架子上，整齐地摆着三本完好的书——",
+"一本《深渊谱系·残卷》，书脊焦黑，像是从火里抢出来的；",
+"一本《第七节点封印实录》，封面有圣城的徽记；",
+"一本《守夜人手记·无名氏》，没有书名页，扉页只有一行字：“灯灭之日，去找守夜人。”",
+"你只有时间拿一本。"
+],options:[
+{t:"拿《深渊谱系·残卷》",effects:{xp:10,flag:"acad_book_abyss"},tier:{ok:["你把残卷贴身收好。它很轻，但它的分量，你心里清楚。"]},go:"acad_forbidden_3"},
+{t:"拿《第七节点封印实录》",effects:{xp:10,flag:"acad_book_seal"},tier:{ok:["你把实录收好。里面的内容，你连夜读了一部分——七节点的历史，比传闻的更沉重。"]},go:"acad_forbidden_3"},
+{t:"拿《守夜人手记·无名氏》",effects:{xp:10,flag:"acad_book_guard"},tier:{ok:["你把那本手记收好。扉页那句话，像一根针，扎进你心里。"]},go:"acad_forbidden_3"}
+]};
+N["acad_forbidden_3"]={tag:"branch",place:"艾尔达魔法学院 · 禁书区",pace:"normal",text:[
+"你刚把书收好，地窖的入口忽然被一片阴影罩住——",
+"一个人影，无声无息地站在缝隙口。灯从背后打过来，看不清脸，只能看见他袖口——没有银叶。",
+"他开口，声音温和：“深夜造访禁书区，好兴致。”",
+"是费尔曼。",
+"他侧身，让出一点光：“出来吧。地窖里凉。”",
+"你攥着那本书，进退两难。"
+],options:[
+{t:"坦然地走出来，承认自己来过",check:{a:"CHA",sk:"persu",label:"坦承"},tier:{
+ ok:["费尔曼看着你走出来，没有动怒。他看了你一眼：“你知道这扇门后面是什么吗？”你没答。他点点头，“知道还敢来，有胆色。”","“书你留着。但记住——看过的，别对任何人说。”他转身走了，像来时一样无声。","你站在原地，攥着那本书，心跳如鼓。"],
+ fail:["你僵在原地。费尔曼没有催你，只是等着。最终你走出来，他看了一眼你怀里的书：“《守夜人手记》？”他点点头，“好书。”","他没再说什么，走了。你分不清那是放过，还是记下。"],
+ crit:["你走出来，直视他的眼睛：“费尔曼教授——或者说，席恩先生？”","费尔曼的动作，顿住了。他看了你很久，最终轻轻叹了口气：“……你已经知道了。”","他沉默片刻：“那这本书，你更该留着。”他转身，“别走我的老路。”"]
+},effects:{xp:15},onCrit:{flag:"acad_face_sein"},go:"acad_forbidden_4"}
+]};
+N["acad_forbidden_4"]={tag:"branch",place:"艾尔达魔法学院 · 禁书区",pace:"normal",text:[
+"那夜之后，你成了学院里“知道太多”的人之一。",
+"费尔曼不再躲你——他甚至偶尔在图书馆，主动给你留一个座位。",
+"但你知道，这条暗线，迟早要走到头：净化、封印、睁眼——三拨人都在等。",
+"你手里的那本书，是一份筹码，也是一根引线。",
+"你站在十字路口：是把这个发现，交给圣痕司（换取安全）；还是交给墨丘利（守住学院）；还是自己藏起来（走自己的路）？"
+],options:[
+{t:"把发现报告给学院（去西厅找院长）",effects:{xp:10,flag:"acad_forb_report"},tier:{ok:["你带着那本书，去找了院长。院长听完，沉默很久：“……我知道了。”他没有收你的书，只留了一句话：“学院欠你的，会在你需要的时刻还你。”","你走出院长办公室时，看见费尔曼站在回廊尽头，看着你。他没有说话，只是转身走了。"]},go:"north_academy_2"},
+{t:"私下交给墨丘利教授",effects:{xp:10,flag:"acad_forb_mercury"},tier:{ok:["墨丘利接过那本书，看了很久：“……你胆子不小。”他把书锁进抽屉，“这件事，到此为止。你继续上课，当什么都没发生过。”","他顿了顿：“如果圣痕司问起来——就说，是我让你去取的。”"]},go:"north_academy_2"},
+{t:"自己留着，谁也不告诉",effects:{xp:10,flag:"acad_forb_keep"},tier:{ok:["你把那本书贴身收好。","你知道，从这一刻起，你手里握着的，是一根引线。至于它通向哪里——只有走到底，才知道。"]},go:"north_academy_2"}
+]};
+})();
+
+/* /u1inj:data-nodes:dn_acad_people.js/ */
+/* ============================================================
+ * B-3 学院人际网：同学 8 人（凯恩/艾莉丝/洛卡/阿塔已有 + 塞西莉娅/灰须·莫里/伊莲娜/老铁 4 新人）
+ * 入口：acad_people_hub（从 acad_life_y1_open 挂入）
+ * 每人支线：相识 → 共事 → 考验 → 结局（≥4 节点闭环，changeRelation 好感）
+ * 里程碑：60 挚友 / 80 恋人 / -60 死敌（changeRelation 自动触发）
+ * 铁律：saveVersion=48 不变；独立键；V66 文风；蓝图+账本
+ * ============================================================ */
+(function(){
+/* ---------- 人际网中枢 ---------- */
+N["acad_people_hub"]={tag:"main",place:"艾尔达魔法学院 · 生活区",pace:"light",text:[
+"学院的生活区，是人际的集市。你在这五年里，认识了不少人——有的人成了朋友，有的人成了过客，有的人，成了你将来某段故事里的名字。",
+"你停下来，想了想今天该去找谁。"
+],options:[
+{t:"去找塞西莉娅（东境贵族·政务系）",req:function(){return true;},go:"acad_cecy_1"},
+{t:"去找灰须·莫里（矮人符文匠）",req:function(){return true;},go:"acad_mori_1"},
+{t:"去找伊莲娜（精灵治愈师）",req:function(){return true;},go:"acad_elena_1"},
+{t:"去找老铁（战争系工坊学徒）",req:function(){return true;},go:"acad_tie_1"},
+{t:"去找凯恩（战争系·老友）",req:function(){return S.npcRelations&&S.npcRelations["kain"]>=30;},go:"acad_kain_end"},
+{t:"去找艾莉丝（火系·老友）",req:function(){return S.npcRelations&&S.npcRelations["alice"]>=30;},go:"acad_alice_end"},
+{t:"去找洛卡（药剂系·老友）",req:function(){return S.npcRelations&&S.npcRelations["loca"]>=30;},go:"acad_loca_end"},
+{t:"去找阿塔（草原·老友）",req:function(){return S.npcRelations&&S.npcRelations["ata"]>=30;},go:"acad_ata_end"},
+{t:"去找导师们请教（导师区）",go:"acad_mentor_hub"},
+{t:"去禁书区外转转（暗线）",req:function(){return S.day>=60;},go:"acad_forbidden_1"},
+{t:"回宿舍歇着",go:"acad_life_y1_dorm"}
+]};
+/* ---------- 塞西莉娅（东境贵族） ---------- */
+N["acad_cecy_1"]={tag:"branch",place:"艾尔达魔法学院 · 图书馆",pace:"normal",text:[
+"你在图书馆最安静的角落，撞见一个抱着整摞档案的少女。她没注意你，侧身时档案塌了一半，散了一地。",
+"她叹了口气，蹲下来一张张捡：“……又来了。”",
+"她抬头看见你，礼貌地点头：“塞西莉娅·德·莱茵，政务系。抱歉，挡着你的路了。”",
+"你帮她捡起最底下那张——是一份《东境承天城民政岁报》。她看见你的目光，轻声说：“我父亲让我‘读点有用的’。”她顿了顿，“但我想读的，是为什么承天城的水会变浑。”"
+],options:[
+{t:"和她聊聊承天城的水",check:{a:"INT",sk:"lore",label:"交谈"},tier:{
+ ok:["塞西莉娅眼睛亮了：“你也关心这个？”她压低声音，“我查过旧档——承天城的水，五十年前就浑过一回。那一年，晨天城……”她忽然收住话头，摇摇头，“算了，这些不该在图书馆说。”","她朝你露出一个真切的笑，这是你们友谊的开始。"],
+ fail:["塞西莉娅礼貌地笑了笑：“多谢。”她抱着档案走了。你看着她的背影，觉得她肩上压着什么东西。"],
+ crit:["你不但接上了她的话，还点出了关键：“晨天城覆灭前，井水也是先浑的。”塞西莉娅怔住，看了你很久：“……你从哪儿知道的？”","“那是我家祖辈的旧档里写的。我找了三年，没找到第二个知道这件事的人。”她的声音有些发颤。","你把从东境出发时听来的传闻，原原本本告诉了她。"]
+},effects:{xp:10},run:function(){changeRelation('cecy',15,'承天城水变浑之谈');},onCrit:{flag:"acad_cecy_secret"},go:"acad_cecy_2"}
+]};
+N["acad_cecy_2"]={tag:"main",place:"艾尔达魔法学院 · 政务系教室",pace:"normal",text:[
+"塞西莉娅组织了一场学院内部的“南北风物展”——名义上是联谊，实际上她想借机收集各地方言和传闻。",
+"她拉你帮忙登记。半天下来，你们记了厚厚一摞：北境的狼、南方的盐、草原的狼旗、沙漠的驼队、东境的官道……",
+"傍晚收摊，她请你喝了杯热茶：“谢谢你。这些东西，够我整理一个月了。”",
+"“我父亲一直想让我回去嫁人。”她忽然说，“他说，政务不是小姐该学的东西。”她看着那摞登记册，“可我想知道，这片大陆到底为什么乱成一团。”"
+],options:[
+{t:"支持她：政务是救人的学问",check:{a:"CHA",sk:"persu",label:"支持"},tier:{
+ ok:["塞西莉娅眼眶微红，很快又压下去：“谢谢你。五年了，你是第一个说这句话的人。”她认真看着你，“如果有一天我主持东境的政务……我会记得今天。”"],
+ fail:["塞西莉娅笑了笑：“谢了。”她没再说下去，但你看得出，这句话她记住了。"],
+ crit:["塞西莉娅沉默很久，忽然说：“你知道吗，政务系里，只有我一个东境贵族。”她苦笑，“他们都说，东境人只配当兵和种地。”","“但如果有一天，东境需要一个会算账、会看水、会读旧档的人——我希望那是我。”","你伸出手，和她碰了碰杯。"]
+},effects:{xp:10},run:function(){changeRelation('cecy',15,'南北风物展的支持');},go:"acad_cecy_3"}
+]};
+N["acad_cecy_3"]={tag:"main",place:"艾尔达魔法学院 · 西厅",pace:"normal",text:[
+"第三学年末，塞西莉娅收到一封家书，看完后一整天没说话。",
+"第二天，她来找你，把信递给你看。信上写着：“政务非女子之事。归家。三月后与商盟盟主长子完婚。”",
+"她问你：“我该怎么办？”",
+"她的手指攥着信纸，指节发白。"
+],options:[
+{t:"支持她抗婚，留在学院",check:{a:"CHA",sk:"persu",label:"支持"},tier:{
+ ok:["塞西莉娅的眼泪终于落下来，又飞快擦掉：“好。我不回去。”她烧了那封信，“我写信回东境：我在学院有事要做。”","“谢谢你。”她说，“你不是第一个劝我留下的。但你是第一个，让我觉得留下是对的。”"],
+ fail:["塞西莉娅沉默很久：“我……想想吧。”她没烧那封信。几天后，她告诉你，她回信拒绝了婚事，但没提退学。"],
+ crit:["塞西莉娅盯着你：“如果我留下，东境会和我断绝关系。我没有钱了，没有地位了——你还会把我当朋友吗？”","你说会。她笑了，眼泪却掉下来：“那我留下。”","那天夜里，你们在东回廊坐到很晚。她说：“东境欠我的，我自己去讨回来。”"]
+},effects:{xp:12},run:function(){changeRelation('cecy',25,'抗婚之夜的抉择');},onCrit:{flag:"acad_cecy_stay"},go:"acad_cecy_4"}
+]};
+N["acad_cecy_4"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，塞西莉娅拿到了政务系第一名的成绩。",
+"院长问她去向。她说：“回东境。承天城的水，该有人管了。”",
+"她走之前，把一本厚厚的笔记交给你：“这是我五年整理的《东境民政要略》。如果我出了什么事……”她顿了顿，“你替我看完。”",
+"你们在学院门口告别。她上马车前，回头看了你一眼：“东境见。”",
+"多年后，你听说承天城的井水，在某个春天开始变清。有人说，是因为换了个懂水的城主。"
+],options:[
+{t:"目送她离开，把笔记收好",effects:{xp:20},run:function(){changeRelation('cecy',20,'毕业赠别');},tier:{ok:["你收好那本笔记。东境，多了一个该记住的名字。"]},go:"acad_people_hub"}
+]};
+/* ---------- 灰须·莫里（矮人符文匠） ---------- */
+N["acad_mori_1"]={tag:"branch",place:"艾尔达魔法学院 · 符文工坊",pace:"normal",text:[
+"符文工坊里叮当作响。一个矮人少年正抡着锤子，敲打一块发红的铁板。他头也不回：“要修东西放下，要聊天等会儿。”",
+"你等了半盏茶。他放下锤子，抹了把汗，这才看你：“灰须·莫里，符文系。你叫啥？”",
+"他打量你：“北境口音？铁门关那边的？”他咧开嘴，“巧了，我家在矮人王国北矿——跟你那边隔着一道铁门。我爹说，那道铁门上刻着七道封印。”"
+],options:[
+{t:"问他七道封印的事",check:{a:"INT",sk:"lore",label:"交谈"},tier:{
+ ok:["莫里的眼睛一亮：“你也知道？”他压低声音，“我爹说，铁门上七道封印，是矮人先祖封的——封的是地底的东西。”他顿了顿，“这几年，封印松了一道的消息，在矿里传开了。”","你想起出发时听过的那些传闻，心里咯噔一下。"],
+ fail:["莫里挠挠头：“算了，都是矿里的老话。来，给你看我打的这口剑坯。”","他手艺不错。"],
+ crit:["莫里放下锤子，认真说：“我爹说，铁门第七道封印上，刻着一只竖瞳——和你说的那些传闻对得上。”他盯着你，“你见过那个图案？”","你没直接回答。但他显然看懂了你的沉默。"]
+},effects:{xp:10},run:function(){changeRelation('mori',15,'铁门封印之谈');},onCrit:{flag:"acad_mori_seal"},go:"acad_mori_2"}
+]};
+N["acad_mori_2"]={tag:"main",place:"艾尔达魔法学院 · 符文工坊",pace:"normal",text:[
+"学院大门的符文锁年久失修，管事愁了半个月。莫里自告奋勇：“我试试。”",
+"他带着你，把门楣上那串符文一个个拓下来、校对、重刻。干了三天，门锁纹丝不动——直到他灵光一闪：“顺序错了！这是倒着刻的！”",
+"换序重刻，门锁“咔哒”一声开了。管事的脸都绿了：“你俩……把门修好了？”",
+"莫里得意地拍拍手：“修门，我们是专业的。”他转头朝你挤挤眼，“今晚工坊，我请你喝酒——矮人酿的，你喝过没有？”"
+],options:[
+{t:"赴约，喝矮人酿的麦酒",check:{a:"CON",sk:"surv",label:"痛饮"},tier:{
+ ok:["那麦酒劲道十足。三碗下去，莫里话匣子开了：“我爹说，会修锁的矮人，一辈子吃穿不愁。”他打了个嗝，“会修锁的矮人，还知道哪把锁不该开。”","你问他哪把锁不该开。他没回答，只是看着工坊角落那口锁着的铁柜。"],
+ fail:["你一碗就上头了。莫里笑得直拍桌子：“哈！北境人不行啊！来，吃点肉压压！”"],
+ crit:["酒过三巡，莫里压低声音：“工坊那口铁柜——锁是三年前换的，学院没人知道钥匙在哪。”他顿了顿，“但我见过那锁的样式。是矮人古锁。能开这种锁的钥匙，全大陆只有三把。”","“一把在矮人王宫，一把在圣城大教堂。第三把……”他摇摇头，“丢了。据说，在第七节点。”"]
+},effects:{xp:12},onCrit:{flag:"acad_mori_ironbox"},go:"acad_mori_3"}
+]};
+N["acad_mori_3"]={tag:"main",place:"艾尔达魔法学院 · 符文工坊",pace:"normal",text:[
+"第四学年，莫里收到家里的信：北矿塌了一段矿道，压死了七个人。",
+"信里夹着一张拓片——是他爹临死前托人带出来的：矿道最深处，发现一块石碑，碑上刻着一个图案。",
+"莫里把拓片给你看。你一眼认出：一个圈，圈里一只竖瞳。",
+"他沉默了很久，说：“我爹说，让儿子离开矿，去学符文——不是学修锁。”他抬起头，“是学怎么认出那些记号。”",
+"“他说，认得记号的人，才能躲开它。”"
+],options:[
+{t:"陪着他，把拓片上的图案描下来",effects:{xp:10},run:function(){changeRelation('mori',20,'北矿塌方之夜');},tier:{ok:["你们把那图案描了三份。一份给墨丘利，一份收进学院档案，一份——你俩各留半张。","“如果有一天，”莫里说，“这图案又出现在别处——你就知道，该走了。”"]},go:"acad_mori_4"}
+]};
+N["acad_mori_4"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，莫里没有留在学院。",
+"他背着一把自打的战锤，揣着那张拓片：“我要回北矿。我爹留下的矿，总得有人看着。”",
+"临行前，他把一柄短刃塞给你：“我自己打的。钢是好钢，能开锁，也能防身。”刃柄上，刻着一个小小的锤纹。",
+"他咧嘴一笑：“你是我在学院认识的第一个外人。朋友这东西，矮人一辈子认一个，就够本了。”",
+"他转身走进雪里，像一块铁，慢慢走远了。"
+],options:[
+{t:"收下短刃，送他出山门",effects:{item:"灰须短刃",xp:20},run:function(){changeRelation('mori',20,'毕业赠刃');},tier:{ok:["你握着那柄短刃，看着他的背影消失在雪线里。","北矿，多了一个守矿的人。"]},go:"acad_people_hub"}
+]};
+/* ---------- 伊莲娜（精灵治愈师） ---------- */
+N["acad_elena_1"]={tag:"branch",place:"艾尔达魔法学院 · 药圃",pace:"normal",text:[
+"药圃的暖棚里，一个银发少女跪在花丛间，指尖悬着一滴露珠，正缓缓滴进一株枯苗的根须。",
+"她听见脚步声，抬头——眼睛是浅绿色的，像新叶：“你是……来要药的？”",
+"她起身，拍拍裙摆：“伊莲娜，治愈系。学院里管我配药的。”她笑笑，“不过先说好，我配的药，八成是甜的。”"
+],options:[
+{t:"和她聊聊精灵的治愈术",check:{a:"CHA",sk:"persu",label:"交谈"},tier:{
+ ok:["伊莲娜的眼睛弯起来：“精灵的治愈术，不是‘治伤’——是‘哄伤’。”她示范了一下，“你得先让伤口相信，你不会再伤害它。”","你头一次听见这种说法，若有所思。"],
+ fail:["伊莲娜笑了笑，低头继续照顾花苗：“改天聊，这株苗正到关键时候。”"],
+ crit:["伊莲娜教你辨识了三种北境没有的草药：“这是精灵语里的‘夜灯草’，能安神；这是‘银泪花’，能止痛；这是……”她顿了顿，“这是‘忘忧草’。喝了，会忘掉最近一个月的事。”","她认真看着你：“精灵族里，这味药只给将死之人用。你记住了——别乱用。”"]
+},effects:{xp:10},run:function(){changeRelation('elena',15,'治愈术之谈');},onCrit:{flag:"acad_elena_forget"},go:"acad_elena_2"}
+]};
+N["acad_elena_2"]={tag:"main",place:"艾尔达魔法学院 · 疫病夜",pace:"normal",text:[
+"那年冬，学院闹了一场疫病——高热、咳血，学生病倒了一小半。",
+"伊莲娜连着三天没合眼，药圃的存货见底，她自己也染上了轻症。",
+"你端着热汤找到她时，她正蹲在药架前配药，手在发抖。她抬头看见你，勉强笑笑：“别……别靠太近。传染。”",
+"她把一包药塞给你：“这是配方。我配不动了……你按这个，能配多少配多少。”"
+],options:[
+{t:"替她配药，熬过那三天",check:{a:"INT",sk:"lore",label:"配药"},tier:{
+ ok:["你照着配方，磕磕绊绊配出了三批药。病倒的学生，渐渐少了。","疫病过去那天，伊莲娜瘦了一圈，但眼睛很亮：“你救了我一命——和半个学院。”"],
+ fail:["你配废了两批，但第三批终于成了。伊莲娜虚弱地笑：“新手能配成这样，算你有天赋。”"],
+ crit:["你不但配出了药，还顺手改良了一味辅料，药效快了一半。伊莲娜看着成品，愣了半天：“……你是治愈系派来的卧底吧？”","她认真地看着你，“药圃以后缺人手，随时来找我。”"]
+},effects:{xp:15},run:function(){changeRelation('elena',25,'疫病之夜的并肩');},go:"acad_elena_3"}
+]};
+N["acad_elena_3"]={tag:"main",place:"艾尔达魔法学院 · 广场",pace:"normal",text:[
+"圣痕司来学院抓“涉疑奥术师”那天，伊莲娜正在给一个重伤的学生治伤。",
+"灰袍执事要带走那个学生——伊莲娜拦在前面：“他伤还没好。你们现在带走他，他会死在路上。”",
+"执事冷笑：“精灵，你在阻碍圣痕司执法。”",
+"伊莲娜没让开：“我是治愈师。我的誓言是先救人——你们的执法，等伤好了再说。”",
+"围观的人越来越多。执事僵在那里，下不来台。"
+],options:[
+{t:"站到她身边，一起挡",check:{a:"CHA",sk:"persu",label:"声援"},tier:{
+ ok:["你站出来，站在她身边。接着，凯恩也站了过来。艾莉丝、洛卡……半个学院的人都站了过来。","执事最终放过了那个学生，留下一句“你们等着”就走了。","伊莲娜转身看你，眼眶红了：“……谢谢。”"],
+ fail:["你站了出来，但人群没动。执事强行带走了学生。伊莲娜站在原地，攥着拳头没说话。","那之后几天，她都没笑过。"],
+ crit:["你不但站了出来，还当场驳了执事三条“圣痕司条例”。执事的脸涨得通红，最终摔下一句狠话走了。","伊莲娜看着你，忽然说：“你知道吗——我本来打算毕业后回精灵森林的。”她顿了顿，“现在我想，再留一年。”"]
+},effects:{xp:15},run:function(){changeRelation('elena',25,'广场上的并肩');},go:"acad_elena_4"}
+]};
+N["acad_elena_4"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，伊莲娜收到了精灵森林的回信——森林长老同意她留在人类大陆，“以治愈师的身份，见证这片土地”。",
+"她高兴地来找你，把一包种子塞进你手里：“这是‘夜灯草’的种子。北境种不活——但如果你去了南方，种在温暖的地方，它会记得你。”",
+"她顿了顿，轻声说：“如果有一天，你受了很重的伤……记得来药圃找我。”",
+"她转身离开时，药圃的暖棚里，那株当年枯掉的苗，开出了一朵淡蓝色的小花。"
+],options:[
+{t:"收下种子，祝她前程",effects:{item:"夜灯草种子",xp:20},run:function(){changeRelation('elena',20,'毕业赠种');},tier:{ok:["你握紧那包种子。学院里，多了一个愿意为陌生人站出来的治愈师。"]},go:"acad_people_hub"}
+]};
+/* ---------- 老铁（战争系工坊学徒） ---------- */
+N["acad_tie_1"]={tag:"branch",place:"艾尔达魔法学院 · 食堂",pace:"normal",text:[
+"食堂角落里，一个黑壮少年正埋头吃第四碗饭。他面前的餐盘堆得比山高。",
+"你在他对面坐下。他抬头，憨厚一笑：“俺叫老铁，战争系的。俺爹是铁匠，俺本来也该打铁——但俺娘说，多读点书，以后打铁也能多卖俩钱。”",
+"他挠挠头：“俺读书不行。但俺力气大，谁要搬东西、扛麻袋，叫俺！”"
+],options:[
+{t:"帮他认字，从菜谱开始",check:{a:"INT",sk:"lore",label:"教学"},tier:{
+ ok:["你教老铁认菜谱上的字。他学得慢，但记得牢：“‘红烧’……‘红烧’是啥意思？就是把啥都烧红了？”","你笑了。他挠挠头，也笑了。这顿饭吃了很久。"],
+ fail:["老铁学了半天，还是把‘青菜’认成‘青采’。他沮丧地挠头：“俺是不是太笨了？”","你安慰他：“你力气大啊。读书的事，慢慢来。”"],
+ crit:["一个月后，老铁能读食堂的菜谱了。他兴奋地跑来告诉你：“俺能读‘辣子鸡’了！是辣的鸡！”","他郑重其事地谢你：“等俺将来开了铁匠铺，你打铁，不收钱。”"]
+},effects:{xp:10},run:function(){changeRelation('tie',15,'菜谱识字课');},go:"acad_tie_2"}
+]};
+N["acad_tie_2"]={tag:"main",place:"艾尔达魔法学院 · 工坊",pace:"normal",text:[
+"老铁的力气派上了大用场——学院要重修演武场的木桩，他一个人扛了半天的料。",
+"你帮他打下手，他一边抡锤一边跟你絮叨：“俺爹说，铁匠的儿子，一辈子跟铁打交道。俺想好了，毕业了就回去开铺子。”",
+"他顿了顿：“不过，俺娘说——多读点书，以后打铁也能多卖俩钱。”他咧嘴一笑，“俺现在能认二百个字了。够用了！”"
+],options:[
+{t:"教他写自己的名字",effects:{xp:8},run:function(){changeRelation('tie',10,'演武场并肩');},tier:{ok:["老铁一笔一划，写了半天，终于写出“铁”字。他举着那张纸，像举着军功章：“俺会写名字了！”","他小心地把纸折好，收进怀里：“寄回家里去，让俺娘看看。”"]},go:"acad_tie_3"}
+]};
+N["acad_tie_3"]={tag:"main",place:"艾尔达魔法学院 · 西厅",pace:"normal",text:[
+"第四学年，老铁家里出事了——他爹的铁匠铺，被征去给北方公国联盟造兵器。",
+"他爹不肯去，被按了个“通敌”的罪名抓了。老铁收到信，在工坊里坐了一夜。",
+"第二天，他来问你：“俺想回去。但俺娘说，回去了也没用——人家有兵有刀。”",
+"“俺该怎么办？”"
+],options:[
+{t:"帮他写一封申诉信，走学院的路子",check:{a:"CHA",sk:"persu",label:"写信"},tier:{
+ ok:["你帮他写了一封申诉信，又托墨丘利教授递给学院理事会。半个月后，回音来了：他爹的罪名降为“征用纠纷”，限期放人。","老铁攥着回信，手抖了半天：“……谢，谢谢你。”"],
+ fail:["申诉信石沉大海。老铁等了一个月，最终决定自己回去看看。他走之前，把你教他写的二百个字，抄了一份带在身上。"],
+ crit:["你不但写了信，还找到了当年经办此案的文书漏洞。老铁的爹，三天后就被放了出来。","老铁冲进工坊，给你鞠了个九十度的躬：“俺这条命，以后就是你的了。”"]
+},effects:{xp:15},run:function(){changeRelation('tie',25,'家书与申诉');},go:"acad_tie_4"}
+]};
+N["acad_tie_4"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，老铁果然回去开了铁匠铺。",
+"他临走前，把一柄自己打的柴刀塞给你：“俺娘说了，读书人使不动刀，但砍柴总得有个家伙。”",
+"他憨厚地笑着：“俺铺子开在铁门关外官道边。你路过，报俺名字，打铁八折！”",
+"他背着一大包工具，哼着不知名的乡间小调，走远了。",
+"你握着那柄柴刀——刀柄上，歪歪扭扭刻着一个“铁”字。那笔迹，是你教的。"
+],options:[
+{t:"收下柴刀，目送他远去",effects:{item:"老铁柴刀",xp:20},run:function(){changeRelation('tie',20,'毕业赠刀');},tier:{ok:["你握着那柄柴刀。铁门关外的官道上，多了一间铁匠铺。"]},go:"acad_people_hub"}
+]};
+/* ---------- 老友结局（凯恩/艾莉丝/洛卡/阿塔） ---------- */
+N["acad_kain_end"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，凯恩在战争系拿到了头名。",
+"他来找你，难得带了一壶酒：“喝一杯。毕业了，以后不知道还有没有机会。”",
+"你问他打算。他看着窗外的塔灯：“我学了五年‘不死人的打仗’——够不够，得上战场才知道。”",
+"他顿了顿：“铁门关那边，缺个教官。我打算去。”",
+"他举起酒碗：“敬学院。敬朋友。敬……还没打完的仗。”"
+],options:[
+{t:"与他碰碗，祝他平安",effects:{xp:20},run:function(){changeRelation('kain',20,'毕业敬酒');},tier:{ok:["那碗酒很烈。凯恩喝完，把碗往桌上一顿，转身走了。","你看着他的背影——那柄旧剑，换了一柄新剑。"]},go:"acad_people_hub"}
+]};
+N["acad_alice_end"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，艾莉丝的火系法术已经能烤熟一整头羊。",
+"她毕业汇演时，把演武场的沙地烧出一片焦黑——院长在台上咳嗽了两声：“……艾莉丝同学，下次注意防火。”",
+"散场后，她抱着那本旧《火系基础·入门》来找你：“当初你第一个喝我汤的时候，我就觉得——你会是个好朋友。”",
+"她翻开扉页，上面写着：“致第一个敢吃我汤的人。”她补了一行字：“和最后一个。”",
+"“我打算去南方的火山城进修。”她朝你眨眨眼，“等我成了大法师，请你喝汤——保熟的那种。”"
+],options:[
+{t:"笑着应下这顿‘保熟的汤’",effects:{xp:20},run:function(){changeRelation('alice',20,'毕业之约');},tier:{ok:["你和她击掌为誓。那本旧书，你一直收着。"]},go:"acad_people_hub"}
+]};
+N["acad_loca_end"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，洛卡的药剂配方被圣痕司盯上了——他配的一种“安眠水”，被说成“迷魂药”。",
+"你替他作证：那配方你见过，只是安神用的。",
+"圣痕司最终没抓他，但洛卡吓得不轻。他来找你，难得一脸认真：“我这些年，配了一百多种药水。最好的那瓶，我留着没用。”",
+"他掏出一小瓶淡蓝色的药水：“这是‘净水’的解药。我花了三年配的。”他压低声音，“圣痕司那瓶‘净水’，我偷过样本——这个能解。”",
+"他把它塞给你：“拿着。比什么毕业证书都值钱。”"
+],options:[
+{t:"郑重收下这瓶解药",effects:{item:"净水解药",xp:20},run:function(){changeRelation('loca',25,'解药相赠');},tier:{ok:["你收下那瓶淡蓝色的药水。洛卡咧嘴一笑：“我总算，配出了一瓶有用的。”"]},go:"acad_people_hub"}
+]};
+N["acad_ata_end"]={tag:"ending",place:"艾尔达魔法学院 · 毕业季",pace:"normal",text:[
+"毕业那年，阿塔收到草原的信：黑石部族被暗蚀会袭击了。",
+"他连夜收拾行装，来找你道别。他把你带到宿舍，把那床狼皮抱出来：“这个，你留着。”",
+"“草原的规矩：收了东西，就是朋友。朋友之间，不欠账。”他把狼皮塞进你怀里，“我欠你的，草原上还你。”",
+"你问他打算。他握紧拳：“回草原，把那些挖地的，赶出去。”",
+"他走出门，又回头：“如果草原出事——去狼旗下找我。”",
+"和五年前，一模一样的这句话。"
+],options:[
+{t:"把狼皮收好，送他出山门",effects:{xp:20},run:function(){changeRelation('ata',20,'草原之约');},tier:{ok:["你抱着那床狼皮，看着他的背影消失在雪线里。","草原上的风，会记得一个叫阿塔的战士。"]},go:"acad_people_hub"}
+]};
+})();
+
 /* /u1inj:data-nodes:dn_acad_road.js/ */
 /* ============================================================
  * B-1 入学引导链：雪原旅途 → 学院山门 → 新生报到 → 宿舍分配 → 开学典礼
@@ -44628,7 +45026,10 @@ window.CAUSALITY_WORDS = [
     {id:"led_b1_01",type:"设定",desc:"学院入学引导链：自由城/王都/铁门关前线三入口可达学院（acad_road_1~5），开学典礼埋塔灯传说",plant:"acad_road_1",reap:"academy_admission",status:"open",world:"vol_academy"},
     {id:"led_b1_02",type:"伏笔",desc:"塔顶之灯数人之说（acad_tower_rumor）与图书馆塔灯呼应，待学院线回收",plant:"acad_road_4",reap:"academy_graduation",status:"open",world:"vol_academy"},
     {id:"led_b2_01",type:"设定",desc:"学院五学年生活线（acad_life_y1~y5，30 节点：课程ifJob/宿舍/同窗/期中/期末/假期/学年事件），north_academy_gate 生活区入口",plant:"acad_life_y1_open",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"}];
+    {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"},
+    {id:"led_b3_01",type:"人物",desc:"学院人际网：塞西莉娅（东境政务/晨天水）/灰须·莫里（矮人符文/铁门七封印）/伊莲娜（精灵治愈/忘忧草）/老铁（铁门关铁匠），各 4 节点闭环",plant:"acad_people_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b3_03",type:"伏笔",desc:"禁书区地窖铁门（矮人古锁）与莫里所述北矿铁门呼应，书三选一（深渊残卷/封印实录/守夜人手记）",plant:"acad_forbidden_1",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"}];
 /* ===== /v91inj:ledgerwords:end/ ===== */
 
 /* /u1inj:data-nodes:dn_chapters.js/ */
@@ -48392,7 +48793,42 @@ window.STORY_BLUEPRINT = {
   "acad_event_y2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
   "acad_event_y3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
   "acad_event_y4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
-  "acad_event_y5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"}
+  "acad_event_y5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_people_hub": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_cecy_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_cecy_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_cecy_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_cecy_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mori_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mori_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mori_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mori_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_elena_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_elena_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_elena_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_elena_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_tie_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_tie_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_tie_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_tie_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_kain_end": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_alice_end": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_loca_end": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_ata_end": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_hub": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_mercury": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_mercury_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_gora": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_gora_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_theresa": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_theresa_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_moritz": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_mentor_moritz_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_forbidden_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_forbidden_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_forbidden_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acad_forbidden_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"}
+
 
 
 

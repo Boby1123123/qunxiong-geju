@@ -15,6 +15,7 @@ N["acad_life_y1_open"]={tag:"main",place:"艾尔达魔法学院 · 第一学年"
 "分班名单贴在西厅的公告板上。你挤进人群，看见自己的名字排在一个小班底下——班里有十来个人，来自大陆各地。",
 "课程表发下来，密密麻麻。学院不逼你选主修——但每个人都要有一门“立足的功课”。"
 ],options:[
+{t:"去交朋友——学院里最不缺的就是人（人际网）",go:"acad_people_hub"},
 {t:"【学年小事】赶去参加学院的秋日排水渠劳动（秋季例行）",req:function(){return !S.flags["acad_event_y1_done"];},effects:{flag:"acad_event_y1_done"},go:"acad_event_y1"},
 {t:"【职业·魔法师】选《元素基础·火》（教授：白胡子老教习）",req:function(){return S.job==="mage";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
 {t:"【职业·战士】选《剑道精义》（教授：独臂的戈拉）",req:function(){return S.job==="warrior";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},

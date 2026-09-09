@@ -1,97 +1,97 @@
 
-/* /v67inj:modal/ V67 模态栈单例：统一出口 + 焦点管理 + 弹窗栈 */
+/* /v67inj:lock/ V67 选项交互锁定：防重入 + 视觉反馈 + 看门狗 */
 (function(){
   try{
-    var ui = {
-      stack: [],
-      openDepth: 0,
-      _lastFocus: null,
-      open: function(el){
-        var m = document.getElementById("modal");
-        if(!m) return;
-        try{ ui._lastFocus = document.activeElement; }catch(e){}
-        m.innerHTML = "";
-        var container = document.createElement("div");
-        container.className = "v31-modal-container";
-        try{
-          if(el && el.querySelector && !el.querySelector(".panel-footer") && !el.querySelector(".modal-actions")){
-            if(!el.style.padding) el.style.padding = "8px 4px 4px";
-            var footer = document.createElement("div");
-            footer.className = "panel-footer v31-modal-footer";
-            footer.innerHTML = "<button class='btn-back' onclick='v67_ui.close()'>返回游戏</button>";
-            el.appendChild(footer);
-          }
-        }catch(e){}
-        try{ container.appendChild(el); }catch(e){}
-        m.appendChild(container);
-        try{ m.setAttribute('role','dialog'); m.setAttribute('aria-modal','true'); m.setAttribute('aria-label','游戏弹窗'); }catch(e){}
-        m.classList.add("show");
-        ui.stack.push(container);
-        ui.openDepth++;
-        try{ var f = m.querySelector("button, a, input, select, [tabindex]"); if(f && f.focus) f.focus(); }catch(e){}
-        try{ if(window.UI_STATE) UI_STATE.panel = null; }catch(e){}
-      },
-      close: function(){
-        ui.openDepth = Math.max(0, ui.openDepth - 1);
-        if(ui.stack.length) ui.stack.pop();
-        if(ui.openDepth === 0){
-          var m = document.getElementById("modal");
-          if(m){ m.classList.remove("show"); m.innerHTML = ""; }
-          try{ document.body.classList.remove("modal-open"); }catch(e){}
+    window.__v67Busy = false;
+    window.__v67BusyAt = 0;
+    function v67_busySet(){
+      window.__v67Busy = true;
+      window.__v67BusyAt = Date.now();
+      v67_showTip();
+      /* 每次置锁重置看门狗：5s 未释放强制解锁（防死锁兜底，同时恢复按钮灰化） */
+      try{ if(window.v61_timer) window.v61_timer(function(){
+        if(window.__v67Busy && window.__v67BusyAt && (Date.now()-window.__v67BusyAt>5000)){
+          window.__v67Busy = false;
+          v67_unlockUI();
         }
-        try{
-          var fb = ui._lastFocus;
-          if(fb && document.contains(fb) && fb.focus) fb.focus();
-          ui._lastFocus = null;
-        }catch(e){}
-        try{ if(window.UI_STATE) UI_STATE.panel = null; }catch(e){}
-      },
-      toggle: function(name){
-        try{ if(window.togglePanel) window.togglePanel(name); }catch(e){}
-      }
-    };
-    window.v67_ui = ui;
-  }catch(e){ try{ console.error("[v67modal]", e); }catch(_){} }
-})();
-
-/* /v74ui:key/ V74 全局快捷键 + 提示条（M/B/T/L 保留，补齐 Q/G/C/F） */
-(function(){
-  try{
-    /* V74：只处理 v68 导航之外的键（z魔法/a成就/s存档）；
-       m/b/t/l/q/g/c/f 沿用 v68 既有导航（避免键位语义冲突与双触发） */
-    var KEY_MAP = {
-      z:function(){ try{ if(window.v35_openMagicPanel) v35_openMagicPanel(); }catch(e){} },
-      a:function(){ try{ if(window.v34_openAchievements) v34_openAchievements(); }catch(e){} },
-      s:function(){ try{ if(window.v34_openSavePanel) v34_openSavePanel(); }catch(e){} }
-    };
-    function v74_onKey(e){
-      if(e.ctrlKey||e.altKey||e.metaKey) return;
-      var t = e.target;
-      if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT'||t.isContentEditable)) return;
-      var k = (e.key||'').toLowerCase();
-      var fn = KEY_MAP[k];
-      if(!fn) return;
-      e.preventDefault();
-      try{ fn(); }catch(err){ console.error('[v74key]', err); }
+      }, 5000, "v67-lock-watchdog"); }catch(e){}
     }
-    document.addEventListener('keydown', v74_onKey, false);
-    window.v74_keyHelp = function(){
-      return 'M 地图 · B 行囊 · T 修炼 · L 日志 · F 势力 · Q 任务 · G 强者 · C 编年史 · Z 魔法 · A 成就 · S 存档 · Esc 返回';
-    };
-    function v74_mountHint(){
+    function v67_busyClear(){
+      window.__v67Busy = false;
+      window.__v67BusyAt = 0;
+      v67_clearTip();
+    }
+    /* /v74ui:lock/ 处理中提示 + 按钮恢复（watchdog 兜底） */
+    function v67_showTip(){
       try{
-        if(document.getElementById('v74-key-hint')) return;
-        var hint = document.createElement('div');
-        hint.id = 'v74-key-hint';
-        hint.className = 'v74-key-hint';
-        hint.title = v74_keyHelp();
-        hint.textContent = '\u2328 M地图  B行囊  T修炼  L日志  F势力  Q任务  G强者  C编年史  Z魔法  A成就  S存档';
-        var anchor = document.getElementById('v68-announce');
-        if(anchor && anchor.parentNode) anchor.parentNode.insertBefore(hint, anchor.nextSibling);
-        else document.body.insertBefore(hint, document.body.firstChild);
+        const box = document.getElementById("options");
+        if(!box) return;
+        if(box.querySelector(".v67-busy-tip")) return;
+        const tip = document.createElement("div");
+        tip.className = "v67-busy-tip";
+        tip.textContent = "⏳ 正在处理…";
+        box.insertBefore(tip, box.firstChild);
       }catch(e){}
     }
-    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', v74_mountHint);
-    else v74_mountHint();
-  }catch(e){}
+    function v67_clearTip(){
+      try{
+        const box = document.getElementById("options");
+        if(!box) return;
+        const tip = box.querySelector(".v67-busy-tip");
+        if(tip) tip.remove();
+      }catch(e){}
+    }
+    function v67_unlockUI(){
+      try{
+        const box = document.getElementById("options");
+        if(box){
+          const btns = box.querySelectorAll("button.opt");
+          for(var i=0;i<btns.length;i++){
+            btns[i].disabled = false;
+            btns[i].style.opacity = "";
+            btns[i].style.cursor = "";
+          }
+        }
+      }catch(e){}
+      v67_clearTip();
+    }
+    function v67_busyNow(){ return !!window.__v67Busy; }
+    /* 选中反馈：灰化其余 + disabled（保留按钮供 writeNext 自然清空） */
+    function v67_uiFeedback(opt){
+      try{
+        var box = document.getElementById("options");
+        if(!box) return;
+        var t = (opt && opt.t) ? String(opt.t) : "";
+        var btns = box.querySelectorAll("button.opt");
+        for(var i=0;i<btns.length;i++){
+          try{
+            btns[i].disabled = true;
+            btns[i].style.opacity = "0.4";
+            btns[i].style.cursor = "default";
+            if(t && btns[i].getAttribute("data-t") === t){
+              btns[i].classList.add("opt-chosen");
+              btns[i].style.opacity = "1";
+              btns[i].style.borderColor = "var(--gold, #d4a017)";
+              btns[i].style.boxShadow = "0 0 10px rgba(212,160,23,.5)";
+            }
+          }catch(e){}
+        }
+      }catch(e){}
+    }
+    /* 看门狗：5s 未释放强制解锁（防死锁） */
+    if(typeof window.v61_timer === "function"){
+      try{ window.v61_timer(function(){
+        if(window.__v67Busy && window.__v67BusyAt && (Date.now() - window.__v67BusyAt > 5000)){
+          window.__v67Busy = false;
+        }
+      }, 5000, "v67-lock-watchdog"); }catch(e){}
+    }
+    window.v67_busySet = v67_busySet;
+    window.v67_busyClear = v67_busyClear;
+    window.v67_busyNow = v67_busyNow;
+    window.v67_uiFeedback = v67_uiFeedback;
+    window.v67_showTip = v67_showTip;
+    window.v67_clearTip = v67_clearTip;
+    window.v67_unlockUI = v67_unlockUI;
+  }catch(e){ try{ console.error("[v67lock]", e); }catch(_){} }
 })();

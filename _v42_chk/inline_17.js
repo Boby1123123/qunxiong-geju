@@ -1,110 +1,65 @@
 
-/* /v67inj:map/ V67 地图单例：REGIONS 全量渲染 + 缩放 + 迷雾 + 城市卡 + 真实旅行 */
+/* /v67inj:cost/ V67 行为成本器：修炼/探索成本化（时间/行动点/环境/身心/疲劳） */
 (function(){
   try{
-    var MAP = {
-      ZOOMS: [0.8, 1, 1.3, 1.7, 2.2, 2.8],
-      zoomIdx: 1,
-      _box: null,
-      _sel: null,
-      open: function(){
-        var box = document.createElement("div");
-        box.className = "box";
-        box.innerHTML = MAP._render();
-        MAP._box = box;
-        openModal(box);
-      },
-      _collect: function(){
-        var cities = [], rk, ck, R, C;
-        for(rk in REGIONS){ R = REGIONS[rk]; for(ck in R.cities){ C = R.cities[ck];
-          cities.push({id:rk+"_"+ck, cn:C.cn, x:(C.x||0), y:-(C.y||0), desc:C.desc||"", region:rk, unlock:!!R.unlock, danger:(R.danger||1)});
-        }}
-        var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
-        for(var i=0;i<cities.length;i++){ var c=cities[i];
-          if(c.x<minX)minX=c.x; if(c.x>maxX)maxX=c.x; if(c.y<minY)minY=c.y; if(c.y>maxY)maxY=c.y;
+    function v67_ensureDefaults(){
+      try{ if(window.v66_ensureDefaults) v66_ensureDefaults(); }catch(e){}
+      try{ if(!S.trainStreak) S.trainStreak = 0; }catch(e){}
+      try{ if(!S.v67CostLog) S.v67CostLog = []; }catch(e){}
+    }
+    function v67_trainSite(){
+      var loc = (S.loc||"");
+      var s = {mult:0.7, interrupt:0.12, desc:"野外风大，心神难定"};
+      try{
+        if(loc.indexOf("north_aierda")===0){ s={mult:1.1,interrupt:0,desc:"学院静室，灵气安定"}; }
+        else if(["free_jiaohui","free_gonghui","free_jishi","free_huigang","south_huangjin","south_moxie","church_shengcheng","east_chengtian","dwarf_wangdu","elf_wangting","orc_heishi"].indexOf(loc)>=0){ s={mult:1.0,interrupt:0,desc:"城中客栈，安稳"}; }
+      }catch(e){}
+      return s;
+    }
+    function v67_costTrain(costed){
+      var out = {ok:true, mult:1, interrupt:0, msg:"", envDesc:""};
+      try{
+        v67_ensureDefaults();
+        if(!S.world) S.world = {};
+        /* 身心限制 */
+        if((S.hp||0) < 30 || (S.san||0) < 20){
+          out.ok=false; out.msg="气海虚浮，强练恐伤根基。先歇一歇，处理些俗务再说。"; return out;
         }
-        if(cities.length===0){ minX=-400; maxX=400; minY=-400; maxY=400; }
-        return {cities:cities, minX:minX-80, minY:minY-80, w:(maxX-minX)+160, h:(maxY-minY)+160};
-      },
-      _render: function(){
-        var d = MAP._collect();
-        var z = MAP.ZOOMS[MAP.zoomIdx];
-        var ww = d.w/z, wh = d.h/z;
-        var cx = d.minX + d.w/2, cy = d.minY + d.h/2;
-        var vx = cx - ww/2, vy = cy - wh/2;
-        var html = "<h2>大陆地图</h2>";
-        html += "<div style='display:flex;align-items:center;gap:8px;margin-bottom:8px;color:var(--text-secondary);font-size:13px'>";
-        html += "<span>缩放</span><button class='btn' onclick='v67_map.zoom(1)'>＋</button><button class='btn' onclick='v67_map.zoom(-1)'>－</button>";
-        html += "<span id='v67-map-zoom-label'>"+Math.round(z*100)+"%</span>";
-        html += "<span style='margin-left:auto;color:var(--text-muted)'>金圈 = 你所在</span></div>";
-        html += "<div style='position:relative;'>";
-        html += "<svg viewBox='"+vx+" "+vy+" "+ww+" "+wh+"' style='width:100%;height:440px;background:linear-gradient(160deg,#efe6cf,#e4d8bc);border:1px solid var(--border);border-radius:10px;' xmlns='http://www.w3.org/2000/svg'>";
-        var gi, gx, gy;
-        for(gx=d.minX; gx<=d.minX+d.w; gx+=100){ html += "<line x1='"+gx+"' y1='"+d.minY+"' x2='"+gx+"' y2='"+(d.minY+d.h)+"' stroke='rgba(90,70,30,.08)' stroke-width='1'/>"; }
-        for(gy=d.minY; gy<=d.minY+d.h; gy+=100){ html += "<line x1='"+d.minX+"' y1='"+gy+"' x2='"+(d.minX+d.w)+"' y2='"+gy+"' stroke='rgba(90,70,30,.08)' stroke-width='1'/>"; }
-        var seen = (typeof S!=="undefined" && S && S.visited) ? S.visited : null;
-        var wars = null;
-        try{ if(typeof S!=="undefined" && S && S.worldState && S.worldState.wars && S.worldState.wars.length) wars = S.worldState.wars; }catch(e){}
-        var frontSet = {};
-        if(wars){ for(var wi=0; wi<wars.length; wi++){ if(wars[wi].front) frontSet[wars[wi].front]=1; } }
-        var here = (typeof S!=="undefined" && S) ? S.loc : "";
-        for(var i2=0; i2<d.cities.length; i2++){
-          var c2 = d.cities[i2];
-          var isHere = (c2.id===here);
-          var visited = !!(seen && seen[c2.id]);
-          var locked = !c2.unlock;
-          var cx2 = c2.x, cy2 = c2.y;
-          var r = isHere ? 10 : (visited ? 8 : 6);
-          var fill = isHere ? "#d4a017" : (visited ? "#6a5a2a" : "#9a8a5a");
-          html += "<g onclick='v67_map.select(\""+c2.id+"\")' style='cursor:pointer'>";
-          if(frontSet[c2.id]){ html += "<circle cx='"+cx2+"' cy='"+cy2+"' r='"+(r+6)+"' fill='none' stroke='#b03030' stroke-width='3'/>"; }
-          if(isHere){ html += "<circle cx='"+cx2+"' cy='"+cy2+"' r='"+(r+4)+"' fill='none' stroke='#d4a017' stroke-width='2'><animate attributeName='r' values='"+(r+3)+";"+(r+7)+";"+(r+3)+"' dur='2s' repeatCount='indefinite'/></circle>"; }
-          html += "<circle cx='"+cx2+"' cy='"+cy2+"' r='"+r+"' fill='"+(locked?"rgba(0,0,0,.35)":fill)+"' stroke='#fff' stroke-width='1.5'/>";
-          var label = locked ? "？？？" : c2.cn;
-          html += "<text x='"+cx2+"' y='"+(cy2-r-6)+"' font-size='"+(isHere?14:13)+"' fill='"+(locked?"#8a7a5a":"#3a2e10")+"' text-anchor='middle' style='font-family:Georgia,serif'>"+label+"</text>";
-          html += "</g>";
+        if((S.san||0) < 50) out.mult *= 0.8;
+        /* 环境 */
+        var site = v67_trainSite();
+        out.mult *= site.mult; out.interrupt = site.interrupt; out.envDesc = site.desc;
+        /* 疲劳 */
+        var st = S.trainStreak||0;
+        if(st >= 3){ out.mult *= 0.75; out.envDesc += "（经脉发胀，事倍功半）"; }
+        out.mult = Math.max(0.4, Math.min(1.2, out.mult));
+        /* 成本（直接调用时） */
+        if(!costed){
+          var ap = (S.world.actions===undefined) ? (S.world.actionsMax||4) : S.world.actions;
+          if(ap < 1){ out.ok=false; out.msg="今日已无余力，明日再来。"; return out; }
+          S.world.actions = ap - 1;
+          try{ if(window.mechClockAdvance) mechClockAdvance(2); }catch(e){}
         }
-        html += "</svg>";
-        html += "<div id='v67-map-card' style='position:absolute;left:10px;top:10px;min-width:210px;max-width:300px;background:rgba(24,18,8,.88);color:#e8dcc0;border:1px solid #d4a017;border-radius:8px;padding:10px 12px;font-size:13px;display:none;box-shadow:0 6px 20px rgba(0,0,0,.4)'></div>";
-        html += "</div>";
-        return html;
-      },
-      zoom: function(dir){
-        MAP.zoomIdx = Math.max(0, Math.min(MAP.ZOOMS.length-1, MAP.zoomIdx + dir));
-        if(MAP._box){ MAP._box.innerHTML = MAP._render(); MAP._showCard(MAP._sel); }
-      },
-      select: function(id){
-        MAP._sel = id;
-        MAP._showCard(id);
-      },
-      _showCard: function(id){
-        var card = document.getElementById("v67-map-card");
-        if(!card) return;
-        if(!id){ card.style.display = "none"; return; }
-        var c = null;
-        for(var rk in REGIONS){ var R=REGIONS[rk]; for(var ck in R.cities){ if((rk+"_"+ck)===id){ c=R.cities[ck]; } } }
-        if(!c) return;
-        var here = (typeof S!=="undefined" && S) ? S.loc : "";
-        var html = "<div style='font-weight:bold;color:#d4a017;margin-bottom:4px'>"+c.cn+"</div>";
-        html += "<div style='opacity:.85;margin-bottom:6px'>"+(c.desc||"")+"</div>";
-        if(here===id){ html += "<div style='color:#7fbf7f;margin-bottom:6px'>◆ 你正在此地</div>"; }
-        html += "<div style='display:flex;gap:6px;flex-wrap:wrap'>";
-        html += "<button class='btn' onclick='v67_map.travel(\""+id+"\")'>前往</button>";
-        html += "<button class='btn' onclick='v67_map.citySpots(\""+id+"\")'>城中各处</button>";
-        html += "<button class='btn' onclick='v67_map.hideCard()'>关闭</button>";
-        html += "</div>";
-        card.innerHTML = html;
-        card.style.display = "block";
-      },
-      hideCard: function(){ MAP._sel = null; var card = document.getElementById("v67-map-card"); if(card) card.style.display = "none"; },
-      travel: function(id){
-        try{ if(window.v67_ui) v67_ui.close(); else closeModal(); }catch(e){}
-        try{ if(window.travelTo) travelTo(id); }catch(e){}
-      },
-      citySpots: function(id){
-        try{ if(window.openCitySpots) openCitySpots(id); }catch(e){}
-      }
-    };
-    window.v67_map = MAP;
-  }catch(e){ try{ console.error("[v67map]", e); }catch(_){} }
+      }catch(e){}
+      return out;
+    }
+    function v67_costExplore(costed){
+      var out = {ok:true, msg:""};
+      try{
+        v67_ensureDefaults();
+        if(!S.world) S.world = {};
+        if(!costed){
+          var ap = (S.world.actions===undefined) ? (S.world.actionsMax||4) : S.world.actions;
+          if(ap < 1){ out.ok=false; out.msg="今日已无余力，明日再来。"; return out; }
+          S.world.actions = ap - 1;
+          try{ if(window.mechClockAdvance) mechClockAdvance(2); }catch(e){}
+        }
+      }catch(e){}
+      return out;
+    }
+    window.v67_ensureDefaults = v67_ensureDefaults;
+    window.v67_trainSite = v67_trainSite;
+    window.v67_costTrain = v67_costTrain;
+    window.v67_costExplore = v67_costExplore;
+  }catch(e){ try{ console.error("[v67cost]", e); }catch(_){} }
 })();

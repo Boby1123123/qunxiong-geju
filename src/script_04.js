@@ -8219,9 +8219,21 @@ function v74_journalAppend(appended){
     var j = {};
     try{ j = JSON.parse(localStorage.getItem(window.ELDA_JOURNAL_KEY)||'{}') || {}; }catch(e){ j={}; }
     if(!j.days) j.days = {};
+    /* /sp7inj:journal-vol/ 手记卷章标注：从叙事蓝图取当前节点卷/章（兼容无蓝图或未标注节点） */
+    var _vc = null;
+    try{
+      var _bp = window.STORY_BLUEPRINT;
+      var _cn = (typeof curNode!=='undefined') ? curNode : '';
+      if(_bp && _bp.nodeIndex && _cn && _bp.nodeIndex[_cn]){
+        var _r = _bp.nodeIndex[_cn];
+        if(_r && (_r.vol || _r.ch)) _vc = {vol:_r.vol||'', ch:_r.ch||''};
+      }
+    }catch(e){ _vc=null; }
     var key = 'day' + day;
     if(!j.days[key]) j.days[key] = {place:place, entries:[]};
     if(place) j.days[key].place = place;
+    if(_vc) j.days[key].vol = _vc.vol;
+    if(_vc) j.days[key].ch = _vc.ch;
     if(!Array.isArray(j.days[key].entries)) j.days[key].entries = [];
     for(var k=0;k<txt.length;k++) j.days[key].entries.push(txt[k]);
     j.total = j.total || 0;
@@ -8264,7 +8276,9 @@ function v74_openJournal(){
       var d = j.days[days[i]];
       var dn = days[i].slice(3);
       html += '<div style="margin:14px 0 8px;padding:8px 10px;background:rgba(0,0,0,0.04);border-left:3px solid var(--gold);border-radius:4px">'
-        +'<b>第 '+dn+' 天</b>'+(d.place?' · <span style="color:var(--gold2)">'+String(d.place).replace(/</g,'&lt;')+'</span>':'')
+        +'<b>第 '+dn+' 天</b>'+(d.vol?' · <span style="color:var(--gold2)">卷:'+String((window.STORY_BLUEPRINT&&window.STORY_BLUEPRINT.volumes&&(function(){var _vn={};for(var _i=0;_i<window.STORY_BLUEPRINT.volumes.length;_i++){_vn[window.STORY_BLUEPRINT.volumes[_i].id]=window.STORY_BLUEPRINT.volumes[_i].name;}return _vn;})())[d.vol]||d.vol).replace(/</g,'&lt;')+'</span>':'')
+        +(d.ch?' · <span style="color:var(--gold)">'+String(d.ch).replace(/</g,'&lt;')+'</span>':'')
+        +(d.place?' · <span style="color:var(--text-muted)">'+String(d.place).replace(/</g,'&lt;')+'</span>':'')
         +' <span style="float:right;font-size:11px;color:var(--text-muted)">'+((d.entries||[]).length)+' 条</span></div>';
       for(var k=0;k<(d.entries||[]).length;k++){
         html += '<p style="margin:4px 0;font-size:14px">'+String(d.entries[k]).replace(/</g,'&lt;')+'</p>';
@@ -8283,6 +8297,105 @@ function v74_clearJournal(){
   try{ v74_openJournal(); }catch(e){}
 }
 window.v74_clearJournal = v74_clearJournal;
+
+/* /sp7inj:story-panel/ SP-7 玩家叙事体验：弧线进度面板 + 目标指引 + 当前卷章 */
+function v91_storyPanel(){
+  try{
+    var html = '<div class="panel-wrap" style="max-width:680px;max-height:80vh;display:flex;flex-direction:column">'
+      +'<div class="panel-header"><span class="panel-title">🗺 叙事罗盘</span><button class="panel-close" onclick="closePanel()">✕</button></div>'
+      +'<div class="panel-body" style="flex:1;overflow-y:auto;padding:14px;line-height:1.8;font-size:var(--fs-body)">';
+    var bp = window.STORY_BLUEPRINT;
+    var cn = (typeof curNode!=='undefined') ? curNode : '';
+    var rec = null;
+    try{ if(bp && bp.nodeIndex && cn && bp.nodeIndex[cn]) rec = bp.nodeIndex[cn]; }catch(e){}
+    /* 当前所在 */
+    html += '<div style="padding:10px 12px;background:rgba(0,0,0,0.04);border-left:3px solid var(--gold);border-radius:4px;margin-bottom:12px">';
+    html += '<b>当前位置</b><br>';
+    if(rec && (rec.vol || rec.ch)){
+      html += '<span style="color:var(--gold2)">'+(rec.vol?('卷 · '+String(volNames[rec.vol]||rec.vol).replace(/</g,'&lt;')):'')+'</span>'
+        +(rec.ch?(' ｜ 章 · '+String(rec.ch).replace(/</g,'&lt;')):'')
+        +(rec.arc?(' ｜ 弧 · '+String(arcNames[rec.arc]||rec.arc).replace(/</g,'&lt;')):'');
+    } else {
+      html += '<span style="color:var(--text-muted)">旅途中（叙事索引外）</span>';
+    }
+    html += '</div>';
+    /* 活跃弧 */
+    var arcs = {};
+    try{ arcs = (typeof S!=='undefined' && S && S.arcs) ? S.arcs : {}; }catch(e){ arcs={}; }
+    var arcNames = {};
+    var volNames = {};
+    try{
+      if(bp && bp.arcs && bp.arcs.length){
+        for(var i=0;i<bp.arcs.length;i++){ var a=bp.arcs[i]; if(a && a.id) arcNames[a.id]=a.name||a.id; }
+      }
+      if(bp && bp.volumes && bp.volumes.length){
+        for(var v=0;v<bp.volumes.length;v++){ var vv=bp.volumes[v]; if(vv && vv.id) volNames[vv.id]=vv.name||vv.id; }
+      }
+    }catch(e){}
+    var stageNames = {setup:'蓄势', rising:'渐起', climax:'高潮', resolution:'落定'};
+    var keys = Object.keys(arcs);
+    html += '<b>进行中的故事线（'+keys.length+'）</b>';
+    if(!keys.length){
+      html += '<p style="color:var(--text-muted);margin:6px 0">尚未进入任何叙事弧线。继续旅程，故事会自己展开。</p>';
+    } else {
+      for(var i=0;i<keys.length;i++){
+        var aid = keys[i];
+        var st = arcs[aid] || {};
+        var nm = arcNames[aid] || aid;
+        var stage = stageNames[st.s] || ('阶段'+(st.s||'?'));
+        html += '<div style="margin:8px 0;padding:8px 10px;background:rgba(255,255,255,0.5);border-radius:4px">'
+          +'<b>'+String(nm).replace(/</g,'&lt;')+'</b>'
+          +' <span style="color:var(--gold2)">'+stage+'</span>'
+          +' <span style="float:right;font-size:11px;color:var(--text-muted)">第 '+(st.st||'?')+' 天启</span>'
+          +'</div>';
+      }
+    }
+    /* 当前目标指引 */
+    var curArc = rec && rec.arc ? rec.arc : null;
+    html += '<div style="margin-top:14px;padding:10px 12px;background:rgba(0,0,0,0.04);border-left:3px solid var(--gold2);border-radius:4px">';
+    html += '<b>当前指引</b><br>';
+    if(curArc && arcs[curArc]){
+      var ast = arcs[curArc].s || 1;
+      var goal = '继续推进当前故事线（阶段 '+ast+'/'+4+'），完成'+(stageNames[ast]||'')+'阶段的事件';
+      html += '<span>'+goal+'</span>';
+    } else if(curArc){
+      html += '<span>正处在 <b>'+String(arcNames[curArc]||curArc).replace(/</g,'&lt;')+'</b> 的故事现场，跟随剧情做出选择。</span>';
+    } else {
+      html += '<span style="color:var(--text-muted)">跟随剧情推进，叙事罗盘会随故事展开记录你的轨迹。</span>';
+    }
+    html += '</div>';
+    html += '</div><div class="panel-footer" style="display:flex;gap:8px;justify-content:space-between">'
+      +'<button class="btn" onclick="v91_storyPanel()">刷新</button>'
+      +'<button class="btn btn-gold" onclick="closePanel()">合上</button></div></div>';
+    openModal(elFromHtml(html));
+  }catch(e){ try{ console.log('story panel:', e); }catch(_){} }
+}
+window.v91_storyPanel = v91_storyPanel;
+
+/* 工具栏按钮注入：手记按钮后插「🗺 叙事」（DOM 就绪后重试兜底） */
+(function(){
+  function inject2(){
+    try{
+      var ref = document.getElementById('btn-journal') || document.getElementById('btn-chronicle');
+      if(!ref) return false;
+      if(document.getElementById('btn-story')) return true;
+      var b = document.createElement('button');
+      b.id = 'btn-story';
+      b.className = 'btn';
+      b.title = '叙事罗盘：当前卷章·弧线进度·目标指引';
+      b.textContent = '🗺 叙事';
+      b.onclick = function(){ try{ v91_storyPanel(); }catch(e){} };
+      ref.insertAdjacentElement('afterend', b);
+      return true;
+    }catch(e){ return false; }
+  }
+  var n2 = 0;
+  (function tryInject2(){
+    if(inject2()) return;
+    if(n2++ < 20) setTimeout(tryInject2, 500);
+  })();
+})();
+
 
 /* 工具栏按钮注入：编年史按钮后插「📔 手记」（DOM 就绪后重试兜底） */
 (function(){

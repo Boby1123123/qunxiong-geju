@@ -40,7 +40,11 @@ window.CAUSALITY_LEDGER = [
   {id:"led_35", type:"地点", desc:"矮人王都铁砧议会，八百年的锤声", plant:"node:dwarf_deep_hall", reap:"node:dwarf_deep_mine2", status:"open", world:"矮人线"},
   {id:"led_36", type:"伏笔", desc:"西境元素风暴异常：风暴间隔缩短、风暴眼蓝光游走、枯井泉水与地下裂缝相通，与元素行者/封魔之战旧史呼应（BD-1 新埋）。", plant:"node:west_storm_observatory", reap:"future", status:"open", world:"西境"},
   {id:"led_37", type:"伏笔", desc:"死亡沙漠第七封印柱松动：盐湖渗水、夜车取水、遗迹壁画的凿柱笔记，与 seal 深渊封印松动（day200）同源呼应（BD-2 新埋）。", plant:"node:desert_seal_watch", reap:"future", status:"open", world:"死亡沙漠"},
-  {id:"led_38", type:"伏笔", desc:"圣城圣痕司地基下发现与沙漠第七柱同源的石柱（艾德蒙叔叔遗信），圣城与沙漠压在一条封印线上（BD-3 新埋）。", plant:"node:church_doubter2", reap:"future", status:"open", world:"光明教会"}
+  {id:"led_38", type:"伏笔", desc:"圣城圣痕司地基下发现与沙漠第七柱同源的石柱（艾德蒙叔叔遗信），圣城与沙漠压在一条封印线上（BD-3 新埋）。", plant:"node:church_doubter2", reap:"future", status:"open", world:"光明教会"},
+
+  {id:"led_sp8_01", type:"设定", desc:"西境游侠学院（院长柯恩，铁木黑弓，鹰牌信物）", plant:"node:sp8_ranger_00", reap:"node:sp8_ranger_14", status:"open", world:"西境"},
+  {id:"led_sp8_02", type:"伏笔", desc:"柯恩身世：军阀火并中失去村子的孤儿收容者", plant:"node:sp8_ranger_00b", reap:"node:sp8_ranger_15", status:"open", world:"西境"},
+  {id:"led_sp8_03", type:"人物", desc:"游侠公会老会长（行省会鹰旗持有者）", plant:"node:sp8_ranger_14", reap:"node:sp8_ranger_15", status:"open", world:"西境"}
 ];
 /* ===== /v91inj:ledger:end/ ===== */
 

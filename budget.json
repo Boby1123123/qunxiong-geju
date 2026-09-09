@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 6432063,
+    "game_html_bytes_max": 6869424,
     "chunked_html_bytes_max": 3832777,
-    "node_total_min": 3827,
+    "node_total_min": 3855,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 6382063,
+    "game_html_bytes": 6819424,
     "chunked_html_bytes": 3732777,
-    "node_total": 3877,
+    "node_total": 3905,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CS-3d分片重建(CS批分片版同步)",
+    "reason": "SP-8 示范章 30 节点",
     "history": [
       {
         "date": "2026-09-09",
@@ -236,6 +236,41 @@
         "chunked_bytes": 3732777,
         "nodes": 3877,
         "reason": "CS-3d分片重建(CS批分片版同步)"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6406889,
+        "chunked_bytes": 3732777,
+        "nodes": 3877,
+        "reason": "SP1-blueprint dn_story_blueprint.js 纳入权威源（79弧+36章+10卷+5幕），合法内容层增长 +24.8KB"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6785268,
+        "chunked_bytes": 3732777,
+        "nodes": 3877,
+        "reason": "SP2-annotate nodeIndex 3877 节点全量标注（91%弧/91%卷），合法内容层增长 +374KB"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6786993,
+        "chunked_bytes": 3732777,
+        "nodes": 3877,
+        "reason": "SP3-arcs 弧线生命周期：S.arcs 状态 + v91_arcAdvance 推进钩子（+1.7KB 合法引擎层增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6794832,
+        "chunked_bytes": 3732777,
+        "nodes": 3877,
+        "reason": "SP4-node-templates NODE_TEMPLATES 12 类模板工厂（+7.8KB 合法数据层增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6819424,
+        "chunked_bytes": 3732777,
+        "nodes": 3905,
+        "reason": "SP-8 示范章 30 节点"
       }
     ]
   },

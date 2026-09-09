@@ -1,0 +1,1032 @@
+[
+ {
+  "name": "elda",
+  "path": "tools/elda/elda.py",
+  "category": "入口",
+  "status": "active",
+  "desc": "工具链统一入口：quick/full/chunks/sync/audit/stale/doctor/ledger/registry"
+ },
+ {
+  "name": "eldacheck",
+  "path": "tools/eldacheck/eldacheck.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "一键体检 CLI（quick 六项 / full 十项）"
+ },
+ {
+  "name": "jsscan",
+  "path": "tools/eldacheck/checks/jsscan.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "共享 JS 静态扫描器（等长 strip + 全括号深度 + 多变量声明）"
+ },
+ {
+  "name": "c_syntax",
+  "path": "tools/eldacheck/checks/c_syntax.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "6 script node --check 并发语法检查"
+ },
+ {
+  "name": "c_links",
+  "path": "tools/eldacheck/checks/c_links.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "go 引用死链检查"
+ },
+ {
+  "name": "c_refhealth",
+  "path": "tools/eldacheck/checks/c_refhealth.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "引用健康审计（FAIL/WARN/PASS + 跨 script 专项）"
+ },
+ {
+  "name": "c_nodes",
+  "path": "tools/eldacheck/checks/c_nodes.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "N[id] 节点格式校验"
+ },
+ {
+  "name": "c_markers",
+  "path": "tools/eldacheck/checks/c_markers.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "注入 marker 台账（重复/悬挂检测）"
+ },
+ {
+  "name": "c_structure",
+  "path": "tools/eldacheck/checks/c_structure.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "结构健康（V59：误报归零，多变量/箭头/参数列表隔离）"
+ },
+ {
+  "name": "c_text",
+  "path": "tools/eldacheck/checks/c_text.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "文本质量扫描（AI味/引号/口径/标点）"
+ },
+ {
+  "name": "c_dead",
+  "path": "tools/eldacheck/checks/c_dead.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "死代码候选（孤岛节点/无调用函数/未用S字段）"
+ },
+ {
+  "name": "c_save",
+  "path": "tools/eldacheck/checks/c_save.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "存档兼容仿真"
+ },
+ {
+  "name": "c_speed",
+  "path": "tools/eldacheck/checks/c_speed.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "性能计时"
+ },
+ {
+  "name": "audit_registry",
+  "path": "tools/audit_registry.json",
+  "category": "审计",
+  "status": "active",
+  "desc": "版本审计注册表（elda audit 调度）"
+ },
+ {
+  "name": "registry",
+  "path": "tools/registry.json",
+  "category": "审计",
+  "status": "active",
+  "desc": "全工具注册表"
+ },
+ {
+  "name": "v42_chunks",
+  "path": "_v42_build_chunks.py",
+  "category": "构建",
+  "status": "active",
+  "desc": "分片构建（elda chunks 调用）"
+ },
+ {
+  "name": "v42_verify",
+  "path": "_v42_verify_chunks.py",
+  "category": "构建",
+  "status": "active",
+  "desc": "分片完整性验证（elda chunks 调用）"
+ },
+ {
+  "name": "v42_syntax",
+  "path": "_v42_chk_syntax.py",
+  "category": "构建",
+  "status": "active",
+  "desc": "分片 15 JS 语法检查（elda chunks 调用）"
+ },
+ {
+  "name": "v39_extract",
+  "path": "_v39_extract.py",
+  "category": "验证",
+  "status": "retired",
+  "desc": "script 提取（已被 eldacheck c_syntax 收编）"
+ },
+ {
+  "name": "check_dead_links",
+  "path": "_check_dead_links.py",
+  "category": "验证",
+  "status": "retired",
+  "desc": "死链检查（已被 eldacheck c_links 收编）"
+ },
+ {
+  "name": "v47_foreshadow_audit",
+  "path": "_v47_foreshadow_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v47 伏笔回收审计"
+ },
+ {
+  "name": "v53_audit",
+  "path": "_v53_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v53 强者谱数值审计"
+ },
+ {
+  "name": "v55_audit",
+  "path": "_v55_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v55 技能+命运弧审计"
+ },
+ {
+  "name": "v56_audit",
+  "path": "_v56_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v56 强者活态审计"
+ },
+ {
+  "name": "v57_audit",
+  "path": "_v57_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v57 职业总成审计"
+ },
+ {
+  "name": "v58eng_aifresh1",
+  "path": "_v58eng_aifresh01.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "AI味去味批1（序章，已执行完成）"
+ },
+ {
+  "name": "v58eng_aifresh2",
+  "path": "_v58eng_aifresh02.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "AI味去味批2（封印线，已执行完成）"
+ },
+ {
+  "name": "v58eng_aifresh3",
+  "path": "_v58eng_aifresh03.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "AI味去味批3（圣辉城，已执行完成）"
+ },
+ {
+  "name": "v58eng_aifresh4",
+  "path": "_v58eng_aifresh04.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "AI味去味批4（其余，已执行完成）"
+ },
+ {
+  "name": "v58eng_aifresh5",
+  "path": "_v58eng_aifresh05.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "AI味去味补修（已执行完成）"
+ },
+ {
+  "name": "v58eng_iife",
+  "path": "_v58eng_iife01.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "15 项 IIFE 收敛（已执行完成）"
+ },
+ {
+  "name": "v58eng_fix1",
+  "path": "_v58eng_fix1.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "V58-ENG 引用修复1（已执行完成）"
+ },
+ {
+  "name": "v58eng_fix2",
+  "path": "_v58eng_fix2.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "V58-ENG 引用修复2（已执行完成）"
+ },
+ {
+  "name": "v58eng_aifresh_scan",
+  "path": "_v58eng_aifresh_scan.py",
+  "category": "工具",
+  "status": "retired",
+  "desc": "AI味扫描探针（已归档）"
+ },
+ {
+  "name": "v58eng_iife_scan",
+  "path": "_v58eng_iife_scan.py",
+  "category": "工具",
+  "status": "retired",
+  "desc": "IIFE 甄别探针（已归档）"
+ },
+ {
+  "name": "v58eng_iife_points",
+  "path": "_v58eng_iife_points.py",
+  "category": "工具",
+  "status": "retired",
+  "desc": "IIFE 包裹点定位（已归档）"
+ },
+ {
+  "name": "archive_20260908",
+  "path": "tools/archive_20260908",
+  "category": "归档",
+  "status": "active",
+  "desc": "历史脚本归档（62 项）"
+ },
+ {
+  "name": "mongodb",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "MongoDB 连接器（$mongodb-database，数据存取）"
+ },
+ {
+  "name": "supabase",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "Supabase 连接器（$supabase-platform，平台后端）"
+ },
+ {
+  "name": "computer-use",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "桌面/浏览器自动化（computer_use_tool bu/cu 平面）"
+ },
+ {
+  "name": "docker-troubleshoot",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "Docker 环境故障排查"
+ },
+ {
+  "name": "codebase-analyze",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "代码库理解与架构梳理"
+ },
+ {
+  "name": "frontend-dev",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "前端开发（应用生成）"
+ },
+ {
+  "name": "backend-dev",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "后端开发"
+ },
+ {
+  "name": "game-designer",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "游戏策划（版本口令设计）"
+ },
+ {
+  "name": "human-signal",
+  "path": "",
+  "category": "外部",
+  "status": "active",
+  "desc": "去 AI 味文风标准"
+ },
+ {
+  "name": "placeholder",
+  "path": "",
+  "category": "扩展",
+  "status": "placeholder",
+  "desc": "后续新工具在此登记，elda registry 自动纳入"
+ },
+ {
+  "name": "v46_audit",
+  "path": "_v46_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v46 结构审计"
+ },
+ {
+  "name": "v46_arc_audit",
+  "path": "_v46_arc_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v46 弧断点审计"
+ },
+ {
+  "name": "v46_setting_audit",
+  "path": "_v46_setting_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v46 设定一致性审计"
+ },
+ {
+  "name": "v54_audit",
+  "path": "_v54_audit.py",
+  "category": "审计",
+  "status": "active",
+  "desc": "v54 强者分布重构审计"
+ },
+ {
+  "name": "c_dialog",
+  "path": "tools/eldacheck/checks/c_dialog.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "原生 dialog 扫描（V60：白名单基线 + 新增报警）"
+ },
+ {
+  "name": "v60_winx_scan",
+  "path": "_v60_winx_scan.py",
+  "category": "工具",
+  "status": "active",
+  "desc": "V60 前置扫描：跨 script 52 项确认表（只读）"
+ },
+ {
+  "name": "v60_winx_inject",
+  "path": "_v60_winx_inject.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V60 window 显式导出注入（幂等 marker winx1/winx2）"
+ },
+ {
+  "name": "v60_vm_sim",
+  "path": "_v60_vm_sim.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "V60 vm 仿真：注入前后 ReferenceError 对比"
+ },
+ {
+  "name": "v61_lzstring",
+  "path": "game.html#v61_lzstring",
+  "category": "运行时",
+  "status": "active",
+  "desc": "V61 存档压缩（LZString UTF-16，WTFPL）"
+ },
+ {
+  "name": "v61_save_store",
+  "path": "game.html#StorageKit",
+  "category": "运行时",
+  "status": "active",
+  "desc": "V61 SaveStore：localStorage 压缩写 + 嗅探读 + 旧档自动迁移"
+ },
+ {
+  "name": "v61_typewriter",
+  "path": "game.html#v34_typewriter",
+  "category": "运行时",
+  "status": "active",
+  "desc": "V61 打字机 rAF 化 + 点击跳全文"
+ },
+ {
+  "name": "v61_hook_registry",
+  "path": "game.html#v61_afterWrite",
+  "category": "运行时",
+  "status": "active",
+  "desc": "V61 afterWrite 钩子注册表 + 统一分发"
+ },
+ {
+  "name": "v61_timer_registry",
+  "path": "game.html#v61_timer",
+  "category": "运行时",
+  "status": "active",
+  "desc": "V61 定时器注册表 + 读档/新游戏清理"
+ },
+ {
+  "name": "_v61_save.py",
+  "path": "_v61_save.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V61 方向一注入脚本（幂等 /v61inj:save-*）"
+ },
+ {
+  "name": "_v61_perf.py",
+  "path": "_v61_perf.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V61 方向二注入脚本（幂等 /v61inj:perf-*）"
+ },
+ {
+  "name": "_v61_logsfix.py",
+  "path": "_v61_logsfix.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V61 方向四 logs 根治 + TODO 清点（幂等 /v61inj:logsfix/）"
+ },
+ {
+  "name": "c_save(s-size)",
+  "path": "tools/eldacheck/checks/c_save.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "存档兼容 + 存档体积估算（明文/压缩/阈值）"
+ },
+ {
+  "name": "elda snapshot/diff",
+  "path": "tools/elda/elda.py",
+  "category": "入口",
+  "status": "active",
+  "desc": "结构快照与影响面对比子命令"
+ },
+ {
+  "name": "eldacheck 增量缓存",
+  "path": "tools/eldacheck/eldacheck.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "c_text/c_dead 缓存（文件未变命中，full 提速）"
+ },
+ {
+  "name": "_v62_build_chunks.py",
+  "path": "_v62_build_chunks.py",
+  "category": "构建",
+  "status": "active",
+  "desc": "v62 内容分片构建：提取 seal 片 -> chunks/v62_seal.js + 主文件精简 + loader 注入（幂等，--loader-only 重注入）",
+  "lastUsed": "2026-09-08 12:49"
+ },
+ {
+  "name": "_v62_merge.py",
+  "path": "_v62_merge.py",
+  "category": "构建",
+  "status": "active",
+  "desc": "v62 合并视图：game.html + chunks/v62_*.js -> game_v62_full.html（elda chunks 调 v42 构建用）",
+  "lastUsed": "2026-09-08 12:49"
+ },
+ {
+  "name": "chunks/v62_seal.js",
+  "path": "chunks/v62_seal.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "v62 封印线分片（509 节点，运行时按需加载，勿手改）",
+  "lastUsed": "2026-09-08 12:49"
+ },
+ {
+  "name": "c_chunks",
+  "path": "tools/eldacheck/checks/c_chunks.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "v62 分片健康检查：片文件存在/语法/前缀/主片重复/死链复核（elda full 第 11 项）",
+  "lastUsed": "2026-09-08 12:49"
+ },
+ {
+  "name": "v62_chunk_loader",
+  "path": "game.html",
+  "category": "运行时",
+  "status": "active",
+  "desc": "v62 ChunkLoader 运行时：script 注入加载 + writeNext 前置按需加载 + 队列（/v62inj:loader/）",
+  "lastUsed": "2026-09-08 12:49"
+ },
+ {
+  "name": "_v62_node_sim.js",
+  "path": "_v62_node_sim.js",
+  "category": "验证",
+  "status": "active",
+  "desc": "v62 运行时仿真：loader/owner/片合并/mark/writeNext 包装/按需加载触发",
+  "lastUsed": "2026-09-08 12:49"
+ },
+ {
+  "name": "chunks/v62_origin.js",
+  "path": "chunks/v62_origin.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "起源线分片 105 节点",
+  "lastUsed": "2026-09-08 13:35"
+ },
+ {
+  "name": "chunks/v62_arc.js",
+  "path": "chunks/v62_arc.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "命运弧分片 117 节点",
+  "lastUsed": "2026-09-08 13:35"
+ },
+ {
+  "name": "chunks/v62_west.js",
+  "path": "chunks/v62_west.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "西域线分片 36 节点",
+  "lastUsed": "2026-09-08 13:35"
+ },
+ {
+  "name": "chunks/v62_abyss.js",
+  "path": "chunks/v62_abyss.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "深渊线分片 50 节点",
+  "lastUsed": "2026-09-08 13:35"
+ },
+ {
+  "name": "chunks/v62_dun.js",
+  "path": "chunks/v62_dun.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "地下城分片 40 节点",
+  "lastUsed": "2026-09-08 13:35"
+ },
+ {
+  "name": "chunks/v62_relic.js",
+  "path": "chunks/v62_relic.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "圣物线分片 30 节点",
+  "lastUsed": "2026-09-08 13:35"
+ },
+ {
+  "name": "chunks/v62_evt.js",
+  "path": "chunks/v62_evt.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "事件池分片 32 节点",
+  "lastUsed": "2026-09-08 13:35"
+ },
+ {
+  "name": "chunks/v62_academy.js",
+  "path": "chunks/v62_academy.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "学院线分片 269 节点（v63.5 移）",
+  "lastUsed": "2026-09-08 13:49"
+ },
+ {
+  "name": "chunks/v62_city.js",
+  "path": "chunks/v62_city.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "城市线分片 161 节点（city+cityev，多前缀）",
+  "lastUsed": "2026-09-08 13:49"
+ },
+ {
+  "name": "chunks/v62_npc.js",
+  "path": "chunks/v62_npc.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "NPC与同窗分片 155 节点（npc+classmate，多前缀）",
+  "lastUsed": "2026-09-08 13:49"
+ },
+ {
+  "name": "elda serve",
+  "path": "tools/elda/elda.py",
+  "category": "工具",
+  "status": "active",
+  "desc": "本地 HTTP 服务子命令（V63.5）",
+  "lastUsed": "2026-09-08 13:49"
+ },
+ {
+  "name": "v63_cloud 槽位",
+  "path": "game.html",
+  "category": "内容",
+  "status": "active",
+  "desc": "Supabase 云存档槽位注释（预留，未启用）",
+  "lastUsed": "2026-09-08 13:49"
+ },
+ {
+  "name": "W64 世界引擎",
+  "path": "game.html",
+  "category": "内容",
+  "status": "active",
+  "desc": "v64 世界局势引擎（势力关系/战争/天灾/政治/市场/目标/名声/因果，marker /v64inj:engine/）",
+  "lastUsed": "2026-09-08 14:30"
+ },
+ {
+  "name": "w64 内容节点",
+  "path": "chunks/v62_world.js",
+  "category": "内容",
+  "status": "active",
+  "desc": "v64 世界局势分片 12 节点（w64 前缀：战争介入/天灾响应/局势介入）",
+  "lastUsed": "2026-09-08 14:30"
+ },
+ {
+  "name": "c_world 检查器",
+  "path": "tools/eldacheck/checks/c_world.py",
+  "category": "工具",
+  "status": "active",
+  "desc": "v64 世界局势健康检查（引擎/兜底/tick/死链/市场数值），已注册 elda full",
+  "lastUsed": "2026-09-08 14:30"
+ },
+ {
+  "name": "_v64_engine.py",
+  "path": "_v64_engine.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v64 引擎注入脚本（幂等，可重跑）",
+  "lastUsed": "2026-09-08 14:30"
+ },
+ {
+  "name": "_v64_content.py",
+  "path": "_v64_content.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v64 内容层注入脚本（w64 节点 + 局势介入按钮，幂等）",
+  "lastUsed": "2026-09-08 14:30"
+ },
+ {
+  "name": "_v64_sim.js",
+  "path": "_v64_sim.js",
+  "category": "验证",
+  "status": "active",
+  "desc": "v64 引擎 smoke 仿真（vm 合并 scripts + world 片）",
+  "lastUsed": "2026-09-08 14:30"
+ },
+ {
+  "name": "_v64b_engine.py",
+  "path": "_v64b_engine.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v64.1 引擎补丁：战争五变体 w64_warResult/休战检查/三入口按钮/游说/区域繁荣度/兜底扩展（marker /v64b:engine/）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v64b_content.py",
+  "path": "_v64b_content.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v64.1 内容层：教廷选举/立目标/战后结算 14 节点（marker /v64b:content/）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v64b_sim.js",
+  "path": "_v64b_sim.js",
+  "category": "验证",
+  "status": "active",
+  "desc": "v64.1 smoke 仿真：五变体三态/游说门槛/休战期/兜底字段/新节点存在性",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v64b_restore_all.py",
+  "path": "_v64b_restore_all.py",
+  "category": "归档",
+  "status": "active",
+  "desc": "v64b 灾难恢复：从 v641_before 恢复 12 旧节点 + 追加 14 新节点定义（分片覆盖事故后用）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v65_engine.py",
+  "path": "_v65_engine.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65 引擎：W65_WAR 五大骨架（军团/战役/恩怨/军校/军功经济）+ v65_ensureDefaults + 周结算 + 面板（marker /v65:engine/）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v65_content1.py",
+  "path": "_v65_content1.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65 从军线 + 军校节点（marker /v65:content1/）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v65_content2.py",
+  "path": "_v65_content2.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65 恩怨 + 战役 + 传奇战役 3 场节点（marker /v65:content2/）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v65_content3.py",
+  "path": "_v65_content3.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65 将领 + 创伤 + 佣兵节点（marker /v65:content3/）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v65_sim.js",
+  "path": "_v65_sim.js",
+  "category": "验证",
+  "status": "active",
+  "desc": "v65 smoke 仿真：兜底/从军/军衔晋升/恩怨/佣兵/兑换/创伤/战后入账/节点存在性（24 断言）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "c_war.py",
+  "path": "tools/eldacheck/checks/c_war.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "v65 战争检查器：引擎存在性/S 字段兜底/tick 挂载/v65 死链/军衔兵种阵型表",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v65_fix1.py",
+  "path": "_v65_fix1.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "v65 引号修复（半角嵌套，已落地），保留供审计",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v65_fix2.py",
+  "path": "_v65_fix2.py",
+  "category": "注入",
+  "status": "retired",
+  "desc": "v65_promote 循环晋升修复（已落地），保留供审计",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v651_engine.py",
+  "path": "_v651_engine.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65.1 引擎：unit 兜底/军衔加成/同袍生成/军营事件/战史长廊区/grudgeAdd 归一",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v651_events.py",
+  "path": "_v651_events.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65.1 内容：campEvents 40 条 + special 4 事件 + grudge_revenge 修复覆盖版",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v651_comrade.py",
+  "path": "_v651_comrade.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65.1 节点：部队 3 操作 + 同袍 4 事件 + view + v65_legend_hall",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v652_general.py",
+  "path": "_v652_general.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65.2 方向一：名将引擎（generalBonus/duelRoll/casualtyRoll）+ 斗将/俘虏/立场/军史榜节点",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v652_siege.py",
+  "path": "_v652_siege.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65.2 方向二：攻城引擎（siegeStart/Tick/Storm/After）+ 围城/器械/破城/守城节点",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v652_fin.py",
+  "path": "_v652_fin.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "v65.2 收尾：campEvents +6 立场事件 + 片内 battle_clash1 斗将入口改接 v652_duel_challenge",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v653_merc.py",
+  "path": "_v653_merc.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V65.3 佣兵军工：悬赏榜/合同/名望/军功扩展/战争财（marker v653:merc）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v653_trauma.py",
+  "path": "_v653_trauma.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V65.3 创伤战史：四态任务链/创伤等级/战史编年/道德连锁（marker v653:trauma）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v654_engine.py",
+  "path": "_v654_engine.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V65.4 战略层引擎：多战线/战争目标/援军盟友/和谈条约/战败处置/赔款流（marker v654:engine，参考 CK3/EU4/三国志14）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v654_nodes.py",
+  "path": "_v654_nodes.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V65.4 战略节点 46 个：战略面板/战线/目标/援军/和谈/战败/赔款/战略操作（marker v654:nodes）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "c_war.py(v654)",
+  "path": "tools/eldacheck/checks/c_war.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "V65.4 扩展：v654 引擎/表/节点数/死链/tick 挂载/面板入口检查",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v655_engine.py",
+  "path": "_v655_engine.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V65.5 战略层交互引擎：SVG 战线地图+谈判判定+赔款闭环（marker v655:engine）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v655_hooks.py",
+  "path": "_v655_hooks.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V65.5 挂载：v655_debtTick 周结算 + 战争面板战线地图/亲自和谈按钮",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v655_nodes.py",
+  "path": "_v655_nodes.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V65.5 战略层节点 14 个：战线军报/谈判流/讨债战争/调解/结清（marker v655:nodes）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "c_war.py(v655)",
+  "path": "tools/eldacheck/checks/c_war.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "V65.5 扩展：v655 引擎/表/节点数/死链/tick 挂载/面板入口检查",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "c_narr.py",
+  "path": "tools/eldacheck/checks/c_narr.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "V66 叙事连续性检查器：引擎存在/writeNext 挂载/接续表/节点数/死链（find->rfind 修复）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "c_cast.py",
+  "path": "tools/eldacheck/checks/c_cast.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "V66 群像检查器：W66_PROFILES 档案四件套完整性/账本字段兜底",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "c_lore.py",
+  "path": "tools/eldacheck/checks/c_lore.py",
+  "category": "验证",
+  "status": "active",
+  "desc": "V66 设定深度检查器：传说节点可达/loreDiscovered 兜底/说书人入口",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v66_engine.py",
+  "path": "_v66_engine.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V66 引擎独立 script 块注入：NARR/IMM/CAST/LORE/DENS 全套 API（marker v66inj:narr）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v66_nodes.py",
+  "path": "_v66_nodes.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V66 节点块注入：W66_PROFILES 16 档四件套 + 30 节点（marker v66inj:nodes / blockend）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v66_fixscripts.py",
+  "path": "_v66_fixscripts.py",
+  "category": "修复",
+  "status": "active",
+  "desc": "V66 script 标签配对修复：折叠残留开标签 + body 前补闭标签（13:9 -> 12:12）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v66_logo.py",
+  "path": "_v66_logo.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V66 游戏内 Logo 注入：加载页 splash + 顶部栏小标 + title_screen 开场大图（marker v66img:logo，base64 内联 384PNG）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_scan.py",
+  "path": "_v67_scan.py",
+  "category": "探查",
+  "status": "active",
+  "desc": "V67 前置探查：交互/地图/成本/主题四扫描，输出 docs/v67_前置确认表.md",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_lock.py",
+  "path": "_v67_lock.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向一：选项锁定 __v67Busy + uiFeedback + 看门狗（marker v67inj:lock）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_modal.py",
+  "path": "_v67_modal.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向二：#modal 合并 + v67_ui 模态栈单例 + 关闭别名转发（marker v67inj:modal）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_gate.py",
+  "path": "_v67_gate.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向三：V67_GATES 门禁表 + v67_gate + CITY_SPOTS 路由（marker v67inj:gate）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_cost.py",
+  "path": "_v67_cost.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向四：v67_costTrain/Explore 成本器 + 环境表 + 疲劳（marker v67inj:cost）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_cost2.py",
+  "path": "_v67_cost2.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向四补充：renderRealm 面板消耗说明（V67 修炼成本说明）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_map.py",
+  "path": "_v67_map.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向五：v67_map IIFE + travelTo 转发（首次 FAIL 未落盘，由 fix 补入）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_map_patch.py",
+  "path": "_v67_map_patch.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向五补丁1：v34_travelTo/v34_openMap 转发",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_map_patch2.py",
+  "path": "_v67_map_patch2.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向五补丁2：btn-map 双绑 + togglePanel map 特判 + openWorldMap 转发",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_theme.py",
+  "path": "_v67_theme.py",
+  "category": "注入",
+  "status": "active",
+  "desc": "V67 方向六：三层设计令牌 + v67-panel 基类 + 硬编码色替换（marker v67inj:theme）",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_fix.py",
+  "path": "_v67_fix.py",
+  "category": "修复",
+  "status": "active",
+  "desc": "V67 修复合集：补 v67_map IIFE + marker 去重 + c_ui 判据 + --txt 令牌",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "_v67_fix_deadlock.py",
+  "path": "_v67_fix_deadlock.py",
+  "category": "修复",
+  "status": "active",
+  "desc": "V67.1 死锁修复：分页/auto/无选项路径解锁 + 看门狗每次置锁重置",
+  "lastUsed": "2026-09-08"
+ },
+ {
+  "name": "c_ui.py",
+  "path": "c_ui.py",
+  "category": "检查器",
+  "status": "active",
+  "desc": "V67 UI 检查器：v67_ui 单例/#modal 唯一/别名/选项锁/门禁/成本/地图/令牌/死链 9 项",
+  "lastUsed": "2026-09-08"
+ }
+]

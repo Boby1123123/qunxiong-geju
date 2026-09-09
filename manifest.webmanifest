@@ -1,0 +1,12 @@
+{
+  "name": "艾尔达大陆·群雄割据",
+  "short_name": "群雄割据",
+  "description": "西幻文字互动小说：在艾尔达大陆开启你的传奇人生。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5ecd7",
+  "theme_color": "#8b6f47",
+  "lang": "zh-CN",
+  "icons": []
+}

@@ -1,0 +1,249 @@
+{
+  "name": "群雄割据性能预算门",
+  "version": 79,
+  "updated": "2026-09-09",
+  "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
+  "budgets": {
+    "game_html_bytes_max": 6432063,
+    "chunked_html_bytes_max": 3832777,
+    "node_total_min": 3827,
+    "dead_links_max": 0,
+    "full_seconds_max": 20.0
+  },
+  "baseline": {
+    "game_html_bytes": 6382063,
+    "chunked_html_bytes": 3732777,
+    "node_total": 3877,
+    "full_seconds": 9.2
+  },
+  "meta": {
+    "last_updated": "2026-09-09",
+    "reason": "CS-3d分片重建(CS批分片版同步)",
+    "history": [
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6069783,
+        "chunked_bytes": 3437896,
+        "nodes": 3789,
+        "reason": "U9 预算自动化脚本上线测试"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6029525,
+        "chunked_bytes": 3418195,
+        "nodes": 3789,
+        "reason": "T0-1 引号规范化（无体积增长，复核用）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6074958,
+        "chunked_bytes": 3438776,
+        "nodes": 3789,
+        "reason": "T0-1 引号规范化完成（1635 处单引号/转义引号转中文引号，UTF-8 字节自然增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6075117,
+        "chunked_bytes": 3440261,
+        "nodes": 3789,
+        "reason": "I1-1 分段阅读渲染+建号兜底完成"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6082301,
+        "chunked_bytes": 3447445,
+        "nodes": 3789,
+        "reason": "I1-2 章节标题卡 dn_chapters.js 数据表"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6082472,
+        "chunked_bytes": 3447616,
+        "nodes": 3789,
+        "reason": "I1-2 修复v45_sceneTitle导出+章节卡"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6088175,
+        "chunked_bytes": 3453319,
+        "nodes": 3789,
+        "reason": "I1-3 冒险手记实现"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6089100,
+        "chunked_bytes": 3454244,
+        "nodes": 3789,
+        "reason": "I1-4 沉浸联动+分段阅读开关"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6126926,
+        "chunked_bytes": 3488393,
+        "nodes": 3803,
+        "reason": "PE-1 兽人草原深度包 16节点+5事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6159227,
+        "chunked_bytes": 3520694,
+        "nodes": 3816,
+        "reason": "PE-2 精灵矮人扩展包 10节点+4事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6176781,
+        "chunked_bytes": 3538248,
+        "nodes": 3823,
+        "reason": "PE-3 铁门关战争前线包 7节点+6事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6177367,
+        "chunked_bytes": 3538588,
+        "nodes": 3823,
+        "reason": "PE 入口连通修复 6处+选项扩展"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6188934,
+        "chunked_bytes": 3550155,
+        "nodes": 3823,
+        "reason": "CM-1 记忆注入 模板库+钩子"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6188940,
+        "chunked_bytes": 3550161,
+        "nodes": 3823,
+        "reason": "CM-1 记忆注入 console marker 唯一化"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6188927,
+        "chunked_bytes": 3550148,
+        "nodes": 3823,
+        "reason": "CM-1 console 调试串去 marker 前缀"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6196016,
+        "chunked_bytes": 3557237,
+        "nodes": 3823,
+        "reason": "CM-2 状态感知变体 20节点挂载"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6204172,
+        "chunked_bytes": 3565393,
+        "nodes": 3823,
+        "reason": "CM-3 因果账本+设定词冻结 19检查器"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6221943,
+        "chunked_bytes": 3573097,
+        "nodes": 3823,
+        "reason": "CM-4 pace标注+会话计数器+20检查器"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6221943,
+        "chunked_bytes": 3573097,
+        "nodes": 3823,
+        "reason": "CM-4 会话计数器入口归零"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6265575,
+        "chunked_bytes": 3616590,
+        "nodes": 3838,
+        "reason": "BD-1西境内容包: +15节点/5事件/支线, 节点3838"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6265867,
+        "chunked_bytes": 3616590,
+        "nodes": 3838,
+        "reason": "BD-1收尾: 账本led_36西境伏笔+292B, 节点3838"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6307286,
+        "chunked_bytes": 3658085,
+        "nodes": 3854,
+        "reason": "BD-2沙漠深化包: +16节点/5事件/支线, 节点3854"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6338913,
+        "chunked_bytes": 3689712,
+        "nodes": 3867,
+        "reason": "BD-3光明教会包: +13节点/5事件/支线, 节点3867"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6365489,
+        "chunked_bytes": 3716203,
+        "nodes": 3877,
+        "reason": "BD-4东部承天城包: +10节点/5事件/晨天故都线, 节点3877, 账本38/38"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6369267,
+        "chunked_bytes": 3716203,
+        "nodes": 3877,
+        "reason": "CS-1加密导出导入: 无节点变化, StorageKit+UI"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6378571,
+        "chunked_bytes": 3716203,
+        "nodes": 3877,
+        "reason": "CS-2云存档三函数+设置面板云区: v63_cloud实现"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6380701,
+        "chunked_bytes": 3716203,
+        "nodes": 3877,
+        "reason": "CS-2b补注9850版设置面板云区"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6382059,
+        "chunked_bytes": 3716203,
+        "nodes": 3877,
+        "reason": "CS-3冲突处理: 上传确认+时间戳裁决+冲突备份"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6382061,
+        "chunked_bytes": 3716203,
+        "nodes": 3877,
+        "reason": "CS-3b修复\\n转义"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6382063,
+        "chunked_bytes": 3716203,
+        "nodes": 3877,
+        "reason": "CS-3c修复冲突确认换行转义"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 6382063,
+        "chunked_bytes": 3732777,
+        "nodes": 3877,
+        "reason": "CS-3d分片重建(CS批分片版同步)"
+      }
+    ]
+  },
+  "limits": {
+    "game_html_bytes_max": 6120000,
+    "chunked_html_bytes_max": 3500000,
+    "node_total_min": 2618,
+    "dead_links_max": 0,
+    "full_seconds_max": 20.0
+  }
+}

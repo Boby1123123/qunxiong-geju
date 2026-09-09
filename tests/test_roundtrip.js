@@ -1,0 +1,29 @@
+// ============================================================
+// 自动生成自: test_js_to_yaml_output.yaml
+// 节点数: 1
+// 生成时间: 2026-09-06 19:16:36
+// ============================================================
+
+N["academy_quick_jump"]=function(){
+  return {
+    place:"学院快速跳转",
+    text:function(){
+const arr=[];
+      arr.push("【学院快速跳转】");
+      arr.push("");
+      arr.push("选择你想进入的学院：");
+      return arr;
+},
+    options:[
+      {t:"艾尔达大陆学院",go:"academy_elda_hub"},
+      {t:"圣光神学院",go:"academy_holy_hub"},
+      {t:"帝国军事学院",go:"academy_military_hub"},
+      {t:"精灵银叶学院",go:"academy_elf_hub"},
+      {t:"矮人铁峰学院",go:"academy_dwarf_hub"},
+      {t:"兽人战神学院",go:"academy_orc_hub"},
+      {t:"半身人绿野学院",go:"academy_halfling_hub"},
+      {t:"乡村学院",go:"academy_village_hub"},
+      {t:"返回",go:"fc_jiaohui_entry"}
+    ]
+  };
+};

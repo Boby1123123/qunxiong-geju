@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>艾尔达大陆 · 群雄割据</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* v33 方案D - 微暗羊皮纸配色（西幻文学风） */
+  /* 背景elevation系统 - 越靠上越亮 */
+  --bg-deep:#d4c8a8;           /* 页面背景 - 微暗羊皮纸 */
+  --bg-panel:#e0d4b8;          /* 面板 - 比背景亮 */
+  --bg-panel2:#e8dcc0;         /* 面板内嵌套 */
+  --bg-input:#ede4cc;          /* 按钮/输入 - 最亮 */
+  --border:#b0a080;            /* 边框 - 暖棕 */
+  --border-light:#c0b090;      /* 高亮边框 */
+  /* 文字 - 深棕系（深色文字在浅色背景上护眼） */
+  --text-primary:#241a08;      /* 主文字 - 深棕 */
+  --text-secondary:#3a2e10;    /* 次级文字 - 中棕 */
+  --text-muted:#5a4a30;        /* 辅助文字 - 浅棕 */
+  /* 金色 - 深金，在浅色背景上清晰 */
+  --text-gold:#7a5a10;         /* 深金（主） */
+  --text-gold2:#8a6a20;        /* 亮金（hover） */
+  --gold-dark:#5a4a08;         /* 暗金（active） */
+  /* 对调色 - 苔藓绿 */
+  --teal:#3a5a3a;              /* 苔藓绿 */
+  --teal-light:#4a7a4a;        /* 亮绿 */
+  --teal-bg:rgba(58,90,58,.1);
+  /* 语义色 - 深色版（在浅色背景上） */
+  --success:#2a5a2a;           /* 深绿 */
+  --success-bg:rgba(42,90,42,.12);
+  --warning:#7a5a10;           /* 深金 */
+  --warning-bg:rgba(122,90,16,.12);
+  --danger:#7a2a1a;            /* 深红 */
+  --danger-bg:rgba(122,42,26,.12);
+  --info:#2a4a6a;              /* 深蓝 */
+  --info-bg:rgba(42,74,106,.12);
+  --purple:#4a2a6a;            /* 深紫 */
+  --purple-bg:rgba(74,42,106,.12);
+  /* 兼容旧变量名 */
+  --bg:var(--bg-deep);
+  --panel:var(--bg-panel);
+  --panel2:var(--bg-panel2);
+  --line:var(--border);
+  --gold:var(--text-gold2);
+  --gold2:var(--text-gold);
+  --cyan:var(--teal);
+  --text:var(--text-primary);
+  --dim:var(--text-muted);
+  --ok:var(--success);
+  --bad:var(--danger);
+  --warn:var(--warning);
+}
+
+  /* /v67inj:theme/ V67 primitive 层：只存色值（语义层随主题切换） */
+  --c-paper-50:#e8dcc0; --c-paper-100:#e0d4b8; --c-paper-200:#d4c8a8;
+  --c-ink-900:#241a08; --c-ink-700:#3a2e10; --c-ink-500:#5a4a30;
+  --c-gold-600:#7a5a10; --c-gold-400:#8a6a20; --c-gold-800:#5a4a08;
+  --c-blood-600:#6a2a1a; --c-blood-500:#7a2a1a;
+  --c-night-900:#181208; --c-night-800:#241a0e;
+  /* V67 semantic 补全 */
+  --bg-page:var(--bg-deep);
+  --txt:var(--text-primary);
+}
+/* V67 面板基类：统一背景/圆角/边框/阴影 */
+.v67-panel, .box, .v31-modal-container{
+  background:var(--bg-panel);
+  border:1px solid var(--border);
+  border-radius:10px;
+  box-shadow:0 8px 24px rgba(20,16,8,.25);
+}
+.v67-panel h2, .box h2{ color:var(--text-gold); }
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(180,150,80,.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(100,130,90,.08) 0%, transparent 50%),
+    linear-gradient(180deg, #e0d4b8 0%, #d4c8a8 50%, #c8bca0 100%);
+  color:var(--text);
+  font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif;
+  font-size:16px; overflow:hidden;
+  position:relative;
+  font-weight:500;
+}
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity:.025;
+  pointer-events:none;
+  z-index:0;
+}
+#app{display:flex;flex-direction:column;height:100vh;max-width:1280px;margin:0 auto}
+/* 顶栏 */
+#topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:linear-gradient(180deg,rgba(200,184,144,.95),rgba(184,168,128,.9));border-bottom:1px solid #a09070;flex-wrap:wrap;backdrop-filter:blur(10px);position:relative;z-index:10;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+#topbar .title{font-family:"Noto Serif SC",Georgia,"Songti SC","SimSun",serif;color:var(--gold2);font-size:20px;letter-spacing:3px;font-weight:900;text-shadow:0 1px 0 rgba(255,255,255,.3)}
+#topbar .sep{color:var(--dim);opacity:.5}
+#topbar .stat{font-size:13px;color:var(--cyan);white-space:nowrap}
+#topbar .stat b{color:var(--gold2)}
+#topbar .nav{margin-left:auto;display:flex;gap:6px}
+.btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:5px 12px;border-radius:4px;cursor:pointer;font-size:13px;transition:all .15s}
+.btn:hover{border-color:var(--gold);color:var(--gold2)}
+.btn.gold{background:linear-gradient(180deg,#c0b090,#a89878);border-color:#7a5a10;color:var(--text-secondary);font-weight:700}
+.btn.danger{border-color:#7a3a3a;color:#d98a8a}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+/* 主区 */
+#main{flex:1;display:flex;min-height:0}
+#stage{flex:1;display:flex;flex-direction:column;min-width:0}
+#story{
+  flex:1;
+  overflow-y:auto;
+  min-height:0;
+  color:var(--text-primary);
+  font-size:17px;
+  line-height:2.0;
+  font-weight:500;
+  padding:16px 24px;
+}
+#story p{
+  margin-bottom:14px;
+  text-indent:2em;
+  line-height:2.0;
+}
+#story p.noind{text-indent:0}
+#story .place{color:#5a4a10;font-family:"Noto Serif SC",serif;font-size:20px;font-weight:900;text-indent:0;letter-spacing:3px;margin-bottom:6px;text-align:center}
+#story .where{color:#5a4a30;font-size:14px;font-weight:600;text-indent:0;margin-bottom:14px;border-left:3px solid #a09070;padding-left:12px}
+#story .dice{font-family:Georgia,serif;padding:10px 14px;border-radius:6px;margin:10px 0;text-indent:0;font-size:14px;line-height:1.7}
+#story .dice.crit{background:rgba(42,90,42,.1);border:2px solid #4a7a3a;color:#2a5a2a}
+#story .dice.extreme{background:rgba(42,74,106,.1);border:2px solid #3a6a8a;color:#2a4a6a}
+#story .dice.hard{background:rgba(42,74,106,.08);border:1px solid #5a8aaa;color:#2a4a6a}
+#story .dice.normal{background:rgba(180,160,120,.15);border:1px solid #a09070;color:var(--text)}
+#story .dice.fail{background:rgba(180,140,40,.1);border:2px solid #8a7a20;color:#6a5a10}
+#story .dice.critfail{background:rgba(122,42,26,.1);border:2px solid #8a3a2a;color:var(--danger)}
+#story .dice .dlabel{font-weight:700;letter-spacing:1px}
+#story .res{font-family:Georgia,serif;font-size:14px;font-weight:600;color:#5a4a10;background:rgba(122,90,16,.08);border-left:3px solid #7a5a10;padding:8px 14px;margin:10px 0;text-indent:0}
+#story .gain{color:var(--ok)} #story .loss{color:var(--bad)} #story .hint{color:var(--warn)}
+#story .item{color:var(--gold2)}
+#story .flagline{color:var(--dim);font-size:12px;text-indent:0}
+#story .center{text-align:center;text-indent:0}
+#story .end-title{font-family:Georgia,"Songti SC",serif;font-size:26px;color:var(--gold2);text-align:center;letter-spacing:4px;margin:20px 0;text-indent:0}
+#story blockquote{border-left:3px solid #7a5a10;background:rgba(122,90,16,.06);padding:10px 16px;margin:12px 0;color:#5a4a10;font-style:italic;text-indent:0}
+/* 选项区 */
+#options{padding:12px 18px;border-top:1px solid #a09070;background:linear-gradient(180deg,#e0d4b8,#d8ccb0);max-height:40%;overflow-y:auto;flex-shrink:0}
+#options .opt{display:block;width:100%;text-align:left;background:linear-gradient(135deg,#ede4cc,#e4d8bc);border:2px solid #b0a080;color:var(--text);padding:12px 16px;border-radius:8px;margin:8px 0;cursor:pointer;font-size:16px;font-weight:600;line-height:1.7;transition:all .15s}
+#options .opt:hover{border-color:#7a5a10;background:linear-gradient(135deg,#f2e8d0,#e8dcc0);transform:translateX(4px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+#options .opt .od{color:var(--gold);font-weight:700}
+#options .opt .or{display:block;font-size:12px;color:var(--dim);margin-top:2px}
+#options .opt .oh{display:block;font-size:12px;color:var(--warn);margin-top:2px}
+
+
+/* ===== 机制卷样式：暮色金蓝主题 / 昼夜 / 面板 / 结局动画 ===== */
+body{background:radial-gradient(ellipse at 20% 10%, rgba(180,150,80,.12) 0%, transparent 50%),radial-gradient(ellipse at 80% 90%, rgba(100,130,90,.08) 0%, transparent 50%),linear-gradient(180deg, #e0d4b8 0%, #d4c8a8 50%, #c8bca0 100%);}
+body.night{background:radial-gradient(ellipse at 20% 10%, rgba(120,100,60,.15) 0%, transparent 50%),radial-gradient(ellipse at 80% 90%, rgba(60,80,100,.1) 0%, transparent 50%),linear-gradient(180deg, #d4c8a8 0%, #c8bca0 50%, #bcb094 100%);}
+#topbar{background:linear-gradient(90deg, rgba(200,184,144,.95), rgba(184,168,128,.9));border-bottom:1px solid #a09070;}
+.title{color:var(--gold);text-shadow:0 1px 0 rgba(255,255,255,.3);}
+.nav .btn:hover{box-shadow:0 0 10px rgba(59,110,165,.5);}
+.stat .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle;}
+.stat .dot.day{background:#e8c766;box-shadow:0 0 6px #e8c766;}
+.stat .dot.night{background:#6b8fd6;box-shadow:0 0 6px #6b8fd6;}
+#flash{position:fixed;top:52px;left:50%;transform:translateX(-50%);z-index:99;background:rgba(237,228,204,.98);
+  border:1px solid #7a5a10;color:#5a4a10;padding:8px 20px;border-radius:20px;font-size:14px;font-weight:600;
+  opacity:0;pointer-events:none;transition:opacity .35s;box-shadow:0 4px 16px rgba(0,0,0,.15);}
+#flash.show{opacity:1;}
+.mech-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+.mech-row .btn{flex:1 1 auto;min-width:120px;}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:8px 0;}
+.g-card{background:#ede4cc;border:1px solid #b0a080;border-radius:8px;padding:10px;font-size:13px;color:var(--text-primary);}
+.g-card.got{border-color:var(--gold);color:var(--gold2);}
+.g-card .ic{font-size:20px;}
+.g-card .nm{font-weight:700;}
+.affix-chip{display:inline-block;padding:2px 8px;border-radius:10px;border:1px solid #3b6ea5;margin:2px;font-size:11px;}
+.affix-chip.done{border-color:var(--gold);color:var(--gold2);}
+@keyframes endfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#ending.show-anim{animation:endfade .9s ease-out;}
+@keyframes ember{0%{opacity:.9;transform:translateY(0)}100%{opacity:0;transform:translateY(-60px)}}
+.ember{position:fixed;bottom:-6px;width:3px;height:3px;background:rgba(232,199,102,.8);border-radius:50%;
+  pointer-events:none;z-index:1;animation:ember 6s linear infinite;}
+.letter{background:linear-gradient(160deg,#1c2540,#131b31);border:1px solid #3b6ea5;border-radius:10px;
+  padding:14px 16px;margin:10px 0;font-size:13px;line-height:1.8;}
+.letter .sig{text-align:right;color:var(--gold2);font-style:italic;}
+.board-job{border:1px solid #b0a080;border-radius:8px;padding:10px;margin:8px 0;background:linear-gradient(135deg,#ede4cc,#e4d8bc);color:var(--text-primary);}
+.board-job .jb-t{font-weight:700;color:var(--gold2);}
+.board-job .jb-d{font-size:12px;color:var(--dim);margin:4px 0;}
+.board-job .jb-r{font-size:11px;color:#8fa7c8;}
+.sound-toggle{cursor:pointer;user-select:none;opacity:.85;}
+.sound-toggle:hover{opacity:1;}
+.sound-toggle.off{opacity:.4;}
+.worldtick-line{font-size:12px;color:#8fa7c8;border-left:2px solid #3b6ea5;padding:2px 8px;margin:3px 0;}
+.ng-chip{display:inline-block;padding:3px 10px;border-radius:12px;border:1px solid var(--gold);
+  color:var(--gold2);font-size:11px;margin:2px;background:rgba(201,162,39,.08);}
+/* ===== LLM设置面板 ===== */
+.llm-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200;
+  background:linear-gradient(160deg,#1c2540,#131b31);border:1px solid #3b6ea5;border-radius:12px;
+  padding:24px 28px;width:480px;max-width:92vw;box-shadow:0 8px 40px rgba(0,0,0,.6);}
+.llm-modal h3{color:var(--gold2);margin:0 0 16px 0;font-size:16px;}
+.llm-modal .llm-field{margin:12px 0;}
+.llm-modal label{display:block;font-size:12px;color:#8fa7c8;margin-bottom:4px;}
+.llm-modal input{width:100%;padding:10px 12px;background:#ede4cc;border:1px solid #b0a080;color:var(--text-primary);
+  border-radius:6px;color:#e0e8f0;font-size:13px;box-sizing:border-box;}
+.llm-modal input:focus{border-color:var(--gold);outline:none;}
+.llm-modal .llm-hint{font-size:11px;color:#6b7f9e;margin-top:4px;line-height:1.5;}
+.llm-modal .llm-actions{display:flex;gap:10px;margin-top:18px;}
+.llm-modal .llm-actions button{flex:1;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer;
+  border:1px solid #3b6ea5;background:#1a2540;color:#c8d6e8;}
+.llm-modal .llm-actions button.primary{background:linear-gradient(135deg,#2a4a7a,#1a3050);border-color:var(--gold);color:var(--gold2);}
+.llm-modal .llm-actions button:hover{opacity:.9;}
+.llm-modal .llm-status{font-size:12px;margin-top:10px;padding:6px 10px;border-radius:6px;}
+.llm-modal .llm-status.ok{background:rgba(76,175,80,.15);color:#81c784;border:1px solid rgba(76,175,80,.3);}
+.llm-modal .llm-status.err{background:rgba(244,67,54,.15);color:#ef9a9a;border:1px solid rgba(244,67,54,.3);}
+.llm-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:199;}
+.llm-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:4px;}
+.llm-badge.on{background:rgba(76,175,80,.2);color:#81c784;border:1px solid rgba(76,175,80,.4);}
+.llm-badge.off{background:rgba(100,100,100,.2);color:#888;border:1px solid #555;}
+.llm-enhancing{color:var(--gold2);font-size:11px;font-style:italic;opacity:.7;}
+/* ========== v30 UI美化与对比度增强 ========== */
+/* 面板三段式结构 */
+.panel-wrap{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,.6);width:100%;}
+.panel-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg-panel2);border-radius:10px 10px 0 0;position:sticky;top:0;z-index:2;flex-shrink:0;}
+.panel-title{font-size:16px;font-weight:bold;color:var(--text-gold);letter-spacing:1px;}
+.panel-close{background:none;border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:20px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.panel-close:hover{background:var(--danger-bg);color:var(--danger);border-color:var(--danger);}
+.panel-body{padding:16px;overflow-y:auto;flex:1;color:var(--text-primary);line-height:1.7;min-height:0;}
+.panel-footer{padding:12px 16px;border-top:1px solid var(--border);background:var(--bg-panel2);border-radius:0 0 10px 10px;display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;flex-shrink:0;}
+.btn-secondary{background:var(--bg-input);border:1px solid var(--border);color:var(--text-secondary);padding:8px 18px;border-radius:6px;cursor:pointer;font-size:14px;transition:all .15s;}
+.btn-secondary:hover{background:var(--bg-panel2);color:var(--text-primary);border-color:var(--border-light);}
+.btn-gold{background:linear-gradient(180deg,#2a2240,#1c1830);border:1px solid var(--text-gold);color:var(--text-gold);padding:8px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold;transition:all .15s;}
+.btn-gold:hover{background:linear-gradient(180deg,#3a2e50,#2a2040);box-shadow:0 0 12px rgba(240,214,138,.3);}
+/* 选项按钮类型配色 */
+#options .opt{border-left:3px solid var(--border);}
+#options .opt.opt-combat{border-left-color:var(--danger);}
+#options .opt.opt-dialog{border-left-color:var(--info);}
+#options .opt.opt-cultivate{border-left-color:var(--purple);}
+#options .opt.opt-explore{border-left-color:var(--success);}
+#options .opt.opt-leave{border-left-color:var(--text-muted);}
+#options .opt.opt-gold{border-left-color:var(--text-gold);background:var(--warning-bg);}
+#options .opt.opt-gold:hover{background:rgba(255,200,112,.18);}
+/* 判定结果横幅 */
+.roll-result{padding:10px 16px;border-radius:8px;font-weight:bold;font-size:15px;margin:10px 0;text-align:center;animation:rollSlide .3s ease-out;text-indent:0;}
+.roll-crit{background:var(--success-bg);color:var(--success);border:1px solid var(--success);}
+.roll-ok{background:var(--info-bg);color:var(--info);border:1px solid var(--info);}
+.roll-fail{background:var(--warning-bg);color:var(--warning);border:1px solid var(--warning);}
+.roll-critfail{background:var(--danger-bg);color:var(--danger);border:1px solid var(--danger);}
+/* 得失明细 */
+.gain-loss{margin:8px 0;padding:8px 12px;background:var(--bg-input);border-radius:6px;text-indent:0;}
+.gain-loss .gain{color:var(--success);font-size:13px;}
+.gain-loss .loss{color:var(--danger);font-size:13px;}
+/* 属性进度条 */
+.stat-bar{display:flex;align-items:center;gap:6px;margin:4px 0;font-size:13px;}
+.stat-bar .stat-label{width:36px;color:var(--text-secondary);font-weight:600;}
+.stat-bar .bar-bg{flex:1;height:14px;background:var(--bg-input);border-radius:7px;overflow:hidden;border:1px solid var(--border);}
+.stat-bar .bar-fill{height:100%;border-radius:6px;transition:width .3s;}
+.bar-fill.hp{background:linear-gradient(90deg,#c0392b,#e74c3c);}
+.bar-fill.mp{background:linear-gradient(90deg,#2980b9,#3498db);}
+.bar-fill.san{background:linear-gradient(90deg,#8e44ad,#9b59b6);}
+.bar-fill.exp{background:linear-gradient(90deg,#b8860b,#daa520);}
+.bar-fill.attr{background:linear-gradient(90deg,#3d5a80,#5a7aaa);}
+.stat-bar .stat-value{width:60px;text-align:right;color:var(--text-primary);font-size:12px;}
+/* 境界徽章 */
+.realm-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:bold;letter-spacing:1px;}
+.realm-0{background:#333;color:#aaa;border:1px solid #555;}
+.realm-1{background:rgba(127,214,143,.15);color:var(--success);border:1px solid var(--success);}
+.realm-2{background:rgba(122,184,255,.15);color:var(--info);border:1px solid var(--info);}
+.realm-3{background:rgba(200,154,255,.15);color:var(--purple);border:1px solid var(--purple);}
+.realm-4{background:rgba(240,214,138,.15);color:var(--text-gold);border:1px solid var(--text-gold);}
+.realm-5{background:rgba(255,200,112,.15);color:var(--warning);border:1px solid var(--warning);}
+.realm-6{background:rgba(255,138,138,.15);color:var(--danger);border:1px solid var(--danger);}
+.realm-7{background:rgba(232,238,245,.15);color:var(--text-primary);border:1px solid var(--text-primary);}
+.realm-8{background:linear-gradient(90deg,rgba(255,138,138,.2),rgba(240,214,138,.2),rgba(122,184,255,.2));color:#fff;border:1px solid #fff;}
+/* 剧情文字增强 */
+#story .npc-dialog{color:var(--text-gold);border-left:3px solid var(--text-gold);padding-left:12px;margin:10px 0;font-style:italic;text-indent:0;}
+#story .narration{color:var(--text-secondary);}
+#story .important{color:var(--warning);font-weight:bold;}
+#story .clue{color:var(--info);}
+#story .danger-text{color:var(--danger);font-weight:bold;}
+/* 顶部导航激活态 */
+#topbar .btn.active{background:var(--warning-bg);color:var(--text-gold);border-color:var(--text-gold);}
+/* 动效 */
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes panelIn{from{opacity:0;transform:scale(.95) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+@keyframes rollSlide{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes numberPop{0%{transform:scale(1);}50%{transform:scale(1.3);color:var(--text-gold);}100%{transform:scale(1);}}
+.modal-overlay{animation:fadeIn .2s ease-out;}
+.panel-wrap{animation:panelIn .25s ease-out;}
+.number-pop{animation:numberPop .4s ease-out;}
+/* 滚动条美化 */
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:var(--bg-deep);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:var(--border-light);}
+/* 修炼结果区 */
+#cultivate-result{background:var(--bg-input);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-top:10px;font-size:13px;line-height:1.7;white-space:pre-wrap;color:var(--text-primary);max-height:200px;overflow-y:auto;}
+.cultivate-actions{display:flex;gap:10px;margin-top:10px;justify-content:flex-end;}
+
+/* ============ v31 按钮系统全面重构 ============ */
+
+/* --- 基础按钮重置 --- */
+.btn{
+  background:var(--bg-input);
+  border:1px solid var(--border);
+  color:var(--text-primary);
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+  font-family:var(--font-body, 'Microsoft YaHei', sans-serif);
+  transition:all .18s cubic-bezier(.4,0,.2,1);
+  position:relative;
+  overflow:hidden;
+  line-height:1.5;
+  letter-spacing:.5px;
+}
+.btn:hover{
+  background:var(--bg-panel2);
+  border-color:var(--border-light);
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.btn:active{
+  transform:translateY(0);
+  box-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+.btn:focus-visible{
+  outline:2px solid var(--text-gold);
+  outline-offset:2px;
+}
+
+/* --- 按钮涟漪效果 --- */
+.btn::after{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:0;height:0;
+  background:rgba(255,255,255,.15);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:width .4s ease,height .4s ease;
+  pointer-events:none;
+}
+.btn:active::after{
+  width:300px;height:300px;
+  transition:0s;
+}
+
+/* --- 三级按钮层级 --- */
+
+/* 主按钮：金色渐变，最突出 */
+.btn-primary{
+  background:linear-gradient(135deg,#c9a227 0%,#f0d68a 45%,#e8c468 55%,#c9a227 100%);
+  color:#1a1208;
+  border:1px solid #f0d68a;
+  box-shadow:0 2px 8px rgba(240,214,138,.25),inset 0 1px 0 rgba(255,255,255,.35);
+  font-weight:600;
+  letter-spacing:1px;
+  text-shadow:0 1px 0 rgba(255,255,255,.2);
+}
+.btn-primary:hover{
+  background:linear-gradient(135deg,#d4af37 0%,#f5e0a0 45%,#eed080 55%,#d4af37 100%);
+  border-color:#f5e0a0;
+  box-shadow:0 4px 16px rgba(240,214,138,.45),inset 0 1px 0 rgba(255,255,255,.45);
+  transform:translateY(-2px);
+  color:#1a1208;
+}
+.btn-primary:active{
+  transform:translateY(0);
+  box-shadow:0 1px 4px rgba(240,214,138,.3);
+}
+
+/* 次按钮：深灰边框，低调但清晰 */
+.btn-secondary{
+  background:linear-gradient(135deg,#d4c8a8 0%,#c8bca0 100%);font-weight:700;
+  color:var(--text-secondary);
+  border:1px solid var(--border-light);
+  box-shadow:0 2px 6px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.06);
+  font-weight:500;
+}
+.btn-secondary:hover{
+  background:linear-gradient(135deg,#e0d4b8 0%,#d4c8a8 100%);
+  border-color:#5a7ba8;
+  color:var(--text-primary);
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+
+/* 三级按钮：纯文字+下划线 */
+.btn-ghost{
+  background:transparent;
+  color:var(--text-muted);
+  border:none;
+  border-bottom:1px solid transparent;
+  border-radius:0;
+  padding:6px 4px;
+  box-shadow:none;
+}
+.btn-ghost:hover{
+  color:var(--text-gold);
+  border-bottom-color:var(--text-gold);
+  background:transparent;
+  transform:none;
+  box-shadow:none;
+}
+
+/* 危险按钮 */
+.btn-danger{
+  background:linear-gradient(135deg,#8b2929 0%,#c0392b 100%);
+  color:#fff;
+  border:1px solid #e74c3c;
+  box-shadow:0 2px 8px rgba(231,76,60,.25);
+}
+.btn-danger:hover{
+  background:linear-gradient(135deg,#a03030 0%,#e74c3c 100%);
+  box-shadow:0 4px 16px rgba(231,76,60,.4);
+}
+
+/* 成功按钮 */
+.btn-success{
+  background:linear-gradient(135deg,#1e7a3c 0%,#27ae60 100%);
+  color:#fff;
+  border:1px solid #2ecc71;
+  box-shadow:0 2px 8px rgba(46,204,113,.25);
+}
+.btn-success:hover{
+  background:linear-gradient(135deg,#27ae60 0%,#2ecc71 100%);
+  box-shadow:0 4px 16px rgba(46,204,113,.4);
+}
+
+/* --- 返回按钮专门美化 --- */
+.btn-back{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 24px;
+  min-width:140px;
+  justify-content:center;
+  font-size:15px;font-weight:700;
+  background:linear-gradient(135deg,#c0b090 0%,#b0a080 100%);
+  color:var(--text-secondary);
+  border:1px solid var(--border-light);
+  border-radius:8px;
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  transition:all .18s ease;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.btn-back::before{
+  content:'\2190';
+  font-size:16px;
+  transition:transform .18s ease;
+  display:inline-block;
+}
+.btn-back::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:50%;
+  width:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--text-gold),transparent);
+  transition:width .25s ease;
+  transform:translateX(-50%);
+}
+.btn-back:hover{
+  background:linear-gradient(135deg,#d0c0a0 0%,#c0b090 100%);
+  border-color:var(--text-gold);
+  color:var(--text-gold);
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,.4),0 0 12px rgba(240,214,138,.15);
+}
+.btn-back:hover::before{
+  transform:translateX(-4px);
+}
+.btn-back:hover::after{
+  width:80%;
+}
+.btn-back:active{
+  transform:translateY(0);
+}
+
+/* --- 选项按钮美化（参考Disco Elysium） --- */
+.choice-btn{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  width:100%;
+  text-align:left;
+  padding:14px 18px;
+  margin-bottom:8px;
+  background:linear-gradient(90deg,rgba(15,26,46,.92) 0%,rgba(21,34,56,.85) 100%);
+  border:1px solid var(--border);
+  border-left:3px solid var(--border-light);
+  border-radius:0 8px 8px 0;
+  color:var(--text-primary);
+  font-size:14px;
+  line-height:1.6;
+  cursor:pointer;
+  transition:all .2s ease;
+  position:relative;
+  overflow:hidden;
+}
+.choice-btn::before{
+  content:'\25B8';
+  color:var(--text-muted);
+  font-size:11px;
+  margin-top:4px;
+  flex-shrink:0;
+  transition:all .2s ease;
+}
+.choice-btn:hover{
+  background:linear-gradient(90deg,rgba(21,34,56,.98) 0%,rgba(29,46,74,.92) 100%);
+  border-left-color:var(--text-gold);
+  border-color:var(--border-light);
+  padding-left:22px;
+  box-shadow:0 2px 12px rgba(0,0,0,.3),inset 0 0 20px rgba(240,214,138,.03);
+}
+.choice-btn:hover::before{
+  content:'\25B6';
+  color:var(--text-gold);
+  transform:translateX(4px);
+}
+.choice-btn:active{
+  transform:translateX(2px);
+}
+.choice-btn.visited{
+  opacity:.55;
+  border-left-color:var(--text-muted);
+}
+.choice-btn.visited::before{
+  content:'\2713';
+  color:var(--success);
+  font-size:12px;
+}
+.choice-btn.visited:hover{
+  opacity:.75;
+  padding-left:18px;
+}
+.choice-btn.gold-option{
+  border-left-color:var(--text-gold);
+  background:linear-gradient(90deg,rgba(240,214,138,.08) 0%,rgba(21,34,56,.9) 100%);
+}
+.choice-btn.gold-option::before{
+  color:var(--text-gold);
+}
+.choice-btn.danger-option{
+  border-left-color:var(--danger);
+}
+.choice-btn.danger-option::before{
+  color:var(--danger);
+}
+
+/* --- 行动按钮（面板内） --- */
+.btn.act{
+  flex:1 1 auto;
+  min-width:110px;
+  padding:12px 14px;
+  font-size:15px;
+  font-weight:700;
+  text-align:center;
+  background:linear-gradient(135deg,#d4c8a8 0%,#c8bca0 100%);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text-secondary);
+  transition:all .15s ease;
+}
+.btn.act:hover{
+  background:linear-gradient(135deg,#e0d4b8 0%,#d4c8a8 100%);
+  border-color:var(--text-gold);
+  color:var(--text-gold);
+  transform:translateY(-1px);
+  box-shadow:0 3px 10px rgba(0,0,0,.35);
+}
+
+/* --- 顶部导航按钮 --- */
+.top-btn{
+  padding:8px 16px;
+  font-size:14px;font-weight:700;
+  background:linear-gradient(135deg,rgba(200,184,144,.9) 0%,rgba(184,168,128,.9) 100%);
+  border:1px solid var(--border);
+  border-radius:6px;
+  color:var(--text-secondary);
+  font-size:13px;
+  cursor:pointer;
+  transition:all .15s ease;
+  white-space:nowrap;
+}
+.top-btn:hover{
+  background:linear-gradient(135deg,rgba(210,194,154,.95) 0%,rgba(194,178,138,.95) 100%);
+  border-color:var(--text-gold);
+  color:var(--text-gold);
+  transform:translateY(-1px);
+}
+.top-btn.active{
+  background:linear-gradient(135deg,rgba(240,214,138,.15) 0%,rgba(240,214,138,.08) 100%);
+  border-color:var(--text-gold);
+  color:var(--text-gold);
+  box-shadow:0 0 10px rgba(240,214,138,.2);
+}
+
+/* --- 按钮组 --- */
+.btn-group{
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+.btn-group .btn{
+  min-width:100px;
+}
+
+/* --- 禁用按钮 --- */
+.btn:disabled,.btn.disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  transform:none !important;
+  box-shadow:none !important;
+}
+.btn:disabled:hover,.btn.disabled:hover{
+  background:var(--bg-input);
+  border-color:var(--border);
+  color:var(--text-muted);
+}
+
+
+/* ============ v31 选项按钮增强 ============ */
+#options .opt{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  width:100%;
+  text-align:left;
+  background:linear-gradient(90deg,rgba(237,228,204,.95) 0%,rgba(228,216,188,.9) 100%);
+  border:1px solid var(--border);
+  border-left:3px solid var(--border-light);
+  border-radius:0 8px 8px 0;
+  color:var(--text-primary);
+  padding:13px 16px;
+  margin:7px 0;
+  cursor:pointer;
+  font-size:14px;
+  line-height:1.65;
+  transition:all .2s ease;
+  position:relative;
+  overflow:hidden;
+}
+#options .opt::before{
+  content:'\25B8';
+  color:var(--text-muted);
+  font-size:11px;
+  margin-top:4px;
+  flex-shrink:0;
+  transition:all .2s ease;
+}
+#options .opt:hover{
+  background:linear-gradient(90deg,rgba(242,232,208,.98) 0%,rgba(232,220,192,.95) 100%);
+  border-left-color:var(--text-gold);
+  border-color:var(--border-light);
+  padding-left:20px;
+  box-shadow:0 2px 12px rgba(0,0,0,.3),inset 0 0 20px rgba(240,214,138,.03);
+  transform:translateX(3px);
+}
+#options .opt:hover::before{
+  content:'\25B6';
+  color:var(--text-gold);
+  transform:translateX(4px);
+}
+#options .opt:active{
+  transform:translateX(1px);
+}
+#options .opt .od{
+  display:none;
+}
+#options .opt .oh{
+  color:var(--text-muted);
+  font-size:12px;
+  margin-left:6px;
+}
+#options .opt.opt-gold{
+  border-left-color:var(--text-gold);
+  background:linear-gradient(90deg,rgba(122,90,16,.12) 0%,rgba(237,228,204,.95) 100%);
+}
+#options .opt.opt-gold::before{
+  color:var(--text-gold);
+}
+#options .opt.opt-gold:hover{
+  background:linear-gradient(90deg,rgba(122,90,16,.18) 0%,rgba(242,232,208,.98) 100%);
+  box-shadow:0 2px 16px rgba(240,214,138,.15);
+}
+#options .opt.opt-combat{ border-left-color:var(--danger); }
+#options .opt.opt-combat::before{ color:var(--danger); }
+#options .opt.opt-dialog{ border-left-color:var(--info); }
+#options .opt.opt-dialog::before{ color:var(--info); }
+#options .opt.opt-cultivate{ border-left-color:var(--purple); }
+#options .opt.opt-cultivate::before{ color:var(--purple); }
+#options .opt.opt-explore{ border-left-color:var(--success); }
+#options .opt.opt-explore::before{ color:var(--success); }
+#options .opt.opt-leave{ border-left-color:var(--text-muted); }
+
+/* ============ v31 模态框容器 ============ */
+.v31-modal-container{
+  background:linear-gradient(160deg,#e8dcc0 0%,#e0d4b8 50%,#d8ccb0 100%);
+  border:1px solid rgba(240,214,138,.18);
+  border-radius:12px;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.5),
+    0 20px 60px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  max-height:85vh;
+  overflow-y:auto;
+  animation:v31ModalIn .3s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+@keyframes v31ModalIn{
+  from{ opacity:0; transform:scale(.92) translateY(20px); }
+  to{ opacity:1; transform:scale(1) translateY(0); }
+}
+.v31-modal-footer{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(240,214,138,.12);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+/* 模态框遮罩 */
+#modal.show{
+  background:rgba(5,10,20,.75);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+#modal{
+  transition:background .2s ease;
+}
+
+/* ============ v31 滚动条增强 ============ */
+.v31-modal-container::-webkit-scrollbar{ width:6px; }
+.v31-modal-container::-webkit-scrollbar-track{ background:transparent; }
+.v31-modal-container::-webkit-scrollbar-thumb{
+  background:rgba(240,214,138,.2);
+  border-radius:3px;
+}
+.v31-modal-container::-webkit-scrollbar-thumb:hover{
+  background:rgba(240,214,138,.35);
+}
+
+
+/* ============ v31 字体与排版系统 ============ */
+
+/* 引入Google Fonts（衬线标题+无衬线正文） */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+:root{
+  --font-title: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-body: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* 全局字体 */
+body{
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 标题用衬线字体 */
+h1, h2, h3, h4, h5, h6{
+  font-family: var(--font-title);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* 模态框/面板标题用衬线 */
+.modal-title, .panel-title, .v31-modal-container > div:first-child{
+  font-family: var(--font-title);
+}
+
+/* 剧情正文排版 */
+#story{
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 2;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+}
+#story p{
+  margin-bottom: 16px;
+  text-indent: 2em;
+}
+#story p.noind{
+  text-indent: 0;
+}
+#story p.flagline{
+  text-indent: 0;
+  text-align: center;
+  color: var(--text-gold);
+  font-family: var(--font-title);
+  font-size: 15px;
+  letter-spacing: 3px;
+  margin: 20px 0;
+  padding: 8px 0;
+  border-top: 1px solid rgba(240,214,138,.2);
+  border-bottom: 1px solid rgba(240,214,138,.2);
+}
+#story p.place{
+  text-indent: 0;
+  text-align: center;
+  color: var(--text-gold);
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  margin: 16px 0;
+}
+#story p.where{
+  text-indent: 0;
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+/* NPC对话用衬线斜体+金色左边框 */
+#story .npc-dialog, #story p.dialog{
+  font-family: var(--font-title);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--text-gold);
+  border-left: 3px solid var(--text-gold);
+  padding: 10px 16px;
+  margin: 16px 0;
+  background: linear-gradient(90deg, rgba(240,214,138,.06), transparent);
+  text-indent: 0;
+  line-height: 1.9;
+}
+
+/* 结果/得失文本 */
+#story p.res{
+  text-indent: 0;
+  color: var(--success);
+  font-size: 14px;
+  padding: 6px 12px;
+  background: rgba(127,214,143,.06);
+  border-radius: 4px;
+  margin: 8px 0;
+}
+#story p.warn{
+  text-indent: 0;
+  color: var(--warning);
+  font-size: 14px;
+  padding: 6px 12px;
+  background: rgba(255,200,112,.06);
+  border-radius: 4px;
+  margin: 8px 0;
+}
+#story p.hint{
+  text-indent: 0;
+  color: var(--info);
+  font-size: 14px;
+  padding: 6px 12px;
+  background: rgba(122,184,255,.06);
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+/* 判定结果横幅 */
+.roll-result{
+  font-family: var(--font-title);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* 按钮文字 */
+.btn, .btn-primary, .btn-secondary, .btn-back, .choice-btn, .top-btn{
+  font-family: var(--font-body);
+}
+
+/* 模态框标题 */
+.v31-modal-container > div > div:first-child{
+  font-family: var(--font-title);
+}
+
+/* 属性面板标题 */
+#stats .stat-title, .stat-label{
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+/* 顶部状态栏 */
+#topbar{
+  font-family: var(--font-body);
+}
+#topbar .game-title{
+  font-family: var(--font-title);
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+
+
+
+
+
+
+
+
+/* ===== v35 战斗系统样式 ===== */
+.battle-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(8, 14, 26, 0.95);
+  z-index: 10000;
+  display: none;
+  flex-direction: column;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.battle-overlay.active { display: flex; }
+.battle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, #1a2a44, #0f1a2e);
+  border-bottom: 2px solid #7a5a10;
+}
+.battle-turn { color: #f0d68a; font-weight: bold; font-size: 16px; }
+.battle-objective { color: #b8c5d6; font-size: 14px; }
+.turn-order { display: flex; gap: 4px; }
+.turn-order-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #2d4566;
+  border: 2px solid #3d5a80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #e8eef5;
+}
+.turn-order-icon.current { border-color: #f0d68a; background: #7a5a10; }
+.battle-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+  overflow: hidden;
+}
+.enemy-side {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  min-height: 120px;
+}
+.enemy-card {
+  background: linear-gradient(180deg, #2a1a2e, #1a0f1e);
+  border: 2px solid #8a3a3a;
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 140px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.enemy-card:hover { border-color: #ff8a8a; transform: translateY(-4px); }
+.enemy-card.targeted { border-color: #f0d68a; box-shadow: 0 0 20px rgba(240,214,138,0.4); }
+.enemy-card.dead { opacity: 0.3; filter: grayscale(1); }
+.enemy-name { color: #ff8a8a; font-weight: bold; margin-bottom: 6px; }
+.enemy-hp-bar {
+  height: 10px;
+  background: #1a0f1e;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.enemy-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c0392b, #e74c3c);
+  transition: width 0.3s;
+}
+.enemy-hp-text { font-size: 11px; color: #b8c5d6; }
+.enemy-status { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; justify-content: center; }
+.status-icon {
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: rgba(0,0,0,0.3);
+}
+.battle-log {
+  flex: 1;
+  background: rgba(15, 26, 46, 0.8);
+  border: 1px solid #2d4566;
+  border-radius: 8px;
+  padding: 12px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #b8c5d6;
+  max-height: 150px;
+}
+.battle-log .log-damage { color: #ff8a8a; }
+.battle-log .log-heal { color: #7fd68f; }
+.battle-log .log-player { color: #7ab8ff; }
+.battle-log .log-enemy { color: #ffc870; }
+.battle-log .log-system { color: #f0d68a; }
+.ally-side {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  min-height: 120px;
+}
+.ally-card {
+  background: linear-gradient(180deg, #1a2a44, #0f1a2e);
+  border: 2px solid #3d5a80;
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 160px;
+  text-align: center;
+}
+.ally-card.active { border-color: #f0d68a; box-shadow: 0 0 20px rgba(240,214,138,0.4); }
+.ally-name { color: #7ab8ff; font-weight: bold; margin-bottom: 6px; }
+.ally-bar {
+  height: 8px;
+  background: #0f1a2e;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+.ally-hp-fill { height: 100%; background: linear-gradient(90deg, #c0392b, #e74c3c); transition: width 0.3s; }
+.ally-mp-fill { height: 100%; background: linear-gradient(90deg, #2980b9, #3498db); transition: width 0.3s; }
+.ally-bar-text { font-size: 10px; color: #8a9bb0; display: flex; justify-content: space-between; }
+.battle-actions {
+  display: flex;
+  gap: 10px;
+  padding: 16px 20px;
+  background: linear-gradient(0deg, #1a2a44, #0f1a2e);
+  border-top: 2px solid #7a5a10;
+  justify-content: center;
+}
+.battle-btn {
+  padding: 12px 24px;
+  background: linear-gradient(180deg, #2d4566, #1a2a44);
+  border: 2px solid #3d5a80;
+  border-radius: 8px;
+  color: #e8eef5;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: 100px;
+}
+.battle-btn:hover { background: linear-gradient(180deg, #3d5a80, #2d4566); border-color: #f0d68a; transform: translateY(-2px); }
+.battle-btn:active { transform: translateY(0); }
+.battle-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.battle-btn.attack { border-color: #8a3a3a; }
+.battle-btn.skill { border-color: #8a5a3a; }
+.battle-btn.item { border-color: #3a8a5a; }
+.battle-btn.defend { border-color: #3a5a8a; }
+.battle-btn.flee { border-color: #8a8a3a; }
+.skill-panel, .item-panel {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f1a2e;
+  border: 2px solid #7a5a10;
+  border-radius: 10px;
+  padding: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+  min-width: 300px;
+  display: none;
+}
+.skill-panel.active, .item-panel.active { display: block; }
+.skill-item {
+  padding: 10px;
+  margin: 4px 0;
+  background: #1a2a44;
+  border: 1px solid #2d4566;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.skill-item:hover { border-color: #f0d68a; background: #2d4566; }
+.skill-item.disabled { opacity: 0.4; cursor: not-allowed; }
+.skill-name { color: #f0d68a; font-weight: bold; }
+.skill-info { font-size: 12px; color: #8a9bb0; margin-top: 4px; }
+.skill-mp { color: #7ab8ff; }
+.battle-damage-popup {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  pointer-events: none;
+  animation: damageFloat 1s ease-out forwards;
+  z-index: 100;
+}
+@keyframes damageFloat {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+}
+.battle-damage-popup.damage { color: #ff8a8a; }
+.battle-damage-popup.heal { color: #7fd68f; }
+.battle-damage-popup.crit { color: #f0d68a; font-size: 32px; }
+.battle-result-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.battle-result-overlay.active { display: flex; }
+.battle-result-box {
+  background: linear-gradient(180deg, #1a2a44, #0f1a2e);
+  border: 3px solid #7a5a10;
+  border-radius: 16px;
+  padding: 30px 50px;
+  text-align: center;
+  min-width: 400px;
+}
+.battle-result-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.battle-result-title.victory { color: #7fd68f; }
+.battle-result-title.defeat { color: #ff8a8a; }
+.battle-result-rating {
+  font-size: 48px;
+  color: #f0d68a;
+  margin: 10px 0;
+}
+.battle-result-rewards {
+  text-align: left;
+  margin: 20px 0;
+  color: #b8c5d6;
+}
+.battle-result-reward-item { margin: 6px 0; }
+.battle-result-reward-item.gain { color: #7fd68f; }
+.battle-result-reward-item.loss { color: #ff8a8a; }
+
+/* ===== v35 技术架构样式 ===== */
+.v35-dev-console {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background: rgba(20, 25, 40, 0.98);
+  border-top: 2px solid #7a5a10;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 13px;
+  color: #e0e0e0;
+  z-index: 99999;
+  transform: translateY(100%);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.v35-dev-console.open { transform: translateY(0); }
+.v35-dev-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(122, 90, 16, 0.2);
+  border-bottom: 1px solid #7a5a10;
+  gap: 12px;
+}
+.v35-dev-title { color: #f0d68a; font-weight: bold; }
+.v35-dev-tabs { display: flex; gap: 4px; flex: 1; }
+.v35-dev-tab {
+  background: none;
+  border: 1px solid #555;
+  color: #aaa;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.v35-dev-tab:hover { border-color: #7a5a10; color: #f0d68a; }
+.v35-dev-tab.active { background: rgba(122, 90, 16, 0.3); color: #f0d68a; border-color: #7a5a10; }
+.v35-dev-close {
+  background: none;
+  border: 1px solid #555;
+  color: #aaa;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.v35-dev-close:hover { color: #ff8a8a; border-color: #ff8a8a; }
+.v35-dev-body { flex: 1; overflow: hidden; position: relative; }
+.v35-dev-tab-content { display: none; height: 100%; overflow-y: auto; padding: 8px; }
+.v35-dev-tab-content.active { display: block; }
+.v35-dev-output {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+  padding: 8px;
+}
+.v35-dev-log { margin: 2px 0; word-break: break-all; }
+.v35-dev-log-cmd { color: #7ab8ff; }
+.v35-dev-log-error { color: #ff8a8a; }
+.v35-dev-log-info { color: #b8c5d6; }
+.v35-dev-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-top: 1px solid #333;
+}
+.v35-dev-input-row input {
+  flex: 1;
+  background: #1a2a44;
+  border: 1px solid #555;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: inherit;
+}
+.v35-dev-input-row button {
+  background: #7a5a10;
+  border: none;
+  color: #fff;
+  padding: 6px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.v35-dev-node-tools { display: flex; gap: 8px; margin-bottom: 8px; }
+.v35-dev-node-tools input {
+  flex: 1;
+  background: #1a2a44;
+  border: 1px solid #555;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.v35-dev-node-tools button {
+  background: #7a5a10;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.v35-dev-node-item, .v35-dev-var-item, .v35-dev-event-item {
+  padding: 4px 8px;
+  border-bottom: 1px solid #222;
+  cursor: pointer;
+}
+.v35-dev-node-item:hover, .v35-dev-var-item:hover { background: rgba(122, 90, 16, 0.2); }
+
+/* ===== v34 UI沉浸感系统 ===== */
+
+/* 方向一：场景氛围动态系统 */
+#atmosphere-overlay{
+  position:fixed; inset:0; pointer-events:none; z-index:5;
+  transition: background .8s ease, filter .8s ease;
+}
+body.time-morning{ filter:brightness(1.02) saturate(1.05); }
+body.time-noon{ filter:brightness(1.05) saturate(1); }
+body.time-dusk{ filter:brightness(.95) saturate(1.1) sepia(.1); }
+body.time-night{ filter:brightness(.96) saturate(.9) hue-rotate(-6deg); }
+body.time-night #atmosphere-overlay{
+  background: radial-gradient(ellipse at 50% 100%, rgba(20,30,60,.18), transparent 60%);
+}
+body.weather-rain #atmosphere-overlay{
+  background: linear-gradient(180deg, rgba(100,120,140,.08), rgba(80,100,120,.12));
+}
+body.weather-snow #atmosphere-overlay{
+  background: linear-gradient(180deg, rgba(200,210,220,.1), rgba(180,190,200,.08));
+}
+body.weather-fog #atmosphere-overlay{
+  background: radial-gradient(ellipse at center, rgba(180,180,170,.15), rgba(160,160,150,.25));
+}
+body.abyss-high #atmosphere-overlay{
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(120,20,40,.15) 100%);
+  animation: abyssPulse 3s ease-in-out infinite;
+}
+@keyframes abyssPulse{
+  0%,100%{ opacity:.6; }
+  50%{ opacity:1; }
+}
+.particle{
+  position:fixed; pointer-events:none; z-index:6;
+}
+.rain-drop{
+  width:1px; height:20px; background:linear-gradient(180deg, transparent, rgba(150,170,190,.6));
+  animation: rainFall .4s linear infinite;
+}
+@keyframes rainFall{
+  from{ transform:translateY(-20px); }
+  to{ transform:translateY(100vh); }
+}
+.snow-flake{
+  width:4px; height:4px; background:rgba(220,220,230,.8); border-radius:50%;
+  animation: snowFall 4s linear infinite;
+}
+@keyframes snowFall{
+  from{ transform:translateY(-10px) translateX(0); }
+  to{ transform:translateY(100vh) translateX(30px); }
+}
+
+/* 方向二：文字演出与动效 */
+.tx-whisper{ color:#5a4a30; font-style:italic; opacity:.85; animation:fadeInSlow .8s ease-out; }
+.tx-shout{ color:#7a2a1a; font-weight:900; font-size:19px; animation:shakeText .3s ease-in-out; }
+.tx-ancient{ color:#7a5a10; font-family:"Noto Serif SC",serif; font-weight:700; text-shadow:0 0 8px rgba(122,90,16,.3); animation:glowIn 1s ease-out; }
+.tx-abyss{ color:#6a2a4a; font-weight:700; animation:glitchText .5s ease-in-out; }
+.tx-thought{ color:#5a5a6a; font-style:italic; padding-left:2em; opacity:.8; }
+.tx-important{ color:#5a4a10; font-weight:900; border-bottom:2px solid #7a5a10; padding-bottom:1px; }
+.tx-fear{ color:#3a4a6a; animation:fearShake .4s ease-in-out; }
+.tx-memory{ color:#6a5a40; filter:sepia(.3); opacity:.85; }
+@keyframes fadeInSlow{ from{opacity:0; transform:translateY(5px);} to{opacity:.85; transform:translateY(0);} }
+@keyframes shakeText{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-3px);} 75%{transform:translateX(3px);} }
+@keyframes glowIn{ from{opacity:0; text-shadow:0 0 20px rgba(122,90,16,.8);} to{opacity:1; text-shadow:0 0 8px rgba(122,90,16,.3);} }
+@keyframes glitchText{ 0%{transform:translate(0); filter:hue-rotate(0);} 25%{transform:translate(-2px,1px); filter:hue-rotate(30deg);} 50%{transform:translate(2px,-1px); filter:hue-rotate(-30deg);} 75%{transform:translate(-1px,2px);} 100%{transform:translate(0); filter:hue-rotate(0);} }
+@keyframes fearShake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-2px) translateY(1px);} 40%{transform:translateX(2px) translateY(-1px);} 60%{transform:translateX(-1px);} 80%{transform:translateX(1px);} }
+.typewriter-cursor{
+  display:inline-block; width:2px; height:1em; background:#7a5a10;
+  animation:cursorBlink .8s step-end infinite; vertical-align:text-bottom; margin-left:2px;
+}
+@keyframes cursorBlink{ 0%,100%{opacity:1;} 50%{opacity:0;} }
+.option-enter{
+  animation: optionSlideIn .3s ease-out backwards;
+}
+@keyframes optionSlideIn{
+  from{ opacity:0; transform:translateY(15px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.option-important{
+  animation: importantPulse 2s ease-in-out infinite;
+}
+@keyframes importantPulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(122,90,16,.3); }
+  50%{ box-shadow:0 0 12px 2px rgba(122,90,16,.25); }
+}
+.option-danger{
+  animation: dangerShake 1.5s ease-in-out infinite;
+}
+@keyframes dangerShake{
+  0%,100%{ transform:translateX(0); }
+  25%{ transform:translateX(-1px); }
+  75%{ transform:translateX(1px); }
+}
+.option-chosen{
+  opacity:.5 !important;
+  pointer-events:none;
+}
+.option-chosen::after{
+  content:" ✓"; color:#4a7a3a; font-weight:900;
+}
+.scene-transition{
+  animation: sceneFade .5s ease-in-out;
+}
+@keyframes sceneFade{
+  0%{ opacity:0; transform:translateY(10px); }
+  100%{ opacity:1; transform:translateY(0); }
+}
+.time-skip{
+  text-align:center; color:#7a5a10; font-family:"Noto Serif SC",serif;
+  font-size:16px; font-weight:700; padding:10px 0; margin:10px 0;
+  border-top:1px solid #c0b090; border-bottom:1px solid #c0b090;
+  letter-spacing:3px;
+}
+
+/* 方向三：判定演出系统 */
+.dice-overlay{
+  position:fixed; inset:0; background:rgba(20,16,8,.5); backdrop-filter:blur(4px);
+  z-index:300; display:flex; align-items:center; justify-content:center;
+  animation: fadeIn .2s ease-out;
+}
+.dice-container{
+  text-align:center;
+}
+.dice-3d{
+  width:90px; height:90px; margin:0 auto 20px;
+  background:linear-gradient(135deg, #ede4cc, #d4c8a8);
+  border:3px solid #7a5a10; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:36px; font-weight:900; color:var(--text-primary);
+  box-shadow:0 8px 32px rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.4);
+  animation: diceRoll .8s ease-out;
+  font-family:"Noto Serif SC",serif;
+}
+@keyframes diceRoll{
+  0%{ transform:rotateX(0) rotateY(0) scale(.8); opacity:0; }
+  20%{ opacity:1; }
+  50%{ transform:rotateX(360deg) rotateY(180deg) scale(1.15); }
+  100%{ transform:rotateX(720deg) rotateY(360deg) scale(1); }
+}
+.dice-result-banner{
+  padding:16px 32px; border-radius:10px; font-size:20px; font-weight:900;
+  letter-spacing:2px; margin-bottom:12px;
+  animation: bannerSlide .4s ease-out;
+  font-family:"Noto Serif SC",serif;
+}
+.dice-crit{ background:rgba(42,90,42,.15); border:2px solid #4a7a3a; color:#2a5a2a; }
+.dice-extreme{ background:rgba(42,74,106,.12); border:2px solid #3a6a8a; color:#2a4a6a; }
+.dice-hard{ background:rgba(58,90,74,.1); border:2px solid #4a7a5a; color:#3a5a4a; }
+.dice-normal{ background:rgba(90,90,48,.08); border:2px solid #7a7a40; color:#5a5a30; }
+.dice-fail{ background:rgba(122,90,16,.1); border:2px solid #8a6a20; color:#6a5a10; }
+.dice-critfail{ background:rgba(122,42,26,.12); border:2px solid #8a3a2a; color:var(--danger); }
+@keyframes bannerSlide{
+  from{ opacity:0; transform:translateY(-20px) scale(.9); }
+  to{ opacity:1; transform:translateY(0) scale(1); }
+}
+.dice-numbers{
+  font-size:15px; color:var(--text-secondary); margin:8px 0;
+}
+.dice-numbers .target{ color:#7a5a10; font-weight:900; }
+.dice-numbers .rolled{ font-weight:900; }
+.dice-numbers .rolled.success{ color:#2a5a2a; }
+.dice-numbers .rolled.fail{ color:var(--danger); }
+.dice-flavor{
+  font-size:14px; color:#5a4a30; font-style:italic; margin-top:8px;
+}
+.combo-counter{
+  position:fixed; top:80px; right:20px; z-index:250;
+  background:linear-gradient(135deg, #ede4cc, #d4c8a8);
+  border:2px solid #7a5a10; border-radius:8px;
+  padding:8px 16px; font-weight:900; color:#5a4a10;
+  animation: comboPop .3s ease-out;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+@keyframes comboPop{
+  0%{ transform:scale(.5); opacity:0; }
+  50%{ transform:scale(1.2); }
+  100%{ transform:scale(1); opacity:1; }
+}
+.gain-loss-item{
+  animation: gainSlide .3s ease-out backwards;
+  padding:4px 0; font-size:14px;
+}
+@keyframes gainSlide{
+  from{ opacity:0; transform:translateX(-10px); }
+  to{ opacity:1; transform:translateX(0); }
+}
+.gain-item{ color:#2a5a2a; font-weight:700; }
+.loss-item{ color:var(--danger); font-weight:700; }
+
+/* 方向五：面板质感与光影系统 */
+.panel-v34{
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E") repeat,
+    linear-gradient(180deg, #ede4cc, #e4d8bc);
+  border:2px solid #a09070; border-radius:10px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -1px 0 rgba(0,0,0,.08),
+    0 8px 32px rgba(0,0,0,.18);
+  position:relative;
+}
+.panel-v34::before{
+  content:''; position:absolute; top:-3px; left:-3px; right:-3px; bottom:-3px;
+  border:1px solid rgba(122,90,16,.25); border-radius:12px; pointer-events:none;
+}
+.panel-v34-ornate::after{
+  content:''; position:absolute; top:4px; left:4px; right:4px; bottom:4px;
+  border:1px solid rgba(122,90,16,.15); border-radius:8px; pointer-events:none;
+}
+.btn-3d{
+  background:linear-gradient(180deg, #e8dcc0, #d4c8a8);
+  border:1px solid #a09070; border-radius:6px;
+  color:var(--text-primary); font-weight:700; cursor:pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.4),
+    0 2px 4px rgba(0,0,0,.12);
+  transition:all .15s ease;
+}
+.btn-3d:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.4),
+    0 4px 8px rgba(0,0,0,.18);
+  border-color:#7a5a10;
+}
+.btn-3d:active{
+  transform:translateY(1px);
+  box-shadow:
+    inset 0 2px 4px rgba(0,0,0,.12);
+}
+.btn-3d-gold{
+  background:linear-gradient(180deg, #e0c880, #c8a850);
+  border-color:#7a5a10; color:#3a2a08;
+}
+.glass-panel{
+  background:rgba(237,228,204,.92);
+  backdrop-filter:blur(10px) saturate(1.2);
+  -webkit-backdrop-filter:blur(10px) saturate(1.2);
+  border:1px solid rgba(160,144,112,.5);
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+}
+.progress-bar-v34{
+  height:12px; background:#c8bca0; border-radius:6px; overflow:hidden;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.15);
+  position:relative;
+}
+.progress-fill-v34{
+  height:100%; border-radius:6px; position:relative;
+  transition:width .4s ease;
+}
+.progress-fill-v34::after{
+  content:''; position:absolute; top:0; left:0; right:0; height:50%;
+  background:linear-gradient(180deg, rgba(255,255,255,.35), transparent);
+  border-radius:6px 6px 0 0;
+}
+.progress-hp{ background:linear-gradient(90deg, #8a3a2a, #c96565); }
+.progress-mp{ background:linear-gradient(90deg, #2a5a8a, #5a9aca); }
+.progress-san{ background:linear-gradient(90deg, #5a3a7a, #9a6aca); }
+.progress-exp{ background:linear-gradient(90deg, #8a6a20, #c9a240); }
+.low-hp-warning{
+  animation: lowHpPulse 1s ease-in-out infinite;
+}
+@keyframes lowHpPulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(122,42,26,.4); }
+  50%{ box-shadow:0 0 12px 2px rgba(122,42,26,.3); }
+}
+.scroll-panel{
+  position:relative; background:linear-gradient(180deg, #ede4cc, #e4d8bc);
+  border-left:3px solid #8a7a50; border-right:3px solid #8a7a50;
+  padding:20px 24px;
+}
+.scroll-panel::before, .scroll-panel::after{
+  content:''; position:absolute; left:-8px; right:-8px; height:16px;
+  background:linear-gradient(180deg, #6a5a30, #4a3a20);
+  border-radius:4px; box-shadow:0 2px 6px rgba(0,0,0,.2);
+}
+.scroll-panel::before{ top:-8px; }
+.scroll-panel::after{ bottom:-8px; }
+
+/* 方向四：交互地图 */
+.map-container-v34{
+  position:relative; width:100%; height:520px;
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 300' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%23e0d4b8' width='400' height='300'/%3E%3Cpath d='M0,150 Q100,120 200,140 T400,130' stroke='%23c0b090' fill='none' stroke-width='1' opacity='.5'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%23d4c8a0' opacity='.4'/%3E%3Ccircle cx='350' cy='250' r='40' fill='%23d4c8a0' opacity='.3'/%3E%3C/svg%3E") center/cover,
+    linear-gradient(135deg, #e8dcc0, #d8ccb0);
+  border:3px solid #7a5a10; border-radius:10px; overflow:hidden;
+  box-shadow:inset 0 0 60px rgba(100,80,40,.2), 0 8px 32px rgba(0,0,0,.2);
+}
+.map-location{
+  position:absolute; cursor:pointer; transition:all .2s ease;
+  transform:translate(-50%, -50%); z-index:5;
+}
+.map-location:hover{
+  transform:translate(-50%, -50%) scale(1.25);
+  z-index:10;
+}
+.map-location-icon{
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; background:linear-gradient(135deg, #ede4cc, #d4c8a8);
+  border:2px solid #7a5a10; box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.map-location.current .map-location-icon{
+  animation: locationPulse 1.5s ease-in-out infinite;
+  border-color:#c9a227;
+}
+@keyframes locationPulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(201,162,39,.5); }
+  50%{ box-shadow:0 0 0 12px rgba(201,162,39,0); }
+}
+.map-location.undiscovered{
+  filter:grayscale(1) brightness(.7);
+}
+.map-location-name{
+  position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  white-space:nowrap; font-size:12px; font-weight:700; color:var(--text-secondary);
+  background:rgba(237,228,204,.9); padding:2px 8px; border-radius:4px;
+  margin-top:4px; border:1px solid #a09070;
+}
+.map-info-card{
+  position:absolute; bottom:16px; left:16px; right:16px;
+  background:rgba(237,228,204,.95); backdrop-filter:blur(8px);
+  border:2px solid #7a5a10; border-radius:8px; padding:14px 18px;
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+  animation: cardSlideUp .3s ease-out;
+}
+@keyframes cardSlideUp{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.map-fog{
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(circle at var(--player-x,50%) var(--player-y,50%), transparent 25%, rgba(100,80,50,.5) 60%);
+}
+.map-route{
+  position:absolute; height:3px; background:repeating-linear-gradient(90deg, #7a5a10 0, #7a5a10 8px, transparent 8px, transparent 14px);
+  transform-origin:left center; z-index:3;
+}
+.map-traveler{
+  position:absolute; width:24px; height:24px; font-size:16px;
+  transform:translate(-50%,-50%); z-index:8;
+  transition:left 1s linear, top 1s linear;
+}
+.map-controls{
+  position:absolute; top:12px; right:12px; display:flex; gap:6px; z-index:20;
+}
+.map-zoom-btn{
+  width:32px; height:32px; border-radius:6px; border:1px solid #7a5a10;
+  background:rgba(237,228,204,.9); color:var(--text-secondary); font-size:18px; font-weight:900;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+.map-zoom-btn:hover{ background:#ede4cc; }
+
+/* 方向七：存档与图鉴可视化 */
+.save-slot-v34{
+  display:flex; gap:14px; align-items:center; padding:14px;
+  background:linear-gradient(135deg, #ede4cc, #e4d8bc);
+  border:2px solid #a09070; border-radius:10px; cursor:pointer;
+  transition:all .2s ease; margin-bottom:10px;
+}
+.save-slot-v34:hover{
+  transform:translateY(-2px); border-color:#7a5a10;
+  box-shadow:0 6px 16px rgba(0,0,0,.15);
+}
+.save-slot-thumb{
+  width:60px; height:60px; border-radius:8px; flex-shrink:0;
+  background:linear-gradient(135deg, #d4c8a8, #c0b090);
+  border:1px solid #a09070; display:flex; align-items:center; justify-content:center;
+  font-size:28px;
+}
+.save-slot-info{ flex:1; min-width:0; }
+.save-slot-name{ font-size:16px; font-weight:900; color:var(--text-primary); margin-bottom:4px; }
+.save-slot-meta{ font-size:12px; color:#5a4a30; display:flex; gap:12px; flex-wrap:wrap; }
+.save-slot-progress{ height:6px; background:#c8bca0; border-radius:3px; margin-top:6px; overflow:hidden; }
+.save-slot-progress-fill{ height:100%; background:linear-gradient(90deg, #8a6a20, #c9a240); border-radius:3px; }
+.achievement-grid{
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:10px;
+}
+.achievement-card{
+  background:linear-gradient(135deg, #ede4cc, #e4d8bc);
+  border:2px solid #a09070; border-radius:8px; padding:12px 8px;
+  text-align:center; transition:all .3s ease; cursor:default;
+}
+.achievement-card.unlocked{
+  border-color:#7a5a10;
+  animation: achUnlock .5s ease-out;
+}
+.achievement-card.locked{
+  filter:grayscale(1) brightness(.7);
+}
+.achievement-icon{ font-size:32px; margin-bottom:6px; }
+.achievement-name{ font-size:13px; font-weight:900; color:var(--text-primary); margin-bottom:4px; }
+.achievement-desc{ font-size:11px; color:#5a4a30; line-height:1.4; }
+.achievement-rarity-common{ border-color:#8a8a7a; }
+.achievement-rarity-rare{ border-color:#3a6a8a; }
+.achievement-rarity-epic{ border-color:#6a3a8a; }
+.achievement-rarity-legendary{ border-color:#c9a227; box-shadow:0 0 12px rgba(201,162,39,.2); }
+@keyframes achUnlock{
+  0%{ transform:rotateY(180deg) scale(.8); }
+  100%{ transform:rotateY(0) scale(1); }
+}
+.codex-entry{
+  display:flex; gap:12px; padding:12px; margin-bottom:8px;
+  background:linear-gradient(135deg, #ede4cc, #e4d8bc);
+  border:1px solid #a09070; border-radius:8px;
+}
+.codex-entry.locked{ filter:grayscale(1) brightness(.7); }
+.codex-icon{
+  width:48px; height:48px; border-radius:6px; flex-shrink:0;
+  background:#d4c8a8; border:1px solid #a09070;
+  display:flex; align-items:center; justify-content:center; font-size:24px;
+}
+.codex-info{ flex:1; }
+.codex-name{ font-size:15px; font-weight:900; color:var(--text-primary); }
+.codex-type{ font-size:11px; color:#7a5a10; font-weight:700; }
+.codex-desc{ font-size:13px; color:var(--text-secondary); margin-top:4px; line-height:1.5; }
+.rarity-common{ color:#5a5a5a; }
+.rarity-uncommon{ color:#3a7a3a; }
+.rarity-rare{ color:#3a6a9a; }
+.rarity-epic{ color:#7a3a9a; }
+.rarity-legendary{ color:#9a7a20; }
+
+/* 方向六：音效控制 */
+.audio-toggle{
+  position:fixed; bottom:20px; right:20px; z-index:200;
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg, #ede4cc, #d4c8a8);
+  border:2px solid #7a5a10; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; box-shadow:0 4px 12px rgba(0,0,0,.2);
+  transition:all .2s ease;
+}
+.audio-toggle:hover{ transform:scale(1.1); }
+.audio-toggle.muted{ opacity:.5; }
+
+/* v34 设置面板新增 */
+.v34-setting-row{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 0; border-bottom:1px solid #c0b090;
+}
+.v34-setting-label{ font-size:14px; font-weight:700; color:var(--text-primary); }
+.v34-setting-desc{ font-size:12px; color:#5a4a30; margin-top:2px; }
+.v34-slider{
+  width:120px; height:6px; -webkit-appearance:none; appearance:none;
+  background:#c8bca0; border-radius:3px; outline:none;
+}
+.v34-slider::-webkit-slider-thumb{
+  -webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+  background:#7a5a10; cursor:pointer; border:2px solid #ede4cc;
+}
+.v34-checkbox{
+  width:20px; height:20px; accent-color:#7a5a10; cursor:pointer;
+}
+
+/* 简洁模式（关闭所有动画） */
+body.simple-mode *{
+  animation:none !important;
+  transition:none !important;
+}
+body.simple-mode .particle{ display:none !important; }
+body.simple-mode #atmosphere-overlay{ display:none !important; }
+
+/* ===== v35 技术架构样式 ===== */
+.v35-dev-console {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background: rgba(20, 25, 40, 0.98);
+  border-top: 2px solid #7a5a10;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 13px;
+  color: #e0e0e0;
+  z-index: 99999;
+  transform: translateY(100%);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.v35-dev-console.open { transform: translateY(0); }
+.v35-dev-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(122, 90, 16, 0.2);
+  border-bottom: 1px solid #7a5a10;
+  gap: 12px;
+}
+.v35-dev-title { color: #f0d68a; font-weight: bold; }
+.v35-dev-tabs { display: flex; gap: 4px; flex: 1; }
+.v35-dev-tab {
+  background: none;
+  border: 1px solid #555;
+  color: #aaa;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.v35-dev-tab:hover { border-color: #7a5a10; color: #f0d68a; }
+.v35-dev-tab.active { background: rgba(122, 90, 16, 0.3); color: #f0d68a; border-color: #7a5a10; }
+.v35-dev-close {
+  background: none;
+  border: 1px solid #555;
+  color: #aaa;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.v35-dev-close:hover { color: #ff8a8a; border-color: #ff8a8a; }
+.v35-dev-body { flex: 1; overflow: hidden; position: relative; }
+.v35-dev-tab-content { display: none; height: 100%; overflow-y: auto; padding: 8px; }
+.v35-dev-tab-content.active { display: block; }
+.v35-dev-output {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+  padding: 8px;
+}
+.v35-dev-log { margin: 2px 0; word-break: break-all; }
+.v35-dev-log-cmd { color: #7ab8ff; }
+.v35-dev-log-error { color: #ff8a8a; }
+.v35-dev-log-info { color: #b8c5d6; }
+.v35-dev-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-top: 1px solid #333;
+}
+.v35-dev-input-row input {
+  flex: 1;
+  background: #1a2a44;
+  border: 1px solid #555;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: inherit;
+}
+.v35-dev-input-row button {
+  background: #7a5a10;
+  border: none;
+  color: #fff;
+  padding: 6px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.v35-dev-node-tools { display: flex; gap: 8px; margin-bottom: 8px; }
+.v35-dev-node-tools input {
+  flex: 1;
+  background: #1a2a44;
+  border: 1px solid #555;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.v35-dev-node-tools button {
+  background: #7a5a10;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.v35-dev-node-item, .v35-dev-var-item, .v35-dev-event-item {
+  padding: 4px 8px;
+  border-bottom: 1px solid #222;
+  cursor: pointer;
+}
+.v35-dev-node-item:hover, .v35-dev-var-item:hover { background: rgba(122, 90, 16, 0.2); }
+
+/* ===== v34 UI沉浸感系统 ===== */
+
+// 全局状态
+var V34 = {
+  sceneAtmosphere: {theme:"city", time:"noon", weather:"clear", abyssCorruption:0, particlesEnabled:true},
+  textSettings: {typewriterEnabled:true, typewriterSpeed:25, autoScroll:true, textEffects:true},
+  diceSettings: {animationEnabled:true, showNumbers:true, sfxEnabled:false},
+  uiSettings: {panelStyle:"parchment", glassEffect:true, animations:true, compactMode:false},
+  audioSettings: {enabled:false, bgmVolume:0.3, sfxVolume:0.3, ambientVolume:0.2, currentBgm:null, currentAmbient:null},
+  codex: {achievements:{}, bestiary:{}, items:{}, locations:{}, characters:{}},
+  combo: {success:0, fail:0},
+  typewriter: {active:false, currentEl:null, fullText:"", timer:null}
+};
+
+// ========== 方向一：场景氛围动态系统 ==========
+function v34_initAtmosphere(){
+  // 创建氛围叠加层
+  if(!document.getElementById('atmosphere-overlay')){
+    var overlay = document.createElement('div');
+    overlay.id = 'atmosphere-overlay';
+    document.body.appendChild(overlay);
+  }
+  v34_applyAtmosphere();
+}
+
+function v34_setTheme(theme){
+  V34.sceneAtmosphere.theme = theme;
+  v34_applyAtmosphere();
+}
+
+function v34_setTime(time){
+  V34.sceneAtmosphere.time = time;
+  document.body.classList.remove('time-morning','time-noon','time-dusk','time-night');
+  document.body.classList.add('time-' + time);
+}
+
+function v34_setWeather(weather){
+  V34.sceneAtmosphere.weather = weather;
+  document.body.classList.remove('weather-rain','weather-snow','weather-fog','weather-clear');
+  document.body.classList.add('weather-' + weather);
+  v34_updateParticles();
+}
+
+function v34_setAbyssCorruption(level){
+  V34.sceneAtmosphere.abyssCorruption = level;
+  document.body.classList.remove('abyss-high','abyss-critical');
+  if(level >= 60) document.body.classList.add('abyss-high');
+  if(level >= 90) document.body.classList.add('abyss-critical');
+}
+
+function v34_applyAtmosphere(){
+  document.body.classList.remove('time-morning','time-noon','time-dusk','time-night');
+  document.body.classList.add('time-' + V34.sceneAtmosphere.time);
+  document.body.classList.remove('weather-rain','weather-snow','weather-fog','weather-clear');
+  document.body.classList.add('weather-' + V34.sceneAtmosphere.weather);
+  v34_updateParticles();
+}
+
+function v34_updateParticles(){
+  /* /v74ui:perf/ V74 低性能：simple-mode 不创建粒子 DOM */
+  if(document.body && document.body.classList.contains("simple-mode")) return;
+  // 清除旧粒子
+  var old = document.querySelectorAll('.v34-particle');
+  for(var i=0;i<old.length;i++) old[i].remove();
+  if(!V34.sceneAtmosphere.particlesEnabled) return;
+  var weather = V34.sceneAtmosphere.weather;
+  var count = 0;
+  if(weather === 'rain') count = 40;
+  else if(weather === 'snow') count = 25;
+  else if(weather === 'fog') count = 8;
+  for(var j=0;j<count;j++){
+    var p = document.createElement('div');
+    p.className = 'v34-particle particle ' + (weather==='rain'?'rain-drop':'snow-flake');
+    p.style.left = Math.random()*100 + '%';
+    p.style.animationDelay = (Math.random()*3) + 's';
+    p.style.animationDuration = (weather==='rain'?(0.3+Math.random()*0.3):(3+Math.random()*3)) + 's';
+    if(weather==='snow'){ p.style.width = (3+Math.random()*4)+'px'; p.style.height = p.style.width; }
+    document.body.appendChild(p);
+  }
+}
+
+function v34_toggleParticles(enabled){
+  V34.sceneAtmosphere.particlesEnabled = enabled;
+  v34_updateParticles();
+}
+
+// ========== 方向二：文字演出与动效升级 ==========
+function v34_typewriter(element, text, speed){
+  if(!V34.textSettings.typewriterEnabled){
+    element.innerHTML = text;
+    return;
+  }
+  speed = speed || V34.textSettings.typewriterSpeed;
+  V34.typewriter.active = true;
+  V34.typewriter.currentEl = element;
+  V34.typewriter.fullText = text;
+  element.innerHTML = '';
+  var cursor = document.createElement('span');
+  cursor.className = 'typewriter-cursor';
+  element.appendChild(cursor);
+  var i = 0;
+  function typeNext(){
+    if(i < text.length){
+      var batch = speed <= 15 ? 4 : (speed <= 30 ? 3 : (speed <= 50 ? 2 : 1));
+      var n = 0;
+      while(i < text.length && n < batch){
+        cursor.insertAdjacentText('beforebegin', text[i]);
+        i++; n++;
+      }
+      if(typeof requestAnimationFrame === 'function'){
+        V34.typewriter.timer = requestAnimationFrame(typeNext);
+      } else {
+        V34.typewriter.timer = setTimeout(typeNext, speed);
+      } /* /v61inj:perf-tw1/ */
+    } else {
+      cursor.remove();
+      V34.typewriter.active = false;
+      V34.typewriter.currentEl = null;
+    }
+  }
+  typeNext();
+}
+
+function v34_skipTypewriter(){
+  if(V34.typewriter.active && V34.typewriter.currentEl){
+    try{ if(typeof V34.typewriter.timer === 'number') cancelAnimationFrame(V34.typewriter.timer); }catch(e){}
+    try{ try{ if(typeof V34.typewriter.timer === 'number') cancelAnimationFrame(V34.typewriter.timer); }catch(e){}
+    try{ clearTimeout(V34.typewriter.timer); }catch(e){} /* /v61inj:perf-twskip2/ */ }catch(e){} /* /v61inj:perf-twskip1/ */
+    V34.typewriter.currentEl.innerHTML = V34.typewriter.fullText;
+    V34.typewriter.active = false;
+  }
+}
+
+function v34_applyTextEffect(text, effect){
+  var effects = {
+    whisper:'tx-whisper', shout:'tx-shout', ancient:'tx-ancient',
+    abyss:'tx-abyss', thought:'tx-thought', important:'tx-important',
+    fear:'tx-fear', memory:'tx-memory'
+  };
+  var cls = effects[effect] || '';
+  if(cls) return '<span class="' + cls + '">' + text + '</span>';
+  return text;
+}
+
+function v34_animateOptions(){
+  var opts = document.querySelectorAll('#options .opt');
+  for(var i=0;i<opts.length;i++){
+    opts[i].classList.add('option-enter');
+    opts[i].style.animationDelay = (i*0.08) + 's';
+  }
+}
+
+function v34_markOptionChosen(optEl){
+  optEl.classList.add('option-chosen');
+}
+
+function v34_sceneTransition(callback){
+  var story = document.getElementById('story');
+  if(story){
+    story.classList.add('scene-transition');
+    setTimeout(function(){
+      if(callback) callback();
+      story.classList.remove('scene-transition');
+    }, 300);
+  } else if(callback){ callback(); }
+}
+
+function v34_autoScroll(){
+  if(V34.textSettings.autoScroll){
+    var story = document.getElementById('story');
+    if(story) story.scrollTop = story.scrollHeight;
+  }
+}
+
+// ========== 方向三：判定演出系统 ==========
+var V34_DICE_TIERS = {
+  crit:{name:"大成功", cls:"dice-crit", texts:["完美！","神来之笔！","天助我也！","不可思议！","有如神助！"]},
+  extreme:{name:"极难成功", cls:"dice-extreme", texts:["险胜！","勉强成功！","差一点！","好险！"]},
+  hard:{name:"困难成功", cls:"dice-hard", texts:["成功。","还好。","勉强通过。"]},
+  normal:{name:"成功", cls:"dice-normal", texts:["成功。","通过。","没问题。"]},
+  fail:{name:"失败", cls:"dice-fail", texts:["失败……","差一点……","可惜……","没能成功……"]},
+  critfail:{name:"大失败", cls:"dice-critfail", texts:["糟糕！","完蛋了！","大祸临头！","怎会如此！"]}
+};
+
+function v34_rollDice(target, rolled, tier, callback){
+  if(!V34.diceSettings.animationEnabled){
+    if(callback) callback();
+    return;
+  }
+  var tierData = V34_DICE_TIERS[tier] || V34_DICE_TIERS.normal;
+  var flavor = tierData.texts[Math.floor(Math.random()*tierData.texts.length)];
+  
+  // 创建遮罩
+  var overlay = document.createElement('div');
+  overlay.className = 'dice-overlay';
+  overlay.id = 'v34-dice-overlay';
+  overlay.innerHTML = 
+    '<div class="dice-container">' +
+    '<div class="dice-3d" id="v34-dice-num">?</div>' +
+    '<div class="dice-result-banner ' + tierData.cls + '" id="v34-dice-banner" style="display:none">' + tierData.name + '</div>' +
+    '<div class="dice-numbers" id="v34-dice-nums" style="display:none">' +
+    '目标值：<span class="target">' + target + '</span> | 掷出：<span class="rolled ' + (tier==='fail'||tier==='critfail'?'fail':'success') + '">' + rolled + '</span>' +
+    '</div>' +
+    '<div class="dice-flavor" id="v34-dice-flavor" style="display:none">' + flavor + '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  
+  // 骰子旋转后显示结果
+  setTimeout(function(){
+    document.getElementById('v34-dice-num').textContent = rolled;
+  }, 600);
+  setTimeout(function(){
+    document.getElementById('v34-dice-banner').style.display = 'block';
+    document.getElementById('v34-dice-nums').style.display = 'block';
+    document.getElementById('v34-dice-flavor').style.display = 'block';
+  }, 800);
+  
+  // 点击或1.8s后关闭
+  var closed = false;
+  function closeDice(){
+    if(closed) return;
+    closed = true;
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity .3s';
+    setTimeout(function(){ overlay.remove(); }, 300);
+    if(callback) callback();
+  }
+  overlay.addEventListener('click', closeDice);
+  setTimeout(closeDice, 2000);
+  
+  // 更新连击
+  if(tier === 'crit' || tier === 'extreme' || tier === 'hard' || tier === 'normal'){
+    V34.combo.success++;
+    V34.combo.fail = 0;
+    if(V34.combo.success >= 2) v34_showCombo(V34.combo.success, 'success');
+  } else {
+    V34.combo.fail++;
+    V34.combo.success = 0;
+    if(V34.combo.fail >= 2) v34_showCombo(V34.combo.fail, 'fail');
+  }
+}
+
+function v34_showCombo(count, type){
+  var old = document.getElementById('v34-combo');
+  if(old) old.remove();
+  var combo = document.createElement('div');
+  combo.className = 'combo-counter';
+  combo.id = 'v34-combo';
+  combo.textContent = (type==='success'?'连击 ':'厄运累积 ') + 'x' + count;
+  combo.style.color = type==='success' ? '#2a5a2a' : '#6a2a1a';
+  document.body.appendChild(combo);
+  setTimeout(function(){ combo.remove(); }, 2000);
+}
+
+function v34_showGainLoss(gains, losses){
+  var html = '<div style="margin:10px 0;padding:10px 14px;background:rgba(180,160,120,.1);border-radius:6px;border-left:3px solid #7a5a10">';
+  if(gains){
+    for(var i=0;i<gains.length;i++){
+      html += '<div class="gain-loss-item gain-item" style="animation-delay:' + (i*0.1) + 's">+ ' + gains[i] + '</div>';
+    }
+  }
+  if(losses){
+    for(var j=0;j<losses.length;j++){
+      html += '<div class="gain-loss-item loss-item" style="animation-delay:' + ((gains?gains.length:0)+j)*0.1 + 's">- ' + losses[j] + '</div>';
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+// ========== 方向五：面板质感与光影 ==========
+function v34_applyPanelStyle(el, style){
+  if(!el) return;
+  el.classList.add('panel-v34');
+  if(style === 'ornate') el.classList.add('panel-v34-ornate');
+}
+
+function v34_numberPop(el){
+  if(!el) return;
+  el.style.animation = 'none';
+  el.offsetHeight; // 触发重排
+  el.style.animation = 'comboPop .3s ease-out';
+}
+
+function v34_animateProgressBar(bar, newValue){
+  if(!bar) return;
+  bar.style.width = newValue + '%';
+}
+
+function v34_setCompactMode(enabled){
+  V34.uiSettings.compactMode = enabled;
+  document.body.classList.toggle('simple-mode', enabled);
+}
+
+// ========== 方向四：交互地图 ==========
+var V34_MAP_LOCATIONS = {
+  free_city:{id:"free_city",name:"交汇城",type:"city",x:45,y:55,icon:"🏰",explored:true,danger:1,desc:"自由城邦的中心，大陆最繁华的贸易城市。"},
+  iron_pass:{id:"iron_pass",name:"铁门关",type:"fortress",x:20,y:30,icon:"⚔️",explored:true,danger:3,desc:"北方公国的边境要塞，抵御深渊生物的前线。"},
+  south_port:{id:"south_port",name:"南方港城",type:"city",x:60,y:75,icon:"⚓",explored:true,danger:2,desc:"南方商业城邦的港口，海上贸易的枢纽。"},
+  holy_city:{id:"holy_city",name:"圣城",type:"holy",x:75,y:40,icon:"✨",explored:false,danger:2,desc:"光明教会的中心，朝圣者的圣地。"},
+  silver_leaf:{id:"silver_leaf",name:"银叶城",type:"elf",x:30,y:65,icon:"🌿",explored:false,danger:1,desc:"精灵王国的都城，世界树的所在地。"},
+  ironpeak:{id:"ironpeak",name:"铁峰堡",type:"dwarf",x:15,y:50,icon:"⛏️",explored:false,danger:2,desc:"矮人王国的首都，永恒熔炉所在。"},
+  orc_homeland:{id:"orc_homeland",name:"兽人王庭",type:"orc",x:85,y:25,icon:"🗡️",explored:false,danger:3,desc:"兽人草原的王庭，战士的故乡。"},
+  death_desert:{id:"death_desert",name:"死亡沙漠",type:"danger",x:50,y:85,icon:"🏜️",explored:false,danger:5,desc:"大陆南部的死亡沙漠，传说中有古国遗迹。"},
+  elda_academy:{id:"elda_academy",name:"艾尔达学院",type:"academy",x:42,y:48,icon:"📚",explored:true,danger:1,desc:"大陆最古老的魔法学院，七印研究的中心。"}
+};
+
+function v34_openMap(){
+  /* V67 已退役：统一走 v67_map.open() */
+  try{ if(window.v67_map){ v67_map.open(); return; } }catch(e){}
+  try{
+  var box = document.createElement('div');
+  box.className = 'box';
+  var html = '<h2>大陆地图</h2>';
+  html += '<div class="map-container-v34" id="v34-map">';
+  html += '<div class="map-controls"><button class="map-zoom-btn" onclick="v34_zoomMap(1)">+</button><button class="map-zoom-btn" onclick="v34_zoomMap(-1)">−</button></div>';
+  html += '<div class="map-fog"></div>';
+  
+  // 渲染地点
+  for(var id in V34_MAP_LOCATIONS){
+    var loc = V34_MAP_LOCATIONS[id];
+    var current = (S && S.loc === id) ? ' current' : '';
+    var undiscovered = !loc.explored ? ' undiscovered' : '';
+    html += '<div class="map-location' + current + undiscovered + '" style="left:' + loc.x + '%;top:' + loc.y + '%" onclick="v34_selectLocation(\'' + id + '\')">';
+    html += '<div class="map-location-icon">' + (loc.explored ? loc.icon : '❓') + '</div>';
+    if(loc.explored) html += '<div class="map-location-name">' + loc.name + '</div>';
+    html += '</div>';
+  }
+  
+  html += '<div class="map-info-card" id="v34-map-info" style="display:none">';
+  html += '<div id="v34-map-info-content"></div>';
+  html += '</div>';
+  html += '</div>';
+  html += '<div style="text-align:center;margin-top:14px"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
+  
+  box.innerHTML = html;
+  openModal(box);
+  }catch(e){}
+}
+
+function v34_selectLocation(id){
+  var loc = V34_MAP_LOCATIONS[id];
+  if(!loc) return;
+  var info = document.getElementById('v34-map-info');
+  var content = document.getElementById('v34-map-info-content');
+  if(!info || !content) return;
+  
+  var dangerStars = '';
+  for(var i=0;i<loc.danger;i++) dangerStars += '⚠️';
+  
+  content.innerHTML = 
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
+    '<span style="font-size:18px;font-weight:900;color:var(--text-primary)">' + loc.icon + ' ' + loc.name + '</span>' +
+    '<span style="font-size:12px;color:var(--danger)">' + dangerStars + '</span>' +
+    '</div>' +
+    '<div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px">' + loc.desc + '</div>' +
+    '<div style="display:flex;gap:8px">' +
+    '<button class="btn btn-3d btn-3d-gold" onclick="v34_travelTo(\'' + id + '\')">前往</button>' +
+    '<button class="btn btn-3d" onclick="document.getElementById(\'v34-map-info\').style.display=\'none\'">关闭</button>' +
+    '</div>';
+  info.style.display = 'block';
+}
+
+function v34_travelTo(id){
+  var loc = V34_MAP_LOCATIONS[id];
+  if(!loc) return;
+  closeModal();
+  if(typeof writePar === 'function'){
+    writePar('你决定前往' + loc.name + '。');
+  }
+  /* V67 已接入真实旅行 */
+  try{ if(window.travelTo){ travelTo(id); return; } }catch(e){}
+}
+
+function v34_zoomMap(dir){
+  var map = document.getElementById('v34-map');
+  if(!map) return;
+  var current = parseFloat(map.dataset.zoom) || 1;
+  var next = Math.max(0.8, Math.min(2, current + dir*0.2));
+  map.dataset.zoom = next;
+  map.style.transform = 'scale(' + next + ')';
+  map.style.transformOrigin = 'center center';
+}
+
+// ========== 方向六：音效与音乐系统 ==========
+var V34_AUDIO = {
+  ctx: null,
+  bgmAudio: null,
+  ambientAudio: null
+};
+
+function v34_initAudio(){
+  try{
+    V34_AUDIO.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  } catch(e){
+    console.log('Audio not supported');
+  }
+}
+
+function v34_toggleAudio(){
+  V34.audioSettings.enabled = !V34.audioSettings.enabled;
+  var btn = document.querySelector('.audio-toggle');
+  if(btn){
+    btn.textContent = V34.audioSettings.enabled ? '🔊' : '🔇';
+    btn.classList.toggle('muted', !V34.audioSettings.enabled);
+  }
+  if(V34.audioSettings.enabled){
+    v34_initAudio();
+    v34_playSfx('click');
+  } else {
+    v34_stopBgm();
+    v34_stopAmbient();
+  }
+}
+
+function v34_playSfx(type){
+  if(!V34.audioSettings.enabled || !V34_AUDIO.ctx) return;
+  // v44: 扩展音效池（Web Audio 合成，无外部资源）
+  var ctx = V34_AUDIO.ctx;
+  var vol = V34.audioSettings.sfxVolume;
+  function tone(freq, dur, type2, when, gv){
+    try{
+      var osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.type = type2||'sine';
+      osc.frequency.value = freq;
+      var t0 = (when===undefined?ctx.currentTime:when);
+      var g = (gv===undefined?vol:gv);
+      gain.gain.setValueAtTime(g, t0);
+      gain.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(t0); osc.stop(t0 + dur);
+    }catch(e){}
+  }
+  function seq(steps){
+    for(var i=0;i<steps.length;i++){
+      var s=steps[i];
+      tone(s[0], s[1], s[2], ctx.currentTime + (s[3]||0), s[4]);
+    }
+  }
+  switch(type){
+    case 'click': tone(800, 0.05, 'square'); break;
+    case 'hover': tone(600, 0.03); break;
+    case 'success': tone(880, 0.15); break;
+    case 'fail': tone(220, 0.2, 'sawtooth'); break;
+    case 'crit': seq([[1047,0.12,'sine',0],[1319,0.2,'sine',0.1]]); break;
+    case 'critfail': tone(150, 0.4, 'sawtooth'); break;
+    case 'item': tone(1200, 0.1); break;
+    case 'levelup': seq([[523,0.15,'sine',0],[659,0.15,'sine',0.12],[784,0.3,'sine',0.24]]); break;
+    case 'buy': seq([[660,0.08,'sine',0],[990,0.12,'sine',0.07]]); break;
+    case 'equip': seq([[500,0.08,'triangle',0],[750,0.1,'triangle',0.08]]); break;
+    case 'eat': tone(300,0.1,'triangle'); break;
+    case 'page': tone(1000,0.04,'sine'); break;
+    case 'coin': seq([[1200,0.05,'square',0],[1600,0.1,'square',0.05]]); break;
+    case 'morning': seq([[880,0.1,'sine',0],[1175,0.18,'sine',0.1]]); break;
+    case 'night': tone(196,0.3,'sine',undefined,vol*0.5); break;
+    case 'quest': seq([[784,0.1,'sine',0],[988,0.16,'sine',0.1]]); break;
+    case 'heal': seq([[660,0.12,'sine',0],[880,0.2,'sine',0.1]]); break;
+    case 'hurt': tone(180,0.2,'sawtooth'); break;
+    case 'breakthrough': seq([[523,0.12,'sine',0],[659,0.12,'sine',0.1],[784,0.12,'sine',0.2],[1047,0.4,'sine',0.3]]); break;
+    default: tone(440, 0.1); break;
+  }
+}
+
+function v34_playBgm(type){
+  if(!V34.audioSettings.enabled) return;
+  // BGM需要音频文件，这里预留接口
+  V34.audioSettings.currentBgm = type;
+}
+
+function v34_stopBgm(){
+  V34.audioSettings.currentBgm = null;
+}
+
+var V44_AMBIENT = { nodes:[], master:null };
+function v44_ambientStop(){
+  try{
+    var arr=V44_AMBIENT.nodes||[];
+    for(var i=0;i<arr.length;i++){
+      try{ if(arr[i].stop) arr[i].stop(); }catch(e){}
+      try{ if(arr[i].disconnect) arr[i].disconnect(); }catch(e){}
+    }
+    V44_AMBIENT.nodes=[];
+    try{ if(V44_AMBIENT.master&&V44_AMBIENT.master.disconnect) V44_AMBIENT.master.disconnect(); }catch(e){}
+    V44_AMBIENT.master=null;
+  }catch(e){}
+}
+function v34_playAmbient(type){
+  if(!V34.audioSettings.enabled || !V34_AUDIO.ctx){ V34.audioSettings.currentAmbient=type; return; }
+  v44_ambientStop();
+  V34.audioSettings.currentAmbient = type;
+  var ctx=V34_AUDIO.ctx;
+  if(type==='silence') return;
+  var master=ctx.createGain();
+  master.gain.value = V34.audioSettings.ambientVolume||0.2;
+  master.connect(ctx.destination);
+  V44_AMBIENT.master=master;
+  var t0=ctx.currentTime;
+  function noiseBuf(){
+    var len=ctx.sampleRate*2, buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+    for(var i=0;i<len;i++) d[i]=Math.random()*2-1;
+    return buf;
+  }
+  function loopNoise(filterFreq, gainV, lfoRate, typeF){
+    var src=ctx.createBufferSource(); src.buffer=noiseBuf(); src.loop=true;
+    var f=ctx.createBiquadFilter(); f.type=typeF||'lowpass'; f.frequency.value=filterFreq;
+    var g=ctx.createGain(); g.gain.value=gainV;
+    var lfo=ctx.createOscillator(); lfo.frequency.value=lfoRate;
+    var lg=ctx.createGain(); lg.gain.value=gainV*0.3;
+    lfo.connect(lg); lg.connect(g.gain);
+    src.connect(f); f.connect(g); g.connect(master);
+    src.start(t0); lfo.start(t0);
+    return [src,f,g,lfo,lg];
+  }
+  if(type==='rain'){ V44_AMBIENT.nodes=loopNoise(900,0.5,0.5); }
+  else if(type==='wind'){ V44_AMBIENT.nodes=loopNoise(300,0.35,0.12); }
+  else if(type==='night'){
+    V44_AMBIENT.nodes=loopNoise(200,0.25,0.06);
+    var osc=ctx.createOscillator(); osc.frequency.value=55;
+    var og=ctx.createGain(); og.gain.value=0.12;
+    osc.connect(og); og.connect(master); osc.start(t0);
+    V44_AMBIENT.nodes.push(osc,og);
+  }
+  else if(type==='tavern'){
+    V44_AMBIENT.nodes=loopNoise(500,0.18,0.3);
+    for(var ti=0;ti<3;ti++){
+      (function(delay){
+        setTimeout(function(){
+          try{
+            var c=ctx.createOscillator(); c.frequency.value=700+Math.random()*500;
+            var cg=ctx.createGain(); cg.gain.value=0.08;
+            c.connect(cg); cg.connect(master); c.start(); c.stop(ctx.currentTime+0.08);
+          }catch(e){}
+        }, delay);
+      })(ti*1700+Math.random()*800);
+    }
+  }
+  else if(type==='church'){
+    V44_AMBIENT.nodes=loopNoise(400,0.12,0.2);
+    var chords=[[196,247,294],[220,262,330],[175,220,262],[147,196,247]];
+    var ci=0;
+    function pad(){
+      try{
+        if(V34.audioSettings.currentAmbient!=='church') return;
+        var ch=chords[ci%chords.length]; ci++;
+        var t=ctx.currentTime;
+        for(var j=0;j<ch.length;j++){
+          var o=ctx.createOscillator(); o.frequency.value=ch[j];
+          var g=ctx.createGain(); g.gain.setValueAtTime(0.001,t);
+          g.gain.linearRampToValueAtTime(0.06,t+1.5);
+          g.gain.linearRampToValueAtTime(0.001,t+4);
+          o.connect(g); g.connect(master); o.start(t); o.stop(t+4.2);
+        }
+        setTimeout(pad, 4500);
+      }catch(e){}
+    }
+    pad();
+  }
+}
+
+function v34_stopAmbient(){
+  v44_ambientStop();
+  V34.audioSettings.currentAmbient = null;
+}
+
+function v34_setVolume(type, value){
+  if(type === 'bgm') V34.audioSettings.bgmVolume = value;
+  else if(type === 'sfx') V34.audioSettings.sfxVolume = value;
+  else if(type === 'ambient') V34.audioSettings.ambientVolume = value;
+}
+
+// ========== 方向七：存档与图鉴可视化 ==========
+function v34_renderSaveSlots(){
+  var html = '<h2>📦 存档管理</h2>';
+  html += '<div style="text-align:center;font-size:12px;color:var(--dim);margin-bottom:10px">槽位1为主存档位，旧版存档自动兼容 · 写入自动双备份（本地+IndexedDB）</div>';
+  for(var i=1;i<=5;i++){
+    var saved = localStorage.getItem(i===1 ? RULESET_ID+"-save" : 'elda-save-slot-slot'+i);
+    var empty = !saved;
+    var nm='空存档槽', loc='-', day='-', pr=0, cl='';
+    if(saved){
+      try{
+        var data = v61_lzstring.sniffRaw(saved); /* /v61inj:save-panel1/ */
+        nm = data.name || ('第'+(data.day||1)+'日存档');
+        loc = data.loc || (data.homeland || '未知');
+        day = '第' + (data.day||1) + '日';
+        pr = Math.min(100, Math.max(0, (data.day||0) % 100));
+        cl = ' style="border-color:var(--gold)"';
+      }catch(e){ nm='存档损坏'; }
+    }
+    var icon = empty ? '📁' : '⚔️';
+    html += '<div class="save-slot-v34"' + cl + ' style="' + (empty?'opacity:.6;':'') + 'border-color:var(--line)">';
+    html += '<div class="save-slot-thumb">' + icon + '</div>';
+    html += '<div class="save-slot-info">';
+    html += '<div class="save-slot-name">槽位' + i + ' · ' + nm + '</div>';
+    html += '<div class="save-slot-meta"><span>📍 ' + loc + '</span><span>📅 ' + day + '</span></div>';
+    html += '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">';
+    html += '<button class="btn" onclick="v34_saveToSlot(' + i + ')">💾 保存到此槽</button>';
+    html += '<button class="btn" ' + (empty?'disabled':'') + ' onclick="v34_loadFromSlot(' + i + ')">📖 读取</button>';
+    html += '<button class="btn btn-danger" ' + (empty?'disabled':'') + ' onclick="v34_deleteSlot(' + i + ')">🗑 删除</button>';
+    html += '</div></div></div>';
+  }
+  html += '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">';
+  html += '<button class="btn btn-gold" onclick="v34_exportSave()" style="flex:1">⬇ 导出存档(JSON)</button>';
+  html += '<button class="btn" onclick="v34_importSave()" style="flex:1">⬆ 导入存档(JSON)</button>';
+  html += '</div>';
+  html += '<div style="font-size:11px;color:var(--dim);margin-top:8px;text-align:center">导出=备份到本地文件；导入=从文件恢复，导入前会二次确认覆盖</div>';
+  html += '<div style="text-align:center;margin-top:14px"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
+  return html;
+}
+
+function v34_saveToSlot(i){
+  if(typeof S === "undefined" || !S || !S.name){ flashMsg("当前没有可保存的角色"); return; }
+  try{
+    S.choices=[]; S.curNode = curNode; S.saveVersion = 48; /* /v58eng:savever/ */
+    S.slotId = "slot" + i; S.saveTime = Date.now();
+    StorageKit.save(S);
+    closeModal(); flashMsg("已保存到槽位" + i);
+    v34_renderSaveSlots();
+    v34_openSavePanel();
+  }catch(e){ flashMsg("保存失败：" + e.message); }
+}
+
+function v34_loadFromSlot(i){
+  try{
+    const d = StorageKit.load("slot" + i);
+    if(!d){ flashMsg("槽位" + i + "没有存档"); return; }
+    if(d.ruleset!==RULESET_ID){ flashMsg("存档版本不匹配"); return; }
+    S = applyDefaults(d);
+    if(!S.readings) S.readings={unlocked:{},read:{}};
+    try{ v46_ensureDefaults(); }catch(e){}
+    if(window.v55_ensureDefaults){ try{ v55_ensureDefaults(); }catch(e){} }
+    if(window.v56_ensureDefaults){ try{ v56_ensureDefaults(); }catch(e){} }
+    if(window.v57_ensureDefaults){ try{ v57_ensureDefaults(); }catch(e){} }
+    if(window.w64_ensureDefaults){ try{ w64_ensureDefaults(); }catch(e){} } /*v64inj:hooks*/
+    if(window.v55_learnAll){ try{ v55_learnAll(); }catch(e){} }
+    S.saveVersion = S.saveVersion || 48;
+    S.slotId = "slot" + i;
+    closeModal(); logMsg("已读取槽位" + i + "存档（第"+S.day+"日）","g"); flashMsg("已读取槽位" + i);
+    if(S.ending){ showEnding(S.ending); return; }
+    curNode = S.curNode || "fc_jiaohui_entry";
+    renderTop(); renderStats(); writeNext();
+  }catch(e){ flashMsg("读档失败：" + e.message); }
+}
+
+function v34_deleteSlot(i){
+  if(!confirm("确定删除槽位" + i + "的存档？此操作不可恢复。")) return;
+  StorageKit.deleteSlot("slot" + i);
+  closeModal(); flashMsg("已删除槽位" + i); v34_openSavePanel();
+}
+
+function v34_exportSave(){
+  try{
+    const ok = StorageKit.exportJSON();
+    if(ok) flashMsg("存档已导出（JSON文件）");
+  }catch(e){ flashMsg("导出失败：" + e.message); }
+}
+
+function v34_importSave(){
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = '.json,application/json';
+  inp.style.display = 'none';
+  document.body.appendChild(inp);
+  inp.onchange = function(){
+    const f = inp.files && inp.files[0];
+    if(!f){ inp.remove(); return; }
+    StorageKit.importJSON(f, function(res){
+      inp.remove();
+      if(!res.ok){ flashMsg(res.msg); return; }
+      if(!confirm("将用存档文件覆盖当前进度，确定？")) return;
+      try{
+        S = applyDefaults(res.data);
+        S.saveVersion = S.saveVersion || 48;
+        S.slotId = S.slotId || "slot1";
+        curNode = S.curNode || "fc_jiaohui_entry";
+        saveGame();
+        closeModal(); flashMsg("存档导入成功");
+        if(S.ending){ showEnding(S.ending); return; }
+        renderTop(); renderStats(); writeNext();
+      }catch(e){ flashMsg("导入失败：" + e.message); }
+    });
+  };
+  inp.click();
+}
+
+function v34_openErrorLog(){
+  var logs = ErrorLog.text();
+  var html = '<h2>🧾 错误日志</h2>';
+  html += '<div class="dbg-json" id="v42-errorlog-body" style="max-height:50vh;white-space:pre-wrap;font-size:12px">' + logs.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</div>';
+  html += '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">';
+  html += '<button class="btn" onclick="v42_copyErrorLog()" style="flex:1">复制全部</button>';
+  html += '<button class="btn" onclick="v42_exportErrorLog()" style="flex:1">导出 txt</button>';
+  html += '<button class="btn btn-danger" onclick="v42_clearErrorLog()" style="flex:1">清空日志</button>';
+  html += '</div>';
+  html += '<div style="text-align:center;margin-top:14px"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
+  var box = document.createElement('div');
+  box.className = 'box';
+  box.innerHTML = html;
+  openModal(box);
+}
+
+function v42_copyErrorLog(){
+  try{
+    const txt = ErrorLog.text();
+    if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(function(){ flashMsg("已复制错误日志"); }); }
+    else{ const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); flashMsg("已复制错误日志"); }
+  }catch(e){ flashMsg("复制失败"); }
+}
+
+function v42_exportErrorLog(){
+  try{
+    const blob = new Blob([ErrorLog.text()], {type:'text/plain;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'elda-error-log.txt';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    flashMsg("错误日志已导出");
+  }catch(e){ flashMsg("导出失败：" + e.message); }
+}
+
+function v42_clearErrorLog(){
+  ErrorLog.clear();
+  v34_openErrorLog();
+  flashMsg("错误日志已清空");
+}
+
+var V34_ACHIEVEMENTS = {
+  first_step:{id:"first_step",name:"第一步",desc:"完成序章",icon:"👣",rarity:"common"},
+  academy_grad:{id:"academy_grad",name:"毕业",desc:"从学院毕业",icon:"🎓",rarity:"rare"},
+  seal_master:{id:"seal_master",name:"七印之主",desc:"修复全部七印",icon:"🔮",rarity:"legendary"},
+  abyss_lord:{id:"abyss_lord",name:"深渊之主",desc:"解放深渊",icon:"👁️",rarity:"legendary"},
+  peacemaker:{id:"peacemaker",name:"和平使者",desc:"阻止大陆战争",icon:"🕊️",rarity:"epic"},
+  rich:{id:"rich",name:"富甲一方",desc:"拥有1000金币",icon:"💰",rarity:"rare"},
+  warrior:{id:"warrior",name:"百战百胜",desc:"赢得50场战斗",icon:"⚔️",rarity:"epic"},
+  scholar:{id:"scholar",name:"博学者",desc:"阅读50本书籍",icon:"📖",rarity:"rare"},
+  loved:{id:"loved",name:"万人迷",desc:"与5人达成挚友关系",icon:"❤️",rarity:"epic"},
+  survivor:{id:"survivor",name:"幸存者",desc:"从大失败中恢复",icon:"🛡️",rarity:"common"}
+};
+
+function v34_renderAchievements(){
+  var html = '<h2>成就墙</h2>';
+  var unlocked = 0, total = 0;
+  html += '<div class="achievement-grid">';
+  for(var id in V34_ACHIEVEMENTS){
+    var ach = V34_ACHIEVEMENTS[id];
+    total++;
+    var isUnlocked = V34.codex.achievements[id] || false;
+    if(isUnlocked) unlocked++;
+    html += '<div class="achievement-card ' + (isUnlocked?'unlocked':'locked') + ' achievement-rarity-' + ach.rarity + '">';
+    html += '<div class="achievement-icon">' + (isUnlocked ? ach.icon : '❓') + '</div>';
+    html += '<div class="achievement-name">' + (isUnlocked ? ach.name : '???') + '</div>';
+    html += '<div class="achievement-desc">' + (isUnlocked ? ach.desc : '未解锁') + '</div>';
+    html += '</div>';
+  }
+  html += '</div>';
+  html += '<div style="text-align:center;margin:14px 0;font-size:14px;color:#5a4a30">已解锁：' + unlocked + ' / ' + total + '</div>';
+  html += '<div style="text-align:center"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
+  return html;
+}
+
+function v34_unlockAchievement(id){
+  if(V34.codex.achievements[id]) return;
+  V34.codex.achievements[id] = true;
+  v34_playSfx('levelup');
+  // 可以添加成就解锁通知
+}
+
+function v34_addToCodex(type, id){
+  if(!V34.codex[type]) V34.codex[type] = {};
+  V34.codex[type][id] = true;
+}
+
+// ========== v34 设置面板 ==========
+function v34_renderSettings(){
+  var html = '<h2>游戏设置</h2>';
+  
+  html += '<h4 style="color:#5a4a10;margin:16px 0 8px">文字演出</h4>';
+  html += v34_settingRow('打字机效果', '剧情文字逐字显示', 'typewriterEnabled', 'checkbox');
+  html += v34_settingRow('打字机速度', '文字显示速度', 'typewriterSpeed', 'slider', 10, 80);
+  html += v34_settingRow('文字特效', '低语/呐喊/古老等特效', 'textEffects', 'checkbox');
+  html += v34_settingRow('自动滚动', '新内容自动滚动到底部', 'autoScroll', 'checkbox');
+  
+  html += '<h4 style="color:#5a4a10;margin:16px 0 8px">场景氛围</h4>';
+  html += v34_settingRow('粒子效果', '雨/雪/雾等天气粒子', 'particlesEnabled', 'checkbox');
+  html += v34_settingRow('判定动画', '掷骰子动画演出', 'diceAnimation', 'checkbox');
+  
+  html += '<h4 style="color:#5a4a10;margin:16px 0 8px">音效</h4>';
+  html += v34_settingRow('启用音效', '开启游戏音效', 'audioEnabled', 'checkbox');
+  html += v34_settingRow('音效音量', 'UI/判定音效', 'sfxVolume', 'slider', 0, 100);
+  
+  html += '<h4 style="color:#5a4a10;margin:16px 0 8px">界面</h4>';
+  html += v34_settingRow('简洁模式', '关闭所有动画效果', 'compactMode', 'checkbox');
+  
+  html += '<h4 style="color:#5a4a10;margin:16px 0 8px">显示</h4>';
+  html += '<div class="v34-setting-row"><div><div class="v34-setting-label">字号</div><div class="v34-setting-desc">故事正文大小</div></div><div class="v44-seg" id="v44-fontsize-seg"></div></div>';
+  html += '<div class="v34-setting-row"><div><div class="v34-setting-label">主题</div><div class="v34-setting-desc">界面配色方案</div></div><div class="v44-seg" id="v44-theme-seg"></div></div>';
+  html += '<h4 style="color:#5a4a10;margin:16px 0 8px">数据与调试</h4>';
+  html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">';
+  html += '<button class="btn" onclick="v34_openSavePanel()" style="flex:1 1 120px">📦 存档管理</button>';
+  html += '<button class="btn" onclick="v34_openErrorLog()" style="flex:1 1 120px">🧾 错误日志</button>';
+  html += '<button class="btn" onclick="DebugPanel.toggle()" style="flex:1 1 120px">🔧 调试面板</button>';
+  html += '</div>';
+  html += '<div style="font-size:11px;color:var(--dim)">快捷键 Ctrl+Shift+D 或连点顶部标题栏5次可随时打开调试面板</div>';
+  
+  html += '<div style="text-align:center;margin-top:20px"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
+  return html;
+}
+
+function v34_settingRow(label, desc, key, type, min, max){
+  var val = V34.textSettings[key] !== undefined ? V34.textSettings[key] :
+            V34.sceneAtmosphere[key] !== undefined ? V34.sceneAtmosphere[key] :
+            V34.diceSettings[key] !== undefined ? V34.diceSettings[key] :
+            V34.audioSettings[key] !== undefined ? V34.audioSettings[key] :
+            V34.uiSettings[key] !== undefined ? V34.uiSettings[key] : false;
+  
+  var control = '';
+  if(type === 'checkbox'){
+    control = '<input type="checkbox" class="v34-checkbox" ' + (val?'checked':'') + ' onchange="v34_toggleSetting(\'' + key + '\', this.checked)">';
+  } else if(type === 'slider'){
+    var pct = type==='slider' && key==='typewriterSpeed' ? val : (val*100);
+    control = '<input type="range" class="v34-slider" min="' + (min||0) + '" max="' + (max||100) + '" value="' + val + '" onchange="v34_setSettingValue(\'' + key + '\', this.value)">';
+  }
+  
+  return '<div class="v34-setting-row">' +
+    '<div><div class="v34-setting-label">' + label + '</div>' +
+    '<div class="v34-setting-desc">' + desc + '</div></div>' +
+    control + '</div>';
+}
+
+function v34_toggleSetting(key, value){
+  if(key === 'typewriterEnabled') V34.textSettings.typewriterEnabled = value;
+  else if(key === 'textEffects') V34.textSettings.textEffects = value;
+  else if(key === 'autoScroll') V34.textSettings.autoScroll = value;
+  else if(key === 'particlesEnabled') v34_toggleParticles(value);
+  else if(key === 'diceAnimation') V34.diceSettings.animationEnabled = value;
+  else if(key === 'audioEnabled') v34_toggleAudio();
+  else if(key === 'compactMode') v34_setCompactMode(value);
+}
+
+function v34_setSettingValue(key, value){
+  if(key === 'typewriterSpeed') V34.textSettings.typewriterSpeed = parseInt(value);
+  else if(key === 'sfxVolume') V34.audioSettings.sfxVolume = value/100;
+}
+
+function v34_openAchievements(){
+  try{
+    var box = document.createElement('div');
+    box.className = 'box';
+    box.innerHTML = v34_renderAchievements();
+    openModal(box);
+  }catch(e){}
+}
+
+function v34_openSavePanel(){
+  var box = document.createElement('div');
+  box.className = 'box';
+  box.innerHTML = v34_renderSaveSlots();
+  openModal(box);
+}
+
+function v34_openSettings(){
+  var box = document.createElement('div');
+  box.className = 'box';
+  box.innerHTML = v34_renderSettings();
+  openModal(box);
+  try{ v44_initSegs(); }catch(e){}
+}
+
+// ========== v34 初始化 ==========
+function v34_init(){
+  v34_initAtmosphere();
+  // 添加音效切换按钮
+  if(!document.querySelector('.audio-toggle')){
+    var audioBtn = document.createElement('div');
+    audioBtn.className = 'audio-toggle muted';
+    audioBtn.textContent = '🔇';
+    audioBtn.onclick = v34_toggleAudio;
+    document.body.appendChild(audioBtn);
+  }
+  console.log('v34 UI沉浸感系统已初始化');
+}
+
+// 页面加载完成后初始化
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', v34_init);
+} else {
+  v34_init();
+}
+
+
+/* ============================================================
+   v35 技术架构基础
+   事件总线 / 模块化 / 数据驱动 / 开发者工具
+   ============================================================ */
+
+
+/* ===== v43 段落渐显动画 ===== */
+.par-enter{ animation: parFadeIn .4s ease-out both; }
+@keyframes parFadeIn{
+  from{ opacity:0; transform:translateY(5px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.v45-cg{ margin-top:6px !important; border:1px solid #b59a5e !important; background:linear-gradient(180deg,#f0e6c8,#e0d0a8) !important; color:#5a3a10 !important; font-weight:700; }
+.v45-cg:hover{ background:linear-gradient(180deg,#f7efd8,#e8d8b8) !important; transform:translateX(4px); }
+.v45-unread{ border-left:3px solid #b04030 !important; font-weight:700; }
+</style>

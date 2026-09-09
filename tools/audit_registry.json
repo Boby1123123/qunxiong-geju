@@ -1,0 +1,90 @@
+[
+  {
+    "auditId": "v47_foreshadow",
+    "path": "_v47_foreshadow_audit.py",
+    "args": "",
+    "expect": "exit 0：15 条伏笔 planted→revealed→聚合全链无缺",
+    "desc": "v47 伏笔回收审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v53_peers",
+    "path": "_v53_audit.py",
+    "args": "",
+    "expect": "exit 0：能力者12.5万/传奇26/半神9/神9 数值一致",
+    "desc": "v53 强者谱数值一致性审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v55_skills",
+    "path": "_v55_audit.py",
+    "args": "",
+    "expect": "exit 0：81+1 技能 / 117 弧节点 / 弧链死链 / 主线目标",
+    "desc": "v55 技能+命运弧审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v56_living",
+    "path": "_v56_audit.py",
+    "args": "",
+    "expect": "exit 0：档案数/关系边引用/事件死链/行踪目标/图鉴挂点",
+    "desc": "v56 强者活态审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v57_career",
+    "path": "_v57_audit.py",
+    "args": "",
+    "expect": "exit 0：九职业 27 流派/27 烙印/27 派系/9 收徒线覆盖",
+    "desc": "v57 职业总成审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v58eng_refhealth",
+    "path": "tools/eldacheck/eldacheck.py",
+    "args": "--full",
+    "expect": "exit 0：eldacheck 全量十项 PASS",
+    "desc": "V58-ENG 基线：全量体检（含新精确化检查器）",
+    "status": "active"
+  },
+  {
+    "auditId": "v46_structure",
+    "path": "_v46_audit.py",
+    "args": "",
+    "expect": "exit 0：v46 结构审计",
+    "desc": "v46 结构审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v46_arc",
+    "path": "_v46_arc_audit.py",
+    "args": "",
+    "expect": "exit 0：弧断点审计",
+    "desc": "v46 弧断点审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v46_setting",
+    "path": "_v46_setting_audit.py",
+    "args": "",
+    "expect": "exit 0：设定一致性审计",
+    "desc": "v46 设定一致性审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v54_peers",
+    "path": "_v54_audit.py",
+    "args": "",
+    "expect": "exit 0：图鉴/普通人世界小节等 v54 项",
+    "desc": "v54 强者分布重构审计",
+    "status": "active"
+  },
+  {
+    "auditId": "v59eng_placeholder",
+    "path": "",
+    "args": "",
+    "expect": "后续新版本审计在此注册，elda audit 自动纳入",
+    "desc": "扩展位：v59 及以后审计注册位",
+    "status": "placeholder"
+  }
+]

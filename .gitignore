@@ -1,0 +1,12 @@
+﻿backup/
+releases/
+.vscode/
+__pycache__/
+*.pyc
+*.log
+regress_result.json
+regress_u7.json
+regress_u8.json
+sim_out.txt
+vp_test.html
+gap_00.html

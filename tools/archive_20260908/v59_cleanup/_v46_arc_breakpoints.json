@@ -1,0 +1,270 @@
+{
+ "origin_arc": {
+  "中文名": "序章线",
+  "成员数": 149,
+  "候选断点": 69,
+  "样例": [
+   {
+    "from": "prologue_start",
+    "to": "prologue_wild",
+    "targetFirst": "郊外的空气比城里清新。"
+   },
+   {
+    "from": "prologue_daily_check",
+    "to": "prologue_final",
+    "targetFirst": "出发的日子到了。"
+   },
+   {
+    "from": "prologue_awakening",
+    "to": "prologue_after_awakening",
+    "targetFirst": "觉醒之后，你感觉整个世界都不一样了。"
+   },
+   {
+    "from": "prologue_awakening",
+    "to": "prologue_after_awakening",
+    "targetFirst": "觉醒之后，你感觉整个世界都不一样了。"
+   },
+   {
+    "from": "prologue_after_awakening",
+    "to": "prologue_awakening_truth",
+    "targetFirst": "导师沉默了很久。"
+   },
+   {
+    "from": "prologue_crisis",
+    "to": "prologue_after_crisis",
+    "targetFirst": "危机过去了。"
+   },
+   {
+    "from": "prologue_crisis",
+    "to": "prologue_after_crisis",
+    "targetFirst": "危机过去了。"
+   },
+   {
+    "from": "prologue_crisis",
+    "to": "prologue_after_crisis",
+    "targetFirst": "危机过去了。"
+   },
+   {
+    "from": "prologue_crisis",
+    "to": "prologue_after_crisis",
+    "targetFirst": "危机过去了。"
+   },
+   {
+    "from": "prologue_choose_elda",
+    "to": "prologue_final",
+    "targetFirst": "出发的日子到了。"
+   },
+   {
+    "from": "prologue_choose_chengtian",
+    "to": "prologue_final",
+    "targetFirst": "出发的日子到了。"
+   },
+   {
+    "from": "prologue_choose_holy",
+    "to": "prologue_final",
+    "targetFirst": "出发的日子到了。"
+   }
+  ]
+ },
+ "academy_arc": {
+  "中文名": "学院线",
+  "成员数": 269,
+  "候选断点": 383,
+  "样例": [
+   {
+    "from": "academy_entrance",
+    "to": "academy_exam_elda",
+    "targetFirst": "交汇城的夏天很热。艾尔达魔法学院的大门前挤满了来自大陆各"
+   },
+   {
+    "from": "academy_entrance",
+    "to": "academy_exam_chengtian",
+    "targetFirst": "承天学院的入学试，设在文渊阁前。主考官是个蓄着山羊胡的老"
+   },
+   {
+    "from": "academy_entrance",
+    "to": "academy_exam_holy",
+    "targetFirst": "圣光学院的入学圣考，在礼拜堂举行。穹顶的彩窗漏下斑斓的光"
+   },
+   {
+    "from": "academy_entrance",
+    "to": "academy_silver_leaf",
+    "targetFirst": "银叶学院的入学仪式，在一棵古树下进行。精灵导师递给你一片"
+   },
+   {
+    "from": "academy_entrance",
+    "to": "academy_forge_peak",
+    "targetFirst": "铁峰学院的入学试，就是一块铁坯。主考的老匠师把一块烧红的"
+   },
+   {
+    "from": "academy_exam_elda",
+    "to": "academy_practical",
+    "targetFirst": "实操考试在竞技场进行。每个考生要面对一个魔法傀儡，用自己"
+   },
+   {
+    "from": "academy_exam_elda",
+    "to": "academy_practical",
+    "targetFirst": "实操考试在竞技场进行。每个考生要面对一个魔法傀儡，用自己"
+   },
+   {
+    "from": "academy_year1_open",
+    "to": "academy_course_select",
+    "targetFirst": "选课大厅在学院东翼，是一间穹顶极高的大厅。清晨的阳光从高"
+   },
+   {
+    "from": "academy_year1_open",
+    "to": "academy_clubs",
+    "targetFirst": "学院广场的社团招新，比集市还热闹。各社团的摊位一字排开，"
+   },
+   {
+    "from": "academy_year1_open",
+    "to": "academy_explore",
+    "targetFirst": "学院里总有些角落，连在这里待了多年的教授都不常去。你顺着"
+   },
+   {
+    "from": "academy_course_select",
+    "to": "academy_year1_midterm",
+    "targetFirst": "时间过得很快。期中考试来了。图书馆里座无虚席，每个人都在"
+   },
+   {
+    "from": "academy_course_select",
+    "to": "academy_year1_midterm",
+    "targetFirst": "时间过得很快。期中考试来了。图书馆里座无虚席，每个人都在"
+   }
+  ]
+ },
+ "seal_arc": {
+  "中文名": "封印线",
+  "成员数": 505,
+  "候选断点": 292,
+  "样例": [
+   {
+    "from": "seal1_irongate",
+    "to": "seal1_oldman",
+    "targetFirst": "老人抬头看了你一眼。他的眼睛很浑，像结了冰的湖水，但湖底"
+   },
+   {
+    "from": "seal1_oldman",
+    "to": "seal1_door",
+    "targetFirst": "老人沉默了很久。"
+   },
+   {
+    "from": "seal1_door",
+    "to": "seal1_night",
+    "targetFirst": "子时。雪停了。"
+   },
+   {
+    "from": "seal1_gift",
+    "to": "seal1_door",
+    "targetFirst": "老人沉默了很久。"
+   },
+   {
+    "from": "seal_overview",
+    "to": "seal_1_intro",
+    "targetFirst": "铁门关。"
+   },
+   {
+    "from": "seal_overview",
+    "to": "seal_2_intro",
+    "targetFirst": "兽人草原。"
+   },
+   {
+    "from": "seal_overview",
+    "to": "seal_4_intro",
+    "targetFirst": "铁峰堡。"
+   },
+   {
+    "from": "seal_2_intro",
+    "to": "seal_2_shaman",
+    "targetFirst": "萨满的帐篷在营地的最深处，比其他帐篷大了一倍。"
+   },
+   {
+    "from": "seal_2_intro",
+    "to": "seal_2_shaman",
+    "targetFirst": "萨满的帐篷在营地的最深处，比其他帐篷大了一倍。"
+   },
+   {
+    "from": "seal_2_shaman",
+    "to": "seal_2_cost",
+    "targetFirst": "萨满沉默了很久。"
+   },
+   {
+    "from": "seal_4_intro",
+    "to": "seal_4_forge",
+    "targetFirst": "永恒熔炉。"
+   },
+   {
+    "from": "seal_4_intro",
+    "to": "seal_4_forge",
+    "targetFirst": "永恒熔炉。"
+   }
+  ]
+ },
+ "faction_arc": {
+  "中文名": "势力线",
+  "成员数": 110,
+  "候选断点": 89,
+  "样例": [
+   {
+    "from": "h_faction_north_court",
+    "to": "h_faction_north_audience",
+    "targetFirst": "大公会议的议题只有一个：北方怎么办。"
+   },
+   {
+    "from": "h_faction_north_court",
+    "to": "h_faction_north_audience",
+    "targetFirst": "大公会议的议题只有一个：北方怎么办。"
+   },
+   {
+    "from": "h_faction_north_court",
+    "to": "h_faction_north_audience",
+    "targetFirst": "大公会议的议题只有一个：北方怎么办。"
+   },
+   {
+    "from": "h_faction_north_audience",
+    "to": "h_faction_north_peace",
+    "targetFirst": "「谈判？」大主教的声音冷了下来，「和异端谈判？」"
+   },
+   {
+    "from": "h_faction_north_audience",
+    "to": "h_faction_north_alliance",
+    "targetFirst": "「矮人？」大公抬起眉毛，「你要我们和矮人结盟？」"
+   },
+   {
+    "from": "pol_intro",
+    "to": "pol_faction_map",
+    "targetFirst": "茶会在活动室举行。长桌旁坐着学生会核心成员，烛光把每个人"
+   },
+   {
+    "from": "pol_intro",
+    "to": "pol_rumor_hall",
+    "targetFirst": "学院东楼的走廊尽头，有一间永远开着的空教室。"
+   },
+   {
+    "from": "pol_rumor_hall",
+    "to": "pol_faction_map",
+    "targetFirst": "茶会在活动室举行。长桌旁坐着学生会核心成员，烛光把每个人"
+   },
+   {
+    "from": "pol_rumor_hall",
+    "to": "pol_rumor_more",
+    "targetFirst": "「你要听真话还是假话？」那个学生压低声音，「假话，是学院"
+   },
+   {
+    "from": "pol_rumor_more",
+    "to": "pol_faction_map",
+    "targetFirst": "茶会在活动室举行。长桌旁坐着学生会核心成员，烛光把每个人"
+   },
+   {
+    "from": "pol_rumor_more",
+    "to": "pol_gold_trail",
+    "targetFirst": "财务室的门虚掩着。你借着整理鞋带的工夫往里扫了一眼——墙"
+   },
+   {
+    "from": "pol_gold_trail",
+    "to": "pol_gold_ledger",
+    "targetFirst": "账本上那笔数字，你查了三遍。"
+   }
+  ]
+ }
+}

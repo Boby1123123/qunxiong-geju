@@ -1,0 +1,19 @@
+{
+  "version": "v29",
+  "timestamp": "2026-09-06 19:22:21",
+  "file_size": 4527155,
+  "file_size_mb": 4.32,
+  "node_count": 1756,
+  "go_references": 4375,
+  "quick_mode": true,
+  "tools": {
+    "check_references": "✓",
+    "build": "✓",
+    "syntax_check": "✓",
+    "traverse_test": "✓",
+    "save_test": "✓",
+    "generate_index": "✓",
+    "generate_graph": "✓",
+    "backup": "✓"
+  }
+}

@@ -1,0 +1,19 @@
+### prologue_market — 块内无命中
+### prologue_tavern — 块内无命中
+### prologue_mentor — 块内无命中
+### seal_3_intro (块起行22390)
+  [缓缓] 行22397: crit:function(){return[pickV(["你将感知延伸到世界树的根部，看到了第三印的真容——一个由自然之力构成的巨大封印，正在缓缓旋转。但你也看到了，封印的一角有一道细微的裂缝。第三印线索+2，SAN-2。","你感觉到世界树的脉搏，它和第三印是相连的。如果第三印出了问题，世界树也会枯萎。第三印线索…
+
+### seal_3_queen — 块内无命中
+### seal_3_contract — 块内无命中
+### seal7_exp_coexist_method — 块内无命中
+### city_jiaohui_medici — 块内无命中
+### city_jiaohui_medici_secret — 块内无命中
+### city_jiaohui_slum — 块内无命中
+### relic_hourglass — 块内无命中
+### eclipse_intro — 块内无命中
+### relic_grail_boss — 块内无命中
+### pol_guardian — 块内无命中
+### dun_ruins_treasure — 块内无命中
+### dun_tower_treasure — 块内无命中
+### dun_arena_1 — 块内无命中

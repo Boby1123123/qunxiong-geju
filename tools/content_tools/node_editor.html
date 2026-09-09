@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>艾尔达大陆 · 节点编辑器（dev）</title>
+<style>
+  body{margin:0;font-family:'PingFang SC','Segoe UI',Arial,sans-serif;background:#14161a;color:#ddd;font-size:14px;}
+  #top{display:flex;gap:8px;align-items:center;padding:10px 14px;background:#1d2026;border-bottom:1px solid #333;flex-wrap:wrap;}
+  #top input[type=file]{color:#aaa;}
+  #top button{background:#3a4250;color:#eee;border:1px solid #4a5464;border-radius:6px;padding:6px 12px;cursor:pointer;}
+  #top button:hover{background:#4a5464;}
+  #top .hint{color:#888;font-size:12px;}
+  #body{display:flex;height:calc(100vh - 56px);}
+  #list{width:280px;min-width:280px;overflow:auto;border-right:1px solid #333;padding:8px;}
+  #list input{width:100%;box-sizing:border-box;background:#1d2026;color:#ddd;border:1px solid #333;border-radius:6px;padding:6px 8px;margin-bottom:8px;}
+  #list .node{padding:6px 8px;border-radius:6px;cursor:pointer;border:1px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  #list .node:hover{background:#232733;}
+  #list .node.on{background:#2c3a52;border-color:#4a7ab5;}
+  #editor{flex:1;overflow:auto;padding:16px;max-width:900px;}
+  #editor label{display:block;color:#9ab;margin:10px 0 4px;font-size:13px;}
+  #editor input[type=text],#editor textarea{width:100%;box-sizing:border-box;background:#1d2026;color:#ddd;border:1px solid #3a4250;border-radius:6px;padding:8px;font-size:14px;}
+  #editor textarea{font-family:Consolas,monospace;}
+  #editor .opt{display:flex;gap:6px;margin:4px 0;}
+  #editor .opt input{flex:1;}
+  #editor .opt input.t{flex:2;}
+  #editor .opt button{background:#5a3030;border:1px solid #7a4040;color:#eee;border-radius:6px;cursor:pointer;}
+  #meta{color:#888;font-size:12px;margin-bottom:12px;}
+  #msg{position:fixed;right:16px;bottom:16px;background:#2c3a52;color:#cde;border:1px solid #4a7ab5;border-radius:8px;padding:8px 14px;display:none;font-size:13px;}
+  .badge{display:inline-block;background:#3a4250;border-radius:4px;padding:1px 6px;margin-left:6px;font-size:11px;color:#9ab;}
+</style>
+</head>
+<body>
+<div id="top">
+  <input type="file" id="file" accept=".html,.js">
+  <button id="load">加载节点文件</button>
+  <button id="export">导出补丁 JSON</button>
+  <button id="clear">清空补丁</button>
+  <span class="hint">加载 game.html / chunks\*.js，编辑后导出补丁；用 tools\content_tools\node_apply.py 应用到 src 权威源</span>
+</div>
+<div id="body">
+  <div id="list">
+    <input type="text" id="q" placeholder="搜索节点 id…">
+    <div id="nodes"></div>
+  </div>
+  <div id="editor">
+    <div id="meta"></div>
+    <label>节点 id（不可改）</label>
+    <input type="text" id="fid" readonly>
+    <label>地点 place</label>
+    <input type="text" id="fplace">
+    <label>时间 where</label>
+    <input type="text" id="fwhere">
+    <label>正文 text（每行一段，用换行分隔）</label>
+    <textarea id="ftext" rows="8"></textarea>
+    <label>选项 options（t=文本 / go=目标 / effect=效果，可留空）</label>
+    <div id="fopts"></div>
+    <button id="addopt" style="margin-top:6px;background:#3a4250;color:#eee;border:1px solid #4a5464;border-radius:6px;padding:4px 10px;cursor:pointer;">+ 选项</button>
+  </div>
+</div>
+<div id="msg"></div>
+<script>
+(function(){
+  var nodes = {};      // id -> 原始节点对象（解析后的字段）
+  var order = [];      // id 顺序
+  var patch = {};      // 已修改 {id: {text:[...], options:[...], place, where}}
+  var cur = null;
+
+  var $ = function(id){ return document.getElementById(id); };
+  function msg(s){ var m=$('msg'); m.style.display='block'; m.textContent=s; setTimeout(function(){ m.style.display='none'; }, 2600); }
+
+  // 解析 JS 中的节点定义：兼容 N["id"]=function(){return {...}} 与 N["id"]={...}
+  function extractNodes(text){
+    var out = {};
+    var re = /N\["([^"]+)"\]\s*=\s*(?:function\s*\([^)]*\)\s*\{\s*return\s*)?(\{[\s\S]*?\})\s*(?:;|\}\s*;)/g;
+    var m, n = 0;
+    while((m = re.exec(text))){
+      var id = m[1];
+      var body = m[2];
+      try{
+        // 用 Function 求值对象字面量（仅 dev 工具，读取数据）
+        var obj = new Function('return (' + body + ')')();
+        if(obj && typeof obj === 'object'){
+          out[id] = obj;
+          n++;
+        }
+      }catch(e){ /* 跳过求值失败的（含函数式 text） */ }
+    }
+    return {nodes: out, count: n};
+  }
+
+  function renderList(){
+    var q = $('q').value.toLowerCase();
+    var box = $('nodes');
+    box.innerHTML = '';
+    order.forEach(function(id){
+      if(q && id.indexOf(q) < 0) return;
+      var d = document.createElement('div');
+      d.className = 'node' + (id===cur ? ' on' : '');
+      d.textContent = id + (patch[id] ? ' ✎' : '');
+      d.onclick = function(){ openNode(id); };
+      box.appendChild(d);
+    });
+  }
+
+  function optRow(opt, i){
+    var div = document.createElement('div');
+    div.className = 'opt';
+    var t = document.createElement('input'); t.className='t'; t.placeholder='选项文本'; t.value = opt.t||'';
+    var g = document.createElement('input'); g.placeholder='go'; g.value = opt.go||'';
+    var e = document.createElement('input'); e.placeholder='effect(如 gold:-10)'; e.value = typeof opt.effect==='object' ? JSON.stringify(opt.effect) : (opt.effect||'');
+    var del = document.createElement('button'); del.textContent='✕';
+    del.onclick = function(){ div.remove(); };
+    div.appendChild(t); div.appendChild(g); div.appendChild(e); div.appendChild(del);
+    return div;
+  }
+
+  function openNode(id){
+    cur = id;
+    var n = nodes[id] || {};
+    $('fid').value = id;
+    $('fplace').value = n.place || '';
+    $('fwhere').value = n.where || '';
+    var txt = n.text;
+    $('ftext').value = Array.isArray(txt) ? txt.join('\n') : (typeof txt==='function' ? '(函数式正文：只读)' : String(txt||''));
+    $('fopts').innerHTML = '';
+    (n.options||[]).forEach(function(o,i){ $('fopts').appendChild(optRow(o,i)); });
+    $('meta').textContent = '字段：' + Object.keys(n).join(' / ') + '（tag/effects 等未知字段保留）';
+    renderList();
+  }
+
+  function collectNode(id){
+    var rows = $('fopts').querySelectorAll('.opt');
+    var opts = [];
+    rows.forEach(function(r){
+      var ins = r.querySelectorAll('input');
+      var t = ins[0].value.trim(), g = ins[1].value.trim(), e = ins[2].value.trim();
+      if(!t && !g) return;
+      var o = {};
+      if(t) o.t = t;
+      if(g) o.go = g;
+      if(e){
+        try{ o.effect = JSON.parse(e); }catch(err){ o.effect = e; }
+      }
+      opts.push(o);
+    });
+    return {place: $('fplace').value.trim(), where: $('fwhere').value.trim(),
+            text: $('ftext').value.split('\n').filter(function(x){return x!=='';}),
+            options: opts};
+  }
+
+  function mark(id){
+    var n = collectNode(id);
+    // 与原值对比，记录差异
+    var orig = nodes[id] || {};
+    var changed = false;
+    if((Array.isArray(orig.text) ? orig.text.join('\n') : '') !== n.text.join('\n')) changed = true;
+    if(JSON.stringify(orig.options||[]) !== JSON.stringify(n.options)) changed = true;
+    if(orig.place !== n.place) changed = true;
+    if(orig.where !== n.where) changed = true;
+    if(changed) patch[id] = n; else delete patch[id];
+    renderList();
+  }
+
+  ['ftext','fplace','fwhere'].forEach(function(id){
+    $(id).addEventListener('input', function(){ if(cur) mark(cur); });
+  });
+  $('addopt').onclick = function(){ if(cur){ $('fopts').appendChild(optRow({},0)); } };
+  $('q').addEventListener('input', renderList);
+
+  $('load').onclick = function(){
+    var f = $('file').files[0];
+    if(!f){ msg('先选择文件'); return; }
+    var rd = new FileReader();
+    rd.onload = function(){
+      var res = extractNodes(String(rd.result));
+      nodes = res.nodes; order = Object.keys(nodes).sort();
+      patch = {}; cur = null;
+      $('meta').textContent = '';
+      renderList();
+      msg('加载完成：' + res.count + ' 个节点（函数式正文节点已跳过求值）');
+    };
+    rd.readAsText(f, 'utf-8');
+  };
+
+  $('export').onclick = function(){
+    if(cur) mark(cur);
+    var keys = Object.keys(patch);
+    if(!keys.length){ msg('没有修改'); return; }
+    var blob = new Blob([JSON.stringify(patch, null, 1)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'node_patch.json';
+    a.click();
+    msg('已导出 ' + keys.length + ' 个节点的补丁 → node_patch.json；运行 node_apply.py 应用');
+  };
+  $('clear').onclick = function(){ patch = {}; renderList(); msg('补丁已清空'); };
+})();
+</script>
+</body>
+</html>

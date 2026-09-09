@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-09-06 19:29:07",
+  "total_nodes": 1610,
+  "total_goes": 4375,
+  "duplicates": 23,
+  "broken_links": 389,
+  "structure_errors": 389,
+  "structure_warnings": 23,
+  "passed": false
+}

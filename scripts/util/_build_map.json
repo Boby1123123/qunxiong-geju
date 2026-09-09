@@ -1,0 +1,384 @@
+{
+  "volume_map": {
+    "b": {
+      "start_line": 1,
+      "end_line": 1105,
+      "filename": "story_elda_b.py",
+      "line_count": 1105
+    },
+    "c": {
+      "start_line": 1107,
+      "end_line": 1538,
+      "filename": "story_elda_c.py",
+      "line_count": 432
+    },
+    "d": {
+      "start_line": 1540,
+      "end_line": 2440,
+      "filename": "story_elda_d.py",
+      "line_count": 901
+    },
+    "e": {
+      "start_line": 2442,
+      "end_line": 3218,
+      "filename": "story_elda_e.py",
+      "line_count": 777
+    },
+    "f": {
+      "start_line": 3220,
+      "end_line": 6019,
+      "filename": "story_elda_f.py",
+      "line_count": 2800
+    },
+    "g": {
+      "start_line": 6021,
+      "end_line": 7450,
+      "filename": "story_elda_g.py",
+      "line_count": 1430
+    },
+    "h": {
+      "start_line": 7452,
+      "end_line": 9946,
+      "filename": "story_elda_h.py",
+      "line_count": 2495
+    },
+    "i": {
+      "start_line": 9948,
+      "end_line": 12137,
+      "filename": "story_elda_i.py",
+      "line_count": 2190
+    },
+    "j": {
+      "start_line": 12139,
+      "end_line": 12593,
+      "filename": "story_elda_j.py",
+      "line_count": 455
+    },
+    "k": {
+      "start_line": 12595,
+      "end_line": 12952,
+      "filename": "story_elda_k.py",
+      "line_count": 358
+    },
+    "l": {
+      "start_line": 12954,
+      "end_line": 13327,
+      "filename": "story_elda_l.py",
+      "line_count": 374
+    },
+    "m": {
+      "start_line": 13329,
+      "end_line": 13456,
+      "filename": "story_elda_m.py",
+      "line_count": 128
+    },
+    "n": {
+      "start_line": 13458,
+      "end_line": 13670,
+      "filename": "story_elda_n.py",
+      "line_count": 213
+    },
+    "o": {
+      "start_line": 13672,
+      "end_line": 13800,
+      "filename": "story_elda_o.py",
+      "line_count": 129
+    },
+    "p": {
+      "start_line": 13802,
+      "end_line": 13957,
+      "filename": "story_elda_p.py",
+      "line_count": 156
+    },
+    "q": {
+      "start_line": 13959,
+      "end_line": 14876,
+      "filename": "story_elda_q.py",
+      "line_count": 918
+    },
+    "r": {
+      "start_line": 14878,
+      "end_line": 15963,
+      "filename": "story_elda_r.py",
+      "line_count": 1086
+    },
+    "s": {
+      "start_line": 15965,
+      "end_line": 16704,
+      "filename": "story_elda_s.py",
+      "line_count": 740
+    },
+    "t": {
+      "start_line": 16706,
+      "end_line": 17393,
+      "filename": "story_elda_t.py",
+      "line_count": 688
+    },
+    "u": {
+      "start_line": 17395,
+      "end_line": 17600,
+      "filename": "story_elda_u.py",
+      "line_count": 206
+    },
+    "v": {
+      "start_line": 17602,
+      "end_line": 18589,
+      "filename": "story_elda_v.py",
+      "line_count": 988
+    },
+    "w": {
+      "start_line": 18591,
+      "end_line": 19238,
+      "filename": "story_elda_w.py",
+      "line_count": 648
+    },
+    "y": {
+      "start_line": 19240,
+      "end_line": 22709,
+      "filename": "story_elda_y.py",
+      "line_count": 3470
+    },
+    "x": {
+      "start_line": 22711,
+      "end_line": 23267,
+      "filename": "story_elda_x.py",
+      "line_count": 557
+    },
+    "y2": {
+      "start_line": 23269,
+      "end_line": 24013,
+      "filename": "story_elda_y2.py",
+      "line_count": 745
+    },
+    "z": {
+      "start_line": 24015,
+      "end_line": 24460,
+      "filename": "story_elda_z.py",
+      "line_count": 446
+    },
+    "aa": {
+      "start_line": 24462,
+      "end_line": 24916,
+      "filename": "story_elda_aa.py",
+      "line_count": 455
+    },
+    "ab": {
+      "start_line": 24918,
+      "end_line": 25265,
+      "filename": "story_elda_ab.py",
+      "line_count": 348
+    },
+    "ac": {
+      "start_line": 25267,
+      "end_line": 25630,
+      "filename": "story_elda_ac.py",
+      "line_count": 364
+    },
+    "ad": {
+      "start_line": 25632,
+      "end_line": 26121,
+      "filename": "story_elda_ad.py",
+      "line_count": 490
+    },
+    "ae": {
+      "start_line": 26123,
+      "end_line": 26856,
+      "filename": "story_elda_ae.py",
+      "line_count": 734
+    },
+    "af": {
+      "start_line": 26858,
+      "end_line": 27489,
+      "filename": "story_elda_af.py",
+      "line_count": 632
+    },
+    "ag": {
+      "start_line": 27491,
+      "end_line": 28078,
+      "filename": "story_elda_ag.py",
+      "line_count": 588
+    },
+    "ah": {
+      "start_line": 28080,
+      "end_line": 29234,
+      "filename": "story_elda_ah.py",
+      "line_count": 1155
+    },
+    "ai": {
+      "start_line": 29236,
+      "end_line": 29657,
+      "filename": "story_elda_ai.py",
+      "line_count": 422
+    },
+    "aj": {
+      "start_line": 29659,
+      "end_line": 30304,
+      "filename": "story_elda_aj.py",
+      "line_count": 646
+    },
+    "ak": {
+      "start_line": 30306,
+      "end_line": 30755,
+      "filename": "story_elda_ak.py",
+      "line_count": 450
+    },
+    "al": {
+      "start_line": 30757,
+      "end_line": 31211,
+      "filename": "story_elda_al.py",
+      "line_count": 455
+    },
+    "am": {
+      "start_line": 31213,
+      "end_line": 31572,
+      "filename": "story_elda_am.py",
+      "line_count": 360
+    },
+    "an": {
+      "start_line": 31574,
+      "end_line": 32122,
+      "filename": "story_elda_an.py",
+      "line_count": 549
+    },
+    "ao": {
+      "start_line": 32124,
+      "end_line": 32520,
+      "filename": "story_elda_ao.py",
+      "line_count": 397
+    },
+    "ap": {
+      "start_line": 32522,
+      "end_line": 32927,
+      "filename": "story_elda_ap.py",
+      "line_count": 406
+    },
+    "aq": {
+      "start_line": 32929,
+      "end_line": 33294,
+      "filename": "story_elda_aq.py",
+      "line_count": 366
+    },
+    "ar": {
+      "start_line": 33296,
+      "end_line": 33667,
+      "filename": "story_elda_ar.py",
+      "line_count": 372
+    },
+    "as": {
+      "start_line": 33669,
+      "end_line": 34016,
+      "filename": "story_elda_as.py",
+      "line_count": 348
+    },
+    "at": {
+      "start_line": 34018,
+      "end_line": 34398,
+      "filename": "story_elda_at.py",
+      "line_count": 381
+    },
+    "au": {
+      "start_line": 34400,
+      "end_line": 34802,
+      "filename": "story_elda_au.py",
+      "line_count": 403
+    },
+    "av": {
+      "start_line": 34804,
+      "end_line": 35147,
+      "filename": "story_elda_av.py",
+      "line_count": 344
+    },
+    "aw": {
+      "start_line": 35149,
+      "end_line": 35520,
+      "filename": "story_elda_aw.py",
+      "line_count": 372
+    },
+    "ax": {
+      "start_line": 35522,
+      "end_line": 35920,
+      "filename": "story_elda_ax.py",
+      "line_count": 399
+    },
+    "ay": {
+      "start_line": 35922,
+      "end_line": 36507,
+      "filename": "story_elda_ay.py",
+      "line_count": 586
+    },
+    "az": {
+      "start_line": 36509,
+      "end_line": 37081,
+      "filename": "story_elda_az.py",
+      "line_count": 573
+    },
+    "ba": {
+      "start_line": 37083,
+      "end_line": 38377,
+      "filename": "story_elda_ba.py",
+      "line_count": 1295
+    },
+    "bb": {
+      "start_line": 38379,
+      "end_line": 39178,
+      "filename": "story_elda_bb.py",
+      "line_count": 800
+    },
+    "bc": {
+      "start_line": 39180,
+      "end_line": 39811,
+      "filename": "story_elda_bc.py",
+      "line_count": 632
+    },
+    "bd": {
+      "start_line": 39813,
+      "end_line": 40697,
+      "filename": "story_elda_bd.py",
+      "line_count": 885
+    },
+    "be": {
+      "start_line": 40699,
+      "end_line": 41434,
+      "filename": "story_elda_be.py",
+      "line_count": 736
+    },
+    "bf": {
+      "start_line": 41436,
+      "end_line": 42031,
+      "filename": "story_elda_bf.py",
+      "line_count": 596
+    },
+    "bg": {
+      "start_line": 42033,
+      "end_line": 42871,
+      "filename": "story_elda_bg.py",
+      "line_count": 839
+    },
+    "bh": {
+      "start_line": 42873,
+      "end_line": 43436,
+      "filename": "story_elda_bh.py",
+      "line_count": 564
+    },
+    "bi": {
+      "start_line": 43438,
+      "end_line": 43891,
+      "filename": "story_elda_bi.py",
+      "line_count": 454
+    },
+    "bj": {
+      "start_line": 43893,
+      "end_line": 44390,
+      "filename": "story_elda_bj.py",
+      "line_count": 498
+    },
+    "bk": {
+      "start_line": 44392,
+      "end_line": 44649,
+      "filename": "story_elda_bk.py",
+      "line_count": 258
+    }
+  },
+  "total_nodes_lines": 44650,
+  "build_time": "2026-09-06T19:44:14.742664"
+}

@@ -1,0 +1,10 @@
+﻿python :   File "<string>", line 6
+所在位置 行:1 字符: 25
++ cd "D:\1pao tuan\群雄割据"; python -c "
++                         ~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  File "<string>", line 6:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    hits = list(re.finditer(r'N\[%s\]' % re.escape('" +nid+ \'),
+                                                   ^
+SyntaxError: unterminated string literal (detected at line 6); perhaps you escaped the end quote?

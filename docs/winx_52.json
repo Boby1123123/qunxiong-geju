@@ -1,0 +1,314 @@
+[
+ {
+  "name": "ATTR_CN",
+  "kind": "const",
+  "script": 1,
+  "pos": 162571
+ },
+ {
+  "name": "ATTR_DESC",
+  "kind": "const",
+  "script": 1,
+  "pos": 162669
+ },
+ {
+  "name": "CHURCH_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 396581
+ },
+ {
+  "name": "CITY_DAILY_EVENTS",
+  "kind": "const",
+  "script": 2,
+  "pos": 1824060
+ },
+ {
+  "name": "CITY_SPOTS",
+  "kind": "const",
+  "script": 3,
+  "pos": 3932624
+ },
+ {
+  "name": "CURRENCY",
+  "kind": "const",
+  "script": 1,
+  "pos": 186876
+ },
+ {
+  "name": "ChunkLoader",
+  "kind": "const",
+  "script": 4,
+  "pos": 4365798
+ },
+ {
+  "name": "DREAM_EVENTS",
+  "kind": "const",
+  "script": 2,
+  "pos": 1826741
+ },
+ {
+  "name": "DWARF_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 373497
+ },
+ {
+  "name": "EAST_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 389082
+ },
+ {
+  "name": "ELF_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 365989
+ },
+ {
+  "name": "ENEMIES",
+  "kind": "const",
+  "script": 1,
+  "pos": 187050
+ },
+ {
+  "name": "ErrorLog",
+  "kind": "const",
+  "script": 4,
+  "pos": 4363984
+ },
+ {
+  "name": "FORESHADOWING_V27",
+  "kind": "const",
+  "script": 2,
+  "pos": 3400577
+ },
+ {
+  "name": "FREE_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 333567
+ },
+ {
+  "name": "GALLERY_BONUS",
+  "kind": "const",
+  "script": 4,
+  "pos": 3970207
+ },
+ {
+  "name": "HOBBIES",
+  "kind": "const",
+  "script": 1,
+  "pos": 173994
+ },
+ {
+  "name": "HOMELANDS",
+  "kind": "const",
+  "script": 1,
+  "pos": 171403
+ },
+ {
+  "name": "IDEALS",
+  "kind": "const",
+  "script": 1,
+  "pos": 174828
+ },
+ {
+  "name": "ITEM_GALLERY",
+  "kind": "const",
+  "script": 4,
+  "pos": 3966132
+ },
+ {
+  "name": "JOBS",
+  "kind": "const",
+  "script": 1,
+  "pos": 163362
+ },
+ {
+  "name": "N",
+  "kind": "const",
+  "script": 2,
+  "pos": 274530
+ },
+ {
+  "name": "NORTH_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 334176
+ },
+ {
+  "name": "NPC_LIFE",
+  "kind": "const",
+  "script": 1,
+  "pos": 189743
+ },
+ {
+  "name": "ORC_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 380722
+ },
+ {
+  "name": "RACES",
+  "kind": "const",
+  "script": 1,
+  "pos": 181384
+ },
+ {
+  "name": "REALMS",
+  "kind": "const",
+  "script": 1,
+  "pos": 175734
+ },
+ {
+  "name": "REGIONS",
+  "kind": "const",
+  "script": 1,
+  "pos": 176403
+ },
+ {
+  "name": "RULESET_ID",
+  "kind": "const",
+  "script": 1,
+  "pos": 162474
+ },
+ {
+  "name": "RenderBatch",
+  "kind": "const",
+  "script": 4,
+  "pos": 4358420
+ },
+ {
+  "name": "S",
+  "kind": "let",
+  "script": 3,
+  "pos": 3694373
+ },
+ {
+  "name": "SECRETS",
+  "kind": "const",
+  "script": 2,
+  "pos": 424888
+ },
+ {
+  "name": "SKILLS",
+  "kind": "const",
+  "script": 1,
+  "pos": 162825
+ },
+ {
+  "name": "SKILL_LEVELS",
+  "kind": "const",
+  "script": 1,
+  "pos": 163267
+ },
+ {
+  "name": "SOUTH_BOARD",
+  "kind": "const",
+  "script": 2,
+  "pos": 357621
+ },
+ {
+  "name": "SUBRACES",
+  "kind": "const",
+  "script": 1,
+  "pos": 181924
+ },
+ {
+  "name": "StorageKit",
+  "kind": "const",
+  "script": 4,
+  "pos": 4359888
+ },
+ {
+  "name": "TALENTS",
+  "kind": "const",
+  "script": 1,
+  "pos": 173600
+ },
+ {
+  "name": "TRAVEL",
+  "kind": "const",
+  "script": 1,
+  "pos": 179880
+ },
+ {
+  "name": "TRAVEL_EVENTS",
+  "kind": "const",
+  "script": 2,
+  "pos": 407683
+ },
+ {
+  "name": "V35_DevConsole",
+  "kind": "const",
+  "script": 0,
+  "pos": 118590
+ },
+ {
+  "name": "V35_EventBus",
+  "kind": "const",
+  "script": 0,
+  "pos": 114014
+ },
+ {
+  "name": "V35_ModuleManager",
+  "kind": "const",
+  "script": 0,
+  "pos": 115001
+ },
+ {
+  "name": "WORLD_EVENTS",
+  "kind": "const",
+  "script": 1,
+  "pos": 180860
+ },
+ {
+  "name": "choice",
+  "kind": "const",
+  "script": 3,
+  "pos": 3697039
+ },
+ {
+  "name": "curNode",
+  "kind": "let",
+  "script": 3,
+  "pos": 3708282
+ },
+ {
+  "name": "logs",
+  "kind": "const",
+  "script": 3,
+  "pos": 3909643
+ },
+ {
+  "name": "optEl",
+  "kind": "let",
+  "script": 3,
+  "pos": 3708275
+ },
+ {
+  "name": "pool",
+  "kind": "let",
+  "script": 3,
+  "pos": 3939979
+ },
+ {
+  "name": "renderPerf",
+  "kind": "const",
+  "script": 4,
+  "pos": 4359295
+ },
+ {
+  "name": "rnd",
+  "kind": "const",
+  "script": 3,
+  "pos": 3696993
+ },
+ {
+  "name": "storyEl",
+  "kind": "let",
+  "script": 3,
+  "pos": 3708262
+ }
+]

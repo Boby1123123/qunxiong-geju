@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7148961,
-    "chunked_html_bytes_max": 4547888,
-    "node_total_min": 3937,
+    "game_html_bytes_max": 7154818,
+    "chunked_html_bytes_max": 4553997,
+    "node_total_min": 3941,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7098961,
-    "chunked_html_bytes": 4447888,
-    "node_total": 3987,
+    "game_html_bytes": 7104818,
+    "chunked_html_bytes": 4453997,
+    "node_total": 3991,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "C-3 薄节点密度重写（16 节点扩写 25 万字计划的文本增量）",
+    "reason": "E-1 过渡章四去向旅途链（+4 节点）",
     "history": [
       {
         "date": "2026-09-09",
@@ -334,6 +334,13 @@
         "chunked_bytes": 4447888,
         "nodes": 3987,
         "reason": "C-3 薄节点密度重写（16 节点扩写 25 万字计划的文本增量）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7104818,
+        "chunked_bytes": 4453997,
+        "nodes": 3991,
+        "reason": "E-1 过渡章四去向旅途链（+4 节点）"
       }
     ]
   },

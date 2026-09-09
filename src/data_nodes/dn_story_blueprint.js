@@ -244,7 +244,11 @@ window.STORY_BLUEPRINT = {
   "acad_forbidden_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
   "acad_forbidden_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
   "acad_forbidden_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
-  "acad_forbidden_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"}
+  "acad_forbidden_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "fc_road_north_road": {tag:"main", vol:"vol_freecity", arc:"arc_prologue", pace:"normal"},
+  "fc_road_west_road": {tag:"main", vol:"vol_freecity", arc:"arc_prologue", pace:"normal"},
+  "fc_road_desert_road": {tag:"main", vol:"vol_freecity", arc:"arc_prologue", pace:"normal"},
+  "fc_road_east_road": {tag:"main", vol:"vol_freecity", arc:"arc_prologue", pace:"normal"}
 
 
 

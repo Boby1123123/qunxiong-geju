@@ -79,5 +79,13 @@ window.CAUSALITY_WORDS = [
   {word:"大汗", world:"兽人草原", file:"script_02a.js"},
   {word:"青叶", world:"精灵线", file:"dn_elf_dwarf.js"},
   {word:"净化令", world:"净化令线", file:"script_02g.js"}
-];
+,
+    {id:"led_a3_01",type:"伏笔",desc:"北境灰烬村废墟之眼（深渊生物窥视）",plant:"origin_expand_north_edge",reap:"origin_expand_north_6",status:"open",world:"vol_north"},
+    {id:"led_a3_02",type:"设定",desc:"南方深海绿光·第七印在海底（商船线）",plant:"origin_expand_south_4",reap:"",status:"open",world:"vol_south"},
+    {id:"led_a3_03",type:"人物",desc:"杜嬷嬷送阿禾东去承天城投奔姓秦者（教会孤儿线）",plant:"origin_expand_church_4",reap:"",status:"open",world:"vol_church"},
+    {id:"led_a3_04",type:"设定",desc:"世界树根部封印·晨星之泪可洗蚀痕（精灵线）",plant:"origin_expand_elf_6",reap:"",status:"open",world:"vol_elf"},
+    {id:"led_a3_05",type:"设定",desc:"矮人南矿洞铁门·七道封印之一（矮人线）",plant:"origin_expand_dwarf_4",reap:"",status:"open",world:"vol_dwarf"},
+    {id:"led_a3_06",type:"人物",desc:"铁门关斥候托信交汇城李管事·暗蚀会挖地寻物（兽人线）",plant:"origin_expand_orc_7",reap:"",status:"open",world:"vol_orc"},
+    {id:"led_a3_07",type:"人物",desc:"秦·长风：晨天城秦氏幸存者，居交汇城，官署暗探在找（东境线）",plant:"origin_expand_east_7",reap:"",status:"open",world:"vol_east"},
+    {id:"led_a3_08",type:"伏笔",desc:"承天城井水变浑·晨天城覆灭征兆重现",plant:"origin_expand_east_6",reap:"",status:"open",world:"vol_east"}];
 /* ===== /v91inj:ledgerwords:end/ ===== */

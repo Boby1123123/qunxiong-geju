@@ -121,7 +121,7 @@ def run(html=None, timings=None):
                         text = io.open(os.path.join(d, fn), encoding='utf-8').read()
                     except Exception:
                         continue
-                    ids |= set(re.findall(r'nodes\["([^"]+)"\]\s*=\s*function', text))
+                    ids |= set(re.findall(r'nodes\["([^"]+)"\]\s*=\s*(?:function\b|\{)', text))
         dead = len([g for g in grefs if g not in ids])
     _chk('节点数下限', node_total >= nmin,
          '节点=%d ≥ 下限 %d（内容零损失红线）' % (node_total, nmin) if node_total >= 0

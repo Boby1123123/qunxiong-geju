@@ -21,7 +21,7 @@ def _chunk_ids():
                 text = io.open(os.path.join(d, fn), encoding='utf-8').read()
             except Exception:
                 continue
-            ids |= set(re.findall(r'nodes\["([^"]+)"\]\s*=\s*function', text))
+            ids |= set(re.findall(r'nodes\["([^"]+)"\]\s*=\s*(?:function\b|\{)', text))
     return ids
 
 

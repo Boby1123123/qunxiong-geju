@@ -21,7 +21,7 @@ def _read_chunks():
                 text = io.open(p, encoding='utf-8').read()
             except Exception:
                 text = ''
-            ids = re.findall(r'nodes\["([^"]+)"\]\s*=\s*function', text)
+            ids = re.findall(r'nodes\["([^"]+)"\]\s*=\s*(?:function\b|\{)', text)
             chunks[fn] = {'ids': ids, 'text': text, 'path': p}
     return chunks
 

@@ -409,6 +409,18 @@ def main():
         if cmd == 'content':
             return p2tools_impl.cmd_content(sys.argv[2:])
         return p2tools_impl.cmd_text(sys.argv[2:])
+    if cmd == 'backup':
+        import eng_impl
+        return eng_impl.cmd_backup(sys.argv[2:])
+    if cmd == 'release':
+        import eng_impl
+        return eng_impl.cmd_release(sys.argv[2:])
+    if cmd == 'test':
+        import eng_impl
+        return eng_impl.cmd_test(sys.argv[2:])
+    if cmd == 'volume':
+        import eng_impl
+        return eng_impl.cmd_volume(sys.argv[2:])
     if cmd == 'regress':
         return cmd_regress()
     if cmd == 'serve':

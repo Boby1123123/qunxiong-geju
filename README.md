@@ -34,7 +34,7 @@ python -X utf8 smoke_test.py               :: 冒烟（建号→主线→结局�
 - 节点 Schema / 事件注入 / 文风词表 / 账本核销规则见 `skills/elda-content-author`
 - 世界设定圣经（8 势力·五主线·设定词冻结）见 `skills/elda-story-guard`
 - 验证链一键门禁 + 踩坑清单见 `skills/elda-ci-guard`（`python skills/elda-ci-guard/scripts/ci_guard.py --quick`）
-- 三个技能随仓库版本化，新环境/新会话可直接使用；完整文档族在 `docs/`（世界设定_v64 · 状态Schema_v70 · 存档层_v71 · CM 因果账本 · I1 叙事沉浸等）
+- 四个技能随仓库版本化（skills/: elda-project-guide 项目入口 / content-author 内容创作 / story-guard 设定守护 / ci-guard 一键门禁），新环境/新会话可直接使用；完整文档族在 `docs/`（世界设定_v64 · 状态Schema_v70 · 存档层_v71 · CM 因果账本 · I1 叙事沉浸等）
 
 ## 存档
 

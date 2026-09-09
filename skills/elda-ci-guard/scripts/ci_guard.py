@@ -121,6 +121,16 @@ def smoke():
             "tail": "\n".join(tail), "err_tail": (se or "").strip()[-300:]}
 
 
+def volume():
+    rc, so, se = run(PY + [os.path.join(ROOT, "tools", "elda", "elda.py"),
+                           "volume", "--json"], timeout=120)
+    try:
+        data = json.loads(so or "{}")
+    except Exception:
+        data = {}
+    return {"status": "PASS" if rc == 0 else "FAIL", "returncode": rc, "data": data}
+
+
 def main():
     argv = sys.argv[1:]
     quick = "--quick" in argv
@@ -168,6 +178,17 @@ def main():
     print(f"\n[{'4' if not full else '5'}/5] 四路字节一致:", r["status"])
     for row in r["rows"]:
         print(f"   {row['a']}({row['a_bytes']}) == {row['b']}({row['b_bytes']}) -> {row['match']}")
+
+    r = volume()
+    report["results"]["volume"] = r
+    print(f"\n[vol] 体积趋势:", r["status"], end="")
+    if r.get("data"):
+        d = r["data"]
+        print(f" (game={d.get('game_bytes')}B, avg5={d.get('avg5')}B, {d.get('growth_pct', 0)}%, 样本={d.get('samples')})")
+        for w in d.get("warns", []):
+            print("   [!]", w)
+    else:
+        print()
 
     r = git_status()
     report["results"]["git_status"] = r

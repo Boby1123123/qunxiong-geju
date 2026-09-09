@@ -14,7 +14,8 @@ if [ -z "$FILES" ]; then
 fi
 
 if echo "$FILES" | grep -qE '^(src/|tools/|_build_authority\.py|smoke_test\.py|game\.html|game_check\.html|game_chunked\.html|index\.html|game_built\.html|chunks/)'; then
-    echo "[pre-commit] 游戏代码变更 → 运行 elda-ci-guard --quick（全量门禁）"
+    echo "[pre-commit] 游戏代码变更 → 自动快照 + 全量门禁"
+    python -X utf8 tools/elda/elda.py backup --reason pre-commit >/dev/null || true
     if ! python -X utf8 skills/elda-ci-guard/scripts/ci_guard.py --quick; then
         echo "[pre-commit] ❌ 门禁未通过，提交已阻止。修复后再提交；确需绕过：git commit --no-verify（不推荐）"
         exit 1

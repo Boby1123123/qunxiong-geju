@@ -1,0 +1,40 @@
+name: elda-ci-guard
+
+# 群雄割据 CI（第三层：云端双保险）
+# 每次 push 到 main 自动跑完整门禁：build → copy → chunks → sync → ci(21检查器) → smoke
+# 任何一步 FAIL → 本次运行红灯；Pages 部署仍由 GitHub 默认 workflow 执行，
+# 但 CI 红灯即"不可发布"的机器证据。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  elda-ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 一键门禁（build→chunks→sync→ci→smoke→四路字节）
+        run: python -X utf8 skills/elda-ci-guard/scripts/ci_guard.py --build --report
+
+      - name: 上传门禁报告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-guard-report
+          path: docs/ci_guard_report_latest.md
+          if-no-files-found: ignore

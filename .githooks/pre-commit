@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# 群雄割据 pre-commit 门禁（elda-ci-guard 第二层：本地双保险）
+# 规则：
+#   - 提交涉及游戏代码（src/ tools/ 构建脚本 发布文件）→ 强制跑 --quick 全量门禁，不绿阻止提交
+#   - 仅文档/技能/README 变更 → 跳过全量（避免改个 md 也要等 2 分钟）
+# 用法：本机已执行 git config core.hooksPath .githooks；新环境 clone 后同配置一次即可。
+
+cd "$(git rev-parse --show-toplevel)" || { echo "[pre-commit] 无法定位仓库根"; exit 1; }
+
+FILES=$(git diff --cached --name-only)
+if [ -z "$FILES" ]; then
+    echo "[pre-commit] 无暂存变更"
+    exit 0
+fi
+
+if echo "$FILES" | grep -qE '^(src/|tools/|_build_authority\.py|smoke_test\.py|game\.html|game_check\.html|game_chunked\.html|index\.html|game_built\.html|chunks/)'; then
+    echo "[pre-commit] 游戏代码变更 → 运行 elda-ci-guard --quick（全量门禁）"
+    if ! python -X utf8 skills/elda-ci-guard/scripts/ci_guard.py --quick; then
+        echo "[pre-commit] ❌ 门禁未通过，提交已阻止。修复后再提交；确需绕过：git commit --no-verify（不推荐）"
+        exit 1
+    fi
+    echo "[pre-commit] ✅ 门禁全绿，允许提交"
+else
+    echo "[pre-commit] 仅文档/技能变更 → 跳过全量门禁"
+fi
+exit 0

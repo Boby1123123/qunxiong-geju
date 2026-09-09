@@ -11,7 +11,25 @@
 """
 import subprocess, sys, os, shutil, json, datetime
 
-ROOT = r"D:\1pao tuan\群雄割据"
+
+def _resolve_root():
+    """项目根定位：环境变量 ELDA_PROJECT_ROOT > 脚本向上查找（仓库 skills/ 布局）> 本地默认。
+    兼容：本地 .user_skills 安装、仓库内 skills/ 安装、CI/Linux runner。"""
+    env = os.environ.get("ELDA_PROJECT_ROOT")
+    if env and os.path.exists(os.path.join(env, "_build_authority.py")):
+        return env
+    here = os.path.dirname(os.path.abspath(__file__))
+    for _ in range(6):
+        if os.path.exists(os.path.join(here, "_build_authority.py")):
+            return here
+        parent = os.path.dirname(here)
+        if parent == here:
+            break
+        here = parent
+    return r"D:\1pao tuan\群雄割据"
+
+
+ROOT = _resolve_root()
 TOOLS_ELDA = os.path.join(ROOT, "tools", "elda", "elda.py")
 BUILD_PY = os.path.join(ROOT, "_build_authority.py")
 SMOKE_PY = os.path.join(ROOT, "smoke_test.py")

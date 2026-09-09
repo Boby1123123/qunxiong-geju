@@ -195,11 +195,21 @@ def build_chunks(proj, src_path=None):
     _write(os.path.join(d, 'NODE_MAP.js'), '\n'.join(nm_lines))
     print('NODE_MAP.js:', len(node_map), '条映射')
 
-    new_block = ('<script src="chunks/NODE_MAP.js"></script>\n'
-                 '<script src="chunks/story_core.js"></script>\n'
-                 '<script>\n/* 剧情节点已分片加载（v42） */\n' +
-                 (non_node_text + '\n' if non_node_text else '') +
-                 '</script>')
+    # 引用全部 8 个 story_* 分片（story_core 最先，其余按名排序，保证分片版节点完整）
+    ordered = ['story_core.js'] + sorted(c + '.js' for c in chunks if c != 'story_core')
+    src_refs = ''.join('<script src="chunks/%s"></script>\n' % f for f in ordered)
+    # N 必须先于分片定义：把 non_node_text 里的 N 定义段拆出提前
+    n_head = ''
+    n_tail = non_node_text
+    m = re.search(r'const\s+N\s*=\s*\{\};\s*window\.N\s*=\s*N;', non_node_text)
+    if m:
+        n_head = m.group(0) + ';'
+        n_tail = non_node_text[:m.start()] + non_node_text[m.end():]
+    new_block = ('<script>' + n_head + '</script>\n' if n_head else '') + \
+                ('<script src="chunks/NODE_MAP.js"></script>\n' + src_refs) + \
+                '<script>\n/* 剧情节点已分片加载（v42） */\n' + \
+                (n_tail + '\n' if n_tail else '') + \
+                '</script>'
     chunked = html[:s_open] + new_block + html[s_close:]
     _write(os.path.join(proj, 'game_chunked.html'), chunked)
     print('game_chunked.html:', len(chunked), '字符')

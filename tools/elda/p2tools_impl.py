@@ -780,13 +780,16 @@ def _vol_nodes():
 _TAG_BY_TYPE = {'main': 'main', 'ending': 'ending', 'event': 'event', 'branch': 'branch'}
 
 def cmd_content_new(args):
-    """elda content new --type main|ending|event|branch --id <id> --vol <卷>
-    生成节点模板文件 src/data_nodes/dn_scaffold.js（可编辑）；生成即过 node --check。"""
+    """elda content new --type main|ending|event|branch [--tpl <模板类>] --id <id> [--vol <卷>] [--arc <弧id>]
+    SP-4 模板工厂：读取 src/data_nodes/dn_node_templates.js（NODE_TEMPLATES 12 类）生成脚手架；
+    生成即过 node --check；--arc/--vol 时读蓝图校验并写入标注注释。"""
     import argparse as _ap
-    ap = _ap.ArgumentParser(description='节点脚手架')
+    ap = _ap.ArgumentParser(description='节点脚手架（模板工厂）')
     ap.add_argument('--type', required=True, help='main|ending|event|branch')
+    ap.add_argument('--tpl', default=None, help='模板类键（见 NODE_TEMPLATES；缺省按 type 推断）')
     ap.add_argument('--id', required=True, help='节点 id（如 bd1_west_entry）')
     ap.add_argument('--vol', default='unassigned', help='目标卷（用于注释与账本）')
+    ap.add_argument('--arc', default=None, help='所属弧 id（蓝图校验，如 arc_fsh_primal1）')
     a = ap.parse_args(args)
     if a.type not in _TAG_BY_TYPE:
         print('[FAIL] --type 必须为 main|ending|event|branch')
@@ -794,20 +797,81 @@ def cmd_content_new(args):
     if not re.match(r'^[A-Za-z0-9_]+$', a.id):
         print('[FAIL] --id 仅允许字母数字下划线（中文 id 建议改用拼音/英文前缀）')
         return 1
-    tpl = _SCAFFOLD_TMPL % {
-        'id': a.id, 'type': a.type, 'tag': _TAG_BY_TYPE[a.type], 'vol': a.vol,
-        'ts': time.strftime('%Y-%m-%d'),
-    }
+    # 读模板工厂（单一权威源）
+    tpls = _load_node_templates()
+    if a.tpl is None:
+        a.tpl = {'main': 'main_advance', 'ending': 'ending', 'event': 'event_world', 'branch': 'branch_quest'}[a.type]
+    if a.tpl not in tpls:
+        print('[FAIL] --tpl %s 不存在；可用模板：%s' % (a.tpl, ', '.join(sorted(tpls.keys()))))
+        return 1
+    tpl = tpls[a.tpl]
+    tag = tpl.get('tag') or _TAG_BY_TYPE[a.type]
+    # 蓝图校验（--arc/--vol）
+    arc_note = ''
+    if a.arc:
+        bp = _load_blueprint()
+        arcs = bp.get('arcs', []) if bp else []
+        found = [x for x in arcs if x.get('id') == a.arc]
+        if not found:
+            print('[WARN] 蓝图无弧 %s（仅写入注释，不阻塞）' % a.arc)
+        else:
+            ar = found[0]
+            vol = a.vol if a.vol != 'unassigned' else ar.get('vol', 'unassigned')
+            a.vol = vol
+            arc_note = '  所属弧：%s（%s · 幕%s · %s）\n' % (a.arc, ar.get('name', ''), ar.get('act', '?'), vol)
+    body = _tpl_to_node(a.id, tag, a.vol, tpl)
+    header = u"// SP-4 节点脚手架（elda content new --type %(type)s --tpl %(tpl)s --id %(id)s --vol %(vol)s，%(ts)s 生成）\n" % {
+        'type': a.type, 'tpl': a.tpl, 'id': a.id, 'vol': a.vol, 'ts': time.strftime('%Y-%m-%d')}
+    if arc_note:
+        header += '// ' + arc_note
+    header += u"// 铁律：本文件只含节点数据（N[\"id\"]=对象），不含引擎逻辑；判定公式/writeNext/choose/存档语义不可触碰。\n"
+    header += u"// CM-3 账本登记提示：埋设/回收伏笔请同步 dn_causality.js；设定词须出现在所属卷域（elda content causality 校验）。\n"
+    header += u"// 注意：dn_scaffold.js 不进构建——填写完成后另存为正式 dn_<主题>.js 文件。\n"
+    out = header + 'N["%s"]=%s;\n' % (a.id, body)
     p = os.path.join(DATA_NODES, 'dn_scaffold.js')
-    _write(p, tpl)
-    # 生成即语法校验
+    _write(p, out)
     rc = subprocess.call(['node', '--check', p], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if rc != 0:
         print('[FAIL] 脚手架生成后 node --check 未通过（%s）' % p)
         return 1
     print('[OK] 脚手架已生成: %s' % p)
-    print('    节点 %s（tag=%s, 目标卷=%s）——填写正文后请执行：node --check → elda ci → 浏览器回归' % (a.id, a.type, a.vol))
+    print('    节点 %s（tag=%s, tpl=%s, 卷=%s%s）——填写【】占位后：node --check → elda ci → 浏览器回归'
+          % (a.id, tag, a.tpl, a.vol, ('，弧=' + a.arc) if a.arc else ''))
     return 0
+
+
+def _load_node_templates():
+    """从 src/data_nodes/dn_node_templates.js 读取 NODE_TEMPLATES（单一权威源）。"""
+    p = os.path.join(DATA_NODES, 'dn_node_templates.js')
+    if not os.path.exists(p):
+        print('[WARN] 模板工厂缺失：%s（请先确认 SP-4 已落地）' % p)
+        return {}
+    try:
+        txt = io.open(p, encoding='utf-8').read()
+        # JS 对象（键可无引号）→ 用 node 求值提取，避免 json.loads 严格模式失败
+        code = ("var window={};eval(require('fs').readFileSync(process.argv[1],'utf8'));"
+                "if(!window.NODE_TEMPLATES){process.exit(2);}"
+                "console.log(JSON.stringify(window.NODE_TEMPLATES));")
+        out = subprocess.check_output(['node', '-e', code, p], shell=True, text=True, encoding='utf-8', errors='replace', timeout=60)
+        import json
+        obj = json.loads(out.strip().split('\n')[-1])
+        return obj if isinstance(obj, dict) else {}
+    except Exception as e:
+        print('[WARN] 模板读取异常：%s' % e)
+        return {}
+
+
+def _tpl_to_node(nid, tag, vol, tpl):
+    """把模板对象转成节点 JS 字面量（id 替换；正文保持占位）。"""
+    import json as _j
+    node = {}
+    node['tag'] = tpl.get('tag', tag)
+    if 'place' in tpl:
+        node['place'] = tpl['place']
+    node['pace'] = tpl.get('pace', 'normal')
+    node['text'] = tpl.get('text', ['【正文】'])
+    node['options'] = tpl.get('options', [])
+    return _j.dumps(node, ensure_ascii=False, indent=2)
 
 
 _SCAFFOLD_TMPL = u"""// CT-2 节点脚手架（elda content new --type %(type)s --id %(id)s --vol %(vol)s，%(ts)s 生成）
@@ -918,9 +982,298 @@ def cmd_content_stat(args):
     return 0
 
 
+def _load_blueprint():
+    """用 node 加载 dn_story_blueprint.js 并返回 dict；失败返回 None。"""
+    p = os.path.join(DATA_NODES, 'dn_story_blueprint.js')
+    if not os.path.isfile(p):
+        return None
+    code = (
+        "global.window={};require(%r);"
+        "process.stdout.write(JSON.stringify(window.STORY_BLUEPRINT||{}));"
+    ) % p.replace('\\', '\\\\')
+    try:
+        r = subprocess.run(['node', '-e', code], capture_output=True, text=True,
+                           encoding='utf-8', errors='replace', timeout=60)
+    except Exception as e:
+        print('[ERR] node 不可用: %s' % e)
+        return None
+    if r.returncode != 0:
+        print('[ERR] 蓝图加载失败: %s' % (r.stderr or r.stdout)[-300:])
+        return None
+    try:
+        return json.loads(r.stdout)
+    except Exception as e:
+        print('[ERR] 蓝图 JSON 解析失败: %s' % e)
+        return None
+
+
+def _collect_node_ids():
+    """全部节点 id（主文件+分片），与 _vol_nodes 同口径。"""
+    ids = set()
+    vols = _vol_nodes()
+    for items in vols.values():
+        for it in items:
+            ids.add(it['id'])
+    return ids
+
+
+def cmd_content_skeleton(args):
+    """elda content skeleton v1 —— 叙事蓝图结构检查器（SP-1）
+    校验：蓝图语法 / 幕≥5 卷≥9 章≥30 弧≥60 / id 唯一 / 锚点与引用节点存在 / 弧 vol·act 引用有效。"""
+    print('== elda content skeleton v1：叙事蓝图结构检查 ==')
+    bp = _load_blueprint()
+    if bp is None:
+        print('[FAIL] 蓝图不可用（dn_story_blueprint.js 缺失或加载失败）')
+        return 1
+    node_ids = _collect_node_ids()
+    errs = []
+    warns = []
+
+    def uniq(seq, kind):
+        seen, dup = set(), []
+        for x in seq:
+            if x['id'] in seen:
+                dup.append(x['id'])
+            seen.add(x['id'])
+        if dup:
+            errs.append('%s id 重复: %s' % (kind, ', '.join(dup[:5])))
+
+    acts = bp.get('acts', [])
+    vols = bp.get('volumes', [])
+    chs = bp.get('chapters', [])
+    arcs = bp.get('arcs', [])
+    uniq(acts, '幕'); uniq(vols, '卷'); uniq(chs, '章'); uniq(arcs, '弧')
+
+    if len(acts) < 5: errs.append('幕 %d < 5' % len(acts))
+    if len(vols) < 9: errs.append('卷 %d < 9' % len(vols))
+    if len(chs) < 30: errs.append('章 %d < 30' % len(chs))
+    if len(arcs) < 60: errs.append('弧 %d < 60' % len(arcs))
+
+    vol_ids = {v['id'] for v in vols}
+    act_ids = {a['id'] for a in acts}
+    # 卷/幕引用有效
+    for v in vols:
+        if v.get('act') and v['act'] not in act_ids:
+            errs.append('卷 %s 引用未定义幕 %s' % (v['id'], v['act']))
+    # 章锚点存在
+    for ch in chs:
+        a = ch.get('anchor')
+        if a and a not in node_ids:
+            errs.append('章 %s 锚点节点不存在: %s' % (ch['id'], a))
+        if ch.get('vol') and ch['vol'] not in vol_ids:
+            errs.append('章 %s 引用未定义卷 %s' % (ch['id'], ch['vol']))
+    # 弧校验：prefixes 非空 / vol·act 有效 / stages 锚点存在
+    arc_types = {}
+    for ar in arcs:
+        arc_types[ar.get('type', 'other')] = arc_types.get(ar.get('type', 'other'), 0) + 1
+        if not ar.get('prefixes'):
+            errs.append('弧 %s 无 prefixes' % ar['id'])
+        if ar.get('vol') and ar['vol'] not in vol_ids:
+            errs.append('弧 %s 引用未定义卷 %s' % (ar['id'], ar['vol']))
+        if ar.get('act') and ar['act'] not in act_ids:
+            errs.append('弧 %s 引用未定义幕 %s' % (ar['id'], ar['act']))
+        st = ar.get('stages', {})
+        for stage in ('setup', 'rising', 'climax', 'resolution'):
+            for nid in st.get(stage, []) or []:
+                if nid not in node_ids:
+                    errs.append('弧 %s %s 阶段锚点不存在: %s' % (ar['id'], stage, nid))
+    # 前缀命中率（信息性）
+    hit = miss = 0
+    miss_list = []
+    for ar in arcs:
+        ok = False
+        for pre in ar.get('prefixes', []):
+            if any(i.startswith(pre) for i in node_ids):
+                ok = True
+                hit += 1
+                break
+        if not ok:
+            miss += 1
+            miss_list.append(ar['id'])
+    if miss_list:
+        warns.append('前缀零命中的弧(%d): %s' % (len(miss_list), ', '.join(miss_list[:8])))
+
+    print('  蓝图规模: 幕%d 卷%d 章%d 弧%d（类型分布 %s）' %
+          (len(acts), len(vols), len(chs), len(arcs),
+           ' '.join('%s×%d' % (k, v) for k, v in sorted(arc_types.items()))))
+    print('  节点集: %d；弧前缀命中 %d 条，零命中 %d 条' % (len(node_ids), hit, miss))
+    for w in warns:
+        print('  [WARN] %s' % w)
+    if errs:
+        print('[FAIL] skeleton v1 未通过（%d 项）:' % len(errs))
+        for e in errs[:15]:
+            print('   - %s' % e)
+        return 1
+    print('[OK] skeleton v1 全绿 —— 蓝图结构完整，可进入 SP-2 标注')
+    return 0
+
+
+def cmd_content_chapter(args):
+    """elda content chapter --vol <卷id> [--ch <章id>] [--count N] [--prefix p] [--anchor x] [--exit y] [--arc a]
+    SP-5 章节批量生产线：读叙事蓝图，生成"入边锚点 → N 个链式骨架节点 → 出口锚点"的整章骨架，
+    写 src/data_nodes/dn_scaffold_chapter.js（不进构建）；生成即过 node --check。"""
+    import argparse as _ap
+    ap = _ap.ArgumentParser(description='章节批量生产线')
+    ap.add_argument('--vol', required=True, help='目标卷 id（如 vol_west）')
+    ap.add_argument('--ch', default=None, help='章 id（如 ch_free_jiaohui；缺省取该卷第一章）')
+    ap.add_argument('--count', type=int, default=8, help='生成节点数（默认 8）')
+    ap.add_argument('--prefix', default=None, help='节点前缀（默认 bd_<vol>）')
+    ap.add_argument('--anchor', default=None, help='入边锚点节点 id（缺省取章 anchor 或卷首章 anchor）')
+    ap.add_argument('--exit', default=None, help='出口锚点节点 id（缺省取下一卷首章 anchor 或本卷末章 anchor）')
+    ap.add_argument('--arc', default=None, help='所属弧 id（蓝图校验，注释标注）')
+    a = ap.parse_args(args)
+    if a.count < 2 or a.count > 60:
+        print('[FAIL] --count 须在 2-60 之间')
+        return 1
+    bp = _load_blueprint()
+    vols = bp.get('volumes', []) if bp else []
+    chs = bp.get('chapters', []) if bp else []
+    vol = None
+    for v in vols:
+        if v.get('id') == a.vol:
+            vol = v
+            break
+    if not vol:
+        print('[FAIL] 蓝图无卷 %s；可用卷：%s' % (a.vol, ', '.join(v.get('id', '') for v in vols)))
+        return 1
+    chs_of_vol = [c for c in chs if c.get('vol') == a.vol]
+    ch = None
+    if a.ch:
+        for c in chs_of_vol:
+            if c.get('id') == a.ch:
+                ch = c
+                break
+        if not ch:
+            print('[FAIL] 卷 %s 内无章 %s；可用章：%s' % (a.vol, a.ch, ', '.join(c.get('id', '') for c in chs_of_vol)))
+            return 1
+    else:
+        ch = chs_of_vol[0] if chs_of_vol else {'id': 'ch_%s' % a.vol, 'name': vol.get('name', a.vol), 'anchor': None}
+    # 出口：下一卷首章 anchor；无则本卷末章 anchor；再无则弧 resolution 首锚点
+    exit_anchor = a.exit
+    if not exit_anchor:
+        vidx = None
+        for i, v in enumerate(vols):
+            if v.get('id') == a.vol:
+                vidx = i
+                break
+        nxt_vol = vols[vidx + 1] if vidx is not None and vidx + 1 < len(vols) else None
+        if nxt_vol:
+            nxt_chs = [c for c in chs if c.get('vol') == nxt_vol.get('id')]
+            if nxt_chs and nxt_chs[0].get('anchor'):
+                exit_anchor = nxt_chs[0]['anchor']
+        if not exit_anchor and chs_of_vol and chs_of_vol[-1].get('anchor'):
+            exit_anchor = chs_of_vol[-1]['anchor']
+        if not exit_anchor and a.arc:
+            ar = None
+            for x in (bp.get('arcs', []) or []):
+                if x.get('id') == a.arc:
+                    ar = x
+                    break
+            if ar and ar.get('stages', {}).get('resolution'):
+                exit_anchor = ar['stages']['resolution'][0]
+    if not exit_anchor:
+        exit_anchor = 'prologue_start'
+    anchor = a.anchor or ch.get('anchor') or exit_anchor
+    prefix = a.prefix or ('bd_' + a.vol)
+    if not re.match(r'^[A-Za-z0-9_]+$', prefix):
+        print('[FAIL] --prefix 仅允许字母数字下划线')
+        return 1
+    # 生成链式骨架
+    ids = ['%s_%d' % (prefix, i) for i in range(a.count)]
+    lines = []
+    for i, nid in enumerate(ids):
+        nxt = exit_anchor if i == a.count - 1 else ids[i + 1]
+        if i == 0:
+            tag, pace = 'main', 'deep'
+        elif i == a.count - 1:
+            tag, pace = 'main', 'deep'
+        elif i % 3 == 2:
+            tag, pace = 'branch', 'normal'
+        elif i % 3 == 1:
+            tag, pace = 'branch', 'combat'.replace('combat', 'normal')
+        else:
+            tag, pace = 'branch', 'normal'
+        if i == 1 and a.count >= 3:
+            tag, pace = 'branch', 'normal'
+        lines.append('N["%s"]={' % nid)
+        lines.append('  tag:"%s",' % tag)
+        lines.append('  place:"%s",' % vol.get('name', a.vol))
+        lines.append('  pace:"%s",' % pace)
+        lines.append('  text:[')
+        lines.append('    "【%s：正文第一段，%d-%d 字，按 V66 文风白描】",' % ('章内第 %d 步' % (i + 1), 60, 140))
+        lines.append('    "【正文第二段，%d-%d 字】"' % (80, 200))
+        lines.append('  ],')
+        lines.append('  options:[')
+        lines.append('    {t:"【选项A】",go:"%s"}' % nxt)
+        if i == 0 and anchor and anchor not in ids:
+            lines.append('    ,{t:"【选项B：折返 %s】",go:"%s"}' % (anchor, anchor))
+        lines.append('  ]')
+        lines.append('};')
+    body = '\n'.join(lines)
+    header = []
+    header.append('// SP-5 章节批量生产线（elda content chapter --vol %s%s%s，%s 生成）' % (
+        a.vol, (' --ch ' + a.ch) if a.ch else '', (' --arc ' + a.arc) if a.arc else '', time.strftime('%Y-%m-%d')))
+    header.append('// 卷：%s ｜ 章：%s（%s）' % (vol.get('name', a.vol), ch.get('id', '?'), ch.get('name', '?')))
+    header.append('// 入边锚点：%s ｜ 出口锚点：%s' % (anchor, exit_anchor))
+    if a.arc:
+        header.append('// 所属弧：%s（建议提交时登记账本/标注 nodeIndex 归属）' % a.arc)
+    header.append('// 铁律：dn_scaffold_chapter.js 不进构建——填写【】占位后按节点拆分另存为正式 dn_<主题>.js 文件。')
+    header.append('// 填写后验证链：node --check → elda ci（死链 0 → 入边闭环）→ 浏览器回归。')
+    out = '\n'.join(header) + '\n' + body + '\n'
+    p = os.path.join(DATA_NODES, 'dn_scaffold_chapter.js')
+    _write(p, out)
+    rc = subprocess.call(['node', '--check', p], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if rc != 0:
+        print('[FAIL] 章节骨架生成后 node --check 未通过（%s）' % p)
+        return 1
+    print('[OK] 章节骨架已生成: %s' % p)
+    print('    卷=%s 章=%s 节点=%d 链：%s → … → %s' % (a.vol, ch.get('id', '?'), a.count, anchor, exit_anchor))
+    print('    下一步：拆分节点 → 填正文 → 入边锚点接入（anchor 节点 options 补 go）→ elda ci')
+    return 0
+
+
+def cmd_content_blueprint(args):
+    """elda content blueprint [--json] —— 导出叙事蓝图汇总（幕/卷/章/弧 + 卷密度）"""
+    as_json = '--json' in args
+    bp = _load_blueprint()
+    if bp is None:
+        return 1
+    if as_json:
+        print(json.dumps(bp, ensure_ascii=False, indent=1))
+        return 0
+    vols = bp.get('volumes', [])
+    chs = bp.get('chapters', [])
+    arcs = bp.get('arcs', [])
+    print('== elda content blueprint：叙事蓝图导出（v%d）==' % bp.get('meta', {}).get('version', 1))
+    for act in bp.get('acts', []):
+        sub = [v['name'] for v in vols if v.get('act') == act['id']]
+        print('\n[%s] %s' % (act['id'], act['name']))
+        print('  卷: %s' % (' / '.join(sub) if sub else '(无)'))
+    print('\n--- 章（%d）---' % len(chs))
+    cur = None
+    for ch in chs:
+        if ch['vol'] != cur:
+            cur = ch['vol']
+            vn = next((v['name'] for v in vols if v['id'] == cur), cur)
+            print('  %s' % vn)
+        print('    %-24s %s' % (ch['name'], ch['anchor']))
+    print('\n--- 弧（%d，按类型）---' % len(arcs))
+    by_type = {}
+    for ar in arcs:
+        by_type.setdefault(ar.get('type', 'other'), []).append(ar)
+    for t, lst in sorted(by_type.items()):
+        print('  [%s × %d]' % (t, len(lst)))
+        for ar in lst:
+            st = ar.get('stages', {})
+            filled = sum(1 for k in ('setup', 'rising', 'climax', 'resolution') if st.get(k))
+            print('    %-24s %-16s act=%s vol=%s stages=%d/4' %
+                  (ar['id'], ar.get('name', ''), ar.get('act', '-'), ar.get('vol', '-'), filled))
+    return 0
+
+
 def cmd_content(args):
     if not args:
-        print('elda content 子命令: event | quest | dup | chain | causality | stat')
+        print('elda content 子命令: event | quest | dup | chain | causality | stat | new | skeleton | blueprint')
         return 1
     sub = args[0]
     if sub == 'event': return cmd_content_event(args[1:])
@@ -930,6 +1283,9 @@ def cmd_content(args):
     if sub == 'causality': return cmd_content_causality(args[1:])
     if sub == 'stat': return cmd_content_stat(args[1:])
     if sub == 'new': return cmd_content_new(args[1:])
+    if sub == 'skeleton': return cmd_content_skeleton(args[1:])
+    if sub == 'blueprint': return cmd_content_blueprint(args[1:])
+    if sub == 'chapter': return cmd_content_chapter(args[1:])
     print('未知 content 子命令: %s' % sub)
     return 1
 

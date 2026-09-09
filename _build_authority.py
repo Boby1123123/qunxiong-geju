@@ -70,7 +70,7 @@ def _collect_data_nodes():
     段格式：DN_MARK 行 + 每文件(marker 行 + 内容) + DN_END 行；不带前导空行。
     CT-2：dn_scaffold.js 为 dev 脚手架模板（elda content new 产物），不进构建。"""
     fps = sorted(glob.glob(os.path.join(DN_DIR, '*.js')))
-    fps = [f for f in fps if os.path.basename(f) != 'dn_scaffold.js']
+    fps = [f for f in fps if os.path.basename(f) not in ('dn_scaffold.js', 'dn_node_templates.js')]
     if not fps:
         return ''
     seg = [DN_MARK]

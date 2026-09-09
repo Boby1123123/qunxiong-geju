@@ -39,6 +39,7 @@ N["travel_west_start"] = {
     {t:"往西，去矮人王都",run:function(){ travelTo("dwarf_wangdu"); }},
     {t:"往西南，去圣城",run:function(){ travelTo("church_shengcheng"); }},
     {t:"一路向西，穿过荒野去西境（元素荒原）",run:function(){ travelTo("west_huangyuan"); }},  /* /bd1inj:west-entry/ */
+    {t:"打听西境游侠学院的传闻（西境支线）",go:"sp8_ranger_00"},  /* /sp8inj:entry/ */
     {t:"先打开地图",run:function(){ togglePanel("map"); }}
   ]
 };

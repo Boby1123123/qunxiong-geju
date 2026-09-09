@@ -45,6 +45,10 @@ function applyDefaults(s){
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
+  /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
+  if(s.settings.originProfile===undefined) s.settings.originProfile=true;
+  /* /sp3inj:defaults/ SP-3 弧线进度兜底（旧档兼容；新档为空对象） */
+  if(!s.arcs) s.arcs={};
   return s;
 }
 function loadGame(){
@@ -3017,9 +3021,20 @@ options:[
         if(_id && window.CHAPTERS_I12 && CHAPTERS_I12[_id]){
           var c = CHAPTERS_I12[_id];
           var ck = (c.vol||'') + '|' + c.title;
+          /* /sp7inj:chapter-arc/ SP-7 章节卡弧名增强：同卷章不重复；副标题补当前弧名 */
+          var _arcName = '';
+          try{
+            var _bp = window.STORY_BLUEPRINT;
+            var _rec = (_bp && _bp.nodeIndex && _bp.nodeIndex[_id]) ? _bp.nodeIndex[_id] : null;
+            if(_rec && _rec.arc && _bp.arcs){
+              for(var _a=0;_a<_bp.arcs.length;_a++){
+                if(_bp.arcs[_a] && _bp.arcs[_a].id === _rec.arc){ _arcName = _bp.arcs[_a].name || _rec.arc; break; }
+              }
+            }
+          }catch(e){ _arcName=''; }
           if(ck !== window.__v45lastChapter){
             window.__v45lastChapter = ck;
-            chapterCard((c.vol ? c.vol + ' · ' : '') + c.title, c.sub || '');
+            chapterCard((c.vol ? c.vol + ' · ' : '') + c.title, _arcName ? (_arcName + '　' + (c.sub||'')) : (c.sub||''));
           }
         }
       }catch(e){}
@@ -3388,6 +3403,24 @@ window.v91_memoryInjection = function(node, txt){
     return inj.length?inj:null;
   }catch(e){ try{ console.log("[v91mem:err]",e); }catch(_){} return null; }
 };
+/* ===== /A1inj:proffn/ A-1 个性化开局注入（只读钩子；序章前 3 节点各注入 1 段五维专属文本；S.flags.origin_profile_done 完成后零注入；开关 S.settings.originProfile） ===== */
+window.__v91prof = window.__v91prof || {step:0, used:false, segs:null};
+window.v91_originProfile = function(node, txt){
+  try{
+    if(!S||!S.settings||S.settings.originProfile===false) return null;
+    if(!S.flags||S.flags.origin_profile_done) return null;
+    const P=window.ORIGIN_PROFILE; if(!P||typeof P._build!=="function") return null;
+    const isOrigin = (String(curNode||"").indexOf("origin_")===0) || (S.flags.prologueV27 && !window.__v91prof.used);
+    if(!isOrigin) return null;
+    const st=window.__v91prof;
+    if(st.step<=0){ st.segs=P._build(S); if(!st.segs||!st.segs.length){ S.flags.origin_profile_done=true; return null; } }
+    if(st.step>=st.segs.length){ S.flags.origin_profile_done=true; return null; }
+    const inj=[st.segs[st.step]];
+    st.step++; st.used=true;
+    if(st.step>=st.segs.length) S.flags.origin_profile_done=true;
+    return inj;
+  }catch(e){ try{ console.log("[v91prof:err]",e); }catch(_){} return null; }
+};
 /* ===== /v91inj:memvar/ CM-2 状态感知文本变体（三形态：字符串数组 / ifFlag / ifRelation；向后兼容；不改选项与判定） ===== */
 window.v91_resolveText = function(node){
   try{
@@ -3410,6 +3443,14 @@ window.v91_resolveText = function(node){
       else if(r.op==="===") ok=v===r.val;
       seg=ok?(r.yes||null):(r.no||null);
     }
+    /* /A1inj:fivekeys/ A-1 五维状态变体（ifJob/ifIdeal/ifHobby/ifTalent/ifSubrace；与 ifFlag 同构，读 S 五维键；向后兼容零回归） */
+    if(seg==null){
+      const _kv=["ifJob","ifIdeal","ifHobby","ifTalent","ifSubrace"];
+      const _sv=["job","ideal","hobby","talent","subrace"];
+      for(let _i=0;_i<_kv.length;_i++){
+        if(node[_kv[_i]]&&S&&S[_sv[_i]]!=null&&node[_kv[_i]][S[_sv[_i]]]!=null){ seg=node[_kv[_i]][S[_sv[_i]]]; break; }
+      }
+    }
     if(seg!=null) return Array.isArray(seg)?seg:[seg];
     if(typeof raw==="string"||Array.isArray(raw)) return Array.isArray(raw)?raw:[raw];
     if(typeof raw==="object"){
@@ -3427,6 +3468,14 @@ window.v91_resolveText = function(node){
         else if(r.op==="<") ok=v<r.val;
         else if(r.op==="===") ok=v===r.val;
         seg=ok?(r.yes||null):(r.no||null);
+      }
+      /* /A1inj:fivekeys-raw/ A-1 五维状态变体（raw 对象内嵌形态，与 ifFlag/ifRelation 内嵌同构） */
+      if(seg==null){
+        const _kv=["ifJob","ifIdeal","ifHobby","ifTalent","ifSubrace"];
+        const _sv=["job","ideal","hobby","talent","subrace"];
+        for(let _i=0;_i<_kv.length;_i++){
+          if(raw[_kv[_i]]&&S&&S[_sv[_i]]!=null&&raw[_kv[_i]][S[_sv[_i]]]!=null){ seg=raw[_kv[_i]][S[_sv[_i]]]; break; }
+        }
       }
       if(seg==null) seg=raw.default||null;
       if(seg==null) return [];
@@ -3464,6 +3513,43 @@ window.v91_sessRender = function(node){
     el.appendChild(row);
   }catch(e){}
 };
+/* ===== /sp3inj:arcfn/ SP-3 弧线生命周期推进（只读 node + 写 S.arcs；不触碰判定/writeNext/choose；stage 只增不减） ===== */
+window.v91_arcState = function(){
+  try{ if(!S) return {}; if(!S.arcs) S.arcs={}; return S.arcs; }catch(e){ return {}; }
+};
+window.v91_arcReset = function(){
+  try{ S.arcs={}; }catch(e){}
+};
+window.v91_arcAdvance = function(node){
+  try{
+    if(!S) return; if(!S.arcs) S.arcs={};
+    var BP=window.STORY_BLUEPRINT; if(!BP||!BP.nodeIndex) return;
+    var rec=BP.nodeIndex[curNode]; if(!rec||!rec.arc) return;
+    var arcId=rec.arc;
+    var ar=null;
+    for(var i=0;i<BP.arcs.length;i++){ if(BP.arcs[i].id===arcId){ ar=BP.arcs[i]; break; } }
+    var want=0; /* 0=未开始 1=setup 2=rising 3=climax 4=resolution 5=closed */
+    if(ar&&ar.stages){
+      var st=ar.stages;
+      function has(a){ return a&&a.length? a.indexOf(curNode)>=0 : false; }
+      if(has(st.resolution)) want=4;
+      else if(has(st.climax)) want=3;
+      else if(has(st.rising)) want=2;
+      else if(has(st.setup)) want=1;
+      else if(rec.type==="main"||rec.type==="ending"||rec.type==="faction") want=Math.max(want,1);
+    } else {
+      if(rec.type==="main"||rec.type==="ending"||rec.type==="faction") want=1;
+    }
+    if(!want) return;
+    var cur=S.arcs[arcId];
+    if(!cur){ S.arcs[arcId]={s:want,st:S.day||1,ls:S.day||1}; }
+    else {
+      if(want>cur.s) cur.s=want;
+      cur.ls=S.day||cur.ls;
+    }
+  }catch(e){ try{ console.log("[sp3arc:err]",e); }catch(_){} }
+};
+
 function writeNext(_v46f){
   renderTop(); renderStats();
   const _wnT0 = Date.now();
@@ -3479,6 +3565,9 @@ function writeNext(_v46f){
     try{ window.v91_sessCount(_txt); }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
+    /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */
+    try{ var _prof = window.v91_originProfile(node,_txt); if(_prof&&_prof.length){ _txt=_prof.concat(_txt); } }catch(e){}
+    try{ window.v91_arcAdvance(node); }catch(e){} /* /sp3inj:archook/ SP-3 弧线推进（只读注入点） */
     if(window.v45_shouldPaginate(node)){
       try{ window.v67_busyClear(); }catch(e){} /* 分页节点无选项，立即解锁防死锁 */
       window.__v45ctx={node:node,txt:_txt,page:0};

@@ -412,6 +412,9 @@ def main():
     if cmd == 'backup':
         import eng_impl
         return eng_impl.cmd_backup(sys.argv[2:])
+    if cmd == 'restore':
+        import eng_impl
+        return eng_impl.cmd_restore(sys.argv[2:])
     if cmd == 'release':
         import eng_impl
         return eng_impl.cmd_release(sys.argv[2:])

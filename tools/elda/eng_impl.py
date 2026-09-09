@@ -314,13 +314,16 @@ def cmd_test_events():
 
 def cmd_test(args):
     ap = argparse.ArgumentParser(prog='elda test')
-    ap.add_argument('what', nargs='?', default='all', choices=('all', 'endings', 'events'))
+    ap.add_argument('what', nargs='?', default='all',
+                    choices=('all', 'endings', 'events', 'branches'))
     a = ap.parse_args(args)
     rc = 0
     if a.what in ('all', 'endings'):
         rc = cmd_test_endings() or rc
     if a.what in ('all', 'events'):
         rc = cmd_test_events() or rc
+    if a.what in ('all', 'branches'):
+        rc = cmd_test_branches() or rc
     return rc
 
 
@@ -375,4 +378,173 @@ def cmd_volume(args):
         print('  体积趋势: FAIL（超预算，需 elda budget --reason 更新）')
         return 1
     print('  体积趋势: PASS')
+    return 0
+
+
+# ============================================================
+# E6-① · elda restore —— 快照恢复（回滚命令化）
+# ============================================================
+def _snap_list():
+    if not os.path.isdir(BACKUP):
+        return []
+    out = []
+    for f in sorted(os.listdir(BACKUP)):
+        if f.startswith('snap_') and f.endswith('.zip'):
+            p = os.path.join(BACKUP, f)
+            out.append((f, os.path.getsize(p), os.path.getmtime(p)))
+    return out
+
+
+def cmd_restore(args):
+    ap = argparse.ArgumentParser(prog='elda restore')
+    ap.add_argument('--list', action='store_true', help='列出全部快照')
+    ap.add_argument('--name', default='', help='指定快照文件名（snap_*.zip）')
+    ap.add_argument('--latest', action='store_true', help='恢复最近一份快照')
+    ap.add_argument('--dry-run', action='store_true', help='只预览将覆盖的文件，不执行')
+    ap.add_argument('--no-backup', action='store_true', help='恢复前不备份当前状态（默认会备份）')
+    a = ap.parse_args(args)
+
+    snaps = _snap_list()
+    if not snaps:
+        print('[FAIL] backup\\ 无快照（先执行 elda backup）')
+        return 1
+
+    if a.list or (not a.name and not a.latest):
+        print('== elda restore --list ==')
+        for f, size, mtime in reversed(snaps):
+            print('  %s  %.1fKB  %s' % (f, size / 1024.0,
+                  datetime.datetime.fromtimestamp(mtime).strftime('%Y-%m-%d %H:%M:%S')))
+        print('用法: elda restore --name <snap_x.zip> 或 --latest [--dry-run] [--no-backup]')
+        return 0
+
+    name = ''
+    if a.name:
+        if not os.path.isfile(os.path.join(BACKUP, a.name)):
+            print('[FAIL] 快照不存在: %s' % a.name)
+            return 1
+        name = a.name
+    elif a.latest:
+        name = snaps[-1][0]
+
+    zpath = os.path.join(BACKUP, name)
+    # 预览清单（防御路径穿越：只允许项目内相对路径）
+    members = []
+    with zipfile.ZipFile(zpath) as z:
+        for zi in z.infolist():
+            if zi.is_dir():
+                continue
+            rel = zi.filename.replace('\\', '/')
+            if rel.startswith('/') or '..' in rel.split('/'):
+                print('[FAIL] 快照含非法路径: %s（拒绝恢复）' % zi.filename)
+                return 1
+            members.append(rel)
+    members.sort()
+    print('== elda restore ==')
+    print('快照: %s（%d 个文件）' % (name, len(members)))
+    print('将覆盖/新增:')
+    for rel in members[:12]:
+        print('  + %s' % rel)
+    if len(members) > 12:
+        print('  ... 共 %d 个文件' % len(members))
+    if a.dry_run:
+        print('[dry-run] 未执行任何写入')
+        return 0
+
+    # 恢复前备份当前状态（默认）
+    if not a.no_backup:
+        ts = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        pre = os.path.join(BACKUP, 'pre_restore_%s.zip' % ts)
+        with zipfile.ZipFile(pre, 'w', zipfile.ZIP_DEFLATED) as z:
+            for rel in members:
+                p = os.path.join(PROJ, rel)
+                if os.path.exists(p):
+                    z.write(p, rel)
+        print('[OK] 当前状态已备份: %s' % os.path.basename(pre))
+
+    # 解压恢复
+    with zipfile.ZipFile(zpath) as z:
+        for zi in z.infolist():
+            if zi.is_dir():
+                continue
+            z.extract(zi, PROJ)
+    print('[OK] 已恢复 %d 个文件' % len(members))
+
+    # 恢复后验证链（快验：语法 + 四路 + 门禁）
+    print('--- 恢复后验证 ---')
+    rc = _run('"%s" "%s" ci' % (PY, ELDA))
+    if rc != 0:
+        print('[FAIL] 恢复后 elda ci 未全绿——如需退回恢复前，用备份 pre_restore_*.zip')
+        return 1
+    print('[OK] 恢复完成且门禁全绿')
+    return 0
+
+
+# ============================================================
+# E6-② · elda test branches —— 支线闭环检测
+# ============================================================
+def cmd_test_branches():
+    text = _read(GAME)
+    nodes = _extract_nodes(text)
+    branch_ids = [k for k, nt in nodes.items()
+                  if re.search(r'["\']?tag["\']?\s*:\s*"branch"', nt)]
+    if not branch_ids:
+        print('== elda test branches ==')
+        print('未发现 tag:"branch" 节点，跳过')
+        return 0
+
+    # 按 id 字母前缀分组（church_doubter1/2/3 → church_doubter；quest_find_1 → quest_find_）
+    groups = {}
+    for nid in branch_ids:
+        m = re.match(r'([a-zA-Z_]+)', nid)
+        key = m.group(1) if m else nid
+        groups.setdefault(key, []).append(nid)
+
+    # 全图出边/入边
+    outs = {}
+    for nid, nt in nodes.items():
+        edges = re.findall(r'["\']?(?:go|then)["\']?\s*:\s*"([A-Za-z0-9_]+)"', nt)
+        edges += re.findall(r'["\']?go["\']?\s*:\s*"([A-Za-z0-9_]+)"', nt)
+        outs[nid] = set(edges)
+    indeg = {}
+    for nid, es in outs.items():
+        for t in es:
+            indeg.setdefault(t, 0)
+            indeg[t] += 1
+
+    fails, warns, total = [], [], 0
+    for key in sorted(groups):
+        ids = groups[key]
+        total += 1
+        gset = set(ids)
+        if len(gset) < 2:
+            continue  # 单节点"分支点"标记不算支线
+        # 1) 组内每个节点有 text（真缺陷 → FAIL）
+        for nid in ids:
+            if not _node_text_ok(nodes[nid]):
+                fails.append('%s/%s: 缺 text 或空' % (key, nid))
+        # 2) 组内每个节点有出边（真缺陷 → FAIL：支线中断）
+        for nid in ids:
+            if not outs.get(nid):
+                fails.append('%s/%s: 无出边（支线中断）' % (key, nid))
+        # 3) 无入边节点 → WARN（事件/状态机动态进入，合法）
+        for nid in ids:
+            if indeg.get(nid, 0) == 0:
+                warns.append('%s/%s: 无静态入边（动态进入，WARN）' % (key, nid))
+        # 4) 组内互链统计 → 信息 + 0 互链 WARN（经主线 hub 中转是合法结构）
+        inner_edges = 0
+        for nid in ids:
+            inner_edges += len(outs.get(nid, set()) & gset)
+        if inner_edges == 0:
+            warns.append('%s: 组内无直接互链（经外部节点中转，WARN 非 FAIL）' % key)
+
+    print('== elda test branches ==')
+    print('支线节点: %d 个（tag:"branch"），分组 %d 组（≥2 节点视为支线）' % (len(branch_ids), total))
+    for w in warns:
+        print('  [WARN] %s' % w)
+    for f in fails:
+        print('  [FAIL] %s' % f)
+    if fails:
+        print('  支线闭环: FAIL（%d 项）' % len(fails))
+        return 1
+    print('  支线闭环: PASS（%d 组，%d 节点，全部有文本/出边/闭环）' % (total, len(branch_ids)))
     return 0

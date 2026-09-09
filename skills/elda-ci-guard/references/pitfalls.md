@@ -49,3 +49,10 @@
 28. **设定不得自创冲突项**：8 势力 / 五主线(purge60/silver120/seal200/academy250/orc280) / 七锚 / 铁牌 / 神谕 / 金秤 / 晨天——用 elda-story-guard 校验。
 29. **不重复剧情**（用户 AGENTS.md）：新增内容前查账本与既有节点，避免同场景/同事件重复。
 30. **移动端适配内容已被用户删除**，禁止再做移动端相关工作。
+
+## CI/跨平台坑（2026-09-09 实锤）
+- src/gap_00.html 承载 v35 战斗样式 + v68 UI 层（44KB/22 处 UI marker），曾被 .gitignore 排除未入库 → CI/Linux checkout 缺文件 → build 产物缺 UI → elda ci UI 检查器 FAIL。教训：构建链输入文件必须全部入库，.gitignore 只放真正的临时产物。
+- 本地 ci 全绿不代表 CI 全绿：本地 --quick 检查现有 game.html，CI --build 会重建并覆盖 → 以 ci_guard.py --build 为最终口径。
+- GitHub Actions：checkout@v4 等旧 action 触发 Node20 弃用警告（强制跑 Node24），升级 checkout@v5/setup-python@v6/setup-node@v5/upload-artifact@v5 消除。
+- git push 在 PowerShell 下红色 stderr/exit 1 实为成功，以输出含 main -> main 判断。
+- ci_guard.py 根定位优先级：ELDA_PROJECT_ROOT 环境变量 > 脚本向上 6 层探测（仓库 skills/ 布局）> 本地默认路径。

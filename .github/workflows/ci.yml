@@ -33,7 +33,7 @@ jobs:
 
       - name: 上传门禁报告
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ci-guard-report
           path: docs/ci_guard_report_latest.md

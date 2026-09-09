@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7136911,
-    "chunked_html_bytes_max": 4487627,
+    "game_html_bytes_max": 7139422,
+    "chunked_html_bytes_max": 4538178,
     "node_total_min": 3937,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7086911,
-    "chunked_html_bytes": 4387627,
+    "game_html_bytes": 7089422,
+    "chunked_html_bytes": 4438178,
     "node_total": 3987,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "B3 wording fix +12B",
+    "reason": "B-4 学院/北境事件池+12",
     "history": [
       {
         "date": "2026-09-09",
@@ -320,6 +320,13 @@
         "chunked_bytes": 4387627,
         "nodes": 3987,
         "reason": "B3 wording fix +12B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7089422,
+        "chunked_bytes": 4438178,
+        "nodes": 3987,
+        "reason": "B-4 学院/北境事件池+12"
       }
     ]
   },

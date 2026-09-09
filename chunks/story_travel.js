@@ -75,6 +75,7 @@ N["arrive_north_tiebi"] = {tag:"main",
   options:[
     {t:"去军营方向看看战事安排",go:"tiebi_camp"},
     {t:"打听铁门关古战场的事",go:"tiebi_warfield"},
+    {t:"北上艾尔达城，去魔法学院求学",go:"acad_road_1"},
     {t:"先落脚，接点军需活计",go:"board_north"}
   ]
 };
@@ -91,6 +92,7 @@ N["arrive_north_beijing"] = {tag:"main",
   options:[
     {t:"去城头看看冰狼盟誓的营寨",go:"beijing_wolf"},
     {t:"打听草原上的消息",go:"beijing_rumor"},
+    {t:"绕道艾尔达城，去魔法学院求学",go:"acad_road_1"},
     {t:"先落脚，接点活计",go:"board_north"}
   ]
 };

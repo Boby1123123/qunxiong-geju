@@ -117,6 +117,7 @@ N["fc_choice"]={tag:"main",place:"自由城邦 · 交汇城",pace:"normal",text:
 "你握着那杯温麦酒，觉得该做个决定了。"
 ],options:[
 {t:"往北，去铁门关看看战场的样子",go:"fc_road_north"},
+	{t:"往北，去艾尔达魔法学院求学",go:"acad_road_1"},
 {t:"往西，去荒原上的游侠学院",go:"fc_road_west"},
 {t:"往南，跟着商队进死亡沙漠",go:"fc_road_desert"},
 {t:"往东，去东境打听晨天城的消息",go:"fc_road_east"},

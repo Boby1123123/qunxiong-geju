@@ -87,5 +87,7 @@ window.CAUSALITY_WORDS = [
     {id:"led_a3_05",type:"设定",desc:"矮人南矿洞铁门·七道封印之一（矮人线）",plant:"origin_expand_dwarf_4",reap:"",status:"open",world:"vol_dwarf"},
     {id:"led_a3_06",type:"人物",desc:"铁门关斥候托信交汇城李管事·暗蚀会挖地寻物（兽人线）",plant:"origin_expand_orc_7",reap:"",status:"open",world:"vol_orc"},
     {id:"led_a3_07",type:"人物",desc:"秦·长风：晨天城秦氏幸存者，居交汇城，官署暗探在找（东境线）",plant:"origin_expand_east_7",reap:"",status:"open",world:"vol_east"},
-    {id:"led_a3_08",type:"伏笔",desc:"承天城井水变浑·晨天城覆灭征兆重现",plant:"origin_expand_east_6",reap:"",status:"open",world:"vol_east"}];
+    {id:"led_a3_08",type:"伏笔",desc:"承天城井水变浑·晨天城覆灭征兆重现",plant:"origin_expand_east_6",reap:"",status:"open",world:"vol_east"},
+    {id:"led_b1_01",type:"设定",desc:"学院入学引导链：自由城/王都/铁门关前线三入口可达学院（acad_road_1~5），开学典礼埋塔灯传说",plant:"acad_road_1",reap:"academy_admission",status:"open",world:"vol_academy"},
+    {id:"led_b1_02",type:"伏笔",desc:"塔顶之灯数人之说（acad_tower_rumor）与图书馆塔灯呼应，待学院线回收",plant:"acad_road_4",reap:"academy_graduation",status:"open",world:"vol_academy"}];
 /* ===== /v91inj:ledgerwords:end/ ===== */

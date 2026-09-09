@@ -3755,6 +3755,7 @@ N["north_academy_gate"] = {tag:"branch",
   ],pace:"normal",
   options:[
     /* /u8inj:ah-entry/ */ {t:"进藏书塔求见学院院长", go:"u8_ah_enter"},
+    {t:"先在生活区安顿下来，熟悉学院的日常（五学年生活线入口）",go:"acad_life_y1_open"},
     {t:"把书收好，进学院",effects:{book:function(){const j=JOBS[S.job]; return j.books[0][0];}},tier:{ok:["你把书收进行囊，迈进那道石拱门。门后的庭院里，喷泉的细流在阳光下闪成一道彩虹。","学院内部，比外面安静，也比外面冷。"]},go:"north_academy_inside"},
     {t:"追上那个被抓走的年轻人问问情况",check:{a:"AGI",sk:"stealth",label:"追踪"},tier:{
       ok:["你远远缀着那两个灰袍执事，看他们把年轻人带进学院西侧的一栋灰楼。灰楼的门楣上刻着三个字：'审问室'。门关上之前，你看见里面还有几个穿黑袍的人——圣痕司的。","你记住了这栋楼的位置。"],

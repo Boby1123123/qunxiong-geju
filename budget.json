@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7029062,
-    "chunked_html_bytes_max": 4417894,
-    "node_total_min": 3869,
+    "game_html_bytes_max": 7089183,
+    "chunked_html_bytes_max": 4427658,
+    "node_total_min": 3903,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 6979062,
-    "chunked_html_bytes": 4317894,
-    "node_total": 3919,
+    "game_html_bytes": 7039183,
+    "chunked_html_bytes": 4327658,
+    "node_total": 3953,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "B1 acad-road 5 nodes + 3 entries",
+    "reason": "B2 acad-life 34 nodes",
     "history": [
       {
         "date": "2026-09-09",
@@ -299,6 +299,13 @@
         "chunked_bytes": 4317894,
         "nodes": 3919,
         "reason": "B1 acad-road 5 nodes + 3 entries"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7039183,
+        "chunked_bytes": 4327658,
+        "nodes": 3953,
+        "reason": "B2 acad-life 34 nodes"
       }
     ]
   },

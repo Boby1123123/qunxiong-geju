@@ -89,5 +89,7 @@ window.CAUSALITY_WORDS = [
     {id:"led_a3_07",type:"人物",desc:"秦·长风：晨天城秦氏幸存者，居交汇城，官署暗探在找（东境线）",plant:"origin_expand_east_7",reap:"",status:"open",world:"vol_east"},
     {id:"led_a3_08",type:"伏笔",desc:"承天城井水变浑·晨天城覆灭征兆重现",plant:"origin_expand_east_6",reap:"",status:"open",world:"vol_east"},
     {id:"led_b1_01",type:"设定",desc:"学院入学引导链：自由城/王都/铁门关前线三入口可达学院（acad_road_1~5），开学典礼埋塔灯传说",plant:"acad_road_1",reap:"academy_admission",status:"open",world:"vol_academy"},
-    {id:"led_b1_02",type:"伏笔",desc:"塔顶之灯数人之说（acad_tower_rumor）与图书馆塔灯呼应，待学院线回收",plant:"acad_road_4",reap:"academy_graduation",status:"open",world:"vol_academy"}];
+    {id:"led_b1_02",type:"伏笔",desc:"塔顶之灯数人之说（acad_tower_rumor）与图书馆塔灯呼应，待学院线回收",plant:"acad_road_4",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b2_01",type:"设定",desc:"学院五学年生活线（acad_life_y1~y5，30 节点：课程ifJob/宿舍/同窗/期中/期末/假期/学年事件），north_academy_gate 生活区入口",plant:"acad_life_y1_open",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"}];
 /* ===== /v91inj:ledgerwords:end/ ===== */

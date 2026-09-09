@@ -44,7 +44,16 @@ window.CAUSALITY_LEDGER = [
 
   {id:"led_sp8_01", type:"设定", desc:"西境游侠学院（院长柯恩，铁木黑弓，鹰牌信物）", plant:"node:sp8_ranger_00", reap:"node:sp8_ranger_14", status:"open", world:"西境"},
   {id:"led_sp8_02", type:"伏笔", desc:"柯恩身世：军阀火并中失去村子的孤儿收容者", plant:"node:sp8_ranger_00b", reap:"node:sp8_ranger_15", status:"open", world:"西境"},
-  {id:"led_sp8_03", type:"人物", desc:"游侠公会老会长（行省会鹰旗持有者）", plant:"node:sp8_ranger_14", reap:"node:sp8_ranger_15", status:"open", world:"西境"}
+  {id:"led_sp8_03", type:"人物", desc:"游侠公会老会长（行省会鹰旗持有者）", plant:"node:sp8_ranger_14", reap:"node:sp8_ranger_15", status:"open", world:"西境"},
+
+  {id:"led_a1_01", type:"设定", desc:"理想线·富甲天下：商路第一步与第一桶金", plant:"node:goal_intro_wealth", reap:"node:goal_wealth_3", status:"open", world:"理想线"},
+  {id:"led_a1_02", type:"设定", desc:"理想线·威震四海：老佣兵授艺与第一场硬仗", plant:"node:goal_intro_might", reap:"node:goal_might_3", status:"open", world:"理想线"},
+  {id:"led_a1_03", type:"设定", desc:"理想线·守护苍生：孤儿二狗与货栈救火", plant:"node:goal_intro_guard", reap:"node:goal_guard_3", status:"open", world:"理想线"},
+  {id:"led_a1_04", type:"设定", desc:"理想线·探寻真相：《封印前史》残卷与七印草图", plant:"node:goal_intro_truth", reap:"node:goal_truth_3", status:"open", world:"理想线"},
+  {id:"led_a1_05", type:"设定", desc:"理想线·自由自在：雪原独行与雪崩村守望", plant:"node:goal_intro_free", reap:"node:goal_free_3", status:"open", world:"理想线"},
+  {id:"led_a1_06", type:"设定", desc:"理想线·登临神座：符文石板参悟与第一缕微光", plant:"node:goal_intro_god", reap:"node:goal_god_3", status:"open", world:"理想线"},
+  {id:"led_a1_07", type:"设定", desc:"理想线·名留青史：救人扬名与吟游诗人的传唱", plant:"node:goal_intro_fame", reap:"node:goal_fame_3", status:"open", world:"理想线"},
+  {id:"led_a1_08", type:"设定", desc:"理想线·以血还血：旧伤溯源与刀鞘刻名", plant:"node:goal_intro_revenge", reap:"node:goal_revenge_3", status:"open", world:"理想线"}
 ];
 /* ===== /v91inj:ledger:end/ ===== */
 

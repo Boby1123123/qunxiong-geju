@@ -40,3 +40,5 @@ python -X utf8 smoke_test.py               :: 冒烟（建号→主线→结局�
 
 - 存档键 `elda-qunxiong-v3-save`，saveVersion=48，旧档向前兼容
 - 云存档：设置 → 云存档 → 配置云端（粘贴 Supabase URL + anonKey），三副本 + 时间戳冲突裁决
+
+- 工程链 E6（v92+）：elda restore 快照恢复 / elda test branches 支线闭环 / CI 自动生成发布页（docs/release.html）

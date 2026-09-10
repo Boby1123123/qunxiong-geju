@@ -1558,7 +1558,6 @@ return arr;
       arr.push("你站在半山腰，仰头看着那道光。");arr.push("它像一只眼睛——不是比喻，是真的像。一道竖着的裂缝，边缘泛着柔和的光，一开一合，像谁在眨眼睛。");arr.push("你想起书院先生说过的话：第六印是「时间之印」，它松动的时候，时间会打结。你当时在打瞌睡，没听进去。现在你忽然希望，当时没有打瞌睡。");arr.push("风从山顶吹下来，带着一种奇怪的味道——不像山里的松脂，倒像……旧书。像书院藏经阁里，那些很久没人翻过的书。");arr.push("你往山上又爬了几步。就在那一瞬间，你脚下的石阶，忽然变成了另一条你从没见过的路——然后，又变回来了。");arr.push("你站在原地，心跳得厉害。你刚才，真的看到了。时间，打了一个结。");return arr;
     } /*v45inj:origin_eastern_1*/,
     options:[
-      {t:"（序章扩充）东境·承天城：离乡前的日子",req:function(){return !S.flags.origin_expand_eastern_done;},go:"origin_expand_eastern_1",effect:{flag:"origin_expand_eastern_start"}},
       {t:"继续往上爬", go:"origin_eastern_2a", effect:{check:"AGI", tier:{
         crit:{t:"你爬到了山顶，看到了那道光——它是一个裂缝，空间的裂缝。裂缝里，你看到了另一个世界：有高楼，有飞车，有你看不懂的东西。然后裂缝合上了，你发现自己手里多了一块奇怪的金属片。", effect:{san:-5, knowledge:1, item:"strange_metal", flag:"saw_time_rift"}},
         ok:{t:"你爬到了半山腰，看到了那道光——它在山顶，你上不去了。但你记住了它的样子：像一只眼睛，在看着你。", effect:{san:-2}},

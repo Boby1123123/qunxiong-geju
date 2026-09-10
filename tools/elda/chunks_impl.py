@@ -205,6 +205,20 @@ def build_chunks(proj, src_path=None):
     if m:
         n_head = m.group(0) + ';'
         n_tail = non_node_text[:m.start()] + non_node_text[m.end():]
+    # 顶层数据常量提前（被分片节点顶层 IIFE 引用的 BOARD 等）：
+    # 从 n_tail 提出 const X = [...]; window.X = X; 放进 n_head，避免分片加载时 ReferenceError
+    _CONST_PAT = re.compile(
+        r'const\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*\[.*?\];\s*window\.\1\s*=\s*\1\s*;', re.S)
+    board_defs = []
+    _hits = [(m.start(), m.end(), m.group(0)) for m in _CONST_PAT.finditer(n_tail)]
+    for _s, _e, _txt in sorted(_hits, key=lambda x: -x[0]):  # 从后往前删，避免偏移错乱
+        board_defs.append(_txt)
+        n_tail = n_tail[:_s] + n_tail[_e:]
+    if board_defs:
+        board_defs.reverse()
+        n_head = (n_head + '\n' if n_head else '') + '\n'.join(board_defs)
+        _names = [m.group(1) for m in map(_CONST_PAT.search, board_defs)]
+        print('顶层数据常量提前:', len(board_defs), '个定义（', ', '.join(_names), '）')
     new_block = ('<script>' + n_head + '</script>\n' if n_head else '') + \
                 ('<script src="chunks/NODE_MAP.js"></script>\n' + src_refs) + \
                 '<script>\n/* 剧情节点已分片加载（v42） */\n' + \
@@ -227,7 +241,8 @@ def verify_chunks(proj):
         if f.endswith('.js'):
             chunks_text += _read(os.path.join(proj, 'chunks', f)) + '\n'
     merged = html + '\n' + chunks_text
-    node_ids = set(re.findall(r'N\[["\']([^"\']+)["\']\]\s*=\s*(?:function|{)', merged))
+    # 兼容新格式 N["id"]= 与 v62 旧格式 nodes["id"]=function
+    node_ids = set(re.findall(r'(?:N|nodes)\[["\']([^"\']+)["\']\]\s*=\s*(?:function|{)', merged))
     print('合并节点总数:', len(node_ids))
 
     single = _read(os.path.join(proj, 'game.html'))

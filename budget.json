@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8116661,
-    "chunked_html_bytes_max": 5486239,
-    "node_total_min": 4551,
+    "game_html_bytes_max": 8261142,
+    "chunked_html_bytes_max": 5578191,
+    "node_total_min": 4581,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8066661,
-    "chunked_html_bytes": 5386239,
-    "node_total": 4601,
+    "game_html_bytes": 8211142,
+    "chunked_html_bytes": 5478191,
+    "node_total": 4631,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CON-1 设置面板加记忆注入开关",
+    "reason": "CON-2 分片修复：FREE_BOARD 提前 + v62 死链选项移除",
     "history": [
       {
         "date": "2026-09-09",
@@ -530,6 +530,41 @@
         "chunked_bytes": 5386239,
         "nodes": 4601,
         "reason": "CON-1 设置面板加记忆注入开关"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8161865,
+        "chunked_bytes": 5443217,
+        "nodes": 4601,
+        "reason": "CON-2 过渡链：1212 节点注入过渡白描 + transition 命令"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8211129,
+        "chunked_bytes": 5478166,
+        "nodes": 4631,
+        "reason": "CON-2 回响节点：30 决策回响 + 账本登记 + 蓝图登记"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8211127,
+        "chunked_bytes": 5478164,
+        "nodes": 4631,
+        "reason": "CON-2 回响节点修复尾逗号：字节微调"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8211142,
+        "chunked_bytes": 5478179,
+        "nodes": 4631,
+        "reason": "CON-2 回响文本微调"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8211142,
+        "chunked_bytes": 5478191,
+        "nodes": 4631,
+        "reason": "CON-2 分片修复：FREE_BOARD 提前 + v62 死链选项移除"
       }
     ]
   },

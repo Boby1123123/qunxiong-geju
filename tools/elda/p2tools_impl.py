@@ -776,8 +776,171 @@ def _vol_nodes():
             vols[vol] = items
     return vols
 
-# CT-2：新增节点脚手架（elda content new）
-_TAG_BY_TYPE = {'main': 'main', 'ending': 'ending', 'event': 'event', 'branch': 'branch'}
+# ---------------- content: transition ----------------
+
+# 过渡/旅途性质提示词（正文含其一即视为已有过渡文本，不进入待补清单）
+TRANSITION_HINTS = ('前往', '上路', '旅途', '抵达', '穿过', '翻过', '渡过', '赶路', '官道', '商队',
+                    '马车', '驿站', '城门', '山道', '小径', '风雪', '夜路', '路程', '行程', '启程',
+                    '行至', '一路', '沿途', '归来', '回到', '出了', '进了', '北行', '南下', '西行', '东去')
+
+
+def _extract_node_fields(body):
+    """从节点 body 提取 {place, text_joined, goes}（支持对象式/函数式 return 内/动态 text:function）。"""
+    out = {'place': '', 'text_joined': '', 'goes': []}
+    m = re.search(r'place\s*:\s*["\']([^"\']*)["\']', body)
+    if m:
+        out['place'] = m.group(1).strip()
+    txt_parts = []
+    for arr in _extract_arrays_deep(body):
+        for sm in re.finditer(r'"((?:[^"\\]|\\.){8,})"|\'((?:[^\'\\]|\\.){8,})\'', arr):
+            v = sm.group(1) if sm.group(1) is not None else sm.group(2)
+            txt_parts.append(v.replace('\\n', ' '))
+    for sm in re.finditer(r'text\s*:\s*["\']((?:[^"\'\\]|\\.){8,})["\']', body):
+        txt_parts.append(sm.group(1).replace('\\n', ' '))
+    # text: function(){ arr.push("...") } 动态正文
+    for fm in re.finditer(r'text\s*:\s*function\s*\([^)]*\)\s*\{', body):
+        i = body.find('{', fm.start())
+        depth = 0
+        j = i
+        while j < len(body):
+            c = body[j]
+            if c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+                if depth == 0:
+                    break
+            j += 1
+        seg = body[i:j]
+        for pm in re.finditer(r'\.push\(\s*["\']((?:[^"\'\\]|\\.){6,})["\']', seg):
+            txt_parts.append(pm.group(1).replace('\\n', ' '))
+    # 变体 text:{default:[...] , ...}：default 数组视为主正文
+    for dm in re.finditer(r'default\s*:\s*\[', body):
+        i = body.find('[', dm.end())
+        depth = 0
+        j = i
+        instr = None
+        while j < len(body):
+            c = body[j]
+            if instr:
+                if c == '\\':
+                    j += 2
+                    continue
+                if c == instr:
+                    instr = None
+            else:
+                if c in '"\'':
+                    instr = c
+                elif c == '[':
+                    depth += 1
+                elif c == ']':
+                    depth -= 1
+                    if depth == 0:
+                        break
+            j += 1
+        seg = body[i:j]
+        for sm in re.finditer(r'"((?:[^"\\]|\\.){8,})"|\'((?:[^\'\\]|\\.){8,})\'', seg):
+            v = sm.group(1) if sm.group(1) is not None else sm.group(2)
+            txt_parts.append(v.replace('\\n', ' '))
+    out['text_joined'] = ''.join(txt_parts)
+    for gm in re.finditer(r'go\s*:\s*["\']([A-Za-z0-9_]+)["\']', body):
+        if gm.group(1) not in out['goes']:
+            out['goes'].append(gm.group(1))
+    return out
+
+
+# 系统菜单/元叙事类 place（不参与剧情过渡补写）
+META_PLACE_HINTS = ('系统', '总览', '世界动态', '世界状态', '新世界的诞生', '记忆的回廊', 'v25', '菜单',
+                    '操作', '调试', '设置', '存档管理', '游戏设置')
+
+# CON-2 过渡补写豁免节点（特殊叙事/系统/嵌套结构，正文自带收束，追加过渡句冗余）
+TRANSITION_SKIP_IDS = {
+    'battle_seal1_defeat': '战斗失败结算节点，正文已收束',
+    'i_origin_brothers_unite': '抉择收束节点',
+    'i_watchmen_why_me': '多分支叙事节点',
+    'moral_choice_event': '道德抉择系统节点',
+    'pov_recap_node': '多视角回顾系统节点',
+    'prologue_crisis': '危机事件结算节点',
+    'slow_travel_companion_talk': '旅途同伴对话节点（嵌套结构）',
+    'v47_ledger': '伏笔簿系统节点（引擎展示）',
+}
+
+
+def cmd_content_transition(args):
+    """elda content transition [--top 300] [--from from_id]：
+    扫描全部 go 边，输出两端 place 不同且 from 无过渡文本的待补清单（from→to、两端 place、from 末句）。"""
+    ap = argparse.ArgumentParser(prog='elda content transition')
+    ap.add_argument('--top', type=int, default=300)
+    ap.add_argument('--from', dest='from_id', default=None)
+    a = ap.parse_args(args)
+    nodes = {}
+    for p in _src_files():
+        t = _read(p)
+        for nid, nd in _extract_nodes(t).items():
+            if nid not in nodes:
+                nodes[nid] = dict(nd)
+                nodes[nid]['file'] = os.path.basename(p)
+                nodes[nid]['fields'] = _extract_node_fields(nd['body'])
+    pending = []
+    hub_nodes = set()
+    # 先统计跨地点出边数，>=3 视为选择中枢（hub）豁免
+    edge_count = {}
+    for nid, nd in nodes.items():
+        f = nd['fields']
+        if not f['goes'] or not f['place']:
+            continue
+        if any(h in f['place'] for h in META_PLACE_HINTS):
+            continue
+        if nid in TRANSITION_SKIP_IDS:
+            continue
+        cnt = 0
+        for to in f['goes']:
+            if to not in nodes:
+                continue
+            tf = nodes[to]['fields']
+            if not tf['place'] or tf['place'] == f['place']:
+                continue
+            if any(h in tf['place'] for h in META_PLACE_HINTS):
+                continue
+            cnt += 1
+        edge_count[nid] = cnt
+        if cnt >= 3:
+            hub_nodes.add(nid)
+    for nid, nd in nodes.items():
+        f = nd['fields']
+        if not f['goes'] or not f['place']:
+            continue
+        if any(h in f['place'] for h in META_PLACE_HINTS):
+            continue
+        if nid in TRANSITION_SKIP_IDS:
+            continue
+        if nid in hub_nodes:
+            continue
+        for to in f['goes']:
+            if to not in nodes:
+                continue
+            tf = nodes[to]['fields']
+            if not tf['place'] or tf['place'] == f['place']:
+                continue
+            if any(h in tf['place'] for h in META_PLACE_HINTS):
+                continue
+            if any(h in f['text_joined'] for h in TRANSITION_HINTS):
+                continue
+            tail = f['text_joined'][-40:] if f['text_joined'] else '(无正文)'
+            pending.append((nid, to, f['place'], tf['place'], tail, nd['file']))
+    pending.sort(key=lambda r: r[2])
+    print('== elda content transition：跨地点 go 边待补过渡（%d 条 / 全节点 %d）==' % (len(pending), len(nodes)))
+    print('  口径：from/to place 不同 + from 正文不含过渡提示词（%d 词）；hub（跨地点出边≥3）%d 个与元叙事/豁免 %d 个不计' %
+          (len(TRANSITION_HINTS), len(hub_nodes), len(TRANSITION_SKIP_IDS)))
+    for r in pending[:a.top]:
+        print('  %-24s → %-24s | %s → %s | %s' % (r[0], r[1], r[2], r[3], r[4]))
+    if len(pending) > a.top:
+        print('  （仅显示前 %d 条，共 %d 条）' % (a.top, len(pending)))
+    print('RESULT: 待补 %d 条（--from 可只看单节点出边）' % len(pending))
+    return 0
+
+
+
 
 def cmd_content_new(args):
     """elda content new --type main|ending|event|branch [--tpl <模板类>] --id <id> [--vol <卷>] [--arc <弧id>]
@@ -1273,13 +1436,14 @@ def cmd_content_blueprint(args):
 
 def cmd_content(args):
     if not args:
-        print('elda content 子命令: event | quest | dup | chain | causality | stat | new | skeleton | blueprint')
+        print('elda content 子命令: event | quest | dup | chain | transition | causality | stat | new | skeleton | blueprint')
         return 1
     sub = args[0]
     if sub == 'event': return cmd_content_event(args[1:])
     if sub == 'quest': return cmd_content_quest(args[1:])
     if sub == 'dup': return cmd_content_dup()
     if sub == 'chain': return cmd_content_chain(args[1:])
+    if sub == 'transition': return cmd_content_transition(args[1:])
     if sub == 'causality': return cmd_content_causality(args[1:])
     if sub == 'stat': return cmd_content_stat(args[1:])
     if sub == 'new': return cmd_content_new(args[1:])

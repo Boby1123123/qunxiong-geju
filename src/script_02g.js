@@ -33,6 +33,7 @@ N["moral_choice_result"] = function(){
       arr.push("");
       arr.push("你继续往前走。但你知道，刚才的那个选择会跟着你——不是作为惩罚，是作为你的一部分。");
       arr.push("人就是他所有选择的总和。");
+      arr.push("你最后回望一眼抉择之后，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options: [
@@ -113,6 +114,7 @@ N["silence_node"] = function(){
       if(m) arr.push(m.text);
       arr.push("");
       arr.push("有些时刻，语言是多余的。");
+      arr.push("你最后回望一眼沉默，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options: [
@@ -133,6 +135,7 @@ N["unresolved_mysteries_node"] = function(){
       }
       arr.push("");
       arr.push("不是所有问题都有答案。也许这就是世界的本来面目——充满了未解之谜，而我们在其中行走，偶尔捡到一片拼图，然后继续走。");
+      arr.push("别过未解之谜，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -256,6 +259,7 @@ N["prologue_seal_hint"] = function(){
       arr.push("光只持续了几息就灭了。但你闻到了一种气味——铁锈、腐肉、还有某种说不出的、让人想跪下的古老气息。");
       arr.push("邻居们都出来了，没人说话。一个老人在胸口画着光明神的印记，手在抖。");
       arr.push("「地底有东西醒了。」老人说，声音像砂纸磨过木头。「我爷爷说过，铁门关碎的那天，也是这样的光。」");
+      arr.push("你与异变之夜作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -279,6 +283,7 @@ N["prologue_seal_fragment"] = function(){
       arr.push("然后你醒了。枕头湿了，不知道是汗还是泪。");
       arr.push("从那天起，你偶尔会在某些古老的建筑里看到同样的符文。每次看到，后脑勺就一阵发麻。");
       arr.push("你不知道这意味着什么。但你知道，这和你将要去的地方有关。");
+      arr.push("记忆碎片在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -415,6 +420,7 @@ N["messenger_fight_hunger"] = function(){
       arr.push("「你知道我想要什么吗？」它问。「我想要「一切」。你的力量，你的记忆，你的情感，你的「存在」。给我吧。」");
       arr.push("它向你伸出手。不是攻击——是「邀请」。如果你握住它的手，你会被吞噬。但如果你能让它「满足」……");
       arr.push("你想起了老兽人说的话——饥饿的弱点是「满足」。");
+      arr.push("离开第一使者时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -439,6 +445,7 @@ N["messenger_defeated"] = function(){
       arr.push("老兽人摇头：「一个一个来。每一道印碎了，对应的使者就会出来。你已经处理了第一个。还有六个。」");
       arr.push("他递给你一个水袋。「喝点水。路还长。」");
       arr.push("你喝了一口水。水是凉的，但你感觉到了——世界，因为你的行动，稍微变好了一点。");
+      arr.push("别过战斗结束，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -540,6 +547,7 @@ N["letter_trigger_1"] = function(){
       arr.push("「致读到这封信的人：如果你能看到这些文字，说明你已经能看到符文了……」");
       arr.push("你读完了。风把纸吹得哗哗响，但你抓得很紧。");
       arr.push("黄林晶。三千年前的英雄。他在给你写信。");
+      arr.push("你与第一封信作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -571,6 +579,7 @@ N["letter_read"] = function(){
           arr.push("【" + l.title + "】" + l.content.substring(0, 50) + "……");
         }
       }
+      arr.push("别过黄林晶的信，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -594,6 +603,7 @@ N["watcher_prologue_observe"] = function(){
       arr.push("「交汇城方向。能看到符文。第一印征兆反应。建议：观察。」");
       arr.push("他把本子收起来，看了一眼你家的窗户，然后消失在黑暗里。");
       arr.push("守望者。他们已经注意到你了。但你还不知道。");
+      arr.push("别过暗处，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -621,6 +631,7 @@ N["watcher_academy_test"] = function(){
       arr.push("「你感觉到的那个意识，是奥雷利安。」他说。「守望者的首席。他在「看」你——不是用眼睛，是用灵魂。他想知道你是不是「那个人」。」");
       arr.push("「哪个人？」你问。");
       arr.push("墨丘利喝了一口茶。「黄林晶的继承人。或者说——能打开后门的人。」");
+      arr.push("出了墨丘利的课，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -644,6 +655,7 @@ N["watcher_seraph_clue"] = function(){
       arr.push("「为什么告诉我这些？」你问。");
       arr.push("墨丘利把画收起来。「因为你会走到那一步的。你会去查七印，会去查守望者，会去查塞拉芬。到时候，记住——不要完全相信任何一方。奥雷利安是好人，但他有他的立场。塞拉芬是对的，但她的方法太极端。」");
       arr.push("「而你，」他看着你，「也许能找到第三条路。」");
+      arr.push("你与塞拉芬的线索作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -672,6 +684,7 @@ N["watcher_aurelian_meet"] = function(){
       arr.push("「守望者是什么？」你问。");
       arr.push("奥雷利安终于转过头看你。他的眼睛是灰色的，像阴天的海。「守望者是黄林晶创立的组织。监视七印，在必要的时候采取行动。三千年了，我们一直在暗处。」");
       arr.push("「现在，我给你一个选择。」他说。「加入守望者——作为候选。你会获得资源、知识、保护。但你也要承担责任——在世界需要的时候，站出来。」");
+      arr.push("你收拾停当，离开黄昏，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -700,6 +713,7 @@ N["watcher_invitation"] = function(){
       arr.push("奥雷利安转过身，继续看夕阳。");
       arr.push("「去吧。」他说。「你的路还长。守望者的事，不急。」");
       arr.push("你走下天台的时候，太阳刚好落下去。天台上只剩下奥雷利安一个人，和三千年的孤独。");
+      arr.push("离开抉择时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -727,6 +741,7 @@ N["watcher_schism"] = function(){
       arr.push("争论开始了。两派各执一词，声音越来越大。奥雷利安没有阻止——他只是看着，眼神疲惫。");
       arr.push("然后，所有人都看向了你。");
       arr.push("「你是能看到符文的人。」铁拳说。「你说——我们该怎么办？」");
+      arr.push("深夜在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -757,6 +772,7 @@ N["watcher_seraph_truth"] = function(){
       arr.push("「她发现了七印的真相。」奥雷利安说。「和你现在发现的一样。她想证明黄林晶错了，想找到更好的方法。但她太急了——她想直接解放第一印，看看会发生什么。」");
       arr.push("「我们阻止她，不是因为她错了，是因为时机不对。那时候，世界还没有准备好。如果第一印在那个时候解放，会造成灾难。」");
       arr.push("「但现在……」奥雷利安看着你。「也许时机到了。也许，你能完成她没完成的事。」");
+      arr.push("最深层的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -788,6 +804,7 @@ N["watcher_origin_truth"] = function(){
       arr.push("「但三千年了，守望者变了。最初的使命被遗忘了，变成了「守护七印」——守护一个可能根本就是错的东西。」");
       arr.push("奥雷利安看着长卷的最后一幅——他自己，孤独地站着。");
       arr.push("「我老了。」他说。「守望者需要新的方向。也许……那个方向，要由你来定。」");
+      arr.push("别过历史室，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -817,6 +834,7 @@ N["watcher_final_choice"] = function(){
       arr.push("「第二，改革守望者。改变组织的方向——从「守护」变成「理解」。主动调查七印的真相，寻找更好的解决方案。」");
       arr.push("「第三，解散守望者。三千年了，也许这个组织已经完成了它的使命。让每个人自由选择自己的道路。」");
       arr.push("「你选哪个？」");
+      arr.push("你与最终会议作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -849,6 +867,7 @@ N["ending_watcher"] = function(){
         arr.push("守望者不存在了。但每个前守望者，都在以自己的方式，继续守护这个世界。");
       }
       arr.push("不管你选了什么，你知道——守望者的故事结束了，但你的故事，还在继续。");
+      arr.push("你离了结局，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -930,6 +949,7 @@ N["eclipse_prologue_encounter"] = function(){
       arr.push("他带你走到集市后面的小巷。确认没人之后，他从怀里掏出一个徽章——黑色的，上面刻着一只眼睛和一个倒十字。");
       arr.push("「我是暗蚀会的人。」他说。「我们在找能看到符文的人。你愿意听我们说说话吗？」");
       arr.push("你不知道暗蚀会是什么。但你注意到，商人的手在抖——不是因为紧张，是因为……兴奋。");
+      arr.push("出了集市，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -954,6 +974,7 @@ N["eclipse_prologue_pitch"] = function(){
       arr.push("「记住我的话。」他轻声说，然后翻墙跑了。");
       arr.push("审判骑士走过来，问你有没有看到一个可疑的商人。你摇头。骑士看了你一眼，走了。");
       arr.push("你站在小巷里，手里还攥着商人塞给你的一个护身符。上面的符文，在发烫。");
+      arr.push("你收拾停当，离开小巷，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -983,6 +1004,7 @@ N["eclipse_face_intel_intro"] = function(){
       arr.push("「别紧张。我不是来杀你的。我是来……谈合作的。」她放下茶杯。「你在查七印的事，对吧？我也是。我们有共同的目标——知道真相。」");
       arr.push("「暗蚀会不是要解放七印吗？」你问。");
       arr.push("夜莺的笑容淡了。「那是「官方」说法。我个人的目标，只是真相。教会撒了三千年的谎，我要让所有人知道。至于解放七印之后会怎样……我也不知道。但至少，我们应该知道自己在做什么选择。」");
+      arr.push("茶馆的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -1006,6 +1028,7 @@ N["eclipse_face_intel_backstory"] = function(){
       arr.push("她看着你。「你知道吗？教会的净化令，表面上是清除异端，实际上是清除「知道太多的人」。每一个被烧死的「异端」，都是可能发现真相的人。」");
       arr.push("你沉默了。");
       arr.push("「我不是要你加入暗蚀会。」夜莺说。「我只是要你——在查真相的时候，小心教会。他们不是你以为的那样。」");
+      arr.push("夜莺的故事的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options: [
@@ -1028,6 +1051,7 @@ N["eclipse_face_intel_confrontation"] = function(){
       arr.push("审判骑士看向你。「你是什么人？和这个异端是什么关系？」");
       arr.push("你看了看夜莺——她很平静，但手已经放在了腰间的短刀上。你又看了看审判骑士——他们的手在剑柄上，眼睛里没有任何犹豫。");
       arr.push("你知道，你的选择会决定很多事。");
+      arr.push("你离了对峙，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -1084,6 +1108,7 @@ N["eclipse_face_action_intro"] = function(){
       arr.push("「该杀的人？」你问。");
       arr.push("铁拳停下了动作，看着篝火。「三十年前，人类的「净化军」屠了我的部落。我的妻子，我的孩子，我的父母——都在里面。我那天出去打猎，逃过了一劫。」");
       arr.push("「我加入暗蚀会，是为了复仇。但三十年了……我杀了很多人。可我的家人，回不来了。」");
+      arr.push("从营地出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -1107,6 +1132,7 @@ N["eclipse_face_action_backstory"] = function(){
       arr.push("「我加入暗蚀会，是因为他们说——能帮我复仇。他们给我武器，给我情报，给我目标。我杀了很多净化军的人。但……」");
       arr.push("他看着自己的金属左臂。「这只手，是在一次暗杀中失去的。暗蚀会给我装了这个。他们说——这是「进化」。但我知道，我只是他们的武器。」");
       arr.push("「年轻人，你说——复仇有意义吗？三十年了，我还是不快乐。」");
+      arr.push("你收拾停当，离开铁拳的故事，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -1132,6 +1158,7 @@ N["eclipse_face_action_confrontation"] = function(){
       arr.push("「你要退出暗蚀会？」你问。");
       arr.push("铁拳摇头。「没那么容易。暗蚀会不会让我走的。但至少——这次任务，我会「失败」。让那个主教活着。」");
       arr.push("他拍了拍你的肩，力气大得让你踉跄。「再见了，年轻人。如果我们再见面——希望不是在战场上。」");
+      arr.push("黎明的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -1177,6 +1204,7 @@ N["eclipse_face_research_intro"] = function(){
       arr.push("「你发现了。」他说，语气很平静，像是在说今天天气不错。「坐吧。我们谈谈。」");
       arr.push("你攥了攥袖口，坐下了。白骨教授把茶放在你面前，然后坐在对面。");
       arr.push("「你一定有很多问题。」他说。「问吧。」");
+      arr.push("别过教授办公室，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -1200,6 +1228,7 @@ N["eclipse_face_research_backstory"] = function(){
       arr.push("他看着你。「我知道暗蚀会在做什么。我知道他们解放七印的计划可能会造成灾难。但我不在乎。我只在乎——知识。人类的知识，不应该被宗教和恐惧束缚。」");
       arr.push("「你呢？」他问。「你在查七印的真相，不也是为了知识吗？我们是一样的人。」");
       arr.push("你看着他的眼睛——里面没有疯狂，只有一种……纯粹的、冰冷的对知识的渴望。");
+      arr.push("从深夜出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -1223,6 +1252,7 @@ N["eclipse_face_research_confrontation"] = function(){
       arr.push("他转向你。「年轻人，你也在场。这个选择，你也有份。」");
       arr.push("墨丘利说：「白骨教授的研究，虽然走了偏路，但确实有价值——他对灵魂魔法的理解，比学院里任何人都深。我们可以选择：一，把他交给教会，他会被烧死。二，让他继续研究，但在守望者的监督之下。三，放他走，让他加入暗蚀会的核心。」");
       arr.push("「你选哪个？」");
+      arr.push("从抉择出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -1252,6 +1282,7 @@ N["eclipse_face_research_fate"] = function(){
         arr.push("你不知道他是在赎罪，还是只是想让知识传播。但至少，他没有伤害任何人。");
       }
       arr.push("不管怎样，你知道——对知识的渴望，本身没有错。错的是使用知识的方式。");
+      arr.push("离开事件之后时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -1278,6 +1309,7 @@ N["eclipse_face_hr_intro"] = function(){
       arr.push("「因为你很特别。」她站起来，走到你面前。「能看到符文的人，三千年才出一个。我想——「塑造」你。」");
       arr.push("「塑造？」你问。");
       arr.push("蛇母笑了。「别害怕。我不是要改造你。我只是想——看看你能不能成为「更好」的人。我相信，人性是可以被塑造的。只要找到正确的痛点，正确的激励，正确的……环境。」");
+      arr.push("别过蛇母的巢穴，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -1300,6 +1332,7 @@ N["eclipse_face_hr_backstory"] = function(){
       arr.push("「从那以后，我就相信——人性是可以被设计的。如果我能设计一个「更好」的环境，就能创造「更好」的人。」");
       arr.push("她看着你。「暗蚀会就是我的「实验」。我招募人，塑造人，把他们变成我想要的样子。有些人成功了，有些人失败了。但总体来说——我的实验，是有效的。」");
       arr.push("「你呢？」她问。「你觉得，你是你自己，还是你所有经历的「总和」？如果你的经历不同，你会是不同的人吗？」");
+      arr.push("从蛇母的故事出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -1323,6 +1356,7 @@ N["eclipse_face_hr_confrontation"] = function(){
       arr.push("「你看。」蛇母说。「人性是可以被塑造的。他以前连一只蚂蚁都不敢踩。现在，他杀过十七个人。」");
       arr.push("她转向你。「现在，考验你。这个男孩——你可以杀了他，结束他的痛苦。你也可以「拯救」他，让他恢复以前的样子。或者，你可以加入我，一起「塑造」更多的人。」");
       arr.push("「你选哪个？」");
+      arr.push("考验的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -1354,6 +1388,7 @@ N["eclipse_face_hr_fate"] = function(){
         arr.push("你不知道她说得对不对。但你知道，从那天起，你开始更谨慎地对待自己的每一个选择——因为你不知道，你的选择是不是也在「塑造」别人。");
       }
       arr.push("蛇母的问题，一直留在你心里：人，到底是自己，还是所有经历的总和？");
+      arr.push("离开事件之后时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -1379,6 +1414,7 @@ N["eclipse_face_finance_intro"] = function(){
       arr.push("金秤笑了。「很惊讶？暗蚀会需要钱——很多钱。买武器，买情报，买人。而我，最擅长的就是赚钱。」");
       arr.push("他举起手里的文物。「这件东西，我花了十万金龙。但它的实际价值——至少五十万。因为上面有黄林晶的符文，能打开某个「宝库」。」");
       arr.push("「我叫你来，是想和你做一笔生意。」他说。「你帮我解读符文，我分你三成利润。怎么样？」");
+      arr.push("从拍卖行出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -1402,6 +1438,7 @@ N["eclipse_face_finance_backstory"] = function(){
       arr.push("「所以，我不怕暴露身份。因为——没有人敢动我。」");
       arr.push("他看着你。「年轻人，这个世界，说到底是钱的世界。教会有钱，所以能烧人。美第奇有钱，所以能操控政治。暗蚀会有钱，所以能和教会对抗。」");
       arr.push("「你呢？你追求的是什么？真相？正义？还是……别的什么？」");
+      arr.push("别过贵宾室，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -1426,6 +1463,7 @@ N["eclipse_face_finance_confrontation"] = function(){
       arr.push("你解释了——黄林晶留下的、能让世界重新完整的东西。");
       arr.push("金秤沉默了很久。然后他说：「如果这个东西真的存在……它的价值，不是钱能衡量的。它能改变整个世界。」");
       arr.push("他看着你。「年轻人，我给你一个选择——把这个盒子给我，我给你一百万金龙。或者，我们一起打开它，看看里面是什么。你选哪个？」");
+      arr.push("你离了生意，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -1457,6 +1495,7 @@ N["eclipse_face_finance_fate"] = function(){
       }
       arr.push("金秤后来怎么样了？有人说他成了大陆最富有的人。有人说他被暗蚀会内部清洗了。还有人说——他匿名资助了很多孤儿院和学校。");
       arr.push("你不知道哪个是真的。但你偶尔会想起他——一个被家族伤害的人，用金钱来证明自己的价值。也许，他和你一样，只是在寻找「意义」。");
+      arr.push("你最后回望一眼事件之后，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options: [
@@ -1520,7 +1559,8 @@ N["ending_eclipse"] = function(){
       }
       arr.push("不管怎样，暗蚀会的故事——五张面孔的故事——到这里，告一段落了。");
       arr.push("但你知道，只要世界还有谎言，就会有追求真相的人。只要世界还有压迫，就会有反抗的人。暗蚀会可能消失了，但「暗蚀」——那种在黑暗中寻找光明的精神——永远不会消失。");
-      arr.push("你选择了与暗蚀会同行。");arr.push("这条路，你走得比任何人都深。你见过那些藏在影子里的东西，你听过那些不该听的声音，你握过那些烫手的秘密。");arr.push("可你走到终点的时候，忽然发现——你不是要成为他们。你是要，替他们记住。");arr.push("记住那些人为什么堕落，记住那些堕落里的人，曾经是什么样子。");arr.push("你站在这条路的尽头，回望来路。来路很长，长得看不清起点。可你知道，起点就在那里——在那个你第一次选择「不择手段」的夜晚。");arr.push("那个夜晚没有错。错的是，有人把「不择手段」当成了目的地，而不是手段。");arr.push("你转身，走进你选择的那片黑暗。你走得很稳。因为你知道，你不是在逃避光——你是在，替光，看着那片黑暗。");return arr;
+      arr.push("你选择了与暗蚀会同行。");arr.push("这条路，你走得比任何人都深。你见过那些藏在影子里的东西，你听过那些不该听的声音，你握过那些烫手的秘密。");arr.push("可你走到终点的时候，忽然发现——你不是要成为他们。你是要，替他们记住。");arr.push("记住那些人为什么堕落，记住那些堕落里的人，曾经是什么样子。");arr.push("你站在这条路的尽头，回望来路。来路很长，长得看不清起点。可你知道，起点就在那里——在那个你第一次选择「不择手段」的夜晚。");arr.push("那个夜晚没有错。错的是，有人把「不择手段」当成了目的地，而不是手段。");arr.push("你转身，走进你选择的那片黑暗。你走得很稳。因为你知道，你不是在逃避光——你是在，替光，看着那片黑暗。");arr.push("从结局出来，路上行人渐稀。你脚步不停，一路向前。");
+      return arr;
     } /*v45inj:ending_eclipse*/,
     options: [
       { t:"继续你的旅程", go:"fc_jiaohui_entry", effect:{flag:"eclipse_ending_complete"} }
@@ -1616,6 +1656,7 @@ N["reunion_cecilia"] = function(){
       arr.push("你注意到，她身后躲着一个小女孩——十三四岁，在发抖。");
       arr.push("「这是我的学生。」塞西莉亚说。「她有灵魂魔法的天赋。我不能让教会把她烧死。」");
       arr.push("审判骑士看向你。「你是什么人？要插手教会的事吗？」");
+      arr.push("大教堂外已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -1639,6 +1680,7 @@ N["reunion_grom"] = function(){
       arr.push("你注意到，他身后有兽人平民——老人、女人、孩子。他们在发抖。");
       arr.push("「我不想打。」格罗姆说。「但他们要杀我的族人。我没有选择。」");
       arr.push("人类战士的领头人看到了你：「你是什么人？是和兽人一伙的吗？」");
+      arr.push("战场在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -1663,6 +1705,7 @@ N["reunion_result"] = function(){
       }
       arr.push("你不知道的是，你和每个同学的重逢，都在改变他们的命运轨迹。有些人因为你而变得更好，有些人因为你而变得更坏。有些人活着，有些人……可能会死。");
       arr.push("但这就是人生——你做的每一个选择，都在影响着周围的人。而这些影响，会在终局的时候，汇聚在一起。");
+      arr.push("重逢之后在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -1695,6 +1738,7 @@ N["final_battle_classmates"] = function(){
       arr.push("十一个人。你的同学。你的朋友。你的……家人。");
       arr.push("「我们来了。」塞西莉亚说。「你以为你一个人能扛下所有事？」");
       arr.push("格罗姆笑了：「兄弟，我们一起。」");
+      arr.push("别过同学汇聚，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -1746,6 +1790,7 @@ N["karma_seed_merchant"] = function(){
       arr.push("老汤姆跪在地上，求他们住手。「这是我孙女的医药费……求求你们……」");
       arr.push("帮派的领头人笑了：「医药费？关我屁事。不交钱，就别在这摆摊。」");
       arr.push("你站在人群里，看着这一切。你可以选择——上前帮忙，或者，假装没看见。");
+      arr.push("集市的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -1771,6 +1816,7 @@ N["karma_sprout_merchant"] = function(){
         arr.push("但你偶尔会想起那个集市——老汤姆跪在地上的样子。你不知道他后来怎么样了。有时候，你会想——如果当时你上前了，会怎样？");
         arr.push("这个念头，会在你心里，存在很久。");
       }
+      arr.push("你离了第一学期，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -1798,6 +1844,7 @@ N["karma_grow_merchant"] = function(){
         arr.push("你想起了序章的那个集市——你选择了走开。而这个选择，导致了一个老人的死亡，和一个女孩的悲剧。");
         arr.push("因果，就是这样——你做的每一个选择，都在影响着别人的人生。");
       }
+      arr.push("你与交汇城作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -1845,6 +1892,7 @@ N["karma_seed_protect_grom"] = function(){
       arr.push("格罗姆的拳头攥得很紧，指节发白。你能感觉到，他在忍耐——但忍耐是有限度的。");
       arr.push("如果他动手了，他会被开除。兽人在人类学院，本来就不受欢迎。");
       arr.push("你站在旁边，看着这一切。你可以选择——上前帮忙，或者，看着。");
+      arr.push("你与食堂作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -1872,6 +1920,7 @@ N["karma_sprout_protect"] = function(){
         arr.push("你在食堂又看到了格罗姆。他还是一个人坐在角落。但这次，他的眼神变了——不再是忍耐，而是……冷漠。");
         arr.push("你知道，有些东西，已经变了。");
       }
+      arr.push("几天后的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options: [
@@ -1979,6 +2028,7 @@ N["extinct_dragon_clue"] = function(){
       arr.push("龙族，不是已经灭绝了吗？三千年了，所有人都以为龙族已经消失了。但这里——有一颗龙蛋。");
       arr.push("你伸出手，想触摸它。然后，你听到了一个声音——不是用耳朵听到的，是直接出现在你脑海里的。");
       arr.push("「……你是谁？」");
+      arr.push("你离了山脚，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -2008,6 +2058,7 @@ N["extinct_dragon_survivor"] = function(){
         arr.push("那颗龙蛋，那个声音——它们在你心里，留下了印记。");
         arr.push("你开始查龙族的历史。官方版本说，龙族是「深渊的走狗」，被英雄黄林晶消灭了。但你在禁书区找到了一本旧书——上面说，龙族是「智慧的种族」，他们的灭亡，有隐情。");
       }
+      arr.push("从龙蛋出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -2032,6 +2083,7 @@ N["extinct_dragon_truth"] = function(){
       arr.push("你合上书，很久没有说话。");
       arr.push("黄林晶——不是纯粹的英雄，也不是纯粹的恶人。他做了一个艰难的选择，然后用三千年的时间，来合理化自己的选择。");
       arr.push("而龙族——是这个选择的代价。");
+      arr.push("离开龙族真相时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -2091,6 +2143,7 @@ N["extinct_dragon_outcome"] = function(){
         arr.push("你偶尔会看看它——金色的纹路，一收一缩。它还在等。");
       }
       arr.push("不管你选了什么，你知道——龙族的故事，没有结束。它只是，换了一种方式继续。");
+      arr.push("出了事件之后，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -2116,6 +2169,7 @@ N["extinct_aquan_clue"] = function(){
       arr.push("你想起了第五印——南方深海。黄林晶的信里说过，他「流放」了海族。");
       arr.push("也许，水族就是被流放的种族。也许，他们知道第五印的真相。");
       arr.push("你决定——去海底看看。");
+      arr.push("码头的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -2139,6 +2193,7 @@ N["extinct_aquan_survivor"] = function(){
       arr.push("一个年老的水族游过来。他的鳞片已经发白了，但眼睛很亮。");
       arr.push("「三千年了。」他说。「终于，有人类能看到符文了。」");
       arr.push("「你是来问第五印的事吧？」他说。「跟我来。我告诉你，黄林晶对我们做了什么。」");
+      arr.push("水族城市已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -2161,6 +2216,7 @@ N["extinct_aquan_truth"] = function(){
       arr.push("你问，第五印的真相是什么。");
       arr.push("老水族看着你。「第五印里，是「嫉妒」。原初之物的一部分。它在「看」——看着大陆上的一切，然后嫉妒。嫉妒生命，嫉妒光明，嫉妒自由。」");
       arr.push("「我们守护它，是因为我们能「安抚」它。水族的歌声，能让嫉妒平静。但三千年了，我们的歌声越来越弱。第五印，快要碎了。」");
+      arr.push("从长老殿出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -2239,6 +2295,7 @@ N["faith_light_intro"] = function(){
       arr.push("但你也看到了——教堂里，有穷人在领食物，有病人在接受治疗。教会，确实在帮助人。");
       arr.push("光明，是真实的。但光明背后的阴影，也是真实的。");
       arr.push("牧师看着你，等你的回答。");
+      arr.push("你离了大教堂，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -2266,6 +2323,7 @@ N["faith_light_oracle"] = function(){
         arr.push("牧师的表情变了一下。「那是……禁地。只有红衣主教才能进。」");
         arr.push("你不知道里面是什么。但你能感觉到——门后面，有什么东西。也许，是教会不想让人知道的秘密。");
       }
+      arr.push("神谕的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -2296,6 +2354,7 @@ N["faith_light_miracle"] = function(){
         arr.push("你离开了教堂。");
         arr.push("但你偶尔会想起——那扇被守住的门，门后面的秘密。也许，有一天你会回去，把它打开。");
       }
+      arr.push("神迹的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options: [
@@ -2527,6 +2586,7 @@ N["chronicle_academy_year1"] = function(){
       arr.push("你认识了墨丘利，那个玩世不恭但深藏秘密的教授。");
       arr.push("你也第一次感觉到——这个世界，比你想的更复杂，更危险。");
       arr.push("但你不后悔。因为，你正在变得更强。");
+      arr.push("你与第一学年作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -2634,6 +2694,7 @@ N["chronicle_final"] = function(){
       arr.push("");
       arr.push("但至少——你活过。你爱过，你恨过，你选择过，你承担过。");
       arr.push("这就够了。");
+      arr.push("你离了终局，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -2669,6 +2730,7 @@ N["chronicle_view"] = function(){
       }
       arr.push("━━━━━━━━━━━━━━━━━━━━");
       arr.push("历史，是由胜利者书写的。但真实，只有你知道。");
+      arr.push("你离了查看，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -2946,6 +3008,7 @@ N["primordial_hunger_encounter"] = function(){
       arr.push("它的眼睛——巨大的、空洞的、饥饿的眼睛——看着你。");
       arr.push("然后你听到了一个声音。不是用耳朵听到的，是直接出现在你脑海里的。");
       arr.push("「……你来了。你能看见我？」");
+      arr.push("离开铁门关废墟深处时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -3001,6 +3064,7 @@ N["primordial_hunger_dialogue_2"] = function(){
       }
       arr.push("你看着它。你知道，它不是怪物。它是一个被抛弃的孩子。而你，是三千年后第一个看见它的人。");
       arr.push("现在，你要做一个选择。");
+      arr.push("你离了坑底，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -3067,6 +3131,7 @@ N["primordial_anger_encounter"] = function(){
       arr.push("它感觉到了你。它转过头。");
       arr.push("它的眼睛——燃烧的、愤怒的、疲惫的眼睛——看着你。");
       arr.push("「滚。」它说。「我不想和你说话。」");
+      arr.push("从兽人草原深处出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -3092,6 +3157,7 @@ N["primordial_anger_dialogue"] = function(){
       arr.push("黄林晶打败了炎。然后他把自己的'愤怒'切了下来——对背叛的愤怒，对朋友的愤怒，对自己的愤怒。这份愤怒被封印在第二印，由兽人萨满世代安抚。");
       arr.push("「我已经忘了是谁背叛了我。」那个声音说。「但愤怒还在。它已经不需要理由了。它只是……存在。三千年了，我一直在战斗。和谁战斗？和自己。和这永远不会消失的愤怒。」");
       arr.push("你看着眼前这个燃烧的战士。它不是怪物。它是——一个被背叛的朋友的愤怒。三千年了，它还在战斗。");
+      arr.push("别过石阵，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -3122,6 +3188,7 @@ N["primordial_anger_outcome"] = function(){
         abyssProgressUpdate(10);
       }
       arr.push("第二印的事，到此为止。还有五道印在等你。");
+      arr.push("你离了后果，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -3158,6 +3225,7 @@ N["primordial_alliance"] = function(){
       } else {
         arr.push("你理解的原初之物还不够。它们还不能完全信任你。但你手里的碎片，会在最终之战中帮你。");
       }
+      arr.push("原初之物联盟的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -3185,6 +3253,7 @@ N["knowledge_gain_seal_truth"] = function(){
       arr.push("你也感觉到了——SAN值在下降。不是因为恐惧，是因为……真相太沉重了。");
       arr.push("从今天起，你再也无法用以前的眼光看这个世界了。");
       gainKnowledge("seal_truth");
+      arr.push("你与七印真相作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -3209,6 +3278,7 @@ N["knowledge_gain_hlj_crime"] = function(){
       arr.push("不是不信任——是……不再盲目信任。你知道，他们也有他们的秘密，他们的罪，他们的'必要的恶'。");
       arr.push("SAN值在下降。真相，总是有代价的。");
       gainKnowledge("hlj_crime");
+      arr.push("黄林晶的罪的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -3230,6 +3300,7 @@ N["knowledge_forget_choice"] = function(){
       arr.push("「而且，」他说。「遗忘不是删除。它只是……藏起来。某一天，某个触发点，它会回来。带着加倍的力量。」");
       arr.push("你看着他。你知道，他说的是真的。");
       arr.push("遗忘，不是解决办法。遗忘，只是推迟。");
+      arr.push("你与遗忘作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -3465,6 +3536,7 @@ N["past_arrival"] = function(){
       arr.push("他感觉到了你，抬起头。");
       arr.push("「你好。」他说。「你是从很远的地方来的吧？我叫黄林晶。」");
       arr.push("三千年了。你终于见到了他。不是史书里的英雄，不是传说中的圣人——是一个坐在树下看书、笑得像个孩子的年轻人。");
+      arr.push("离开艾尔达大陆时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -3495,6 +3567,7 @@ N["past_huanglingjing_talk"] = function(){
       arr.push("他说这句话的时候，自己都打了个寒颤。");
       arr.push("「我知道这不对。」他说。「但我想不出别的办法了。」");
       arr.push("你看着眼前这个年轻人。他不是圣人。他是一个——害怕的、绝望的、试图拯救世界的年轻人。他即将做出一个三千年后还在影响世界的决定。而你，是唯一知道后果的人。");
+      arr.push("从树下出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -3529,6 +3602,7 @@ N["past_era1_choice"] = function(){
       arr.push("然后他走了。你站在原地，看着他的背影消失在晨光里。");
       arr.push("你知道，你改变了一些东西。不是大方向——黄林晶还是会切除七情，七印还是会建成。但你改变了……细节。某个态度，某封信，某段记忆。");
       arr.push("这些细节，会在三千年后，以你意想不到的方式显现。");
+      arr.push("你与选择作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -3549,6 +3623,7 @@ N["past_era1_explore"] = function(){
       arr.push("你遇到了年轻的奥雷利安。一个安静的年轻人，他在角落里观察着一切。他看你的眼神很特别——好像他知道你是谁。「你从很远的地方来。」他说。不是问句。「黄林晶也会去很远的地方。不是空间的远，是……时间的远。」");
       arr.push("你看到了这个世界的美，也看到了这个世界的痛。你开始理解——黄林晶为什么会做出那个选择。不是因为他冷酷，是因为他绝望。");
       arr.push("然后，你感觉到了——时光裂隙在召唤你回去。你不能再待下去了。");
+      arr.push("探索的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options: [
@@ -3628,6 +3703,7 @@ N["prophecy_first_hearing"] = function(){
       arr.push("说完，老人恢复了正常，茫然地看着你，好像不知道自己刚才说了什么。");
       arr.push("你站在原地，心里有一种奇怪的感觉——好像有什么东西，在注视着你。");
       arr.push("后来你会知道，这只是开始。不同的势力，有不同版本的预言。每一个版本，都在试图把你往他们想要的方向推。");
+      arr.push("你收拾停当，离开第一次听到预言，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -3658,6 +3734,7 @@ N["prophecy_investigation"] = function(){
       arr.push("只有你。和你的选择。");
       hearProphecy("true_prophecy");
       gainKnowledge("hlj_crime");
+      arr.push("调查在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -3820,6 +3897,7 @@ N["language_learn_elvish"] = function(){
       arr.push("学了一段时间后，你发现了一件事：精灵语里没有'再见'这个词。只有'待会儿见'和'下次见'。因为对精灵来说，分离只是暂时的。三百年，五百年，一千年——总会再见的。");
       arr.push("你第一次理解了——语言不仅仅是交流工具。语言，是一个种族看待世界的方式。");
       learnLanguage("elvish", 1);
+      arr.push("学习精灵语的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options: [
@@ -3839,6 +3917,7 @@ N["language_learn_elvish_2"] = function(){
       arr.push("你能流利地和精灵对话了。你开始读精灵语的书籍——不是翻译版，是原版。你发现了一件事：很多精灵语的诗歌，翻译成通用语之后，失去了90%的美。因为精灵语的美，在于它的'时间感'——每个词都包含了过去、现在和未来。");
       arr.push("你也开始注意到：精灵在说通用语的时候，会不自觉地用精灵语的语法。这让他们的通用语听起来……很奇怪。但你现在理解了。");
       arr.push("语言，是一扇窗。学会了精灵语，你看到了一个人类永远看不到的世界。");
+      arr.push("离开进阶时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -3859,6 +3938,7 @@ N["language_learn_ancient"] = function(){
       arr.push("古艾尔达语很难。不是语法难，是……概念难。三千年前的世界，和现在完全不同。很多词，在现代语言里没有对应。比如'情感之灾'之前，人们有一个词叫'满'——不是物理的满，是情感的满。这个词，在切除七情之后，就消失了。");
       arr.push("你学着学着，开始理解——语言的消失，就是世界的消失。每一个死去的词，都是一段死去的记忆。");
       learnLanguage("ancient", 1);
+      arr.push("学习古艾尔达语的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -3883,6 +3963,7 @@ N["language_ancient_decode"] = function(){
       arr.push("你站在符文前，很久没有说话。");
       arr.push("你终于理解了黄林晶的选择——也理解了这个选择的代价。");
       gainKnowledge("seal_truth");
+      arr.push("别过解读符文，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -3903,6 +3984,7 @@ N["language_learn_draconic"] = function(){
       arr.push("学第一个词的时候，你说了出来。然后——你面前的蜡烛，火焰突然变蓝了。不是物理的蓝，是……元素的蓝。你感觉到了——这个词，在和火元素对话。");
       arr.push("你开始理解为什么龙族会被灭。不是因为它们强大，是因为它们的语言——太强大了。一个会说龙语的人，可以直接操控元素。黄林晶不能允许这种力量存在。");
       learnLanguage("draconic", 1);
+      arr.push("你离了学习龙语，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -3952,6 +4034,7 @@ N["disaster_trigger_flood"] = function(){
       arr.push("第十天，城市被淹了。不是整个城市——是下半部分。街道变成了河流，房屋的一楼浸在水里，人们爬到屋顶上，等待救援。");
       arr.push("你站在高处，看着这一切。你知道——这不是普通的洪水。第五印不稳了。原初之物'嫉妒'在躁动，它的情绪影响了天气。");
       arr.push("人们在尖叫，在哭泣，在祈祷。教会的牧师在说这是'神的惩罚'，暗蚀会的人在说这是'解放的征兆'，普通人只是——想活下去。");
+      arr.push("从大洪水出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -3980,6 +4063,7 @@ N["disaster_flood_response"] = function(){
         arr.push("你赚了200金龙。但你也知道——你在这个城市的名声，毁了。");
       }
       arr.push("洪水终于退了。但它留下的东西，会持续很久。");
+      arr.push("出了应对，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -4066,6 +4150,7 @@ N["disaster_blood_rain_aftermath"] = function(){
       arr.push("被雨淋过的人，有些人疯了。有些人获得了奇怪的能力——能看到死者，能听到声音。有些人变得……不一样了。更冷漠，或者更狂热。");
       arr.push("教会宣布这是'末日的第一征兆'，开始大规模招募信徒。暗蚀会宣布'解放即将到来'，开始更激进的行动。守望者……守望者在沉默。");
       arr.push("你知道——这只是开始。深渊进度在提升，更多的天灾会来。血雨、地震、洪水、火山……世界在'提醒'你：时间不多了。");
+      arr.push("你最后回望一眼余波，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options: [
@@ -4195,6 +4280,7 @@ N["council_session_1"] = function(){
       arr.push("兽人大萨满在喝麦酒——那种'我不在乎你们说什么'的不在乎。");
       arr.push("你知道，这场议会，将决定很多事情。不只是议题的结果，还有——你在这个大陆的位置。");
       arr.push("议会的第一个议题：净化令的范围与强度。");
+      arr.push("离开第一届时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -4219,6 +4305,7 @@ N["council_issue_purification"] = function(){
       arr.push("议事厅里吵成了一片。");
       arr.push("然后，所有人都看向了你。因为你是'能看到符文之人'——你的意见，会影响很多中立势力。");
       arr.push("你知道，你的选择，将决定净化令的命运。也将决定——很多灵魂法师的生死。");
+      arr.push("你离了净化令议题，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -4257,6 +4344,7 @@ N["council_vote_purification"] = function(){
         arr.push("沉默，也是一种选择。");
       }
       arr.push("第一个议题结束了。但议会还有更多议题。还有更多选择，在等着你。");
+      arr.push("投票结果在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -4279,6 +4367,7 @@ N["council_issue_iron_gate"] = function(){
       arr.push("议事厅又吵成了一片。");
       arr.push("然后，所有人又看向了你。");
       arr.push("你知道，这个选择，将决定——战争还是和平。很多人的生死，在你一念之间。");
+      arr.push("铁门关议题在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -4303,6 +4392,7 @@ N["council_outcome"] = function(){
       arr.push("你在大陆议会的影响力：" + S.council.influence);
       arr.push("你知道，这只是开始。以后还会有第二届、第三届。每一届，都会有新的议题，新的选择，新的博弈。");
       arr.push("而你，将在其中扮演越来越重要的角色。");
+      arr.push("第一届结束在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -4328,6 +4418,7 @@ N["relation_deep_mercury"] = function(){
       arr.push("但你也……害怕他。因为你知道，他有很多秘密。而有秘密的人，永远不会完全可信。");
       arr.push("你也对他有……愧疚。因为你知道，他为了保护你，做了很多牺牲。而你，可能永远无法回报。");
       arr.push("今天，他约你在他的研究室见面。他说，有话要对你说。");
+      arr.push("出了墨丘利，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -4357,6 +4448,7 @@ N["relation_mercury_talk"] = function(){
       relationChange("mercury", "trust", 10);
       relationChange("mercury", "guilt", 5);
       relationChange("mercury", "respect", 10);
+      arr.push("离开墨丘利的研究室时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -4379,6 +4471,7 @@ N["relation_mercury_outcome"] = function(){
       arr.push("你和墨丘利的关系：" + getRelationSummary("mercury"));
       arr.push("你知道，从今天起，他看你的眼神，不一样了。不再只是看一个学生——是看一个……理解他的人。");
       arr.push("这很重要。在这个充满谎言和背叛的世界里，被理解，是最珍贵的东西。");
+      arr.push("墨丘利的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options: [
@@ -4404,6 +4497,7 @@ N["relation_rupture_event"] = function(){
       arr.push("然后他走了。没有回头。");
       arr.push("你站在原地，知道——你失去了什么。不是一个盟友，不是一个资源。是一个……曾经信任你的人。");
       arr.push("关系破裂了。某些选项，永久消失了。某些对话，永远不会再有了。");
+      arr.push("破裂已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -4431,6 +4525,7 @@ N["relation_repair_attempt"] = function(){
       arr.push("最后，他说：「我还是很生气。」");
       arr.push("「但我相信你不是故意的。」");
       arr.push("「我们……可以重新开始。但裂痕在那里。永远在。」");
+      arr.push("离开修复时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -4508,6 +4603,7 @@ N["succession_choose"] = function(){
       }
       arr.push("");
       arr.push("或者，你可以选择不传承。让故事到此为止。让下一代自己去寻找答案。");
+      arr.push("你离了选择后继者，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -4536,6 +4632,7 @@ N["succession_training"] = function(){
       arr.push("这些问题，你没有答案。因为你也不知道。");
       arr.push("但你知道——这很好。下一代应该有自己的问题，自己的答案，自己的选择。");
       arr.push("传承，不是复制。是——给下一代一个起点，然后让他们自己走。");
+      arr.push("出了培养，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -4561,6 +4658,7 @@ N["succession_handover"] = function(){
       arr.push("「那这个世界……怎么办？」");
       arr.push("你笑了笑——那种经历了一切之后的、平静的笑。「这个世界，」你说。「从来不是靠一个人拯救的。它靠的是——每一代人，做出自己的选择。」");
       arr.push("「现在，轮到你了。」");
+      arr.push("交接在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -4617,6 +4715,7 @@ N["v24_ending_synthesis"] = function(){
       arr.push("· 传承：" + (r.succession ? "有后继者" : "无后继者"));
       arr.push("");
       arr.push("这些，将决定你的结局。");
+      arr.push("你收拾停当，离开九大方向汇聚，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -4779,6 +4878,7 @@ N["ending_v24_coexist"] = function(){
       arr.push("封印不是答案。解放不是答案。");
       arr.push("共存，才是答案。");
       arr.push("而你，找到了它。");
+      arr.push("你离了共存，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -4804,6 +4904,7 @@ N["ending_v24_become"] = function(){
       arr.push("你成为了新的黄林晶——用自己的存在，维持着世界的平衡。");
       arr.push("孤独。永恒的孤独。");
       arr.push("但你知道，这是你的选择。");
+      arr.push("新的深渊之主在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options: [
@@ -5378,6 +5479,7 @@ N["branch_academy_join"] = function(){
       arr.push("他看着你。「你很有天赋。我可以让你看到真相。但你要为我做一些事。」");
       arr.push("你知道，从这一刻起，你不再是一个普通学生了。");
       arr.push("你成了双面间谍。表面上是学院的好学生，暗地里是暗蚀会的外围成员。");
+      arr.push("别过暗室密谈，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -5404,6 +5506,7 @@ N["branch_academy_negotiate"] = function(){
       arr.push("「现在你知道了。」费尔曼说。「你可以举报我，可以加入我，也可以——和我合作。我在暗蚀会内部，但我不完全同意他们的做法。我需要一个在外面的人。」");
       arr.push("你成了他的暗线。他给你情报，你给他外面的消息。");
       arr.push("这是最危险的路——两边都不信任你，但两边都需要你。");
+      arr.push("你收拾停当，离开真相的代价，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -5477,6 +5580,7 @@ N["branch_continent_destroy"] = function(){
       arr.push("深渊进度大幅上升。暗蚀会对你表示欢迎。教会宣布你为异端。");
       arr.push("你打碎了黄林晶的枷锁。你不知道这是对是错。");
       arr.push("但你知道，世界再也回不到从前了。");
+      arr.push("离开解放的宣言时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -5502,6 +5606,7 @@ N["branch_continent_understand"] = function(){
       arr.push("你获得了「饥饿碎片」——它的一段记忆，一种情感，一丝力量。");
       arr.push("这是第三条路的起点。不是封印，不是解放。是——共存。");
       arr.push("但你知道，理解一个原初之物，需要付出代价。你的SAN值下降了。你看世界的方式，永远改变了。");
+      arr.push("你最后回望一眼第三条路的起点，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options: [
@@ -5750,6 +5855,7 @@ N["fate_classmate_01_hero"] = function(){
       arr.push("毕业时，她以第一名的成绩离开学院。");
       arr.push("多年后，她成了大陆闻名的大魔法师。但她总是说：「如果没有那个人，我早就坠入黑暗了。」");
       arr.push("她的命运，因为你而改变了。");
+      arr.push("离开英雄之路时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -5774,6 +5880,7 @@ N["fate_classmate_01_villain"] = function(){
       arr.push("她看到你，笑了。「是你劝我加入的。」她说。「你还记得吗？」");
       arr.push("你记得。");
       arr.push("她的命运，因为你而改变了。但不是你想要的方向。");
+      arr.push("从黑暗之路出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -5818,6 +5925,7 @@ N["ripple_seed_save_vendor"] = function(){
       arr.push("你可以选择帮忙，也可以选择走开。");
       arr.push("");
       arr.push("（这个选择的后果，可能在很久以后才会显现。）");
+      arr.push("你离了因果种子，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -5839,6 +5947,7 @@ N["ripple_seed_save_vendor_done"] = function(){
       arr.push("你没当回事。你只是做了一件小事。");
       arr.push("但你不知道——这颗因果种子，已经种下了。");
       arr.push("它会在学院发芽，在大陆成长，在终局结果。");
+      arr.push("因果已种已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -5861,6 +5970,7 @@ N["ripple_sprout_vendor"] = function(){
       arr.push("「当年你救了我，我一直记着。」老周说。「以后有什么需要，尽管来找我。我在交汇城集市摆摊。」");
       arr.push("你看着他推着车离开的背影，突然意识到——你在序章做的那件小事，还没有结束。");
       arr.push("因果的种子，发芽了。");
+      arr.push("出了因果发芽，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -5936,6 +6046,7 @@ N["ripple_web_view"] = function(){
       arr.push("");
       arr.push("你做的每一个选择，都在这张网上。它们会发芽，会成长，会在你意想不到的时候结果。");
       arr.push("有些果是甜的，有些是苦的。但都是你自己种的。");
+      arr.push("因果之网已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -6076,6 +6187,7 @@ N["event_academy_lab_explosion_investigate"] = function(){
       arr.push("你把笔记本藏好。");
       arr.push("实验室爆炸不是意外。是有人在做禁忌实验，然后……炸了。");
       arr.push("这个发现，可能会改变整个学院的权力格局。");
+      arr.push("你与爆炸真相作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -6143,6 +6255,7 @@ N["event_continent_refugee_help"] = function(){
       arr.push("他看着你。「你帮了我们。如果有一天你需要我……我会来。」");
       arr.push("他走了。你不知道他会不会真的来。");
       arr.push("但你种下了一颗因果种子。");
+      arr.push("难民的感激的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -6233,6 +6346,7 @@ N["encounter_tavern_rumor"] = function(){
       arr.push("你放下酒杯。");
       arr.push("这个传闻，可能是真的，也可能是假的，还可能是……暗蚀会故意散布的。");
       arr.push("但如果是真的——铁门关破了，整个北方都会陷入战火。");
+      arr.push("从传闻出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -6280,6 +6394,7 @@ N["event_pool_view"] = function(){
       }
       arr.push("");
       arr.push("每次重开，事件组合都不同。这就是为什么——每一次，都是不同的故事。");
+      arr.push("出了当前激活事件，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -6492,6 +6607,7 @@ N["hidden_route_clue"] = function(){
       }
       arr.push("");
       arr.push("有些路，不是明着给的。你需要在正确的时间、正确的地点，带着正确的身份和知识，才能看到它。");
+      arr.push("你收拾停当，离开秘密的线索，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -6516,6 +6632,7 @@ N["hidden_watcher_academy_unlock"] = function(){
       arr.push("「你愿意来吗？」");
       arr.push("");
       arr.push("（你解锁了隐藏路线：守望者秘密学院。这是一条极难的路线，但也是最接近真相的路线。）");
+      arr.push("守望者秘密学院已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -6570,6 +6687,7 @@ N["attr_high_int_clue"] = function(){
       arr.push("· 书架上的书，第三层第二本，书脊的磨损程度和其他书不一样——这本书被频繁取阅。是什么书？");
       arr.push("");
       arr.push("（高INT让你注意到了这些细节。这些细节，可能是某个隐藏路线的线索。）");
+      arr.push("从高INT洞察出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -6592,6 +6710,7 @@ N["attr_high_spr_warning"] = function(){
       arr.push("这个房间，发生过不好的事。而且……可能还会发生。");
       arr.push("");
       arr.push("（高SPR让你感受到了氛围中的危险。你可以选择离开，也可以选择调查——但调查可能有危险。）");
+      arr.push("出了高SPR预警，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -6626,6 +6745,7 @@ N["attr_language_ancient_decode"] = function(){
       arr.push("也许，你可以。");
       arr.push("");
       arr.push("（掌握古艾尔达语让你读懂了符文的真正含义。其他玩家看到的只是「古老的符文，无法解读」。）");
+      arr.push("你离了古艾尔达语解读，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options: [
@@ -6651,6 +6771,7 @@ N["attr_knowledge_perception_change"] = function(){
       arr.push("每一个微笑背后，都是三千年的镇压。每一滴眼泪背后，都是被囚禁的情感。");
       arr.push("");
       arr.push("（知道七印真相后，所有场景描述都会发生微妙变化。你看到的世界，和不知道真相的人看到的，是两个世界。）");
+      arr.push("你收拾停当，离开知道真相后的世界，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -6843,6 +6964,7 @@ N["ngplus_intro"] = function(){
       arr.push("你可以用上周目的知识改变命运。但你也知道——改变一个人的命运，可能会让另一个人的命运变得更糟。");
       arr.push("");
       arr.push("（二周目开始。你可以选择继承上周目的部分内容。世界因为上周目的结局而有所不同。）");
+      arr.push("你最后回望一眼似曾相识，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options: [
@@ -6865,6 +6987,7 @@ N["ngplus_inherit"] = function(){
       arr.push("");
       arr.push("继承的越多，本周目越容易。但也越没有新鲜感。");
       arr.push("（知识继承有代价——你知道真相，但SAN值上限-10）");
+      arr.push("你最后回望一眼继承，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options: [
@@ -6930,6 +7053,7 @@ N["ngplus_true_ending"] = function(){
       arr.push("");
       arr.push("【真结局·完整的世界】");
       arr.push("—— 完 ——");
+      arr.push("三周目的累积已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -6966,6 +7090,7 @@ N["timeline_overview"] = function(){
       }
       arr.push("");
       arr.push("世界不等你。有些剧情，错过了就永远错过了。");
+      arr.push("你与时间线作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -7014,6 +7139,7 @@ N["time_pressure_abyss"] = function(){
       arr.push("你也可以直奔第七印，尽快结束这一切。但你准备好了吗？");
       arr.push("");
       arr.push("（深渊进度达到100%时，强制进入终局。你可以通过修复七印/理解原初之物来延缓，也可以通过破坏七印来加速。）");
+      arr.push("别过深渊倒计时，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -7532,6 +7658,7 @@ N["time_dusk_arrival"] = function(){
       }
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("黄昏已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -7562,6 +7689,7 @@ N["time_night_arrival"] = function(){
       }
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("深夜的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -7856,6 +7984,7 @@ N["wait_1period"] = function(){
       arr.push("时间过去了。世界没有因为你在等待而停下来。");
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("离开等待时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options: [
@@ -7888,6 +8017,7 @@ N["wait_1day"] = function(){
       arr.push("你不在场的时候，世界没有等你。");
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("出了等待了一天，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -7923,6 +8053,7 @@ N["wait_until_night"] = function(){
       arr.push("深夜是秘密的时刻。你想找的人，可能在这个时候出现。");
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("你与等到深夜作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -7967,6 +8098,7 @@ N["sleep_normal"] = function(){
       arr.push("你感觉精神好了一些。疲劳度下降了。");
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("你收拾停当，离开休息，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -8373,6 +8505,7 @@ N["prologue_work"] = function(){
       arr.push("你赚了几个铜星，身体有点累，但心里踏实。");
       arr.push("");
       arr.push("（时间流逝了一个时段。）");
+      arr.push("从打工出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options:[
@@ -8397,6 +8530,7 @@ N["prologue_explore"] = function(){
       }
       arr.push("");
       arr.push("（时间流逝了一个时段。）");
+      arr.push("别过探索，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options:[
@@ -8420,6 +8554,7 @@ N["prologue_social"] = function(){
       arr.push("（有很多话，你最终还是没有说出口。也许以后会有机会。也许不会。）");
       arr.push("");
       arr.push("（时间流逝了一个时段。）");
+      arr.push("你收拾停当，离开告别，沿着来路踏上行程。");
       return arr;
     },
     options:[
@@ -8445,6 +8580,7 @@ N["prologue_cultivate"] = function(){
       arr.push("你感觉修为有了一丝进步。");
       arr.push("");
       arr.push("（时间流逝了一个时段。）");
+      arr.push("你最后回望一眼修炼，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options:[
@@ -8738,7 +8874,8 @@ N["journey_river_1"] = function(){
       arr.push("但船长是个沉默的人，他总是盯着河面看，好像在等什么。");
       arr.push("");
       plantForeshadowV27('seal_omen');
-      arr.push("水路的船不大，船帮上长满了青苔，走起来吱吱嘎嘎，像一位上了年纪的老人。");arr.push("你坐在船头，看河水从船底流过。水是浑的，看不见底，偶尔有鱼跃出水面，银光一闪，又落回水里。");arr.push("船老大是个沉默的汉子，只在上船时问了一句：「坐稳了？」之后便再没开过口，只是撑着长篙，一下一下，把船推向前方。");arr.push("河两岸是大片大片的芦苇荡，风一吹，沙沙沙地响，像有无数人在小声说话。你盯着那片芦苇看了很久，总觉得里面有什么东西，也在看着你。");arr.push("船老大忽然开口：「别看太久。」他说，「河里的东西，最经不起人看。」");arr.push("你移开视线，低头看自己的倒影。水波荡开，倒影碎成一片一片，像一张被揉皱的脸。");return arr;
+      arr.push("水路的船不大，船帮上长满了青苔，走起来吱吱嘎嘎，像一位上了年纪的老人。");arr.push("你坐在船头，看河水从船底流过。水是浑的，看不见底，偶尔有鱼跃出水面，银光一闪，又落回水里。");arr.push("船老大是个沉默的汉子，只在上船时问了一句：「坐稳了？」之后便再没开过口，只是撑着长篙，一下一下，把船推向前方。");arr.push("河两岸是大片大片的芦苇荡，风一吹，沙沙沙地响，像有无数人在小声说话。你盯着那片芦苇看了很久，总觉得里面有什么东西，也在看着你。");arr.push("船老大忽然开口：「别看太久。」他说，「河里的东西，最经不起人看。」");arr.push("你移开视线，低头看自己的倒影。水波荡开，倒影碎成一片一片，像一张被揉皱的脸。");arr.push("第一天已被抛在身后。路在脚下延伸，你不回头，行至前方。");
+      return arr;
     } /*v45inj:journey_river_1*/,
     options:[
       {t:"问船长在看什么", go:"journey_river_2", effect:{check:"CHA", tier:{
@@ -8769,7 +8906,8 @@ N["journey_river_2"] = function(){
       plantForeshadowV27('seal_omen');
       plantForeshadowV27('primordial_whisper');
       arr.push("（你听到了一个声音——从河底传来的，像在叫你的名字。你不确定那是不是幻觉。）");
-      arr.push("夜里，船泊在一处河湾。你躺在舱里，听着水声，怎么也睡不着。");arr.push("月亮升起来的时候，河面像铺了一层碎银。你爬起来，坐到船头，看月光在波浪间跳动。");arr.push("就在这时，你看见水面上有什么东西在发光——绿幽幽的，像一只只眼睛，在水下徐徐游动。");arr.push("你想起船老大白天的话，屏住呼吸，一动不动。那些绿光在水下绕了一圈，又徐徐散开了，像一群游过的鱼，又像别的什么。");arr.push("你慢慢吐出一口气，退回舱里。那一夜，你听着水声，一直到天亮，再也没有睡着。");return arr;
+      arr.push("夜里，船泊在一处河湾。你躺在舱里，听着水声，怎么也睡不着。");arr.push("月亮升起来的时候，河面像铺了一层碎银。你爬起来，坐到船头，看月光在波浪间跳动。");arr.push("就在这时，你看见水面上有什么东西在发光——绿幽幽的，像一只只眼睛，在水下徐徐游动。");arr.push("你想起船老大白天的话，屏住呼吸，一动不动。那些绿光在水下绕了一圈，又徐徐散开了，像一群游过的鱼，又像别的什么。");arr.push("你慢慢吐出一口气，退回舱里。那一夜，你听着水声，一直到天亮，再也没有睡着。");arr.push("别过第三天深夜，你沿官道走出里许，回头已看不清来处。");
+      return arr;
     } /*v45inj:journey_river_2*/,
     options:[
       {t:"听船长的话，回船舱", go:"journey_river_3", effect:{san:-2}},
@@ -8796,6 +8934,7 @@ N["journey_river_3"] = function(){
       arr.push("");
       plantForeshadowV27('lost_item');
       arr.push("你把石头收进怀里，往学院的方向走去。");
+      arr.push("从到达出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options:[
@@ -8900,6 +9039,7 @@ N["orientation_day1"] = function(){
       arr.push("你说了名字和出身。他在名册上找了找，然后递给你一把钥匙和一张纸。");
       arr.push("");
       arr.push("「宿舍在东区，302室。你的室友已经到了两个——去认识一下吧。明天上午是入学测评，别迟到。」");
+      arr.push("第一天的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options:[
@@ -8928,6 +9068,7 @@ N["orientation_day1_room"] = function(){
       plantForeshadowV27('classmate_seed');
       plantForeshadowV27('karma_seed');
       arr.push("（这两个人，将是你接下来五年里最亲近的人——或者最疏远的人。取决于你怎么做。）");
+      arr.push("离开宿舍302时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options:[
@@ -8952,6 +9093,7 @@ N["orientation_day1_campus"] = function(){
       arr.push("");
       plantForeshadowV27('seal_omen');
       arr.push("（你在校园里的时候，又有了那种被注视的感觉。但你回头看，什么都没有。）");
+      arr.push("你与校园作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options:[
@@ -8976,6 +9118,7 @@ N["orientation_day2"] = function(){
       arr.push("境界检测的结果——你是凡人境。大多数新生都是凡人境，少数天才是启灵境。");
       arr.push("");
       arr.push("最后是职业倾向评估。教授问了你几个问题，然后在你的表格上写了几个字。");
+      arr.push("第二天在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options:[
@@ -8999,6 +9142,7 @@ N["orientation_day2_result"] = function(){
       arr.push("你看着表格上的七个职业选项——魔法师、战士、灵魂法师、牧师、盗贼、商人、炼金术师。");
       arr.push("");
       arr.push("这是你人生中最重要的选择之一。");
+      arr.push("你最后回望一眼测评结果，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options:[
@@ -9023,6 +9167,7 @@ N["orientation_day3"] = function(){
       arr.push("");
       plantForeshadowV27('hlj_letter');
       plantForeshadowV27('seal_omen');
+      arr.push("从第三天出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options:[
@@ -9053,6 +9198,7 @@ N["orientation_day4"] = function(){
       plantForeshadowV27('classmate_seed');
       plantForeshadowV27('eclipse_outer');
       arr.push("（你注意到一个穿黑袍的学生，在角落里独自喝酒。他的眼神很深——好像在看什么别人看不到的东西。）");
+      arr.push("你收拾停当，离开第四天，沿着来路踏上行程。");
       return arr;
     },
     options:[
@@ -9088,6 +9234,7 @@ N["orientation_day5"] = function(){
       arr.push("（仪式结束后，你在人群中看到了一个穿灰袍的老人——他在看你。你们的视线对视了一秒，然后他转身走了。你后来才知道，那是墨丘利教授。）");
       arr.push("");
       arr.push("【入学周结束。你的学院生活，正式开始了。】");
+      arr.push("第五天已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options:[
@@ -9146,6 +9293,7 @@ N["moral_bread_theft"] = function(){
       arr.push("但你也可以走开。饿肚子的滋味不好受，但偷东西的滋味更不好受。");
       arr.push("");
       plantForeshadowV27('karma_seed');
+      arr.push("面包店的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options:[
@@ -9203,6 +9351,7 @@ N["moral_bread_theft_hungry"] = function(){
       arr.push("");
       plantForeshadowV27('karma_seed');
       arr.push("（你不知道的是，老张后来在你最困难的时候，帮了你一把。）");
+      arr.push("离开巷子里时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options:[
@@ -9223,6 +9372,7 @@ N["moral_bread_theft_work"] = function(){
       plantForeshadowV27('karma_seed');
       plantForeshadowV27('classmate_seed');
       arr.push("（你后来才知道，老张的侄子也在学院上学。他跟他侄子提过你——「一个有骨气的年轻人」。）");
+      arr.push("你最后回望一眼面包店，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options:[
@@ -9278,6 +9428,7 @@ N["moral_refugee_all"] = function(){
       plantForeshadowV27('karma_seed');
       plantForeshadowV27('classmate_seed');
       arr.push("（你后来才知道，那个女人的丈夫是铁门关的军官。他后来在学院找到了你，报答了你的恩情。）");
+      arr.push("你与城门口作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options:[{t:"继续", go:"prologue_hub", effect:{}}]
@@ -9297,6 +9448,7 @@ N["moral_refugee_half"] = function(){
       arr.push("");
       plantForeshadowV27('karma_seed');
       arr.push("（这个选择，不好不坏。但人生大多数选择，都是这样。）");
+      arr.push("别过城门口，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options:[{t:"继续", go:"prologue_hub", effect:{}}]
@@ -9315,6 +9467,7 @@ N["moral_refugee_little"] = function(){
       arr.push("你走开了，心里有点不舒服。但你告诉自己：你已经尽力了。");
       arr.push("");
       plantForeshadowV27('karma_seed');
+      arr.push("你收拾停当，离开城门口，沿着来路踏上行程。");
       return arr;
     },
     options:[{t:"继续", go:"prologue_hub", effect:{}}]
@@ -9335,6 +9488,7 @@ N["moral_refugee_none"] = function(){
       plantForeshadowV27('karma_seed');
       plantForeshadowV27('unspoken_word');
       arr.push("（很多年以后，你还会想起那个孩子的哭声。你会想：如果当时给了他们钱，一切会不会不一样？）");
+      arr.push("你离了城门口，脚步声在空旷处格外清晰。赶路要紧。");
       return arr;
     },
     options:[{t:"继续", go:"prologue_hub", effect:{san:-2}}]
@@ -10615,6 +10769,7 @@ N["continent_start_variation"] = function(){
       }
       arr.push("");
       arr.push("（你在学院的所有选择、所有秘密、所有人际关系，都将在这里产生后果。）");
+      arr.push("别过开局，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options:[

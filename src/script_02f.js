@@ -1572,6 +1572,7 @@ N["slow_travel_start"] = function(){
       arr.push("你从"+(S.loc||"交汇城")+"出发，前往"+st.dest+"。预计需要"+st.totalDays+"天。");
       arr.push("你的旅伴是："+comp.name+"——"+comp.desc);
       arr.push("路在脚下延伸，两边的风景在慢慢变化。");
+      arr.push("第已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -1598,6 +1599,7 @@ N["slow_travel_morning"] = function(){
       if(comp && comp.id!=="alone"){
         arr.push(comp.name+"已经准备好了，正在等你。");
       }
+      arr.push("出了第，风迎面扑来。你认了认方向，启程。");
       return arr;
     },
     options: [
@@ -1626,6 +1628,7 @@ N["slow_travel_noon"] = function(){
         const enc = pickV(SLOW_TRAVEL.roadEncounters, "st_encounter_"+st.day);
         if(enc) arr.push(enc.text);
       }
+      arr.push("第已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -1657,6 +1660,7 @@ N["slow_travel_dusk"] = function(){
       if(comp && comp.id!=="alone"){
         arr.push(comp.name+"在帮忙搭帐篷，动作很熟练。");
       }
+      arr.push("从第出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options: [
@@ -1768,6 +1772,7 @@ N["slow_travel_campfire"] = function(){
       arr.push(comp.name+"往火里添了根柴，然后开始讲故事。");
       arr.push(comp.stories[idx]);
       arr.push("故事讲完了，你们都沉默了一会儿。篝火的光映在脸上，明明灭灭。");
+      arr.push("营火旁的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [
@@ -2400,6 +2405,7 @@ N["document_read"] = function(){
           arr.push("· "+r.insight+"（涉及："+r.docs.join("、")+"）");
         }
       }
+      arr.push("你收拾停当，离开文献阅读，沿着来路踏上行程。");
       return arr;
     },
     options: [
@@ -2429,6 +2435,7 @@ N["knowledge_panel"] = function(){
       for(const b of bs) arr.push("· "+b);
       arr.push("");
       arr.push("你知道得越多，就越意识到自己不知道的更多。");
+      arr.push("别过知识与认知，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [

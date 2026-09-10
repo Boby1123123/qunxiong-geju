@@ -8096,6 +8096,7 @@ N["orientation_day1"] = function(){
       arr.push("你说了名字和出身。他在名册上找了找，然后递给你一把钥匙和一张纸。");
       arr.push("");
       arr.push("「宿舍在东区，302室。你的室友已经到了两个——去认识一下吧。明天上午是入学测评，别迟到。」");
+      arr.push("第一天的动静在身后淡了。你把行囊带子紧了紧，继续上路。");
       return arr;
     },
     options:[
@@ -8125,6 +8126,7 @@ N["orientation_day1_room"] = function(){
       plantForeshadowV27('classmate_seed');
       plantForeshadowV27('karma_seed');
       arr.push("（这两个人，将是你接下来五年里最亲近的人——或者最疏远的人。取决于你怎么做。）");
+      arr.push("离开宿舍302时天光正好，靴子踏上路面的声音很稳。一路向前。");
       return arr;
     },
     options:[
@@ -8150,6 +8152,7 @@ N["orientation_day1_campus"] = function(){
       arr.push("");
       plantForeshadowV27('seal_omen');
       arr.push("（你在校园里的时候，又有了那种被注视的感觉。但你回头看，什么都没有。）");
+      arr.push("你与校园作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options:[
@@ -8175,6 +8178,7 @@ N["orientation_day2"] = function(){
       arr.push("境界检测的结果——你是凡人境。大多数新生都是凡人境，少数天才是启灵境。");
       arr.push("");
       arr.push("最后是职业倾向评估。教授问了你几个问题，然后在你的表格上写了几个字。");
+      arr.push("第二天在雾里模糊了轮廓。你紧了紧衣领，迈步上路。");
       return arr;
     },
     options:[
@@ -8199,6 +8203,7 @@ N["orientation_day2_result"] = function(){
       arr.push("你看着表格上的七个职业选项——魔法师、战士、灵魂法师、牧师、盗贼、商人、炼金术师。");
       arr.push("");
       arr.push("这是你人生中最重要的选择之一。");
+      arr.push("你最后回望一眼测评结果，转身穿过街口，往下一程赶路。");
       return arr;
     },
     options:[
@@ -8224,6 +8229,7 @@ N["orientation_day3"] = function(){
       arr.push("");
       plantForeshadowV27('hlj_letter');
       plantForeshadowV27('seal_omen');
+      arr.push("从第三天出来，路上行人渐稀。你脚步不停，一路向前。");
       return arr;
     },
     options:[
@@ -8255,6 +8261,7 @@ N["orientation_day4"] = function(){
       plantForeshadowV27('classmate_seed');
       plantForeshadowV27('eclipse_outer');
       arr.push("（你注意到一个穿黑袍的学生，在角落里独自喝酒。他的眼神很深——好像在看什么别人看不到的东西。）");
+      arr.push("你收拾停当，离开第四天，沿着来路踏上行程。");
       return arr;
     },
     options:[
@@ -8291,6 +8298,7 @@ N["orientation_day5"] = function(){
       arr.push("（仪式结束后，你在人群中看到了一个穿灰袍的老人——他在看你。你们的视线对视了一秒，然后他转身走了。你后来才知道，那是墨丘利教授。）");
       arr.push("");
       arr.push("【入学周结束。你的学院生活，正式开始了。】");
+      arr.push("第五天已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options:[

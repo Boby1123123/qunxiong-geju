@@ -2692,7 +2692,7 @@ N["board_north"] = function(){
   const picks = shuffle(NORTH_BOARD).slice(0,3);
   return {
     place:"北方公国联盟 · 冒险者公会委托板", where:"白昼",
-    text:["委托板前人头攒动。战争时期，活计比平时多了一倍，赏金也厚。你扫了一遍，挑了三个顺眼的。"],pace:"light",
+    text:["委托板前人头攒动。战争时期，活计比平时多了一倍，赏金也厚。你扫了一遍，挑了三个顺眼的。", "出了冒险者公会委托板，风迎面扑来。你认了认方向，启程。"],pace:"light",
     options: picks.map(b=>({
       t:b.t, check:b.check, tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},
       effects:b.okEff, onFail:b.failEff, go:"board_north_done"
@@ -2701,7 +2701,7 @@ N["board_north"] = function(){
 };
 
 N["board_north_done"] = {tag:"branch",
-  place:"委托板", text:["你把委托交了，赏金落袋。这年头，力气和胆量，都是硬通货。","你把委托交了，赏金落袋。铁门关的委托板钉在兵营外墙，纸上沾着灰尘和几点暗色的旧渍——不知是酒还是别的什么。","","旁边一个老兵正往板上钉新告示：“北边雪原闹狼群，猎队缺人手，酬金面议。”他钉完，转头看你：“小子，要是缺钱，这单不错。就是路远，风大。”","","你谢过他。风从关外灌进来，带着雪和铁的味道。你掂了掂钱袋——这年头的安稳日子，都是用脚走出来的。",""],pace:"light",
+  place:"委托板", text:["你把委托交了，赏金落袋。这年头，力气和胆量，都是硬通货。","你把委托交了，赏金落袋。铁门关的委托板钉在兵营外墙，纸上沾着灰尘和几点暗色的旧渍——不知是酒还是别的什么。","","旁边一个老兵正往板上钉新告示：“北边雪原闹狼群，猎队缺人手，酬金面议。”他钉完，转头看你：“小子，要是缺钱，这单不错。就是路远，风大。”","","你谢过他。风从关外灌进来，带着雪和铁的味道。你掂了掂钱袋——这年头的安稳日子，都是用脚走出来的。","", "你与委托板作别，踏上旅途。尘土扑上靴面，像旧识。"],pace:"light",
   options:[
     {t:"再接一单",go:"board_north"},
     {t:"继续赶路",run:function(){ togglePanel("map"); }}
@@ -2712,7 +2712,7 @@ N["board_south"] = function(){
   const picks = shuffle(SOUTH_BOARD).slice(0,3);
   return {
     place:"南方商业城邦联盟 · 冒险者公会委托板", where:"白昼",
-    text:["南方联盟的委托板比北方多了一倍，活计也五花八门：护送、送信、鉴定、采集。你扫了一遍，挑了三个。"],pace:"light",
+    text:["南方联盟的委托板比北方多了一倍，活计也五花八门：护送、送信、鉴定、采集。你扫了一遍，挑了三个。", "冒险者公会委托板已被抛在身后。路在脚下延伸，你不回头，行至前方。"],pace:"light",
     options: picks.map(b=>({
       t:b.t, check:b.check, tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},
       effects:b.okEff, onFail:b.failEff, go:"board_south_done"
@@ -2721,7 +2721,7 @@ N["board_south"] = function(){
 };
 
 N["board_south_done"] = {tag:"branch",
-  place:"委托板", text:["南方联盟的活计，来钱快，水也深。你把赏金收好，掂了掂分量。"],pace:"light",
+  place:"委托板", text:["南方联盟的活计，来钱快，水也深。你把赏金收好，掂了掂分量。", "委托板已被抛在身后。路在脚下延伸，你不回头，行至前方。"],pace:"light",
   options:[
     {t:"再接一单",go:"board_south"},
     {t:"继续赶路",run:function(){ togglePanel("map"); }}
@@ -2730,45 +2730,44 @@ N["board_south_done"] = {tag:"branch",
 
 N["board_elf"] = function(){
   const picks = shuffle(ELF_BOARD).slice(0,2);
-  return {place:"精灵边境 · 委托板",text:["精灵边境的活计不多，但都干净。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_elf_done"})).concat([{t:"离开",go:"elf_done"}])};
+  return {place:"精灵边境 · 委托板",text:["精灵边境的活计不多，但都干净。", "委托板的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_elf_done"})).concat([{t:"离开",go:"elf_done"}])};
 };
 
-N["board_elf_done"] = {place:"委托板",text:["活计办妥，赏金落袋。"],pace:"light",options:[{t:"再接一单",go:"board_elf"},{t:"离开",go:"elf_done"}]};
+N["board_elf_done"] = {place:"委托板",text:["活计办妥，赏金落袋。", "委托板已被抛在身后。路在脚下延伸，你不回头，行至前方。"],pace:"light",options:[{t:"再接一单",go:"board_elf"},{t:"离开",go:"elf_done"}]};
 
 N["board_dwarf"] = function(){
   const picks = shuffle(DWARF_BOARD).slice(0,3);
-  return {place:"矮人王国 · 委托板",text:["矮人的活计，都跟铁与力有关。你扫了一眼委托板。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_dwarf_done"})).concat([{t:"离开",go:"dwarf_done"}])};
+  return {place:"矮人王国 · 委托板",text:["矮人的活计，都跟铁与力有关。你扫了一眼委托板。", "你离了委托板，脚步声在空旷处格外清晰。赶路要紧。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_dwarf_done"})).concat([{t:"离开",go:"dwarf_done"}])};
 };
 
-N["board_dwarf_done"] = {place:"委托板",text:["活计办妥，赏金落袋。"],pace:"light",options:[{t:"再接一单",go:"board_dwarf"},{t:"离开",go:"dwarf_done"}]};
+N["board_dwarf_done"] = {place:"委托板",text:["活计办妥，赏金落袋。", "委托板的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],pace:"light",options:[{t:"再接一单",go:"board_dwarf"},{t:"离开",go:"dwarf_done"}]};
 
 N["board_orc"] = function(){
   const picks = shuffle(ORC_BOARD).slice(0,2);
-  return {place:"兽人草原 · 边市",text:["草原边市上的活计，粗犷而直接。你扫了一眼。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_orc_done"})).concat([{t:"离开",go:"orc_done"}])};
+  return {place:"兽人草原 · 边市",text:["草原边市上的活计，粗犷而直接。你扫了一眼。", "你与边市作别，踏上旅途。尘土扑上靴面，像旧识。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_orc_done"})).concat([{t:"离开",go:"orc_done"}])};
 };
 
-N["board_orc_done"] = {place:"边市",text:["活计办妥，赏金落袋。"],pace:"light",options:[{t:"再接一单",go:"board_orc"},{t:"离开",go:"orc_done"}]};
+N["board_orc_done"] = {place:"边市",text:["活计办妥，赏金落袋。", "从边市出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_orc"},{t:"离开",go:"orc_done"}]};
 
 N["board_east"] = function(){
   const picks = shuffle(EAST_BOARD).slice(0,3);
-  return {place:"东部王国 · 委托板",text:["东部的活计，规矩多，赏钱也准。你扫了一眼。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_east_done"})).concat([{t:"离开",go:"east_after"}])};
+  return {place:"东部王国 · 委托板",text:["东部的活计，规矩多，赏钱也准。你扫了一眼。", "别过委托板，你沿官道走出里许，回头已看不清来处。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_east_done"})).concat([{t:"离开",go:"east_after"}])};
 };
 
-N["board_east_done"] = {place:"委托板",text:["活计办妥，赏金落袋。","委托板上，那张泛黄的纸被取下，露出下面一排新的告示。赏金袋在手里沉甸甸的，铜星碰着银角，叮当作响。","","你把袋子收进怀里。板子旁边的木柱上，用炭笔写着几行小字，是别的佣兵留的：“东境粮价又涨了——跑商的人说，边关在囤货。”","","你记下这句话，转身走进市集。叫卖声迎面扑来，热腾腾的炊饼气味混着铁器的腥味。这座城，从来不缺活计，也不缺消息。",""],pace:"light",options:[{t:"再接一单",go:"board_east"},{t:"离开",go:"east_after"}]};
+N["board_east_done"] = {place:"委托板",text:["活计办妥，赏金落袋。","委托板上，那张泛黄的纸被取下，露出下面一排新的告示。赏金袋在手里沉甸甸的，铜星碰着银角，叮当作响。","","你把袋子收进怀里。板子旁边的木柱上，用炭笔写着几行小字，是别的佣兵留的：“东境粮价又涨了——跑商的人说，边关在囤货。”","","你记下这句话，转身走进市集。叫卖声迎面扑来，热腾腾的炊饼气味混着铁器的腥味。这座城，从来不缺活计，也不缺消息。","", "委托板的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],pace:"light",options:[{t:"再接一单",go:"board_east"},{t:"离开",go:"east_after"}]};
 
 N["board_church"] = function(){
   const picks = shuffle(CHURCH_BOARD).slice(0,2);
-  return {place:"圣城 · 委托板",text:["圣城的活计，干净，赏钱也干净。你扫了一眼。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_church_done"})).concat([{t:"离开",go:"church_after"}])};
+  return {place:"圣城 · 委托板",text:["圣城的活计，干净，赏钱也干净。你扫了一眼。", "委托板在雾里模糊了轮廓。你紧了紧衣领，迈步上路。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_church_done"})).concat([{t:"离开",go:"church_after"}])};
 };
 
-N["board_church_done"] = {tag:"branch",place:"委托板",text:["活计办妥，赏金落袋。","委托板钉在教堂侧门的廊柱上，纸页被烛火熏得微黄。你交了活计，赏金袋落进掌心，铜钱带着圣城特有的、被香火熏过的温热。","","一个修士从你身边走过，看了你一眼，欲言又止。他最终还是开口：“最近别接那些‘关于圣物的委托’——教会那边，最近查得严。”","","你点头谢过他，把赏金收好。圣城的钟声正好响起，一声接一声，把市集的喧闹盖了过去。",""],pace:"light",options:[{t:"再接一单",go:"board_church"},{t:"离开",go:"church_after"}]};
+N["board_church_done"] = {tag:"branch",place:"委托板",text:["活计办妥，赏金落袋。","委托板钉在教堂侧门的廊柱上，纸页被烛火熏得微黄。你交了活计，赏金袋落进掌心，铜钱带着圣城特有的、被香火熏过的温热。","","一个修士从你身边走过，看了你一眼，欲言又止。他最终还是开口：“最近别接那些‘关于圣物的委托’——教会那边，最近查得严。”","","你点头谢过他，把赏金收好。圣城的钟声正好响起，一声接一声，把市集的喧闹盖了过去。","", "离开委托板时天光正好，靴子踏上路面的声音很稳。一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_church"},{t:"离开",go:"church_after"}]};
 
 N["board_free"] = {
   place:"自由城邦 · 冒险者之城 · 委托板",where:"白昼",
   text:[
     "委托板上贴满了纸片。风一吹，纸角哗哗地响。",
-    "你扫了一圈，挑出几张还算靠谱的。"
-  ],pace:"light",
+    "你扫了一圈，挑出几张还算靠谱的。", "冒险者之城的灯火远了。夜风凉，你把心思收回来，专心赶路。"],pace:"light",
   options:(function(){
     const picks = FREE_BOARD.slice().sort(function(){return Math.random()-0.5;}).slice(0,2);
     return picks.map(function(q,i){
@@ -2866,8 +2865,7 @@ N["quest_bandit_camp_after"] = function(){ return {tag:"branch",
     "营地安静了。",
     "你搜了搜，找到一些钱和物资。还有一封信，封蜡上印着一只闭着的眼睛——暗蚀会的标记。",
     "信的内容很简单：“继续截断商路。三个月内，让自由城邦的粮价翻三倍。”",
-    "你把信收好。原来这些山贼，不是普通的山贼。他们是暗蚀会的棋子。"
-  ],pace:"light",
+    "你把信收好。原来这些山贼，不是普通的山贼。他们是暗蚀会的棋子。", "从北郊山贼营地出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",
   options:[
     {t:"回城里交委托", effect:{gold:10,rep:2,flag:"bandit_camp_cleared",flag:"darkcult_bandit_letter"}, go:"arrive_generic"},
     {t:"仔细研究这封信", check:{a:"INT",sk:"lore",label:"分析"},
@@ -2914,7 +2912,7 @@ N["quest_research"] = function(){ return {tag:"branch",
 
 N["quest_classmate"]=function(){return{tag:"branch",
 place:"委托·同窗",
-text:["你答应帮同窗一个忙——他最近在整理一份旧档案，缺几卷资料，那些资料只有学院图书馆的深处才有。", "你来到图书馆的旧藏区，顺着索引找到那排书架。灰尘很厚，你抽出一卷，封面上印着泛黄的日期——那是很多年前的事了。", "你翻开卷宗，本想着快点找到需要的资料，却渐渐被内容吸引——上面记录着一些旧事，其中几页提到的人名和事件，你似乎在别的地方见过。", "你把那几页折了个角，记下位置，然后找到同窗要的资料，一并带了出来。有些忙，帮到最后，往往会帮出些意外收获。", "你帮同窗，做了一件，他自己做不了的事。这件事，你没有告诉他，全部的真相。", "他托你，去取一样东西。你去了。你取到东西，回来的路上，你发现，那样东西，比他想的多了一重——它背后，还连着另一件事。", "你站在路口，想了很久。你最终，没有告诉他那件事。你把东西，原样，交给了他。", "他接过东西，很高兴。他连声道谢。你看着他高兴的样子，笑了笑，说：「没什么。」", "你走出门，回头，看了一眼。他还在摆弄那样东西。你转回身，走了。你在想，那件没有说的事，你将来，会不会，后悔。"],pace:"normal" /*v45inj:quest_classmate*/,
+text:["你答应帮同窗一个忙——他最近在整理一份旧档案，缺几卷资料，那些资料只有学院图书馆的深处才有。", "你来到图书馆的旧藏区，顺着索引找到那排书架。灰尘很厚，你抽出一卷，封面上印着泛黄的日期——那是很多年前的事了。", "你翻开卷宗，本想着快点找到需要的资料，却渐渐被内容吸引——上面记录着一些旧事，其中几页提到的人名和事件，你似乎在别的地方见过。", "你把那几页折了个角，记下位置，然后找到同窗要的资料，一并带了出来。有些忙，帮到最后，往往会帮出些意外收获。", "你帮同窗，做了一件，他自己做不了的事。这件事，你没有告诉他，全部的真相。", "他托你，去取一样东西。你去了。你取到东西，回来的路上，你发现，那样东西，比他想的多了一重——它背后，还连着另一件事。", "你站在路口，想了很久。你最终，没有告诉他那件事。你把东西，原样，交给了他。", "他接过东西，很高兴。他连声道谢。你看着他高兴的样子，笑了笑，说：「没什么。」", "你走出门，回头，看了一眼。他还在摆弄那样东西。你转回身，走了。你在想，那件没有说的事，你将来，会不会，后悔。", "出了同窗，风迎面扑来。你认了认方向，启程。"],pace:"normal" /*v45inj:quest_classmate*/,
 options:[
 {t:"把资料交给同窗", go:"quest_hub"},
 {t:"先自己研究一下", go:"quest_hub"}
@@ -2934,7 +2932,7 @@ options:[
 
 N["quest_event"]=function(){return{tag:"branch",
 place:"委托·事件",
-text:["你接下的这个委托，比看上去要复杂得多。委托人说丢了件祖传的信物，求你帮忙找回来——但你调查后发现，那件信物牵涉的旧事，远比「祖传」两个字复杂。", "你顺着线索查下去，发现信物几经转手，每一任持有者都有一段故事：有商人，有盗贼，还有一个已经去世多年的老妇人。", "你在老妇人的旧居里，找到一封没有寄出的信。信里写着信物的来历——它确实珍贵，但珍贵的不是它的价值，而是它见证过的一段约定。", "你握着那封信，站在老妇人空荡荡的院子里，忽然觉得，这委托的答案，也许不在信物本身，而在这些被遗忘的人和事里。", "你赶上了一场，正在发生的事。事情不小，你正好，在场。", "你一开始，只是想看看。但事情的发展，比你预想的快。你还没来得及决定，你已经被卷进去了。", "你帮了一把手。你做的事，不大，但恰好，改变了一点什么。有人注意到你了。他朝你，点了点头。", "事后，他找到你：「你刚才，做得不错。」他说，「有没有兴趣，跟着我干？」你问他，干什么。他说：「干点，对的事。」", "你站在那里，想了很久。你最后，没有立刻答应。你说：「让我想想。」他点了点头：「行。想好了，来找我。」他走了。你站在原地，想了很久，很久。"],pace:"normal" /*v45inj:quest_event*/,
+text:["你接下的这个委托，比看上去要复杂得多。委托人说丢了件祖传的信物，求你帮忙找回来——但你调查后发现，那件信物牵涉的旧事，远比「祖传」两个字复杂。", "你顺着线索查下去，发现信物几经转手，每一任持有者都有一段故事：有商人，有盗贼，还有一个已经去世多年的老妇人。", "你在老妇人的旧居里，找到一封没有寄出的信。信里写着信物的来历——它确实珍贵，但珍贵的不是它的价值，而是它见证过的一段约定。", "你握着那封信，站在老妇人空荡荡的院子里，忽然觉得，这委托的答案，也许不在信物本身，而在这些被遗忘的人和事里。", "你赶上了一场，正在发生的事。事情不小，你正好，在场。", "你一开始，只是想看看。但事情的发展，比你预想的快。你还没来得及决定，你已经被卷进去了。", "你帮了一把手。你做的事，不大，但恰好，改变了一点什么。有人注意到你了。他朝你，点了点头。", "事后，他找到你：「你刚才，做得不错。」他说，「有没有兴趣，跟着我干？」你问他，干什么。他说：「干点，对的事。」", "你站在那里，想了很久。你最后，没有立刻答应。你说：「让我想想。」他点了点头：「行。想好了，来找我。」他走了。你站在原地，想了很久，很久。", "你离了事件，脚步声在空旷处格外清晰。赶路要紧。"],pace:"normal" /*v45inj:quest_event*/,
 options:[
 {t:"把信物交还委托人", go:"quest_hub"},
 {t:"继续深挖旧事", go:"quest_hub"}
@@ -2944,7 +2942,7 @@ options:[
 
 N["quest_secret"]=function(){return{tag:"branch",
 place:"委托·秘密",
-text:["你在一次委托中，无意间触碰了一个秘密。那是一个尘封多年的名字，出现在一份不该存在的名单上。", "你盯着那个名字看了很久。它和某件你一直在调查的事，隐隐有着联系——但你还不确定，这联系是巧合，还是有人在刻意安排。", "你把名单抄了一份，原件放回原处。走出那间屋子时，你留心观察了四周——确认没有人跟踪，才松了口气。", "你走在夜色里，反复琢磨那个名字。有些秘密，知道了就是知道了，装不知道，反而更危险。你决定，把它查清楚。", "你接下了一件，不能说的差事。接下它的那一刻，你就知道，这件事，会改变一些什么。", "给你差事的人，只说了三句话。第一句：「这事，只有你能做。」第二句：「做了，别说。」第三句：「做完，忘了。」", "你问他，为什么是你。他说：「因为，你正好，出现在了，它该发生的时候。」你不太明白。他没有解释。", "你做了那件事。你做得，比你想的顺利。你做完，像他说的，没有说，也没有再想。", "但有些事，不是你说忘，就能忘的。那天夜里，你翻来覆去，睡不着。你在想，那三句话里的，每一个字。"],pace:"normal" /*v45inj:quest_secret*/,
+text:["你在一次委托中，无意间触碰了一个秘密。那是一个尘封多年的名字，出现在一份不该存在的名单上。", "你盯着那个名字看了很久。它和某件你一直在调查的事，隐隐有着联系——但你还不确定，这联系是巧合，还是有人在刻意安排。", "你把名单抄了一份，原件放回原处。走出那间屋子时，你留心观察了四周——确认没有人跟踪，才松了口气。", "你走在夜色里，反复琢磨那个名字。有些秘密，知道了就是知道了，装不知道，反而更危险。你决定，把它查清楚。", "你接下了一件，不能说的差事。接下它的那一刻，你就知道，这件事，会改变一些什么。", "给你差事的人，只说了三句话。第一句：「这事，只有你能做。」第二句：「做了，别说。」第三句：「做完，忘了。」", "你问他，为什么是你。他说：「因为，你正好，出现在了，它该发生的时候。」你不太明白。他没有解释。", "你做了那件事。你做得，比你想的顺利。你做完，像他说的，没有说，也没有再想。", "但有些事，不是你说忘，就能忘的。那天夜里，你翻来覆去，睡不着。你在想，那三句话里的，每一个字。", "秘密在雾里模糊了轮廓。你紧了紧衣领，迈步上路。"],pace:"normal" /*v45inj:quest_secret*/,
 options:[
 {t:"追查名单上的名字", go:"quest_hub"},
 {t:"暂时按兵不动", go:"act_rest"}
@@ -2964,7 +2962,7 @@ options:[
 
 N["shop_buy_generic"]=function(){return{
 place:"商店 · 购买",
-text:["你浏览了商店的商品，挑选了一些你需要的东西。", "店主笑眯眯地给你报价，你和他讨价还价了一番，最终以一个双方都满意的价格成交。", "你把买好的东西放进包里，然后离开了商店。", "（此节点为v38通用购买节点，后续将补充完整的商品列表和交易系统。）", "你挑好了东西，拿到柜台前。掌柜的看了一眼：「就这些？」你点了点头。", "他拿起算盘，噼里啪啦地，打了一阵，报了个数。你数出钱，递过去。他接过来，点了点，收进钱匣。", "他把东西，用纸，一件一件地，包好。他包得很仔细，像包一件，贵重的东西。", "「拿好。」他把纸包递给你，「回头客，下次，给你算便宜点。」", "你接过纸包，道了谢，走出门。你掂了掂手里的东西，觉得，这趟，没白来。"],pace:"normal" /*v45inj:shop_buy_generic*/,
+text:["你浏览了商店的商品，挑选了一些你需要的东西。", "店主笑眯眯地给你报价，你和他讨价还价了一番，最终以一个双方都满意的价格成交。", "你把买好的东西放进包里，然后离开了商店。", "（此节点为v38通用购买节点，后续将补充完整的商品列表和交易系统。）", "你挑好了东西，拿到柜台前。掌柜的看了一眼：「就这些？」你点了点头。", "他拿起算盘，噼里啪啦地，打了一阵，报了个数。你数出钱，递过去。他接过来，点了点，收进钱匣。", "他把东西，用纸，一件一件地，包好。他包得很仔细，像包一件，贵重的东西。", "「拿好。」他把纸包递给你，「回头客，下次，给你算便宜点。」", "你接过纸包，道了谢，走出门。你掂了掂手里的东西，觉得，这趟，没白来。", "购买的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],pace:"normal" /*v45inj:shop_buy_generic*/,
 options:[
 {t:"继续购物", go:"shop_generic"},
 {t:"离开商店", go:"arrive_generic"}
@@ -2973,7 +2971,7 @@ options:[
 
 N["shop_sell_generic"]=function(){return{
 place:"商店 · 出售",
-text:["你把一些不需要的东西拿出来，准备卖给店主。", "店主仔细检查了你的物品，然后给你报了一个价格。你和他讨价还价了一番，最终以一个双方都满意的价格成交。", "你把卖东西得来的钱放进包里，然后离开了商店。", "（此节点为v38通用出售节点，后续将补充完整的物品估价和交易系统。）", "你把手里的东西，放在柜台上。掌柜的拿起来，翻来覆去，看了看。", "「这东西，」他开口，「你想卖多少？」你说了个数。他想了想，摇了摇头：「高了。」", "你们来来回回，磨了一会儿。最后，以一个，你们都能接受的价格，成交了。", "他数了钱，递给你。你接过钱，数了数，收好。", "你走出门，回头，看了一眼。他已经把你的东西，摆到了货架上。你忽然觉得，有些东西，一旦卖了，就再也，拿不回来了。"],pace:"normal" /*v45inj:shop_sell_generic*/,
+text:["你把一些不需要的东西拿出来，准备卖给店主。", "店主仔细检查了你的物品，然后给你报了一个价格。你和他讨价还价了一番，最终以一个双方都满意的价格成交。", "你把卖东西得来的钱放进包里，然后离开了商店。", "（此节点为v38通用出售节点，后续将补充完整的物品估价和交易系统。）", "你把手里的东西，放在柜台上。掌柜的拿起来，翻来覆去，看了看。", "「这东西，」他开口，「你想卖多少？」你说了个数。他想了想，摇了摇头：「高了。」", "你们来来回回，磨了一会儿。最后，以一个，你们都能接受的价格，成交了。", "他数了钱，递给你。你接过钱，数了数，收好。", "你走出门，回头，看了一眼。他已经把你的东西，摆到了货架上。你忽然觉得，有些东西，一旦卖了，就再也，拿不回来了。", "你离了出售，脚步声在空旷处格外清晰。赶路要紧。"],pace:"normal" /*v45inj:shop_sell_generic*/,
 options:[
 {t:"继续卖东西", go:"shop_generic"},
 {t:"离开商店", go:"arrive_generic"}
@@ -3027,6 +3025,7 @@ N["timeline_overview"] = function(){
       }
       arr.push("");
       arr.push("世界不等你。有些剧情，错过了就永远错过了。");
+      arr.push("你与时间线作别，踏上旅途。尘土扑上靴面，像旧识。");
       return arr;
     },
     options: [
@@ -3052,6 +3051,7 @@ N["time_pressure_abyss"] = function(){
       arr.push("你也可以直奔第七印，尽快结束这一切。但你准备好了吗？");
       arr.push("");
       arr.push("（深渊进度达到100%时，强制进入终局。你可以通过修复七印/理解原初之物来延缓，也可以通过破坏七印来加速。）");
+      arr.push("别过深渊倒计时，你沿官道走出里许，回头已看不清来处。");
       return arr;
     },
     options: [
@@ -3152,6 +3152,7 @@ N["time_dusk_arrival"] = function(){
       }
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("黄昏已被抛在身后。路在脚下延伸，你不回头，行至前方。");
       return arr;
     },
     options: [
@@ -3183,6 +3184,7 @@ N["time_night_arrival"] = function(){
       }
       arr.push("");
       arr.push("（" + getTimeStringV26() + "）");
+      arr.push("深夜的灯火远了。夜风凉，你把心思收回来，专心赶路。");
       return arr;
     },
     options: [

@@ -111,7 +111,12 @@ window.CAUSALITY_LEDGER = [
 {id:"led_goldscale_01",type:"设定",desc:"金秤=晨天王朝司秤官金家传世镇器，两头挂一头称天一头称地",plant:"goldscale_1",reap:"goldscale_8",status:"open",world:"vol_north"},
 {id:"led_goldscale_02",type:"设定",desc:"金家守秤三十一代，金望之等持锚人三十一年",plant:"goldscale_2",reap:"goldscale_7",status:"open",world:"vol_north"},
 {id:"led_goldscale_03",type:"伏笔",desc:"金望之第三十代守秤人临终托付秤账与铁牌",plant:"goldscale_3",reap:"goldscale_8",status:"open",world:"vol_north"},
-{id:"led_goldscale_04",type:"伏笔",desc:"晨天王朝天衡殿主簿金秤镇界记载：锚足齐则秤稳",plant:"goldscale_5",reap:"goldscale_8",status:"open",world:"vol_east"}
+{id:"led_goldscale_04",type:"伏笔",desc:"晨天王朝天衡殿主簿金秤镇界记载：锚足齐则秤稳",plant:"goldscale_5",reap:"goldscale_8",status:"open",world:"vol_east"},
+{id:"led_war_01",type:"伏笔",desc:"北境七阶段战争线：边境摩擦至终战，战火由北向南烧遍大陆",plant:"warphase_1",reap:"warphase_14",status:"open",world:"vol_war"},
+{id:"led_fac_01",type:"设定",desc:"四阵营互斥：加入一方后其余阵营声望下降，背叛走惩罚支线",plant:"faction_free_1",reap:"faction_traitor_4",status:"open",world:"vol_war"},
+{id:"led_fac_02",type:"伏笔",desc:"教会的铁匠旧案：二十年前渎神罪烧死打钥匙的铁匠，与七锚钥匙线呼应",plant:"faction_church_5",reap:"anchor_tower_1",status:"open",world:"vol_church"},
+{id:"led_fac_03",type:"伏笔",desc:"沙漠遗迹玉片：刻痕像半个锚，地缝符号与学院禁书区同源",plant:"faction_desert_5",reap:"anchor_mine_1",status:"open",world:"vol_desert"},
+{id:"led_fac_04",type:"设定",desc:"商会盐道：自由城商会以军饷换北境盐道畅通，商会立场成型",plant:"faction_free_5",reap:"faction_free_9",status:"open",world:"vol_free"}
 
 ];
 /* ===== /v91inj:ledger:end/ ===== */

@@ -81,6 +81,7 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 {t:"去流民营看看",go:"frontier_camp"},
 {t:"上城墙，沿着墙根巡逻一圈",go:"frontier_snow"},
 {t:"去战报栏看看最新的消息",go:"frontier_herald"},
+{t:"（应征：北境联军正在边境集结，随军北上）",go:"warphase_1"},
 {t:"（离城，回铁门关方向）",go:"frontier_leave"}
 ]};
 

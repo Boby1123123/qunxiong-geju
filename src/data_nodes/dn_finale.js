@@ -118,5 +118,5 @@ N["anchor_finale_8"]={tag:"main",place:"北境 · 第三哨 · 城头",where:"�
 "草原的斥候在城下骂阵，说黑石部族悬赏你的人头，价码一天涨了三回。你把秤往城垛上一放，对骂阵的斥候喊道：回去告诉你们可汗，秤在这，门在这，有胆就来称。"
 ]
 }},options:[
-{t:"（把秤与锚托付给守城将军，投身战争）",effects:{xp:100},go:"ending_anchor_war_1"}
+{t:"（把秤与锚托付给守城将军，投身战争）",effects:{xp:100,flag:"war_enter"},go:"warphase_1"}
 ]};

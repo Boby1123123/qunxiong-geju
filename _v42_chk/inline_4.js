@@ -50,6 +50,10 @@ function applyDefaults(s){
   if(s.settings.originProfile===undefined) s.settings.originProfile=true;
   /* /sp3inj:defaults/ SP-3 弧线进度兜底（旧档兼容；新档为空对象） */
   if(!s.arcs) s.arcs={};
+  /* /m8inj:defaults/ M8 卷D战争/阵营状态兜底（旧档兼容；独立键） */
+  if(s.worldWar===undefined) s.worldWar=0;
+  if(s.anchors===undefined) s.anchors=0;
+  if(!s.faction) s.faction="";
   return s;
 }
 function loadGame(){

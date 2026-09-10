@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7794913,
-    "chunked_html_bytes_max": 5188736,
-    "node_total_min": 4365,
+    "game_html_bytes_max": 7861504,
+    "chunked_html_bytes_max": 5260417,
+    "node_total_min": 4419,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7744913,
-    "chunked_html_bytes": 5088736,
-    "node_total": 4415,
+    "game_html_bytes": 7811504,
+    "chunked_html_bytes": 5160417,
+    "node_total": 4469,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器",
+    "reason": "M8 战争推进+前四势力：warphase14+faction40+traitor4+事件15+账本5",
     "history": [
       {
         "date": "2026-09-09",
@@ -453,6 +453,13 @@
         "chunked_bytes": 5088736,
         "nodes": 4415,
         "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7811504,
+        "chunked_bytes": 5160417,
+        "nodes": 4469,
+        "reason": "M8 战争推进+前四势力：warphase14+faction40+traitor4+事件15+账本5"
       }
     ]
   },

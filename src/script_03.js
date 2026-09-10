@@ -43,6 +43,8 @@ function applyDefaults(s){
   /* /t11inj:defaults/ I1-1 分段阅读开关兜底（旧档兼容） */
   if(!s.settings) s.settings={};
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
+  if(s.settings.globalHooks===undefined) s.settings.globalHooks=true;
+  if(!s.hooksState) s.hooksState={};
     if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
@@ -3723,6 +3725,59 @@ window.v92_lorebook = function(node){
     return out;
   }catch(e){ try{ console.log("[v92lore:err]",e); }catch(_){} return []; }
 };
+/* ===== /upg14inj:hooks/ UPG-14 事件池全局钩子（Evennia Scripts 模式）
+ * 节点切换后由 writeNext 调用 v92_scanHooks：遍历 GLOBAL_HOOKS（数据层 dn_hooks.js），
+ * condition（只读 S 的 JS 表达式）满足 + cooldown 冷却结束 + 未超 maxTriggers → 播报对应事件。
+ * eventId 去重（S.world['ev_'+id]）；S.hooksState 独立键（applyDefaults 兜底，旧档兼容）。
+ * 另含 v92_scanLedgerReminder：因果账本 open 高优先级伏笔定期提醒（每 10 天一次）。
+ * 铁律：不触碰判定公式 / writeNext 核心语义 / choose / 存档结构语义。 ===== */
+window.v92_scanHooks = function(){
+  try{
+    if(!S) return;
+    if(S.settings && S.settings.globalHooks === false) return;
+    const HK = window.GLOBAL_HOOKS; if(!HK || !HK.length) return;
+    if(!S.hooksState) S.hooksState = {};
+    if(!S.world) S.world = {};
+    for(let i=0;i<HK.length;i++){
+      const h = HK[i]; if(!h || !h.id) continue;
+      const st = S.hooksState[h.id] || {n:0, lastDay:-9999};
+      if(st.n >= (h.maxTriggers||1)) continue;
+      if(S.day - st.lastDay < (h.cooldown||0)) continue;
+      if(S.world['ev_'+h.eventId]) continue;
+      let ok = false;
+      try{ ok = !!(new Function('S','window','return ('+h.condition+');'))(S, window); }catch(e){ ok = false; }
+      if(!ok) continue;
+      S.world['ev_'+h.eventId] = true;
+      st.n += 1; st.lastDay = S.day;
+      S.hooksState[h.id] = st;
+      try{ if(window.logMsg) logMsg("世界事件："+(h.text||"某种预兆降临了。")+"（第"+S.day+"日）"); }catch(e){}
+      try{ console.log("[upg14inj:hook]", h.id, "day", S.day, "n", st.n); }catch(e){}
+    }
+  }catch(e){ try{ console.log("[upg14:hook:err]", e); }catch(_){} }
+};
+/* /upg14inj:ledger/ 账本伏笔定期提醒（只读：CAUSALITY_LEDGER 中 status open 且 importance>=4 的项，每 10 天弹 1 条） */
+window.v92_scanLedgerReminder = function(){
+  try{
+    if(!S) return;
+    const LG = window.CAUSALITY_LEDGER; if(!LG || !LG.length) return;
+    if(!S.hooksState) S.hooksState = {};
+    const st = S.hooksState.ledgerReminder || {lastDay:-9999};
+    if(S.day - st.lastDay < 10) return;
+    const pending = [];
+    for(let i=0;i<LG.length;i++){
+      const e = LG[i];
+      if(e && e.status==='open' && (e.importance||0)>=4) pending.push(e);
+    }
+    if(pending.length){
+      st.lastDay = S.day;
+      S.hooksState.ledgerReminder = st;
+      const pick = pending[Math.floor(Math.random()*pending.length)];
+      try{ if(window.logMsg) logMsg("【伏笔回声】"+((pick.desc||"一件旧事")+"").slice(0,60)+"……（第"+S.day+"日）", "warn"); }catch(e){}
+      try{ console.log("[upg14inj:ledger]", pick.id||"", S.day); }catch(e){}
+    }
+  }catch(e){ try{ console.log("[upg14:ledger:err]", e); }catch(_){} }
+};
+
 /* ===== /v92inj:mem2/ UPG-02 记忆注入 v3：双层加权检索（只读钩子；世界规则层=LOREBOOK constant，事件记忆层=CAUSALITY_LEDGER 按 keywords×importance×recency Top-K；开关 S.settings.memoryBank；不写任何状态） ===== */
 window.v92_memoryBank = function(node){
   try{
@@ -3992,6 +4047,9 @@ function writeNext(_v46f){
     try{ var _lr = window.v92_lorebook(node); if(_lr&&_lr.length){ _txt=_lr.concat(_txt); } }catch(e){}
     /* /v92inj:mem2hook/ UPG-02 记忆库注入（只读钩子；世界规则(LOREBOOK)之后、事件记忆(账本Top-K)随后；开关 S.settings.memoryBank；关闭时零注入） */
     try{ var _mb = window.v92_memoryBank(node); if(_mb&&_mb.length){ _txt=_mb.concat(_txt); } }catch(e){}
+        /* /upg14inj:hookscan/ UPG-14 全局钩子扫描（节点切换后；事件池新增触发不改变既有判定） */
+    try{ if(window.v92_scanHooks) v92_scanHooks(); }catch(e){}
+    try{ if(window.v92_scanLedgerReminder) v92_scanLedgerReminder(); }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */

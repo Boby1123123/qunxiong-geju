@@ -23,7 +23,7 @@ def C(code, s):
 
 def load_checks():
     sys.path.insert(0, HERE)
-    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements, c_observe, c_stats, c_persist, c_map, c_style
+    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements, c_observe, c_stats, c_persist, c_map, c_style, c_hooks
     return {
         'quick': [
             ('语法检查', c_syntax.run),
@@ -68,6 +68,7 @@ def load_checks():
             ('三级持久化', c_persist.run),
             ('九域地图', c_map.run),
             ('V66风格锁', c_style.run),
+            ('事件全局钩子', c_hooks.run),
         ],
     }
 

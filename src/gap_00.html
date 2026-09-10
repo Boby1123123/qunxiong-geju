@@ -964,19 +964,55 @@ body.v68-theme #main .v93-guide{ display:block; }
 .v93-fn-grid{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
 .v93-fn-grid .btn{ flex:1 1 96px; min-height:40px; font-size:13px; }
 .v93-fn-sec{ margin-top:14px; font-weight:700; color:var(--c-gold-600); border-bottom:1px dashed rgba(74,52,32,.3); padding-bottom:3px; letter-spacing:1px; }
+
+body.v68-theme #topbar .v93-statrow{ order:1; display:flex; gap:14px; justify-content:center; align-items:center; margin-top:2px; flex-wrap:wrap; }
+body.v68-theme #topbar .stat, body.v68-theme #topbar .sep{ order:auto; }
+/* ===== /v93v5/ 方案一·羊皮卷宗 概念图还原：中央大标题 / 右上沉浸+更多 / 纪闻分版块 / 选项卡片 / 底部资源栏 ===== */
+body.v68-theme #topbar{ flex-direction:column; gap:3px; padding-top:10px; padding-bottom:8px; }
+body.v68-theme #topbar .title{ order:0; width:100%; text-align:center; font-size:30px; font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; letter-spacing:8px; font-weight:700; margin-top:8px; text-shadow:0 1px 0 rgba(255,255,255,.5); }
+body.v68-theme #topbar .stat, body.v68-theme #topbar .sep{ order:1; font-size:13px; margin-top:2px; }
+body.v68-theme #topbar .nav{ order:2; justify-content:center; margin-top:4px; }
+body.v68-theme #topbar .v44-topbar2{ order:3; justify-content:center; margin-top:2px; }
+body.v68-theme #topbar #btn-immersive{ display:none !important; }
+body.v68-theme .v93-top-right{ position:fixed; top:14px; right:14px; display:flex; gap:8px; z-index:135; }
+body.v68-theme .v93-top-right .btn{ font-size:13px; padding:6px 14px; border-radius:8px; background:#fbf5e6; border:1px solid #c8a868; color:#4a3520; cursor:pointer; box-shadow:0 2px 6px rgba(74,52,32,.16); font-family:inherit; }
+body.v68-theme .v93-top-right .btn:hover{ background:#f2e0b8; }
+#v93-more-menu{ position:fixed; top:56px; right:14px; z-index:155; background:#f7f0dc; border:1px solid #b89a5e; border-radius:12px; box-shadow:0 10px 32px rgba(74,52,32,.42); padding:12px 14px; display:none; min-width:250px; max-height:76vh; overflow-y:auto; }
+#v93-more-menu.show{ display:block; }
+#v93-more-menu .mm-title{ font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; font-weight:700; border-bottom:1px solid #d8c8a0; padding-bottom:6px; margin-bottom:8px; letter-spacing:3px; font-size:15px; text-align:center; }
+#v93-more-menu .mm-grid{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+#v93-more-menu .mm-btn{ text-align:left; padding:9px 11px; font-size:13px; background:#fbf5e6; border:1px solid #d8c69a; border-radius:9px; cursor:pointer; color:#4a3520; font-family:inherit; }
+#v93-more-menu .mm-btn:hover{ background:#f2e0b8; border-color:#b89a5e; }
+#v93-more-menu .mm-btn.wide{ grid-column:1/3; text-align:center; }
+/* 纪闻分版块 */
+#v93-aside .v93-aside-sec{ margin-top:7px; }
+#v93-aside .v93-aside-sec .sec-title{ font-size:12px; font-weight:700; color:#7a5a1a; border-left:3px solid #b89a5e; padding-left:6px; margin-bottom:3px; letter-spacing:1px; font-family:Georgia,"Times New Roman",serif; }
+#v93-aside .v93-aside-sec .sec-line{ font-size:12px; color:#5a4528; padding:2px 0 2px 9px; line-height:1.5; border-bottom:1px dashed rgba(184,154,94,.28); }
+#v93-aside .v93-aside-sec .sec-line .d{ color:#9a8a6a; font-size:11px; }
+/* 选项卡片化（正文下方右侧） */
+body.v68-theme #options{ display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; max-width:46em; margin:14px auto 0; padding-bottom:8px; }
+body.v68-theme #options .opt{ flex:1 1 190px; text-align:left; padding:13px 16px; font-size:15px; background:#fbf5e6; border:1px solid #c8a868; border-radius:12px; color:#4a3520; cursor:pointer; box-shadow:0 2px 8px rgba(74,52,32,.14); transition:transform .12s ease, box-shadow .12s ease; margin:0; }
+body.v68-theme #options .opt:hover{ background:#f2e0b8; border-color:#a08040; transform:translateY(-2px); box-shadow:0 4px 12px rgba(74,52,32,.2); }
+/* 底部资源栏 */
+
 </style>
 </head>
 <body>
 <div id="app">
   <div id="topbar">
     <button class="btn v93-gear" id="btn-settings" title="设置" onclick="v34_openSettings()">⚙</button>
-    <span class="title">艾尔达大陆 · 群雄割据</span>
-    <span class="sep">|</span>
+    <span class="v93-top-right">
+      <button class="btn" id="btn-immersive-top" title="沉浸模式 (I)：隐藏界面只读剧情" onclick="V68_UI.immersive()">📖 沉浸</button>
+      <button class="btn" id="btn-more" title="更多功能">☰ 更多</button>
+    </span>
+<span class="title">艾尔达大陆 · 群雄割据</span>
+    <div class="v93-statrow"><span class="sep">|</span>
     <span class="stat" id="tb-date">4037年 · 春一月 · 一日</span>
     <span class="stat">📍<b id="tb-place">—</b></span>
     <span class="stat">金币 <b id="tb-gold">100</b></span>
     <span class="stat">第 <b id="tb-day">1</b> 日</span>
     <span class="stat" id="tb-weather" title="天气">☀️</span>
+    </div>
     <span class="nav">
       <span class="v68-nav-group">
         <button class="btn v93-main" id="btn-map" title="世界地图 (M)" onclick="v67_map.open()">🗺 地图</button>
@@ -1044,4 +1080,27 @@ body.v68-theme #main .v93-guide{ display:block; }
   </div>
 </div>
 <div id="modal"></div>
+<div id="v93-more-menu" role="menu" aria-label="更多功能">
+  <div class="mm-title">✦ 功能总览</div>
+  <div class="mm-grid">
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');acInit();openGallery();sfxClick()">📖 图鉴</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');if(window.v92_openSpellbook)v92_openSpellbook();else if(window.v35_openMagicPanel)v35_openMagicPanel()">📖 魔法书</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');v35_openMagicPanel()">✦ 魔法</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');if(window.v34_openStatsPanel)v34_openStatsPanel()">📋 属性</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');V68_UI.strongPanel()">⚔ 强者</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');v92_openTierPanel()">📶 阶层</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');v92_openTradePanel()">🛒 交易</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');v92_openWorldPanel()">🌍 世界</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');v34_openAchievements()">⚑ 成就</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');if(window.v74_openJournal)v74_openJournal()">📔 手记</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');if(window.v92_rollback)v92_rollback()">↩ 回滚</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');v92_openThreadPanel()">☰ 话题</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');v34_openSettings()">🔊 音效</button>
+    <button class="mm-btn" onclick="this.closest('#v93-more-menu').classList.remove('show');acInit();openActs();sfxClick()">⚡ 行动</button>
+    <button class="mm-btn wide" onclick="this.closest('#v93-more-menu').classList.remove('show');DebugPanel.toggle()">🔧 调试</button>
+    <button class="mm-btn wide" onclick="this.closest('#v93-more-menu').classList.remove('show');v92_openNodeEditor()">✎ 节点编辑</button>
+    <button class="mm-btn wide" onclick="this.closest('#v93-more-menu').classList.remove('show');v34_openSettings()">✨ LLM 润色（设置）</button>
+  </div>
+</div>
+
 <div id="flash"></div>

@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8743881,
-    "chunked_html_bytes_max": 6025456,
+    "game_html_bytes_max": 8757854,
+    "chunked_html_bytes_max": 6038199,
     "node_total_min": 4649,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8693881,
-    "chunked_html_bytes": 5925456,
+    "game_html_bytes": 8707854,
+    "chunked_html_bytes": 5938199,
     "node_total": 4699,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UI93 v4 齿轮z-index提升至120",
+    "reason": "UI93-v5 fix3：更多菜单项先关菜单",
     "history": [
       {
         "date": "2026-09-09",
@@ -908,6 +908,27 @@
         "chunked_bytes": 5925456,
         "nodes": 4699,
         "reason": "UI93 v4 齿轮z-index提升至120"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8707748,
+        "chunked_bytes": 5938091,
+        "nodes": 4699,
+        "reason": "UI93-v5 概念图还原：右上更多菜单+纪闻分版块+底部资源栏+选项卡片 CSS/JS"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8707854,
+        "chunked_bytes": 5938199,
+        "nodes": 4699,
+        "reason": "UI93-v5 fix2：statrow 横排 + 纪闻空态基调句"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8707854,
+        "chunked_bytes": 5938199,
+        "nodes": 4699,
+        "reason": "UI93-v5 fix3：更多菜单项先关菜单"
       }
     ]
   },

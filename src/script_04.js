@@ -10897,3 +10897,127 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
   init();
 })();
 
+/* ============ /v93v5/ 方案一·羊皮卷宗 概念图还原：右上更多菜单 / 纪闻分版块 / 底部资源栏 ============ */
+(function(){
+  function _s5(){ try{ return (typeof S!=='undefined'&&S)?S:null; }catch(e){ return null; } }
+  function _we5(){ try{ return (typeof WORLD_EVENTS!=='undefined'&&WORLD_EVENTS)?WORLD_EVENTS:null; }catch(e){ return null; } }
+  function _pool5(){ try{ return (typeof EVENT_POOL_EXT!=='undefined'&&EVENT_POOL_EXT)?EVENT_POOL_EXT:null; }catch(e){ return null; } }
+  function _esc5(x){ try{ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }catch(e){ return ''; } }
+
+  /* ① 右上更多菜单开关 */
+  function bindMore(){
+    var b=document.getElementById('btn-more');
+    if(!b||window.__v93v5more) return;
+    window.__v93v5more=1;
+    b.addEventListener('click',function(e){
+      e.stopPropagation(); e.preventDefault();
+      var m=document.getElementById('v93-more-menu');
+      if(m) m.classList.toggle('show');
+    });
+    document.addEventListener('click',function(){
+      var m=document.getElementById('v93-more-menu');
+      if(m) m.classList.remove('show');
+    });
+  }
+
+  /* ② 纪闻分版块（覆盖 v93_renderAside：北境战报/东境商情/圣城时局/兽人动向/晨天旧档/沙漠风沙 + 近闻） */
+  var _secMap5=[
+    {t:'北境战报', keys:['北境','铁门关','雪崩','暴雪','雪原','霜','狼群','兽潮','北地','冰封'], base:'铁门关的烽烟隔着雪原传来，北风里夹着金铁的冷气。'},
+    {t:'东境商情', keys:['东境','银穗','商路','通货','承天','商队','货物','市价'], base:'银穗商路的驼铃忽远忽近，货价一天一个样。'},
+    {t:'圣城时局', keys:['圣城','教会','审判','圣痕','净化','异端','神谕','大教堂'], base:'圣城的钟声按时响起，钟声之下暗流未歇。'},
+    {t:'兽人动向', keys:['兽人','草原','狼旗','蛮族','部落','大汗','南迁','黑石'], base:'草原上的狼旗又往南移了一箭之地。'},
+    {t:'晨天旧档', keys:['晨天','金秤','秦','故都','旧档','档案','无字碑','陆昭'], base:'承天城的老墙根下，有人压着嗓子念叨金秤家的旧事。'},
+    {t:'沙漠风沙', keys:['沙漠','绿洲','驼队','遗迹','深渊','封印','神殿','沙暴'], base:'沙暴在天边卷起黄云，驼铃时远时近。'}
+  ];
+  window.v93_renderAside = function(){
+    try{
+      var list=document.getElementById('v93-aside-list');
+      var warn=document.getElementById('v93-aside-warn');
+      if(!list) return;
+      var Sd=_s5(); var day=(Sd&&typeof Sd.day==='number')?Sd.day:1;
+      if(warn){
+        var we=_we5(); var wout='';
+        if(we&&Sd){
+          var keys=['purge','silver','seal','academy','orc'];
+          var near=null;
+          for(var i=0;i<keys.length;i++){
+            var e=we[keys[i]];
+            if(!e||typeof e.day!=='number') continue;
+            if(e.day>day&&e.day-day<=6){ if(!near||e.day<near.day) near=e; }
+          }
+          if(near) wout='<div class="v93-aside-warn-card">⚠ 距『'+_esc5(near.cn)+'』还有 '+(near.day-day)+' 日</div>';
+          warn.innerHTML=wout||'';
+        }
+      }
+      var pool=_pool5();
+      if(!pool||!pool.length){ list.innerHTML='<div class="v93-aside-item" style="cursor:default">纪闻待启。</div>'; return; }
+      var evs=pool.filter(function(ev){ return ev&&typeof ev.day==='number'&&ev.day<=day; });
+      evs.sort(function(a,b){ return (b.day||0)-(a.day||0); });
+      var recent=evs.slice(0,16);
+      var html='';
+      for(var i=0;i<_secMap5.length;i++){
+        var sec=_secMap5[i];
+        var hits=recent.filter(function(ev){
+          for(var k=0;k<sec.keys.length;k++){ if((ev.text||'').indexOf(sec.keys[k])>=0) return true; }
+          return false;
+        });
+        var lines='';
+        if(hits.length){
+          for(var j=0;j<Math.min(hits.length,2);j++){
+            var tx=_esc5(hits[j].text||'');
+            if(tx.length>26) tx=tx.slice(0,26)+'…';
+            lines+='<div class="sec-line">'+tx+' <span class="d">· 第'+hits[j].day+'日</span></div>';
+          }
+        } else {
+          lines='<div class="sec-line" style="color:#8a7a5a">'+(_esc5(sec.base)||'暂无动向。')+'</div>';
+        }
+        html+='<div class="v93-aside-sec"><div class="sec-title">'+sec.t+'</div>'+lines+'</div>';
+      }
+      if(recent.length){
+        html+='<div class="v93-aside-sec"><div class="sec-title">近闻</div>';
+        for(var k2=0;k2<Math.min(recent.length,3);k2++){
+          var tx2=_esc5(recent[k2].text||'');
+          if(tx2.length>26) tx2=tx2.slice(0,26)+'…';
+          html+='<div class="sec-line">'+tx2+' <span class="d">· 第'+recent[k2].day+'日</span></div>';
+        }
+        html+='</div>';
+      }
+      list.innerHTML=html;
+      window.__v93AsideItems=recent;
+    }catch(e){}
+  };
+
+  /* ③ 底部资源栏（100金龙 / 行动4/4 / 所在地 / 日期天气） */
+  window.v93_renderFoot = function(){
+    try{
+      var f=document.getElementById('v93-footbar');
+      if(!f) return;
+      var Sd=_s5();
+      if(!Sd||typeof Sd.day!=='number'){ f.style.display='none'; return; }
+      var gold=(typeof Sd.gold==='number')?Sd.gold:0;
+      var acts='—';
+      try{ if(typeof actsLeft==='function') acts=actsLeft(); }catch(e){}
+      var loc=Sd.curCity||'—';
+      var dateStr='';
+      var de=document.getElementById('tb-date');
+      if(de) dateStr=de.textContent;
+      var wd=document.getElementById('tb-weather');
+      var wTxt=wd?wd.textContent:'';
+      f.innerHTML='<span class="fb">💰 <b>'+gold+'</b> 金龙</span>'+
+        '<span class="fb">⚡ 行动 <b>'+acts+'</b></span>'+
+        '<span class="fb">📍 '+_esc5(loc)+'</span>'+
+        '<span class="fb">📅 '+dateStr+'</span>'+
+        (wTxt?'<span class="fb">'+wTxt+'</span>':'');
+      f.style.display='flex';
+    }catch(e){}
+  };
+
+  function init(){
+    bindMore();
+    var t0=function(){ try{ v93_renderAside(); v93_renderGuide(); v93_renderFoot(); }catch(e){} };
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',t0); } else { t0(); }
+    setInterval(t0,5000);
+  }
+  init();
+})();
+

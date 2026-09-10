@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7154818,
-    "chunked_html_bytes_max": 4553997,
-    "node_total_min": 3941,
+    "game_html_bytes_max": 7464172,
+    "chunked_html_bytes_max": 4863442,
+    "node_total_min": 4100,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7104818,
-    "chunked_html_bytes": 4453997,
-    "node_total": 3991,
+    "game_html_bytes": 7414172,
+    "chunked_html_bytes": 4763442,
+    "node_total": 4150,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "E-1 过渡章四去向旅途链（+4 节点）",
+    "reason": "B-5 死链与治理词修复后重建",
     "history": [
       {
         "date": "2026-09-09",
@@ -341,6 +341,20 @@
         "chunked_bytes": 4453997,
         "nodes": 3991,
         "reason": "E-1 过渡章四去向旅途链（+4 节点）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7414128,
+        "chunked_bytes": 4763398,
+        "nodes": 4150,
+        "reason": "B-5 补缺：学院生活/外界/人际/修行/剧情 159 新节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7414172,
+        "chunked_bytes": 4763442,
+        "nodes": 4150,
+        "reason": "B-5 死链与治理词修复后重建"
       }
     ]
   },

@@ -94,5 +94,12 @@ window.CAUSALITY_WORDS = [
     {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"},
     {id:"led_b3_01",type:"人物",desc:"学院人际网：塞西莉娅（东境政务/晨天水）/灰须·莫里（矮人符文/铁门七封印）/伊莲娜（精灵治愈/忘忧草）/老铁（铁门关铁匠），各 4 节点闭环",plant:"acad_people_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
     {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b3_03",type:"伏笔",desc:"禁书区地窖铁门（矮人古锁）与莫里所述北矿铁门呼应，书三选一（深渊残卷/封印实录/守夜人手记）",plant:"acad_forbidden_1",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"}];
+    {id:"led_b5_01",type:"道具",desc:"钥匙收集线：矿洞铜牌+元素池底黑铁+金库失窃铁牌，皆旧封印之钥（acad_magic_y1_pool / acad_story_vault）",plant:"acad_magic_y1_pool",reap:"acad_magic_y5_choice",status:"open",world:"vol_academy"},
+    {id:"led_b5_02",type:"伏笔",desc:"封印之门位于北境地脉蛇头·第三哨；门缝青光渐亮，封印松动（seal 主线弱呼应）",plant:"acad_magic_y3_seal",reap:"north_road_1",status:"open",world:"vol_academy"},
+    {id:"led_b5_03",type:"人物",desc:"金先生（金秤的金），老莫里茨之师，地脉学派五人小团体领袖，失踪；墓园无字碑即其葬地",plant:"acad_story_oldman",reap:"acad_story_graveyard",status:"open",world:"vol_academy"},
+    {id:"led_b5_04",type:"人物",desc:"艾琳·霜叶，北境民谣歌者，旧礼堂歌声、荣誉墙墨叉、档案被涂，与教会异端调查有关",plant:"acad_story_ghost",reap:"acad_story_archives",status:"open",world:"vol_academy"},
+    {id:"led_b5_05",type:"伏笔",desc:"费尔曼与六钥匙：刘矿头死于矿洞、老铁守第三哨失踪；费尔曼手背青纹更深",plant:"acad_magic_y5_ferman",reap:"north_road_1",status:"open",world:"vol_academy"},
+    {id:"led_b5_06",type:"地点",desc:"第三哨铜钟，十年未鸣；守钟人独臂老兵言敲钟会出事",plant:"acad_magic_y4_quiet",reap:"north_road_1",status:"open",world:"vol_academy"},
+    {id:"led_b5_07",type:"人物",desc:"陆昭（鸦羽），炼金系偷铁牌者，休学去南，灰楼夜火持铁盒再现，铁盒或已交费尔曼",plant:"acad_story_vault_end",reap:"acad_story_fire_after",status:"open",world:"vol_academy"},
+    {id:"led_b5_08",type:"人物",desc:"秦策，东境承天城演武场之约；东境动荡避风北上，秦·长风线人物网络延伸",plant:"acad_story_duel_after",reap:"east_chengtian_old",status:"open",world:"vol_academy"}];
 /* ===== /v91inj:ledgerwords:end/ ===== */

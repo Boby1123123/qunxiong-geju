@@ -23,6 +23,7 @@ N["acad_people_hub"]={tag:"main",place:"艾尔达魔法学院 · 生活区",pace
 {t:"去找阿塔（草原·老友）",req:function(){return S.npcRelations&&S.npcRelations["ata"]>=30;},go:"acad_ata_end"},
 {t:"去找导师们请教（导师区）",go:"acad_mentor_hub"},
 {t:"去禁书区外转转（暗线）",req:function(){return S.day>=60;},go:"acad_forbidden_1"},
+{t:"深入学院生活（人际/修行/学院见闻）",go:"acad_social_hub"},
 {t:"回宿舍歇着",go:"acad_life_y1_dorm"}
 ]};
 /* ---------- 塞西莉娅（东境贵族） ---------- */

@@ -26,7 +26,9 @@ N["acad_life_y1_open"]={tag:"main",place:"艾尔达魔法学院 · 第一学年"
 {t:"【职业·商人】选《跨邦贸易与算术》（教授：账房出身的老莫里茨）",req:function(){return S.job==="merchant";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
 {t:"【职业·术士】选《血脉共鸣初步》（教授：艾琳，出身矮人王国的女术士）",req:function(){return S.job==="warlock";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
 {t:"【职业·骑士】选《誓约与守御》（教授：老骑士赫尔曼）",req:function(){return S.job==="knight";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
-{t:"【职业·游侠】选《荒野生存与追踪》（教授：沉默的猎手哈芙）",req:function(){return S.job==="ranger";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"}
+{t:"【职业·游侠】选《荒野生存与追踪》（教授：沉默的猎手哈芙）",req:function(){return S.job==="ranger";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
+{t:"【学年小事·加深】去生活区深处走走（人际/见闻）",go:"acad_social_hub"},
+{t:"【学年小事·加深】去修行区摸摸门道（冥想/元素池）",go:"acad_magic_hub"}
 ]};
 N["acad_life_y1_dorm"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "宿舍的日子像一锅慢慢熬的粥。凯恩每天天不亮就起来练剑，剑风从窗口灌进来，带着铁锈味；隔壁的艾莉丝隔三差五烧糊一锅汤，然后拉着全走廊的人尝“新配方”。",

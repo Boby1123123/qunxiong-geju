@@ -18,6 +18,7 @@ N["acad_mentor_hub"]={tag:"main",place:"艾尔达魔法学院 · 导师区",pace
 {t:"去找戈拉教授（剑道）",go:"acad_mentor_gora"},
 {t:"去找特蕾莎嬷嬷（神术）",go:"acad_mentor_theresa"},
 {t:"去找老莫里茨（商课）",go:"acad_mentor_moritz"},
+{t:"去修行区修炼（冥想/元素/试炼）",go:"acad_magic_hub"},
 {t:"回生活区",go:"acad_people_hub"}
 ]};
 /* ---------- 导师：墨丘利 ---------- */

@@ -45,14 +45,19 @@ def run(html):
                 pref_joined.add(nid)
 
     # 字符串级引用：节点 id 作为字符串在全文出现次数 > 定义处次数 → 有非定义引用（隐藏入口/条件/存档恢复点）
+    # 性能优化（G-CI1）：逐节点 html.count 为 4637×4 次全文件扫描（~158GB）；改为一次正则 Counter（O(文件)）
+    _quote_ids = Counter(re.findall(r'"([A-Za-z_$][\w$]*)"', html))
+    _quote_ids.update(re.findall(r"'([A-Za-z_$][\w$]*)'", html))
+    _n_defs = Counter(re.findall(r'N\["([A-Za-z_$][\w$]*)"\]', html))
+    _n_defs.update(re.findall(r"N\['([A-Za-z_$][\w$]*)'\]", html))
     islands = []
     for nid in sorted(node_ids):
         if go_counter.get(nid, 0) > 0 or nid in entry_refs or nid in dyn_calls or nid in pref_joined \
            or nid in field_refs or nid in node_map_refs:
             continue
         # 字符串出现次数（含双/单引号包裹）
-        n_quote = html.count('"%s"' % nid) + html.count("'%s'" % nid)
-        n_def = html.count('N["%s"]' % nid) + html.count("N['%s']" % nid)
+        n_quote = _quote_ids.get(nid, 0)
+        n_def = _n_defs.get(nid, 0)
         if n_quote > n_def:
             continue
         islands.append(nid)
@@ -62,12 +67,14 @@ def run(html):
     for m in _FN_DEF.finditer(html):
         fn_names.append(m.group(1) or m.group(2))
     fn_counter = Counter(fn_names)
+    # 性能优化（G-CI1）：逐名 html.count(name) 多次全文件扫描；改为一次标识符 token 统计（定义处与调用处均为 token，判定等价且更抗词根误报）
+    _fn_tokens = Counter(re.findall(r'[A-Za-z_$][\w$]*', html))
     uncalled = []
     for name, ndef in fn_counter.items():
         if ndef > 1 or len(name) < 3:
             continue
-        # 子串计数：定义处 1 + 任何出现（含 ELDA.utils.deepClone 成员调用）>1 → 有调用
-        n_total = html.count(name)
+        # token 计数：定义处 1 + 任何调用处 >1 → 有调用（原子串计数会把 run 计入 running，此处更保守少误报）
+        n_total = _fn_tokens.get(name, 0)
         if n_total <= ndef:
             uncalled.append((name, n_total))
 
@@ -82,11 +89,13 @@ def run(html):
             j = html.find('}', m.end())
             if j != -1:
                 s_keys |= set(re.findall(r'([A-Za-z_$][\w$]*)\s*:', html[m.end():j]))
+    # 性能优化（G-CI1）：逐键 count('S.'+k) 多次全文件扫描；改为一次 \bS\. 引用统计
+    _s_refs = Counter(re.findall(r'\bS\.([A-Za-z_$][\w$]*)', html))
     unused_s = []
     for k in sorted(s_keys):
         if k in ('id', 'type', 'version', 'saveVersion'):
             continue
-        n_use = html.count('S.' + k)
+        n_use = _s_refs.get(k, 0)
         if n_use == 0:
             unused_s.append(k)
 

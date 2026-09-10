@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7861504,
-    "chunked_html_bytes_max": 5260417,
-    "node_total_min": 4419,
+    "game_html_bytes_max": 7990504,
+    "chunked_html_bytes_max": 5389417,
+    "node_total_min": 4551,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7811504,
-    "chunked_html_bytes": 5160417,
-    "node_total": 4469,
+    "game_html_bytes": 7940504,
+    "chunked_html_bytes": 5289417,
+    "node_total": 4601,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "M8 战争推进+前四势力：warphase14+faction40+traitor4+事件15+账本5",
+    "reason": "M9 治理词修复后重建",
     "history": [
       {
         "date": "2026-09-09",
@@ -460,6 +460,20 @@
         "chunked_bytes": 5160417,
         "nodes": 4469,
         "reason": "M8 战争推进+前四势力：warphase14+faction40+traitor4+事件15+账本5"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7940471,
+        "chunked_bytes": 5289384,
+        "nodes": 4601,
+        "reason": "M9 卷D后四势力+战后章+尾声：131节点/18事件/5账本"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7940504,
+        "chunked_bytes": 5289417,
+        "nodes": 4601,
+        "reason": "M9 治理词修复后重建"
       }
     ]
   },

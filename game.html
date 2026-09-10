@@ -4948,7 +4948,25 @@ const EVENT_POOL_EXT = [
 {id:"war_news_12",day:262,cls:"天灾",text:"战争蔓延到整片大陆，西境的风暴、东境的征兵、南边的部族，全都卷了进来。自由城的码头空了大半。"},
 {id:"war_news_13",day:273,cls:"人祸",text:"荒原诸部的主力倾巢南下，雪原上帐篷连成灰白色的海。终战的气息，连最迟钝的旅人都闻到了。"},
 {id:"war_news_14",day:288,cls:"商机",text:"战后重建的消息先一步传开，木料、铁器、粮种的订单堆满了商会的桌子。活下来的人，开始盘算往后的日子。"},
-{id:"war_news_15",day:296,cls:"奇遇",text:"雪原深处发现一片旧战场遗迹，冻土里露出锈蚀的兵器和刻着符文的石柱。有冒险者结队前去探宝。"},
+{id:"war_news_15",day:296,cls:"奇遇",text:"雪原深处发现一片旧战场遗迹，冻土里露出锈蚀的兵器和刻着符文的石柱。有冒险者结队前去探宝。"},,
+{id:"aft_east_salt", day:98, cls:"商机", text:"东境官盐解禁，承天城盐价回落，商队连夜起运。"},
+{id:"aft_north_plague", day:126, cls:"人祸", text:"北境军营出现时疫，联军封锁道路，第三哨闭门谢客。"},
+{id:"aft_east_raid", day:132, cls:"人祸", text:"东境官署一夜之间抄了三个粮商的宅子，承天城风声鹤唳。"},
+{id:"aft_elf_fire", day:145, cls:"天灾", text:"精灵林邦东缘起了山火，巡林队连夜隔离火线，林海幸未受损。"},
+{id:"aft_dwarf_iron", day:156, cls:"商机", text:"矮人山国解禁铁器，北境商队在山门外排了三里长队。"},
+{id:"aft_dwarf_collapse", day:168, cls:"天灾", text:"矮人山国南矿洞二次坍塌，铜锤带人挖了两天两夜，救出三名矿工。"},
+{id:"aft_chen_book", day:180, cls:"奇遇", text:"承天城旧书摊上流出一卷景和年间的残册，扉页写着‘晨天’二字。"},
+{id:"aft_east_flood", day:188, cls:"天灾", text:"东境大河汛期提前，承天城开仓放粮，官署连夜筑堤。"},
+{id:"aft_elf_border", day:207, cls:"人祸", text:"精灵林邦边界的商队遭劫，巡林长带人追出三十里，追回货物。"},
+{id:"aft_orc_drought", day:212, cls:"天灾", text:"兽人草原入夏大旱，诸部商议开北境粮道，换粮渡荒。"},
+{id:"aft_orc_fight", day:218, cls:"人祸", text:"兽人诸部因草场起了内斗，阿岩连夜斡旋，两帐熄了火。"},
+{id:"aft_elf_herb", day:225, cls:"商机", text:"林邦药草丰收，青叶晒了满庐的药材，自由城药铺抢着要货。"},
+{id:"aft_dwarf_gate", day:238, cls:"人祸", text:"矮人山国铁门关隘遭流匪袭扰，守军据险击退，铁门无恙。"},
+{id:"aft_dwarf_echo", day:244, cls:"奇遇", text:"矮人山国地底传来悠长回响，长老们聚在锻造坊听了一夜。"},
+{id:"aft_east_black", day:256, cls:"人祸", text:"自由城黑市流出一批无印铁器，李管事查了三天，查不出源头。"},
+{id:"aft_orc_wolf", day:268, cls:"奇遇", text:"兽人草原的狼群北归途中在神谕石林绕行三圈，阿岩说那是老萨满的记号。"},
+{id:"aft_north_wolfplague", day:272, cls:"天灾", text:"北境雪原狼群中起了瘟病，第三哨闭城三日，守钟人日日敲钟驱邪。"},
+{id:"aft_east_land", day:286, cls:"商机", text:"战后无主之地开垦令下，东境各郡涌入垦荒的人，官署连夜造册。"}
 
 
 ]; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
@@ -72245,7 +72263,12 @@ window.CAUSALITY_LEDGER = [
 {id:"led_fac_01",type:"设定",desc:"四阵营互斥：加入一方后其余阵营声望下降，背叛走惩罚支线",plant:"faction_free_1",reap:"faction_traitor_4",status:"open",world:"vol_war"},
 {id:"led_fac_02",type:"伏笔",desc:"教会的铁匠旧案：二十年前渎神罪烧死打钥匙的铁匠，与七锚钥匙线呼应",plant:"faction_church_5",reap:"anchor_tower_1",status:"open",world:"vol_church"},
 {id:"led_fac_03",type:"伏笔",desc:"沙漠遗迹玉片：刻痕像半个锚，地缝符号与学院禁书区同源",plant:"faction_desert_5",reap:"anchor_mine_1",status:"open",world:"vol_desert"},
-{id:"led_fac_04",type:"设定",desc:"商会盐道：自由城商会以军饷换北境盐道畅通，商会立场成型",plant:"faction_free_5",reap:"faction_free_9",status:"open",world:"vol_free"}
+{id:"led_fac_04",type:"设定",desc:"商会盐道：自由城商会以军饷换北境盐道畅通，商会立场成型",plant:"faction_free_5",reap:"faction_free_9",status:"open",world:"vol_free"},
+{id:"led_fac_05", type:"设定", desc:"东境承天与晨天故都的旧档呼应（战后 M9）", plant:"faction_east_4", reap:"war_after_26", status:"open", world:"vol_east"},
+{id:"led_fac_06", type:"设定", desc:"兽人神谕石林的守秤传说（草原柱根）", plant:"faction_orc_8", reap:"war_epilogue_4", status:"open", world:"vol_orc"},
+{id:"led_fac_07", type:"伏笔", desc:"矮人山国南矿洞铁门与地底七锚刻痕", plant:"faction_dwarf_3", reap:"war_after_13", status:"open", world:"vol_dwarf"},
+{id:"led_fac_08", type:"伏笔", desc:"精灵林邦晨星之泪与树底封印", plant:"faction_elf_6", reap:"war_after_14", status:"open", world:"vol_elf"},
+{id:"led_war_02", type:"设定", desc:"守钟人铁牌与七锚重走（战后收束）", plant:"war_after_4", reap:"war_epilogue_16", status:"open", world:"vol_north"}
 
 ];
 /* ===== /v91inj:ledger:end/ ===== */
@@ -74126,6 +74149,750 @@ N["faction_traitor_4"]={tag:"main",place:"大陆 · 各处",where:"白昼",pace:
 "你把腰间那块旧军牌解下来，扔进河里。水花溅起又落下，牌子沉了底。你站起来，拍了拍身上的土，朝前走去。"
 ],options:[
 {t:"（带着一身旧账，重新开始）",effects:{xp:20,flag:"traitor_done"},go:"warphase_14"}
+]};
+
+/* /u1inj:data-nodes:dn_faction2.js/ */
+/* ===== 群雄割据 M9 卷D 后四势力线（dn_faction2.js）=====
+ * 东境承天/兽人诸部/矮人山国/精灵林邦 各 13 节点
+ * schema：N["id"]={tag,place,where,pace,sceneTitle,text[],options[]}
+ * 阵营互斥 run + 背叛出口 faction_traitor_1（与 M8 同构）
+ * 文风：V66 古典白描；30 治理词禁；战斗四段式；中文引号成对
+ */
+/* ================= 势力五：东境承天 ================= */
+N["faction_east_1"]={tag:"main",place:"东境 · 承天城 · 帝京门",where:"白昼",pace:"normal",sceneTitle:"阵营 · 东境承天",text:[
+"战火烧到东境的时候，承天城的城门反而关得比往常更严。",
+"城门口排着长队，盘查的禁军挨个看路引、验身契，动作慢得像在熬粥。一个穿青袍的主簿站在城门洞里，手里攥着一叠名册，见你走过来，上下打量：“北边来的？会写字吗？”",
+"他见你点头，把名册往你手里一塞：“承天缺的不是刀，是能算账、能写字的人。你先把这叠名册誊清，誊得好，就留在官署当差。”",
+"你低头看那叠名册——每一页，都是一个从北边逃来的名字。"
+],options:[
+{t:"（应下差事，留在承天官署）",effects:{xp:20,flag:"faction_join_east"},run:function(){if(S.faction&&S.faction!=="east"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}S.faction="east";},go:"faction_east_2"},
+{t:"（先四处看看，再决定留不留）",effects:{xp:12},go:"faction_east_2"},
+{t:"（东境的水太深，不蹚）",effects:{xp:5},go:"warphase_14"}
+]};
+
+N["faction_east_2"]={tag:"main",place:"东境 · 承天城 · 科举特科考场",where:"白昼",pace:"deep",text:[
+"承天城开了一科特科——战时取士，不论出身，考中了就入官署。",
+"考场设在城西的贡院，院子里坐满了人：有落魄书生，有退役老卒，还有一个赶了三天路、满脚泥的猎户。卷子发下来，题目只有一道：“战时，民以何为重。”",
+"你提笔想了一阵，写了一句：“民以食为重，食以路为重。路通则粮通，粮通则民安。”",
+"交卷的时候，主考的学士多看了你一眼。那一眼很淡，但你读得懂——承天城里，能写出这句话的人不多。"
+],options:[
+{t:"（把卷子交上去，等放榜）",effects:{xp:24,infl:{east:8},flag:"faction_east_exam"},go:"faction_east_3"}
+]};
+
+N["faction_east_3"]={tag:"main",place:"东境 · 承天城 · 官署",where:"白昼",pace:"deep",text:[
+"放榜那日，你的名字挂在丙等。不算高，但入了官署的册子。",
+"青袍主簿把你领到户房，指着一屋子账册：“战时粮秣、军械、丁口，全在这里。你的差事，就是把它们理清楚。”",
+"你翻了三天账，翻出一处对不上：有一批军粮，账上记着已发往北境，可押运的单据全是空白。你拿着账册去找主簿，他盯着那页纸看了很久，说：“这件事，你就当没看见。”",
+"你合上账册。窗外的天阴着，像要下雪——承天城的天，从来都是这么阴着的。"
+],options:[
+{t:"（把账册放回去，先保住差事）",effects:{xp:18,infl:{east:8},flag:"faction_east_hush"},go:"faction_east_4"},
+{t:"（暗地里查那批军粮的下落）",effects:{xp:26,infl:{east:4},flag:"faction_east_probe"},go:"faction_east_4"}
+]};
+
+N["faction_east_4"]={tag:"main",place:"东境 · 承天城 · 官署档房",where:"夜",pace:"deep",sceneTitle:"旧档 · 晨天故都",text:[
+"承天官署的档房里，压着半屋子旧档。",
+"你借着查军粮的机会，翻到一叠更老的东西：景和年间的东境档册，纸页发黄，字迹褪得几乎认不出。有一页上写着“晨天”两个字——那是几十年前一夜之间封城的故都。",
+"你想起路上听过的传说：晨天城覆灭前一夜，井水变浑，城里的钟自己响了三声。档册上没有记载结局，只在这页的末尾，用朱笔画了一道线，线下写着一个字：弃。",
+"你把档册合上，塞回原处。承天城把晨天故都从册子上抹掉了，可抹不掉的是那些还在找它的人。"
+],options:[
+{t:"（把晨天故都的线索记在心里）",effects:{xp:24,infl:{east:6},flag:"faction_east_chen"},go:"faction_east_5"}
+]};
+
+N["faction_east_5"]={tag:"main",place:"东境 · 边关 · 军报驿",where:"白昼",pace:"normal",sceneTitle:"军报 · 边关的风",text:[
+"战时军报一日三封，从边关送往承天。",
+"你的差事多了一件：誊抄军报。北境吃紧、西境戒严、沙漠借道——每一条消息落在纸上，都是一笔人命。",
+"有一天，军报里夹了一封私信，是边关传令兵写的，纸角已经磨破：“家母病重，求官署批三日假。”你看着那封信，笔悬在半空。",
+"战时缺人，边关的传令兵，一个萝卜一个坑。批，还是不批。"
+],options:[
+{t:"（批了：人命比军务重）",effects:{xp:22,infl:{east:4},flag:"faction_east_mercy"},go:"faction_east_6"},
+{t:"（不批：战时无小事）",effects:{xp:16,infl:{east:8},flag:"faction_east_strict"},go:"faction_east_6"}
+]};
+
+N["faction_east_6"]={tag:"main",place:"东境 · 承天城 · 官署大堂",where:"白昼",pace:"deep",sceneTitle:"抉择 · 承天的秤",text:[
+"传令兵的事过去不久，户房又来了一桩难断的案子。",
+"一批赈济粮被查出掺了沙子。管粮仓的仓吏跪在堂下，说粮是底下人贪的，他不知情。可账册上分明记着，是他亲笔签收。",
+"青袍主簿把案子交到你手里：“战时粮贵，一粒沙子就是一条命。你说，怎么断。”",
+"堂上安静下来。仓吏的额头贴在地上，抖得像风里的叶子。你知道，这一断，断的不只是一个人的前程。"
+],options:[
+{t:"（按律重办：斩仓吏，震慑贪墨）",effects:{xp:24,infl:{east:10},flag:"faction_east_axe"},go:"faction_east_7"},
+{t:"（查明掺沙是上头的指示，仓吏是顶罪的）",effects:{xp:30,infl:{east:6},flag:"faction_east_truth"},go:"faction_east_7"},
+{t:"（各打五十大板，把案子压下去）",effects:{xp:14,infl:{east:4},flag:"faction_east_cover"},go:"faction_east_7"}
+]};
+
+N["faction_east_7"]={tag:"main",place:"东境 · 承天城 · 官署",where:"夜",pace:"normal",sceneTitle:"晋升 · 主簿",text:[
+"掺沙案了结后，青袍主簿把你叫到堂后。",
+"他给你倒了一盏茶，说：“承天城的官，一半靠笔杆子，一半靠胆气。你两样都占一点。”他从抽屉里取出一方木印，“从今日起，你是户房主簿。”",
+"木印沉甸甸的，压在掌心。你想起贡院里那句话——民以食为重，食以路为重。如今这杆秤，有一半在你手里了。",
+"窗外又起了风。承天城的天，还是阴的。"
+],options:[
+{t:"（接下木印，做承天的秤）",effects:{xp:22,infl:{east:8},flag:"faction_east_zhubo"},go:"faction_east_8"}
+]};
+
+N["faction_east_8"]={tag:"main",place:"东境 · 铁门关 · 关城上",where:"白昼",pace:"deep",sceneTitle:"呼应 · 铁门关的风",text:[
+"你以主簿身份随军到铁门关核粮，站在关城上，风从北边灌进来，带着雪沫子。",
+"关城上的守将姓秦，是个沉默的中年人。他看着关外灰白的雪原，忽然开口：“三十年前，晨天城还在的时候，关外不是这样的。”",
+"你没接话。秦守将也没有再说，只把一叠军报递给你：“北境的粮，东境的车，都从这道门过。门在，东境就在。”",
+"你低头看那叠军报，第一页上写着：荒原诸部主力南下，前锋距铁门关七日路程。"
+],options:[
+{t:"（把军报连夜送回承天）",effects:{xp:24,infl:{east:8,north:6},flag:"faction_east_report"},go:"faction_east_9"}
+]};
+
+N["faction_east_9"]={tag:"main",place:"东境 · 承天城 · 帝京朝堂外",where:"白昼",pace:"deep",sceneTitle:"军议 · 承天的选择",text:[
+"诸部主力南下的消息传到承天，朝堂上吵成一团。",
+"主战派要倾国之力迎战，主和派要送银求和，还有人主张紧闭城门，坐山观虎斗。你站在堂外，听着里面的争执，隔着门都能闻见火气。",
+"青袍主簿也来了，站在你身边，压着嗓子说：“朝堂上的话，十句有九句是空的。你手里有账，账里才有实话。”",
+"他递给你一本册子：“东境的粮，只够撑四个月。你算算，这仗打不打得起。”"
+],options:[
+{t:"（算给朝堂听：打得起，但要速战）",effects:{xp:28,infl:{east:12},flag:"faction_east_war"},go:"faction_east_10"},
+{t:"（算给朝堂听：打不起，先和谈拖时间）",effects:{xp:22,infl:{east:10},flag:"faction_east_peace"},go:"faction_east_10"}
+]};
+
+N["faction_east_10"]={tag:"main",place:"东境 · 承天城 · 官署",where:"夜",pace:"normal",text:[
+"你的账，朝堂听进去了。",
+"东境定了策：一面在铁门关布防，一面遣使往荒原诸部递信。你在官署连夜拟军需清单，笔尖在纸上沙沙地响。",
+"写到后半夜，你抬头，看见窗外承天城的灯火——万家灯火，一城人的命，都押在你们这些人手里的账本和军报上。",
+"你忽然明白，承天城的官，为什么眼里都熬着血丝。"
+],options:[
+{t:"（把清单拟完，天亮了再睡）",effects:{xp:20,infl:{east:8},flag:"faction_east_night"},go:"faction_east_11"}
+]};
+
+N["faction_east_11"]={tag:"main",place:"东境 · 承天城 · 帝京",where:"白昼",pace:"deep",sceneTitle:"抉择 · 承天的路",text:[
+"终战前，承天城面临最后一次选择。",
+"荒原诸部的主力兵临铁门关，东境的军粮只够十天。朝堂上，有人递上一条密计：开闸放水，淹了关外的雪原，以水代兵。",
+"密计送到你手里——你是主簿，闸口在你辖下。只要你在文书上盖印，一夜之间，关外千里雪原尽成泽国。",
+"你握着那方木印，纸上写着五个字：水淹七百里。印下去，是七百里人命的重量；不印，是铁门关可能失守的代价。"
+],options:[
+{t:"（不印：另想别的办法守城）",effects:{xp:35,infl:{east:15},flag:"faction_east_final_mercy"},go:"faction_east_12"},
+{t:"（印了：以水代兵，保东境不失）",effects:{xp:28,infl:{east:12},flag:"faction_east_final_flood"},go:"faction_east_12"},
+{t:"（把密计卖给荒原诸部，换一条活路）",effects:{gold:80,flag:"faction_traitor"},go:"faction_traitor_1"},
+{t:"（抽空去贡院墙外，看看那个落第书生）",effects:{xp:5},go:"east_lang_1"}
+]};
+
+N["faction_east_12"]={tag:"main",place:"东境 · 承天城 · 帝京门",where:"白昼",pace:"normal",sceneTitle:"坐镇 · 承天的账",text:[
+"终战的消息传到承天，城门开了。",
+"关外的雪原没有变成泽国。你站在帝京门楼上，看着南下的粮队、北归的流民，像两条河一样在城门外汇合。",
+"青袍主簿老了，扶着墙垛喘匀了气，说：“承天的官，换了一茬又一茬。你这一茬，算是没给城丢人。”",
+"你没有接话。城楼下，一个逃难的孩子仰头看你，手里攥着一块干饼。你把怀里的干粮摸出来，扔了下去。"
+],options:[
+{t:"（留在承天，做那个记着民的人）",effects:{xp:25,flag:"faction_east_done"},go:"warphase_14"}
+]};
+
+N["faction_east_13"]={tag:"main",place:"东境 · 承天城 · 城隍庙",where:"夜",pace:"normal",sceneTitle:"余波 · 承天的夜",text:[
+"战后第三夜，承天城办了场法事，超度战死的人。",
+"城隍庙前的香火彻夜不断。你在人群里看见秦守将，他上了一炷香，转身就走，步子还是那么快。",
+"有人在你耳边放轻声音说：“主簿，秦将军一直在查晨天故都的事。三十年了，没停过。”",
+"你看着庙里的烛火，想起档房里那页写着“弃”字的旧档。有些事，承天城抹掉了，可还有人替它记着。"
+],options:[
+{t:"（把秦守将的执念记在心里）",effects:{xp:18,infl:{east:6},flag:"faction_east_chen2"},go:"warphase_14"}
+]};
+
+/* ================= 势力六：兽人诸部 ================= */
+N["faction_orc_1"]={tag:"main",place:"兽人草原 · 诸部大帐",where:"白昼",pace:"normal",sceneTitle:"阵营 · 兽人诸部",text:[
+"北境的战鼓传到草原，比风还快。",
+"诸部的大帐里，头领们围坐成一圈，中间的火堆烧得很旺。一个叫阿岩的年轻猎手站起来，指着地图：“北边要打仗，草原也要选边。跟着联军打，还是各过各的？”",
+"他看见你走进来，上下打量：“你在雪原上跟狼群照过面？敢来的，都是不怕死的。”他拍了拍身边的皮褥子，“坐。草原的规矩，坐下就是兄弟。”"
+],options:[
+{t:"（坐下，加入兽人诸部）",effects:{xp:20,flag:"faction_join_orc"},run:function(){if(S.faction&&S.faction!=="orc"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.east=(S.infl.east||0)-6;}}S.faction="orc";},go:"faction_orc_2"},
+{t:"（先随猎手出去走一趟，看看草原）",effects:{xp:12},go:"faction_orc_2"},
+{t:"（草原的风太野，不急着站队）",effects:{xp:5},go:"warphase_14"}
+]};
+
+N["faction_orc_2"]={tag:"main",place:"兽人草原 · 狼群南迁地",where:"白昼",pace:"deep",text:[
+"入部第一件事，是去看狼群。",
+"阿岩领你爬上草原最高的土坡，指着远处灰蒙蒙的一片：“狼群开始南迁了。老辈人说，狼是草原的哨兵——它们往哪走，草原就在往哪变。”",
+"风从北边来，带着雪和血腥气。你看着那片灰影缓缓移动，心里忽然发紧：狼群南迁，通常只有两个原因——北边没得吃了，或者，北边来了什么让狼都害怕的东西。",
+"阿岩也盯着那片灰影，声音沉了沉：“我们诸部，得在狼群之前，先想好往哪走。”"
+],options:[
+{t:"（记下狼群南迁的方向）",effects:{xp:22,infl:{orc:8},flag:"faction_orc_wolves"},go:"faction_orc_3"}
+]};
+
+N["faction_orc_3"]={tag:"main",place:"兽人草原 · 神谕之地",where:"夜",pace:"deep",sceneTitle:"神谕 · 石林低语",text:[
+"诸部的老萨满听说你来了，要见你。",
+"神谕之地是一片石林，风穿过石缝，发出呜呜的声音，像无数人在低语。老萨满坐在最大的石柱下，面前摆着几根兽骨，骨面上刻着密密麻麻的符号。",
+"他盯着你看了一会儿，说：“你在找一个东西。它不在草原上，也不在北方——它在地底下，等着有人把它拿出来。”",
+"你想起矿洞里的铁门、圣痕司的旧案、沙漠遗迹的玉片。老萨满把一根兽骨递给你：“拿着。等你的路走到头，它会告诉你，该往哪放。”"
+],options:[
+{t:"（收下兽骨，记下神谕）",effects:{xp:24,infl:{orc:10},flag:"faction_orc_oracle"},go:"faction_orc_4"}
+]};
+
+N["faction_orc_4"]={tag:"main",place:"兽人草原 · 诸部大帐",where:"夜",pace:"deep",text:[
+"神谕的事在诸部传开，大帐里吵得更凶了。",
+"主战的头领拍着桌子：“北边抢我们的草场，烧我们的帐篷，这笔账必须算！”主和的头领冷笑：“算账？拿什么算？我们的刀比他们少一半！”",
+"阿岩夹在中间，左右为难。他把你拽到帐外：“你说，草原该打还是该和？”",
+"夜风里，火堆的光在他脸上跳。这个年轻猎手，第一次把诸部的路，压到了你肩上。"
+],options:[
+{t:"（主张和谈：先要粮，再要地）",effects:{xp:22,infl:{orc:8},flag:"faction_orc_peace"},go:"faction_orc_5"},
+{t:"（主张备战：狼群南迁，迟早要打）",effects:{xp:24,infl:{orc:10},flag:"faction_orc_war"},go:"faction_orc_5"}
+]};
+
+N["faction_orc_5"]={tag:"main",place:"兽人草原 · 北境边界",where:"白昼",pace:"normal",sceneTitle:"抉择 · 草原的刀",text:[
+"和与战的争执还没定，北边就递来了信。",
+"铁门关的守将秦长风遣使到草原：愿意用粮换和平，条件是诸部退兵三十里，不得南望。",
+"信使把盖着铁门关大印的文书摆在帐中。主战的头领一拳砸在桌上：“退兵三十里？那不如让我们把刀都磨了！”",
+"阿岩把文书递给你：“你说，这粮，换不换。”"
+],options:[
+{t:"（换：先让部族吃饱，再谈别的）",effects:{gold:30,xp:22,infl:{orc:8,north:6},flag:"faction_orc_trade"},go:"faction_orc_6"},
+{t:"（不换：草原的刀不能低头）",effects:{xp:24,infl:{orc:10},flag:"faction_orc_defy"},go:"faction_orc_6"},
+{t:"（假意答应，拖时间备战）",effects:{xp:20,infl:{orc:6},flag:"faction_orc_trick"},go:"faction_orc_6"}
+]};
+
+N["faction_orc_6"]={tag:"main",place:"兽人草原 · 狩猎场",where:"白昼",pace:"deep",sceneTitle:"试炼 · 猎手之战",text:[
+"和战之事定下后，阿岩拉你去参加诸部的猎手试炼——猎一头荒原上最凶的雪狼。",
+"雪狼的巢在乱石堆里。你趴在下风口，看着那只比牛犊还壮的狼在巢边踱步。阿岩打了个手势：包抄。",
+"你刚起身，雪狼就察觉了。它转身扑来，獠牙在月光下一闪。你侧身闪避，它的爪子从你肩头擦过，撕开一道口子，血顺着胳膊淌下来。",
+"阿岩从侧面掷出飞索，套住狼的后腿。雪狼嘶吼着挣扎，你抓住空档，扑上去按住它的脖颈——刀抵在喉间，狼的眼睛死死盯着你。你松开刀，放它走了。",
+"阿岩看你的眼神变了：“能杀不杀，草原上管这叫——够格当兄弟。”"
+],options:[
+{t:"（捂着肩头的伤，接受试炼）",effects:{xp:30,hp:-8,infl:{orc:10},flag:"faction_orc_hunt"},go:"faction_orc_7"}
+]};
+
+N["faction_orc_7"]={tag:"main",place:"兽人草原 · 诸部大帐",where:"夜",pace:"normal",sceneTitle:"晋升 · 战狼",text:[
+"试炼之后，诸部的大帐给你摆了一场酒。",
+"阿岩把一碗酒端到你面前，单膝跪下：“从今日起，你是诸部的战狼。草原上，刀与酒都认你。”",
+"你接过酒碗，一饮而尽。酒是烈的，烧得胸口发烫。帐里的人都吼起来，有人拔刀在火堆上比划，火星四溅。",
+"你看着那些粗犷的面孔，忽然明白——草原人不是不怕死，是他们把死看得太轻，把兄弟看得太重。"
+],options:[
+{t:"（接下战狼的名号，与诸部共进退）",effects:{xp:22,infl:{orc:10},flag:"faction_orc_wolf"},go:"faction_orc_8"}
+]};
+
+N["faction_orc_8"]={tag:"main",place:"兽人草原 · 神谕石林",where:"夜",pace:"deep",sceneTitle:"呼应 · 骨上的符号",text:[
+"战狼的名号传开，老萨满又把你叫去了石林。",
+"这一次，他把那根兽骨翻过来，露出背面——骨面上刻着一道道符号，像锚，又像秤。你盯着那些符号，忽然想起七枚铁牌上的刻痕。",
+"老萨满说：“草原的老辈人传下一句话：大地之下埋着七根柱子，柱子不倒，天就塌不下来。守柱子的，是一族姓金的守秤人。”",
+"他顿了顿：“可那是很久以前的事了。现在，记得这句话的人，草原上不超过三个。”"
+],options:[
+{t:"（把守秤人的传说记在心里）",effects:{xp:26,infl:{orc:8},flag:"faction_orc_anchor"},go:"faction_orc_9"}
+]};
+
+N["faction_orc_9"]={tag:"main",place:"兽人草原 · 铁门关外",where:"白昼",pace:"deep",sceneTitle:"血仇 · 铁门关",text:[
+"战局恶化，诸部的主力还是被卷进了铁门关之战。",
+"那是草原人最惨烈的一仗。你带着战狼的兄弟们冲上关墙，火把和箭矢横飞，你身边的猎手一个接一个倒下。",
+"混战中，一柄铁枪从侧面刺来，扎进你左肩。你咬牙折断枪杆，反手一刀劈翻偷袭的兵卒，血顺着手臂流到刀柄上，滑得几乎握不住。",
+"阿岩在城下仰头喊你：“撤！关打不下来！”你看着关墙上的旗——那是铁门关的旗，也是三十年前晨天故都的旗。你攥紧刀柄，没有动。"
+],options:[
+{t:"（撤：留得青山在，草原还有以后）",effects:{xp:26,hp:-12,infl:{orc:10},flag:"faction_orc_retreat"},go:"faction_orc_10"},
+{t:"（死战：这一仗，草原不能退）",effects:{xp:34,hp:-20,infl:{orc:12},flag:"faction_orc_fight"},go:"faction_orc_10"}
+]};
+
+N["faction_orc_10"]={tag:"main",place:"兽人草原 · 诸部大帐",where:"夜",pace:"normal",text:[
+"铁门关一仗，诸部伤了元气。",
+"大帐里的火堆比往常小了一半。阿岩的胳膊上缠着绷带，坐在角落里一声不吭。头领们也不吵了，都看着火堆发呆。",
+"你走进帐里，把带回来的那面铁门关的旗角放在火堆边。没有人说话，但你知道，这一仗之后，诸部的路，必须重新选一次。",
+"阿岩抬起头，看着你：“战狼，你说，草原下一步怎么走。”"
+],options:[
+{t:"（养精蓄锐，等联军先动）",effects:{xp:20,infl:{orc:8},flag:"faction_orc_wait"},go:"faction_orc_11"},
+{t:"（趁联军也伤了元气，再压一次边）",effects:{xp:26,infl:{orc:10},flag:"faction_orc_press"},go:"faction_orc_11"}
+]};
+
+N["faction_orc_11"]={tag:"main",place:"兽人草原 · 诸部大帐",where:"白昼",pace:"deep",sceneTitle:"抉择 · 草原的路",text:[
+"终战前夜，诸部的大帐里只剩一个问题：草原，往哪走。",
+"南下抢一片草场，还是北上求和，或者干脆退回荒原深处，谁都不理。头领们吵了三天，最后把刀都拍在你面前：“战狼，你来说。”",
+"你看着那些粗粝的面孔，想起狼群南迁时它们眼里的方向，想起老萨满的话，想起铁门关城下倒下的兄弟。",
+"你开口时，帐里安静得能听见火堆的噼啪声。"
+],options:[
+{t:"（带诸部与北境休战，换粮换地）",effects:{xp:32,infl:{orc:12,north:8},flag:"faction_orc_final_peace"},go:"faction_orc_12"},
+{t:"（带诸部南下，抢一片新的草场）",effects:{xp:28,infl:{orc:10},flag:"faction_orc_final_south"},go:"faction_orc_12"},
+{t:"（把诸部北上的路线卖给联军，换笔财富）",effects:{gold:80,flag:"faction_traitor"},go:"faction_traitor_1"},
+{t:"（抽空去河湾，陪阿岩坐坐）",effects:{xp:5},go:"orc_ayan_1"}
+]};
+
+N["faction_orc_12"]={tag:"main",place:"兽人草原 · 狼头峰",where:"白昼",pace:"normal",sceneTitle:"坐镇 · 草原的风",text:[
+"终战的消息传到草原，狼群开始北归。",
+"你站在狼头峰上，看着灰白的狼群缓缓移动，方向与来时相反。阿岩站在你身边，说：“狼回去了。草原，也该回到它原来的样子。”",
+"他顿了顿：“可有些东西回不去了——铁门关城下倒下的兄弟，回不来了。”",
+"风从北方吹来，带着雪沫子。你没有接话，只把老萨满给的那根兽骨握在手里——它的尽头，还有一段路没走完。"
+],options:[
+{t:"（领着诸部，在战后的草原上重新扎根）",effects:{xp:25,flag:"faction_orc_done"},go:"warphase_14"}
+]};
+
+N["faction_orc_13"]={tag:"main",place:"兽人草原 · 石林",where:"夜",pace:"normal",sceneTitle:"余波 · 狼与骨",text:[
+"战后，老萨满去世了。",
+"诸部按草原的规矩，把他葬在石林最高的石柱下。你站在人群里，看着兽骨被埋进土里，风穿过石缝，呜呜地响了一整夜。",
+"阿岩把老萨满留下的兽骨都收起来，其中一根交到你手里：“他临走前说，这根骨头，是留给那个守秤人的。”",
+"你握着那根兽骨，骨面上的符号在月光下浮着一层幽光。你知道，这根骨头，迟早要回到它该去的地方。"
+],options:[
+{t:"（收好兽骨，等路走完）",effects:{xp:18,infl:{orc:6},flag:"faction_orc_bone"},go:"warphase_14"}
+]};
+
+/* ================= 势力七：矮人山国 ================= */
+N["faction_dwarf_1"]={tag:"main",place:"矮人山国 · 山门",where:"白昼",pace:"normal",sceneTitle:"阵营 · 矮人山国",text:[
+"北境的战争传进山里，矮人们还在打铁。",
+"山门外的熔炉彻夜不熄，铁水映红了大半面山壁。一个胡子编成辫子的矮人老铁匠抬头看你：“北边要刀？要刀可以，拿铁来换，拿矿来换，拿酒来换。”",
+"他敲了敲手里的锤子：“山里的规矩简单——能扛动锤子的，就是兄弟。”他把一柄铁锤扔到你面前，“试试？”"
+],options:[
+{t:"（抄起铁锤，加入矮人山国）",effects:{xp:20,flag:"faction_join_dwarf"},run:function(){if(S.faction&&S.faction!=="dwarf"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.orc=(S.infl.orc||0)-6;}}S.faction="dwarf";},go:"faction_dwarf_2"},
+{t:"（先在锻造坊里看几天，学学手艺）",effects:{xp:12},go:"faction_dwarf_2"},
+{t:"（山里的烟太呛，不急着入伙）",effects:{xp:5},go:"warphase_14"}
+]};
+
+N["faction_dwarf_2"]={tag:"main",place:"矮人山国 · 锻造坊",where:"白昼",pace:"deep",text:[
+"你留在锻造坊，跟着老铁匠学打铁。",
+"铁锤落在砧上，叮叮当当，火星四溅。老铁匠一边锤铁一边骂：“刀要硬，先得把杂念捶出去！你心里装着事，打的刀就会裂！”",
+"你学着把心思全放在铁上。三天后，你打出第一柄像样的短刀。老铁匠拿起来，对着光看了看刀刃，点点头：“能用了。离好刀，还差十年。”",
+"他把短刀扔还给你：“拿着。山国的规矩，自己打的刀，自己用。”"
+],options:[
+{t:"（收下短刀，留在锻造坊）",effects:{xp:22,infl:{dwarf:8},flag:"faction_dwarf_forge"},go:"faction_dwarf_3"}
+]};
+
+N["faction_dwarf_3"]={tag:"main",place:"矮人山国 · 南矿洞",where:"夜",pace:"deep",sceneTitle:"异响 · 南矿洞",text:[
+"南矿洞出了怪事：夜里，洞深处传来沉闷的撞击声，像有什么东西在撞铁门。",
+"你随老铁匠下到矿洞最深处。火把照见一道锈迹斑斑的铁门，门上铸着七道符印，其中一道已经裂开。撞击声，就从门后传来。",
+"老铁匠摸着那道裂纹，脸色很难看：“这扇门，山国守了三百年。老祖宗说，门后关着不该出来的东西。”",
+"他转头看你：“你听见了，也算半个守门人。记住：这道门，别开。”"
+],options:[
+{t:"（记下铁门的方位与符印）",effects:{xp:26,infl:{dwarf:10},flag:"faction_dwarf_seal"},go:"faction_dwarf_4"}
+]};
+
+N["faction_dwarf_4"]={tag:"main",place:"矮人山国 · 议事厅",where:"白昼",pace:"deep",text:[
+"南矿洞的事传开后，矮人山国的长老们开了三次会。",
+"有长老主张加固铁门，多铸七道新锁；有长老主张把矿洞填死，一了百了；还有长老冷笑：“老祖宗留下的门，谁敢动？”",
+"老铁匠把你推进议事厅：“他在北边走过，见过世面，让他说。”",
+"几道目光齐刷刷看过来。你站在厅中央，闻着满屋的炉灰味和酒味，知道这一句话，可能决定山国三百年的门，开还是不开。"
+],options:[
+{t:"（主张加固：不动门，但多铸锁）",effects:{xp:24,infl:{dwarf:10},flag:"faction_dwarf_fortify"},go:"faction_dwarf_5"},
+{t:"（主张填洞：门后的东西，永远别出来）",effects:{xp:22,infl:{dwarf:8},flag:"faction_dwarf_fill"},go:"faction_dwarf_5"},
+{t:"（主张查清：先知道门后是什么，再决定）",effects:{xp:28,infl:{dwarf:6},flag:"faction_dwarf_probe"},go:"faction_dwarf_5"}
+]};
+
+N["faction_dwarf_5"]={tag:"main",place:"矮人山国 · 军需坊",where:"白昼",pace:"normal",sceneTitle:"抉择 · 铁的去向",text:[
+"北境的军需官进了山，要订一万柄刀。",
+"矮人山国一年打的铁，也只够两万柄。长老们为这件事又吵起来：全接了，山国的铁库要见底；不接，北边联军拿什么打仗。",
+"军需官把定金摆在桌上，黄澄澄的金条。老铁匠看也不看，只盯着你：“你是走过北边的人。你说，这批刀，接不接。”",
+"你看着那堆金条，又看了看炉火里翻腾的铁水。"
+],options:[
+{t:"（接一半：留一半铁，守山国自己的门）",effects:{gold:40,xp:22,infl:{dwarf:8,north:6},flag:"faction_dwarf_half"},go:"faction_dwarf_6"},
+{t:"（全接：山国的铁，就是北境的刀）",effects:{gold:60,xp:18,infl:{dwarf:4,north:8},flag:"faction_dwarf_all"},go:"faction_dwarf_6"},
+{t:"（不接：山国的铁，只打山国的门）",effects:{xp:26,infl:{dwarf:10},flag:"faction_dwarf_refuse"},go:"faction_dwarf_6"}
+]};
+
+N["faction_dwarf_6"]={tag:"main",place:"矮人山国 · 地底熔炉",where:"夜",pace:"deep",sceneTitle:"异象 · 地底回响",text:[
+"铁的事定下后，地底忽然传来一声闷响，连锻造坊的炉火都抖了三抖。",
+"老铁匠扔下锤子就往外跑：“不是矿洞！是地底！”他带着你钻进一条废弃的巷道，越走越深，最后停在壁上一道古老的刻痕前——刻痕是七枚连在一起的黑铁锚。",
+"老铁匠用火把照着刻痕，声音发颤：“这是老祖宗的记号。他们说，山国地下压着七根柱子之一。柱子晃，山国就晃。”",
+"他沉默了很久，说：“要变天了。”"
+],options:[
+{t:"（把七锚刻痕拓下来，带回地面）",effects:{xp:28,infl:{dwarf:10},flag:"faction_dwarf_anchor"},go:"faction_dwarf_7"}
+]};
+
+N["faction_dwarf_7"]={tag:"main",place:"矮人山国 · 锻造坊",where:"白昼",pace:"normal",sceneTitle:"晋升 · 铁匠长",text:[
+"地底异象之后，老铁匠把一柄淬过火的铁锤交到你手里。",
+"他咳嗽了两声，说：“我锤了四十年铁，眼睛花了，手也抖了。这柄锤子，从今天起归你——你是山国的铁匠长。”",
+"你握着那柄锤子，锤柄上磨得光滑，全是老铁匠的掌纹。他把手搭在你肩上，压着嗓门：“铁匠长，不光管打铁——还得管着山国那扇门。门在，山国在。”",
+"炉火映着他花白的胡子。你知道，这柄锤子递过来的，不止是一份差事。"
+],options:[
+{t:"（接下铁锤，做山国的守门人）",effects:{xp:22,infl:{dwarf:10},flag:"faction_dwarf_smith"},go:"faction_dwarf_8"}
+]};
+
+N["faction_dwarf_8"]={tag:"main",place:"矮人山国 · 南矿洞铁门",where:"夜",pace:"deep",sceneTitle:"呼应 · 铁门与铁牌",text:[
+"铁匠长上任后的第一件事，是给南矿洞的铁门换锁。",
+"你带着徒弟们铸了七道新锁。换锁的时候，你在门框的夹缝里摸到一样东西——一枚半截的铁牌，牌面上刻着锚形的纹路，与你在别处见过的，像是同一脉。",
+"你盯着那枚铁牌，想起七枚铁牌的传说、圣痕司卷宗里“不该打的钥匙”、老萨满说的“守秤人”。这些碎片，正在慢慢拼成一张图。",
+"你把铁牌收进怀里，没有声张。"
+],options:[
+{t:"（把铁牌与七锚的线索连起来）",effects:{xp:26,infl:{dwarf:8},flag:"faction_dwarf_plate"},go:"faction_dwarf_9"}
+]};
+
+N["faction_dwarf_9"]={tag:"main",place:"矮人山国 · 议事厅",where:"白昼",pace:"deep",sceneTitle:"军议 · 山国的选择",text:[
+"终战前，山国接到两封请帖：北境联军请矮人出山助战，荒原诸部请矮人保持中立。",
+"长老们分坐两排。主战的长老拍着桌子：“铁打了不打仗，那打铁还有什么用！”主和的长老敲着烟斗：“山国的铁，是守门的，不是杀人的。”",
+"老铁匠已经退了位，坐在角落的阴影里，一声不吭。所有人的目光最后都落向你——新任铁匠长。",
+"你站在议事厅中央，炉火在身后烧着。"
+],options:[
+{t:"（出山：山国的铁，该上战场了）",effects:{xp:28,infl:{dwarf:10,north:8},flag:"faction_dwarf_war"},go:"faction_dwarf_10"},
+{t:"（守山：任外面打翻天，山国不动）",effects:{xp:24,infl:{dwarf:12},flag:"faction_dwarf_stay"},go:"faction_dwarf_10"}
+]};
+
+N["faction_dwarf_10"]={tag:"main",place:"矮人山国 · 山门",where:"白昼",pace:"normal",text:[
+"山国的决定，最终落在一柄新铸的刀上。",
+"你把那柄刀插在山门外的石缝里，刀尖朝北。“出山。”你对长老们说，“但刀柄在山国手里——打多久、打到哪里，山国说了算。”",
+"长老们沉默了一阵，最后都点了点头。老铁匠在人群里咳嗽了一声，说：“这柄锤子，没传错人。”",
+"你转身看着山门外灰蒙蒙的天。铁已经淬好了，接下来，是它见血的时候。"
+],options:[
+{t:"（带着山国的铁，走向战场）",effects:{xp:22,infl:{dwarf:8,north:6},flag:"faction_dwarf_march"},go:"faction_dwarf_11"}
+]};
+
+N["faction_dwarf_11"]={tag:"main",place:"矮人山国 · 议事厅",where:"夜",pace:"deep",sceneTitle:"抉择 · 山国的秤",text:[
+"终战后，山国面临最后一个选择。",
+"北边的联军想在山里设一个军械库，常年屯铁；荒原诸部则想要山国开放矿道，互通有无。两边的使者都坐在议事厅里，等着山国的话。",
+"长老们不吵了，都看着你。你手里转着老铁匠留下的那柄小锤子，锤柄上的掌纹已经磨得看不清了。",
+"你放下锤子，开口。"
+],options:[
+{t:"（设军械库，但山国保有钥匙）",effects:{xp:30,infl:{dwarf:12,north:8},flag:"faction_dwarf_final_north"},go:"faction_dwarf_12"},
+{t:"（开放矿道，与诸部互通）",effects:{xp:28,infl:{dwarf:10,orc:8},flag:"faction_dwarf_final_orc"},go:"faction_dwarf_12"},
+{t:"（把山国的矿脉图卖给北境，换一笔厚利）",effects:{gold:80,flag:"faction_traitor"},go:"faction_traitor_1"},
+{t:"（抽空回锻造坊，看看铜锤）",effects:{xp:5},go:"dwarf_bronze_1"}
+]};
+
+N["faction_dwarf_12"]={tag:"main",place:"矮人山国 · 铁王座",where:"白昼",pace:"normal",sceneTitle:"坐镇 · 山国的火",text:[
+"你站在铁王座前——那是山国锻造坊最老的一柄大锤，插在石座里，已经传了七代铁匠长。",
+"你握住锤柄，把它从石座里拔了出来。铁王座空了一瞬，随即，满坊的炉火都旺了三分。",
+"老铁匠已经走不动了，坐在门槛上，看着你举着那柄大锤，咧嘴笑了：“锤子认人。山国的火，还没灭。”",
+"你举着锤子，面向山门外。炉火在你身后烧着，映红了半面山壁。"
+],options:[
+{t:"（举起山国的锤，守着山国的门）",effects:{xp:25,flag:"faction_dwarf_done"},go:"warphase_14"}
+]};
+
+N["faction_dwarf_13"]={tag:"main",place:"矮人山国 · 地底刻痕前",where:"夜",pace:"normal",sceneTitle:"余波 · 柱子的回响",text:[
+"战后，你独自下到地底，站在那七枚黑铁锚的刻痕前。",
+"刻痕比上次来的时候亮了一些——像是有什么东西，正在地底下慢慢醒过来。你把手指按在刻痕上，指尖一阵发麻。",
+"你想起老铁匠的话：柱子晃，山国就晃。现在柱子不只是晃了——它在地底下，发出低沉的、持续的回响。",
+"你收回手，转身离开。有些话，不必对山里的人说。"
+],options:[
+{t:"（把柱子的回响记在心里）",effects:{xp:18,infl:{dwarf:6},flag:"faction_dwarf_echo"},go:"warphase_14"}
+]};
+
+/* ================= 势力八：精灵林邦 ================= */
+N["faction_elf_1"]={tag:"main",place:"精灵林邦 · 林缘",where:"白昼",pace:"normal",sceneTitle:"阵营 · 精灵林邦",text:[
+"北境的战鼓传进林海，比风慢，却比风沉。",
+"林缘的哨台上，一个精灵巡林长放下长弓，看着你：“你身上带着学院的气息。学院的人，林子一向放行。”他顿了顿，“可现在是战时。林邦不问来路，只问一件事——你是来砍树的，还是来护树的？”",
+"他把一支哨箭递到你面前：“吹响它，林邦就认你是自己人。”"
+],options:[
+{t:"（接过哨箭，加入精灵林邦）",effects:{xp:20,flag:"faction_join_elf"},run:function(){if(S.faction&&S.faction!=="elf"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-6;S.infl.dwarf=(S.infl.dwarf||0)-6;}}S.faction="elf";},go:"faction_elf_2"},
+{t:"（先随巡林长走一趟林海，看看再说）",effects:{xp:12},go:"faction_elf_2"},
+{t:"（林子的路太静，不急着入伙）",effects:{xp:5},go:"warphase_14"}
+]};
+
+N["faction_elf_2"]={tag:"main",place:"精灵林邦 · 世界树下",where:"夜",pace:"deep",sceneTitle:"古树 · 世界树",text:[
+"入邦第一夜，巡林长带你去看世界树。",
+"那棵树大得超出想象——树干要几十个人合抱，枝叶遮住了半片星空。风过树梢，整座林海都在低低地响。",
+"巡林长把手掌贴在树干上，说：“林邦的规矩，是树教的：树不争，所以活千年；树不躲，所以立得稳。”",
+"他看着你：“战争来了。林邦不想打仗，可林邦也不怕打仗。你说，树该怎么做？”"
+],options:[
+{t:"（学树：立住根，不争不躲）",effects:{xp:22,infl:{elf:8},flag:"faction_elf_tree"},go:"faction_elf_3"}
+]};
+
+N["faction_elf_3"]={tag:"main",place:"精灵林邦 · 圣痕司分所",where:"白昼",pace:"deep",sceneTitle:"旧识 · 艾琳的留痕",text:[
+"林邦的边地有一座圣痕司分所，战时废弃了。",
+"巡林长让你去清点遗物。你在积灰的案卷里，翻到一本手抄笔记——扉页上写着一个名字：艾琳。",
+"笔记里夹着一页纸，纸上画着几个符号，旁边批注：“与学院禁书区第三架所见一致。疑同源。”你认得那个笔迹——学院里，那个研究异端符号的学姐。",
+"你合上笔记。艾琳的线索，从学院一路延伸到圣城，又在这里露出一角。她到底在查什么。"
+],options:[
+{t:"（把艾琳的笔记收好）",effects:{xp:24,infl:{elf:8},flag:"faction_elf_alice"},go:"faction_elf_4"}
+]};
+
+N["faction_elf_4"]={tag:"main",place:"精灵林邦 · 林界",where:"白昼",pace:"deep",text:[
+"战火烧到林邦边缘：一支军队想借林海行军，砍树开路。",
+"巡林长带着人拦在林界上。对面的军官说：“战时军务，误了军机，你们担得起？”巡林长没有让开：“林子是林邦的命。你砍一棵树，林邦就多记你一笔。”",
+"两边僵持着，箭在弦上。巡林长回头看了你一眼——你是学院出来的人，见过世面。",
+"风穿过林梢，一片叶子落在你肩头。"
+],options:[
+{t:"（主张借路，但限定路线，不许砍树）",effects:{xp:22,infl:{elf:8,north:6},flag:"faction_elf_pass"},go:"faction_elf_5"},
+{t:"（主张封路：林邦的林子，谁也别动）",effects:{xp:26,infl:{elf:10},flag:"faction_elf_block"},go:"faction_elf_5"}
+]};
+
+N["faction_elf_5"]={tag:"main",place:"精灵林邦 · 林间议会",where:"夜",pace:"normal",sceneTitle:"议会 · 林邦的声音",text:[
+"借路的事平息后，林邦的议会开了一场会。",
+"长老们围坐在世界树下，火把插在四周。议题只有一个：林邦，要不要卷入这场战争。",
+"主战的长老说：“刀已经架到林子边上了。”主和的长老说：“树活千年，靠的不是刀。”",
+"巡林长让你坐到长老席边上——林邦少有的例外。他放轻声音：“他们信树，也信一个见过外面的人。”"
+],options:[
+{t:"（主张守林：林邦不参战，但收留难民）",effects:{xp:24,infl:{elf:10},flag:"faction_elf_haven"},go:"faction_elf_6"},
+{t:"（主张参战：树也有根，根不能断）",effects:{xp:26,infl:{elf:8,north:6},flag:"faction_elf_joinwar"},go:"faction_elf_6"}
+]};
+
+N["faction_elf_6"]={tag:"main",place:"精灵林邦 · 古树低语处",where:"夜",pace:"deep",sceneTitle:"异象 · 古树低语",text:[
+"议会之后，世界树忽然在夜里低语。",
+"不是风声——是树根深处传来的一种沉闷的震动，像有什么东西在树底一下一下地撞。巡林长脸色大变，带着你连夜下到树根的空腔里。",
+"空腔深处的岩壁上，嵌着一枚碧绿的玉石，像一滴凝固的泪。巡林长说：“这是晨星之泪。老祖宗说，世界树靠它镇着根底的封印。”",
+"他凑近看，玉石表面多了一道细纹。他倒吸一口气：“封印在松动。”"
+],options:[
+{t:"（记下晨星之泪的位置与裂纹）",effects:{xp:28,infl:{elf:10},flag:"faction_elf_tear"},go:"faction_elf_7"}
+]};
+
+N["faction_elf_7"]={tag:"main",place:"精灵林邦 · 巡林队",where:"白昼",pace:"normal",sceneTitle:"晋升 · 巡林长",text:[
+"晨星之泪的事后，巡林长把一张角弓交到你手里。",
+"他拍了拍你的肩：“你在林界上挡过军队，在树根下守过封印。从今日起，你是林邦的副巡林长。”",
+"角弓沉甸甸的，弓弦是新换的，还带着松脂的味道。巡林长压着嗓门：“副巡林长，不光管林子——还得管树底下的东西。封印若有异动，先护住晨星之泪。”",
+"你握着角弓，抬头看世界树巨大的树冠，枝叶间漏下细碎的光。"
+],options:[
+{t:"（接下角弓，守着林邦的根）",effects:{xp:22,infl:{elf:10},flag:"faction_elf_ranger"},go:"faction_elf_8"}
+]};
+
+N["faction_elf_8"]={tag:"main",place:"精灵林邦 · 树根封印",where:"夜",pace:"deep",sceneTitle:"呼应 · 根底的封印",text:[
+"封印的裂纹没有停下。",
+"你带着巡林队守在世界树根底，看着那道细纹一天天变长。月光从树冠漏下来，照在碧绿的晨星之泪上，泪石表面泛着幽幽的光。",
+"你想起北方那道深渊的封印、南矿洞的铁门、老萨满的话。这片大陆的地底下，像埋着一串锁，一处处都在松动。",
+"巡林长站在你身边，声音放轻：“林邦守了世界树三百年。可这一次，怕是守不住了——除非，有人能把它重新镇住。”"
+],options:[
+{t:"（把各处的封印记成一张图）",effects:{xp:26,infl:{elf:8},flag:"faction_elf_map"},go:"faction_elf_9"}
+]};
+
+N["faction_elf_9"]={tag:"main",place:"精灵林邦 · 林界哨台",where:"白昼",pace:"deep",sceneTitle:"军议 · 林邦的选择",text:[
+"终战前，两边的使者都进了林邦。",
+"北境联军要林邦出弓手；荒原诸部要林邦保持中立，让林海成为双方的缓冲。使者们坐在世界树下，等着林邦的话。",
+"长老们看着你。巡林长站在你身后，轻声说：“你是副巡林长。树怎么选，你来说。”",
+"你站在世界树下，抬头看那遮天蔽日的树冠。风过树梢，整座林海都在等你的回答。"
+],options:[
+{t:"（出弓手：林子立了根，也该亮一次箭）",effects:{xp:28,infl:{elf:10,north:8},flag:"faction_elf_archers"},go:"faction_elf_10"},
+{t:"（守中立：林海是缓冲，不是战场）",effects:{xp:24,infl:{elf:12},flag:"faction_elf_neutral"},go:"faction_elf_10"}
+]};
+
+N["faction_elf_10"]={tag:"main",place:"精灵林邦 · 林间小径",where:"白昼",pace:"normal",text:[
+"林邦的决定，是派出一队弓手，守在林界上。",
+"不是帮谁，是守住林子。弓手们站在树影里，箭搭在弦上，箭尖朝北。巡林长站在队首，回头看了你一眼：“箭搭上弦，就不算中立了。可林子的根，比箭更硬。”",
+"你站在他身边，握着那张角弓。风穿过林梢，把弓弦吹出一声细响，像林海在低语。"
+],options:[
+{t:"（与弓手们一起，守在林界上）",effects:{xp:22,infl:{elf:8},flag:"faction_elf_stand"},go:"faction_elf_11"}
+]};
+
+N["faction_elf_11"]={tag:"main",place:"精灵林邦 · 世界树下",where:"夜",pace:"deep",sceneTitle:"抉择 · 树的回答",text:[
+"终战后，世界树的低语停了。",
+"可晨星之泪的裂纹还在。长老们围在树根下，争论着该怎么办：有人主张用新的晨星之泪替换，有人主张封印树根，还有人说，也许该问问那个走过整片大陆的人。",
+"巡林长把一支哨箭递到你手里：“林邦的哨箭，一生只吹一次。你吹响它，林邦就听你的。”",
+"你握着那支哨箭，站在世界树下。树冠之上，星光漏下来，落了一肩。"
+],options:[
+{t:"（吹响哨箭：建议以晨星之泪镇根，封死树底）",effects:{xp:32,infl:{elf:12},flag:"faction_elf_final_seal"},go:"faction_elf_12"},
+{t:"（吹响哨箭：建议开树底封印，取出真相）",effects:{xp:28,infl:{elf:10},flag:"faction_elf_final_open"},go:"faction_elf_12"},
+{t:"（把晨星之泪的位置卖给圣痕司，换笔厚利）",effects:{gold:80,flag:"faction_traitor"},go:"faction_traitor_1"},
+{t:"（抽空去药庐，看看青叶）",effects:{xp:5},go:"elf_leaf_1"}
+]};
+
+N["faction_elf_12"]={tag:"main",place:"精灵林邦 · 世界树冠",where:"白昼",pace:"normal",sceneTitle:"坐镇 · 林海的根",text:[
+"你爬上世界树最高的枝丫，站在树冠上。",
+"林海在脚下铺到天边，绿得像一片海。风从北方来，带着战后的烟火气，也带着新生的青草味。",
+"巡林长站在另一根枝丫上，望着远方：“树活千年，靠的是根。你替林邦选了根的方向——剩下的事，交给时间。”",
+"你扶着树干，感受着粗粝的树皮底下，那股沉沉的、持续的搏动。像心跳。"
+],options:[
+{t:"（留在林邦，做那棵树的守夜人）",effects:{xp:25,flag:"faction_elf_done"},go:"warphase_14"}
+]};
+
+N["faction_elf_13"]={tag:"main",place:"精灵林邦 · 晨星之泪",where:"夜",pace:"normal",sceneTitle:"余波 · 泪石的光",text:[
+"战后第一场春雨落进林海，你在树根空腔里，看见晨星之泪上的裂纹停了。",
+"那道细纹停在半途，没有再延伸。玉石表面的幽光柔和了一些，像一滴泪，终于不再流了。",
+"巡林长说：“树底的东西，暂时安稳了。可你我都知道——安稳，只是暂时的。”",
+"你把手掌贴在泪石上，凉意透进掌心。你想起老萨满的兽骨、矮人矿洞的铁门、深渊的封印。这片大陆的锁，还没有全部锁上。"
+],options:[
+{t:"（带着晨星之泪的凉意，继续走）",effects:{xp:18,infl:{elf:6},flag:"faction_elf_tear2"},go:"warphase_14"}
+]};
+
+/* /u1inj:data-nodes:dn_faction_side.js/ */
+/* ===== 群雄割据 M9 阵营内部支线（dn_faction_side.js）=====
+ * 东境落第书生 / 兽人阿岩 / 矮人小徒 / 精灵药师 各 6 节点闭环
+ */
+/* ================= 支线一：东境落第书生 ================= */
+N["east_lang_1"]={tag:"branch",place:"东境 · 承天城 · 贡院墙外",where:"白昼",pace:"normal",sceneTitle:"支线 · 落第书生",text:[
+"你在贡院墙外，遇见一个落第的书生。",
+"他蹲在墙角，怀里抱着半摞书，袖子磨破了边。放榜那日，他从早等到晚，榜上没有他的名字。他看见你，苦笑了一下：“考了六年，连丙等都没够着。”",
+"他站起来，拍了拍身上的土：“家里还有老娘，我明天就去码头扛包。这书，怕是再也翻不开了。”",
+"他抱着书，转身要走。风吹过来，把他怀里一张纸吹到你脚边——纸上密密麻麻，全是手抄的东境粮价，从三年前记到现在。"
+],options:[
+{t:"（把纸捡起来还他：“你记粮价记了三年？”）",effects:{xp:18,flag:"east_lang_meet"},go:"east_lang_2"},
+{t:"（塞给他几枚银币，让他先顾眼前）",effects:{gold:-5,xp:12,flag:"east_lang_coin"},go:"east_lang_2"}
+]};
+
+N["east_lang_2"]={tag:"branch",place:"东境 · 承天城 · 茶棚",where:"白昼",pace:"deep",text:[
+"书生的名字叫沈怀远。他认出了你——户房的新主簿。",
+"他眼睛亮了一下，又暗下去：“主簿大人，我知道自己不是科举的料。可我记了三年的粮价，哪里的粮便宜、哪里的粮有缺，我心里有数。”",
+"他犹豫了一下，从怀里掏出那摞纸：“官署收粮，是不是可以用得上？”",
+"你翻着那摞纸，越翻越心惊：三年来，东境各地的粮价、粮道、仓储缺口，记得清清楚楚，连哪条路上的桥塌过、影响了几日粮运，都写着。"
+],options:[
+{t:"（收下他的账，让他到户房做一名小吏）",effects:{xp:24,infl:{east:8},flag:"east_lang_hired"},go:"east_lang_3"},
+{t:"（把账留下，让他先在码头扛包）",effects:{xp:14,flag:"east_lang_wait"},go:"east_lang_3"}
+]};
+
+N["east_lang_3"]={tag:"branch",place:"东境 · 承天城 · 户房",where:"夜",pace:"deep",text:[
+"沈怀远进了户房，做起事来像换了个人。",
+"他一天能算完别人三天的账，还能从旧账里挑出错处。半个月后，他揪出一笔陈年烂账：五年前的一批赈灾粮，账面与实收差了整整一千石。",
+"他拿着账册来找你，手都在抖：“主簿大人，这笔账……我不敢往下查了。牵进去的人，怕是不少。”",
+"窗外风大。你知道，这一千石粮的账，往上查，能查到官署的墙根。"
+],options:[
+{t:"（让他继续查，天塌下来你顶着）",effects:{xp:28,infl:{east:10},flag:"east_lang_deep"},go:"east_lang_4"},
+{t:"（把账压下去，先保住两个人）",effects:{xp:16,infl:{east:6},flag:"east_lang_cover2"},go:"east_lang_4"}
+]};
+
+N["east_lang_4"]={tag:"branch",place:"东境 · 承天城 · 粮仓",where:"夜",pace:"deep",sceneTitle:"支线 · 千石之账",text:[
+"一千石粮的账，最后查到了仓吏头上。",
+"那仓吏跪在粮仓前，说粮是战时被征走的，签了字，却没留下调拨文书。他伏在地上：“主簿大人，战时的事，哪有样样都留凭证的……”",
+"沈怀远站在你身后，嘴唇发白。他放轻声音：“我查过了——那批粮，根本没出城。”",
+"也就是说，一千石粮，还在这座城的某个地方。"
+],options:[
+{t:"（彻查全城粮仓，把一千石粮找出来）",effects:{xp:30,infl:{east:12},flag:"east_lang_found"},go:"east_lang_5"},
+{t:"（按下不表，等战后再查）",effects:{xp:14,infl:{east:4},flag:"east_lang_shelve"},go:"east_lang_5"}
+]};
+
+N["east_lang_5"]={tag:"branch",place:"东境 · 承天城 · 城西旧仓",where:"白昼",pace:"deep",text:[
+"那一千石粮，藏在城西一座废弃的旧仓里。",
+"仓门一开，霉味和粮味扑面而来。粮袋码得整整齐齐，袋上的官印还新着——是战时某批“运往北境”的粮，一袋都没出城。",
+"沈怀远站在仓门口，看着那堆粮，眼圈红了：“主簿大人，这些粮要是早三年拿出来，能救多少人……”",
+"他忽然蹲下去，把脸埋进膝盖里。三年的账，三年的记，他等的就是这一天——可他没想到，真相会这么重。"
+],options:[
+{t:"（拍拍他的肩：“这三年，你没白记。”）",effects:{xp:24,infl:{east:10},flag:"east_lang_true"},go:"east_lang_6"}
+]};
+
+N["east_lang_6"]={tag:"branch",place:"东境 · 承天城 · 贡院墙外",where:"白昼",pace:"normal",sceneTitle:"支线 · 榜外的名字",text:[
+"千石粮案结案后，沈怀远的名字进了官署的功绩册。",
+"他站在贡院墙外，看着新贴的放榜——榜上依然没有他的名字。可这一次，他没有蹲下去。",
+"他转身，看见你站在墙根，说：“主簿大人，我忽然想明白了。我考不中科举，不是因为我笨——是因为这六年的粮价账，已经把我的名字，记在别处了。”",
+"他笑起来：“榜外的名字，也是名字。”"
+],options:[
+{t:"（把户房的钥匙分他一把：“从今日起，你是户房的副主簿。”）",effects:{xp:22,infl:{east:8},flag:"east_lang_done"},go:"warphase_14"}
+]};
+
+/* ================= 支线二：兽人阿岩 ================= */
+N["orc_ayan_1"]={tag:"branch",place:"兽人草原 · 河湾",where:"白昼",pace:"normal",sceneTitle:"支线 · 阿岩的刀",text:[
+"阿岩最近总一个人坐在河湾边磨刀。",
+"那把刀是他父亲留下的，刀柄缠着旧皮绳，磨得发亮。你走过去，他头也不抬：“战狼，你说，刀磨快了，是拿来杀人的，还是拿来吓人的？”",
+"他顿了顿，自问自答：“我爹说，刀是吓人的。可北边的人，不信刀是吓人的。”",
+"他把刀翻了个面，继续磨。河湾的水哗哗地流，像在替他叹气。"
+],options:[
+{t:"（坐下来，陪他磨刀）",effects:{xp:18,flag:"orc_ayan_meet"},go:"orc_ayan_2"},
+{t:"（“刀是吓人的，可磨刀的人得先不怕死。”）",effects:{xp:14,flag:"orc_ayan_words"},go:"orc_ayan_2"}
+]};
+
+N["orc_ayan_2"]={tag:"branch",place:"兽人草原 · 河湾",where:"夜",pace:"deep",text:[
+"夜里，阿岩在河湾边点了一堆火，把那把刀架在火上烤。",
+"他忽然开口：“我爹，死在铁门关。”他盯着火苗，“三十年前，晨天城那会儿，他还是个毛头小子。他跟着老萨满去过北边，回来就变了一个人，天天磨这把刀。”",
+"他抬起头：“他死前跟我说，刀磨快了，不是为了杀人——是为了有一天，能有人拿它，把门打开。”",
+"火苗在他眼里跳。你听懂了：他爹等的门，和晨天故都、和地底下那些东西，是同一条线。"
+],options:[
+{t:"（“你爹等的门，我见过几扇。”）",effects:{xp:24,flag:"orc_ayan_gate"},go:"orc_ayan_3"}
+]};
+
+N["orc_ayan_3"]={tag:"branch",place:"兽人草原 · 诸部大帐",where:"夜",pace:"deep",text:[
+"阿岩听你讲完那些门的事，沉默了很久。",
+"他忽然拔出那把刀，在火堆旁的空地上，用刀尖划了一幅图：“战狼，你说，草原地下，会不会也压着一扇门？”",
+"你想起老萨满的兽骨、神谕之地的石林。阿岩在图上划了个圈：“诸部的祖坟底下，有一片谁都不让进的禁地。老萨满说过，那底下埋着老祖宗的骨头——也埋着别的东西。”",
+"他抬头看你：“我想去看看。你，陪不陪？”"
+],options:[
+{t:"（陪他去禁地走一趟）",effects:{xp:26,infl:{orc:8},flag:"orc_ayan_ban"},go:"orc_ayan_4"},
+{t:"（劝他先别去，等战争打完）",effects:{xp:14,flag:"orc_ayan_wait2"},go:"orc_ayan_4"}
+]};
+
+N["orc_ayan_4"]={tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",pace:"deep",sceneTitle:"支线 · 禁地之门",text:[
+"祖坟禁地是一片黑石荒原，寸草不生。",
+"阿岩举着火把走在前面，一直走到荒原中央。那里立着一块半人高的黑石碑，碑上没有字，只刻着一道粗粝的锚痕——与你在矮人矿洞、沙漠遗迹见过的，是同一笔刻法。",
+"阿岩跪下去，把额头贴在碑上，压着嗓子用草原话念了一段什么。他站起来，说：“老祖宗说，这碑底下，压着草原的一根根。谁动了它，草原就塌。”",
+"他转身看着你，眼睛在火光里亮得吓人：“战狼，我爹磨了一辈子刀，等的就是这根根——我要把它挖出来看看。”"
+],options:[
+{t:"（拦住他：这根根动不得）",effects:{xp:22,infl:{orc:8},flag:"orc_ayan_hold"},go:"orc_ayan_5"},
+{t:"（帮他挖：先看看底下是什么）",effects:{xp:28,infl:{orc:6},flag:"orc_ayan_dig"},go:"orc_ayan_5"}
+]};
+
+N["orc_ayan_5"]={tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",pace:"deep",text:[
+"那一夜，你们挖到碑下一丈深，挖到一块铁板。",
+"铁板锈得发黑，边缘却有一条清晰的亮边——像是最近才被什么磨过。阿岩把刀插进铁板边缘，撬了一下，铁板纹丝不动。",
+"他喘着粗气，盯着那条亮边，忽然笑了：“有人来过了。比我们早。”他抽出刀，在铁板上敲了敲，闷响在荒原上荡开，“战狼，你说，是谁？”",
+"你蹲下来，借着火把看那条亮边。磨痕是新的——是钥匙、铁牌，还是别的东西，在最近几个月里，划过这道铁板。"
+],options:[
+{t:"（“回去问问老萨满留下的东西。”）",effects:{xp:24,infl:{orc:8},flag:"orc_ayan_clue"},go:"orc_ayan_6"}
+]};
+
+N["orc_ayan_6"]={tag:"branch",place:"兽人草原 · 河湾",where:"白昼",pace:"normal",sceneTitle:"支线 · 刀与门",text:[
+"阿岩没有再挖。他把铁板重新盖上土，压平，谁也看不出来。",
+"回河湾的路上，他一路没说话。快到大帐时，他忽然开口：“战狼，我爹说刀是拿来开门的。我现在信了——可开哪扇门，得想清楚。”",
+"他把那把刀递给你：“刀先放你那儿。等你想清楚哪扇门该开，再还我。”",
+"你接过那把刀。刀柄上的皮绳还带着他的体温。河湾的水哗哗地流着，像什么话，说了一半，又咽了回去。"
+],options:[
+{t:"（收下阿岩的刀，替他记着那扇门）",effects:{xp:20,infl:{orc:8},flag:"orc_ayan_done"},go:"warphase_14"}
+]};
+
+/* ================= 支线三：矮人小徒 ================= */
+N["dwarf_bronze_1"]={tag:"branch",place:"矮人山国 · 锻造坊",where:"白昼",pace:"normal",sceneTitle:"支线 · 小徒",text:[
+"锻造坊里有个小徒弟，叫铜锤，是山国最年轻的一把好手。",
+"他才十四岁，力气却大得惊人，能抡动半人高的铁锤。可他有个毛病：打出来的刀，刃口总是不够直。老铁匠骂过他不知多少回，他每次都低着头，下次还歪。",
+"你路过锻造坊，看见他一个人坐在门槛上，对着自己打的刀发呆。他看见你，赶紧把刀藏到背后：“铁匠长……我这刀，还是歪的。”",
+"你在他身边坐下。他低着头，耳朵尖都红了。"
+],options:[
+{t:"（“歪在哪儿？让我看看。”）",effects:{xp:16,flag:"dwarf_bronze_meet"},go:"dwarf_bronze_2"}
+]};
+
+N["dwarf_bronze_2"]={tag:"branch",place:"矮人山国 · 锻造坊",where:"白昼",pace:"deep",text:[
+"铜锤把刀递给你。你翻来覆去看了两遍，看出毛病了：不是火候，不是锤法——是他下锤的时候，总在最后一下收力。",
+"“你怕打坏它。”你点破他。他愣了，然后点头：“师父说，好刀是‘打’出来的。可我一想到这一锤下去，可能把这把刀毁了，手就软了。”",
+"你想了想，把刀放回砧上：“那你就先别把它当刀。当一块铁——铁是打不坏的，只会变成你想要的形状。”",
+"铜锤盯着那块铁，看了很久。"
+],options:[
+{t:"（“试试。打坏了，算我的。”）",effects:{xp:20,flag:"dwarf_bronze_try"},go:"dwarf_bronze_3"}
+]};
+
+N["dwarf_bronze_3"]={tag:"branch",place:"矮人山国 · 锻造坊",where:"夜",pace:"deep",text:[
+"那一夜，锻造坊的炉火没有熄。",
+"铜锤抡了一夜锤。你坐在旁边，看着他把那块铁烧红、捶打、翻面、再捶打。天快亮的时候，他停下手，把那柄新刀举到火光前——刃口直了。",
+"他举着刀，手在抖：“铁匠长……直了。”他忽然哭起来，蹲在地上，把脸埋在膝盖里，“我打了三年，终于直了。”",
+"你拍拍他的肩。炉火映着他抽动的背脊。有些东西，不是力气不够，是心里那关过不去——过了关，手就稳了。"
+],options:[
+{t:"（“从今日起，你是坊里的正式铁匠。”）",effects:{xp:22,infl:{dwarf:8},flag:"dwarf_bronze_promoted"},go:"dwarf_bronze_4"}
+]};
+
+N["dwarf_bronze_4"]={tag:"branch",place:"矮人山国 · 南矿洞",where:"夜",pace:"deep",sceneTitle:"支线 · 铁门的钥匙",text:[
+"转正后，铜锤缠着你要学铸锁。",
+"他说，南矿洞那扇铁门，他想给它打一把新钥匙。“老祖宗的锁，我打不了。可我能打一把新锁，把门锁得更死。”",
+"你带他下到铁门前。他摸着那七道符印，眼睛发亮：“铁匠长，我师父说，锁和钥匙是一对。可这把锁，配的钥匙丢了——”他忽然放低音量，“听说，是被一把火烧掉的铁匠打的。”",
+"你心里一动：圣痕司卷宗里那桩旧案——二十年前烧死的铁匠，打的正是“不该打的钥匙”。"
+],options:[
+{t:"（把教会旧案讲给铜锤听）",effects:{xp:24,flag:"dwarf_bronze_case"},go:"dwarf_bronze_5"}
+]};
+
+N["dwarf_bronze_5"]={tag:"branch",place:"矮人山国 · 南矿洞",where:"夜",pace:"deep",text:[
+"铜锤听完旧案，沉默了很久。",
+"他摸着铁门上那道裂开的符印，说：“铁匠长，我师父说过一句话——山国的铁，能打刀，也能打锁，还能打钥匙。关键看，握着锤子的人，心里想开哪扇门。”",
+"他抬起头：“那个烧死的铁匠，打的钥匙，说不定不是用来开这扇门的——是用来关它的。”",
+"你看着铁门上那七道符印，心里那张图又清晰了一点。"
+],options:[
+{t:"（“记住这句话。等你打得动钥匙那天，我们再回来。”）",effects:{xp:22,infl:{dwarf:8},flag:"dwarf_bronze_key"},go:"dwarf_bronze_6"}
+]};
+
+N["dwarf_bronze_6"]={tag:"branch",place:"矮人山国 · 锻造坊",where:"白昼",pace:"normal",sceneTitle:"支线 · 锤与锁",text:[
+"战后，铜锤打出了他人生第二把直刃的刀。",
+"他把刀插在坊门口，跟那柄老铁锤并排。老铁匠坐在门槛上，眯着眼看了半天，说：“像我当年。”又摇摇头，“比我当年强。”",
+"铜锤咧嘴笑了，露出一口白牙。他跑到你面前：“铁匠长，等我再练十年，我打一把能锁住那扇门的钥匙——锁得死死的，谁也不许开。”",
+"你看着这个十四岁的孩子，忽然觉得，山国的火，是真的灭不了了。"
+],options:[
+{t:"（“好。十年后，我来看你的钥匙。”）",effects:{xp:20,infl:{dwarf:8},flag:"dwarf_bronze_done"},go:"warphase_14"}
+]};
+
+/* ================= 支线四：精灵药师 ================= */
+N["elf_leaf_1"]={tag:"branch",place:"精灵林邦 · 药庐",where:"白昼",pace:"normal",sceneTitle:"支线 · 药师",text:[
+"林邦的药庐里，住着一位精灵药师，叫青叶。",
+"她的药庐比林邦任何一间屋子都香——晒干的草药挂满房梁，风一吹，满林子都是药味。你进门时，她正碾一钵树皮，头也不抬：“林子里的人，找我多是治伤。你身上有战场的气息——伤在哪儿？”",
+"你确实带着旧伤。她放下药钵，洗净手，示意你坐下：“让我看看。林邦的规矩：药不欠人，人不欠药。”"
+],options:[
+{t:"（坐下来，让她看伤）",effects:{xp:16,flag:"elf_leaf_meet"},go:"elf_leaf_2"}
+]};
+
+N["elf_leaf_2"]={tag:"branch",place:"精灵林邦 · 药庐",where:"白昼",pace:"deep",text:[
+"青叶的手法很轻，像在给花瓣上药。",
+"她处理完你的旧伤，忽然说：“你身上有晨星之泪的气息。”她停下动作，“你去过世界树根底？”",
+"你点头。她沉默了一会儿：“我也去过。我在找一样东西——一片碎掉的晨星之泪。老祖宗说，完整的泪石镇得住封印，可泪石裂了，就得用碎泪去补。”",
+"她抬起眼：“碎泪在林邦东边的瘴沼里，泡了三十年。我想去捞，可林邦没人愿意陪我蹚那片泥。”"
+],options:[
+{t:"（“我陪你去。”）",effects:{xp:22,flag:"elf_leaf_swamp"},go:"elf_leaf_3"}
+]};
+
+N["elf_leaf_3"]={tag:"branch",place:"精灵林邦 · 东侧瘴沼",where:"夜",pace:"deep",sceneTitle:"支线 · 瘴沼",text:[
+"瘴沼的夜，又闷又臭，脚下的泥像活物，一踩一个凹陷。",
+"青叶走得很稳，每一步都踩在露出水面的草墩上。她回头放轻声音：“跟着我的脚印走。这泥里有东西——不是兽，是几十年的死气。”",
+"走到沼心，她忽然停住，蹲下来拨开一丛水草——水底下，有一点幽幽的绿光。她深吸一口气：“找到了。”",
+"她探身去捞，泥水漫到肘弯。就在这时，水底忽然翻涌起来，一团黑影朝她扑来。"
+],options:[
+{t:"（一把拽住她，同时拔刀）",effects:{xp:26,hp:-8,flag:"elf_leaf_guard"},go:"elf_leaf_4"}
+]};
+
+N["elf_leaf_4"]={tag:"branch",place:"精灵林邦 · 东侧瘴沼",where:"夜",pace:"deep",text:[
+"那团黑影是头老鳄，足有两丈长，一口能吞下半个人。",
+"你挡在青叶身前，老鳄甩尾拍来，你举臂硬挡——尾梢扫在小臂上，骨头像裂开一样疼，血顺着袖口滴进泥里。",
+"青叶在你身后喊：“别硬拼！引它转！它的左眼是瞎的！”你依言往左一闪，老鳄果然顿了一下。趁这个空档，青叶已经捞起那片碎泪，攥在手心，拉着你拼命往回跑。",
+"跑出瘴沼时，你俩都成了泥人。青叶摊开手，那片碎泪在她掌心里，泛着湿润的绿光。她看着你渗血的小臂，嘴唇抖了抖：“走，回去上药。”"
+],options:[
+{t:"（跟着她回药庐，接受她上药）",effects:{xp:24,hp:-6,flag:"elf_leaf_tear3"},go:"elf_leaf_5"}
+]};
+
+N["elf_leaf_5"]={tag:"branch",place:"精灵林邦 · 药庐",where:"夜",pace:"deep",text:[
+"青叶给你上药的手法，比上次更轻。",
+"她缠好绷带，忽然说：“我三百岁了。”她没看你，看着窗外的月色，“林邦的人活得长，可活得越长，越怕欠别人的。你今天这一挡，我欠你一条命。”",
+"她把那片碎泪放在桌上：“碎泪我留着补泪石。你这个人情，我用这片碎泪的记号还——往后你在林邦要做什么，这片碎泪认你。”",
+"你看着那片泛光的碎泪，又看了看她。月光从窗棂漏进来，落在她缠好的绷带上。"
+],options:[
+{t:"（收下碎泪的记号）",effects:{xp:22,infl:{elf:8},flag:"elf_leaf_mark"},go:"elf_leaf_6"}
+]};
+
+N["elf_leaf_6"]={tag:"branch",place:"精灵林邦 · 药庐",where:"白昼",pace:"normal",sceneTitle:"支线 · 泪与药",text:[
+"战后的第一个晴天，青叶把世界树根底的泪石补好了。",
+"她走出树根空腔时，脸上带着一点笑意：“裂纹停住了。这片碎泪，够撑几十年。”她转头看你，“你那片记号，我记着——林邦欠你一条命，也欠你一片泪。”",
+"药庐的房梁上，草药在风里轻轻晃。青叶把一包晒干的伤药塞进你怀里：“战场上下来的，带着。林邦的规矩：药不欠人——可你，我破例。”",
+"你握着那包药，药香在鼻尖绕了很久。"
+],options:[
+{t:"（带着林邦的药，继续走）",effects:{xp:20,infl:{elf:8},flag:"elf_leaf_done"},go:"warphase_14"}
 ]};
 
 /* /u1inj:data-nodes:dn_fc_life.js/ */
@@ -78906,6 +79673,137 @@ window.STORY_BLUEPRINT = {
   "faction_traitor_2": {tag:"main", vol:"vol_war", arc:"arc_war", pace:"deep"},
   "faction_traitor_3": {tag:"main", vol:"vol_war", arc:"arc_war", pace:"deep"},
   "faction_traitor_4": {tag:"main", vol:"vol_war", arc:"arc_war", pace:"normal"},
+  "faction_east_1": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"normal"},
+  "faction_east_2": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"deep"},
+  "faction_east_3": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"deep"},
+  "faction_east_4": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"deep"},
+  "faction_east_5": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"normal"},
+  "faction_east_6": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"deep"},
+  "faction_east_7": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"normal"},
+  "faction_east_8": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"deep"},
+  "faction_east_9": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"deep"},
+  "faction_east_10": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"normal"},
+  "faction_east_11": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"deep"},
+  "faction_east_12": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"normal"},
+  "faction_east_13": {tag:"main", vol:"vol_east", arc:"arc_fac_east", pace:"normal"},
+  "faction_orc_1": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"normal"},
+  "faction_orc_2": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"deep"},
+  "faction_orc_3": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"deep"},
+  "faction_orc_4": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"deep"},
+  "faction_orc_5": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"normal"},
+  "faction_orc_6": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"deep"},
+  "faction_orc_7": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"normal"},
+  "faction_orc_8": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"deep"},
+  "faction_orc_9": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"deep"},
+  "faction_orc_10": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"normal"},
+  "faction_orc_11": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"deep"},
+  "faction_orc_12": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"normal"},
+  "faction_orc_13": {tag:"main", vol:"vol_orc", arc:"arc_fac_orc", pace:"normal"},
+  "faction_dwarf_1": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"normal"},
+  "faction_dwarf_2": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"deep"},
+  "faction_dwarf_3": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"deep"},
+  "faction_dwarf_4": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"deep"},
+  "faction_dwarf_5": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"normal"},
+  "faction_dwarf_6": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"deep"},
+  "faction_dwarf_7": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"normal"},
+  "faction_dwarf_8": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"deep"},
+  "faction_dwarf_9": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"deep"},
+  "faction_dwarf_10": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"normal"},
+  "faction_dwarf_11": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"deep"},
+  "faction_dwarf_12": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"normal"},
+  "faction_dwarf_13": {tag:"main", vol:"vol_dwarf", arc:"arc_fac_dwarf", pace:"normal"},
+  "faction_elf_1": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"normal"},
+  "faction_elf_2": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"deep"},
+  "faction_elf_3": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"deep"},
+  "faction_elf_4": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"deep"},
+  "faction_elf_5": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"normal"},
+  "faction_elf_6": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"deep"},
+  "faction_elf_7": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"normal"},
+  "faction_elf_8": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"deep"},
+  "faction_elf_9": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"deep"},
+  "faction_elf_10": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"normal"},
+  "faction_elf_11": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"deep"},
+  "faction_elf_12": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"normal"},
+  "faction_elf_13": {tag:"main", vol:"vol_elf", arc:"arc_fac_elf", pace:"normal"},
+  "east_lang_1": {tag:"branch", vol:"vol_east", arc:"arc_fac_side", pace:"normal"},
+  "east_lang_2": {tag:"branch", vol:"vol_east", arc:"arc_fac_side", pace:"deep"},
+  "east_lang_3": {tag:"branch", vol:"vol_east", arc:"arc_fac_side", pace:"deep"},
+  "east_lang_4": {tag:"branch", vol:"vol_east", arc:"arc_fac_side", pace:"deep"},
+  "east_lang_5": {tag:"branch", vol:"vol_east", arc:"arc_fac_side", pace:"deep"},
+  "east_lang_6": {tag:"branch", vol:"vol_east", arc:"arc_fac_side", pace:"normal"},
+  "orc_ayan_1": {tag:"branch", vol:"vol_orc", arc:"arc_fac_side", pace:"normal"},
+  "orc_ayan_2": {tag:"branch", vol:"vol_orc", arc:"arc_fac_side", pace:"deep"},
+  "orc_ayan_3": {tag:"branch", vol:"vol_orc", arc:"arc_fac_side", pace:"deep"},
+  "orc_ayan_4": {tag:"branch", vol:"vol_orc", arc:"arc_fac_side", pace:"deep"},
+  "orc_ayan_5": {tag:"branch", vol:"vol_orc", arc:"arc_fac_side", pace:"deep"},
+  "orc_ayan_6": {tag:"branch", vol:"vol_orc", arc:"arc_fac_side", pace:"normal"},
+  "dwarf_bronze_1": {tag:"branch", vol:"vol_dwarf", arc:"arc_fac_side", pace:"normal"},
+  "dwarf_bronze_2": {tag:"branch", vol:"vol_dwarf", arc:"arc_fac_side", pace:"deep"},
+  "dwarf_bronze_3": {tag:"branch", vol:"vol_dwarf", arc:"arc_fac_side", pace:"deep"},
+  "dwarf_bronze_4": {tag:"branch", vol:"vol_dwarf", arc:"arc_fac_side", pace:"deep"},
+  "dwarf_bronze_5": {tag:"branch", vol:"vol_dwarf", arc:"arc_fac_side", pace:"deep"},
+  "dwarf_bronze_6": {tag:"branch", vol:"vol_dwarf", arc:"arc_fac_side", pace:"normal"},
+  "elf_leaf_1": {tag:"branch", vol:"vol_elf", arc:"arc_fac_side", pace:"normal"},
+  "elf_leaf_2": {tag:"branch", vol:"vol_elf", arc:"arc_fac_side", pace:"deep"},
+  "elf_leaf_3": {tag:"branch", vol:"vol_elf", arc:"arc_fac_side", pace:"deep"},
+  "elf_leaf_4": {tag:"branch", vol:"vol_elf", arc:"arc_fac_side", pace:"deep"},
+  "elf_leaf_5": {tag:"branch", vol:"vol_elf", arc:"arc_fac_side", pace:"deep"},
+  "elf_leaf_6": {tag:"branch", vol:"vol_elf", arc:"arc_fac_side", pace:"normal"},
+  "war_after_1": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_2": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_3": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_4": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_5": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_6": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_7": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_8": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_9": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_10": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_11": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_12": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_13": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_14": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_15": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_16": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_17": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_18": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_19": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_20": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_21": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_22": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_23": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_24": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_25": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_26": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_27": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_28": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_29": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_30": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_31": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_32": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_33": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_after_34": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_35": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"deep"},
+  "war_after_36": {tag:"main", vol:"vol_north", arc:"arc_war_after", pace:"normal"},
+  "war_epilogue_1": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"normal"},
+  "war_epilogue_2": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_3": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_4": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_5": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"normal"},
+  "war_epilogue_6": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_7": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_8": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_9": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_10": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"epic"},
+  "war_epilogue_11": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"epic"},
+  "war_epilogue_12": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"epic"},
+  "war_epilogue_13": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_14": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"epic"},
+  "war_epilogue_15": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"normal"},
+  "war_epilogue_16": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_17": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"normal"},
+  "war_epilogue_18": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"deep"},
+  "war_epilogue_19": {tag:"main", vol:"vol_north", arc:"arc_war_epi", pace:"epic"},
   "goldscale_10": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
   "anchor_chen_1": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
   "anchor_chen_2": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
@@ -79312,6 +80210,538 @@ N["u8_fl_end"]={place:"自由城邦 · 执政厅",where:"白昼",text:[
 ]};
 /* /u8inj:nodes-end/ */
 
+/* /u1inj:data-nodes:dn_war_after.js/ */
+/* ===== 群雄割据 M9 战后世界章（dn_war_after.js）=====
+ * war_after_1~36：终战后大陆各区余波 + 事件回望 + 收束
+ * 入口：warphase_14 选项（战后，去大陆各处看看）
+ */
+N["war_after_1"]={tag:"main",place:"大陆 · 战后 · 自由城邦",where:"白昼",pace:"normal",sceneTitle:"战后 · 第一卷 · 硝烟散处",text:[
+"终战的硝烟散尽后，你从战场下来，一路走回自由城邦。",
+"城门口的检查哨拆了，换成了粥棚。逃难的人坐在墙根下晒太阳，脸上还带着土色，可眼睛活过来了——有人在笑，有人哭，有人在数自己还剩几个铜板。",
+"李管事在码头等你。他老了很多，腰弯了，可眼神还是精明的：“回来得好。战后的钱最好赚，也最烫手——你走不走这一趟，自己掂量。”",
+"城门口的风，带着烟火和粥饭的香气。战争结束了，日子还在过。"
+],options:[
+{t:"（在自由城歇下脚，看看战后的人间）",go:"war_after_2"},
+{t:"（不停留，继续往北走）",go:"war_after_3"}
+]};
+
+N["war_after_2"]={tag:"main",place:"自由城邦 · 交汇城 · 码头",where:"白昼",pace:"deep",text:[
+"你在自由城住了三天。",
+"码头的船又多了起来，帆在风里扯得哗哗响。粮价回落了，铁价也回落了，只有药铺的生意还旺着——战后的人，比战时更需要药。",
+"你在码头遇见一个退伍的老兵，他缺了条胳膊，正在帮人搬货，用一只手和肩膀。他看见你腰间的军牌，咧嘴一笑：“兄弟，活着回来了？”",
+"你点头。他拍拍你的肩：“活着就好。活着，就还有日子过。”他说完，又转身去扛货，步子一瘸一拐，却走得稳稳当当。",
+"你站在码头上，看着他的背影。战争结束了——可有些人，带着战争留下的东西，还得继续活。"
+],options:[
+{t:"（把这句话记在心里，继续上路）",effects:{xp:20,flag:"war_after_free"},go:"war_after_3"}
+]};
+
+N["war_after_3"]={tag:"main",place:"北境 · 第三哨 · 要塞",where:"白昼",pace:"normal",sceneTitle:"战后 · 第二卷 · 雪线",text:[
+"第三哨的城墙塌了一半，还没修。",
+"雪已经停了，阳光照在残雪上，亮得刺眼。城里的兵少了大半——有的战死了，有的解甲归田。城门口贴着一张告示：凡战后无主之地，可自行开垦。",
+"你走到钟楼下，那口铜钟还挂着。一个陌生的老卒在擦钟，他看见你，说：“擦钟的老卒，上个月没了。死的时候，手里还攥着砂纸。”",
+"你抬头看那口钟。钟身上那道铁牌刻痕还在——三十年了，它还在。"
+],options:[
+{t:"（替老卒，把钟再擦一遍）",effects:{xp:22,flag:"war_after_bell"},go:"war_after_4"}
+]};
+
+N["war_after_4"]={tag:"main",place:"北境 · 第三哨 · 钟楼顶",where:"白昼",pace:"deep",text:[
+"你爬上钟楼，用砂纸把铜钟的凹痕边擦了一遍。",
+"擦到一半，你发现刻痕的边角，被磨得比上次更亮了——像是有人在你走后，也上来擦过它。你在钟座底下，摸到一样东西：一块包着油布的铁牌。",
+"油布上写着字，笔迹苍老：“守钟三十年，等一个能看懂刻痕的人。铁牌给你——它不是钥匙，是方向。”",
+"你翻开铁牌，牌面上铸着一道锚痕，与你在七处见过的，是同一脉。你把它收进怀里，站在钟楼上，看雪线在远处泛着光。"
+],options:[
+{t:"（收下铁牌，记住守钟人）",effects:{xp:24,flag:"war_after_plate"},go:"war_after_5"}
+]};
+
+N["war_after_5"]={tag:"main",place:"北境 · 雪原 · 旧战场",where:"夜",pace:"deep",sceneTitle:"战后 · 第三卷 · 旧战场",text:[
+"战争结束后的第一场雪夜，你独自去了旧战场。",
+"雪已经盖住了大部分痕迹，可有些东西盖不住：断掉的枪、烧焦的旗角、冻土里露出的半截刀鞘。风呜咽着穿过旷野，像无数人在低语。",
+"你在雪地里走了一夜，捡起一面残破的旗——不是联军的，也不是诸部的，是一面没有纹章的旧旗。旗角上缝着一枚铜扣，磨得发亮。",
+"你把旗叠好，放进怀里。这片土地死了太多人，活下来的，得替他们把故事记下去。"
+],options:[
+{t:"（把旧旗带回，替死去的人记着）",effects:{xp:22,flag:"war_after_flag"},go:"war_after_6"}
+]};
+
+N["war_after_6"]={tag:"main",place:"北境 · 铁门关 · 关城",where:"白昼",pace:"normal",sceneTitle:"战后 · 第四卷 · 关城",text:[
+"铁门关的城门，战后第一次全开。",
+"秦长风站在城楼上，看着关外。他比战时更瘦了，颧骨支棱着，可腰杆还是直的。你走上城楼，他头也不回：“你来了。战争结束了，可有些事，还没结束。”",
+"他看着关外灰白的雪原，声音很低：“晨天故都的事，我查了三十年。战后，我打算亲自去一趟——你要不要一起。”",
+"风从关外灌进来，带着雪沫子。那道三十年的门，终于有人要开了。"
+],options:[
+{t:"（“我陪你去晨天故都。”）",effects:{xp:26,flag:"war_after_chen"},go:"war_after_7"},
+{t:"（“先让活着的人安顿好，再去。”）",effects:{xp:18,flag:"war_after_wait3"},go:"war_after_7"}
+]};
+
+N["war_after_7"]={tag:"main",place:"东境 · 承天城 · 帝京门",where:"白昼",pace:"deep",sceneTitle:"战后 · 第五卷 · 承天",text:[
+"你随秦长风南下，先到了承天城。",
+"承天城的城门开着，可城里的气氛还是紧的——战后清算，一拨人进去了，一拨人出来了。青袍主簿在官署门口等你，他老得厉害，可眼神还是亮的。",
+"他把一叠文书塞给你：“战后抚恤的册子，你帮着看看——东境战死的人，一个都不能漏。”他说着，咳了两声，“我老了，眼睛花了，怕漏了谁。”",
+"你接过册子。册子很厚，每一页，都是一个名字，一个家。"
+],options:[
+{t:"（坐下来，替他核这一册抚恤）",effects:{xp:24,infl:{east:8},flag:"war_after_pension"},go:"war_after_8"}
+]};
+
+N["war_after_8"]={tag:"main",place:"东境 · 承天城 · 官署",where:"夜",pace:"deep",text:[
+"抚恤册核到第三夜，你翻到一页，停住了。",
+"那页上写着：北境第三哨，守钟人，无亲眷，阵亡于围城之战。抚恤金无人领取。",
+"你想起第三哨那个擦钟的老卒——他死的时候，手里攥着砂纸。你提笔，在抚恤栏里填了一行字：由铁门关秦长风代领，用于修缮第三哨钟楼。",
+"青袍主簿在旁边看着，没说话。半晌，他轻轻说：“承天的官，要是都像你这么记人，就好了。”",
+"窗外的天，还是阴的。可你心里那一角，亮了一点。"
+],options:[
+{t:"（合上册子，天快亮了）",effects:{xp:22,infl:{east:8},flag:"war_after_book"},go:"war_after_9"}
+]};
+
+N["war_after_9"]={tag:"main",place:"东境 · 承天城 · 城隍庙",where:"夜",pace:"normal",sceneTitle:"战后 · 第六卷 · 城隍",text:[
+"离开承天前一夜，你去了城隍庙。",
+"庙里的香火比战时旺了——活下来的人，都来给死去的人上香。你在庙门前遇见沈怀远，他穿着一身干净的新官服，胸口的补子上绣着一枝粮穗。",
+"他看见你，行了个礼：“主簿大人，哦不，该叫您一声老大人了。户房如今收粮、放粮、记粮价，都是我在管。”他顿了顿，声音低了些，“那千石粮，我分了三批，全放给了战后断粮的人家。”",
+"他抬头看你，眼睛很亮：“榜外的名字，也是名字。您教我的。”"
+],options:[
+{t:"（拍拍他的肩：“你记了三年的账，没有白记。”）",effects:{xp:22,flag:"war_after_lang"},go:"war_after_10"}
+]};
+
+N["war_after_10"]={tag:"main",place:"兽人草原 · 狼头峰",where:"白昼",pace:"normal",sceneTitle:"战后 · 第七卷 · 草原",text:[
+"草原上的狼群，已经全数北归。",
+"阿岩站在狼头峰上，看着远方。他的刀挂在腰间——不是他那把家传的刀，是新的。那把旧刀，还在你怀里。",
+"他看见你，咧嘴一笑：“战狼，回来了。草原的战事完了，可草原的日子，比战事还长——得放牧、得打猎、得跟北边换粮。”",
+"他拍了拍身边的位置：“坐。草原的规矩，兄弟回来了，先喝酒。”"
+],options:[
+{t:"（坐下来，跟阿岩喝一碗酒）",effects:{xp:20,infl:{orc:8},flag:"war_after_orc"},go:"war_after_11"}
+]};
+
+N["war_after_11"]={tag:"main",place:"兽人草原 · 河湾",where:"夜",pace:"deep",text:[
+"酒喝到一半，阿岩忽然问起那把刀。",
+"“战狼，我爹的刀，还在你那儿吧。”你点头。他低头拨弄着火堆：“那扇门，我后来想明白了——不是挖出来看的，是等它自己开的。”",
+"他抬起头，火光在他眼里跳：“老萨满说，地底下的东西，都有它的时辰。时辰不到，谁挖都是白挖。”",
+"他忽然笑了：“所以我把那把刀留在你那儿，是对的——你比我走得远，比我先看到时辰。”"
+],options:[
+{t:"（“等时辰到了，我把刀还你。”）",effects:{xp:22,infl:{orc:8},flag:"war_after_knife"},go:"war_after_12"}
+]};
+
+N["war_after_12"]={tag:"main",place:"矮人山国 · 山门",where:"白昼",pace:"normal",sceneTitle:"战后 · 第八卷 · 山国",text:[
+"矮人山国的炉火，战后就没有熄过。",
+"不是打刀——是修。修城门、修桥、修犁，铁匠们把战时的刀熔了，打成农具。老铁匠已经不抡锤了，坐在门槛上晒太阳，眯着眼看徒弟们干活。",
+"铜锤如今是坊里的一把好手。他看见你，跑过来，举着一柄新打的铁犁：“铁匠长！你看，这犁刃直不直！”",
+"你接过铁犁，翻来覆去看了看，刃口直得像一条线。你点点头：“直了。”铜锤咧着嘴笑了，露出一口白牙。"
+],options:[
+{t:"（把铁犁还给他：“山国的火，没灭。”）",effects:{xp:20,infl:{dwarf:8},flag:"war_after_dwarf"},go:"war_after_13"}
+]};
+
+N["war_after_13"]={tag:"main",place:"矮人山国 · 南矿洞",where:"夜",pace:"deep",text:[
+"夜里，你独自下了南矿洞。",
+"那扇铁门还锁着，七道符印里，裂开的那道没有继续扩大，也没有愈合。你把手掌贴在铁门上，凉意透进掌心——门后的东西，安静下来了。",
+"你在门边坐下，从怀里掏出那枚守钟人给的铁牌，又摸出阿岩家的旧刀、老萨满的兽骨。这些物件，在幽暗的火光里，像是彼此应和着什么。",
+"你把它们一件件收好。时辰还没到——但你离它，越来越近了。"
+],options:[
+{t:"（在铁门前坐到天亮）",effects:{xp:24,flag:"war_after_anchor3"},go:"war_after_14"}
+]};
+
+N["war_after_14"]={tag:"main",place:"精灵林邦 · 林缘",where:"白昼",pace:"normal",sceneTitle:"战后 · 第九卷 · 林海",text:[
+"林邦的林海，战后比战时更绿了。",
+"巡林长在林缘等你。他老了一些，可手里的角弓还是满的：“弓手们都撤回来了。林子一根树没少——多亏你当初那句‘限定路线’。”",
+"他带你看了一圈林界，最后在世界树下站住：“晨星之泪的裂纹，青叶补好了。她让我带句话：你欠林邦的那片泪，林邦记着——你也记着，林邦的门，为你开着。”",
+"风过树梢，整座林海低低地响，像在应和。"
+],options:[
+{t:"（“林邦的门，我也记着。”）",effects:{xp:20,infl:{elf:8},flag:"war_after_elf"},go:"war_after_15"}
+]};
+
+N["war_after_15"]={tag:"main",place:"精灵林邦 · 药庐",where:"白昼",pace:"normal",text:[
+"你绕到药庐，青叶正在晾草药。",
+"她看见你，手上的活没停：“伤好了？好了就走吧——林邦的药，不欠人。”可你转身要走时，她又叫住你，塞给你一包药，“带着。战场上落下的旧伤，换季的时候会疼。”",
+"你握着那包药，药香绕在鼻尖。她头也不回，继续晾她的草药。",
+"你走出药庐，林间的光斑落了一身。"
+],options:[
+{t:"（带着林邦的药，继续走）",effects:{xp:18,infl:{elf:6},flag:"war_after_herb"},go:"war_after_16"}
+]};
+
+N["war_after_16"]={tag:"main",place:"圣城 · 大教堂",where:"白昼",pace:"normal",sceneTitle:"战后 · 第十卷 · 圣城",text:[
+"圣城的粥棚，战后还支着。",
+"老执事在教堂门口分发粥，手颤颤的，可一勺一勺舀得很稳。他看见你，把勺子递给旁人，走过来：“你来了。教会的争论，有了结果——开仓济民。你那一句‘光明该照进粮仓’，教会记住了。”",
+"他顿了顿，放低音量：“圣痕司的旧案卷，我让人封存了。那桩铁匠的案子——总有一天，会有人来翻它。那个人，应该知道它在哪里。”",
+"他拍了拍你的肩，又转身去舀粥了。"
+],options:[
+{t:"（把旧案卷的位置记在心里）",effects:{xp:22,infl:{church:8},flag:"war_after_church"},go:"war_after_17"}
+]};
+
+N["war_after_17"]={tag:"main",place:"圣城 · 圣痕司 · 卷宗房",where:"夜",pace:"deep",text:[
+"你趁夜进了圣痕司的卷宗房。",
+"老执事说的那卷旧案，静静躺在第三排架子的最底层。你抽出来，就着月光翻开——二十年前，铁匠被烧死的卷宗，证人、证词、判决，一应俱全。",
+"卷宗的最后一页，夹着一片焦黑的纸角，纸上依稀可以辨出半个锚形的符号。你盯着那符号，与守钟人的铁牌、老萨满的兽骨、矮人矿洞的刻痕——是一家人。",
+"你把纸角收进怀里，把卷宗放回原处。有些真相，要在合适的时辰，才该见光。"
+],options:[
+{t:"（合上卷宗，退出圣痕司）",effects:{xp:24,flag:"war_after_case"},go:"war_after_18"}
+]};
+
+N["war_after_18"]={tag:"main",place:"死亡沙漠 · 绿洲集市城",where:"白昼",pace:"normal",sceneTitle:"战后 · 第十一卷 · 沙海",text:[
+"沙漠的驼铃声，战后又响起来了。",
+"扎克的病好了大半，能拄着拐在集市上走。他看见你，老远就喊：“兄弟！我就知道你会回来！沙漠的茶，给你留着！”",
+"他给你倒了一碗茶，絮絮叨叨地讲诸部的事：水草地分了，驼队通了，北边的粮南边的盐，都从沙道上过。他忽然放低音量：“你捡的那枚玉片，我让人照着刻了个模子——诸部的孩子，现在都戴这个。”",
+"他掏出一枚小小的玉片挂坠，递给你：“你留一个。沙漠的路，认这个东西。”"
+],options:[
+{t:"（收下玉片挂坠）",effects:{xp:20,infl:{desert:8},flag:"war_after_jade"},go:"war_after_19"}
+]};
+
+N["war_after_19"]={tag:"main",place:"死亡沙漠 · 古代遗迹",where:"夜",pace:"deep",text:[
+"你回到捡到玉片的那道地缝，又下去探了一次。",
+"这一次，你发现地缝深处的石壁上，刻痕比上次清晰了许多——像是有人在你走后，把浮沙和苔藓清掉了。刻痕的内容，是一幅地图的残片。",
+"你凑近细看：图上标着七处位置，其中六处，与你见过的刻痕、铁牌、兽骨一一对应。第七处，在图的中央，标着一个字：秤。",
+"你盯着那个字，胸口忽然一热。七处位置，七枚锚——而你手里，已经集齐了六处线索。"
+],options:[
+{t:"（把地图残片拓下来）",effects:{xp:26,flag:"war_after_map"},go:"war_after_20"}
+]};
+
+N["war_after_20"]={tag:"main",place:"西境 · 元素荒原",where:"白昼",pace:"normal",sceneTitle:"战后 · 第十二卷 · 西境",text:[
+"你绕道西境，看了一回元素荒原。",
+"荒原上的元素风暴，战后反而平息了许多。游侠学院的院长在门口等你：“你来晚了——风暴最烈的时候已经过去了。”他顿了顿，“不过，也许来得正是时候。”",
+"他领你到学院后山，指着一道新裂开的岩缝：“风暴把地皮掀开了一层，露出底下一些旧东西。你要不要看看。”",
+"岩缝深处，可辨出一道刻痕——锚形。"
+],options:[
+{t:"（下到岩缝里查看）",effects:{xp:22,flag:"war_after_west"},go:"war_after_21"}
+]};
+
+N["war_after_21"]={tag:"main",place:"西境 · 元素荒原 · 岩缝",where:"夜",pace:"deep",text:[
+"岩缝底部的刻痕，与别处不同——它是一幅完整的图案：一只天平，秤盘上压着七枚锚。",
+"你蹲在刻痕前，看了很久。天平的图案，你见过——在墓园无字碑下，在金秤家族的古籍里，在晨天故都的天衡殿。",
+"你伸手，指尖沿着刻痕划过。刻痕的边缘很新——像是被什么东西，最近才重新描过。",
+"你站起来，看着头顶那道裂缝透进来的天光。七枚锚，一只秤——这个图案，正在把散落在大陆各处的线索，收拢成一条线。"
+],options:[
+{t:"（把天平与七锚的图案记在心里）",effects:{xp:24,flag:"war_after_scale"},go:"war_after_22"}
+]};
+
+N["war_after_22"]={tag:"main",place:"大陆 · 各处的归途",where:"白昼",pace:"normal",sceneTitle:"战后 · 第十三卷 · 归途",text:[
+"你从西境回来，一路走，一路看。",
+"自由城的粥棚、第三哨的钟楼、承天的官署、草原的河湾、山国的炉火、林邦的药庐、圣城的烛火、沙漠的驼铃——战后的大陆，像一块被打碎又拼起来的陶器，裂缝还在，可器型回来了。",
+"你在路边的小店里歇脚，听见邻桌的人在说话：“仗打完了，日子还得过。”另一个说：“是啊，活着就好。”",
+"你想起码头那个独臂的老兵。活着就好——这四个字，大概是这场战争里，最重的一句话。"
+],options:[
+{t:"（把这句话，放在心里最深处）",effects:{xp:20,flag:"war_after_alive"},go:"war_after_23"}
+]};
+
+N["war_after_23"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"夜",pace:"deep",sceneTitle:"战后 · 第十四卷 · 钟声",text:[
+"你回到第三哨，在钟楼顶上坐了一夜。",
+"月光照着雪原，也照着那口铜钟。你忽然想敲它一下——不是为了报信，就是想让这片雪原，听一听活人的声音。",
+"你握住钟绳，拉了一下。钟声沉沉地荡开，盖过雪原，盖过第三哨的屋顶，像一只巨大的手，抚过这片刚刚安静下来的土地。",
+"钟声落尽后，你在钟座底下，又摸到一样东西——一块新的油布，上面压着一枚石子。油布上写着字，是陌生的笔迹：“听到钟声，就知道你回来了。老卒托我转告：他等的人，等到了。”",
+"你握着那块油布，在钟楼顶坐到天亮。"
+],options:[
+{t:"（把油布收好，替老卒记着这句话）",effects:{xp:24,flag:"war_after_bell2"},go:"war_after_24"}
+]};
+
+N["war_after_24"]={tag:"main",place:"自由城邦 · 交汇城 · 码头",where:"白昼",pace:"deep",sceneTitle:"战后 · 第十五卷 · 码头",text:[
+"你最后去了一趟自由城码头。",
+"码头比战时热闹多了，船来船往，吆喝声此起彼伏。你站在上次遇见独臂老兵的地方，看了一会儿，没有看到他——也许他去了别处，也许他正在哪个货堆后面，用一只手，扛着他的日子。",
+"你在码头坐了很久，看船靠岸，看人下船。有人背着行李，有人抱着孩子，有人空着手，却带着一脸劫后余生的笑。",
+"你站起来，拍了拍身上的灰。战争结束了，这片土地上的故事，还在往下写——而你，还在这故事里。"
+],options:[
+{t:"（沿着码头，走向大陆的下一个路口）",effects:{xp:20,flag:"war_after_dock"},go:"war_after_25"}
+]};
+
+N["war_after_25"]={tag:"main",place:"大陆 · 岔路口",where:"白昼",pace:"normal",sceneTitle:"战后 · 第十六卷 · 岔路",text:[
+"你在大陆的岔路口停下来。",
+"四条路，四个方向：往北，是第三哨和雪原；往东，是承天和晨天故都；往西，是荒原和西境；往南，是自由城和更远的南方。",
+"你站在路口，风从四个方向吹来。怀里那堆物件——铁牌、兽骨、玉片、旧刀、拓片、焦黑的纸角——在衣襟下轻轻响着，像在催你上路。",
+"秦长风的话在耳边响：“有些事，还没结束。”你低头看了看怀里的东西，抬起头，选了一个方向。"
+],options:[
+{t:"（往东：去晨天故都，赴秦长风之约）",effects:{xp:24,flag:"war_after_go_east"},go:"war_after_26"},
+{t:"（往北：回第三哨，再看一眼雪原）",effects:{xp:20,flag:"war_after_go_north"},go:"war_after_27"},
+{t:"（往南：先回自由城，把日子过起来）",effects:{xp:18,flag:"war_after_go_south"},go:"war_after_28"}
+]};
+
+N["war_after_26"]={tag:"main",place:"东境 · 晨天故都 · 城门外",where:"夜",pace:"deep",sceneTitle:"战后 · 第十七卷 · 故都",text:[
+"你沿着东行的路，走了七天，到了晨天故都。",
+"故都的城门早已坍塌，城墙上的藤蔓爬得比人还高。秦长风站在城门外，背着手，看着那片废墟。他听见脚步声，没有回头：“你来了。比我想的快。”",
+"他伸手，推开半扇城门。门轴发出一声悠长的呻吟，像这座死城，终于等来了活人。",
+"风从城门洞里灌出来，带着尘土和旧木的气息。你跟在秦长风身后，走进了那座被从册子上抹掉的故都。"
+],options:[
+{t:"（随秦长风，走进晨天故都）",effects:{xp:26,flag:"war_after_chen2"},go:"war_after_29"}
+]};
+
+N["war_after_27"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"夜",pace:"deep",sceneTitle:"战后 · 第十八卷 · 雪夜",text:[
+"你往北走了三天，回到第三哨。",
+"那一夜，雪又下起来了。你站在城墙上，看着雪花落进城里，落在修了一半的城墙上，落在空荡荡的校场上。城里的灯火稀稀落落，像散落在雪地里的火星。",
+"你在城墙上站到半夜，忽然听见钟楼传来一声钟响——不是报时，是一声孤零零的、像问候一样的钟声。",
+"你愣了一下，随即笑了。那是新来的守钟人在试钟。这口钟，没有因为老卒的死而沉默——它还在响，就像这片土地，还在活。"
+],options:[
+{t:"（对着钟声的方向，也回应了一声）",effects:{xp:22,flag:"war_after_snow"},go:"war_after_30"}
+]};
+
+N["war_after_28"]={tag:"main",place:"自由城邦 · 交汇城 · 市集",where:"白昼",pace:"deep",sceneTitle:"战后 · 第十九卷 · 市集",text:[
+"你回到自由城，在市集里逛了一整天。",
+"战后第一个丰收季，市集上堆满了新粮。卖粮的老农咧着嘴笑：“今年的谷子，是战后第一茬！甜！”他抓起一把谷子给你看，谷粒饱满，在阳光下发亮。",
+"你买了一袋新粮，扛在肩上，走在人群里。有人跟你擦肩而过，有人冲你点头，有人拉着你问北边的战事。你一一答了，说到最后，总加上一句：“都过去了。”",
+"你忽然觉得，这句“都过去了”，是这场战争里，最好听的一句话。"
+],options:[
+{t:"（在自由城住下来，过一段太平日子）",effects:{xp:20,flag:"war_after_market"},go:"war_after_31"}
+]};
+
+N["war_after_29"]={tag:"main",place:"东境 · 晨天故都 · 天衡殿遗址",where:"夜",pace:"deep",sceneTitle:"故都 · 天衡殿",text:[
+"晨天故都的废墟里，天衡殿只剩下一片台基。",
+"秦长风站在台基中央，用手掌抚过地面。月光照在残破的浮雕上——那是一只巨大的天平，秤盘上压着七枚锚，与你在地缝里看到的图案，一模一样。",
+"他蹲下来，说：“我查了三十年，查到一个说法：晨天王朝覆灭前，把七枚镇柱的锚，交给了七个家族看守。金家守秤，其余六家守锚。”",
+"他抬起头，月光落在他脸上：“那个说法还说——锚在，秤在；秤在，天不塌。”"
+],options:[
+{t:"（“金家……我知道他们在哪儿。”）",effects:{xp:28,flag:"war_after_scale2"},go:"war_after_32"}
+]};
+
+N["war_after_30"]={tag:"main",place:"北境 · 第三哨 · 钟楼顶",where:"夜",pace:"deep",sceneTitle:"雪夜 · 钟声",text:[
+"你留在第三哨过了冬。",
+"每天清晨，你都会上钟楼，帮新来的守钟人擦钟。那口钟的凹痕，在你的砂纸下，一点一点变得更亮。",
+"春天来的时候，雪开始化了。守钟人是个沉默的年轻人，他有一天忽然开口：“老卒走前跟我说，这口钟，等的那个人，迟早会回来敲它。”",
+"他看着你，说：“是你吧。”你没有回答，只是握住钟绳，又拉了一下。钟声荡开，惊起檐上的积雪，簌簌地落了一地。",
+"雪落尽时，春天就到了。"
+],options:[
+{t:"（在第三哨，等过这个春天）",effects:{xp:22,flag:"war_after_spring"},go:"war_after_33"}
+]};
+
+N["war_after_31"]={tag:"main",place:"自由城邦 · 交汇城 · 旧居",where:"白昼",pace:"deep",sceneTitle:"太平 · 炊烟",text:[
+"你在自由城赁了一间小院，住了下来。",
+"院子里有一棵老槐树，春天发芽，夏天撑开一树荫凉。你在树下支了一张桌子，白天帮人写信、记账，晚上看星星。",
+"邻居是个寡居的老太太，隔三差五给你送一碗汤。她有一次说：“你这个人，身上有战场的气味。可你坐在树底下的时候，又像个教书先生。”",
+"你笑了笑，没有接话。战场的日子，和平的日子，都是日子。能坐在树荫底下喝一碗热汤，就是好日子。"
+],options:[
+{t:"（在树荫底下，过完这个夏天）",effects:{xp:20,flag:"war_after_house"},go:"war_after_34"}
+]};
+
+N["war_after_32"]={tag:"main",place:"东境 · 晨天故都 · 地下密室",where:"夜",pace:"deep",sceneTitle:"故都 · 地下",text:[
+"秦长风在天衡殿台基下，找到一间地下密室。",
+"密室的石门被藤蔓和泥土封死，你们凿了一整天，才凿开一条缝。门后是一间不大的石室，正中摆着一只石匣，匣盖上刻着一行字：“秤在，天不塌。”",
+"石匣里，躺着一卷发黄的绢帛。你展开绢帛，上面是一幅完整的地图——七枚锚的位置，一只天平，以及地图中央，那个“秤”字。",
+"秦长风站在你身后，看着那幅绢帛，声音有些哑：“三十年了。我找的，就是这东西。”他把绢帛递给你，“你拿着——你比我会用。”"
+],options:[
+{t:"（接过绢帛，收下天平的秘密）",effects:{xp:30,flag:"war_after_ancient"},go:"war_after_35"}
+]};
+
+N["war_after_33"]={tag:"main",place:"北境 · 第三哨 · 要塞外",where:"白昼",pace:"normal",sceneTitle:"春归 · 雪线",text:[
+"春天，你离开了第三哨。",
+"守钟的年轻人在城门口送你，把那口铜钟的钟杵塞给你：“老卒说，擦钟的人，走到哪儿都该带着它。不是武器——是个念想。”",
+"你握着那根磨得光滑的钟杵，走出城门。雪线在远处退去，露出黑色的土地。有农人在田里翻土，有孩子在路边追着一只土狗跑。",
+"你回头看了一眼第三哨。城墙上的雪化了，露出青灰色的砖。这座城，还站着。"
+],options:[
+{t:"（带着钟杵，走向雪线外）",effects:{xp:20,flag:"war_after_leave"},go:"war_after_36"}
+]};
+
+N["war_after_34"]={tag:"main",place:"自由城邦 · 交汇城 · 码头",where:"白昼",pace:"deep",sceneTitle:"秋收 · 码头",text:[
+"秋天，你在自由城码头的货行里，又遇见了那个独臂老兵。",
+"他如今在货行里管账，用一只手写字，居然写得不慢。他看见你，咧嘴一笑：“兄弟，又见面了！我如今有正经差事了——管账，不用扛货。”",
+"他顿了顿，放低音量：“战后的账，比战时的难算。有人想把战时的亏空赖掉，有人想浑水摸鱼。可我不怕——我这条胳膊，就是战时丢的，我比谁都记得清楚。”",
+"他拿起笔，在账本上重重地落下一笔：“每一笔，都得对得起丢胳膊的那些人。”"
+],options:[
+{t:"（“每一笔，都对得起。”）",effects:{xp:20,flag:"war_after_ledger"},go:"war_after_36"}
+]};
+
+N["war_after_35"]={tag:"main",place:"东境 · 晨天故都 · 天衡殿遗址",where:"夜",pace:"deep",sceneTitle:"故都 · 天将明",text:[
+"你在天衡殿的台基上，坐了一夜。",
+"绢帛摊在膝上，七枚锚的位置，在地图上连成一条线，像一串埋在大地深处的锁链。你想起老萨满的话、老铁匠的话、守钟人的铁牌——它们全指向同一件事：大地之下，压着七根柱子；柱子不倒，天不塌。",
+"秦长风也坐在旁边。他忽然说：“我查了三十年，现在知道了真相，却不知道该怎么办。”他看着你，“你知道的——你见过的东西，比我多。”",
+"你低头看着那幅绢帛。地图中央的“秤”字，在月光下泛着幽幽的光。你想起金秤家族的守秤人——他们守了三百年，等的，就是有人能把这幅图，看全。",
+"天边，亮起一线鱼肚白。"
+],options:[
+{t:"（合上绢帛：“天快亮了。有些事，得等天亮再想。”）",effects:{xp:24,flag:"war_after_dawn"},go:"war_after_36"}
+]};
+
+N["war_after_36"]={tag:"main",place:"大陆 · 岔路口",where:"白昼",pace:"normal",sceneTitle:"战后 · 终卷 · 新路",text:[
+"你走完了战后大陆的最后一程，又回到那个岔路口。",
+"这一次，四条路上的风景都变了一些：往北的雪线退了，往东的官道通了，往西的风暴停了，往南的码头忙了。这片土地，正在一寸一寸地，从战争的伤里长回来。",
+"你摸了摸怀里的东西——铁牌、兽骨、玉片、旧刀、钟杵、绢帛。它们压在一起，像一部没读完的书，还差最后一页。",
+"你抬起头，看着天边。战争结束了，可有些事还没结束——那七枚锚，那只秤，那个地底下的秘密，还等着你，去翻开最后一页。",
+"你选了一个方向，迈开步子。身后，大陆的风，正从四个方向吹来。"
+],options:[
+{t:"（翻开最后一页：去寻那第七枚锚）",effects:{xp:30,flag:"war_after_final"},go:"war_epilogue_1"}
+]};
+
+/* /u1inj:data-nodes:dn_war_epilogue.js/ */
+/* ===== 群雄割据 M9 终局尾声（dn_war_epilogue.js）=====
+ * war_epilogue_1~19：寻第七锚 → 天秤真相 → 汇流回 anchor_finale_1（M7 终局章）
+ */
+N["war_epilogue_1"]={tag:"main",place:"大陆 · 寻锚之路 · 起点",where:"白昼",pace:"normal",sceneTitle:"尾声 · 第七枚锚",text:[
+"你决定去寻那第七枚锚。",
+"六处线索你已经走过——第三哨的钟、南矿洞的铁门、草原的石林、矮山的地底、林邦的树根、沙漠的遗迹。绢帛上的地图，六处都已点亮，只有第七处，还暗着。",
+"你把绢帛铺在桌上，就着灯看了半夜。第七处的位置，在图上没有标注名字，只有一个小小的、几乎褪色的印记——像一只秤盘。",
+"你想起金秤家族、想起墓园的无字碑、想起老莫里茨临终前的话。第七枚锚，也许不在别处——它一直藏在那个家族手里。",
+"你吹熄灯，天还没亮，你就上路了。"
+],options:[
+{t:"（往墓园的方向去）",effects:{xp:20,flag:"war_epi_1"},go:"war_epilogue_2"}
+]};
+
+N["war_epilogue_2"]={tag:"main",place:"北境 · 墓园 · 无字碑",where:"夜",pace:"deep",sceneTitle:"尾声 · 无字碑",text:[
+"墓园的无字碑，还是老样子——一块光秃秃的石碑，连个名字都没有。",
+"你站在碑前，想起守秤人金先生的话：这块碑底下，埋着金家的根。你蹲下来，用指尖拂开碑座下的浮土——上次来时，你见过的那道石槽，还在。",
+"你从怀里掏出绢帛，对着月光比对。石槽的轮廓，与绢帛上第七处的印记，严丝合缝。",
+"你把手按在石槽上，石槽的深处，传来一声极轻的、像回音一样的响动。"
+],options:[
+{t:"（沿着石槽，往下探）",effects:{xp:24,flag:"war_epi_2"},go:"war_epilogue_3"}
+]};
+
+N["war_epilogue_3"]={tag:"main",place:"北境 · 墓园 · 无字碑下",where:"夜",pace:"deep",sceneTitle:"尾声 · 碑下密室",text:[
+"石槽下的土，松动得反常——像是最近被人翻过。",
+"你扒开浮土，露出一块青石板。石板一角，压着一枚小小的铜钥匙，钥匙柄上铸着一只天平。",
+"你捡起铜钥匙，在青石板上找到一道锁孔。钥匙插进去，转了一圈，石板无声地滑开，露出一条向下的石阶。",
+"石阶尽头透出一点光。你握着那枚铜钥匙，一步步走下去。"
+],options:[
+{t:"（走下石阶）",effects:{xp:26,flag:"war_epi_3"},go:"war_epilogue_4"}
+]};
+
+N["war_epilogue_4"]={tag:"main",place:"北境 · 墓园 · 地下石室",where:"夜",pace:"deep",sceneTitle:"尾声 · 金家的密室",text:[
+"石室不大，正中摆着一张石案，案上放着一只木匣。",
+"木匣没有锁，只是虚掩着。你打开它，里面是一卷更老的绢帛——比晨天故都那卷还老，边角已经发脆，却保存得很好。",
+"你展开绢帛。上面是一篇序文，字迹端正如刻：“金氏守秤，七代于兹。秤者，衡也；衡者，天地之平也。七锚镇七柱，一秤衡七锚。柱在则地稳，锚在则柱固，秤在则锚安。”",
+"序文的末尾，写着这样一行：“金家之秤，非铜非铁，乃守土之心。心失，则秤失。”",
+"你捧着那卷绢帛，手有些抖。金秤家族守了七代的东西——不是七枚锚，是这句话。"
+],options:[
+{t:"（把绢帛小心地收进怀里）",effects:{xp:28,flag:"war_epi_4"},go:"war_epilogue_5"}
+]};
+
+N["war_epilogue_5"]={tag:"main",place:"北境 · 墓园 · 无字碑前",where:"白昼",pace:"normal",sceneTitle:"尾声 · 守秤的家族",text:[
+"你带着那卷绢帛，走出石室，回到无字碑前。",
+"阳光照在碑面上，碑身还是没有字。可你现在知道，它为什么无字——金家的秤，从来不需要刻在石头上，它刻在守秤人的心里。",
+"你在碑前站了很久。想起老莫里茨、金先生、还有那些你在旅途中遇见的、守着一件事不放的人。守钟的老卒、查了三十年的秦长风、磨了一辈子刀的阿岩他爹——他们都是守秤人，只是各自守着一只不同的秤。",
+"你对着无字碑，弯腰行了一礼。"
+],options:[
+{t:"（“金家的秤，我记下了。”）",effects:{xp:24,flag:"war_epi_5"},go:"war_epilogue_6"}
+]};
+
+N["war_epilogue_6"]={tag:"main",place:"大陆 · 寻锚之路 · 重走",where:"白昼",pace:"deep",sceneTitle:"尾声 · 重走六处",text:[
+"你带着新的认知，重走了六处锚点。",
+"这一次，你不再只是看刻痕、拓图案——你去看那些守着锚的人。第三哨的新守钟人、南矿洞的铜锤、草原的阿岩、山国的长老、林邦的巡林长、沙漠的扎克。",
+"每到一处，你都把那句话讲给他们听：“柱在则地稳，锚在则柱固，秤在则锚安。”他们听完，反应不一：有人点头，有人沉默，有人问：“那秤在谁手里？”",
+"你回答：“在每一个记得这句话的人手里。”",
+"六处走完，你心里那张图，终于完整了。"
+],options:[
+{t:"（回到天衡殿遗址，等一个时机）",effects:{xp:26,flag:"war_epi_6"},go:"war_epilogue_7"}
+]};
+
+N["war_epilogue_7"]={tag:"main",place:"东境 · 晨天故都 · 天衡殿",where:"夜",pace:"deep",sceneTitle:"尾声 · 天衡殿之约",text:[
+"秦长风在天衡殿等你。他显然也去过别处——他的马鞍边，挂着一柄旧枪，枪尖缠着褪色的红缨。",
+"他看见你，第一句话是：“七处，我走了四处。你走了几处？”你如实答了。他沉默了一会儿，说：“那我们手里，凑齐了。”",
+"他把一枚铁牌放在石案上——牌面上铸着一只天平，与你的铜钥匙、守钟人的铁牌，是同一脉。",
+"“晨天王朝的七家，我找到了五家后人。”他说，“他们都传下来一句话——七锚齐鸣之日，秤归天衡之时。”他看着你，“那个日子，怕是近了。”"
+],options:[
+{t:"（“近了。所以我们要先想好，秤该怎么用。”）",effects:{xp:26,flag:"war_epi_7"},go:"war_epilogue_8"}
+]};
+
+N["war_epilogue_8"]={tag:"main",place:"东境 · 晨天故都 · 天衡殿",where:"夜",pace:"deep",sceneTitle:"尾声 · 秤的用法",text:[
+"那一夜，你和秦长风在天衡殿里，把七枚锚的来历、金家的古训、绢帛上的地图，一一摊在石案上。",
+"“七锚镇七柱。”秦长风说，“可七柱压的是什么，没人说得清。是深渊的封印？是地脉的命门？还是别的什么。”",
+"你想起学院禁书区里那些残缺的记载，想起圣痕司卷宗里那句“不该打的钥匙”，想起老萨满的兽骨上那些符号。",
+"你开口：“七柱压的，也许不是一样东西——是七样。”你指着绢帛，“它们分散在大陆各处，各自镇着各自的东西。所以金家的秤，才要做成衡——不是锁，是衡。衡者，让七处各安其位。”",
+"秦长风看了你很久，说：“你比三十年前的我，想得明白。”"
+],options:[
+{t:"（“不是我想得明白，是这一路的人，教我想明白的。”）",effects:{xp:28,flag:"war_epi_8"},go:"war_epilogue_9"}
+]};
+
+N["war_epilogue_9"]={tag:"main",place:"大陆 · 七处 · 异动",where:"白昼",pace:"deep",sceneTitle:"尾声 · 七处异动",text:[
+"第七日，七处锚点同时传来异动。",
+"消息是分头送到的：第三哨的钟，自己响了七声；南矿洞的铁门，符印裂纹又深了一分；草原石林的兽骨，夜里发烫；矮山地底的刻痕，泛出幽光；林邦的晨星之泪，裂纹重新张开；沙漠遗迹的刻痕，浮沙自行退开。",
+"最后一条消息，是秦长风亲自带来的：“墓园的无字碑，裂了。”",
+"你站在天衡殿前，看着手里那卷绢帛。地图上，七处光点正在依次亮起——像一串灯，一盏一盏，被看不见的手点燃。",
+"“七锚齐鸣之日。”秦长风在你身后说，“到了。”"
+],options:[
+{t:"（“走吧——去天衡殿，等它们齐鸣。”）",effects:{xp:30,flag:"war_epi_9"},go:"war_epilogue_10"}
+]};
+
+N["war_epilogue_10"]={tag:"main",place:"东境 · 晨天故都 · 天衡殿",where:"夜",pace:"epic",sceneTitle:"尾声 · 七锚齐鸣",text:[
+"那一夜，晨天故都的天，亮如白昼。",
+"先是第三哨的钟声，从北边沉沉地传来；然后是草原的鼓声、山国的锤声、林海的树涛、沙漠的驼铃、圣城的晚钟——最后，是无字碑下，那一声沉闷的地鸣。",
+"七种声音，从七个方向，汇向天衡殿。殿中央的浮雕——那只巨大的天平——在声音抵达的瞬间，像活过来一样，秤盘缓缓下沉，又缓缓回平。",
+"你站在浮雕前，怀里那些物件——铁牌、兽骨、玉片、旧刀、钟杵、铜钥匙、绢帛——全部在发热，像七枚锚，在回应同一声召唤。",
+"秦长风站在你身侧，声音很轻：“秤归天衡。金家的秤，等到了它的衡者。”",
+"地底的震动，越来越近。你知道，那扇门——那扇压在大陆最深处的门——到了该开的时候。"
+],options:[
+{t:"（走向天衡殿的深处）",effects:{xp:40,flag:"war_epi_10"},go:"war_epilogue_11"}
+]};
+
+N["war_epilogue_11"]={tag:"main",place:"晨天故都 · 天衡殿 · 地底",where:"夜",pace:"epic",sceneTitle:"尾声 · 地底之门",text:[
+"天衡殿的深处，一条向下的石阶，通往地底。",
+"你举着火把，一步一步往下走。石阶两侧的壁上，刻满浮雕——七枚锚、一只天平、一个王朝的兴衰。走到石阶尽头，一扇石门横在面前，门上没有锁，只有一只浅浅的、天平形状的凹槽。",
+"你回头看了秦长风一眼。他点了点头。",
+"你把那枚铜钥匙——金家密室里的那把——按进凹槽。严丝合缝。门内传来一声悠长的、像钟又像鼓的响动，石门缓缓向两侧滑开。",
+"门后，是深不见底的黑暗。风从黑暗里涌出来，带着尘土和铁锈的气息——也带着，一点极远的、幽幽的光。"
+],options:[
+{t:"（走进门后的黑暗）",effects:{xp:40,flag:"war_epi_11"},go:"war_epilogue_12"}
+]};
+
+N["war_epilogue_12"]={tag:"main",place:"晨天故都 · 地底 · 镇柱之室",where:"夜",pace:"epic",sceneTitle:"尾声 · 镇柱之室",text:[
+"石门后，是一间巨大的地下石室——比天衡殿还大。",
+"石室中央，矗立着一根通天的石柱，柱身上缠绕着七道铁链，每道铁链的尽头，连着一枚铁锚，锚身深深嵌进地面。柱子的顶端，悬着一只巨大的石秤——秤盘上，空无一物。",
+"你站在柱子前，仰头看那只石秤。石秤的秤杆上，刻着一行字：“衡者，天地之平也。”",
+"你终于明白：这根柱子，就是第七枚锚——不，应该说，是所有的锚，共同镇着的那个“一”。七锚镇七柱，七柱镇一根；一根若倒，七处皆失。",
+"你伸手，按住石柱。柱身的凉意透进掌心，像按在一只沉睡巨兽的脉搏上。"
+],options:[
+{t:"（“现在我知道，秤该放在哪里了。”）",effects:{xp:44,flag:"war_epi_12"},go:"war_epilogue_13"}
+]};
+
+N["war_epilogue_13"]={tag:"main",place:"晨天故都 · 地底 · 镇柱之室",where:"夜",pace:"deep",sceneTitle:"尾声 · 衡者的选择",text:[
+"石秤悬在柱顶，秤盘空空——它在等你，把什么东西放上去。",
+"你怀里那些物件，在衣襟下静静躺着：铁牌、兽骨、玉片、旧刀、钟杵、铜钥匙、绢帛。它们每一件，都连着大陆的一处；每一件，都是一枚锚的见证。",
+"你一件一件，把它们摆上秤盘。铁牌落盘，一声轻响；兽骨落盘，一声闷响；玉片、旧刀、钟杵、铜钥匙、绢帛——七件物件，七声轻响，像七枚锚，依次归位。",
+"秤盘沉下去，又缓缓回平。石秤的秤杆，第一次，指向了正中。",
+"柱子深处，传来一声极长的、像叹息一样的震动。"
+],options:[
+{t:"（“七锚归位，秤归天衡。”）",effects:{xp:44,flag:"war_epi_13"},go:"war_epilogue_14"}
+]};
+
+N["war_epilogue_14"]={tag:"main",place:"晨天故都 · 地底 · 镇柱之室",where:"夜",pace:"epic",sceneTitle:"尾声 · 柱醒",text:[
+"秤盘回平的那一刻，石柱醒了。",
+"柱身上的七道铁链，哗啦啦地绷紧，又缓缓松开。柱顶的石秤，发出低沉的嗡鸣，像一枚巨钟被敲响。地底的震动，从脚下传上来，传向四面八方——传向第三哨、南矿洞、草原、山国、林邦、沙漠、圣城。",
+"七处锚点，在同一瞬间，发出回应。你听见七种声音，从地底、从远方、从大陆的每一个角落，汇成一声。",
+"然后，一切安静下来。柱子上的铁链，松而不落；石秤的秤杆，稳稳地停在正中。",
+"你扶着石柱，感受着那股从地底传来的、平稳的搏动。像一个沉睡许久的人，终于安定了呼吸。"
+],options:[
+{t:"（“镇住了。”）",effects:{xp:44,flag:"war_epi_14"},go:"war_epilogue_15"}
+]};
+
+N["war_epilogue_15"]={tag:"main",place:"晨天故都 · 天衡殿",where:"白昼",pace:"normal",sceneTitle:"尾声 · 天亮",text:[
+"你走出地底时，天已经亮了。",
+"秦长风站在天衡殿的台基上，看着晨光一寸一寸，漫过故都的废墟。他听见你的脚步声，没有回头：“镇住了？”",
+"“镇住了。”你在他身边站定。",
+"他沉默了很久，忽然说：“三十年前，我站在这里，看着晨天城被封。那时我以为，这城完了。”他顿了顿，“现在我才明白——城是完了，可城底下压着的东西，还活着。你把它镇住了，这城，就还没完。”",
+"晨光里，废墟的轮廓镀上一层金边。这座被从册子上抹掉的故都，在三十年后，终于重新有了光。"
+],options:[
+{t:"（“故都的光，是你点了三十年才点亮的。”）",effects:{xp:30,flag:"war_epi_15"},go:"war_epilogue_16"}
+]};
+
+N["war_epilogue_16"]={tag:"main",place:"大陆 · 七处 · 回响",where:"白昼",pace:"deep",sceneTitle:"尾声 · 七处回响",text:[
+"镇柱之后，你花了一个月，走遍七处锚点。",
+"每一处，都变了：第三哨的钟，响声清亮如初；南矿洞的铁门，符印裂纹止住；草原的石林，兽骨不再发烫；山国的刻痕，幽光敛去；林邦的晨星之泪，裂纹缓缓愈合；沙漠的遗迹，浮沙落定；圣城的旧案卷，封存如故。",
+"每到一处，你都把天秤的事，讲给守着它们的人听。守钟的年轻人听完，说：“那我这钟，还得接着擦。”铜锤听完，说：“那我这锁，还得接着打。”阿岩听完，说：“那我这刀，还得接着磨。”",
+"你忽然明白：镇住七柱的，从来不是某一枚锚、某一只秤——是这些日复一日、守着自己的东西不放的人。",
+"你走完最后一处，站在大陆的岔路口，风从四个方向吹来，带着雪、沙、林、海的气息。"
+],options:[
+{t:"（“这大陆，有人守着，就不会塌。”）",effects:{xp:32,flag:"war_epi_16"},go:"war_epilogue_17"}
+]};
+
+N["war_epilogue_17"]={tag:"main",place:"自由城邦 · 交汇城 · 码头",where:"白昼",pace:"normal",sceneTitle:"尾声 · 归处",text:[
+"你最后，回了自由城。",
+"码头还是老样子，船来船往。你在码头上站了一会儿，看见那个独臂老兵，正用一只手，给货行的账本打结。他抬头看见你，咧嘴一笑：“兄弟，又回来了！这次，还走吗？”",
+"你看着他，又看了看码头上忙碌的人群，忽然觉得，这个问题的答案，你已经找了很久。",
+"你开口：“不走了。”他愣了一下，随即大笑起来：“不走了好！码头缺个记账的，你字写得好，来帮我！”",
+"你站在码头，风从海上吹来。战争结束了，锚镇住了，你走过的地方，都有人守着——现在，轮到你，找个地方，把自己安下来。"
+],options:[
+{t:"（在自由城住下来，做个记账的人）",effects:{xp:26,flag:"war_epi_17"},go:"war_epilogue_18"}
+]};
+
+N["war_epilogue_18"]={tag:"main",place:"自由城邦 · 交汇城 · 小院",where:"夜",pace:"deep",sceneTitle:"尾声 · 夜话",text:[
+"你在自由城住下后，旧识们陆续来看你。",
+"阿岩送来一把新磨的刀，说是谢礼；铜锤送来一柄铁犁，说山国的炉火旺着呢；青叶托人带来一包药，说换季记得喝；扎克寄来一枚玉片，说沙漠的路永远认你；沈怀远捎来一封信，说东境的粮价，今年稳了。",
+"秦长风也来过一次。他没多话，只在院子里站了一会儿，临走时说：“天衡殿的浮雕，我找人重新描了。那天平，描得很亮。”",
+"你坐在槐树底下，把这些东西一样一样摆开。月光照在上面，铁牌、兽骨、玉片、旧刀、钟杵、铜钥匙、绢帛——七件物件，像七枚锚，静静地躺在你手里。",
+"你知道，它们的故事还没完。可至少这一夜，风是静的，月光是好的。"
+],options:[
+{t:"（把七件物件收进木匣，等下一个故事）",effects:{xp:28,flag:"war_epi_18"},go:"war_epilogue_19"}
+]};
+
+N["war_epilogue_19"]={tag:"main",place:"大陆 · 天衡殿 · 七锚之约",where:"夜",pace:"epic",sceneTitle:"终章 · 七锚之约",text:[
+"你在自由城住了三年。",
+"三年后的一个夜里，你梦见了天衡殿——殿中央的浮雕活了过来，七枚锚从七个方向飞来，落入秤盘。秤盘回平的那一刻，你醒了。",
+"你起身，打开那只木匣。七件物件，在月光下静静地躺着，没有异动。可你知道，梦不是无缘无故来的——大陆的地底，又有什么，在轻轻呼唤。",
+"你合上木匣，看向窗外。天边，晨光正亮。",
+"你想起那个约定——七锚之约。锚在，秤在；秤在，天不塌。这个约定，你已经守了三年。",
+"你背起行囊，推开院门。风从北方来，带着雪线退去的湿润气息。你知道，新的故事，正在大陆的某个角落，等你上路。",
+"你迈开步子，走进了晨光里。"
+],options:[
+{t:"（踏上新的旅程：回到那扇终局之门）",effects:{xp:50,flag:"war_epi_19"},go:"anchor_finale_1"}
+]};
+
 /* /u1inj:data-nodes:dn_warfront.js/ */
 /* /pe3inj:warfront/ PE-3 铁门关战争前线包（政治与战争可玩层）
    全对象式纯数据节点；世界观约束：铁门关主线（新地基/第七枚锚/镇北军秦·长风）已存在，
@@ -79653,7 +81083,8 @@ N["warphase_14"]={tag:"main",place:"北境 · 雪原 · 战后",where:"夜",pace
 "war7_broker":["你在阵前喊了三天的话，嗓子哑得说不出声。第三天，老萨满终于开口：“让你们的将军来，我有话当面说。”你带着这句话跑回阵中。停战那夜，两边在雪地上点了一堆篝火，老萨满递给你一碗酒：“年轻人，这仗打完了。记住，和平是用命换来的。”"],
 "war7_speculate":["你带着那队人绕到阵后，堵了他们的退路。荒原诸部撤的时候，从你们这边冲了几次，你带人硬扛住，自己也挨了一枪，扎在腿上。退兵那天，你拄着根树枝一瘸一拐地走回营地，手下的兵把你围起来，有人把缴获的刀塞给你：“队长，这仗，你带我们打赢了。”"],
 }},options:[
-{t:"（在战后的大陆上，收拾这场战争的残局）",effects:{xp:20,flag:"war_aftermath"},go:"ending_anchor_war_1"}
+{t:"（在战后的大陆上，收拾这场战争的残局）",effects:{xp:20,flag:"war_aftermath"},go:"ending_anchor_war_1"},
+{t:"（战后，去大陆各处走走，看看这场仗留下了什么）",effects:{xp:10},go:"war_after_1"}
 ]};
 
 /* /u1inj:data-nodes:dn_west.js/ */

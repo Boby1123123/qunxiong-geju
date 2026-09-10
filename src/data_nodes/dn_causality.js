@@ -116,7 +116,12 @@ window.CAUSALITY_LEDGER = [
 {id:"led_fac_01",type:"设定",desc:"四阵营互斥：加入一方后其余阵营声望下降，背叛走惩罚支线",plant:"faction_free_1",reap:"faction_traitor_4",status:"open",world:"vol_war"},
 {id:"led_fac_02",type:"伏笔",desc:"教会的铁匠旧案：二十年前渎神罪烧死打钥匙的铁匠，与七锚钥匙线呼应",plant:"faction_church_5",reap:"anchor_tower_1",status:"open",world:"vol_church"},
 {id:"led_fac_03",type:"伏笔",desc:"沙漠遗迹玉片：刻痕像半个锚，地缝符号与学院禁书区同源",plant:"faction_desert_5",reap:"anchor_mine_1",status:"open",world:"vol_desert"},
-{id:"led_fac_04",type:"设定",desc:"商会盐道：自由城商会以军饷换北境盐道畅通，商会立场成型",plant:"faction_free_5",reap:"faction_free_9",status:"open",world:"vol_free"}
+{id:"led_fac_04",type:"设定",desc:"商会盐道：自由城商会以军饷换北境盐道畅通，商会立场成型",plant:"faction_free_5",reap:"faction_free_9",status:"open",world:"vol_free"},
+{id:"led_fac_05", type:"设定", desc:"东境承天与晨天故都的旧档呼应（战后 M9）", plant:"faction_east_4", reap:"war_after_26", status:"open", world:"vol_east"},
+{id:"led_fac_06", type:"设定", desc:"兽人神谕石林的守秤传说（草原柱根）", plant:"faction_orc_8", reap:"war_epilogue_4", status:"open", world:"vol_orc"},
+{id:"led_fac_07", type:"伏笔", desc:"矮人山国南矿洞铁门与地底七锚刻痕", plant:"faction_dwarf_3", reap:"war_after_13", status:"open", world:"vol_dwarf"},
+{id:"led_fac_08", type:"伏笔", desc:"精灵林邦晨星之泪与树底封印", plant:"faction_elf_6", reap:"war_after_14", status:"open", world:"vol_elf"},
+{id:"led_war_02", type:"设定", desc:"守钟人铁牌与七锚重走（战后收束）", plant:"war_after_4", reap:"war_epilogue_16", status:"open", world:"vol_north"}
 
 ];
 /* ===== /v91inj:ledger:end/ ===== */

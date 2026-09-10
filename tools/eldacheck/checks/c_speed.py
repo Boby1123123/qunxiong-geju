@@ -14,7 +14,7 @@ import io, os, re, sys, json, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
-THRESHOLD = 5.0  # 秒（慢检查器）
+THRESHOLD = 6.0  # 秒（慢检查器；M9 节点 4600+ 后死代码检测 ~5s，5→6 保留告警）
 
 _BUDGET_PATH = os.path.join(PROJ, 'budget.json')
 

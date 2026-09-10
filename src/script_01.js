@@ -186,7 +186,25 @@ const EVENT_POOL_EXT = [
 {id:"war_news_12",day:262,cls:"天灾",text:"战争蔓延到整片大陆，西境的风暴、东境的征兵、南边的部族，全都卷了进来。自由城的码头空了大半。"},
 {id:"war_news_13",day:273,cls:"人祸",text:"荒原诸部的主力倾巢南下，雪原上帐篷连成灰白色的海。终战的气息，连最迟钝的旅人都闻到了。"},
 {id:"war_news_14",day:288,cls:"商机",text:"战后重建的消息先一步传开，木料、铁器、粮种的订单堆满了商会的桌子。活下来的人，开始盘算往后的日子。"},
-{id:"war_news_15",day:296,cls:"奇遇",text:"雪原深处发现一片旧战场遗迹，冻土里露出锈蚀的兵器和刻着符文的石柱。有冒险者结队前去探宝。"},
+{id:"war_news_15",day:296,cls:"奇遇",text:"雪原深处发现一片旧战场遗迹，冻土里露出锈蚀的兵器和刻着符文的石柱。有冒险者结队前去探宝。"},,
+{id:"aft_east_salt", day:98, cls:"商机", text:"东境官盐解禁，承天城盐价回落，商队连夜起运。"},
+{id:"aft_north_plague", day:126, cls:"人祸", text:"北境军营出现时疫，联军封锁道路，第三哨闭门谢客。"},
+{id:"aft_east_raid", day:132, cls:"人祸", text:"东境官署一夜之间抄了三个粮商的宅子，承天城风声鹤唳。"},
+{id:"aft_elf_fire", day:145, cls:"天灾", text:"精灵林邦东缘起了山火，巡林队连夜隔离火线，林海幸未受损。"},
+{id:"aft_dwarf_iron", day:156, cls:"商机", text:"矮人山国解禁铁器，北境商队在山门外排了三里长队。"},
+{id:"aft_dwarf_collapse", day:168, cls:"天灾", text:"矮人山国南矿洞二次坍塌，铜锤带人挖了两天两夜，救出三名矿工。"},
+{id:"aft_chen_book", day:180, cls:"奇遇", text:"承天城旧书摊上流出一卷景和年间的残册，扉页写着‘晨天’二字。"},
+{id:"aft_east_flood", day:188, cls:"天灾", text:"东境大河汛期提前，承天城开仓放粮，官署连夜筑堤。"},
+{id:"aft_elf_border", day:207, cls:"人祸", text:"精灵林邦边界的商队遭劫，巡林长带人追出三十里，追回货物。"},
+{id:"aft_orc_drought", day:212, cls:"天灾", text:"兽人草原入夏大旱，诸部商议开北境粮道，换粮渡荒。"},
+{id:"aft_orc_fight", day:218, cls:"人祸", text:"兽人诸部因草场起了内斗，阿岩连夜斡旋，两帐熄了火。"},
+{id:"aft_elf_herb", day:225, cls:"商机", text:"林邦药草丰收，青叶晒了满庐的药材，自由城药铺抢着要货。"},
+{id:"aft_dwarf_gate", day:238, cls:"人祸", text:"矮人山国铁门关隘遭流匪袭扰，守军据险击退，铁门无恙。"},
+{id:"aft_dwarf_echo", day:244, cls:"奇遇", text:"矮人山国地底传来悠长回响，长老们聚在锻造坊听了一夜。"},
+{id:"aft_east_black", day:256, cls:"人祸", text:"自由城黑市流出一批无印铁器，李管事查了三天，查不出源头。"},
+{id:"aft_orc_wolf", day:268, cls:"奇遇", text:"兽人草原的狼群北归途中在神谕石林绕行三圈，阿岩说那是老萨满的记号。"},
+{id:"aft_north_wolfplague", day:272, cls:"天灾", text:"北境雪原狼群中起了瘟病，第三哨闭城三日，守钟人日日敲钟驱邪。"},
+{id:"aft_east_land", day:286, cls:"商机", text:"战后无主之地开垦令下，东境各郡涌入垦荒的人，官署连夜造册。"}
 
 
 ]; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */

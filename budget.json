@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8625818,
-    "chunked_html_bytes_max": 5903515,
-    "node_total_min": 4607,
+    "game_html_bytes_max": 8643878,
+    "chunked_html_bytes_max": 5921506,
+    "node_total_min": 4612,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8575818,
-    "chunked_html_bytes": 5803515,
-    "node_total": 4657,
+    "game_html_bytes": 8593878,
+    "chunked_html_bytes": 5821506,
+    "node_total": 4662,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "F-1 ifJob变体重构 文本微增",
+    "reason": "F-2 抉择代价节点 5事件5节点",
     "history": [
       {
         "date": "2026-09-09",
@@ -831,6 +831,13 @@
         "chunked_bytes": 5803515,
         "nodes": 4657,
         "reason": "F-1 ifJob变体重构 文本微增"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8593878,
+        "chunked_bytes": 5821506,
+        "nodes": 4662,
+        "reason": "F-2 抉择代价节点 5事件5节点"
       }
     ]
   },

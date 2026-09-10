@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8679813,
-    "chunked_html_bytes_max": 5957370,
-    "node_total_min": 4630,
+    "game_html_bytes_max": 8700818,
+    "chunked_html_bytes_max": 5978337,
+    "node_total_min": 4639,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8629813,
-    "chunked_html_bytes": 5857370,
-    "node_total": 4680,
+    "game_html_bytes": 8650818,
+    "chunked_html_bytes": 5878337,
+    "node_total": 4689,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "F-3 NPC弧线18节点 文本增长",
+    "reason": "F-4 身世暗线+回响15节点",
     "history": [
       {
         "date": "2026-09-09",
@@ -845,6 +845,13 @@
         "chunked_bytes": 5857370,
         "nodes": 4680,
         "reason": "F-3 NPC弧线18节点 文本增长"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8650818,
+        "chunked_bytes": 5878337,
+        "nodes": 4689,
+        "reason": "F-4 身世暗线+回响15节点"
       }
     ]
   },

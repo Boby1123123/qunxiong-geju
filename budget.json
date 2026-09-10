@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8499310,
-    "chunked_html_bytes_max": 5782365,
+    "game_html_bytes_max": 8505111,
+    "chunked_html_bytes_max": 5788069,
     "node_total_min": 4587,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8449310,
-    "chunked_html_bytes": 5682365,
+    "game_html_bytes": 8455111,
+    "chunked_html_bytes": 5688069,
     "node_total": 4637,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UPG-15 节点物理分区：注册表100%覆盖",
+    "reason": "PN1-PN2 线程状态机+编织引用引擎钩子与注册表（+9.2KB 合法增长）",
     "history": [
       {
         "date": "2026-09-09",
@@ -712,6 +712,13 @@
         "chunked_bytes": 5682365,
         "nodes": 4637,
         "reason": "UPG-15 节点物理分区：注册表100%覆盖"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8455111,
+        "chunked_bytes": 5688069,
+        "nodes": 4637,
+        "reason": "PN1-PN2 线程状态机+编织引用引擎钩子与注册表（+9.2KB 合法增长）"
       }
     ]
   },

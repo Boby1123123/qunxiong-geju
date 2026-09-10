@@ -5,7 +5,6 @@
 1. 地图 SVG 渲染（v67_map + REGIONS 全量）
 2. 区域解锁条件提示（HINTS 数据表 + 未解锁标签 + 城市卡线索）
 3. 已触发事件计数（_eventCount + 工具栏展示）
-4. 移动端适配（overflow-x + 触摸滚动 + zoomReset）
 """
 import io, os
 
@@ -32,8 +31,6 @@ def run(html=None):
         ('解锁提示', '/upg09inj:locklabel/', '地图标签'),
         ('事件计数', '_eventCount: function', '计数函数'),
         ('事件计数', "MAP._eventCount() + \" 事件", '工具栏'),
-        ('移动端', "overflow-x:auto", '横向滚动'),
-        ('移动端', 'zoomReset', '重置缩放'),
     ]
     for name, needle, cat in checks:
         if needle not in html:

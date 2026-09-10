@@ -2364,7 +2364,55 @@ window.CAUSALITY_LEDGER = [
     "importance": 2,
     "keywords": ["兽人南下代价：边关狼牙传信（北境线入网）——F-2 代价节点"],
     "irreversible": false
-  }
+  },
+  {
+    "id": "led_f3_lu",
+    "type": "伏笔",
+    "desc": "七笔账→石料→北境矿洞（姑娘父亲死因；钥匙/柳巷七号暗屉）",
+    "plant": "flag:f3_lu_secret",
+    "reap": "node:world_f3_lu_4",
+    "status": "open",
+    "world": "银穗商路线",
+    "importance": 3,
+    "keywords": ["七笔账→石料→北境矿洞"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f3_qingwu",
+    "type": "伏笔",
+    "desc": "金秤守门人候选顾长风（血灯/铁盒/密档抄件/费尔曼信）",
+    "plant": "flag:f3_qw_goldscale",
+    "reap": "node:world_f3_duo_2",
+    "status": "open",
+    "world": "学院暗流线",
+    "importance": 3,
+    "keywords": ["金秤守门人候选顾长风"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f3_fat",
+    "type": "伏笔",
+    "desc": "银月商会石料线（程管事卷宗/赵福生疤/铁门关押货）",
+    "plant": "flag:f3_fat_offer",
+    "reap": "node:world_f3_fat_3",
+    "status": "open",
+    "world": "银穗商路线",
+    "importance": 3,
+    "keywords": ["银月商会石料线"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f3_duo",
+    "type": "伏笔",
+    "desc": "双人线合一（矿洞铜钱共鸣/费尔曼书房——金秤之门线索聚合）",
+    "plant": "flag:f3_duo1_team",
+    "reap": "node:world_f3_duo_1c",
+    "status": "open",
+    "world": "金秤家族线",
+    "importance": 4,
+    "keywords": ["双人线合一"],
+    "irreversible": false
+  }
 ];
 /* ===== /v91inj:ledger:end/ ===== */
 

@@ -26399,6 +26399,8 @@ function applyDefaults(s){
   if(s.settings.weatherLine===undefined) s.settings.weatherLine=true;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.originProfile===undefined) s.settings.originProfile=true;
+  /* /upg01inj:defaults/ UPG-01 世界书开关兜底（旧档兼容；独立键默认 true） */
+  if(s.settings.lorebook===undefined) s.settings.lorebook=true;
   /* /sp3inj:defaults/ SP-3 弧线进度兜底（旧档兼容；新档为空对象） */
   if(!s.arcs) s.arcs={};
   /* /m8inj:defaults/ M8 卷D战争/阵营状态兜底（旧档兼容；独立键） */
@@ -29794,6 +29796,68 @@ window.ELDA.tags = {
     }catch(e){ return []; }
   }
 };
+/* ===== /v92inj:lore/ UPG-01 世界书 Lorebook（只读钩子；constant 常驻 + triggers 命中注入 + recursive 递归链 + depth 插位；开关 S.settings.lorebook；不写任何状态） ===== */
+window.v92_lorebook = function(node){
+  try{
+    if(!S||!S.settings||S.settings.lorebook===false) return [];
+    const L=window.LOREBOOK; if(!L||!L.length) return [];
+    /* 拼节点文本 + 标签 + 地点作触发源 */
+    let hay="";
+    try{
+      const raw=(node&&node.text!=null)?node.text:null;
+      if(typeof raw==="string") hay+=raw;
+      else if(Array.isArray(raw)) hay+=raw.join(" ");
+      else if(raw&&typeof raw==="object"){ try{ hay+=JSON.stringify(raw); }catch(_){} }
+      if(node&&node.tags&&Array.isArray(node.tags)) hay+=" "+node.tags.join(" ");
+      if(node&&node.place) hay+=" "+node.place;
+      if(node&&node.title) hay+=" "+node.title;
+      if(S.curCity) hay+=" "+S.curCity;
+      if(S.region) hay+=" "+S.region;
+    }catch(_){}
+    const hayS=String(hay||"");
+    const active=[];
+    const hitSet={};
+    function pushEntry(e){
+      if(!e||hitSet[e.id]) return;
+      hitSet[e.id]=true; active.push(e);
+    }
+    /* 常驻条目 */
+    for(let i=0;i<L.length;i++){ if(L[i]&&L[i].constant) pushEntry(L[i]); }
+    /* 触发命中 */
+    for(let i=0;i<L.length;i++){
+      const e=L[i]; if(!e||e.constant) continue;
+      const tr=e.triggers;
+      if(!tr||!tr.length) continue;
+      for(let k=0;k<tr.length;k++){
+        if(hayS.indexOf(tr[k])>=0){ pushEntry(e); break; }
+      }
+    }
+    /* 递归链：命中条目的 recursive 依次激活 */
+    let grew=true, guard=0;
+    while(grew&&guard<10){
+      grew=false; guard++;
+      for(let i=0;i<L.length;i++){
+        const e=L[i]; if(!e) continue;
+        if(!hitSet[e.id]) continue;
+        const rc=e.recursive; if(!rc||!rc.length) continue;
+        for(let k=0;k<rc.length;k++){
+          for(let j=0;j<L.length;j++){
+            if(L[j]&&L[j].id===rc[k]&&!hitSet[L[j].id]){ pushEntry(L[j]); grew=true; }
+          }
+        }
+      }
+    }
+    if(!active.length) return [];
+    /* 上下文压力控制：depth=0 前置最多 3 条；其余最多 1 条 */
+    const front=active.filter(function(e){ return e.depth===0; }).slice(0,3);
+    const back=active.filter(function(e){ return e.depth!==0; }).slice(0,1);
+    const out=[];
+    for(let i=0;i<front.length;i++){ if(front[i]&&front[i].text) out.push(front[i].text); }
+    for(let i=0;i<back.length;i++){ if(back[i]&&back[i].text) out.push(back[i].text); }
+    try{ console.log("[v92inj:lore]", out.length, out[0]?out[0].slice(0,24):""); }catch(_){}
+    return out;
+  }catch(e){ try{ console.log("[v92lore:err]",e); }catch(_){} return []; }
+};
 /* ===== /v92inj:wxfn/ TQ-1 天气句（只读钩子；按季节×区域返回 1 句天气句；开关 S.settings.weatherLine；不写任何状态） ===== */
 window.v92_weatherLine = function(node){
   try{
@@ -30004,6 +30068,8 @@ function writeNext(_v46f){
     try{ window.v91_sessCount(_txt); }catch(e){}
     /* /v92inj:wxhook/ TQ-1 天气句注入（只读钩子；天气句排最前=环境先行；开关 S.settings.weatherLine；关闭时零注入） */
     try{ var _wx = window.v92_weatherLine(node); if(_wx){ _txt=[_wx].concat(_txt); } }catch(e){}
+    /* /v92inj:lorehook/ UPG-01 世界书注入（只读钩子；设定片段排最前；开关 S.settings.lorebook；关闭时零注入） */
+    try{ var _lr = window.v92_lorebook(node); if(_lr&&_lr.length){ _txt=_lr.concat(_txt); } }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */
@@ -41612,6 +41678,8 @@ function v34_renderSettings(){
   html += v34_settingRow('自动滚动', '新内容自动滚动到底部', 'autoScroll', 'checkbox');
   html += v34_settingRow('分段阅读', '长剧情逐段显示，点击正文或 Space/Enter 继续', 'pagedReading', 'checkbox');
   html += v34_settingRow('记忆注入', '按地点/时间/好感/事件余波自动插入衔接句', 'memoryInjection', 'checkbox');
+  html += v34_settingRow('世界书设定', '按关键词自动注入世界观设定片段（九域/金秤/七锚等）', 'lorebook', 'checkbox');
+  html += v34_settingRow('天气句', '渲染环境天气与时辰白描句', 'weatherLine', 'checkbox');
   
   html += '<h4 style="color:#5a4a10;margin:16px 0 8px">场景氛围</h4>';
   html += v34_settingRow('粒子效果', '雨/雪/雾等天气粒子', 'particlesEnabled', 'checkbox');
@@ -54695,6 +54763,106 @@ N["goal_revenge_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",te
 "那天夜里你睡得很沉，梦见了火。火里有人伸出一只手，你握住了。醒来时，天已经亮了。", "你离了交汇城，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"收刀（理想里程碑·完成）",effect:{flag:"ideal_goal_revenge_done"},go:"fc_tavern"}
 ]};
+
+/* /u1inj:data-nodes:dn_lorebook.js/ */
+/* ===== UPG-01 世界书 Lorebook（关键词触发式设定注入） =====
+ * SillyTavern World Info 式：constant 常驻 / triggers 命中注入 / recursive 递归链
+ * 渲染层只读钩子 v92_lorebook 消费；不改任何判定与存档。
+ * 文本遵守 V66 文风；条目均为既有世界观（九域/光明神系/金秤/七锚/铁牌/神谕/净化令/晨天/银辉骑士团）。
+ */
+window.LOREBOOK = [
+  /* ============ 核心常驻（constant，整局注入） ============ */
+  {id:"lb_nine_domains", title:"九域格局", constant:true, depth:0, triggers:["大陆","九域","东境","西境","南境","北境","草原","沙漠","林海","山国"],
+   recursive:["lb_war_five"],
+   text:"艾尔达大陆九域并立：自由城邦居中，北境七公国联盟、南方商盟、精灵林邦、矮人山国、兽人草原、东部王国王朝、光明教会圣域、死亡沙漠诸部环伺。"},
+  {id:"lb_light_pantheon", title:"光明神系", constant:true, depth:0, triggers:["光明神","圣光","教会","教皇","圣城"],
+   recursive:["lb_purge_order"],
+   text:"大陆诸神曾于远古神战灭绝龙裔，唯光明神系绵延至今。太阳神在位，圣光、誓约与守护为其权柄；教会以圣城为中枢，代神牧养万民。"},
+  {id:"lb_goldscale", title:"金秤家族", constant:true, depth:0, triggers:["金秤","老莫里茨","无字碑","守门人"],
+   recursive:["lb_anchor_seven"],
+   text:"金秤是艾尔达最古老的守门人世家，世代守望墓园无字碑，秘藏大陆封印之秘。金秤之名不在史册，只在代代口耳相传的誓言里。"},
+  {id:"lb_anchor_seven", title:"七枚锚", constant:true, depth:0, triggers:["七锚","七枚锚","锚点","封印之门"],
+   recursive:["lb_iron_token"],
+   text:"七枚锚钉入大陆地脉，镇压深渊封印：哨楼、矿洞、墓园、金库、故都、圣库、神谕之地，各镇一方。锚在，则封印之门不开。"},
+  {id:"lb_iron_token", title:"铁牌", constant:true, depth:0, triggers:["铁牌","钥匙","七锚钥匙"],
+   recursive:[],
+   text:"铁牌是开启七锚之门的钥匙残片，与锚一一对应。牌在匠人之手、墓园之底、金库之中流散百年，持牌者便是锚的执掌人。"},
+  {id:"lb_oracle", title:"兽人神谕", constant:true, depth:0, triggers:["神谕","圣山","狼旗","祖灵"],
+   recursive:["lb_orc_tribes"],
+   text:"兽人诸部以圣山为神谕之地，祖灵低语唯有大萨满可闻。神谕曾预言草原狼群南迁之日，便是大陆战火重燃之时。"},
+  {id:"lb_purge_order", title:"净化令", constant:true, depth:0, triggers:["净化令","异端","审判"],
+   recursive:["lb_church_city"],
+   text:"净化令是教会最高敕令，凡认定异端，审判骑士团可越境缉拿、就地焚书。上一次净化令颁行，是三十年前的圣城大火。"},
+  {id:"lb_magic", title:"魔法体系", constant:true, depth:0, triggers:["魔法","法术","魔力","奥术","元素"],
+   recursive:[],
+   text:"魔力源于地脉与星辉，凡人借冥想与仪式取用。元素、神圣、死灵、奥术四系并立；深渊之敌噬魔而生，是法师最忌的对手。"},
+  {id:"lb_war_five", title:"五战之劫", constant:true, depth:0, triggers:["战争","兵锋","战火","铁蹄"],
+   recursive:["lb_north_league"],
+   text:"大陆战事有迹可循：净化令起于圣城，商路断于银穗，封印松于深渊，学院乱于暗流，草原兵锋终抵铁门关。五事连环，是为劫数。"},
+  {id:"lb_abyss_seal", title:"深渊封印", constant:true, depth:0, triggers:["深渊","封印","裂隙","地脉"],
+   recursive:["lb_anchor_seven"],
+   text:"深渊是地底的无光之海，旧日之物沉眠其中。七锚锁其脉，封印之门镇其口；封印每弱一分，地面便多一分异象。"},
+
+  /* ============ 触发注入（区域/组织/人物） ============ */
+  {id:"lb_free_cities", title:"自由城邦", constant:false, depth:0, triggers:["交汇城","集市城","灰港","冒险者之城","自由城邦"],
+   recursive:["lb_silver_route"],
+   text:"自由城邦法律宽松，金币至上。交汇城是大陆十字路口，灰港走私与正经生意共用一条水道，冒险者公会在此悬赏天下。"},
+  {id:"lb_silver_route", title:"银穗商路", constant:false, depth:0, triggers:["银穗","商路","商会","李管事"],
+   recursive:["lb_free_cities"],
+   text:"银穗商路贯通南北，是自由城邦的血脉。商路若断，城邦先饿死一半，再谈什么中立与自由。"},
+  {id:"lb_north_league", title:"北境七公国", constant:false, depth:0, triggers:["艾尔达城","铁壁城","北境城","矿山城","河湾城","森林城","海港城","北方公国"],
+   recursive:["lb_academy"],
+   text:"七公国共治北境，冰原铁甲与魔法学院并立。艾尔达城是盟主之都，铁壁城直面东方兵锋，北境城终年积雪。"},
+  {id:"lb_academy", title:"艾尔达魔法学院", constant:false, depth:0, triggers:["学院","学府","费尔曼","禁书区","入学"],
+   recursive:["lb_north_league"],
+   text:"艾尔达魔法学院高踞山丘，五学年分五院。禁书区藏有旧日禁卷，费尔曼教授看守着其中一间密室，钥匙在他腰间晃了三十年。"},
+  {id:"lb_third_sentry", title:"第三哨", constant:false, depth:0, triggers:["第三哨","铜钟","哨楼","矿洞","军械库"],
+   recursive:["lb_anchor_seven"],
+   text:"第三哨是北境最北的军事要塞，铜钟悬于哨楼，雪夜里一响便是警讯。哨下矿洞曾埋过钥匙，也埋过哨兵的往事。"},
+  {id:"lb_tiemen", title:"铁门关", constant:false, depth:0, triggers:["铁门关","秦·长风","边关"],
+   recursive:["lb_east_kingdom"],
+   text:"铁门关是东部王国的西陲雄关，城墙三重，兵甲如林。守将秦·长风在此守了二十年，刀锋比任何军令都可靠。"},
+  {id:"lb_church_city", title:"圣城", constant:false, depth:0, triggers:["圣城","大教堂","审判庭","圣痕司","异端牢房"],
+   recursive:["lb_purge_order"],
+   text:"圣城有百尺金像镇守，光明结界笼罩全城。审判庭与圣痕司同署办公，异端牢房在地底，常年不见天日。"},
+  {id:"lb_east_kingdom", title:"东部王朝", constant:false, depth:0, triggers:["承天城","帝京","科举","东境官署"],
+   recursive:["lb_chengtian"],
+   text:"东部王朝以承天城为帝京，科举取士，官署林立。王朝旧都与晨天的传说重叠，城下的地下宫室比史书更古老。"},
+  {id:"lb_chengtian", title:"晨天故都", constant:true, depth:0, triggers:["晨天","故都","地下宫室"],
+   recursive:["lb_goldscale"],
+   text:"晨天是东境先民的故都，覆灭于三百年前的井水之变。今承天城建于故都之上，地下仍埋着晨天王朝的余烬。"},
+  {id:"lb_orc_tribes", title:"兽人诸部", constant:false, depth:0, triggers:["黑石部族","狼旗","灰鬃","阿岩","草原"],
+   recursive:["lb_oracle"],
+   text:"兽人诸部以狼为旗，黑石部族最强。灰鬃是部族里的老猎手，阿岩是他的养子；草原的雪一化，马蹄便向南。"},
+  {id:"lb_elf_realm", title:"精灵林邦", constant:false, depth:0, triggers:["精灵王庭","银月","月池","林歌","青叶"],
+   recursive:[],
+   text:"精灵林邦藏于林海深处，王庭有银月古树，月池映照星光。精灵寿命悠长，记得许多人类早已遗忘的事。"},
+  {id:"lb_dwarf_kingdom", title:"矮人山国", constant:false, depth:0, triggers:["矮人王都","树根矿脉","锻炉","山腹"],
+   recursive:[],
+   text:"矮人山国凿山为城，树根矿脉出产大陆最好的铁。矮人记仇也记恩，一锤一凿都算得清楚。"},
+  {id:"lb_desert_tribes", title:"沙漠诸部", constant:false, depth:0, triggers:["沙漠边缘","绿洲集市","深渊神殿","驼队驿站","古代遗迹"],
+   recursive:["lb_abyss_seal"],
+   text:"死亡沙漠有绿洲集市与驼队驿站，沙漠边缘的深渊神殿是封印最薄弱处，守墓人与沙盗都盯着那里。"},
+  {id:"lb_west_wild", title:"西境荒原", constant:false, depth:0, triggers:["西境","元素荒原","游侠学院","元素风暴"],
+   recursive:[],
+   text:"西境荒原元素之力狂躁，风暴过境能卷走整支商队。游侠学院建在风口，教人如何在元素乱流里活下来。"},
+  {id:"lb_dark_cult", title:"暗蚀会", constant:false, depth:0, triggers:["暗蚀","腐光","邪教","密教"],
+   recursive:[],
+   text:"暗蚀会崇拜深渊旧物，以腐光侵蚀人心。会众行事隐秘，常在灾年趁乱传道，收买走投无路之人。"},
+  {id:"lb_guard_knight", title:"审判骑士团", constant:false, depth:0, triggers:["审判骑士","骑士团","圣骑士"],
+   recursive:["lb_purge_order"],
+   text:"审判骑士团是教会的刀，披白甲、佩圣印，专事缉拿异端。骑士团的马蹄声到哪，哪里的书就烧起来。"},
+  {id:"lb_blood_tokens", title:"龙裔余脉", constant:false, depth:0, triggers:["龙裔","龙血","龙语","龙鳞"],
+   recursive:[],
+   text:"龙裔是神战遗孤，体内淌着稀薄的龙血。龙语魔法与龙鳞锻造俱是旧日的遗产，如今会的人一只手数得过来。"},
+  {id:"lb_graveyard_plot", title:"墓园无字碑", constant:false, depth:0, triggers:["无字碑","墓园","金先生"],
+   recursive:["lb_goldscale"],
+   text:"学院山下的墓园立着无字碑，三代守墓人守着它。碑下埋的不是尸骨，是一段被刻意抹去的家族史。"},
+  {id:"lb_necromancy", title:"死灵禁忌", constant:false, depth:0, triggers:["死灵","亡者","安魂","招魂"],
+   recursive:[],
+   text:"死灵法术在教会治下是重罪，只有禁书区与暗蚀会还在传习。学院为此专设安魂科，专管亡者异动。"}
+];
+/* ===== /v92inj:lorebook:end/ ===== */
 
 /* /u1inj:data-nodes:dn_memory_tpl.js/ */
 /* ===== /v91inj:memtpl/ CM-1 记忆注入模板库（纯数据；v66 文风；治理词合规） =====

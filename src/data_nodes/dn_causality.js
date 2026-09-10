@@ -90,7 +90,17 @@ window.CAUSALITY_LEDGER = [
 {id:"led_grad_02",type:"伏笔",desc:"金秤家信物铁牌（三道弧线围一圆），老莫里茨遗赠，墓园认亲凭证",plant:"grad_stay_4",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
 {id:"led_grad_03",type:"伏笔",desc:"费尔曼第三把锈钥匙——禁书区铁门钥匙，留校线持有",plant:"grad_y3_end_3",reap:"anchor_vault_1",status:"open",world:"vol_academy"},
 {id:"led_grad_04",type:"设定",desc:"墓园无字碑·金先生=金秤家守墓人，碑下埋锚（第三哨北）",plant:"grad_stay_5",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
-{id:"led_grad_05",type:"设定",desc:"毕业四去向（留校/从军/游历/回乡），各自独立链与北上汇合点",plant:"grad_choose",reap:"grad_path_stay_north",status:"closed",world:"vol_academy"}
+{id:"led_grad_05",type:"设定",desc:"毕业四去向（留校/从军/游历/回乡），各自独立链与北上汇合点",plant:"grad_choose",reap:"grad_path_stay_north",status:"closed",world:"vol_academy"},
+{id:"led_alumni_01",type:"伏笔",desc:"狼群南迁与神谕石林枯井水眼干涸，洛克线埋下兽人神谕危机",plant:"alumni_rock_4",reap:"anchor_oracle_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_02",type:"伏笔",desc:"铁门关防务疏漏与第三哨异动，凯恩线指向北境战争前兆",plant:"alumni_kain_4",reap:"warphase_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_03",type:"伏笔",desc:"《灰烬之书》失窃与圣痕司异动，艾丽丝线指向圣痕与封纹",plant:"alumni_alice_4",reap:"anchor_church_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_04",type:"伏笔",desc:"神谕枯井井底壁画与波浪纹刻痕，阿塔线标记地底通路",plant:"alumni_ata_3",reap:"anchor_oracle_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_05",type:"伏笔",desc:"东境灰瘟与地底铁门铰链，洛卡线指向沉埋门扉",plant:"alumni_loka_4",reap:"anchor_mine_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_06",type:"伏笔",desc:"晨天故城与官仓粮印旧账，塞西莉娅线指向东境地下",plant:"alumni_cecy_4",reap:"anchor_chen_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_07",type:"伏笔",desc:"矮人矿洞石室与标路记号，莫里线呼应神谕枯井波浪纹",plant:"alumni_mori_5",reap:"anchor_mine_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_08",type:"伏笔",desc:"圣痕封伤与封纹铁片，艾琳娜线指向净仪与圣痕司隐秘",plant:"alumni_elena_4",reap:"anchor_church_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_09",type:"伏笔",desc:"铜钟裂口与钟楼铁板地图，老铁线标记北境地下门扉",plant:"alumni_tie_3",reap:"anchor_tower_1",status:"open",world:"vol_academy"},
+{id:"led_alumni_10",type:"伏笔",desc:"导师遗物黄铜钥匙与七块铁碑文，指向七锚封镇真相",plant:"grad_mentor_3",reap:"goldscale_1",status:"open",world:"vol_academy"}
 
 ];
 /* ===== /v91inj:ledger:end/ ===== */

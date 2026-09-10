@@ -267,6 +267,8 @@ N["grad_stay_8"]={tag:"main",place:"艾尔达魔法学院 · 钟楼",where:"白�
 "你知道，留校不是终点。这座学院，是你出发的地方。北边，有人在等一块铁牌。"
 ],options:[
 {t:"（择日北上，先去北境第三哨落脚）",effects:{xp:15,flag:"grad_path_stay_north"},go:"frontier_city"}
+,
+{t:"（顺路去驿站，看看有没有信）",effects:{xp:5},go:"alumni_hub"}
 ]};
 
 /* ============ 毕业去向二：从军 ============ */
@@ -335,6 +337,8 @@ N["grad_army_8"]={tag:"main",place:"北境 · 第三哨城墙外",where:"白昼"
 "你踏进城门的石阶，知道从今天起，你就是这座北境要塞的兵了。城里的日子，会比铁门关更冷，也更接近那些你听见过的名字——铜钟、矿洞、老兵老铁。"
 ],options:[
 {t:"（入城报到，先熟悉这座要塞）",effects:{xp:15},go:"frontier_city"}
+,
+{t:"（顺路去驿站，看看有没有信）",effects:{xp:5},go:"alumni_hub"}
 ]};
 
 /* ============ 毕业去向三：游历 ============ */
@@ -402,6 +406,8 @@ N["grad_roam_8"]={tag:"main",place:"东境 · 官道",where:"白昼",pace:"norma
 "你把行囊紧了紧，转向北。风从那个方向吹来，带着雪的味道。"
 ],options:[
 {t:"（转道北上，走向游历的终点与起点）",effects:{xp:15,flag:"grad_path_roam_north"},go:"frontier_city"}
+,
+{t:"（顺路去驿站，看看有没有信）",effects:{xp:5},go:"alumni_hub"}
 ]};
 
 /* ============ 毕业去向四：回乡 ============ */
@@ -468,4 +474,6 @@ N["grad_home_8"]={tag:"main",place:"故乡 · 村口",where:"白昼",pace:"norma
 "我转回身，朝着北边走去。那里有第三哨，有雪原，有矿洞，也有五年前我在学院课堂上听见的第一句咒语没能解答的东西。故乡给了我底气，而北边，有我要去弄明白的事。"
 ],options:[
 {t:"（朝北走，走向新的路）",effects:{xp:15,flag:"grad_path_home_north"},go:"frontier_city"}
+,
+{t:"（顺路去驿站，看看有没有信）",effects:{xp:5},go:"alumni_hub"}
 ]};

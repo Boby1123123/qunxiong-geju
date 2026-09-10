@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7763724,
-    "chunked_html_bytes_max": 5157547,
-    "node_total_min": 4339,
+    "game_html_bytes_max": 7794913,
+    "chunked_html_bytes_max": 5188736,
+    "node_total_min": 4365,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7713724,
-    "chunked_html_bytes": 5057547,
-    "node_total": 4389,
+    "game_html_bytes": 7744913,
+    "chunked_html_bytes": 5088736,
+    "node_total": 4415,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "M6 治理词微调",
+    "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器",
     "history": [
       {
         "date": "2026-09-09",
@@ -439,6 +439,20 @@
         "chunked_bytes": 5057547,
         "nodes": 4389,
         "reason": "M6 治理词微调"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7744911,
+        "chunked_bytes": 5088734,
+        "nodes": 4415,
+        "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7744913,
+        "chunked_bytes": 5088736,
+        "nodes": 4415,
+        "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器"
       }
     ]
   },

@@ -349,9 +349,9 @@ def cmd_ci():
            % (sizes['game.html'], sizes['game_check.html'], sizes['game_chunked.html'], sizes['index.html']), ok4)
     ok = ok and st3[1]
 
-    # 4. elda full（24 检查器：死链/分片/存档/marker/UI/因果账本/节奏战斗/文本治理门禁…）
+    # 4. elda full（25 检查器：死链/分片/存档/marker/UI/因果账本/节奏战斗/文本治理门禁…）
     rc = cmd_quick_full(True)
-    st4 = ('elda full 24 检查器', rc == 0)
+    st4 = ('elda full 25 检查器', rc == 0)
     ok = ok and st4[1]
 
     print('-' * 62)

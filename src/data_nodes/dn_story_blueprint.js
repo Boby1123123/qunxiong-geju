@@ -675,7 +675,23 @@ window.STORY_BLUEPRINT = {
   "goldscale_7": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
   "goldscale_8": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
   "goldscale_9": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
-  "goldscale_10": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"}
+    "anchor_finale_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_finale_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_finale_7": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_finale_8": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_finale_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "anchor_finale_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_finale_7": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_finale_8": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+"goldscale_10": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"}
 
 
 

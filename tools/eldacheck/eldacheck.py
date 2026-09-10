@@ -23,7 +23,7 @@ def C(code, s):
 
 def load_checks():
     sys.path.insert(0, HERE)
-    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report
+    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor
     return {
         'quick': [
             ('语法检查', c_syntax.run),
@@ -58,6 +58,7 @@ def load_checks():
             ('叙事骨架门', c_skeleton.run),
             ('弧线覆盖门', c_arc.run),
             ('生产报表', c_report.run),
+            ('七锚终局', c_anchor.run),
         ],
     }
 

@@ -96,5 +96,5 @@ N["goldscale_10"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"白�
 "你站在钟楼上，腰间金秤晃了晃。雪原尽头，地平线上，有什么东西正泛起一线极淡的光——那是七锚齐鸣的方向，也是那道门的方向。",
 "金秤真相，至此尘埃落定。而你握着这杆秤，站在门前——下一步，就是七锚齐鸣的那一刻。"
 ],options:[
-{t:"（把锚印与金秤收好，等待七锚齐鸣）",effects:{xp:35,flag:"goldscale_done"},go:"anchor_oracle_6"}
+{t:"（把锚印与金秤收好，等待七锚齐鸣）",effects:{xp:35,flag:"goldscale_done"},go:"anchor_finale_1"}
 ]};

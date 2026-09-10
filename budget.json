@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8495317,
-    "chunked_html_bytes_max": 5778426,
+    "game_html_bytes_max": 8499310,
+    "chunked_html_bytes_max": 5782365,
     "node_total_min": 4587,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8445317,
-    "chunked_html_bytes": 5678426,
+    "game_html_bytes": 8449310,
+    "chunked_html_bytes": 5682365,
     "node_total": 4637,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UPG-16 fix: 职业事件day错开",
+    "reason": "UPG-15 节点物理分区：注册表100%覆盖",
     "history": [
       {
         "date": "2026-09-09",
@@ -698,6 +698,20 @@
         "chunked_bytes": 5678426,
         "nodes": 4637,
         "reason": "UPG-16 fix: 职业事件day错开"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8448814,
+        "chunked_bytes": 5681923,
+        "nodes": 4637,
+        "reason": "UPG-15 节点物理分区：dn_registry九域注册表+命名规范检查器"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8449310,
+        "chunked_bytes": 5682365,
+        "nodes": 4637,
+        "reason": "UPG-15 节点物理分区：注册表100%覆盖"
       }
     ]
   },

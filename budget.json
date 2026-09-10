@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8757854,
-    "chunked_html_bytes_max": 6038199,
+    "game_html_bytes_max": 8757875,
+    "chunked_html_bytes_max": 6038220,
     "node_total_min": 4649,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8707854,
-    "chunked_html_bytes": 5938199,
+    "game_html_bytes": 8707875,
+    "chunked_html_bytes": 5938220,
     "node_total": 4699,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UI93-v5 fix3：更多菜单项先关菜单",
+    "reason": "UI93-v5.1 正文加宽对齐书签行（story 42em→76em+94%）",
     "history": [
       {
         "date": "2026-09-09",
@@ -929,6 +929,13 @@
         "chunked_bytes": 5938199,
         "nodes": 4699,
         "reason": "UI93-v5 fix3：更多菜单项先关菜单"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8707875,
+        "chunked_bytes": 5938220,
+        "nodes": 4699,
+        "reason": "UI93-v5.1 正文加宽对齐书签行（story 42em→76em+94%）"
       }
     ]
   },

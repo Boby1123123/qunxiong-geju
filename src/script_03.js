@@ -4632,6 +4632,68 @@ window.v92_worldSnapshot = function(){
         return d;
       }catch(e){ return null; }
     };
+    /* /g3inj:engine/ G-N3 数值台阶（只读参考层：战力评级 + 区域分级；不改判定公式） */
+    window.v92_tierInfo = function(){
+      try{
+        var sum = 0;
+        var keys = ["STR","CON","AGI","INT","SPR","CHA","str","con","agi","int","spr","cha","atk","def","hp","mp"];
+        for(var i=0;i<keys.length;i++){ var v = S[keys[i]]; if(typeof v === "number" && v>0) sum += v; }
+        for(var lk in S){ if(lk.indexOf("lv_")===0 && typeof S[lk]==="number") sum += S[lk]; }
+        var dayBonus = 0;
+        if(S.day>=60) dayBonus += 10;
+        if(S.day>=120) dayBonus += 15;
+        if(S.day>=200) dayBonus += 25;
+        if(S.day>=250) dayBonus += 15;
+        if(S.day>=280) dayBonus += 20;
+        var anchorBonus = 0;
+        if(S.anchors && typeof S.anchors === "object" && typeof S.anchors.length === "number") anchorBonus += S.anchors.length*10;
+        var score = sum + dayBonus + anchorBonus;
+        var tier = 1;
+        if(score>=330) tier=6; else if(score>=260) tier=5; else if(score>=200) tier=4; else if(score>=120) tier=3; else if(score>=60) tier=2;
+        var tn = (window.TIER_NAMES_V92 && TIER_NAMES_V92[tier]) || {name:"青铜", ref:""};
+        var next = (window.TIER_NAMES_V92 && TIER_NAMES_V92[tier+1]) ? TIER_NAMES_V92[tier+1].name : "已至顶点";
+        return {score: Math.round(score), tier: tier, name: tn.name, ref: tn.ref, next: next};
+      }catch(e){ return {score:0, tier:1, name:"青铜", ref:"", next:"黑铁"}; }
+    };
+    window.v92_openTierPanel = function(){
+      try{
+        var old = document.getElementById('v92-tier-panel');
+        if(old){ old.parentNode.removeChild(old); }
+        var info = window.v92_tierInfo();
+        var rows = [];
+        var rts = window.REGION_TIER_V92 || {};
+        for(var rid in rts){
+          if(!rts.hasOwnProperty(rid)) continue;
+          var r = rts[rid];
+          var reg = (window.REGIONS && REGIONS[rid]) ? REGIONS[rid].cn : rid;
+          rows.push('<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 2px;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px;line-height:1.6;">'
+            + '<div style="flex:0 0 130px;"><b>'+reg+'</b></div>'
+            + '<div style="flex:1;color:#666;font-size:12px;">'+r.desc+'</div>'
+            + '<div style="flex:0 0 46px;text-align:center;">'+r.name+'</div></div>');
+        }
+        var refs = window.TIER_REF_V92 || [];
+        var refRows = [];
+        for(var j=0;j<refs.length;j++){ var tf=refs[j]; refRows.push('<div style="flex:1 1 130px;min-width:0;padding:8px;border:1px solid rgba(0,0,0,.08);border-radius:8px;margin:4px;"><div style="font-size:13px;font-weight:600;">'+TIER_NAMES_V92[tf.tier].name+'</div><div style="font-size:11px;color:#888;margin-top:2px;">攻 '+tf.atk+' / 防 '+tf.def+'</div><div style="font-size:12px;color:#666;margin-top:2px;">'+tf.note+'</div></div>'); }
+        var d = document.createElement('div');
+        d.id = 'v92-tier-panel';
+        d.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:640px;max-width:92vw;max-height:84vh;overflow:auto;background:#fdf9ee;border:2px solid #a8842a;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.4);z-index:9999;padding:16px 20px;font-family:inherit;';
+        d.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+          + '<div style="font-size:18px;font-weight:600;">⚔ 实力对照 · 战力 '+info.score+'</div>'
+          + '<button class="opt" onclick="var p=document.getElementById(\'v92-tier-panel\');if(p)p.parentNode.removeChild(p);">✕ 关闭</button></div>'
+          + '<div style="padding:10px 12px;background:rgba(168,132,42,.08);border:1px solid rgba(168,132,42,.3);border-radius:8px;margin-bottom:10px;">'
+          + '<div style="font-size:16px;font-weight:700;color:#8a6410;">当前评级：'+info.name+'</div>'
+          + '<div style="font-size:13px;color:#555;margin-top:4px;line-height:1.7;">'+info.ref+'</div>'
+          + '<div style="font-size:12px;color:#888;margin-top:4px;">下一阶：'+info.next+'</div></div>'
+          + '<div style="font-size:13px;font-weight:600;margin-bottom:4px;">九域难度（去更高处之前，先掂量自己）</div>'
+          + rows.join('')
+          + '<div style="font-size:13px;font-weight:600;margin:10px 0 4px;">战力参考（攻/防为量级示意，非判定公式）</div>'
+          + '<div style="display:flex;flex-wrap:wrap;margin:-4px;">'+refRows.join('')+'</div>'
+          + '<div style="font-size:12px;color:#999;margin-top:10px;line-height:1.6;">评级由属性、修行与见闻（day/七锚）推算，只作参考，不改任何判定。</div>';
+        document.body.appendChild(d);
+        if(window.v67_busyClear){ try{ window.v67_busyClear(); }catch(e){} }
+        return d;
+      }catch(e){ return null; }
+    };
     window.v92_openTradePanel = function(){
       try{
         window.v92_tradeInit();

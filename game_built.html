@@ -4728,7 +4728,8 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
         <button class="btn" id="btn-chronicle" title="编年史 (C)">📖 编年史</button>
         <button class="btn" id="btn-threads" title="叙事线 (N)：并行叙事线进度" onclick="v92_openThreadPanel()">☰ 叙事线</button>
         <button class="btn" id="btn-world" title="世界局势 (W)：九域现状与主线走向" onclick="v92_openWorldPanel()">🌍 局势</button>
-        <button class="btn" id="btn-trade" title="商路 (G)：倒买倒卖赚差价" onclick="v92_openTradePanel()">🛒 商路</button>
+        <button class="btn" id="btn-tier" title="实力 (G)：战力评级与九域难度" onclick="v92_openTierPanel()">⚔ 实力</button>
+<button class="btn" id="btn-trade" title="商路 (G)：倒买倒卖赚差价" onclick="v92_openTradePanel()">🛒 商路</button>
 <button class="btn" id="btn-nodeedit" title="✎ 节点编辑器（作者工具）：搜索/编辑/脚手架/导出补丁" onclick="v92_openNodeEditor()">✎ 编辑</button>
         <button class="btn" id="btn-save" title="存档 (Ctrl+S)" onclick="v34_openSavePanel()">💾 存档</button>
         <button class="btn" id="btn-settings" title="设置" onclick="v34_openSettings()">⚙ 设置</button>
@@ -55190,6 +55191,68 @@ window.v92_worldSnapshot = function(){
         return d;
       }catch(e){ return null; }
     };
+    /* /g3inj:engine/ G-N3 数值台阶（只读参考层：战力评级 + 区域分级；不改判定公式） */
+    window.v92_tierInfo = function(){
+      try{
+        var sum = 0;
+        var keys = ["STR","CON","AGI","INT","SPR","CHA","str","con","agi","int","spr","cha","atk","def","hp","mp"];
+        for(var i=0;i<keys.length;i++){ var v = S[keys[i]]; if(typeof v === "number" && v>0) sum += v; }
+        for(var lk in S){ if(lk.indexOf("lv_")===0 && typeof S[lk]==="number") sum += S[lk]; }
+        var dayBonus = 0;
+        if(S.day>=60) dayBonus += 10;
+        if(S.day>=120) dayBonus += 15;
+        if(S.day>=200) dayBonus += 25;
+        if(S.day>=250) dayBonus += 15;
+        if(S.day>=280) dayBonus += 20;
+        var anchorBonus = 0;
+        if(S.anchors && typeof S.anchors === "object" && typeof S.anchors.length === "number") anchorBonus += S.anchors.length*10;
+        var score = sum + dayBonus + anchorBonus;
+        var tier = 1;
+        if(score>=330) tier=6; else if(score>=260) tier=5; else if(score>=200) tier=4; else if(score>=120) tier=3; else if(score>=60) tier=2;
+        var tn = (window.TIER_NAMES_V92 && TIER_NAMES_V92[tier]) || {name:"青铜", ref:""};
+        var next = (window.TIER_NAMES_V92 && TIER_NAMES_V92[tier+1]) ? TIER_NAMES_V92[tier+1].name : "已至顶点";
+        return {score: Math.round(score), tier: tier, name: tn.name, ref: tn.ref, next: next};
+      }catch(e){ return {score:0, tier:1, name:"青铜", ref:"", next:"黑铁"}; }
+    };
+    window.v92_openTierPanel = function(){
+      try{
+        var old = document.getElementById('v92-tier-panel');
+        if(old){ old.parentNode.removeChild(old); }
+        var info = window.v92_tierInfo();
+        var rows = [];
+        var rts = window.REGION_TIER_V92 || {};
+        for(var rid in rts){
+          if(!rts.hasOwnProperty(rid)) continue;
+          var r = rts[rid];
+          var reg = (window.REGIONS && REGIONS[rid]) ? REGIONS[rid].cn : rid;
+          rows.push('<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 2px;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px;line-height:1.6;">'
+            + '<div style="flex:0 0 130px;"><b>'+reg+'</b></div>'
+            + '<div style="flex:1;color:#666;font-size:12px;">'+r.desc+'</div>'
+            + '<div style="flex:0 0 46px;text-align:center;">'+r.name+'</div></div>');
+        }
+        var refs = window.TIER_REF_V92 || [];
+        var refRows = [];
+        for(var j=0;j<refs.length;j++){ var tf=refs[j]; refRows.push('<div style="flex:1 1 130px;min-width:0;padding:8px;border:1px solid rgba(0,0,0,.08);border-radius:8px;margin:4px;"><div style="font-size:13px;font-weight:600;">'+TIER_NAMES_V92[tf.tier].name+'</div><div style="font-size:11px;color:#888;margin-top:2px;">攻 '+tf.atk+' / 防 '+tf.def+'</div><div style="font-size:12px;color:#666;margin-top:2px;">'+tf.note+'</div></div>'); }
+        var d = document.createElement('div');
+        d.id = 'v92-tier-panel';
+        d.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:640px;max-width:92vw;max-height:84vh;overflow:auto;background:#fdf9ee;border:2px solid #a8842a;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.4);z-index:9999;padding:16px 20px;font-family:inherit;';
+        d.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+          + '<div style="font-size:18px;font-weight:600;">⚔ 实力对照 · 战力 '+info.score+'</div>'
+          + '<button class="opt" onclick="var p=document.getElementById(\'v92-tier-panel\');if(p)p.parentNode.removeChild(p);">✕ 关闭</button></div>'
+          + '<div style="padding:10px 12px;background:rgba(168,132,42,.08);border:1px solid rgba(168,132,42,.3);border-radius:8px;margin-bottom:10px;">'
+          + '<div style="font-size:16px;font-weight:700;color:#8a6410;">当前评级：'+info.name+'</div>'
+          + '<div style="font-size:13px;color:#555;margin-top:4px;line-height:1.7;">'+info.ref+'</div>'
+          + '<div style="font-size:12px;color:#888;margin-top:4px;">下一阶：'+info.next+'</div></div>'
+          + '<div style="font-size:13px;font-weight:600;margin-bottom:4px;">九域难度（去更高处之前，先掂量自己）</div>'
+          + rows.join('')
+          + '<div style="font-size:13px;font-weight:600;margin:10px 0 4px;">战力参考（攻/防为量级示意，非判定公式）</div>'
+          + '<div style="display:flex;flex-wrap:wrap;margin:-4px;">'+refRows.join('')+'</div>'
+          + '<div style="font-size:12px;color:#999;margin-top:10px;line-height:1.6;">评级由属性、修行与见闻（day/七锚）推算，只作参考，不改任何判定。</div>';
+        document.body.appendChild(d);
+        if(window.v67_busyClear){ try{ window.v67_busyClear(); }catch(e){} }
+        return d;
+      }catch(e){ return null; }
+    };
     window.v92_openTradePanel = function(){
       try{
         window.v92_tradeInit();
@@ -81291,6 +81354,40 @@ window.NPC_STATE = [
      {day:280, where:"东境·承天城", doing:"戒严令下他亲自守库，腰刀夜夜出鞘。"}
    ]}
 ];
+
+/* /u1inj:data-nodes:dn_numerics.js/ */
+/* /g3inj:data/ G-N3 数值台阶：区域难度分级 + 战力评级参考（纯数据，只读参考层，不参与判定） */
+const REGION_TIER_V92 = {
+  "free":    {tier:1, name:"青铜",  cities:{"jiaohui":1,"jishi":1,"gonghui":1,"huigang":1}, desc:"中立之地，什么都能买到，也什么都能丢掉。新手起步区。"},
+  "north":   {tier:2, name:"黑铁",  cities:{"aierda":2,"hewan":1,"kuangshan":2,"senlin":2,"tiebi":2,"beijing":3,"disanshao":3,"haigang":2}, desc:"七公国联邦。越往北越冷，越靠近战争越硬。"},
+  "south":   {tier:2, name:"黑铁",  cities:{"huangjin":2,"moxie":2,"xueshu":2,"shangzhan":2,"gangkou":2}, desc:"金钱联邦。账本比刀剑更锋利，商路即是战场。"},
+  "church":  {tier:2, name:"黑铁",  cities:{"shengcheng":2}, desc:"神权国度。圣光之下有审判庭，也有异端牢房。"},
+  "west":    {tier:3, name:"白银",  cities:{"xingsheng":3,"youxia":3,"huangyuan":4}, desc:"元素荒原。风暴与兽潮之下，只有老手和疯子讨生活。"},
+  "east":    {tier:3, name:"白银",  cities:{"chengtian":3,"tiemen":4}, desc:"东方帝国。科举取士，边关兵甲森森。"},
+  "desert":  {tier:3, name:"白银",  cities:{"bianyuan":2,"lvzhou":3,"tuoduo":3,"yiji":4,"shendian":5}, desc:"死亡沙漠。越往南越深，深处埋着深渊的七号封印。"},
+  "elf":     {tier:4, name:"黄金",  cities:{"wangting":4}, desc:"精灵王国。迷雾封锁三百年，世界树根须直抵深渊边缘。"},
+  "dwarf":   {tier:4, name:"黄金",  cities:{"wangdu":4}, desc:"矮人王国。石门沉重，矿脉枯竭，熔炉仍在山腹轰鸣。"},
+  "orc":     {tier:4, name:"黄金",  cities:{"heishi":4,"shengshan":5}, desc:"兽人草原。马蹄与战鼓声中，一个统一的大汗正在崛起。"}
+};
+const TIER_NAMES_V92 = {
+  1: {name:"青铜",   ref:"初出茅庐：能在中立之地接活、跑商、混口饭吃。",   min:0},
+  2: {name:"黑铁",   ref:"小有名声：可以在公国与商路间来去，敢看大城的眼色。", min:60},
+  3: {name:"白银",   ref:"一方好手：边疆与帝国的门槛。荒原的风、东方的兵，都认得你。", min:120},
+  4: {name:"黄金",   ref:"国之栋梁：精灵与矮人的古老门槛，深渊裂隙边的常客。", min:200},
+  5: {name:"秘银",   ref:"传奇之资：圣山、故都、封印深处。与你同行的，只剩传说。", min:260},
+  6: {name:"龙晶",   ref:"大陆顶点：七锚之约的终局，与诸神同席的一步之遥。", min:330}
+};
+const TIER_REF_V92 = [
+  {tier:1, atk:5,  def:5,  note:"村口恶狼的水平。铁器、粗布、旧药，够用。"},
+  {tier:2, atk:12, def:10, note:"职业佣兵的门槛。要开始挑装备与同伴。"},
+  {tier:3, atk:22, def:18, note:"精锐哨骑。普通刀剑已留不下什么疤。"},
+  {tier:4, atk:36, def:30, note:"骑士团长的战力。魔法与血脉开始比力气更值钱。"},
+  {tier:5, atk:55, def:45, note:"王国柱石。寻常军队见了你，会先敬礼再让路。"},
+  {tier:6, atk:80, def:65, note:"传说本身。与深渊对话，替大陆做决定。"}
+];
+window.REGION_TIER_V92 = REGION_TIER_V92;
+window.TIER_NAMES_V92 = TIER_NAMES_V92;
+window.TIER_REF_V92 = TIER_REF_V92;
 
 /* /u1inj:data-nodes:dn_orc_deep.js/ */
 /* /pe1inj:orc-deep/ PE-1 兽人草原深度包（P2 剩余 + 大幅方向内容展开）

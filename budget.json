@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8334914,
-    "chunked_html_bytes_max": 5645659,
+    "game_html_bytes_max": 8336462,
+    "chunked_html_bytes_max": 5647090,
     "node_total_min": 4581,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8284914,
-    "chunked_html_bytes": 5545659,
+    "game_html_bytes": 8286462,
+    "chunked_html_bytes": 5547090,
     "node_total": 4631,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "EXP-1 结局deep化+临终视野",
+    "reason": "EXP-2 突破场景句+v92_breakthroughScene",
     "history": [
       {
         "date": "2026-09-09",
@@ -586,6 +586,13 @@
         "chunked_bytes": 5545659,
         "nodes": 4631,
         "reason": "EXP-1 结局deep化+临终视野"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8286462,
+        "chunked_bytes": 5547090,
+        "nodes": 4631,
+        "reason": "EXP-2 突破场景句+v92_breakthroughScene"
       }
     ]
   },

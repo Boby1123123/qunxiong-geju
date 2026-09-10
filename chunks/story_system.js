@@ -2701,7 +2701,7 @@ N["board_north"] = function(){
 };
 
 N["board_north_done"] = {tag:"branch",
-  place:"委托板", text:["你把委托交了，赏金落袋。这年头，力气和胆量，都是硬通货。"],pace:"light",
+  place:"委托板", text:["你把委托交了，赏金落袋。这年头，力气和胆量，都是硬通货。","你把委托交了，赏金落袋。铁门关的委托板钉在兵营外墙，纸上沾着灰尘和几点暗色的旧渍——不知是酒还是别的什么。","","旁边一个老兵正往板上钉新告示：“北边雪原闹狼群，猎队缺人手，酬金面议。”他钉完，转头看你：“小子，要是缺钱，这单不错。就是路远，风大。”","","你谢过他。风从关外灌进来，带着雪和铁的味道。你掂了掂钱袋——这年头的安稳日子，都是用脚走出来的。",""],pace:"light",
   options:[
     {t:"再接一单",go:"board_north"},
     {t:"继续赶路",run:function(){ togglePanel("map"); }}
@@ -2754,14 +2754,14 @@ N["board_east"] = function(){
   return {place:"东部王国 · 委托板",text:["东部的活计，规矩多，赏钱也准。你扫了一眼。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_east_done"})).concat([{t:"离开",go:"east_after"}])};
 };
 
-N["board_east_done"] = {place:"委托板",text:["活计办妥，赏金落袋。"],pace:"light",options:[{t:"再接一单",go:"board_east"},{t:"离开",go:"east_after"}]};
+N["board_east_done"] = {place:"委托板",text:["活计办妥，赏金落袋。","委托板上，那张泛黄的纸被取下，露出下面一排新的告示。赏金袋在手里沉甸甸的，铜星碰着银角，叮当作响。","","你把袋子收进怀里。板子旁边的木柱上，用炭笔写着几行小字，是别的佣兵留的：“东境粮价又涨了——跑商的人说，边关在囤货。”","","你记下这句话，转身走进市集。叫卖声迎面扑来，热腾腾的炊饼气味混着铁器的腥味。这座城，从来不缺活计，也不缺消息。",""],pace:"light",options:[{t:"再接一单",go:"board_east"},{t:"离开",go:"east_after"}]};
 
 N["board_church"] = function(){
   const picks = shuffle(CHURCH_BOARD).slice(0,2);
   return {place:"圣城 · 委托板",text:["圣城的活计，干净，赏钱也干净。你扫了一眼。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_church_done"})).concat([{t:"离开",go:"church_after"}])};
 };
 
-N["board_church_done"] = {tag:"branch",place:"委托板",text:["活计办妥，赏金落袋。"],pace:"light",options:[{t:"再接一单",go:"board_church"},{t:"离开",go:"church_after"}]};
+N["board_church_done"] = {tag:"branch",place:"委托板",text:["活计办妥，赏金落袋。","委托板钉在教堂侧门的廊柱上，纸页被烛火熏得微黄。你交了活计，赏金袋落进掌心，铜钱带着圣城特有的、被香火熏过的温热。","","一个修士从你身边走过，看了你一眼，欲言又止。他最终还是开口：“最近别接那些‘关于圣物的委托’——教会那边，最近查得严。”","","你点头谢过他，把赏金收好。圣城的钟声正好响起，一声接一声，把市集的喧闹盖了过去。",""],pace:"light",options:[{t:"再接一单",go:"board_church"},{t:"离开",go:"church_after"}]};
 
 N["board_free"] = {
   place:"自由城邦 · 冒险者之城 · 委托板",where:"白昼",

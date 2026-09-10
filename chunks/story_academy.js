@@ -161,7 +161,7 @@ N["academy_year1_grades"] = function(){ return {
   if(g=="A") base.push("优秀。你获得了小额奖学金。");
   if(g=="D") base.push("及格线边缘。你被警告了——再这样下去要留级。");
   if(g=="F") base.push("不及格。你必须在暑期补课，否则留级。");
-  return base;},
+  base.push("公告栏的木框上钉着一排成绩单，风一吹，纸角轻轻翻动。你的名字印在中间偏上的位置——第一学年综合评价：B级。");base.push("");base.push("你站在公告栏前，把那个字母看了三遍。旁边贴着一张旧告示，边角已经卷起，是上学期末的奖学金名单。你想起这一年的日子：图书馆闭馆的钟声、宿舍夜谈的笑声、还有那些熬夜背咒文的夜晚。");base.push("");return base;},
   options:[
     {t:"开始暑假", go:"academy_vacation_y1", effect:{time:1}}
   ]
@@ -199,7 +199,7 @@ N["academy_year2_open"] = function(){ return {
   
 
 N["academy_major"] = function(){ return {
-  text:["专业方向选择。这决定了你未来两年的课程重点和毕业去向。你站在选择面前，认真思考。"],
+  text:["专业方向选择。这决定了你未来两年的课程重点和毕业去向。你站在选择面前，认真思考。","选专业的表就摆在教务处桌上，纸张厚实，抬头印着学院的纹章。教务长把笔递给你时，眼神里带着点说不清的东西：“想好了再填。这一笔下去，你未来两年的课程、导师、甚至毕业去向，都在上面了。”","","你握着笔，笔尖悬在纸面上方。窗外，操场上传来训练的口号声；走廊里，几个高年级生正抱着厚厚的研究资料走过。你听见自己的心跳。","","第一栏写着：战斗专精——战士/盗贼，适合刀口舔血的人。第二栏：魔法研究——魔法师/灵魂法师，适合在书斋里泡一辈子的人。你想起自己这些年的路，想起那些为你挡过刀、递过书的人。笔尖落了下去。",""],
   options:[
     {t:"战斗专精（战士/盗贼）", effect:{flag:"major_combat", skillUp:"战斗"}, go:"academy_year2_midterm", effect:{time:1}},
     {t:"魔法研究（魔法师/灵魂法师）", effect:{flag:"major_magic", skillUp:"魔法"}, go:"academy_year2_midterm", effect:{time:1}},
@@ -267,7 +267,7 @@ N["academy_year2_purge"] = function(){ return {
   
 
 N["academy_year2_final"] = function(){ return {
-  text:["第二学年结束了。净化令的阴影还没散去，但至少期末考试结束了。你看着成绩单，思考着这一年的得失。明年，事情会更复杂。"],
+  text:["第二学年结束了。净化令的阴影还没散去，但至少期末考试结束了。你看着成绩单，思考着这一年的得失。明年，事情会更复杂。","第二学年的最后一天，教室里空了大半。考试早散了，学生们三三两两收拾东西，商量着暑假的去向。你站在窗边，看楼下的梧桐被风吹得沙沙响。","","净化令的阴影还没散——食堂里有人压低声音议论北边的消息，说着说着，又都住了口。你把这些话听进耳朵，没有接茬。","","成绩单已经发下来了。你把它叠好，收进怀里。明年，事情会更复杂——你心里清楚，这座学院的平静，是借来的。",""],
   options:[
     {t:"查看成绩", go:"academy_year2_grades", effect:{time:2}},
     {t:"开始暑假", go:"academy_vacation_y2", effect:{time:1}}
@@ -328,7 +328,7 @@ N["academy_missing_clue"] = function(){ return {
   
 
 N["academy_mercury_report"] = function(){ return {
-  text:["你敲开了墨丘利研究室的门。他听你说完，沉默了很久。然后他摘下眼镜，擦了擦，轻声说：「你比我想象的要勇敢。」他走到书架前，按了一下——书架移开了，露出一扇暗门。「跟我来。有些事，你该知道了。」"],
+  text:["你敲开了墨丘利研究室的门。他听你说完，沉默了很久。然后他摘下眼镜，擦了擦，轻声说：「你比我想象的要勇敢。」他走到书架前，按了一下——书架移开了，露出一扇暗门。「跟我来。有些事，你该知道了。」","墨丘利教授的书房里堆满了书，从地板摞到天花板，只在窗边留出一张窄桌。他听你说完，摘下眼镜，用袖子擦了擦，又戴上，来回擦了三遍。","","“你比我想象的要勇敢。”他说。窗外有风，吹得书页哗哗响。他走到书架前，手指在一本书的背脊上停了停——那里有一道几乎看不出的划痕。他按下去，书架无声地滑开，露出后面一道窄门。","","门里透出昏黄的光。他侧身让开，看着你：“进来吧。有些事，你迟早要知道——早一天知道，你就能多活一天。”",""],
   options:[
     {t:"跟随墨丘利进入暗门", go:"watchers_reveal", effect:{flag:"watcher_path", time:1}},
     {t:"太危险了，先离开", go:"academy_year3_aftermath", effect:{time:1}}
@@ -360,7 +360,7 @@ N["academy_career"] = function(){ return {
   
 
 N["academy_farewell"] = function(){ return {
-  text:["你和同学们一一告别。塞西莉亚骄傲地说要成为大陆最伟大的魔法师。耗子攥着你的手说以后在道上混报他的名字。玛丽含着泪给了你一个祝福。亚瑟拍了拍你的肩膀，什么都没说。这些人，你以后还会再见到——也许是盟友，也许是敌人。"],
+  text:["你和同学们一一告别。塞西莉亚骄傲地说要成为大陆最伟大的魔法师。耗子攥着你的手说以后在道上混报他的名字。玛丽含着泪给了你一个祝福。亚瑟拍了拍你的肩膀，什么都没说。这些人，你以后还会再见到——也许是盟友，也许是敌人。","学院大门外，梧桐正落着叶子。塞西莉亚先走的，她头也没回，只把手举过头顶挥了挥——可你知道，她眼眶红过。","","耗子磨蹭到最后，把一块磨得发亮的木牌塞进你手里：“道上要是有难处，报我的名。报不上也没事，提一嘴‘学院那帮人’也行。”说完他笑着跑了，跑出老远才回头看你一眼。","","你站在原地，看他们的背影一个个消失在路尽头。风把地上的梧桐叶卷起来，又放下。你忽然明白，这五年是真的结束了——从今天起，你要一个人走进这个大陆了。",""],
   options:[
     {t:"离开学院，踏入大陆", go:"city_free", effect:{flag:"academy_complete", time:1}}
   ]
@@ -393,7 +393,7 @@ N["academy_year_events"] = function(){ return {
     }
   }
   base.push("你可以选择关注哪个事件。");
-  return base;},
+  base.push("学院大厅的告示栏前围了一圈人。你挤进去，看到本学年的几件大事被红笔圈了出来：学术竞赛、社团招新、还有一条措辞含糊的“区域异常通报”。");base.push("");base.push("旁边贴着一张小字条，不知是谁写的：“禁书区附近最近不太平，晚上别一个人走那边。”字迹潦草，落款处只有一朵画得很丑的小花。");base.push("");base.push("你撕下字条，折好收进口袋。告示栏的风又吹过来，纸页哗啦啦响——这座学院，从来不缺热闹，也从来不缺秘密。");base.push("");return base;},
   options:[
     {t:"查看事件详情", go:"academy_event_detail", effect:{time:0}},
     {t:"继续正常学习", go:"academy_year1_midterm", effect:{time:30}}
@@ -405,7 +405,7 @@ N["academy_year_events"] = function(){ return {
 
 N["academy_event_detail"] = function(){ return {
   text:function(){var ev=ACADEMY_EVENTS_POOL[S.flags.year_events[0]];
-  if(!ev) return ["没有活跃事件。"];
+  if(!ev) return ["没有活跃事件。","布告栏上，最新的告示被红漆笔圈了出来。你凑近看——是关于学院里最近发生的异事的通报，措辞含糊，只说“正在调查，请同学们保持秩序”。","","你站在告示前，听见身后两个学生在低声说话：“听说禁区那扇门，半夜自己开了。”“嘘——别乱说，当心被记过。”他们看见你，立刻住口，快步走开了。","","你再次看向那则告示。纸角被风吹起又落下，像有什么话，想说又没说出口。",""];
   return ["【"+ev.name+"】", ev.desc, "你打算怎么做？"];},
   options:[
     {t:"介入事件", check:{attr:"CHA", label:"魅力·介入", target:55},
@@ -421,7 +421,7 @@ N["academy_event_detail"] = function(){ return {
   
 
 N["academy_facilities"] = function(){ return {
-  text:["学院设施一览。你可以去不同的设施，触发不同的功能和事件。"],
+  text:["学院设施一览。你可以去不同的设施，触发不同的功能和事件。","学院的设施分布图挂在主楼大厅的墙上，用不同颜色的图钉标着。你站在图前，盘算着今天去哪里。","","教学楼的方向传来下课的钟声，学生们鱼贯而出，走廊里一下子热闹起来；图书馆的尖顶在树梢间露出，那里永远安静；竞技场那边，隐约有兵刃碰撞的脆响。","","你伸手，在图上的几处点了点。每一点，都是一扇门——门后面，是不同的路。",""],
   options:[
     {t:"教学楼（上课）", go:"facility_classroom", effect:{time:1}},
     {t:"图书馆（借书/研究）", go:"facility_library", effect:{time:1}},
@@ -439,7 +439,7 @@ N["academy_facilities"] = function(){ return {
   
 
 N["academy_quests"] = function(){ return {
-  text:["学院告示板上贴着各种委托。你可以接取任务赚取金钱和声望。"],
+  text:["学院告示板上贴着各种委托。你可以接取任务赚取金钱和声望。","学院告示板上贴满了委托，层层叠叠，风一吹就哗哗响。你挤进人群，一张一张看过去。","","第一张：“教授研究助手——整理文献，抄写资料。报酬：银币若干，附赠一顿食堂餐。”落款是元素塔的某个教授。旁边一张：“同学求助——搬运教材，打扫实验室。报酬：一顿烤肉。”还有一张，字迹潦草：“寻找丢失的宠物猫——它叫‘陛下’，见到请送到宿舍区。”","","你撕下一张，折好收进口袋。告示板上空了一块，很快又被新的贴上。这座学院，每天都有干不完的活计，和用不完的琐碎日子。",""],
   options:[
     {t:"教授研究助手（难度1）", effect:{gold:10, flag:"quest_research"}, go:"quest_research", effect:{time:5}},
     {t:"同学求助（难度1）", effect:{gold:5, flag:"quest_classmate"}, go:"quest_classmate", effect:{time:3}},
@@ -462,7 +462,7 @@ N["academy_political"] = function(){ return {
   for(var i=0;i<snaps.length;i++){if(snaps[i].state==S.flags.political_state){snap=snaps[i];break;}}
   if(snap){base.push(snap.state+"："+snap.effect);}
   base.push("你可以选择介入政治，或者保持中立。");
-  return base;},
+  base.push("学院的权力棋盘上，各方势力犬牙交错。院长一系的保守派主张维持现状，教授会里的改革派想动一动旧规矩，学生自治会的新生力量则在一旁虎视眈眈。");base.push("");base.push("你站在走廊里，看两边的人各自聚集，低声交谈。有人看见你，点了点头，又别过头去。你知道，在这张棋盘上，站队要趁早，可站错队的代价也最重。");base.push("");return base;},
   options:[
     {t:"支持当前格局", effect:{flag:"political_support", rep:5}, go:"academy_year1_open", effect:{time:1}},
     {t:"暗中活动，试图改变格局", check:{attr:"CHA", label:"魅力·政治", target:60},
@@ -1899,7 +1899,7 @@ N["academy_elda_detail"] = function(){
       arr.push(a.desc);
       arr.push("");
       arr.push("【日程】清晨：早课 / 正午：午饭 / 午后：实验选修 / 黄昏：自由活动 / 深夜：宵禁");
-      return arr;
+      arr.push("艾尔达大陆学院的资料摊在你面前：位置、规模、历史、声望，一行一行，像一份完备的档案。");arr.push("");arr.push("人类顶尖综合学院——灵魂魔法和七印研究独步大陆。你念着这两行字，想起入学那天礼堂里的壁画：黄林晶加固七印的场景。");arr.push("");arr.push("你合上档案。这座学院的名字里带着‘大陆’二字，而它藏着的秘密，似乎也真的和整个大陆有关。");arr.push("");return arr;
     },
     options:[
       {t:"参加入学考试", go:"academy_elda_exam", effect:{}},
@@ -1980,7 +1980,7 @@ N["academy_holy_admitted"] = function(){
       arr.push("");
       plantForeshadowV27('eclipse_outer');
       arr.push("（你不知道的是，神学院的地下审讯室里，关着一些「不虔诚」的人。）");
-      return arr;
+      arr.push("圣光神学院的录取函是厚实的羊皮纸，印着烫金的圣徽。信里引用了一段祷文，末尾写着：“愿圣光指引你的路。”");arr.push("");arr.push("报到那天，钟声在圣城的白墙间回荡。你穿着新发的白袍，走在石阶上，神学生们的脚步都很轻，像怕惊动什么。");arr.push("");arr.push("接引你的修士一路无话，直到教堂门口才开口：“圣光之下，人人平等——只要你不说谎，不欺瞒，不藏污。记住了，圣光看得见一切。”他推开门，阳光倾泻而入。");arr.push("");return arr;
     },
     options:[
       {t:"进入神学院（开始第一年）", go:"academy_holy_year1", effect:{flag:"academy_holy_start"}}
@@ -2060,7 +2060,7 @@ N["academy_military_admitted"] = function(){
       arr.push("");
       plantForeshadowV27('karma_seed');
       arr.push("（你不知道的是，军事学院的秘密研究派，在研究一些不该研究的东西。）");
-      return arr;
+      arr.push("帝国军事学院的录取函是盖着军徽的硬纸，措辞像命令：“准予入学。报到时间：下月初一。携带：行李一件，兵器自备。”");arr.push("");arr.push("报到那天，操场上已站满了新生，个个站得笔直，像一排木桩。教官挨个走过，偶尔停下来，捏捏你的肩膀，掰掰你的手腕。");arr.push("");arr.push("走到你面前时，他多看了你两眼：“底子还行。记住——军事学院不看嘴皮子，看拳头和脑子。在这里，睡懒觉是死罪，退缩也是。”");arr.push("");return arr;
     },
     options:[
       {t:"进入军事学院（开始第一年）", go:"academy_military_year1", effect:{flag:"academy_military_start"}}
@@ -2215,7 +2215,7 @@ N["academy_admission_northern"] = function(){
       arr.push("铁门关的风像刀一样刮在脸上。这里的学生都是硬汉——条件艰苦，但实战经验丰富。");
       arr.push("");
       arr.push("（详细学院线在后续扩展中实现。）");
-      return arr;
+      arr.push("北方的录取信是随一柄短刀一起送到的。刀鞘是铁皮打的，磨得发亮。信上只写着一行字：“北方战士学院。带刀来，别带眼泪。”");arr.push("");arr.push("铁门关的风像刀一样刮在脸上。你站在学院门前，看操场上学生们正对着木桩练劈砍，呼喝声混着风声，在关隘里来回撞。");arr.push("");arr.push("一个黑脸教官走过来，上下打量你两眼：“瘦了点。不过不要紧——在这里待三年，石头都能给你磨出锋来。”他扔过来一件皮甲：“穿上。从今天起，你就是这里的人了。”");arr.push("");return arr;
     },
     options:[
       {t:"进入战士学院", go:"fc_jiaohui_entry", effect:{flag:"academy_northern_start", gold:-20}}
@@ -2230,7 +2230,7 @@ N["academy_admission_southern"] = function(){
   initAcademyV28();
   S.academy.currentAcademy = "southern_navigation";
   return {
-    place:"南方航海学院·录取", text:function(){return ["你被南方航海学院录取了！","","海风、咸腥味、桅杆——这是航海学院的日常。","","（详细学院线在后续扩展中实现。）"];},
+    place:"南方航海学院·录取", text:function(){return ["你被南方航海学院录取了！","","海风、咸腥味、桅杆——这是航海学院的日常。","","（详细学院线在后续扩展中实现。）","南方的录取信里夹着一小袋海盐，粗粝发白，闻着有股咸腥。信上写着：“南方航海学院。怕晕船就趁早另寻出路。”","","报到那天，你站在港口边看船——桅杆像一片树林，缆绳叮叮当当地响。水手们赤着脚在甲板上跑，喊着听不懂的号子。","","来接你的学长是个晒成铜色的汉子，他咧嘴一笑，露出一口白牙：“新来的？先跟你打个赌——三天之内，你能分清东南西北风，我请你喝酒。分不清，你请我。”",""];},
     options:[{t:"进入航海学院", go:"fc_jiaohui_entry", effect:{flag:"academy_southern_start", gold:-40}}]
   };
 };
@@ -2254,7 +2254,7 @@ N["academy_admission_western"] = function(){
   initAcademyV28();
   S.academy.currentAcademy = "western_ranger";
   return {
-    place:"西部游侠学院·录取", text:function(){return ["你被西部游侠学院录取了！","","自由、冒险、远方——这是游侠学院的日常。","","（详细学院线在后续扩展中实现。）"];},
+    place:"西部游侠学院·录取", text:function(){return ["你被西部游侠学院录取了！","","自由、冒险、远方——这是游侠学院的日常。","","（详细学院线在后续扩展中实现。）","西部的录取信是托驿马送来的，信纸上还带着一路的风尘。拆开时，一枚枯黄的针叶从信封里落出来——那是西境荒原上特有的植物，硬得像铁片。","","报到那天，风谷口的风几乎把你掀个跟头。游侠学院的旗子在风里猎猎作响，旗上的图案是一只展翅的鹰。","","教官站在旗杆下，看了你一眼：“西境的风一年刮到头，刮不跑的都是自己人。站稳了——站稳了，你就是游侠学院的学生。”",""];},
     options:[{t:"进入游侠学院", go:"fc_jiaohui_entry", effect:{flag:"academy_western_start", gold:-25}}]
   };
 };
@@ -2345,7 +2345,7 @@ N["academy_rankings_view"] = function(){
           arr.push("第" + r.rank + "名：" + a.name + "（" + a.location + "） 声望:" + r.score + " " + trend);
         }
       }
-      return arr;
+      arr.push("大陆学院排名的榜单在眼前展开，各大学院的名字从上到下排列。你一行行看过去，目光在最熟悉的几个名字上停留。");arr.push("");arr.push("艾尔达大陆学院排在中游，比去年升了两名；圣光神学院稳居前列；银叶学院今年势头很猛。排名每年更新，影响学院声望和资源分配。");arr.push("");arr.push("你注意到，榜单末尾有一行小字注释：“排名受各学院在校生表现影响——你的行为，可以改变你母校的位次。”你合上榜单，忽然觉得，这座学院的名字，也有你的一份。");arr.push("");return arr;
     },
     options:[
       {t:"返回", go:"fc_jiaohui_entry", effect:{}}
@@ -2502,7 +2502,7 @@ N["academy_elda_social"] = function(){
       arr.push("你可以找同学聊天，找教授请教，或者去食堂/酒馆社交。");
       arr.push("");
       arr.push("学院里的每一个人都有自己的故事——你越了解他们，就越能发现这个学院的秘密。");
-      return arr;
+      arr.push("你在学院里走动，遇到了一些人。走廊里，抱着书的同学和你擦肩而过；食堂门口，几个学生正围着讨论一张海报。");arr.push("");arr.push("你找了个空位坐下，邻桌的人抬头冲你点点头。你们聊了几句——他来自东境，家里做茶叶生意，说起家乡的茶园，眼睛发亮。");arr.push("");arr.push("你发现，学院里的每一个人都有自己的故事。你越了解他们，就越能发现这个学院的秘密——也越明白，这座学院的水，比看起来深得多。");arr.push("");return arr;
     },
     options:[
       {t:"找墨丘利教授", go:"academy_elda_mercury", effect:{timeCost:"1period"}},
@@ -2595,7 +2595,7 @@ N["academy_elda_explore"] = function(){
       arr.push("");
       plantForeshadowV27('seal_omen');
       arr.push("（你听说，学院建在古代遗迹之上。最深处，有第一印的碎片。）");
-      return arr;
+      arr.push("艾尔达学院的历史写在每一块石头上。走廊的砖缝里嵌着旧世纪的贝壳化石，穹顶的壁画褪了色，却还能看出七印的轮廓。");arr.push("");arr.push("你白天走遍了图书馆、元素塔和礼堂；到了夜里，你顺着一条不起眼的走廊往深处走。油灯的光在墙上投下摇晃的影子——禁书区的铁门、地下遗迹的入口、灵魂魔法塔的旋梯，都在这一带。");arr.push("");arr.push("你在禁书区的铁门前停下来。门上挂着一块铜牌，刻着几行字，被岁月磨得模糊：“非经特许，不得入内。求知者当知敬畏。”你站了很久，把那行字读了三遍。");arr.push("");return arr;
     },
     options:[
       {t:"探索地下遗迹入口", go:"academy_elda_ruins", effect:{timeCost:"1period"}},
@@ -2939,7 +2939,7 @@ N["academy_graduation_church"] = function(){
       arr.push("你站在学院的大门前，最后看了一眼这个你生活了五年的地方。");
       arr.push("");
       arr.push("然后你转身，走向了圣城的方向。");
-      return arr;
+      arr.push("格雷戈里教授把你叫到小教堂，亲手把推荐信放进你手里。信纸是羊皮的，封着教会的蜡印：“圣城那边，主教大人亲自过目。”");arr.push("");arr.push("他拍了拍你的肩膀，难得地露出笑意：“你在这五年，我没看错人。教会需要你这样的年轻人——虔诚，但不迂腐。”");arr.push("");arr.push("你走出教堂，钟声正响。圣城的白墙、彩窗、唱诗班——那些画面在远处等着你。可你心里清楚，教会的水，比圣水要深得多。");arr.push("");return arr;
     },
     options:[
       {t:"前往圣城（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_church", reputation:20}}
@@ -2955,7 +2955,7 @@ N["academy_graduation_merchant"] = function(){
   S.graduation.graduated = true;
   S.graduation.destination = "merchant";
   return {
-    place:"毕业·加入商会", text:function(){return ["你选择了加入商会。","","洛伦佐教授为你写了推荐信。你将前往交汇城，开始你的商业生涯。","","（大陆章起点：交汇城/商会势力）"];},
+    place:"毕业·加入商会", text:function(){return ["你选择了加入商会。","","洛伦佐教授为你写了推荐信。你将前往交汇城，开始你的商业生涯。","","（大陆章起点：交汇城/商会势力）","洛伦佐教授把推荐信递给你时，正在算账。他头也不抬：“商会那帮人认纸不认人——这封信，比你的毕业证值钱。”","","信纸是上好的羊皮纸，墨迹工整，落款处盖着商会的火漆印。你接过来，能闻到淡淡的墨水味和一点烟草味。","","你走出教授办公室，走廊里阳光正好。从明天起，你就是商会的人了——交汇城的账本、算盘、谈判桌，在等着你。",""];},
     options:[{t:"前往交汇城（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_merchant", gold:50, reputation:15}}]
   };
 };
@@ -2968,7 +2968,7 @@ N["academy_graduation_military"] = function(){
   S.graduation.graduated = true;
   S.graduation.destination = "military";
   return {
-    place:"毕业·加入军队", text:function(){return ["你选择了加入军队。","","雷蒙德将军为你写了推荐信。你将前往铁门关，开始你的军人生涯。","","（大陆章起点：铁门关/军方势力）"];},
+    place:"毕业·加入军队", text:function(){return ["你选择了加入军队。","","雷蒙德将军为你写了推荐信。你将前往铁门关，开始你的军人生涯。","","（大陆章起点：铁门关/军方势力）","雷蒙德将军的推荐信写在军用的信笺上，纸张厚实，边角印着军徽。他的笔迹像刀刻的：“此学员，可战。”五个字，没有多余的。","","你把信贴身收好。铁门关的风已经吹过来了——那里有边墙、烽燧、和你以后要并肩的袍泽。","","临出门，将军又叫住你，扔过来一块军牌：“戴着。到了那边，先学会听命令，再学会活命。”",""];},
     options:[{t:"前往铁门关（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_military", exp:30, reputation:15}}]
   };
 };
@@ -2981,7 +2981,7 @@ N["academy_graduation_free"] = function(){
   S.graduation.graduated = true;
   S.graduation.destination = "free";
   return {
-    place:"毕业·自由探索", text:function(){return ["你选择了自由探索。","","你不加入任何势力——你要自己去看看这个大陆。","","墨丘利教授给了你一个指南针：「去你想去的地方。但记住——有些地方，去了就回不来了。」","","（大陆章起点：自由/无势力绑定）"];},
+    place:"毕业·自由探索", text:function(){return ["你选择了自由探索。","","你不加入任何势力——你要自己去看看这个大陆。","","墨丘利教授给了你一个指南针：「去你想去的地方。但记住——有些地方，去了就回不来了。」","","（大陆章起点：自由/无势力绑定）","你不加入任何势力——这个决定让不少教授意外。西奥多院长没有劝你，只说了句：“自由要付的代价，往往比束缚更重。”","","你收拾好行囊，把五年的课本一摞一摞码在门口，留给下届新生。窗台上那盆枯死的薄荷，你浇了最后一次水。","","走出校门时，你没有回头。你要自己去看看这个大陆——用你自己的眼睛，走你自己的路。",""];},
     options:[{t:"开始自由探索（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_free", item:"mercury_compass"}}]
   };
 };
@@ -2994,7 +2994,7 @@ N["academy_graduation_watcher"] = function(){
   S.graduation.graduated = true;
   S.graduation.destination = "watcher";
   return {
-    place:"毕业·加入守望者", text:function(){return ["你选择了加入守望者。","","墨丘利教授带你去了学院地下的一个秘密房间——守望者的秘密据点。奥雷利安在那里等你。","","「欢迎加入守望者。」他说，「你的训练，从今天开始。」","","（大陆章起点：守望者秘密据点/七印主线）"];},
+    place:"毕业·加入守望者", text:function(){return ["你选择了加入守望者。","","墨丘利教授带你去了学院地下的一个秘密房间——守望者的秘密据点。奥雷利安在那里等你。","","「欢迎加入守望者。」他说，「你的训练，从今天开始。」","","（大陆章起点：守望者秘密据点/七印主线）","墨丘利教授带你走过一条从没见过的走廊——它在图书馆的地基下面，灯是法术点亮的，苍白的光照在石墙上。他一路没有说话。","","走到一扇铁门前，他停下来，看了你很久：“守望者不是组织，是一种义务。现在反悔，还来得及。”","","你摇头。他推开门——门里，奥雷利安坐在一张长桌边，面前摊着一幅大陆地图，桌上烛火摇曳。他抬起头，朝你伸出手：“欢迎。从今天起，你看见的东西，要比别人多一层。”",""];},
     options:[{t:"开始守望者训练（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_watcher", knowledge:3, san:-5}}]
   };
 };
@@ -3007,7 +3007,7 @@ N["academy_graduation_eclipse"] = function(){
   S.graduation.graduated = true;
   S.graduation.destination = "eclipse";
   return {
-    place:"毕业·加入暗蚀会", text:function(){return ["你选择了加入暗蚀会。","","艾琳娜教授带你去了学院地下的秘密会议室——暗蚀会支部的据点。一个穿黑袍的人在等你。","","「欢迎加入暗蚀会。」他说，「我们的目标是——解放原初之物，让这个世界回归真实。」","","（大陆章起点：暗蚀会秘密据点/反派主线）"];},
+    place:"毕业·加入暗蚀会", text:function(){return ["你选择了加入暗蚀会。","","艾琳娜教授带你去了学院地下的秘密会议室——暗蚀会支部的据点。一个穿黑袍的人在等你。","","「欢迎加入暗蚀会。」他说，「我们的目标是——解放原初之物，让这个世界回归真实。」","","（大陆章起点：暗蚀会秘密据点/反派主线）","艾琳娜教授在深夜把你叫到学院后山。她披着斗篷，火光在斗篷边缘跳动：“你考虑好了？暗蚀会一旦入会，就没有退路。”","","她带你走了一条地下通道，弯弯绕绕，最后来到一间密室。一个穿黑袍的人坐在阴影里，声音听不出年纪：“艾琳娜推荐的人，不多。说说看——你为什么要来。”","","你把话说完了。黑袍人沉默片刻，从怀里取出一枚漆黑的水晶，放在桌上：“握着它。若它发烫，你就留下；若它冰冷，你就离开，今晚的事当作没发生。”",""];},
     options:[{t:"开始暗蚀会任务（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_eclipse", gold:30, san:-10}}]
   };
 };
@@ -3327,7 +3327,7 @@ N["academy_holy_explore"] = function(){
       arr.push("但你注意到——有些地方，是禁止学生进入的。");
       arr.push("");
       arr.push("地下审讯室、圣物库、异端档案库、圣女密室——这些地方，都藏着教会的秘密。");
-      return arr;
+      arr.push("圣光神学院的走廊一尘不染，白墙上挂着历代圣徒的画像。你走过时，脚步在石板地上回响，显得格外响。");arr.push("");arr.push("教堂里传来唱诗班的歌声，低低的，像水流过鹅卵石。图书馆里，白袍的修士伏在案上抄经，笔尖沙沙。训练场边，神官们正在练习光系神术，指尖亮起柔和的白光。");arr.push("");arr.push("但你注意到，有一座侧楼的窗户钉着铁条，门上一把大锁，锁孔里塞着蜡。你路过时，一个路过的修士停下脚步，看了你一眼，又走开了。那一眼的意思，你没能读懂。");arr.push("");return arr;
     },
     options:[
       {t:"参观教堂", go:"academy_holy_hub", effect:{san:3, timeCost:"1period"}},
@@ -3356,7 +3356,7 @@ N["academy_holy_graduation"] = function(){
       arr.push("你可以选择成为主教、审判官、圣术师、传教士——或者，离开教会，走自己的路。");
       arr.push("");
       arr.push("你在神学院知道的秘密，将决定你未来的路。");
-      return arr;
+      arr.push("毕业弥撒上，唱诗班的歌声在穹顶下回荡。格雷戈里教授为你行完祝福礼，把一枚圣徽别在你衣领上：“圣光神学院五年，你学的不只是祷文和神术——你要记住，神爱世人，也要你学会爱具体的人。”");arr.push("");arr.push("你站在教堂门口，回头最后看了一眼彩窗上的圣像。阳光透过彩窗，在地面上投下五彩的光斑。五年，你在这里学会祈祷，也学会怀疑。");arr.push("");arr.push("你走出教堂，钟声在身后响起。圣城的街道上，白袍的神官来来往往。你摸了摸胸前的圣徽——它的温度，比想象中要凉。");arr.push("");return arr;
     },
     options:[
       {t:"成为审判官（教会精英）", go:"fc_jiaohui_entry", effect:{flag:"holy_judge", reputation:20, timeCost:"1period"}},
@@ -3544,7 +3544,7 @@ N["academy_military_strategy"] = function(){
       arr.push("");
       plantForeshadowV27('seal_omen');
       arr.push("（讨论的战役中，有一个「神秘武器」的设定——你感觉，那不是虚构的。）");
-      return arr;
+      arr.push("战术讨论室里，一张巨大的沙盘摆在中央，山川河流城池，做得惟妙惟肖。十几个学生围在四周，各执一词。");arr.push("");arr.push("沙盘上正演示一场围攻战：蓝军据城而守，红军断其粮道。一个学生指着东面的山道：“从这里分兵，绕到城后，前后夹击。”另一个立刻反驳：“分兵是大忌——城还没破，粮道先被截了。”");arr.push("");arr.push("教官坐在角落，一言不发地听着，偶尔在纸上记几笔。你站在人群外围，看着沙盘上的局势，忽然想：如果是你指挥，你会怎么打？");arr.push("");return arr;
     },
     options:[
       {t:"加入讨论", go:"academy_military_hub", effect:{check:"INT", tier:{
@@ -3610,7 +3610,7 @@ N["academy_military_explore"] = function(){
       arr.push("但你注意到——有些地方，是禁止学生进入的。");
       arr.push("");
       arr.push("秘密武器库、战略室、秘密实验场、军事监狱——这些地方，都藏着军事学院的秘密。");
-      return arr;
+      arr.push("你在军事学院里探索。训练场上，学生正对着木桩练劈砍，呼喝声整齐划一；教室里，教官在黑板前讲解攻城器械的结构图；宿舍区，被子叠得方方正正，像豆腐块。");arr.push("");arr.push("一切都很整齐，很军事化——连脚步声都像踩着同一个节拍。你走了一会儿，就明白这里的规矩：纪律是第一位的。");arr.push("");arr.push("但你注意到，营房尽头有一扇铁门，挂着‘禁止入内’的牌子。门缝里透出一点灯光，还有低沉的机器声。你站了一会儿，没有靠近。");arr.push("");return arr;
     },
     options:[
       {t:"参观训练场", go:"academy_military_hub", effect:{exp:5, timeCost:"1period"}},
@@ -3639,7 +3639,7 @@ N["academy_military_graduation"] = function(){
       arr.push("你可以选择成为军官、参谋、战斗法师——或者，离开军队，走自己的路。");
       arr.push("");
       arr.push("你在军事学院知道的秘密，将决定你未来的路。");
-      return arr;
+      arr.push("结业检阅那天，雷蒙德将军亲自为你授衔。他把肩章拍在你肩上，拍得你肩膀一沉：“帝国军事学院五年——从现在起，你是个真正的兵了。”");arr.push("");arr.push("操场上，方阵踏着正步走过，扬起的尘土遮天蔽日。你想起五年前自己在这里被晒晕的狼狈样子，想起夜里的紧急集合、战术沙盘、和那些被罚跑的黄昏。");arr.push("");arr.push("军号响起，方阵解散。你站在原地，摸了摸肩章。铁门关的风从远处吹来，带着铁锈和硝烟的味道——那里，才是你真正的战场。");arr.push("");return arr;
     },
     options:[
       {t:"成为军官（前线指挥官）", go:"fc_jiaohui_entry", effect:{flag:"military_officer", reputation:20, timeCost:"1period"}},
@@ -3703,7 +3703,7 @@ N["academy_elf_hub"] = function(){
       arr.push("（" + getTimeStringV26() + "）");
       arr.push("");
       arr.push("（精灵的时间感和你不同——他们觉得一天很短，你觉得一天很长。）");
-      return arr;
+      arr.push("世界树的枝叶在风中沙沙作响，像一场听不清的低语。精灵学生们在树枝间轻盈地跳跃，衣袍翻飞，像一群白色的鸟。");arr.push("");arr.push("你顺着树干上的阶梯往上走，路过一间间悬在枝桠间的教室。一间教室里，长老正在讲古代文字，声音轻得像流水；另一间里，几个精灵围着一幅星图，低声争论着什么。");arr.push("");arr.push("你站在这座活的学院里，第一次理解了精灵们为什么总说“时间很慢”——在这棵树下，连风都走得比别处从容。");arr.push("");return arr;
     },
     options:function(){
       const opts=[];
@@ -3885,7 +3885,7 @@ N["academy_elf_explore"] = function(){
       arr.push("这里太美了——阳光透过树叶洒下斑驳的光影，精灵们在树枝间歌唱，空气中弥漫着花香。");
       arr.push("");
       arr.push("但你注意到——有些地方，精灵们不去。那些地方的树叶是黑色的，空气是冷的。");
-      return arr;
+      arr.push("世界树的枝干宽阔得像道路，你在上面走了大半个时辰，也不觉得累。阳光透过层层叠叠的树叶，在树皮上投下碎金一样的光斑。");arr.push("");arr.push("精灵们在树枝间来往，有的背着书卷，有的提着小篮，篮子里装着发光的果子。他们从你身边走过，带着一股草木的清气，脚步轻得像没有重量。");arr.push("");arr.push("你注意到，有几条枝干通向的地方，精灵们从不靠近。那些地方的叶子是黑色的，空气是冷的——连鸟都不从那里飞过。你站在分岔口，看了很久。");arr.push("");return arr;
     },
     options:[
       {t:"欣赏风景", go:"academy_elf_hub", effect:{san:5, timeCost:"1period"}},
@@ -3913,7 +3913,7 @@ N["academy_elf_graduation"] = function(){
       arr.push("长老艾莉娅给了你一个礼物——一片世界树的叶子。「它会在你需要的时候指引你。」她说。");
       arr.push("");
       arr.push("你站在世界树的顶端，最后看了一眼这片云海。然后你转身，走向了人类的世界。");
-      return arr;
+      arr.push("精灵长老在你的毕业文书上系了一根银线：“五年——对精灵来说只是一瞬间。可你在这五年里长的本事，够你用一辈子。”");arr.push("");arr.push("你站在世界树的枝干上，看阳光穿过层层叠叠的树叶，在树皮上落下斑驳的光影。五年了，你终于能像精灵一样在树枝间自如行走——可你知道，你终究不是他们。");arr.push("");arr.push("你沿着树干缓缓走下，脚下是坚实的土地。你回头看了一眼——世界树静静立着，像一位沉默的长辈，目送远行的人。");arr.push("");return arr;
     },
     options:[
       {t:"带着精灵的祝福离开（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_elf", item:"world_tree_leaf", san:10}}
@@ -4187,7 +4187,7 @@ N["academy_dwarf_graduation"] = function(){
       arr.push("大师索林给了你一把他亲手锻造的锤子——「用它，锻造你自己的路。」");
       arr.push("");
       arr.push("你站在铁峰堡的出口，最后看了一眼这片地下的灯火。然后你转身，走向了地面的世界。");
-      return arr;
+      arr.push("索林把一柄短锤交给你——锤柄是黑铁木的，握在手里沉甸甸，锤面锃亮，能照出人影：“铁峰锻造学院毕业的，手里没家伙，说出去丢人。拿着。”");arr.push("");arr.push("地下王国的灯火在身后连成一片，熔炉的轰鸣声顺着隧道传来。你在这里打了五年铁，手上磨出厚厚的茧，也学会了听铁的呼吸。");arr.push("");arr.push("你背着锤子，踩着石阶往上走。光从洞口漏进来——外面是真正的世界。矮人的话还响在耳边：“铁是凉的，可打铁的人心是热的。别丢了这口气。”");arr.push("");return arr;
     },
     options:[
       {t:"带着矮人的祝福离开（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_dwarf", item:"master_hammer", reputation:10}}
@@ -4241,7 +4241,7 @@ N["academy_orc_hub"] = function(){
       arr.push("草原辽阔，战鼓声声。兽人学生们在训练场上厮杀，汗水和鲜血一起挥洒。");
       arr.push("");
       arr.push("你可以去训练、去狩猎、找萨满请教、参加篝火故事，或者——探索草原的秘密。");
-      return arr;
+      arr.push("战鼓声从训练场那边传来，一下一下，敲得地面都跟着震。战神学院的操场上，兽人学生们正捉对厮杀——没有护具，只有木制的兵器，和越打越响的吼声。");arr.push("");arr.push("你站在场边，看一个新生被摔了个跟头，爬起来拍拍土，又冲了上去。教官站在高处，抱着胳膊，面无表情地看，偶尔吼一声：“腿！腿！别拿脸接！”");arr.push("");arr.push("风从草原上吹来，带着青草和血汗的气味。你忽然觉得，这座学院虽然粗野，却有一种坦荡——喜欢就是喜欢，讨厌就是讨厌，从不藏着掖着。");arr.push("");return arr;
     },
     options:[
       {t:"去战斗训练", go:"academy_orc_training", effect:{timeCost:"1period"}},
@@ -4265,7 +4265,7 @@ N["academy_orc_training"] = function(){
       arr.push("训练场上尘土飞扬。");
       arr.push("");
       arr.push("兽人教官在监督训练——他的方式很简单：打，直到你学会为止。");
-      return arr;
+      arr.push("训练场上尘土飞扬，兽人教官站在场中央，抱着一根粗木棒。他看了你一眼，把木棒往地上一顿：“新来的？先绕着场子跑二十圈——跑完再说。”");arr.push("");arr.push("你跑完二十圈，撑着膝盖喘气。教官走过来，绕着你转了一圈：“还行，没趴下。接下来练格挡——我用棒子打，你用盾挡。挡不住，挨一下，长记性。”");arr.push("");arr.push("他挥棒打来，你举起盾。棒子砸在盾上，震得你虎口发麻，后退三步。教官却笑了：“不错，没扔盾。明天这个时候，还在这。”");arr.push("");return arr;
     },
     options:[
       {t:"全力训练", go:"academy_orc_hub", effect:{check:"STR", tier:{
@@ -4292,7 +4292,7 @@ N["academy_orc_hunt"] = function(){
       arr.push("草原上有很多猎物——野兔、羚羊、甚至草原狼。");
       arr.push("");
       arr.push("狩猎不仅是获取食物，也是兽人证明自己的方式。");
-      return arr;
+      arr.push("你和兽人同学一起去草原狩猎。他给你一把弓，拍拍你的肩：“别紧张。草原上的猎物，跑不过你的箭——只要你不先手抖。”");arr.push("");arr.push("你们伏在草丛里等了一刻钟。他忽然压低声音：“三点钟方向，野兔。”你顺着他的目光看过去，一只灰兔正在啃草，耳朵竖得老高。");arr.push("");arr.push("你张弓搭箭，屏住呼吸。箭离弦的一瞬，野兔惊起——箭擦着它的耳朵钉进土里。兽人同学拍了拍你的肩：“不错了。我第一次打猎，射中的是我自己的靴子。”");arr.push("");return arr;
     },
     options:[
       {t:"全力狩猎", go:"academy_orc_hub", effect:{check:"AGI", tier:{
@@ -4317,7 +4317,7 @@ N["academy_orc_social"] = function(){
       arr.push("你在兽人王庭里走动。");
       arr.push("");
       arr.push("兽人们很直接——他们喜欢就喜欢你，讨厌就讨厌你，没有中间地带。");
-      return arr;
+      arr.push("你在兽人王庭里走动，这里的一切都比学院粗粝得多——石墙、兽皮、火盆，连空气里都飘着烤肉和皮革的味道。");arr.push("");arr.push("兽人们很直接。你帮一个老兽人搬了桶水，他二话不说塞给你一块熏肉：“拿着。你不错。”几个年轻兽人在摔跤，输了的一方爬起来，拍拍土，哈哈大笑。");arr.push("");arr.push("你站在火盆边，看火光把每个人的脸照得忽明忽暗。在这里，没有那么多弯弯绕绕——喜欢就是喜欢，讨厌就是讨厌。你忽然觉得，这样也挺好。");arr.push("");return arr;
     },
     options:[
       {t:"找萨满请教", go:"academy_orc_hub", effect:{check:"SPR", tier:{
@@ -4394,7 +4394,7 @@ N["academy_orc_secret"] = function(){
 N["academy_orc_explore"] = function(){
   return {
     place:"草原·探索",
-    text:function(){return ["你在草原上探索。","","风吹草低见牛羊。兽人们在远处放牧。","","这里很辽阔，很自由。"];},
+    text:function(){return ["你在草原上探索。","","风吹草低见牛羊。兽人们在远处放牧。","","这里很辽阔，很自由。","草原的风带着草籽和泥土的气味。你踩过的地方，蚱蜢从脚边弹开，惊起一小片灰雀。远处兽人的毡帐冒着炊烟，几匹矮壮的草原马在河边低头饮水。","","一个披着狼皮的老萨满坐在帐外，用骨针缝着什么东西。他抬头看了你一眼，没有开口，只把一根骨头扔进火堆——火苗蹿高了一瞬，又落回原样。","","你忽然明白，这片辽阔不是用来欣赏的。它每一寸都住着人，住着故事。",""];},
     options:[
       {t:"欣赏风景", go:"academy_orc_hub", effect:{san:5, timeCost:"1period"}},
       {t:"注意黑色草地", go:"academy_orc_hub", effect:{knowledge:1, flag:"orc_black_grass_noticed", timeCost:"1period"}},
@@ -4412,7 +4412,7 @@ N["academy_orc_graduation"] = function(){
   S.graduation.destination = "orc";
   return {
     place:"战神学院·毕业",
-    text:function(){return ["【战神学院·毕业】","","五年的战斗生涯结束了。","","萨满给了你一个图腾——「它会在你需要的时候给你力量。」","","你站在草原上，最后看了一眼这片天空。然后你转身，走向了远方。"];},
+    text:function(){return ["【战神学院·毕业】","","五年的战斗生涯结束了。","","萨满给了你一个图腾——「它会在你需要的时候给你力量。」","","你站在草原上，最后看了一眼这片天空。然后你转身，走向了远方。","萨满把图腾递给你时，草原上正起风。图腾是兽骨雕的，刻着一只仰头长啸的狼，边缘被岁月磨得温润。他握着你的手，让你把图腾握紧：“它会记住你的心跳。你在哪里，它就在哪里醒着。”","","你站在草原上，最后看了一眼这片天空。远处毡帐的炊烟直直升起，风一过，就散了。你想起第一次在这里摔下马背，想起教官的呵斥，想起篝火边分食的烤肉。","","你转身，走向远方。风把你的影子卷在身后，像是这片草原在送你。",""];},
     options:[{t:"带着兽人的祝福离开（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_orc", item:"orc_totem", exp:20}}]
   };
 };
@@ -4514,7 +4514,7 @@ N["academy_halfling_secret"] = function(){
 N["academy_halfling_explore"] = function(){
   return {
     place:"绿野·探索",
-    text:function(){return ["你在田野里探索。","","麦田、果园、小溪——这里太美了。","","半身人们在远处劳作，歌声随风飘来。"];},
+    text:function(){return ["你在田野里探索。","","麦田、果园、小溪——这里太美了。","","半身人们在远处劳作，歌声随风飘来。","麦田的香气混着泥土和肥料的味道。你顺着田埂走，脚边是不时窜过的田鼠和蚱蜢。远处的半身人正弯着腰割麦子，镰刀起落，麦秆齐刷刷地倒下。","","有人直起腰来，摘下草帽擦了把汗，朝你喊：“外来的学生？渴了就去井台，瓢挂在绳上，自己舀。”他的口音很软，像在唱歌。","","你走到果园边，几个半身人孩子正踮脚够树上的苹果。一个见你走近，大方地递来一个：“给你——今天摘的，还带着露水呢。”苹果红得发亮，咬一口，汁水顺着下巴淌下来。",""];},
     options:[
       {t:"欣赏风景", go:"academy_halfling_hub", effect:{san:5, timeCost:"1period"}},
       {t:"返回", go:"academy_halfling_year1", effect:{}}
@@ -4531,7 +4531,7 @@ N["academy_halfling_graduation"] = function(){
   S.graduation.destination = "halfling";
   return {
     place:"绿野学院·毕业",
-    text:function(){return ["【绿野学院·毕业】","","五年的田园生活结束了。","","老太太给了你一个幸运符——「它会给你带来好运。但记住，运气是会用完的。」","","你站在田野边，最后看了一眼这片金色的麦浪。然后你转身，走向了远方。"];},
+    text:function(){return ["【绿野学院·毕业】","","五年的田园生活结束了。","","老太太给了你一个幸运符——「它会给你带来好运。但记住，运气是会用完的。」","","你站在田野边，最后看了一眼这片金色的麦浪。然后你转身，走向了远方。","老太太把幸运符放进你手心时，麦田正泛着金光。幸运符是一枚磨圆的铜币，穿着红绳，边缘已经磨得发亮：“它会给你带来好运。但记住——运气是会用完的。用完之前，把该学的本事学到手。”","","你站在田野边，最后看了一眼这片金色的麦浪。绿野学院的五年，是你在整个大陆最安稳的五年——没有战争，没有阴谋，只有麦子、果园和热腾腾的烤饼。","","你捏了捏那枚铜币，转身走向远方。麦浪在身后起伏，像在跟你道别。",""];},
     options:[{t:"带着半身人的祝福离开（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start_halfling", item:"lucky_charm", san:10}}]
   };
 };
@@ -4613,7 +4613,7 @@ N["academy_southern_hub"] = function(){
       arr.push("海风、咸腥味、桅杆——这是航海学院的日常。");
       arr.push("");
       arr.push("你可以去上课、去船上实习、找教授请教，或者——寻找创始人的宝藏。");
-      return arr;
+      arr.push("南方航海学院就建在港口边，潮水涨落的声音日夜不停。桅杆的森林从校门口一直延伸到海边，风一吹，缆绳叮叮当当地响。");arr.push("");arr.push("水手模样的教官站在船头，正教新生打水手结：“手要稳，眼要活——海上可没重来一次的机会。”他的嗓门很大，压过了海浪。");arr.push("");arr.push("你站在码头边，看一艘训练船缓缓驶出港。海风带着咸腥味灌进鼻子。你知道，这座学院教的不是纸上的学问，是浪里求生的本事。");arr.push("");return arr;
     },
     options:[
       {t:"去上课", go:"fc_jiaohui_entry", effect:{knowledge:1, timeCost:"1period"}},
@@ -4675,7 +4675,7 @@ N["academy_western_hub"] = function(){
       arr.push("自由、冒险、远方——这是游侠学院的日常。");
       arr.push("");
       arr.push("你可以去训练、去探险、找教官请教，或者——探索守望者的秘密。");
-      return arr;
+      arr.push("西部游侠学院建在风谷口，三面是赭红色的岩壁，一面对着开阔的荒原。风从谷口灌进来，终年不停，把院墙打磨得光滑。");arr.push("");arr.push("操场上，游侠学生们在练骑射。马蹄踏起的尘土被风卷走，箭矢钉在靶心，发出沉闷的声响。一个披风衣的教官站在高处，眯着眼看了一会儿，点了点头。");arr.push("");arr.push("你站在风里，把衣领紧了紧。自由、冒险、远方——这座学院的每一块石头，都在说这三个词。");arr.push("");return arr;
     },
     options:[
       {t:"去训练", go:"fc_jiaohui_entry", effect:{exp:10, timeCost:"1period"}},
@@ -5094,7 +5094,7 @@ N["academy_foreshadow_review"] = function(){
       } else {
         arr.push("你已经发现了 " + count + " 个秘密。它们将在大陆章和终局中回收。");
       }
-      return arr;
+      arr.push("你在学院里发现的秘密，此刻像散落的线头，被一张看不见的网串在一起。");arr.push("");arr.push("禁书区的铁链、失踪学生的告示、墨丘利教授书柜后的暗门、地下遗迹的回廊——你把这些线索在脑中过了一遍。");arr.push("");arr.push("有些线头还悬着，有些已经连上了。你隐约觉得，这些秘密的线头，正指向一个你还没看清的方向。");arr.push("");return arr;
     },
     options:[
       {t:"返回", go:"fc_jiaohui_entry", effect:{}}
@@ -5221,7 +5221,7 @@ N["academy_graduation_final"] = function(){
       arr.push("你转身，走向了远方。");
       arr.push("");
       arr.push("（大陆章开始。你在学院的所有选择、所有秘密、所有人际关系，都将在大陆上产生后果。）");
-      return arr;
+      arr.push("五年，一千八百多个日夜，在这一步里被压缩成一瞬。你站在学院大门前，脚下是磨得光滑的石阶——你第一天来时，就在这里绊了一跤。");arr.push("");arr.push("回头看，钟楼上的指针正指向九点。西奥多院长站在窗边，隔着玻璃朝你点了点头。你没有看清他是不是在笑。");arr.push("");arr.push("阳光很亮，照得石阶发白。风从远处来，带着大陆的气息——自由城邦的面包香、铁门关的铁锈味、草原的青草气，它们混在一起，向你招手。你握紧了行囊的带子，迈出第一步。");arr.push("");return arr;
     },
     options:[
       {t:"前往目的地（大陆章开始）", go:"fc_jiaohui_entry", effect:{flag:"continent_start", reputation:5}}
@@ -5244,7 +5244,7 @@ N["academy_graduation_journey"] = function(){
       arr.push("这是你第一次真正以「成年人」的身份面对这个世界。");
       arr.push("");
       arr.push("路上有风景，有遭遇，有回忆，也有新的开始。");
-      return arr;
+      arr.push("毕业典礼散场时，天正黄昏。你手里攥着毕业文书，纸卷被礼堂的烛火烤得微热。西奥多院长在台上讲的话已经散在风里，只剩一句还响在耳边：“出校门后，没人再替你兜底。”");arr.push("");arr.push("你站在学院大门外，第一次以“成年人”的身份打量这条通往大陆的路。路边的野草齐腰高，风一吹，哗啦啦往一个方向倒——那方向，正是自由城邦。");arr.push("");arr.push("你低头看了看自己的影子，被夕阳拉得很长。你知道，从这一刻起，脚下的每一步，都要自己负责了。");arr.push("");return arr;
     },
     options:[
       {t:"和同学一起出发", go:"academy_journey_with_classmates", effect:{timeCost:"5days"}},
@@ -5274,7 +5274,7 @@ N["academy_journey_with_classmates"] = function(){
       arr.push("「会的。」你说。");
       arr.push("");
       arr.push("但你不知道——你们下次见面，可能是在战场上。");
-      return arr;
+      arr.push("出发那天早晨，你们在校门口碰头。耗子背了个快有他人高的包袱，被众人笑了一路；塞西莉亚则只带了一只小皮箱，说“本事在脑子里，不在行李里”。");arr.push("");arr.push("晚上扎营，你们围着篝火分吃一条烤鱼。鱼是亚瑟在河里摸的，他卷起裤腿站了半个时辰，上来时冻得直哆嗦，却把鱼先递给你。");arr.push("");arr.push("酒是耗子从他爹铺子里偷来的，度数不高，喝下去暖洋洋的。有人唱起学院的歌，跑调跑得厉害，可谁也没笑话。火光映在每个人脸上，连平时最沉默的亚瑟，嘴角都松了。");arr.push("");return arr;
     },
     options:[
       {t:"继续旅程", go:"fc_jiaohui_entry", effect:{relation:"classmates:+15", san:5, flag:"journey_with_classmates"}}
@@ -5297,7 +5297,7 @@ N["academy_journey_solo"] = function(){
       arr.push("你回想着学院的五年——那些选择，那些秘密，那些人。");
       arr.push("");
       arr.push("你不知道前方等待你的是什么——但你知道，你已经准备好了。");
-      return arr;
+      arr.push("路是土路，被前几日的雨泡软了，脚印一个叠一个。你独自走在上面，只有自己的影子陪着。风从田埂上滚过来，带起一阵土腥气，又滚向更远的地方。");arr.push("");arr.push("日头偏西的时候，你在路边一棵歪脖子树下歇脚，掏出干粮啃。干粮是昨晚食堂大妈塞给你的，还带着葱油味。你忽然想起她每次多给你打一勺菜的样子，鼻子有点酸。");arr.push("");arr.push("你把这些念头咽下去，继续赶路。天边的云烧成一片，路还长。");arr.push("");return arr;
     },
     options:[
       {t:"继续旅程", go:"fc_jiaohui_entry", effect:{san:3, flag:"journey_solo"}}
@@ -5320,7 +5320,7 @@ N["academy_journey_caravan"] = function(){
       arr.push("路上，你听到了很多大陆的新闻——战争、净化令、深渊的征兆。");
       arr.push("");
       arr.push("你还遇到了一些有趣的人——也许他们会在未来与你再次相遇。");
-      return arr;
+      arr.push("商队走得慢，车辙在土路上压出深深的两道。你坐在粮袋上，听着车轮吱呀，看赶车的老把式甩着鞭子，嘴里哼着不知名的调子。");arr.push("");arr.push("傍晚扎营，商人们升起篝火，架起铁锅煮肉汤。一个戴皮帽的护卫递给你一碗：“新来的？喝了暖和。”汤很咸，飘着几片干菜，可你喝得浑身发热。");arr.push("");arr.push("夜里你裹着毯子躺在车底，听见护卫们低声说话：“北边又不太平了。”“净化令那事……别提。”你闭上眼，把那些话记在心里。");arr.push("");return arr;
     },
     options:[
       {t:"继续旅程", go:"fc_jiaohui_entry", effect:{knowledge:2, gold:10, flag:"journey_caravan"}}
@@ -5343,7 +5343,7 @@ N["academy_journey_escorted"] = function(){
       arr.push("你感觉——你已经不再是一个学生了。你是这个势力的一员。");
       arr.push("");
       arr.push("而这个身份，将给你带来机会，也带来危险。");
-      return arr;
+      arr.push("护送你的两名骑士骑术精熟，一路几乎不说话。他们把盾牌扣在鞍侧，铁靴踏在土路上，发出整齐的声响。你走在他们中间，感觉自己像一件要被移交的货物。");arr.push("");arr.push("第三天，年长的那名骑士终于开口。他指着远处山脊上的一道烽燧：“看见没有？点起来，就是北境全线告急。你既然要入伙，先把这片天认熟。”");arr.push("");arr.push("他教你在野外找水、看星、辨方向，也告诉你哪个渡口商人可信、哪个关卡的税吏吃回扣。你把这些话一一记下——它们比课本上写的有用得多。");arr.push("");return arr;
     },
     options:[
       {t:"继续旅程", go:"fc_jiaohui_entry", effect:{reputation:10, knowledge:1, flag:"journey_escorted"}}
@@ -5542,7 +5542,7 @@ N["academy_exchange_elda"] = function(){
       arr.push("艾尔达大陆学院是综合型学院——灵魂魔法和七印研究独步大陆。");
       arr.push("");
       arr.push("在这里，你可以接触到墨丘利教授、禁书区、地下遗迹——这些都是其他学院没有的。");
-      return arr;
+      arr.push("墨丘利教授亲手批了你的交换申请。他把回执递给你时，镜片后的眼睛很亮：“艾尔达大陆学院——灵魂魔法和七印研究，整个大陆没有第二家。”");arr.push("");arr.push("他顿了顿，声音低了些：“禁书区、地下遗迹，那些地方连本院学生都未必进得去。你要是真想去看看，记住——看到了什么，别乱说。”");arr.push("");arr.push("你接过回执，纸很轻，可你知道这张纸有多重。艾尔达学院的门，正在为你打开。");arr.push("");return arr;
     },
     options:[
       {t:"开始交换生生活", go:"academy_elda_hub", effect:{flag:"exchange_elda", timeCost:"1semester"}},
@@ -5566,7 +5566,7 @@ N["academy_exchange_holy"] = function(){
       arr.push("在这里，你可以接触到教会的秘密——地下审讯室、圣物库、异端档案。");
       arr.push("");
       arr.push("但圣光神学院对灵魂魔法天赋者很警惕——你需要隐藏自己的天赋。");
-      return arr;
+      arr.push("圣光神学院的复函厚重得像一本经书，封面压着烫金的圣徽。信里没有多余的话，只有一段祷文，和一句：“愿圣光照亮你的路。”");arr.push("");arr.push("圣城在山上。你沿着石阶往上走，钟声一下一下，敲得人心头静下来。白袍的神学生列队走过，脚步很轻，像踩在云上。");arr.push("");arr.push("可你注意到，教堂的阴影里，有一扇从不打开的铁门。地下的审讯室、圣物库、异端档案——这座学院藏着的东西，比它展示的要多得多。");arr.push("");return arr;
     },
     options:[
       {t:"开始交换生生活", go:"academy_holy_hub", effect:{flag:"exchange_holy", timeCost:"1semester"}},
@@ -5588,7 +5588,7 @@ N["academy_exchange_military"] = function(){
       arr.push("帝国军事学院是军方的核心——战斗和战略的最高学府。");
       arr.push("");
       arr.push("在这里，你可以接触到军事学院的秘密——秘密武器库、战略室、秘密实验场。");
-      return arr;
+      arr.push("交换批复得很快——帝国军事学院的公函像军令一样简洁，只有一行字：“准。报到时着便装，勿带私物。”");arr.push("");arr.push("报到那天，哨兵盘查了你三遍，连鞋底都要翻过来看。穿过三重铁门，你才看见军营的真容：操场上几百人列队，吼声震天，踏起的尘土遮了半边天。");arr.push("");arr.push("领你入营的军官拍拍你肩膀：“军事学院是军方的核心——秘密武器库、战略室、秘密实验场，都在里面。能不能摸到，看你本事。”");arr.push("");return arr;
     },
     options:[
       {t:"开始交换生生活", go:"academy_military_hub", effect:{flag:"exchange_military", timeCost:"1semester"}},
@@ -5612,7 +5612,7 @@ N["academy_exchange_elf"] = function(){
       arr.push("在这里，你可以接触到第三印的入口、古代图书馆、星象塔。");
       arr.push("");
       arr.push("但精灵对人类很警惕——你需要证明自己的价值。");
-      return arr;
+      arr.push("精灵的复函用银线扎着，打开时散出一股草木香。信纸是薄薄的树皮做的，上面的字迹细得像蛛丝：“银叶学院欢迎你。来时请带一捧你家乡的土。”");arr.push("");arr.push("世界树——精灵们叫它‘母树’。银叶学院就建在它的枝干上，自然魔法和古代史的圣地。你想象着那里的图书馆：书页间夹着干花，连灰尘都带着青草味。");arr.push("");arr.push("你把信小心收好。第三印的入口、星象塔——那些名字，光是念着，就让人心跳。");arr.push("");return arr;
     },
     options:[
       {t:"开始交换生生活", go:"academy_elf_hub", effect:{flag:"exchange_elf", timeCost:"1semester"}},
@@ -5634,7 +5634,7 @@ N["academy_exchange_dwarf"] = function(){
       arr.push("矮人铁峰锻造学院在地下——锻造和工程的最高学府。");
       arr.push("");
       arr.push("在这里，你可以接触到第四印的核心、永恒熔炉、符文宝库。");
-      return arr;
+      arr.push("交换生批复下来那天，矮人导师索林把你叫到工坊。他正在打一柄短锤，锤声咚咚，震得桌上铁屑跳动：“小子，铁峰锻造学院在地下——下去之前，先把你这双嫩手练出茧子。”");arr.push("");arr.push("他递给你一副皮手套，内衬是羊毛的：“地底冷。别学那些外行，冻掉了指头，一辈子打不了铁。”");arr.push("");arr.push("你接过手套。工坊里炉火正旺，火光把他的络腮胡子照得发红。你知道，这趟交换不只是学锻造——永恒熔炉、符文宝库，那些东西都在地底等着你。");arr.push("");return arr;
     },
     options:[
       {t:"开始交换生生活", go:"academy_dwarf_hub", effect:{flag:"exchange_dwarf", timeCost:"1semester"}},
@@ -5661,7 +5661,7 @@ N["academy_transfer_apply"] = function(){
       arr.push("4. 有些学院不接受转校生（精灵/兽人）");
       arr.push("");
       arr.push("但转校也有好处——你可以体验完全不同的学院生活，收集不同的伏笔。");
-      return arr;
+      arr.push("转校申请的表格摆在教务长桌上，边角压着一枚镇纸。教务长摘下眼镜，把它放在表格旁边：“想清楚了？转校不是小事——手续、学籍、档案，层层要盖章。”");arr.push("");arr.push("他翻开一本厚厚的册子，指着其中一页：“三条规矩你记住。一，原学院的关系会衰减——你走了，这边的导师、同窗，不会再为你说话。二，转校考试有淘汰率，考不过，两边都回不去。三，学费要翻倍。”");arr.push("");arr.push("他把册子合上，看着你：“如果你只是好奇别的学院什么样，我劝你趁早打消念头。如果非去不可——那就把这条路上所有的代价，都算清楚。”");arr.push("");return arr;
     },
     options:[
       {t:"申请转校到艾尔达大陆学院", go:"academy_transfer_elda", effect:{timeCost:"1period"}},
@@ -5710,7 +5710,7 @@ N["academy_transfer_holy"] = function(){
       arr.push("你申请转校到圣光神学院。");
       arr.push("");
       arr.push("圣光神学院的转校考试包括信仰测试——如果你有灵魂魔法天赋，会被拒绝。");
-      return arr;
+      arr.push("圣光神学院的转校考试在一间白室里进行。对面坐着三位神官，中间那位手里托着一盏灯，灯光是暖白色的。");arr.push("");arr.push("“先做信仰测试。”中间的神官开口，“闭上眼睛，放空心神——如果你体内有灵魂魔法的天赋，这盏灯会变暗。”");arr.push("");arr.push("你闭上眼。白室里安静得能听见自己的心跳。灯的光在你眼皮上映出一片暖色——你感觉到那光轻轻晃了一下。等你睁开眼，三位神官的表情看不出变化。中间那位开口：“测试结束。你回去等消息吧。”你走出白室，却总觉得那盏灯，晃得不太对劲。");arr.push("");return arr;
     },
     options:[
       {t:"参加转校考试", go:"academy_holy_hub", effect:{check:"SPR", tier:{
@@ -5735,7 +5735,7 @@ N["academy_transfer_military"] = function(){
       arr.push("你申请转校到帝国军事学院。");
       arr.push("");
       arr.push("军事学院的转校考试包括武力测试——贵族出身优先。");
-      return arr;
+      arr.push("军事学院的转校考试设在操场上，铁面教官抱臂站在一边。第一项是武装长跑，绕着操场跑十圈，中途不许停。");arr.push("");arr.push("跑完后，你撑着膝盖喘气，教官走过来，踢了踢你放下的盾牌：“力气还行。接下来考兵器——刀、枪、盾，挑一样，和我过三招。”");arr.push("");arr.push("你挑了盾。三招过后，你手臂发麻，虎口裂了条小口子，但你没退。教官盯着你看了两秒，忽然咧嘴：“行。贵族那套走后门的说法，在你身上不适用。回去等通知吧。”");arr.push("");return arr;
     },
     options:[
       {t:"参加转校考试", go:"academy_military_hub", effect:{check:"STR", tier:{
@@ -5764,7 +5764,7 @@ N["academy_multi_perspective"] = function(){
       arr.push("每个视角都有偏见和隐瞒——你需要自己判断真相。");
       arr.push("");
       arr.push("（多视角叙事是收集跨学院伏笔的重要方式。）");
-      return arr;
+      arr.push("某些重要事件后，学院会开放‘多视角回看’——你可以以其他学院学生的身份，重走一段故事。");arr.push("");arr.push("你第一次试的时候，感觉很奇怪：同一件事，从圣光学院学生的眼里看，是圣光净化异端；从暗蚀会学生的眼里看，是猎杀自由灵魂；从你的同学嘴里听，又是另一个版本。");arr.push("");arr.push("每个视角都有偏见和隐瞒——他们说的都是自己相信的‘真相’。你慢慢学会了一件事：真相，常常不在任何单一视角里，而在它们之间。");arr.push("");return arr;
     },
     options:[
       {t:"以圣光学院学生的视角看「净化令升级」", go:"academy_perspective_holy", effect:{timeCost:"1period"}},
@@ -5794,7 +5794,7 @@ N["academy_perspective_holy"] = function(){
       arr.push("圣女塞拉芬娜在角落祈祷。她的脸色很苍白——她「听到」了什么，但她不敢说。");
       arr.push("");
       arr.push("（你明白了——净化令的升级，不只是教会的决定。还有别的力量在推动它。）");
-      return arr;
+      arr.push("你以圣光神学院学生的身份，坐在大教堂偏厅的会议室外。门虚掩着，里面传来拍桌子的声音。");arr.push("");arr.push("“净化令必须升级！”审判长马库斯的嗓门很大，“异端越来越多了——灵魂法师、暗蚀会、还有那些‘能看到符文的人’。他们藏在平民堆里，藏在学院里，藏在我们眼皮底下！”");arr.push("");arr.push("一个苍老的声音不紧不慢地接话：“升级净化令，就得扩编审判庭。经费从哪来？教区今年的捐税已经收到三年后了。”");arr.push("");arr.push("门里沉默了一会儿。马库斯的声音又响起来，这次低了些：“总会有办法的。神的事情，神会安排；人的事情——我们来。”你坐在门外，把这句话一字不落地记在心里。");arr.push("");return arr;
     },
     options:[
       {t:"继续", go:"academy_multi_perspective", effect:{knowledge:2, san:-5, flag:"perspective_holy"}}
@@ -5821,7 +5821,7 @@ N["academy_perspective_military"] = function(){
       arr.push("梅林注意到了你。「别担心，」他说，「这都是为了更大的善。」");
       arr.push("");
       arr.push("（你明白了——军事学院的秘密实验，比你想象的更黑暗。而梅林，可能不是你以为的那个人。）");
-      return arr;
+      arr.push("深夜，你以军事学院学生的身份，站在地下实验室的观察窗前。玻璃那一侧，研究员们围着一个巨大的符文笼——笼子里，一个年轻人蜷缩着，额头上浮现出淡蓝色的纹路，一闪一闪。");arr.push("");arr.push("“实验体7号又失控了。”一个研究员说，声音里有掩饰不住的疲惫，“第四印的碎片嵌入后，意志再强的人也会被撑裂。”");arr.push("");arr.push("大法师梅林站在最前面，袍子在灯光下泛着银边。他看着笼子里的人，声音平得像在念一份报告：“没关系。我们需要更多的数据——七印的力量，必须被人类掌握。代价，从来都有人愿意付。”");arr.push("");arr.push("笼子里的人抬起头，隔着玻璃看了你一眼。他的眼神很清醒——清醒得让你后脊发凉。");arr.push("");return arr;
     },
     options:[
       {t:"继续", go:"academy_multi_perspective", effect:{knowledge:2, san:-10, flag:"perspective_military"}}
@@ -5850,7 +5850,7 @@ N["academy_perspective_elf"] = function(){
       arr.push("艾莉娅沉默了。她看向世界树的深处——那里，第三印在跳动。");
       arr.push("");
       arr.push("（你明白了——精灵长老们在「喂养」第三印。而他们，已经没有别的办法了。）");
-      return arr;
+      arr.push("你以精灵银叶学院学生的视角，看到了第三印松动的另一面。");arr.push("");arr.push("长老艾莉娅的声音在树屋里回响：“第三印又松动了。地脉的震动比去年频繁了十倍。”她摊开一幅树皮地图，指尖沿着一条红线缓缓移动：“封印一旦破碎，深渊的气息会从这条裂缝涌向整片大陆。”");arr.push("");arr.push("另一个长老叹了口气：“我们需要更多的‘祭品’——不是血肉，是失传的符文、古老的歌谣、沉睡在地下的器物。第三印需要它们来镇定。”");arr.push("");arr.push("你站在长老们身后，看着地图上那条蜿蜒的红线。它从世界树出发，一路向北，穿过草原、沙漠、群山——尽头，是封印所在的方向。");arr.push("");return arr;
     },
     options:[
       {t:"继续", go:"academy_multi_perspective", effect:{knowledge:3, san:-8, flag:"perspective_elf"}}
@@ -5879,7 +5879,7 @@ N["academy_12_directions_review"] = function(){
       arr.push("总计约 " + totalNodes + " 节点（含预留扩展位）。");
       arr.push("");
       arr.push("所有方向均预留至少50%扩展节点位，方便后续持续扩充。");
-      return arr;
+      arr.push("学院章十二大方向的回顾页在你眼前展开。每一行文字，都是一条走过的路、一个做过的选择。");arr.push("");arr.push("你逐行看过去，有些方向你走得深，有些只是擦肩。但每一条，都在你身上留下了痕迹——技能、关系、或者一句还没兑现的话。");arr.push("");arr.push("你合上回顾页。路还长，方向也还多——重要的不是走过多少条，而是接下来，你想往哪走。");arr.push("");return arr;
     },
     options:[
       {t:"返回", go:"fc_jiaohui_entry", effect:{}}
@@ -5967,7 +5967,7 @@ N["academy_quick_jump"] = function(){
       arr.push("【学院快速跳转】");
       arr.push("");
       arr.push("选择你想进入的学院：");
-      return arr;
+      arr.push("学院的大厅里立着一块传送牌，木牌上刻着各大学院的名字。你伸手按在牌面上，能感觉到符文在指尖下微微发烫。");arr.push("");arr.push("牌面亮起不同颜色的光——艾尔达大陆学院的蓝、圣光神学院的白、战神学院的红、银叶学院的绿。每一道颜色，都是一条不同的路。");arr.push("");arr.push("你收回手。传送牌的光渐渐暗下去。你还没决定要去哪——但你知道，选择权在你手里。");arr.push("");return arr;
     },
     options:[
       {t:"艾尔达大陆学院", go:"academy_elda_hub", effect:{}},
@@ -6003,7 +6003,7 @@ N["academy_system_hub"] = function(){
       arr.push("3. 参加校际活动");
       arr.push("4. 查看发现的秘密");
       arr.push("5. 查看12方向回顾");
-      return arr;
+      arr.push("学院系统的面板在眼前展开，各项功能排列得清清楚楚。你伸手点了点，面板上的文字随着你的动作逐一亮起。");arr.push("");arr.push("当前学院、当前年份、课程进度、人际关系——每一项都是你这几年在学院里攒下的家当。你看着这些数字，想起它们背后那些具体的人和事。");arr.push("");arr.push("你关上面板，深吸一口气。日子还得一天一天过，路还得一步一步走。");arr.push("");return arr;
     },
     options:[
       {t:"进入当前学院", go:"academy_elda_hub", effect:{}},
@@ -6172,7 +6172,7 @@ N["academy_magic_class"] = function(){ return {
   text:function(){return [
     "学院的魔法课程在元素塔中进行。七系魔法各有专属的教室，每间教室都配备了防护结界和练习用的假人。",
     "你站在元素塔的大厅里，看着各系教室的门牌。今天可以选择旁听或正式上课。"
-  ];},
+  ,"元素塔的走廊里，七扇门排成一排，每扇门上的符文颜色都不同。你站在火系教室门口，能听见门后传来低沉的轰鸣——像有火在墙内流动。","","推开门，热气扑面。教室里摆着十几个石制假人，表面被烧得发黑开裂。一个穿红袍的教授正往假人身上画符文，头也不抬：“新来的？找地方坐。今天练火球——先学会让它不炸在自己手上。”","","你学着其他学生的样子，把双手放在面前的符文石上。掌心的魔力像被什么牵住了，一跳一跳的。窗外的天空很蓝，塔下的学院像一幅画。你深吸一口气，把注意收回到掌心里。",""];},
   place:"艾尔达大陆学院·元素塔",
   options:[
     {t:"火系魔法教室", go:"class_fire_intro", effect:{time:1}},

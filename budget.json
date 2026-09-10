@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8014548,
-    "chunked_html_bytes_max": 5400458,
+    "game_html_bytes_max": 8053677,
+    "chunked_html_bytes_max": 5432645,
     "node_total_min": 4551,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7964548,
-    "chunked_html_bytes": 5300458,
+    "game_html_bytes": 8003677,
+    "chunked_html_bytes": 5332645,
     "node_total": 4601,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "TQ-1 修正天气模板治理词",
+    "reason": "TQ-3 学院67节点+城市hub 27节点薄节点扩写注入",
     "history": [
       {
         "date": "2026-09-09",
@@ -488,6 +488,20 @@
         "chunked_bytes": 5300458,
         "nodes": 4601,
         "reason": "TQ-1 修正天气模板治理词"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7999027,
+        "chunked_bytes": 5330812,
+        "nodes": 4601,
+        "reason": "TQ-2 序章27节点+自由城/北上链94节点扩写注入"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8003677,
+        "chunked_bytes": 5332645,
+        "nodes": 4601,
+        "reason": "TQ-3 学院67节点+城市hub 27节点薄节点扩写注入"
       }
     ]
   },

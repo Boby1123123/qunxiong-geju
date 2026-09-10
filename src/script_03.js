@@ -42,6 +42,8 @@ function applyDefaults(s){
   if(!s.p12Quest) s.p12Quest={a:0,b:0,c:0};
   /* /t11inj:defaults/ I1-1 分段阅读开关兜底（旧档兼容） */
   if(!s.settings) s.settings={};
+    if(!s.trade) s.trade={goods:{},logs:[],total:0}; /* /g1inj:def/ */
+    if(!s.gallery) s.gallery={}; /* /g2inj:def/ */
   if(s.settings.ambience===undefined) s.settings.ambience=true;
   if(s.settings.nameHighlight===undefined) s.settings.nameHighlight=true;
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
@@ -4327,6 +4329,7 @@ window.v92_highlightNames = function(el){
         _hl += "'>" + nm + "</span>";
         out = out.replace(re, _hl);
         hit = true;
+        try{ if(window.v92_galleryMark){ window.v92_galleryMark("npc_"+nm, window.v92_hlDesc[nm]||nm); } }catch(e){}
       }
       if(hit){
         var sp = document.createElement("span");
@@ -4501,6 +4504,176 @@ window.v92_worldSnapshot = function(){
     return out;
   }catch(e){ try{ console.log("[wn1:snap:err]",e); }catch(_){} return []; }
 };
+    /* /g1inj:engine/ G-N1 商路引擎（只读行情+买卖结算，不动判定公式） */
+    window.v92_tradeHash = function(str){
+      var h = 0;
+      for(var i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) & 0x7fffffff; }
+      return h;
+    };
+    window.v92_tradePrice = function(good, city, isBuy){
+      try{
+        var g = window.TRADE_GOODS_V92 && TRADE_GOODS_V92[good];
+        if(!g) return 0;
+        var m = window.TRADE_MARKET && TRADE_MARKET[city];
+        var mul = m ? m.mul : 1.0;
+        var wave = ((S.day*7 + window.v92_tradeHash(good)) % 100) / 100 * 0.30 - 0.15;
+        var evMul = 1.0;
+        if(window.TRADE_EVENTS){
+          for(var eid in TRADE_EVENTS){
+            if(!TRADE_EVENTS.hasOwnProperty(eid)) continue;
+            var t = TRADE_EVENTS[eid][good];
+            if(!t) continue;
+            var hit = false;
+            if(window.EVENT_POOL_EXT){
+              for(var k=0;k<EVENT_POOL_EXT.length;k++){ if(EVENT_POOL_EXT[k] && EVENT_POOL_EXT[k].id===eid){ hit = (S.day>=EVENT_POOL_EXT[k].day && S.day<=EVENT_POOL_EXT[k].day+20); break; } }
+            }
+            if(!hit && window.WORLD_EVENTS && WORLD_EVENTS[eid]){
+              hit = (S.day>=WORLD_EVENTS[eid].day && S.day<=WORLD_EVENTS[eid].day+30);
+            }
+            if(hit){ evMul *= t; }
+          }
+        }
+        var cityMul = 1.0;
+        if(m){
+          if(m.prod && m.prod.indexOf(good)>=0){ cityMul = isBuy ? 0.75 : 0.90; }
+          else if(m.hot && m.hot.indexOf(good)>=0){ cityMul = isBuy ? 1.10 : 1.15; }
+        }
+        var price = g.base * mul * (1+wave) * cityMul * evMul;
+        if(isBuy){ price = Math.max(1, Math.round(price)); }
+        else { price = Math.max(1, Math.round(price * 0.62)); }
+        return price;
+      }catch(e){ return 0; }
+    };
+    window.v92_tradeInit = function(){
+      if(!S.trade){ S.trade = {goods:{}, logs:[], total:0}; }
+      if(!S.trade.goods) S.trade.goods = {};
+      if(!S.trade.logs) S.trade.logs = [];
+      if(!S.trade.total) S.trade.total = 0;
+    };
+    window.v92_tradeBuy = function(good, n){
+      try{
+        window.v92_tradeInit();
+        var g = window.TRADE_GOODS_V92 && TRADE_GOODS_V92[good];
+        if(!g || !n || n<1) return {ok:false, msg:"没有这种货。"};
+        var city = S.curCity || "jiaohui";
+        var p = window.v92_tradePrice(good, city, true);
+        var cost = p * n;
+        if(cost > S.gold) return {ok:false, msg:"钱不够。"};
+        var cap = 200;
+        var cur = S.trade.goods[good] || 0;
+        if(cur + n > cap) return {ok:false, msg:"驮队装不下了（上限 200）。"};
+        S.gold -= cost;
+        S.trade.goods[good] = cur + n;
+        S.trade.logs.push({day:S.day, city:city, good:good, n:n, gold:-cost, type:"buy"});
+        if(S.trade.logs.length>50) S.trade.logs.shift();
+                if(window.v92_galleryMark){ try{ window.v92_galleryMark("good_"+good, g.cn); }catch(e){} }
+        return {ok:true, msg:"买入 "+g.cn+"×"+n+"，花 "+cost+" 金龙。"};
+      }catch(e){ return {ok:false, msg:"交易失败。"}; }
+    };
+    window.v92_tradeSell = function(good, n){
+      try{
+        window.v92_tradeInit();
+        var g = window.TRADE_GOODS_V92 && TRADE_GOODS_V92[good];
+        if(!g || !n || n<1) return {ok:false, msg:"没有这种货。"};
+        var cur = S.trade.goods[good] || 0;
+        if(cur < n) return {ok:false, msg:"没有那么多货。"};
+        var city = S.curCity || "jiaohui";
+        var p = window.v92_tradePrice(good, city, false);
+        var gain = p * n;
+        S.gold += gain;
+        S.trade.goods[good] = cur - n;
+        S.trade.total = (S.trade.total||0) + gain;
+        S.trade.logs.push({day:S.day, city:city, good:good, n:n, gold:gain, type:"sell"});
+        if(S.trade.logs.length>50) S.trade.logs.shift();
+        if(window.v92_galleryMark){ try{ window.v92_galleryMark("good_"+good); }catch(e){} }
+        return {ok:true, msg:"卖出 "+g.cn+"×"+n+"，得 "+gain+" 金龙。"};
+      }catch(e){ return {ok:false, msg:"交易失败。"}; }
+    };
+    /* /g2inj:engine/ G-N2 收集图鉴（标记钩子 + 面板；S.gallery 独立键） */
+    window.v92_galleryMark = function(key, label){
+      try{
+        if(!S.gallery) S.gallery = {};
+        if(key && !S.gallery[key]){ S.gallery[key] = {label: label || key, day: S.day || 1, got: 1}; }
+        return true;
+      }catch(e){ return false; }
+    };
+    window.v92_openGalleryPanel = function(){
+      try{
+        if(!S.gallery) S.gallery = {};
+        var old = document.getElementById('v92-gallery-panel');
+        if(old){ old.parentNode.removeChild(old); }
+        var cats = {good:'货物', place:'地点', npc:'人物', event:'事件', other:'其他'};
+        var secs = [];
+        for(var c in cats){
+          if(!cats.hasOwnProperty(c)) continue;
+          var items = [];
+          for(var k in S.gallery){
+            if(!S.gallery.hasOwnProperty(k)) continue;
+            if(k.indexOf(c+'_')!==0) continue;
+            var it = S.gallery[k];
+            items.push('<span style="display:inline-block;margin:3px 6px 3px 0;padding:3px 10px;background:rgba(168,132,42,.1);border:1px solid rgba(168,132,42,.35);border-radius:10px;font-size:13px;" title="第 '+it.day+' 日收集">'+it.label+'</span>');
+          }
+          if(items.length){
+            secs.push('<div style="margin-top:10px;"><div style="font-size:13px;font-weight:600;color:#8a6410;margin-bottom:4px;">'+cats[c]+' · '+items.length+'</div><div>'+items.join('')+'</div></div>');
+          }
+        }
+        var total = 0;
+        for(var k2 in S.gallery){ if(S.gallery.hasOwnProperty(k2)) total++; }
+        var d = document.createElement('div');
+        d.id = 'v92-gallery-panel';
+        d.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:560px;max-width:92vw;max-height:80vh;overflow:auto;background:#fdf9ee;border:2px solid #a8842a;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.4);z-index:9999;padding:16px 20px;font-family:inherit;';
+        d.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+          + '<div style="font-size:18px;font-weight:600;">📖 收集图鉴 · 共 '+total+' 条</div>'
+          + '<button class="opt" onclick="var p=document.getElementById(\'v92-gallery-panel\');if(p)p.parentNode.removeChild(p);">✕ 关闭</button></div>'
+          + '<div style="font-size:13px;color:#666;line-height:1.7;">见过的专名、到过的城市、经手的货物、亲历的事件都会收进来。收集是阅历，阅历是命数。</div>'
+          + (secs.length ? secs.join('') : '<div style="color:#999;margin-top:10px;">尚未收集任何条目。去交易、去旅行、去听闻。</div>');
+        document.body.appendChild(d);
+        if(window.v67_busyClear){ try{ window.v67_busyClear(); }catch(e){} }
+        return d;
+      }catch(e){ return null; }
+    };
+    window.v92_openTradePanel = function(){
+      try{
+        window.v92_tradeInit();
+        var old = document.getElementById('v92-trade-panel');
+        if(old){ old.parentNode.removeChild(old); }
+        var city = S.curCity || "jiaohui";
+        var m = (window.TRADE_MARKET && TRADE_MARKET[city]) || {mul:1.0, cn:"此地"};
+        var goods = window.TRADE_GOODS_V92 || {};
+        var rows = [];
+        for(var gid in goods){
+          if(!goods.hasOwnProperty(gid)) continue;
+          var g = goods[gid];
+          var buy = window.v92_tradePrice(gid, city, true);
+          var sell = window.v92_tradePrice(gid, city, false);
+          var hold = (S.trade.goods[gid] || 0);
+          rows.push('<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 2px;border-bottom:1px solid rgba(0,0,0,.06);font-size:14px;line-height:1.6;">'
+            + '<div style="flex:0 0 86px;"><b>'+g.cn+'</b></div>'
+            + '<div style="flex:1;color:#666;font-size:12px;">'+g.desc+'</div>'
+            + '<div style="flex:0 0 58px;text-align:right;">'+buy+'</div>'
+            + '<div style="flex:0 0 58px;text-align:right;">'+sell+'</div>'
+            + '<div style="flex:0 0 40px;text-align:center;">'+hold+'</div>'
+            + '<div style="flex:0 0 118px;text-align:right;">'
+            + '<button class="opt" style="padding:2px 8px;font-size:12px;" onclick="window.v92_tradeBuy(\''+gid+'\',1);window.v92_openTradePanel();">买1</button> '
+            + '<button class="opt" style="padding:2px 8px;font-size:12px;" onclick="window.v92_tradeSell(\''+gid+'\',1);window.v92_openTradePanel();">卖1</button>'
+            + '</div></div>');
+        }
+        var d = document.createElement('div');
+        d.id = 'v92-trade-panel';
+        d.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:660px;max-width:92vw;max-height:82vh;overflow:auto;background:#fdf9ee;border:2px solid #a8842a;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.4);z-index:9999;padding:16px 20px;font-family:inherit;';
+        d.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+          + '<div style="font-size:18px;font-weight:600;">🛒 商路 · '+m.cn+'</div>'
+          + '<button class="opt" onclick="var p=document.getElementById(\'v92-trade-panel\');if(p)p.parentNode.removeChild(p);">✕ 关闭</button></div>'
+          + '<div style="font-size:13px;color:#666;margin-bottom:10px;line-height:1.7;">行情每日随行市波动（±15%）；产地便宜、热需城抬价；银穗商路与天灾事件会扰动货价。金币 '+S.gold+' 金龙 · 累计利润 '+((S.trade.total||0))+' 金龙</div>'
+          + '<div style="display:flex;font-size:12px;color:#888;padding:4px 2px;border-bottom:1px solid rgba(0,0,0,.1);">'
+          + '<div style="flex:0 0 86px;">货物</div><div style="flex:1;">说明</div><div style="flex:0 0 58px;">买价</div><div style="flex:0 0 58px;">卖价</div><div style="flex:0 0 40px;">持有</div><div style="flex:0 0 118px;text-align:right;">操作</div></div>'
+          + rows.join('')
+          + '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;"><div style="font-size:12px;color:#888;line-height:1.7;">倒买倒卖赚差价，是本大陆最古老的修行。交易记录会自动入图鉴。</div><button class="opt" onclick="window.v92_openGalleryPanel();">📖 收集图鉴</button></div>';
+        document.body.appendChild(d);
+        if(window.v67_busyClear){ try{ window.v67_busyClear(); }catch(e){} }
+        return d;
+      }catch(e){ return null; }
+    };
 window.v92_openWorldPanel = function(){
   try{
     if(typeof openModal!=="function") return;

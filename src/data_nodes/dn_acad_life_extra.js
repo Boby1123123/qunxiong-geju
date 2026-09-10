@@ -6,7 +6,7 @@
  * ============================================================ */
 (function(){
 /* 假期事件 */
-N["acad_life_y1_holiday"]={tag:"main",place:"艾尔达魔法学院 · 冬假",pace:"normal",text:[
+N["acad_life_y1_holiday"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 冬假",pace:"normal",text:[
 "第一学年的冬假，学院里冷清下来。留校的人不多，食堂只开一个窗口，守夜人的巡逻队缩成两个人。",
 "你闲着没事，被洛卡拉去帮他“整理药剂库”——其实就是看他炸了三锅药水，然后一起收拾残局。",
 "他忽然问你：“你打算在学院待几年？”",
@@ -19,7 +19,7 @@ N["acad_life_y1_holiday"]={tag:"main",place:"艾尔达魔法学院 · 冬假",pa
 },effects:{xp:10},onCrit:{flag:"acad_clean_water"},go:"acad_life_y2_open"},
 {t:"早点休息，冬假养好精神",effects:{hp:15},tier:{ok:["你睡了个长长的好觉。冬假的雪，把整个学院盖成白色。"]},go:"acad_life_y2_open"}
 ]};
-N["acad_life_y2_holiday"]={tag:"main",place:"艾尔达魔法学院 · 夏假",pace:"normal",text:[
+N["acad_life_y2_holiday"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 夏假",pace:"normal",text:[
 "第二学年的夏假，你跟着凯恩去了一趟学院后山的雪线营地。",
 "说是营地，其实是一排半塌的石头屋——战争系的老规矩：夏假进山，练野外生存。",
 "白天，你们翻山、涉溪、辨识草药；夜里，围在火堆旁，听凯恩讲他以前当佣兵的事。",
@@ -36,7 +36,7 @@ N["acad_life_y2_holiday"]={tag:"main",place:"艾尔达魔法学院 · 夏假",pa
  crit:["凯恩的目光暗了暗：“我在找一种打法——能让战场少死一半人的打法。”他苦笑，“听起来很蠢吧。一个佣兵，想教世界怎么打仗。”","“但我信。学院里要是没人信这个，那就没人信了。”","你第一次，认真看这个黑发少年。他剑上的铁锈味，忽然有了重量。"]
 },effects:{xp:12},onCrit:{flag:"acad_kain_ideal"},go:"acad_life_y3_open"}
 ]};
-N["acad_life_y3_holiday"]={tag:"main",place:"艾尔达魔法学院 · 冬假",pace:"normal",text:[
+N["acad_life_y3_holiday"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 冬假",pace:"normal",text:[
 "第三学年的冬假，你哪儿也没去。",
 "你白天在图书馆，晚上替守夜人巡逻。学院像一座被雪埋了一半的城，安静得能听见自己的心跳。",
 "有一夜，你在东回廊巡逻时，看见一个灰袍身影——袖口没有银叶——从圣痕司的灰楼方向出来，往图书馆去了。",
@@ -49,7 +49,7 @@ N["acad_life_y3_holiday"]={tag:"main",place:"艾尔达魔法学院 · 冬假",pa
 },effects:{},onOk:{flag:"acad_grey_librarian"},onCrit:{flag:"acad_sulfur_smell"},go:"acad_life_y4_open"},
 {t:"停步。有些事，知道得太多不是福",effects:{xp:8},tier:{ok:["你停住脚步，转身走了。","有些影子，不该由你来追。至少，不是现在。"]},go:"acad_life_y4_open"}
 ]};
-N["acad_life_y4_holiday"]={tag:"main",place:"艾尔达魔法学院 · 春假",pace:"normal",text:[
+N["acad_life_y4_holiday"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 春假",pace:"normal",text:[
 "第四学年的春假，冰消雪融。",
 "你去艾尔达城散心，在城门口遇到一个白袍的圣光教会传教士。他拦住你，笑容满面：“年轻人，信主吗？主的圣光，能洗净一切。”",
 "你正要摇头，他忽然压低声音：“……但有些东西，圣光是洗不净的。比如，第七节点。”",
@@ -65,7 +65,7 @@ N["acad_life_y4_holiday"]={tag:"main",place:"艾尔达魔法学院 · 春假",pa
 {t:"不去。把纸条烧了",effects:{xp:8},tier:{ok:["你把纸条凑近灯焰，看它卷曲、发黑、成灰。","有些钩子，不咬就是赢。"]},go:"acad_life_y5_open"}
 ]};
 /* 学年专属事件（yN_open 内 req 一次性触发） */
-N["acad_event_y1"]={tag:"event",place:"艾尔达魔法学院 · 秋",pace:"normal",text:[
+N["acad_event_y1"]={tags:["region:north"],tag:"event",place:"艾尔达魔法学院 · 秋",pace:"normal",text:[
 "秋雨连下三天，学院的排水渠堵了。雨水从食堂的墙根漫出来，漫过石板路，漫进宿舍楼的地基。学院管事敲着铜铃，把全宿舍的人叫到雨里疏通。",
 "你穿着旧斗篷站在泥水里，裤腿卷到膝盖。水渠入口被烂树叶和断树枝塞得严严实实，凯恩蹲在渠边，用手掏了半天，掏出一把湿透的枯叶，回头冲你喊：“搭把手，底下卡着一根树杈！”",
 "你和凯恩、洛卡接力往外拽那根树杈。艾莉丝在边上举着灯喊加油，被凯恩回手泼了一身泥水，她愣了一下，弯腰也抄起一把泥扔回去——闹成一团。",
@@ -73,7 +73,7 @@ N["acad_event_y1"]={tag:"event",place:"艾尔达魔法学院 · 秋",pace:"norma
 "你捧着热汤，坐在廊下，看着满院湿漉漉的灯火。雨水顺着屋檐滴成线，把夜色敲得叮咚响。这种日子，不算惊天动地，但让人踏实。", "你离了秋，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"喝完姜汤，回宿舍",effects:{xp:8},tier:{ok:["姜汤驱了寒。你抖抖斗篷上的泥，回宿舍睡了。"]},go:"acad_life_y1_dorm"}
 ]};
-N["acad_event_y2"]={tag:"event",place:"艾尔达魔法学院 · 冬",pace:"normal",text:[
+N["acad_event_y2"]={tags:["region:north"],tag:"event",place:"艾尔达魔法学院 · 冬",pace:"normal",text:[
 "冬夜，学院组织了一场“守夜人体验”——每人值一个时辰夜班，体验老守夜人常年做的事。负责分派的老门房把风灯递给你时，压低声音：“塔楼那片，灯要是晃了，别去追，记下来就行。”",
 "你提着风灯，沿着东回廊走。雪很大，灯笼的光只能照出三步远，三步之外就是白茫茫一片。你的靴子踩在积雪上，发出咯吱咯吱的响，回声在回廊里荡来荡去，像有人跟在后面。",
 "走到图书馆拐角时，你听见塔顶传来一声轻响——像什么东西，轻轻碰了一下钟。不是钟声，是钟被什么碰了一下，发出短促的“嗡”，随即被风雪吞没。",
@@ -82,7 +82,7 @@ N["acad_event_y2"]={tag:"event",place:"艾尔达魔法学院 · 冬",pace:"norma
 ],options:[
 {t:"记住这个夜晚，继续巡逻",effects:{xp:8},tier:{ok:["你数着自己的脚步声走完剩下的路。","塔顶的灯，在你交班时，灭了一下，又亮了。"]},go:"acad_life_y2_dorm"}
 ]};
-N["acad_event_y3"]={tag:"event",place:"艾尔达魔法学院 · 春",pace:"light",text:[
+N["acad_event_y3"]={tags:["region:north"],tag:"event",place:"艾尔达魔法学院 · 春",pace:"light",text:[
 "春天，学院的花园开了第一茬花。",
 "你经过时，看见费尔曼教授蹲在花圃边，给一株枯枝浇水。他见你，笑笑：“这株，是上一任院长种的。枯了三年，今年又活了。”",
 "他起身，拍掉手上的土：“生命这东西，比封印顽强。”",
@@ -90,7 +90,7 @@ N["acad_event_y3"]={tag:"event",place:"艾尔达魔法学院 · 春",pace:"light
 ],options:[
 {t:"记住这句话",effects:{xp:8},tier:{ok:["“生命比封印顽强。”你把这句，和学院里的暗流一起，放进心里。"]},go:"acad_life_y3_dorm"}
 ]};
-N["acad_event_y4"]={tag:"event",place:"艾尔达魔法学院 · 夏",pace:"light",text:[
+N["acad_event_y4"]={tags:["region:north"],tag:"event",place:"艾尔达魔法学院 · 夏",pace:"light",text:[
 "夏夜，学院举行了一年一度的观星课。",
 "教授们带着学生爬上塔顶平台，指认星座。夜风很大，星光很亮。",
 "你身边的艾莉丝忽然小声说：“你看——那颗星，今天是不是特别亮？”",
@@ -98,7 +98,7 @@ N["acad_event_y4"]={tag:"event",place:"艾尔达魔法学院 · 夏",pace:"light
 "旁边的老教授看了一眼，没说话。他收起了望远镜，转身下楼了。", "夏已被抛在身后。路在脚下延伸，你不回头，行至前方。"],options:[
 {t:"记住那颗星的方位",effects:{xp:8},tier:{ok:["那颗星的位置，你记住了。","多年后你才知道，那夜亮得过分的星，叫‘守门人’。"]},go:"acad_life_y4_dorm"}
 ]};
-N["acad_event_y5"]={tag:"event",place:"艾尔达魔法学院 · 毕业年秋",pace:"light",text:[
+N["acad_event_y5"]={tags:["region:north"],tag:"event",place:"艾尔达魔法学院 · 毕业年秋",pace:"light",text:[
 "毕业年秋，学院迎来了一批新生。",
 "你站在回廊上，看着他们拖着行李、仰头看塔尖的样子——和五年前的你，一模一样。",
 "一个新生撞到你，连声道歉。你摆摆手，忽然想起自己当年在雪地里迷路的狼狈。",

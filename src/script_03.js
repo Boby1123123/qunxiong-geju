@@ -3160,7 +3160,7 @@ N["travel_north_campfire"]={tag:"branch",
 /*v45new:academy_y2_tavern_rumor*/
 /* /v62inj:chunk-seal/ N["seal5_exp_underwater"] 已移入 chunks/v62_seal.js */
 /*v45new:seal5_exp_underwater*/
-N["ending_after_watcher"]={tag:"ending",
+N["ending_after_watcher"]={tags:["ending:after"],tag:"ending",
   place:"多年以后·守望者塔",
   text:[
     "很多年以后，你站在守望者塔的顶层。塔不高，但能看见很远——旷野、河流、村庄，和更远处那条模糊的地平线。",
@@ -3202,7 +3202,7 @@ N["travel_elf_treesong"]={
     {t:"继续赶路", go:"travel_elf_day2_solo", effect:{time:1}}
   ]
 }; /*v45new:travel_elf_treesong*/
-N["ending_elder_memoir"]={tag:"ending",
+N["ending_elder_memoir"]={tags:["ending:elder"],tag:"ending",
   place:"守望者塔·老人回忆",
   text:[
     "你在守望者塔里住下的第三个月，有一天傍晚，一位老人来敲门。他背着一个旧皮包，头发花白，走路有些跛。",
@@ -3408,6 +3408,42 @@ window.v91_memoryInjection = function(node, txt){
     if(inj.length){ try{ console.log("[v92inj:mem]", inj.length, inj[0].slice(0,40)); }catch(_){} }
     return inj.length?inj:null;
   }catch(e){ try{ console.log("[v92inj:mem:err]",e); }catch(_){} return null; }
+};
+/* ===== /v92inj:tags/ UPG-04 节点 tag 元数据通道（只读工具；N[id].tags 为纯数据；成就/地图/事件池筛选统一驱动源） ===== */
+window.v92_nodeTags = function(id){
+  try{
+    if(!id) return [];
+    const n=(typeof N!=="undefined"&&N)?N[id]:null;
+    if(!n) return [];
+    const t=n.tags;
+    if(!t||!Array.isArray(t)) return [];
+    return t.slice();
+  }catch(e){ try{ console.log("[v92tags:err]",e); }catch(_){} return []; }
+};
+window.v92_hasNodeTag = function(id, tag){
+  try{ const t=window.v92_nodeTags(id); return t.indexOf(tag)>=0; }catch(e){ return false; }
+};
+window.ELDA = window.ELDA || {};
+window.ELDA.tags = {
+  of: window.v92_nodeTags,
+  has: window.v92_hasNodeTag,
+  /* 按标签筛事件池（EVENT_POOL_EXT 事件可选带 tags 字段；无 tags 时按 cls 回退匹配，供 UPG-14 钩子与成就用） */
+  eventsByTag: function(tag){
+    try{
+      const pool=(typeof EVENT_POOL_EXT!=="undefined"&&EVENT_POOL_EXT)?EVENT_POOL_EXT:[];
+      const out=[];
+      for(let i=0;i<pool.length;i++){
+        const e=pool[i];
+        if(!e) continue;
+        if(e.tags&&Array.isArray(e.tags)&&e.tags.indexOf(tag)>=0){ out.push(e); continue; }
+        if(tag==="天灾"&&e.cls==="天灾"){ out.push(e); continue; }
+        if(tag==="奇遇"&&e.cls==="奇遇"){ out.push(e); continue; }
+        if(tag==="商机"&&e.cls==="商机"){ out.push(e); continue; }
+        if(tag==="人祸"&&e.cls==="人祸"){ out.push(e); continue; }
+      }
+      return out;
+    }catch(e){ return []; }
+  }
 };
 /* ===== /v92inj:wxfn/ TQ-1 天气句（只读钩子；按季节×区域返回 1 句天气句；开关 S.settings.weatherLine；不写任何状态） ===== */
 window.v92_weatherLine = function(node){
@@ -4165,7 +4201,7 @@ function showEnding(id){
   $("options").appendChild(nb); /* /u7inj:panel-btn/ */
 }
 
-N["ending_choose"] = {tag:"ending",
+N["ending_choose"] = {tags:["ending:choose"],tag:"ending",
   place:"旅途回望",where:"某个黄昏",
   text:[
     "你站在某个黄昏里，回望来路。",

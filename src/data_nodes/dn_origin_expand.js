@@ -2,7 +2,7 @@
 (function(){
 var N = window.N || (window.N = {});
 
-N["origin_expand_north_1"] = {tag:"main",pace:"normal",place:"北境·灰烬村·灶台边",
+N["origin_expand_north_1"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"北境·灰烬村·灶台边",
 text:[
 "那年的第一场雪来得早。",
 "母亲在灶台边揉面，面团在粗瓷盆里发出沉闷的声响。她手上的裂口被雪水泡得发白，却不肯停下——铁门关的军需官说，今年冬天，北境要靠这批干粮过活。",
@@ -24,7 +24,7 @@ fail:["你在村口站了一会儿，风把雪粒吹进领口，你缩着脖子�
 {t:"去帮妹妹找她丢的布偶",effects:{flag:"origin_expand_north_doll"},go:"origin_expand_north_2"}
 ]};
 
-N["origin_expand_north_2"] = {tag:"main",pace:"normal",place:"北境·灰烬村·夜里",
+N["origin_expand_north_2"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"北境·灰烬村·夜里",
 text:[
 "夜里，你躺在炕上，听着屋外风声。",
 "北境的风和别处不一样。它会在屋脊上打旋，像有什么东西在屋顶来回走。你从小听到大，今夜却总觉得不对劲——风里夹着一丝细细的、像人哭又像兽嚎的声音。",
@@ -41,7 +41,7 @@ options:[
 {t:"披上衣服，去院里看看",effects:{flag:"origin_expand_north_yard"},go:"origin_expand_north_3"}
 ]};
 
-N["origin_expand_north_3"] = {tag:"main",pace:"normal",place:"北境·灰烬村·清晨",
+N["origin_expand_north_3"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"北境·灰烬村·清晨",
 text:[
 "天亮得比往常晚。",
 "你推开院门时，雪已经停了。院子里的脚印是你的——昨夜的疑心，只留下这一串。",
@@ -57,7 +57,7 @@ options:[
 {t:"先去地窖看看存粮",effects:{flag:"origin_expand_north_cellar"},go:"origin_expand_north_4"}
 ]};
 
-N["origin_expand_north_4"] = {tag:"branch",pace:"light",place:"北境·灰烬村·地窖口",
+N["origin_expand_north_4"] = {tags:["region:origin"],tag:"branch",pace:"light",place:"北境·灰烬村·地窖口",
 text:[
 "地窖的木板门冻得发脆，你掀开时，一股潮气混着腌菜的酸味涌上来。",
 "母亲下来点了一支油灯。昏黄的光里，坛子排成一排：腌菜、萝卜、半袋黑麦。她数了数，又数了一遍，最后把油灯搁在台阶上，久久没有说话。",
@@ -73,7 +73,7 @@ options:[
 {t:"把皮甲推回去：「娘，你留着」",effects:{flag:"origin_expand_north_refuse"},go:"origin_expand_north_5"}
 ]};
 
-N["origin_expand_north_5"] = {tag:"main",pace:"normal",place:"北境·灰烬村·夜",
+N["origin_expand_north_5"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"北境·灰烬村·夜",
 text:[
 "那晚的风声，是从半夜开始的。",
 "你先是听见狗叫。村里所有的狗，同时叫了起来，声音又急又乱，像被什么吓破了胆。然后狗叫声像被掐住喉咙一样，一只一只地停了。",
@@ -89,7 +89,7 @@ options:[
 {t:"抱紧木剑，等天亮",effects:{flag:"origin_expand_north_wait"},go:"origin_expand_north_6"}
 ]};
 
-N["origin_expand_north_6"] = {tag:"main",pace:"normal",place:"北境·灰烬村·村口",
+N["origin_expand_north_6"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"北境·灰烬村·村口",
 text:[
 "天没亮透，你们就出了门。",
 "雪地上，一串脚印从你们家门口一直延伸向村口——五趾，比狼爪大，比熊掌小。和你在废墟边缘看见的，一模一样。",
@@ -104,7 +104,7 @@ options:[
 {t:"跟上父亲的脚步",effects:{flag:"origin_expand_north_follow"},go:"origin_expand_north_7"}
 ]};
 
-N["origin_expand_north_7"] = {tag:"main",pace:"normal",place:"北境·南行土路",
+N["origin_expand_north_7"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"北境·南行土路",
 text:[
 "南行的路走了三天。",
 "第三天傍晚，你们遇到了一支车队。车上拉着伤兵，还有几具用草席裹着的尸体。赶车的老兵看见你们，把车停了。",
@@ -122,7 +122,7 @@ options:[
 {t:"记住父亲的话",effects:{flag:"origin_expand_north_remember"},go:"origin_expand_north_8"}
 ]};
 
-N["origin_expand_north_8"] = {tag:"main",pace:"light",place:"北境·难民营·入口",
+N["origin_expand_north_8"] = {tags:["region:origin"],tag:"main",pace:"light",place:"北境·难民营·入口",
 text:[
 "难民营比你想象的还要大，还要挤。",
 "帐篷一片连着一片，泥地被踩得稀烂。空气里有药味、汗味、还有说不清的绝望味道。你攥着母亲的衣角，在人流里穿行。",
@@ -139,7 +139,7 @@ options:[
 ]};
 
 /* ============ 南境·商船学徒 ============ */
-N["origin_expand_south_1"] = {tag:"main",pace:"normal",place:"南方港城·银穗号·甲板",
+N["origin_expand_south_1"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"南方港城·银穗号·甲板",
 text:[
 "银穗号吃水很深。这趟装了三百桶桐油，外加两箱给交汇城商会的瓷器。",
 "你十四岁上船，今年十六，已经是船长的学徒。说是学徒，其实什么都干：洗甲板、搓缆绳、给老水手递烟斗。",
@@ -156,7 +156,7 @@ options:[
 {t:"帮忙检查船尾的灯",effects:{flag:"origin_expand_south_lamp"},go:"origin_expand_south_2"}
 ]};
 
-N["origin_expand_south_2"] = {tag:"main",pace:"normal",place:"南方港城·银穗号·船尾",
+N["origin_expand_south_2"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"南方港城·银穗号·船尾",
 text:[
 "船尾挂着一盏铜灯，灯罩擦得锃亮。",
 "你检查了灯芯，又添了油。灯座下刻着一行小字，被海水锈蚀得模糊，但你凑近认了半天：「南无……镇……海……」",
@@ -173,7 +173,7 @@ options:[
 {t:"记下『绿光』的事，回舱房",effects:{flag:"origin_expand_south_mark"},go:"origin_expand_south_3"}
 ]};
 
-N["origin_expand_south_3"] = {tag:"main",pace:"normal",place:"南方港城·码头市集",
+N["origin_expand_south_3"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"南方港城·码头市集",
 text:[
 "开船前半天，你跟着大副上岸采买。",
 "码头市集热闹得像一锅滚粥：卖鱼的扯着嗓子报价，扛包的苦力排着队过秤，一个算命的瞎子坐在墙角，面前摆着一碗清水。",
@@ -191,7 +191,7 @@ options:[
 {t:"跟大副提起这件事",effects:{flag:"origin_expand_south_tellmate"},go:"origin_expand_south_4"}
 ]};
 
-N["origin_expand_south_4"] = {tag:"branch",pace:"light",place:"南方港城·银穗号·货舱",
+N["origin_expand_south_4"] = {tags:["region:origin"],tag:"branch",pace:"light",place:"南方港城·银穗号·货舱",
 text:[
 "开船前一晚，你清点货舱。",
 "桐油桶码得整整齐齐，瓷器的箱子用稻草垫着。你数到第三遍，发现最里面多了一个箱子——不在这趟货单上。",
@@ -211,7 +211,7 @@ fail:["你撬了半天，铜锁纹丝不动。第二天，船长看着锁上新�
 },effects:{flag:"origin_expand_south_chest"},go:"origin_expand_south_5"}
 ]};
 
-N["origin_expand_south_5"] = {tag:"main",pace:"normal",place:"南方港城·银穗号·出港",
+N["origin_expand_south_5"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"南方港城·银穗号·出港",
 text:[
 "第三天清晨，银穗号出港。",
 "码头上，送行的人挥着手，喊声混在海鸥的叫声里。你站在桅杆边，看着港口越来越小，直到变成一条线。",
@@ -227,7 +227,7 @@ options:[
 {t:"往回冲，去把船尾的灯重新点亮",effects:{flag:"origin_expand_south_relight"},go:"origin_expand_south_6"}
 ]};
 
-N["origin_expand_south_6"] = {tag:"main",pace:"normal",place:"南方深海·银穗号·风浪中",
+N["origin_expand_south_6"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"南方深海·银穗号·风浪中",
 text:[
 "绿光越来越亮。海水像活了一样，浪头裹着光，拍上甲板。",
 "你往船头跑。脚下的甲板在晃，一根缆绳横过来，你被绊了一下，膝盖重重磕在船板上，血味混进嘴里。",
@@ -243,7 +243,7 @@ options:[
 {t:"（失去意识）",effects:{flag:"origin_expand_south_blackout"},go:"origin_expand_south_7"}
 ]};
 
-N["origin_expand_south_7"] = {tag:"main",pace:"normal",place:"南方深海·银穗号·次日",
+N["origin_expand_south_7"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"南方深海·银穗号·次日",
 text:[
 "你醒过来时，天已经亮了。",
 "风浪过去了。甲板上到处是断绳、碎木，两个水手在清点损失。银穗号还在，歪歪斜斜地浮在海面上，像一个挨了打的醉汉。",
@@ -258,7 +258,7 @@ options:[
 {t:"看着越来越近的陆地",effects:{flag:"origin_expand_south_arrive"},go:"origin_expand_south_8"}
 ]};
 
-N["origin_expand_south_8"] = {tag:"main",pace:"light",place:"南方港城·交汇城·码头",
+N["origin_expand_south_8"] = {tags:["region:origin"],tag:"main",pace:"light",place:"南方港城·交汇城·码头",
 text:[
 "银穗号靠岸时，太阳正挂在头顶。",
 "交汇城的码头比南方港大得多。船帆密得像森林，扛货的、叫卖的、算账的，人声像潮水。",
@@ -276,7 +276,7 @@ options:[
 ]};
 
 /* ============ 教会·圣堂孤儿 ============ */
-N["origin_expand_church_1"] = {tag:"main",pace:"normal",place:"圣城·黎明圣堂·钟楼",
+N["origin_expand_church_1"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"圣城·黎明圣堂·钟楼",
 text:[
 "圣城的钟，每天敲三次。",
 "你是在钟声里长大的。七岁那年被送进黎明圣堂的孤儿院，到现在，整整十年。",
@@ -294,7 +294,7 @@ options:[
 {t:"故意弄出动静，打断他们",effects:{flag:"origin_expand_church_noise"},go:"origin_expand_church_2"}
 ]};
 
-N["origin_expand_church_2"] = {tag:"main",pace:"normal",place:"圣城·黎明圣堂·孤儿院",
+N["origin_expand_church_2"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"圣城·黎明圣堂·孤儿院",
 text:[
 "杜嬷嬷的脸，那天下午一直绷着。",
 "她把你们十个孩子叫到堂前，挨个检查。轮到最后一个孩子——瘦瘦小小的阿禾——她忽然顿住了。",
@@ -314,7 +314,7 @@ options:[
 {t:"看着阿禾被带走",effects:{flag:"origin_expand_church_letgo"},go:"origin_expand_church_3"}
 ]};
 
-N["origin_expand_church_3"] = {tag:"main",pace:"normal",place:"圣城·黎明圣堂·大主教书房",
+N["origin_expand_church_3"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"圣城·黎明圣堂·大主教书房",
 text:[
 "你被带到大主教的书房时，他正在看一卷羊皮纸。",
 "「坐。」他指了指对面的椅子。你坐下了，半个屁股悬在椅沿上。",
@@ -334,7 +334,7 @@ options:[
 {t:"咬死不说，护住阿禾",effects:{flag:"origin_expand_church_stubborn"},go:"origin_expand_church_4"}
 ]};
 
-N["origin_expand_church_4"] = {tag:"main",pace:"normal",place:"圣城·黎明圣堂·后院",
+N["origin_expand_church_4"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"圣城·黎明圣堂·后院",
 text:[
 "那晚，你被关在后院的柴房里。",
 "月光从窗缝漏进来，在地板上拉出一条白线。你靠着墙，数着心跳。",
@@ -353,7 +353,7 @@ options:[
 {t:"记住杜嬷嬷的话",effects:{flag:"origin_expand_church_memo"},go:"origin_expand_church_5"}
 ]};
 
-N["origin_expand_church_5"] = {tag:"main",pace:"normal",place:"圣城·黎明圣堂·圣痕司",
+N["origin_expand_church_5"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"圣城·黎明圣堂·圣痕司",
 text:[
 "阿禾走后第三天，你被叫进了圣痕司。",
 "圣痕司在教堂地下。台阶又窄又陡，墙上点着牛油蜡烛，火苗被穿堂风扯得歪歪扭扭。",
@@ -377,7 +377,7 @@ fail:["黑袍司祭的钳子一样的手，让你崩溃了。你哭着把一切�
 },effects:{flag:"origin_expand_church_break"},go:"origin_expand_church_6"}
 ]};
 
-N["origin_expand_church_6"] = {tag:"main",pace:"normal",place:"圣城·黎明圣堂·禁闭室",
+N["origin_expand_church_6"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"圣城·黎明圣堂·禁闭室",
 text:[
 "禁闭室只有一扇小窗，高得够不着。",
 "你数着窗外天光的明暗，数了三天。水是隔天送一次的，干饼硬得像石头，你泡着水掰着吃。",
@@ -396,7 +396,7 @@ options:[
 {t:"天亮前混出城",effects:{flag:"origin_expand_church_escape"},go:"origin_expand_church_7"}
 ]};
 
-N["origin_expand_church_7"] = {tag:"main",pace:"normal",place:"圣城·城南·送菜车队",
+N["origin_expand_church_7"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"圣城·城南·送菜车队",
 text:[
 "天没亮，你钻进一辆送菜车的草堆里。",
 "车身颠簸，白菜的叶子戳着你的脸。你一动不动，听着车轮碾过石板路的声音，一茬一茬地往后退。",
@@ -413,7 +413,7 @@ options:[
 {t:"转身向南，往交汇城走",effects:{flag:"origin_expand_church_road"},go:"origin_expand_church_8"}
 ]};
 
-N["origin_expand_church_8"] = {tag:"main",pace:"light",place:"南行官道·驿站",
+N["origin_expand_church_8"] = {tags:["region:origin"],tag:"main",pace:"light",place:"南行官道·驿站",
 text:[
 "南行的官道走了七天。",
 "你一路搭车、蹭饭，用杜嬷嬷给的铜星换了几个黑馒头。第七天黄昏，你在一座破驿站里过夜，遇见一个卖货郎。",
@@ -431,7 +431,7 @@ options:[
 ]};
 
 /* ============ 精灵·世界树 ============ */
-N["origin_expand_elf_1"] = {tag:"main",pace:"normal",place:"精灵林地·世界树根下",
+N["origin_expand_elf_1"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"精灵林地·世界树根下",
 text:[
 "世界树很大。大到你抬头，看不见树冠在哪。",
 "你是在树根下长大的。精灵的孩子，出生后会在世界树的根部住上十年——听树根里的水声，学树叶的呼吸。",
@@ -448,7 +448,7 @@ options:[
 {t:"问艾萨拉那是什么",effects:{flag:"origin_expand_elf_ask"},go:"origin_expand_elf_2"}
 ]};
 
-N["origin_expand_elf_2"] = {tag:"main",pace:"normal",place:"精灵林地·树屋",
+N["origin_expand_elf_2"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"精灵林地·树屋",
 text:[
 "树屋是木质的，挂在世界树粗壮的枝干上，离地十几丈。",
 "夜里，你躺在树屋的草垫上，听着风穿过树叶的声音。往常这声音会让你安心，今晚却总觉得哪里不对。",
@@ -470,7 +470,7 @@ options:[
 {t:"记下这个位置，回树屋",effects:{flag:"origin_expand_elf_mark"},go:"origin_expand_elf_3"}
 ]};
 
-N["origin_expand_elf_3"] = {tag:"main",pace:"normal",place:"精灵林地·世界树·晨曦",
+N["origin_expand_elf_3"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"精灵林地·世界树·晨曦",
 text:[
 "天亮时，艾萨拉发现了你手背上的黑痕。",
 "她握着你的手看了很久，脸上的表情一点一点变冷。她把你带到树根下，用一片银叶蘸了晨露，敷在黑痕上。",
@@ -490,7 +490,7 @@ options:[
 {t:"不再问，帮她照顾树根",effects:{flag:"origin_expand_elf_care"},go:"origin_expand_elf_4"}
 ]};
 
-N["origin_expand_elf_4"] = {tag:"branch",pace:"normal",place:"精灵林地·古语课",
+N["origin_expand_elf_4"] = {tags:["region:origin"],tag:"branch",pace:"normal",place:"精灵林地·古语课",
 text:[
 "那之后，艾萨拉教你古语教得更勤了。",
 "「古语不只是说话。」她说，「是让世界树认识你。树认识的人，树才会护着。」",
@@ -509,7 +509,7 @@ options:[
 {t:"默默练那段古语",effects:{flag:"origin_expand_elf_practice"},go:"origin_expand_elf_5"}
 ]};
 
-N["origin_expand_elf_5"] = {tag:"main",pace:"normal",place:"精灵林地·世界树·夜",
+N["origin_expand_elf_5"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"精灵林地·世界树·夜",
 text:[
 "那天夜里，世界树第一次在你面前，发出了声音。",
 "不是风吹树叶。是整棵树，从根到冠，发出一声悠长的、像叹息一样的震动。树屋的木板跟着颤，碗盏从架子上掉下来，碎了一地。",
@@ -527,7 +527,7 @@ options:[
 {t:"往前走一步，想看个清楚",effects:{flag:"origin_expand_elf_stepforward"},go:"origin_expand_elf_6"}
 ]};
 
-N["origin_expand_elf_6"] = {tag:"main",pace:"normal",place:"精灵林地·世界树·裂缝边",
+N["origin_expand_elf_6"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"精灵林地·世界树·裂缝边",
 text:[
 "你往前走了一步。",
 "裂缝里的黑汁忽然涌出来，像活了似的，顺着树根往上爬。艾萨拉一把把你拽回来，另一只手按在裂缝上，嘴里念了一句古语。",
@@ -544,7 +544,7 @@ options:[
 {t:"问清晨星之泪的线索",effects:{flag:"origin_expand_elf_tear"},go:"origin_expand_elf_7"}
 ]};
 
-N["origin_expand_elf_7"] = {tag:"main",pace:"normal",place:"精灵林地·送别",
+N["origin_expand_elf_7"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"精灵林地·送别",
 text:[
 "晨星之泪的线索，只有一句话：东边，太阳升起的地方。",
 "「东边太大了。」你说。",
@@ -559,7 +559,7 @@ options:[
 {t:"朝东走去（序章继续）",effects:{flag:"origin_expand_elf_go"},go:"origin_expand_elf_8"}
 ]};
 
-N["origin_expand_elf_8"] = {tag:"main",pace:"light",place:"东行林道·溪边",
+N["origin_expand_elf_8"] = {tags:["region:origin"],tag:"main",pace:"light",place:"东行林道·溪边",
 text:[
 "林地的边界，是一条溪。",
 "溪水很清，能看见水底的石头。你蹲在溪边，第一次认真看自己手背上的灰痕——它比出发时，淡了一点点。",
@@ -582,7 +582,7 @@ options:[
 ]};
 
 /* ============ 矮人·锻炉 ============ */
-N["origin_expand_dwarf_1"] = {tag:"main",pace:"normal",place:"矮人山城·永恒锻炉·风箱房",
+N["origin_expand_dwarf_1"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"矮人山城·永恒锻炉·风箱房",
 text:[
 "矮人的山城，建在火山口上。",
 "永恒锻炉是山城的中心，日夜不熄。你从记事起，就在锻炉边打下手：拉风箱、递铁坯、把冷却的锤子浸进盐水里。",
@@ -600,7 +600,7 @@ options:[
 {t:"问铁砧地底下怎么了",effects:{flag:"origin_expand_dwarf_ask"},go:"origin_expand_dwarf_2"}
 ]};
 
-N["origin_expand_dwarf_2"] = {tag:"main",pace:"normal",place:"矮人山城·南矿洞·洞口",
+N["origin_expand_dwarf_2"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"矮人山城·南矿洞·洞口",
 text:[
 "南矿洞在山城南边，洞口被一层灰白的雾气罩着。",
 "这雾不对劲。往常矿洞里的雾是水汽，白而轻；今天的雾，是灰色的，沉甸甸地贴着地面，像一层没洗干净的布。",
@@ -617,7 +617,7 @@ options:[
 {t:"退出矿洞，回去报告铁砧",effects:{flag:"origin_expand_dwarf_report"},go:"origin_expand_dwarf_3"}
 ]};
 
-N["origin_expand_dwarf_3"] = {tag:"main",pace:"normal",place:"矮人山城·锻炉·炉火边",
+N["origin_expand_dwarf_3"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"矮人山城·锻炉·炉火边",
 text:[
 "铁砧听完你的话，沉默了很长时间。",
 "他把那捧灰白色的粉末放在灯下看了又看，最后用手指捻了捻，放到鼻子底下闻了一下。",
@@ -634,7 +634,7 @@ options:[
 {t:"隐瞒：说只在洞口转了转",effects:{flag:"origin_expand_dwarf_lie"},go:"origin_expand_dwarf_4"}
 ]};
 
-N["origin_expand_dwarf_4"] = {tag:"main",pace:"normal",place:"矮人山城·锻炉·夜",
+N["origin_expand_dwarf_4"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"矮人山城·锻炉·夜",
 text:[
 "那晚，铁砧没有赶你走。他让你睡在锻炉边的草垫上，自己守着炉火，一夜没动。",
 "你半夜醒来一次。炉火的光里，铁砧坐在矮凳上，手里攥着一块铁片，翻来覆去地看。",
@@ -654,7 +654,7 @@ options:[
 {t:"走近那扇门，仔细看",effects:{flag:"origin_expand_dwarf_door"},go:"origin_expand_dwarf_5"}
 ]};
 
-N["origin_expand_dwarf_5"] = {tag:"main",pace:"normal",place:"矮人山城·南矿洞·铁门前",
+N["origin_expand_dwarf_5"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"矮人山城·南矿洞·铁门前",
 text:[
 "你走近那扇铁门。",
 "门上的符文你认得一些——是矮人的古符文，但排列的方式很陌生。符文的笔画之间，嵌着一层暗红色的东西，像是干涸了很久的血。",
@@ -672,7 +672,7 @@ options:[
 {t:"追问那声音是什么",effects:{flag:"origin_expand_dwarf_voice"},go:"origin_expand_dwarf_6"}
 ]};
 
-N["origin_expand_dwarf_6"] = {tag:"main",pace:"normal",place:"矮人山城·锻炉·淬火池",
+N["origin_expand_dwarf_6"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"矮人山城·锻炉·淬火池",
 text:[
 "从矿洞回来后的日子，铁砧教你打铁，教得更狠了。",
 "「手要稳。」他站在你身后，看着你抡锤，「铁认识你，你才算铁匠。你现在，只是拿锤子的。」",
@@ -690,7 +690,7 @@ options:[
 {t:"接过短柄锤",effects:{flag:"origin_expand_dwarf_hammer"},go:"origin_expand_dwarf_7"}
 ]};
 
-N["origin_expand_dwarf_7"] = {tag:"main",pace:"normal",place:"矮人山城·山门口",
+N["origin_expand_dwarf_7"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"矮人山城·山门口",
 text:[
 "出发那天，山城的雾散了一些。",
 "铁砧送你到山门口。他没有多说什么，只交代了几句路上的话：「出了山，往西，有一座人类的城，叫交汇城。那里有各族的人，也有各族的活法。你去看看。」",
@@ -708,7 +708,7 @@ options:[
 {t:"下山，往西走（序章继续）",effects:{flag:"origin_expand_dwarf_go"},go:"origin_expand_dwarf_8"}
 ]};
 
-N["origin_expand_dwarf_8"] = {tag:"main",pace:"light",place:"山麓·商道",
+N["origin_expand_dwarf_8"] = {tags:["region:origin"],tag:"main",pace:"light",place:"山麓·商道",
 text:[
 "下山的路，走了两天。",
 "第二天傍晚，你遇到一支从西边来的商队。车队在溪边扎营，一个矮胖的商人看见你背着的锤子，眼睛一亮：",
@@ -726,7 +726,7 @@ options:[
 ]};
 
 /* ============ 兽人·草原 ============ */
-N["origin_expand_orc_1"] = {tag:"main",pace:"normal",place:"兽人草原·迁徙营地",
+N["origin_expand_orc_1"] = {tags:["region:origin","main:orc"],tag:"main",pace:"normal",place:"兽人草原·迁徙营地",
 text:[
 "兽人的草原，天很低，草很高。",
 "你所在的部落叫裂牙部，正在向北迁徙。族长老裂牙说，南边的草场染了病，牛羊吃了草，就开始发疯，口吐白沫，三天就死。",
@@ -743,7 +743,7 @@ options:[
 {t:"先去营地边缘看看情况",effects:{flag:"origin_expand_orc_scan"},go:"origin_expand_orc_2"}
 ]};
 
-N["origin_expand_orc_2"] = {tag:"main",pace:"normal",place:"兽人草原·西帐外",
+N["origin_expand_orc_2"] = {tags:["region:origin","main:orc"],tag:"main",pace:"normal",place:"兽人草原·西帐外",
 text:[
 "夜风很凉，草叶沙沙地响。",
 "你握着弯刀，站在西边的帐篷群前。帐篷里，母亲正在哄妹妹睡觉，声音轻轻的：「睡吧，明天还要赶路。」",
@@ -765,7 +765,7 @@ fail:["你冲上去，被一刀砍在手臂上，血一下子涌出来。你踉�
 },effects:{flag:"origin_expand_orc_fight"},go:"origin_expand_orc_3"}
 ]};
 
-N["origin_expand_orc_3"] = {tag:"main",pace:"normal",place:"兽人草原·营地·火堆边",
+N["origin_expand_orc_3"] = {tags:["region:origin","main:orc"],tag:"main",pace:"normal",place:"兽人草原·营地·火堆边",
 text:[
 "老裂牙让人给你包扎了伤口。他蹲在火堆边，用刀尖拨着火炭，半天没说话。",
 "「猎奴队摸到营地边上，是第一次。」他开口，「以前，他们只在草原边缘转悠。这次摸到营地，说明他们换了路子。」",
@@ -782,7 +782,7 @@ options:[
 {t:"问要见谁",effects:{flag:"origin_expand_orc_who"},go:"origin_expand_orc_4"}
 ]};
 
-N["origin_expand_orc_4"] = {tag:"main",pace:"normal",place:"兽人草原·萨满帐",
+N["origin_expand_orc_4"] = {tags:["region:origin","main:orc"],tag:"main",pace:"normal",place:"兽人草原·萨满帐",
 text:[
 "萨满帐在营地的正中央，门口插着一排兽骨。",
 "老裂牙掀帘进去，你也跟了进去。帐内光线很暗，一个老萨满盘腿坐在兽皮上，面前摆着一盆灰。",
@@ -804,7 +804,7 @@ options:[
 {t:"答应老萨满走这一趟",effects:{flag:"origin_expand_orc_accept"},go:"origin_expand_orc_5"}
 ]};
 
-N["origin_expand_orc_5"] = {tag:"main",pace:"normal",place:"兽人草原·萨满帐·夜",
+N["origin_expand_orc_5"] = {tags:["region:origin","main:orc"],tag:"main",pace:"normal",place:"兽人草原·萨满帐·夜",
 text:[
 "「你身上有深渊的味道。」老萨满重复了一遍，拿起那盆灰，递到你面前，「闻。」",
 "你凑近灰盆。那灰没什么味道，只带着一点干涩的苦。",
@@ -823,7 +823,7 @@ options:[
 {t:"问封印的事",effects:{flag:"origin_expand_orc_seal"},go:"origin_expand_orc_6"}
 ]};
 
-N["origin_expand_orc_6"] = {tag:"main",pace:"normal",place:"兽人草原·迁徙营地·清晨",
+N["origin_expand_orc_6"] = {tags:["region:origin","main:orc"],tag:"main",pace:"normal",place:"兽人草原·迁徙营地·清晨",
 text:[
 "出发那天，草原起了雾。",
 "老裂牙在营地门口等你。他递给你一袋干肉、一把盐：「路上吃。草原上，盐比肉值钱。」",
@@ -840,7 +840,7 @@ options:[
 {t:"策马向南（序章继续）",effects:{flag:"origin_expand_orc_ride"},go:"origin_expand_orc_7"}
 ]};
 
-N["origin_expand_orc_7"] = {tag:"main",pace:"normal",place:"草原南缘·旧哨所",
+N["origin_expand_orc_7"] = {tags:["region:origin","main:orc"],tag:"main",pace:"normal",place:"草原南缘·旧哨所",
 text:[
 "南行了四天，你在草原南缘遇见一座废弃的哨所。",
 "哨所的墙塌了一半，门板歪在一边。你下马查看，在墙根底下发现一串脚印——不是兽的，是人的，皮靴的印记，很深。",
@@ -861,7 +861,7 @@ options:[
 {t:"先帮斥候包扎伤口",effects:{flag:"origin_expand_orc_bandage"},go:"origin_expand_orc_8"}
 ]};
 
-N["origin_expand_orc_8"] = {tag:"main",pace:"light",place:"草原南缘·旧哨所·夜",
+N["origin_expand_orc_8"] = {tags:["region:origin","main:orc"],tag:"main",pace:"light",place:"草原南缘·旧哨所·夜",
 text:[
 "你帮斥候简单包扎了伤口。他靠着墙，声音断断续续：",
 "「黑旗军……不像猎奴队。他们不抢人，不抢货。他们只在找一样东西。」",
@@ -882,7 +882,7 @@ options:[
 ]};
 
 /* ============ 东境·承天城 ============ */
-N["origin_expand_east_1"] = {tag:"main",pace:"normal",place:"东境·承天城·城南书坊",
+N["origin_expand_east_1"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"东境·承天城·城南书坊",
 text:[
 "承天城的晨钟，敲在卯时。",
 "你是城南书坊的学徒。书坊掌柜姓方，人瘦，爱眯着眼，说话总带着算盘的响动。",
@@ -903,7 +903,7 @@ options:[
 {t:"不问了，专心抄书",effects:{flag:"origin_expand_east_copy"},go:"origin_expand_east_2"}
 ]};
 
-N["origin_expand_east_2"] = {tag:"main",pace:"normal",place:"东境·承天城·书坊后院",
+N["origin_expand_east_2"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"东境·承天城·书坊后院",
 text:[
 "方掌柜没有告诉你原版在哪，但他看了你很久，最后说了一句：「你好奇心重。好奇心重的人，在承天城，活不长。」",
 "他让你去后院晒书。",
@@ -921,7 +921,7 @@ options:[
 {t:"问掌柜秦氏的事",effects:{flag:"origin_expand_east_qin"},go:"origin_expand_east_3"}
 ]};
 
-N["origin_expand_east_3"] = {tag:"main",pace:"normal",place:"东境·承天城·旧市街",
+N["origin_expand_east_3"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"东境·承天城·旧市街",
 text:[
 "方掌柜没有接秦氏的话头。他给你放了一天假，让你去旧市街买灯油。",
 "旧市街在承天城的西边，卖的大多是旧货：旧家具、旧衣裳、旧书旧画。你买了灯油，正要往回走，被一个摆摊的老头叫住了。",
@@ -939,7 +939,7 @@ options:[
 {t:"问老头秦长风住在哪",effects:{flag:"origin_expand_east_where"},go:"origin_expand_east_4"}
 ]};
 
-N["origin_expand_east_4"] = {tag:"main",pace:"normal",place:"东境·承天城·城南巷",
+N["origin_expand_east_4"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"东境·承天城·城南巷",
 text:[
 "老头没有告诉你秦长风的住址。他说：「承天城不大，姓秦的没几个。你打听多了，自然会找到。但小子，我劝你一句——有些事，知道名字就够了。找上门去，是给自己找麻烦。」",
 "你嘴上应着，心里却记下了这个名字。",
@@ -958,7 +958,7 @@ options:[
 {t:"记下巷子里的话",effects:{flag:"origin_expand_east_overhear"},go:"origin_expand_east_5"}
 ]};
 
-N["origin_expand_east_5"] = {tag:"main",pace:"normal",place:"东境·承天城·书坊·夜",
+N["origin_expand_east_5"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"东境·承天城·书坊·夜",
 text:[
 "夜里，你把听到的话告诉了方掌柜。",
 "方掌柜听完，半天没说话。他把算盘推到一边，从柜台底下摸出一壶酒，给自己倒了一碗，一口喝干。",
@@ -976,7 +976,7 @@ options:[
 {t:"压在心底，先去睡",effects:{flag:"origin_expand_east_hold"},go:"origin_expand_east_6"}
 ]};
 
-N["origin_expand_east_6"] = {tag:"main",pace:"normal",place:"东境·承天城·城东老井",
+N["origin_expand_east_6"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"东境·承天城·城东老井",
 text:[
 "第二天一早，你借口送书，绕到城东那口老井。",
 "井边围了几个打水的妇人。你凑过去看了一眼——井水确实浑了，泛着一层灰白，像掺了粉。",
@@ -998,7 +998,7 @@ options:[
 {t:"说我留下帮你",effects:{flag:"origin_expand_east_stay"},go:"origin_expand_east_7"}
 ]};
 
-N["origin_expand_east_7"] = {tag:"main",pace:"normal",place:"东境·承天城·书坊·晨",
+N["origin_expand_east_7"] = {tags:["region:origin"],tag:"main",pace:"normal",place:"东境·承天城·书坊·晨",
 text:[
 "方掌柜没有回答你该往哪走。他翻出一个小布包，塞进你手里：",
 "「里面是二十个铜星、一套换洗衣裳，还有一封我写给交汇城一个旧识的信。他姓李，在商会做事，你到了，找他，他能给你找个活计。」",
@@ -1015,7 +1015,7 @@ options:[
 {t:"背起包袱，出城（序章继续）",effects:{flag:"origin_expand_east_leave"},go:"origin_expand_east_8"}
 ]};
 
-N["origin_expand_east_8"] = {tag:"main",pace:"light",place:"东境·西行官道",
+N["origin_expand_east_8"] = {tags:["region:origin"],tag:"main",pace:"light",place:"东境·西行官道",
 text:[
 "出城那天，承天城的天灰蒙蒙的。",
 "你混在一支往西的商队里。商队掌柜听说你是书坊学徒，乐了：「识字好啊！帮我记账，免你饭钱。」",

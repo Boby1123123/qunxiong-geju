@@ -2747,7 +2747,7 @@ N["board_orc"] = function(){
   return {place:"兽人草原 · 边市",text:["草原边市上的活计，粗犷而直接。你扫了一眼。", "你与边市作别，踏上旅途。尘土扑上靴面，像旧识。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_orc_done"})).concat([{t:"离开",go:"orc_done"}])};
 };
 
-N["board_orc_done"] = {place:"边市",text:["活计办妥，赏金落袋。", "从边市出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_orc"},{t:"离开",go:"orc_done"}]};
+N["board_orc_done"] = {tags:["main:orc"],place:"边市",text:["活计办妥，赏金落袋。", "从边市出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_orc"},{t:"离开",go:"orc_done"}]};
 
 N["board_east"] = function(){
   const picks = shuffle(EAST_BOARD).slice(0,3);

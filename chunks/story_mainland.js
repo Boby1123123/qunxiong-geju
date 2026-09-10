@@ -3740,7 +3740,7 @@ options:[
 
   
 
-N["north_academy_gate"] = {tag:"branch",
+N["north_academy_gate"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 大门", where:"白昼",
   text:[
     "学院的大门是一道刻满符文的石拱门。守门的执事看了你的凭证，又看了看你的眼睛：",
@@ -3770,7 +3770,7 @@ N["north_academy_gate"] = {tag:"branch",
   ]
 };
 
-N["north_academy_inside"] = {tag:"branch",
+N["north_academy_inside"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 内院", where:"白昼",
   text:[
     "学院内院是一座巨大的环形广场，中央立着一座石像：法神黄林晶，负手而立，视线望向北方。",
@@ -3876,7 +3876,7 @@ N["north_mercury"] = {tag:"branch",
   ]
 };
 
-N["north_academy_night"] = {tag:"branch",
+N["north_academy_night"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 深夜", where:"夜",
   text:[
     "夜深了。学院的走廊空无一人，只有巡逻的符文灯在墙上一明一灭。",
@@ -3900,7 +3900,7 @@ N["north_academy_night"] = {tag:"branch",
   ]
 };
 
-N["north_academy_2"] = {tag:"branch",
+N["north_academy_2"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 晨", where:"次日清晨",
   text:[
     "第二天清晨，学院来了几位不速之客。",
@@ -4077,7 +4077,7 @@ N["beijing_after"] = {
   ]
 };
 
-N["south_silver_front"] = {tag:"branch",
+N["south_silver_front"] = {tags:["main:silver"],tag:"branch",
   place:"黄金城 · 银月商会门面", where:"白昼",
   text:[
     "银月商会的门面是黄金城里最气派的三层楼。门楣上的银色新月在阳光下熠熠生辉，进出的商人络绎不绝。",
@@ -4104,7 +4104,7 @@ N["south_silver_front"] = {tag:"branch",
   ]
 };
 
-N["south_silver_back"] = {tag:"branch",
+N["south_silver_back"] = {tags:["main:silver"],tag:"branch",
   place:"黄金城 · 城南码头", where:"夜",
   text:[
     "夜里，你按约定来到城南码头。第三根桩，果然停着一艘船，船头挂着白旗。",

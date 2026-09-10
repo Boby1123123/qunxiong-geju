@@ -10,7 +10,7 @@
  * ============================================================ */
 
 /* ---------- 阶段一：边境摩擦 ---------- */
-N["warphase_1"]={tag:"main",place:"北境 · 边境 · 雪线隘口",where:"白昼",pace:"normal",sceneTitle:"卷四 · 战起 · 边境摩擦",text:[
+N["warphase_1"]={tags:["faction:war"],tag:"main",place:"北境 · 边境 · 雪线隘口",where:"白昼",pace:"normal",sceneTitle:"卷四 · 战起 · 边境摩擦",text:[
 "入秋前，北境的边报一封比一封急。荒原上的部族开始结队南下，先是劫走一支运铁的商队，再是烧了铁门关外三座哨塔。",
 "铁门关的守将把求援信送到第三哨，军帖贴在城门上：凡有武艺、愿应征者，一日报到，二日发甲。",
 "你站在军帖前。雪线隘口的方向，烽火已经点起来了，烟柱子直直地往天上顶。城里人说话的声音都低了半截——要打仗了，谁都听得出来。"
@@ -21,7 +21,7 @@ N["warphase_1"]={tag:"main",place:"北境 · 边境 · 雪线隘口",where:"白�
 {t:"（投机：囤一批铁器和干粮，等行情）",effects:{gold:-30,flag:"war1_speculate"},run:function(){S.worldWar=1;},go:"warphase_2"}
 ]};
 
-N["warphase_2"]={tag:"main",place:"北境 · 第三哨 · 军务厅",where:"白昼",pace:"normal",text:{default:[
+N["warphase_2"]={tags:["faction:war"],tag:"main",place:"北境 · 第三哨 · 军务厅",where:"白昼",pace:"normal",text:{default:[
 "你在军务厅的册子上按了手印。管事的军需官头也不抬：“编入丙队，明日辰时校场点卯。”",
 "出了军务厅，城里的气氛已经变了：铁匠铺的炉火整夜不熄，商队绕道走，街上的孩子学着大人压低了嗓子说话。",
 "边境的摩擦没有平息，反而像雪线一样，一夜之间往前拱了一拱。你知道，这只是个开头。"
@@ -35,7 +35,7 @@ N["warphase_2"]={tag:"main",place:"北境 · 第三哨 · 军务厅",where:"白�
 ]};
 
 /* ---------- 阶段二：商路封锁 ---------- */
-N["warphase_3"]={tag:"main",place:"自由城邦 · 商会大堂",where:"白昼",pace:"normal",sceneTitle:"战起 · 商路封锁",text:[
+N["warphase_3"]={tags:["faction:war"],tag:"main",place:"自由城邦 · 商会大堂",where:"白昼",pace:"normal",sceneTitle:"战起 · 商路封锁",text:[
 "边境摩擦一个月后，南边的消息到了：银穗商路全线封锁。",
 "自由城邦的商会大堂里坐满了人。做粮的、做铁的、做药的，人人面前一碗茶，凉了也没人喝。李管事把账本拍在桌上：“西边的矿、北边的皮、东边的盐，全卡在路上了。再封三个月，城里一半铺子要关门。”",
 "你坐在角落里听着。战火离自由城还远，可钱袋子和灶台已经先闻到了味道——这就是战争的第一张脸，它不砍人，它先断粮。", "你最后回望一眼商会大堂，转身穿过街口，往下一程赶路。"],options:[
@@ -45,7 +45,7 @@ N["warphase_3"]={tag:"main",place:"自由城邦 · 商会大堂",where:"白昼",
 {t:"（低价收粮，赌封锁还会拖久些）",effects:{gold:-20,flag:"war2_speculate"},run:function(){S.worldWar=3;},go:"warphase_4"}
 ]};
 
-N["warphase_4"]={tag:"main",place:"自由城邦 · 交汇城 · 码头",where:"白昼",pace:"normal",text:{default:[
+N["warphase_4"]={tags:["faction:war"],tag:"main",place:"自由城邦 · 交汇城 · 码头",where:"白昼",pace:"normal",text:{default:[
 "商路封锁的日子，自由城的码头冷清了大半。船都停在港里，帆卷着，像一群缩着脖子的鸟。",
 "粮价一天一个样。有人开始往城外搬，也有人趁这时候把铺面盘了出去，说要去南边躲躲。",
 "你算着自己手里这点家当，够撑过这个冬天。可冬天之后呢？没有人说得准。"
@@ -59,7 +59,7 @@ N["warphase_4"]={tag:"main",place:"自由城邦 · 交汇城 · 码头",where:"�
 ]};
 
 /* ---------- 阶段三：局部冲突 ---------- */
-N["warphase_5"]={tag:"main",place:"北境 · 雪原 · 冻河滩",where:"夜",pace:"deep",sceneTitle:"战起 · 局部冲突",text:[
+N["warphase_5"]={tags:["faction:war"],tag:"main",place:"北境 · 雪原 · 冻河滩",where:"夜",pace:"deep",sceneTitle:"战起 · 局部冲突",text:[
 "封锁僵持到第二个月，第一仗在冻河滩打响了。",
 "那天夜里，一支荒原部族的骑队摸过了河，想劫第三哨城外粮仓。哨塔上的兵先看见了雪地里的黑影，铜钟敲了七下——七下是敌袭。",
 "你披甲赶到滩头时，两边已经绞在了一起。火把在风里乱晃，雪地被踩成烂泥，喊杀声、兵刃声、马蹄声搅成一锅粥。",
@@ -72,7 +72,7 @@ N["warphase_5"]={tag:"main",place:"北境 · 雪原 · 冻河滩",where:"夜",pa
 {t:"（打扫战场，把能用的甲和兵器都收了）",effects:{gold:15,flag:"war3_speculate"},run:function(){S.worldWar=5;},go:"warphase_6"}
 ]};
 
-N["warphase_6"]={tag:"main",place:"北境 · 第三哨 · 伤兵营",where:"白昼",pace:"normal",text:{default:[
+N["warphase_6"]={tags:["faction:war"],tag:"main",place:"北境 · 第三哨 · 伤兵营",where:"白昼",pace:"normal",text:{default:[
 "冻河滩一仗打完，第三哨的伤兵营住了小半城的人。医官的手一整天没干过，绷带用掉三大卷。",
 "城里的气氛彻底变了。军帖一封接一封，甲胄、箭矢、药品，全往北边送。",
 "你在伤兵营里帮着抬了两天担架，见惯了血，反倒不怕了。战争不是雪原上那一仗，是一天天、一夜夜磨出来的东西。"
@@ -86,7 +86,7 @@ N["warphase_6"]={tag:"main",place:"北境 · 第三哨 · 伤兵营",where:"白�
 ]};
 
 /* ---------- 阶段四：围城 ---------- */
-N["warphase_7"]={tag:"main",place:"北境 · 第三哨 · 城头",where:"夜",pace:"epic",sceneTitle:"战起 · 第三哨围城",text:[
+N["warphase_7"]={tags:["faction:war"],tag:"main",place:"北境 · 第三哨 · 城头",where:"夜",pace:"epic",sceneTitle:"战起 · 第三哨围城",text:[
 "入冬前，荒原诸部的大军围了第三哨。",
 "那是你见过的最大的阵仗：雪线尽头，帐篷连成一片灰白色的海，夜里点起火，像撒了一地的星子。城头的老兵们不说话了，只一门心思磨刀。",
 "围城的第七天，他们攻了一次。云梯架在城墙上，箭像蝗虫一样压过来。你守着西墙的垛口，一刀一个把冒头的砍回去，胳膊酸得抬不起来，也不敢停。",
@@ -98,7 +98,7 @@ N["warphase_7"]={tag:"main",place:"北境 · 第三哨 · 城头",where:"夜",pa
 {t:"（战后在城墙根下捡拾箭矢甲片）",effects:{gold:20,flag:"war4_speculate"},run:function(){S.worldWar=7;},go:"warphase_8"}
 ]};
 
-N["warphase_8"]={tag:"main",place:"北境 · 第三哨 · 城内",where:"白昼",pace:"deep",text:{default:[
+N["warphase_8"]={tags:["faction:war"],tag:"main",place:"北境 · 第三哨 · 城内",where:"白昼",pace:"deep",text:{default:[
 "围城在第十一天解了——不是被打退的，是部族自己退的。哨探回报：东边又起了一股势力，荒原诸部的后方被抄了。",
 "城头上没人欢呼。老兵们靠着垛口坐下，把刀插在雪里，喘着气。解围不是胜利，只是这场仗打了个盹。",
 "你站在城头，看着退去的帐篷海。这场战争，已经从边境摩擦，变成了真正的围城血战。接下来，没人知道会打成什么样。"
@@ -112,7 +112,7 @@ N["warphase_8"]={tag:"main",place:"北境 · 第三哨 · 城内",where:"白昼"
 ]};
 
 /* ---------- 阶段五：全面战争 ---------- */
-N["warphase_9"]={tag:"main",place:"大陆 · 各方战线",where:"白昼",pace:"deep",sceneTitle:"战起 · 全面战争",text:[
+N["warphase_9"]={tags:["faction:war"],tag:"main",place:"大陆 · 各方战线",where:"白昼",pace:"deep",sceneTitle:"战起 · 全面战争",text:[
 "围城之后，战火像雪崩一样漫开了。",
 "北境的仗还没打完，西境又传来元素风暴吞掉一支商队的消息；东境承天城下了征兵令，青壮年一批批往官署门口挤；南边沙漠诸部也动了，驼铃声中夹着兵器的响动。",
 "自由城邦的商会把最后一支驮队也撤了回来。李管事在堂上说了句实话：“这仗，不是北境一家的仗了。是整片大陆的仗。”",
@@ -124,7 +124,7 @@ N["warphase_9"]={tag:"main",place:"大陆 · 各方战线",where:"白昼",pace:"
 {t:"（在乱世里做买卖，谁赢都做生意）",effects:{gold:20,flag:"war5_speculate"},run:function(){S.worldWar=9;},go:"warphase_10"}
 ]};
 
-N["warphase_10"]={tag:"main",place:"大陆 · 迁徙路上",where:"夜",pace:"deep",text:{default:[
+N["warphase_10"]={tags:["faction:war"],tag:"main",place:"大陆 · 迁徙路上",where:"夜",pace:"deep",text:{default:[
 "全面战争的日子，路上全是人。",
 "拖家带口的、推着独轮车的、抱着孩子的，都往自认为安全的地方走。可走到哪儿，都有人跟你说：那边也打起来了。",
 "你走了一路，看了一路。乱世里的人，眼睛都是空的，像一盏盏没点着的灯。你忽然明白，战争最狠的地方不在战场，在它把所有人都卷进去，谁也不放过。"
@@ -138,7 +138,7 @@ N["warphase_10"]={tag:"main",place:"大陆 · 迁徙路上",where:"夜",pace:"de
 ]};
 
 /* ---------- 阶段六：拉锯 ---------- */
-N["warphase_11"]={tag:"main",place:"北境 · 雪原 · 对峙线",where:"夜",pace:"normal",sceneTitle:"战起 · 拉锯",text:[
+N["warphase_11"]={tags:["faction:war"],tag:"main",place:"北境 · 雪原 · 对峙线",where:"夜",pace:"normal",sceneTitle:"战起 · 拉锯",text:[
 "全面战争打了半年，打成了拉锯。",
 "双方隔着一条冻河对峙，谁也吃不掉谁。战报上写着“无大事”，可每天夜里都有哨兵失踪、有粮车被劫、有偷袭得手又被打回去。",
 "你蹲在战壕里，听着冰面下水流的声音。仗打到这个份上，已经没有人记得当初是为了什么打起来的了。",
@@ -150,7 +150,7 @@ N["warphase_11"]={tag:"main",place:"北境 · 雪原 · 对峙线",where:"夜",p
 {t:"（收拢溃兵散卒，组一支自己的队）",effects:{xp:15,flag:"war6_speculate"},run:function(){S.worldWar=11;},go:"warphase_12"}
 ]};
 
-N["warphase_12"]={tag:"main",place:"北境 · 雪原 · 对峙线",where:"白昼",pace:"normal",text:{default:[
+N["warphase_12"]={tags:["faction:war"],tag:"main",place:"北境 · 雪原 · 对峙线",where:"白昼",pace:"normal",text:{default:[
 "拉锯的日子过得又快又慢。快的是日子，慢的是人心。",
 "对峙线上最不缺的就是时间。可每个人心里都憋着一股劲，像拉满的弓弦，绷得久了，手指头都在抖。",
 "你知道，这样的平衡撑不了多久。要么有一方先垮，要么有一方先拼命——终战，就在前面等着。"
@@ -164,7 +164,7 @@ N["warphase_12"]={tag:"main",place:"北境 · 雪原 · 对峙线",where:"白昼
 ]};
 
 /* ---------- 阶段七：终战 ---------- */
-N["warphase_13"]={tag:"main",place:"北境 · 雪原 · 决战之地",where:"白昼",pace:"epic",sceneTitle:"卷四 · 终战",text:[
+N["warphase_13"]={tags:["faction:war"],tag:"main",place:"北境 · 雪原 · 决战之地",where:"白昼",pace:"epic",sceneTitle:"卷四 · 终战",text:[
 "终战来得比所有人预想的都早。",
 "开春的头一场雪还没化，荒原诸部的主力倾巢南下，铁门关的援军也到了。两军在雪原上摆开阵势，东西绵延十几里，一眼望不到头。",
 "号角声在雪原上回荡。你握着手里的兵器，能听见自己心跳的声音。身边的兵没人说话，都绷着脸，攥着家伙。",
@@ -178,7 +178,7 @@ N["warphase_13"]={tag:"main",place:"北境 · 雪原 · 决战之地",where:"白
 {t:"（绕到阵后，断他们的退路）",effects:{xp:26,hp:-12,flag:"war7_speculate"},run:function(){S.worldWar=13;},go:"warphase_14"}
 ]};
 
-N["warphase_14"]={tag:"main",place:"北境 · 雪原 · 战后",where:"夜",pace:"deep",sceneTitle:"卷四 · 终战之后",text:{default:[
+N["warphase_14"]={tags:["faction:war"],tag:"main",place:"北境 · 雪原 · 战后",where:"夜",pace:"deep",sceneTitle:"卷四 · 终战之后",text:{default:[
 "终战打了三天三夜。",
 "第三天傍晚，荒原诸部的老萨满在阵前立起一根骨杖，宣布退兵。铁门关的守将没有追——追不动了，两边都打空了。",
 "雪原上，火堆一簇一簇地亮起来，是活下来的人在找自己人。你坐在一截断木上，浑身的伤都在疼，可心口那口气，总算松了下来。",

@@ -592,7 +592,7 @@ N["arrive_north_haigang"] = {tag:"main",
   ]
 };
 /* 艾尔达城 · 学院线 */
-N["north_academy_gate"] = {tag:"branch",
+N["north_academy_gate"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 大门", where:"白昼",
   text:[
     "学院的大门是一道刻满符文的石拱门。守门的执事看了你的凭证，又看了看你的眼睛：",
@@ -621,7 +621,7 @@ N["north_academy_gate"] = {tag:"branch",
     },effects:{},onCrit:{flag:"academy_secret_pass"},go:"north_academy_inside"}
   ]
 };
-N["north_academy_inside"] = {tag:"branch",
+N["north_academy_inside"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 内院", where:"白昼",
   text:[
     "学院内院是一座巨大的环形广场，中央立着一座石像：法神黄林晶，负手而立，视线望向北方。",
@@ -723,7 +723,7 @@ N["north_mercury"] = {tag:"branch",
     },effects:{},onCrit:{flag:"mercury_warn"},go:"north_academy_night"}
   ]
 };
-N["north_academy_night"] = {tag:"branch",
+N["north_academy_night"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 深夜", where:"夜",
   text:[
     "夜深了。学院的走廊空无一人，只有巡逻的符文灯在墙上一明一灭。",
@@ -746,7 +746,7 @@ N["north_academy_night"] = {tag:"branch",
     },effects:{},onCrit:{flag:"north_whistle"},go:"north_academy_2"}
   ]
 };
-N["north_academy_2"] = {tag:"branch",
+N["north_academy_2"] = {tags:["main:academy"],tag:"branch",
   place:"艾尔达魔法学院 · 晨", where:"次日清晨",
   text:[
     "第二天清晨，学院来了几位不速之客。",
@@ -1200,7 +1200,7 @@ N["arrive_south_gangkou"] = {tag:"main",
   ]
 };
 /* 黄金城 · 银月商会线 */
-N["south_silver_front"] = {tag:"branch",
+N["south_silver_front"] = {tags:["main:silver"],tag:"branch",
   place:"黄金城 · 银月商会门面", where:"白昼",
   text:[
     "银月商会的门面是黄金城里最气派的三层楼。门楣上的银色新月在阳光下熠熠生辉，进出的商人络绎不绝。",
@@ -1226,7 +1226,7 @@ N["south_silver_front"] = {tag:"branch",
     },effects:{},onCrit:{flag:"silver_thirteen"},onCritFail:{flag:"silver_suspicious"},go:"south_silver_back"}
   ]
 };
-N["south_silver_back"] = {tag:"branch",
+N["south_silver_back"] = {tags:["main:silver"],tag:"branch",
   place:"黄金城 · 城南码头", where:"夜",
   text:[
     "夜里，你按约定来到城南码头。第三根桩，果然停着一艘船，船头挂着白旗。",
@@ -1832,7 +1832,7 @@ N["arrive_orc_heishi"] = function(){
     ]
   };
 };
-N["orc_camp"] = {
+N["orc_camp"] = {tags:["main:orc"],
   place:"兽人草原 · 黑石营地", where:"白昼",
   text:[
     "黑石营地里，烤肉与马粪的气味混在一起。兽人们好奇地打量你这个人类，有的咧嘴笑，有的不怀好意。",
@@ -1856,7 +1856,7 @@ N["orc_camp"] = {
     {t:"去营地的集市逛逛，听兽人们唠闲话",go:"orc_deep_market"}
   ]
 };
-N["orc_sacred"] = {
+N["orc_sacred"] = {tags:["main:orc"],
   place:"兽人草原 · 兽人圣山 · 祖灵洞", where:"白昼",
   text:[
     "兽人圣山是一座孤零零的黑色山峰，矗立在草原深处。山腰的祖灵洞，是兽人萨满的圣地，也是大萨满的居所。",
@@ -1879,7 +1879,7 @@ N["orc_sacred"] = {
     },effects:{xp:20},onCrit:{flag:"seven_nails"},go:"orc_after"}
   ]
 };
-N["orc_after"] = {
+N["orc_after"] = {tags:["main:orc"],
   place:"兽人草原 · 祖灵洞外", text:[
     "你走出祖灵洞时，夕阳正把草原染成一片血红。",
     "大萨满在洞内喊住你，声音苍老而清晰：",
@@ -1889,7 +1889,7 @@ N["orc_after"] = {
     {t:"谢过大萨满，离开草原",effects:{rep:8,infl:{orc:10}},tier:{ok:["你策马（或步行）离开草原。身后，黑石营地的战鼓声隐隐传来，像某种不可逆的节拍。","你想起大萨满的话。草原的刀，已经出鞘了一半。"]},go:"orc_done"}
   ]
 };
-N["orc_done"] = {
+N["orc_done"] = {tags:["main:orc"],
   place:"兽人草原 · 边界", text:["你站在草原与北境的交界处，回望那片苍茫的绿。","风里传来战鼓与马嘶。草原正在为一个决定积蓄力量——而那个决定，也许不在兽人自己手里。","你摸了摸怀里的铁牌。下一站，你已有了方向。", "离开边界时天光正好，靴子踏上路面的声音很稳。一路向前。"],pace:"light",
   options:[
     {t:"打开地图，规划下一站",run:function(){ togglePanel("map"); }},
@@ -1905,7 +1905,7 @@ N["board_orc"] = function(){
   const picks = shuffle(ORC_BOARD).slice(0,2);
   return {place:"兽人草原 · 边市",text:["草原边市上的活计，粗犷而直接。你扫了一眼。", "你与边市作别，踏上旅途。尘土扑上靴面，像旧识。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_orc_done"})).concat([{t:"离开",go:"orc_done"}])};
 };
-N["board_orc_done"] = {place:"边市",text:["活计办妥，赏金落袋。", "从边市出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_orc"},{t:"离开",go:"orc_done"}]};
+N["board_orc_done"] = {tags:["main:orc"],place:"边市",text:["活计办妥，赏金落袋。", "从边市出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_orc"},{t:"离开",go:"orc_done"}]};
 /* ================================================================
    东部王国
    ================================================================ */
@@ -2688,7 +2688,7 @@ N["arrive_free_huigang"] = {tag:"main",
   ]
 };
 /* 精灵/兽人/沙漠的次级城市到达（简短叙事兜底） */
-N["arrive_orc_shengshan"] = {tag:"main",
+N["arrive_orc_shengshan"] = {tags:["main:orc"],tag:"main",
   place:"兽人草原 · 兽人圣山",where:"白昼",
   text:[
     "圣山孤零零地矗立在草原深处。山腰的祖灵洞，燃着长明火。",
@@ -4934,7 +4934,7 @@ N["aurelian_observe"]={
     {t:"“七印的事。”", go:"aurelian_seals"}
   ]
 };
-N["aurelian_seal_himself"]={
+N["aurelian_seal_himself"]={tags:["main:seal"],
   place:"地下图书馆最深层", where:"",
   text:[
     "奥雷利安的手顿了一下。茶杯里的水，晃了晃。",

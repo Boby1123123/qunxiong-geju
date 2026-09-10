@@ -45,7 +45,7 @@ N["west_market"] = {
     {t:"不逗留，直接去游侠学院",go:"west_academy_gate"}
   ]
 };
-N["west_academy_gate"] = {
+N["west_academy_gate"] = {tags:["main:academy"],
   tag:"branch",
   place:"西境 · 游侠学院 · 山门", where:"白昼", pace:"normal",
   text:[
@@ -59,7 +59,7 @@ N["west_academy_gate"] = {
     {t:"去档案室看看风暴记录",go:"west_academy_archive"}
   ]
 };
-N["west_academy_hall"] = {
+N["west_academy_hall"] = {tags:["main:academy"],
   tag:"branch",
   place:"西境 · 游侠学院 · 演武场", where:"白昼", pace:"normal",
   text:[
@@ -78,7 +78,7 @@ N["west_academy_hall"] = {
     },effects:{xp:15,infl:{west:5}},go:"west_academy_archive"}
   ]
 };
-N["west_academy_archive"] = {
+N["west_academy_archive"] = {tags:["main:academy"],
   tag:"branch",
   place:"西境 · 游侠学院 · 档案室", where:"白昼", pace:"deep",
   text:[

@@ -58,7 +58,7 @@ N["east_lang_6"]={tag:"branch",place:"东境 · 承天城 · 贡院墙外",where
 ]};
 
 /* ================= 支线二：兽人阿岩 ================= */
-N["orc_ayan_1"]={tag:"branch",place:"兽人草原 · 河湾",where:"白昼",pace:"normal",sceneTitle:"支线 · 阿岩的刀",text:[
+N["orc_ayan_1"]={tags:["main:orc"],tag:"branch",place:"兽人草原 · 河湾",where:"白昼",pace:"normal",sceneTitle:"支线 · 阿岩的刀",text:[
 "阿岩最近总一个人坐在河湾边磨刀。",
 "那把刀是他父亲留下的，刀柄缠着旧皮绳，磨得发亮。你走过去，他头也不抬：“战狼，你说，刀磨快了，是拿来杀人的，还是拿来吓人的？”",
 "他顿了顿，自问自答：“我爹说，刀是吓人的。可北边的人，不信刀是吓人的。”",
@@ -68,7 +68,7 @@ N["orc_ayan_1"]={tag:"branch",place:"兽人草原 · 河湾",where:"白昼",pace
 {t:"（“刀是吓人的，可磨刀的人得先不怕死。”）",effects:{xp:14,flag:"orc_ayan_words"},go:"orc_ayan_2"}
 ]};
 
-N["orc_ayan_2"]={tag:"branch",place:"兽人草原 · 河湾",where:"夜",pace:"deep",text:[
+N["orc_ayan_2"]={tags:["main:orc"],tag:"branch",place:"兽人草原 · 河湾",where:"夜",pace:"deep",text:[
 "夜里，阿岩在河湾边点了一堆火，把那把刀架在火上烤。",
 "他忽然开口：“我爹，死在铁门关。”他盯着火苗，“三十年前，晨天城那会儿，他还是个毛头小子。他跟着老萨满去过北边，回来就变了一个人，天天磨这把刀。”",
 "他抬起头：“他死前跟我说，刀磨快了，不是为了杀人——是为了有一天，能有人拿它，把门打开。”",
@@ -76,7 +76,7 @@ N["orc_ayan_2"]={tag:"branch",place:"兽人草原 · 河湾",where:"夜",pace:"d
 {t:"（“你爹等的门，我见过几扇。”）",effects:{xp:24,flag:"orc_ayan_gate"},go:"orc_ayan_3"}
 ]};
 
-N["orc_ayan_3"]={tag:"branch",place:"兽人草原 · 诸部大帐",where:"夜",pace:"deep",text:[
+N["orc_ayan_3"]={tags:["main:orc"],tag:"branch",place:"兽人草原 · 诸部大帐",where:"夜",pace:"deep",text:[
 "阿岩听你讲完那些门的事，沉默了很久。",
 "他忽然拔出那把刀，在火堆旁的空地上，用刀尖划了一幅图：“战狼，你说，草原地下，会不会也压着一扇门？”",
 "你想起老萨满的兽骨、神谕之地的石林。阿岩在图上划了个圈：“诸部的祖坟底下，有一片谁都不让进的禁地。老萨满说过，那底下埋着老祖宗的骨头——也埋着别的东西。”",
@@ -85,7 +85,7 @@ N["orc_ayan_3"]={tag:"branch",place:"兽人草原 · 诸部大帐",where:"夜",p
 {t:"（劝他先别去，等战争打完）",effects:{xp:14,flag:"orc_ayan_wait2"},go:"orc_ayan_4"}
 ]};
 
-N["orc_ayan_4"]={tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",pace:"deep",sceneTitle:"支线 · 禁地之门",text:[
+N["orc_ayan_4"]={tags:["main:orc"],tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",pace:"deep",sceneTitle:"支线 · 禁地之门",text:[
 "祖坟禁地是一片黑石荒原，寸草不生。",
 "阿岩举着火把走在前面，一直走到荒原中央。那里立着一块半人高的黑石碑，碑上没有字，只刻着一道粗粝的锚痕——与你在矮人矿洞、沙漠遗迹见过的，是同一笔刻法。",
 "阿岩跪下去，把额头贴在碑上，压着嗓子用草原话念了一段什么。他站起来，说：“老祖宗说，这碑底下，压着草原的一根根。谁动了它，草原就塌。”",
@@ -95,7 +95,7 @@ N["orc_ayan_4"]={tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",p
 {t:"（帮他挖：先看看底下是什么）",effects:{xp:28,infl:{orc:6},flag:"orc_ayan_dig"},go:"orc_ayan_5"}
 ]};
 
-N["orc_ayan_5"]={tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",pace:"deep",text:[
+N["orc_ayan_5"]={tags:["main:orc"],tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",pace:"deep",text:[
 "那一夜，你们挖到碑下一丈深，挖到一块铁板。",
 "铁板锈得发黑，边缘却有一条清晰的亮边——像是最近才被什么磨过。阿岩把刀插进铁板边缘，撬了一下，铁板纹丝不动。",
 "他喘着粗气，盯着那条亮边，忽然笑了：“有人来过了。比我们早。”他抽出刀，在铁板上敲了敲，闷响在荒原上荡开，“战狼，你说，是谁？”",
@@ -103,7 +103,7 @@ N["orc_ayan_5"]={tag:"branch",place:"兽人草原 · 祖坟禁地",where:"夜",p
 {t:"（“回去问问老萨满留下的东西。”）",effects:{xp:24,infl:{orc:8},flag:"orc_ayan_clue"},go:"orc_ayan_6"}
 ]};
 
-N["orc_ayan_6"]={tag:"branch",place:"兽人草原 · 河湾",where:"白昼",pace:"normal",sceneTitle:"支线 · 刀与门",text:[
+N["orc_ayan_6"]={tags:["main:orc"],tag:"branch",place:"兽人草原 · 河湾",where:"白昼",pace:"normal",sceneTitle:"支线 · 刀与门",text:[
 "阿岩没有再挖。他把铁板重新盖上土，压平，谁也看不出来。",
 "回河湾的路上，他一路没说话。快到大帐时，他忽然开口：“战狼，我爹说刀是拿来开门的。我现在信了——可开哪扇门，得想清楚。”",
 "他把那把刀递给你：“刀先放你那儿。等你想清楚哪扇门该开，再还我。”",

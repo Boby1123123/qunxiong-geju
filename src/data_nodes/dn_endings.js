@@ -3,7 +3,7 @@
 // ending_anchor_war 战争终局·锚碎 / ending_anchor_goldscale 金秤传承·平民结局
 // 全部 tag:"ending"；结尾含终章收束语
 
-N["ending_anchor_seal_1"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"deep",text:[
+N["ending_anchor_seal_1"]={tags:["ending:anchor","main:seal"],tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"deep",text:[
 "你在钟楼下住了下来。",
 "老卒把钟楼的钥匙给了你，自己搬到城东的矮屋里，说是腿脚不好，爬不动楼了。你心里清楚，他是怕你一个人守着，连个说话的人都没有。",
 "头一个月，你每天夜里都去钟座下看那杆秤。秤悬在雪地上空，不偏不倚，七枚锚印嵌在石槽里，纹丝不动。",
@@ -17,7 +17,7 @@ N["ending_anchor_seal_1"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",wh
 {t:"（守到天亮——终局）",effects:{xp:150},go:"ending_anchor_seal_2"}
 ]};
 
-N["ending_anchor_seal_2"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"白昼",pace:"deep",text:[
+N["ending_anchor_seal_2"]={tags:["ending:anchor","main:seal"],tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"白昼",pace:"deep",text:[
 "守秤的日子过得慢，慢得像钟座下的雪，一层压一层。",
 "春天来的时候，有人从南边来。不是商队，是学院的马车——车帘掀开，露出费尔曼那张常年板着的脸。他坐在车里看了钟楼很久，最后递给你一箱书，什么也没说，走了。",
 "箱子里是历代的封印记录、地脉图谱，还有一册手抄的《秤谱》，扉页上写着一行字：",
@@ -32,7 +32,7 @@ N["ending_anchor_seal_2"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",wh
 {t:"（一世守秤——终局成）",effects:{xp:150},go:"ending_anchor_seal_3"}
 ]};
 
-N["ending_anchor_seal_3"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"白昼",pace:"deep",text:[
+N["ending_anchor_seal_3"]={tags:["ending:anchor","main:seal"],tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"白昼",pace:"deep",text:[
 "二十年后，第三哨的钟楼还是老样子。",
 "楼下的钟换了两次钟锤，墙上的裂缝补了三回，那杆秤却还是悬在原处，不锈，不歪，不落尘。",
 "你老了。手背上有了老年斑，上楼的脚步慢了一拍。可每天三更，钟还是准时响一声——那是你自己敲的。",
@@ -52,7 +52,7 @@ N["ending_anchor_seal_3"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",wh
 {t:"（合上这一卷）",effects:{xp:200},go:"ending_anchor_seal_4"}
 ]};
 
-N["ending_anchor_seal_4"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"任意",pace:"normal",text:[
+N["ending_anchor_seal_4"]={tags:["ending:anchor","main:seal"],tag:"ending",place:"北境 · 第三哨 · 钟楼",where:"任意",pace:"normal",text:[
 "编年史补录：",
 "艾尔达大陆历 4037 年起，北境第三哨钟楼夜夜有声。往来旅人谓之『更钟』，无人知其来历。",
 "唯钟座之下，雪夜可见一杆悬秤，不锈不落。",
@@ -64,7 +64,7 @@ N["ending_anchor_seal_4"]={tag:"ending",place:"北境 · 第三哨 · 钟楼",wh
 {t:"（回到大陆）",go:"ending_anchor_seal_4"}
 ]};
 
-N["ending_anchor_open_1"]={tag:"ending",place:"北境 · 封印之地",where:"黑夜",pace:"epic",text:[
+N["ending_anchor_open_1"]={tags:["ending:anchor"],tag:"ending",place:"北境 · 封印之地",where:"黑夜",pace:"epic",text:[
 "灰白的光没有散。",
 "它沿着地裂的方向，一路往南，像一条河，淌过北境的山，淌过自由城的街，淌过草原，淌到海边才停。光过处，旧秩序像一层冰，一寸一寸裂开。",
 "你跟着光走。断成两截的秤你背在身上，七枚锚印你收进怀里——只剩六枚，最后一枚留在了门缝里。",
@@ -80,7 +80,7 @@ N["ending_anchor_open_1"]={tag:"ending",place:"北境 · 封印之地",where:"�
 {t:"（推开黑铁之门——终局）",effects:{xp:150},go:"ending_anchor_open_2"}
 ]};
 
-N["ending_anchor_open_2"]={tag:"ending",place:"大陆 · 混沌纪元",where:"任意",pace:"epic",text:[
+N["ending_anchor_open_2"]={tags:["ending:anchor"],tag:"ending",place:"大陆 · 混沌纪元",where:"任意",pace:"epic",text:[
 "门后的世界，没有怪物。",
 "门后的世界，有一片海。",
 "海不是蓝色的。海是灰白色的，和那道光一个颜色，像一整块流动的旧镜面。海面上浮着无数光点，每一个光点里，都有一座城的倒影——北境的雪城、东境的故都、草原的营帐，全都在海面上漂着。",
@@ -95,7 +95,7 @@ N["ending_anchor_open_2"]={tag:"ending",place:"大陆 · 混沌纪元",where:"�
 {t:"（在海岸立下第一块界碑——终局成）",effects:{xp:150},go:"ending_anchor_open_3"}
 ]};
 
-N["ending_anchor_open_3"]={tag:"ending",place:"大陆 · 混沌纪元",where:"任意",pace:"deep",text:[
+N["ending_anchor_open_3"]={tags:["ending:anchor"],tag:"ending",place:"大陆 · 混沌纪元",where:"任意",pace:"deep",text:[
 "你在海岸上立了碑。碑上没刻字，只嵌了一枚锚印。",
 "后来有人来问。你告诉他们：海是秤的另一头，门后没有怪物，只有一面镜子。信的人不多，可每年都有人来，在碑前坐一会儿。",
 "又过了几年，海边有了第一个村子。村里人打渔，晒盐，夜里听海。他们管那片灰白色的海叫『秤海』，管你立碑的地方叫『锚台』。",
@@ -111,7 +111,7 @@ N["ending_anchor_open_3"]={tag:"ending",place:"大陆 · 混沌纪元",where:"�
 {t:"（合上这一卷）",effects:{xp:200},go:"ending_anchor_open_4"}
 ]};
 
-N["ending_anchor_open_4"]={tag:"ending",place:"大陆 · 混沌纪元",where:"任意",pace:"normal",text:[
+N["ending_anchor_open_4"]={tags:["ending:anchor"],tag:"ending",place:"大陆 · 混沌纪元",where:"任意",pace:"normal",text:[
 "编年史补录：",
 "艾尔达大陆历 4037 年冬，北境封印之门洞开。灰白光河横贯大陆，直抵南方之海。",
 "后世谓之『称海』。",
@@ -124,7 +124,7 @@ N["ending_anchor_open_4"]={tag:"ending",place:"大陆 · 混沌纪元",where:"�
 {t:"（回到大陆）",go:"ending_anchor_open_4"}
 ]};
 
-N["ending_anchor_transcend_1"]={tag:"ending",place:"北境 · 封印之地",where:"白昼",pace:"epic",text:[
+N["ending_anchor_transcend_1"]={tags:["ending:anchor"],tag:"ending",place:"北境 · 封印之地",where:"白昼",pace:"epic",text:[
 "你与秤合一的那一瞬，天地静了。",
 "不是声音消失了，是声音都变得有了分量。风声是轻的，雪声是重的；远处的钟声落在秤盘上，像一枚铜钱落进碗里。",
 "你低头看自己——没有身体，只有一杆秤，悬在大陆的正中。秤杆是脊梁，秤盘是胸怀，秤星是心。",
@@ -138,7 +138,7 @@ N["ending_anchor_transcend_1"]={tag:"ending",place:"北境 · 封印之地",wher
 {t:"（镇于门前——终局）",effects:{xp:150},go:"ending_anchor_transcend_2"}
 ]};
 
-N["ending_anchor_transcend_2"]={tag:"ending",place:"北境 · 封印之门",where:"任意",pace:"deep",text:[
+N["ending_anchor_transcend_2"]={tags:["ending:anchor"],tag:"ending",place:"北境 · 封印之门",where:"任意",pace:"deep",text:[
 "你悬在那扇门前，称了很久。",
 "久到雪原上的雪化了又冻，冻了又化。久到第三哨换了三茬守军，钟楼的钟换了两次。久到有人开始传说，北境有一杆会飞的秤。",
 "你称出门的重量：三百年前的封印是一半，三百年后的风霜是一半。你称出大陆的脉搏：战争来时重，和平来时轻。",
@@ -153,7 +153,7 @@ N["ending_anchor_transcend_2"]={tag:"ending",place:"北境 · 封印之门",wher
 {t:"（称到天地尽头——终局成）",effects:{xp:150},go:"ending_anchor_transcend_3"}
 ]};
 
-N["ending_anchor_transcend_3"]={tag:"ending",place:"北境 · 封印之门",where:"任意",pace:"normal",text:[
+N["ending_anchor_transcend_3"]={tags:["ending:anchor"],tag:"ending",place:"北境 · 封印之门",where:"任意",pace:"normal",text:[
 "编年史补录：",
 "艾尔达大陆历 4037 年后，北境封印之地夜夜有光。光呈秤形，悬于雪原上空，经年不落。",
 "兽人称之为『天秤』，东境称之为『镇界之衡』，教会称之『神之秤盘』。",
@@ -167,7 +167,7 @@ N["ending_anchor_transcend_3"]={tag:"ending",place:"北境 · 封印之门",wher
 {t:"（回到大陆）",go:"ending_anchor_transcend_3"}
 ]};
 
-N["ending_anchor_war_1"]={tag:"ending",place:"北境 · 第三哨 · 城头",where:"白昼",pace:"epic",text:[
+N["ending_anchor_war_1"]={tags:["ending:anchor"],tag:"ending",place:"北境 · 第三哨 · 城头",where:"白昼",pace:"epic",text:[
 "你把秤交给守城将军时，将军没接。",
 "他盯着那杆秤看了很久，说：“这是你的命，不是我的。”然后他把腰间的剑解下来，递给你：“这是我的命，给你。”",
 "你接过剑。剑很沉，和秤一样沉。",
@@ -181,7 +181,7 @@ N["ending_anchor_war_1"]={tag:"ending",place:"北境 · 第三哨 · 城头",whe
 {t:"（守住第三哨——终局）",effects:{xp:150},go:"ending_anchor_war_2"}
 ]};
 
-N["ending_anchor_war_2"]={tag:"ending",place:"北境 · 第三哨",where:"白昼",pace:"deep",text:[
+N["ending_anchor_war_2"]={tags:["ending:anchor"],tag:"ending",place:"北境 · 第三哨",where:"白昼",pace:"deep",text:[
 "第三哨守住了。",
 "可大陆的仗，没有停。",
 "铁门关失守又夺回，自由城打了两场，东境的官道断了三个月。你带着第三哨的残兵，一路往南，打一路，收一路。",
@@ -198,7 +198,7 @@ N["ending_anchor_war_2"]={tag:"ending",place:"北境 · 第三哨",where:"白昼
 {t:"（把秤立在阵前——终局成）",effects:{xp:150},go:"ending_anchor_war_3"}
 ]};
 
-N["ending_anchor_war_3"]={tag:"ending",place:"大陆 · 战后的春天",where:"白昼",pace:"deep",text:[
+N["ending_anchor_war_3"]={tags:["ending:anchor"],tag:"ending",place:"大陆 · 战后的春天",where:"白昼",pace:"deep",text:[
 "战争结束后的第一个春天，你把秤立在了自由城的广场上。",
 "秤盘里没有锚印——七枚锚印在战争里散落各处，有的进了兵卒的口袋，有的掉进河里，有的被孩子捡去当了玩具。",
 "可秤还是悬在那里，稳稳的。",
@@ -216,7 +216,7 @@ N["ending_anchor_war_3"]={tag:"ending",place:"大陆 · 战后的春天",where:"
 {t:"（合上这一卷）",effects:{xp:200},go:"ending_anchor_war_4"}
 ]};
 
-N["ending_anchor_war_4"]={tag:"ending",place:"大陆 · 自由城",where:"任意",pace:"normal",text:[
+N["ending_anchor_war_4"]={tags:["ending:anchor"],tag:"ending",place:"大陆 · 自由城",where:"任意",pace:"normal",text:[
 "编年史补录：",
 "艾尔达大陆历 4037~4039 年，北境战争延烧两年，史称『群雄割据之末役』。",
 "战止之日，自由城广场立一旧秤，无砣而悬，历年不坠。",
@@ -230,7 +230,7 @@ N["ending_anchor_war_4"]={tag:"ending",place:"大陆 · 自由城",where:"任意
 {t:"（回到大陆）",go:"ending_anchor_war_4"}
 ]};
 
-N["ending_anchor_goldscale_1"]={tag:"ending",place:"北境 · 第三哨 · 墓园",where:"白昼",pace:"deep",text:[
+N["ending_anchor_goldscale_1"]={tags:["ending:anchor"],tag:"ending",place:"北境 · 第三哨 · 墓园",where:"白昼",pace:"deep",text:[
 "你没有留在钟楼。",
 "你把秤从石槽里请出来，用旧布包好，背在身上，往金老人的坟走去。",
 "坟头的雪已经化了，露出去年你插的那枚铜叶。你蹲下来，把铜叶拔起来，和秤放在一起。",
@@ -246,7 +246,7 @@ N["ending_anchor_goldscale_1"]={tag:"ending",place:"北境 · 第三哨 · 墓�
 {t:"（开始新的一天——终局）",effects:{xp:100},go:"ending_anchor_goldscale_2"}
 ]};
 
-N["ending_anchor_goldscale_2"]={tag:"ending",place:"自由城邦 · 集市",where:"白昼",pace:"deep",text:[
+N["ending_anchor_goldscale_2"]={tags:["ending:anchor"],tag:"ending",place:"自由城邦 · 集市",where:"白昼",pace:"deep",text:[
 "你跟着商队跑了三年。",
 "从自由城到铁门关，从铁门关到草原，从草原到东境。你什么货都运：盐、铁、皮毛、药材，还有一次，替人捎了一箱书。",
 "箱子很沉，你以为是书。到了地头，收货的是个白胡子老头，打开箱子，里面是一杆黄铜的旧秤。",
@@ -265,7 +265,7 @@ N["ending_anchor_goldscale_2"]={tag:"ending",place:"自由城邦 · 集市",wher
 {t:"（走进人群——终局成）",effects:{xp:100},go:"ending_anchor_goldscale_3"}
 ]};
 
-N["ending_anchor_goldscale_3"]={tag:"ending",place:"自由城邦 · 集市",where:"任意",pace:"normal",text:[
+N["ending_anchor_goldscale_3"]={tags:["ending:anchor"],tag:"ending",place:"自由城邦 · 集市",where:"任意",pace:"normal",text:[
 "编年史补录：",
 "艾尔达大陆历 4037 年后，北境封印之秤不知所踪。",
 "唯市井间流传：自由城有一跑商客，肩上一根扁担，一头挑货，一头挑一杆旧秤。",

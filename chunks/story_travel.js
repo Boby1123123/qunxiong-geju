@@ -491,7 +491,7 @@ N["arrive_free_huigang"] = {tag:"main",
   ]
 };
 
-N["arrive_orc_shengshan"] = {tag:"main",
+N["arrive_orc_shengshan"] = {tags:["main:orc"],tag:"main",
   place:"兽人草原 · 兽人圣山",where:"白昼",
   text:[
     "圣山孤零零地矗立在草原深处。山腰的祖灵洞，燃着长明火。",

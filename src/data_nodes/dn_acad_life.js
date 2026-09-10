@@ -10,7 +10,7 @@
  * ============================================================ */
 (function(){
 /* ---------- 第一学年 ---------- */
-N["acad_life_y1_open"]={tag:"main",place:"艾尔达魔法学院 · 第一学年",pace:"normal",text:[
+N["acad_life_y1_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 第一学年",pace:"normal",text:[
 "第一学年的第一堂课，是新生向导。一个高年级学生举着一根挑着灯笼的木杆，带着你们二十来个新生穿过回廊。他一路指认：东边是食堂，开饭时跑得快才有热菜；西边是图书馆，借书要押一枚铜星；北边那栋灰楼——他忽然压低声音，只说了一句“别去”，就岔开了话头，带着你们绕过了那条走廊。",
 "分班名单贴在西厅的公告板上，浆糊还没干透。你挤进人群，看见自己的名字排在一个小班底下——班里有十来个人，来自大陆各地。一个皮肤黝黑的南方少年正跟人比手画脚，说他家在海边，学会游泳前先学会了看浪；一个矮人姑娘蹲在角落，从包里掏出一块矿石，举到灯下眯着眼看。",
 "课程表发下来，密密麻麻。学院不逼你选主修——但每个人都要有一门“立足的功课”。高年级学生临走时说：“头一个月，别急着表现，先弄明白食堂几点开饭、哪个教授脾气好、哪条路晚上能走。这三样，比法术重要。”",
@@ -30,7 +30,7 @@ N["acad_life_y1_open"]={tag:"main",place:"艾尔达魔法学院 · 第一学年"
 {t:"【学年小事·加深】去生活区深处走走（人际/见闻）",go:"acad_social_hub"},
 {t:"【学年小事·加深】去修行区摸摸门道（冥想/元素池）",go:"acad_magic_hub"}
 ]};
-N["acad_life_y1_dorm"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
+N["acad_life_y1_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "宿舍的日子像一锅慢慢熬的粥。凯恩每天天不亮就起来练剑，剑风从窗口灌进来，带着铁锈味；隔壁的艾莉丝隔三差五烧糊一锅汤，然后拉着全走廊的人尝“新配方”。",
 "你的室友换了一茬——第一个住了三天就退学，说是“受不了北境的冷”；第二个是个沉默的东境人，每晚在灯下抄书，抄到后半夜。",
 "你在床头钉了一排小木钉，挂上自己的家伙。窗台上的霜花，一天比一天厚。", "西三舍已被抛在身后。路在脚下延伸，你不回头，行至前方。"],options:[
@@ -47,7 +47,7 @@ N["acad_life_y1_dorm"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",pa
 },effects:{xp:12},onOk:{skillUp:"剑术"},go:"acad_life_y1_friend"},
 {t:"早睡。北境的夜太长了",effects:{hp:15,xp:5},tier:{ok:["你早早躺下，听着窗外风声，一夜无梦。","第二天醒来，神清气爽。"]},go:"acad_life_y1_friend"}
 ]};
-N["acad_life_y1_friend"]={tag:"main",place:"艾尔达魔法学院 · 食堂",pace:"normal",text:[
+N["acad_life_y1_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 食堂",pace:"normal",text:[
 "食堂的桌椅是长条木桌，坐满了人。你端着餐盘，在角落找到空位。对面坐着一个戴圆眼镜的矮个子男生，正往面包上抹三层果酱。",
 "他抬头看你，自我介绍：“洛卡，药剂系的。你怎么认出我的？——算了，反正你以后会记住我的，整个学院只有我往面包上抹三层果酱。”",
 "他话匣子一开就收不住：哪个教授上课会睡着、哪条走廊半夜有脚步声、图书馆塔顶的灯“到底是不是活的”……", "食堂的灯火远了。夜风凉，你把心思收回来，专心赶路。"],options:[
@@ -60,7 +60,7 @@ N["acad_life_y1_friend"]={tag:"main",place:"艾尔达魔法学院 · 食堂",pac
 {t:"和洛卡聊聊药剂系的事",effects:{xp:8},tier:{ok:["洛卡得意地掏出一小瓶药水：“我自己配的——提神用的，比学院发的强十倍。”他塞给你：“拿着，熬夜复习用得上。”"],go:"acad_life_y1_mid"}},
 {t:"埋头吃饭，不掺和这些闲话",effects:{hp:8},tier:{ok:["你安静地吃完这顿饭。食堂的汤不错，管饱。"]},go:"acad_life_y1_mid"}
 ]};
-N["acad_life_y1_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中考核",pace:"normal",text:[
+N["acad_life_y1_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期中考核",pace:"normal",text:[
 "期中考核来得比想象中快。考场设在西厅，长桌摆成三排，羊皮纸和墨水瓶叮当作响。",
 "你面前的卷子不难，但有一道题很怪——不是课上的内容：“若第七节点失守，你作为守夜人，第一步做什么？”",
 "你愣了一会儿，写下你的答案。交卷时，监考的老执事看了你一眼，又低头把你的卷子单独抽了出来。", "离开期中考核时天光正好，靴子踏上路面的声音很稳。一路向前。"],options:[
@@ -71,7 +71,7 @@ N["acad_life_y1_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中考核",
 },effects:{xp:20},onCrit:{flag:"acad_watch_invite"},go:"acad_life_y1_final"},
 {t:"在卷子上画个圈，只答会的",effects:{xp:8},tier:{ok:["你把会的都答了，不会的留白。老执事没说什么。成绩中等偏上。"]},go:"acad_life_y1_final"}
 ]};
-N["acad_life_y1_final"]={tag:"main",place:"艾尔达魔法学院 · 期末排名",pace:"normal",text:[
+N["acad_life_y1_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期末排名",pace:"normal",text:[
 "期末排名贴出来那天，下着雪。你挤在人群里，看见自己的名字——不在最前，也不在最后，稳稳地待在中间那一栏。",
 "这个位置不显眼，但安稳。你想起出发那天，老货郎说的话：“眼睛不一样的，学院会收。”",
 "第一学年就这么过去了。你学会的不只是课上的东西，还有：北境的冬天怎么过，食堂几点去人最少，哪条走廊夜里不能走。",
@@ -87,7 +87,7 @@ N["acad_life_y1_final"]={tag:"main",place:"艾尔达魔法学院 · 期末排名
 {t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y1_end_1"}
 ]};
 /* ---------- 第二学年 ---------- */
-N["acad_life_y2_open"]={tag:"main",place:"艾尔达魔法学院 · 第二学年",pace:"normal",text:[
+N["acad_life_y2_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 第二学年",pace:"normal",text:[
 "第二学年，课程重了一倍。教授们不再把你们当新生——第一堂课，戈拉就把剑扔在你面前：“拿起来，然后挨打。”那堂课结束，全班有半数人捂着胳膊和膝盖走出演武场，戈拉站在门口，声音不大不小：“明年这时候，我不希望再看到你们挨打的样子。”",
 "课业之外，你发现学院里有些变化：禁书区的门换了新锁，锁孔周围多了一圈没见过的符文；圣痕司的灰袍执事来得更勤了，开始在走廊里站岗；有个教古代史的教授，上个月“自愿离职”，走得悄无声息，连告别课都没上。",
 "接替他的人叫费尔曼——一个说话很轻、笑起来眼睛不动的中年人。他上课从不翻讲义，讲到古代封印时，会忽然停下来，看一会儿教室的某扇窗，像在确认什么。",
@@ -98,7 +98,7 @@ N["acad_life_y2_open"]={tag:"main",place:"艾尔达魔法学院 · 第二学年"
 {t:"【职业·魔法师/术士】选《高阶元素与共鸣》",req:function(){return S.job==="mage"||S.job==="warlock";},effects:{flag:"acad_life_y2_course",xp:15},go:"acad_life_y2_dorm"},
 {t:"【职业·其他】选一门辅修（洛卡推荐：药剂学基础）",req:function(){return true;},effects:{flag:"acad_life_y2_course",xp:12},go:"acad_life_y2_dorm"}
 ]};
-N["acad_life_y2_dorm"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
+N["acad_life_y2_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "这年冬天格外冷。宿舍的窗缝结满了霜，凯恩的剑练得越来越早，天不亮就能听见院里的破风声。",
 "你的东境室友走了——留了一封信：“家中有事，归期未定。”他的铺位空了三天，来了个新室友：兽人少年，叫阿塔，话少，力气大，第一晚就把床板压塌了。",
 "阿塔用带着口音的通用语说：“我父亲说，学院里学的，比草原上活得更久。”他把一张狼皮铺在窗台上：“北境的冷，跟我们草原的冷不一样。这个，给你垫着。”", "你离了西三舍，脚步声在空旷处格外清晰。赶路要紧。"],options:[
@@ -110,7 +110,7 @@ N["acad_life_y2_dorm"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",pa
 {t:"问他草原上的事",effects:{xp:8},tier:{ok:["阿塔讲起草原：狼旗、黑石部族、每年秋天的部族会盟。他说到“暗蚀会”三个字时，声音明显低了下去：“他们在草原上挖东西，挖了很久了。”","他顿了顿：“我父亲说，别让那东西挖到。所以把我送来了学院。”"]},go:"acad_life_y2_friend"},
 {t:"把狼皮叠好收进箱底，早睡",effects:{hp:10},tier:{ok:["你把狼皮收好。那上面有草原的味道，混着北境的雪。你睡了个安稳觉。"]},go:"acad_life_y2_friend"}
 ]};
-N["acad_life_y2_friend"]={tag:"main",place:"艾尔达魔法学院 · 图书馆",pace:"normal",text:[
+N["acad_life_y2_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 图书馆",pace:"normal",text:[
 "你越来越常在图书馆碰到费尔曼教授。他总是抱着一摞书，从禁书区方向出来，见到你，温和地点头：“又来看书？好习惯。”",
 "有一次，你注意到他借的书——和奥利弗教授借的，是同一类：灵魂、封印、深渊。",
 "管理员罗先生在你耳边嘀咕：“这两个人，借书的路数越来越像了。上次我整理书架，发现一本《深渊谱系》被借走又还回来，书页里夹着一根头发——不是人的头发。”", "图书馆在雾里模糊了轮廓。你紧了紧衣领，迈步上路。"],options:[
@@ -126,7 +126,7 @@ N["acad_life_y2_friend"]={tag:"main",place:"艾尔达魔法学院 · 图书馆",
  crit:["墨丘利听完，脸色微变。他走到门口，确认走廊没人，才压低声音：“费尔曼到任那天，档案室丢过一份卷宗——关于七节点的。”他顿了顿：“丢得无声无息。第二天，管档案的老执事就‘退休’了。”","你和他对视一眼，谁都没再说话。"]
 },effects:{},onCrit:{flag:"acad_ferman_mercury"},go:"acad_life_y2_mid"}
 ]};
-N["acad_life_y2_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中考核",pace:"normal",text:[
+N["acad_life_y2_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期中考核",pace:"normal",text:[
 "期中考试这天，考场里少了一个人——药剂系的洛卡没来。",
 "你后来才知道，他前天夜里“误入”了禁书区，被圣痕司的灰袍执事带走问话，放回来时脸色惨白，一句话也不肯说。",
 "他在食堂角落找到你，把一张纸条塞进你手里，就匆匆走了。纸条上写着一行字：“那扇门，周三晚上会开。别告诉任何人。也别去。”", "期中考核的灯火远了。夜风凉，你把心思收回来，专心赶路。"],options:[
@@ -138,7 +138,7 @@ N["acad_life_y2_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中考核",
  critfail:["你推门的瞬间，走廊尽头的灯忽然亮了。一个灰袍执事站在阴影里，看着你。","你编了个“走错路”的借口，他盯着你看了很久，才侧身放行。","那之后，你总觉得有人在看你。"]
 },effects:{},onOk:{flag:"acad_forbidden_mark"},onCrit:{flag:"acad_eye_mark"},go:"acad_life_y2_final"}
 ]};
-N["acad_life_y2_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace:"normal",text:[
+N["acad_life_y2_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期末",pace:"normal",text:[
 "第二学年结束得很快。你的名字在排名榜上，往前挪了几位。",
 "这一年你学会的：费尔曼每周三深夜去图书馆；禁书区的门换过三次锁；洛卡不再深夜出门。",
 "放假前，阿塔要回草原。他把那床狼皮留给了你：“草原上的规矩——收了东西，就是朋友。朋友之间，不欠账。”",
@@ -154,7 +154,7 @@ N["acad_life_y2_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
 {t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y2_end_1"}
 ]};
 /* ---------- 第三学年 ---------- */
-N["acad_life_y3_open"]={tag:"main",place:"艾尔达魔法学院 · 第三学年",pace:"normal",text:[
+N["acad_life_y3_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 第三学年",pace:"normal",text:[
 "第三学年，学院的空气变了。",
 "教古代史的费尔曼教授，开始在课上频繁提到“古代封印术”。他讲课的方式也变了——不再绕开七节点的名字，而是把它们一个个写在黑板上，用粉笔圈起来，说：“这些节点不是石头，是会醒的东西。”有学生课后去问他，他看了那学生很久，只说：“你该问的，是它们为什么会被封起来。”",
 "奥利弗教授的《梦境与灵魂》课，报名人数翻了四倍——有人说他“讲得太好了，好得像在传授什么”。课堂上他常让学生描述自己的梦，记了一本又一本，说是“研究材料”。",
@@ -165,7 +165,7 @@ N["acad_life_y3_open"]={tag:"main",place:"艾尔达魔法学院 · 第三学年"
 {t:"【职业·任意】选《古代封印史》（费尔曼亲授）——听听他到底讲什么",req:function(){return true;},effects:{flag:"acad_life_y3_course",xp:15},go:"acad_life_y3_dorm"},
 {t:"【职业·任意】选《梦境与灵魂》（奥利弗亲授）——看看他的课有什么不同",req:function(){return true;},effects:{flag:"acad_life_y3_course",xp:15},go:"acad_life_y3_dorm"}
 ]};
-N["acad_life_y3_dorm"]={tag:"main",place:"艾尔达魔法学院 · 课堂",pace:"normal",text:[
+N["acad_life_y3_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 课堂",pace:"normal",text:[
 "你选了费尔曼的课。",
 "他的课讲得确实好——条理清晰，旁征博引，把古代封印术的脉络梳理得一清二楚。但越听，你越觉得不对：他讲“封印”时，眼里有一种……期待。",
 "下课后，他叫住你：“你听得最认真。来，看看这个。”他展开一张羊皮纸，上面画着一个复杂的仪式阵图：“这是第七节点当年的封印阵。可惜，失守了。”",
@@ -178,7 +178,7 @@ N["acad_life_y3_dorm"]={tag:"main",place:"艾尔达魔法学院 · 课堂",pace:
  crit:["费尔曼深深看了你一眼，笑意收敛：“你这个问题，问到了点子上。”他凑近，声音低得几乎听不见：“‘那东西’在等第七个。七印齐聚，它就能睁眼。”","他直起身，又是那副温和的笑容：“好好上课。”"]
 },effects:{},onCrit:{flag:"acad_seventh_secret"},go:"acad_life_y3_friend"}
 ]};
-N["acad_life_y3_friend"]={tag:"main",place:"艾尔达魔法学院 · 同窗",pace:"normal",text:[
+N["acad_life_y3_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 同窗",pace:"normal",text:[
 "这年你的朋友圈，多了一个不寻常的名字——艾莉丝。",
 "她不再只是那个冒冒失失的火系少女。有一天，她把你拉到没人的角落，难得一脸严肃：“我跟你说件事，你别外传。”",
 "“费尔曼教授，每周三深夜去图书馆，不是看书——他在禁书区最深那排书架后面，跟一个人说话。那个人穿着灰袍，但不是圣痕司的执事。”",
@@ -191,7 +191,7 @@ N["acad_life_y3_friend"]={tag:"main",place:"艾尔达魔法学院 · 同窗",pac
 },effects:{},onCrit:{flag:"acad_ally_clue"},go:"acad_life_y3_mid"},
 {t:"郑重谢过她，把这事记在心里",effects:{xp:8},tier:{ok:["你谢过艾莉丝。她摆摆手：“朋友嘛。”","你把这个细节，和洛卡的字条、费尔曼的数字串在一起——学院的影子，越来越深了。"]},go:"acad_life_y3_mid"}
 ]};
-N["acad_life_y3_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中",pace:"normal",text:[
+N["acad_life_y3_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期中",pace:"normal",text:[
 "期中这天，圣痕司在学院抓了人。",
 "被抓的不是学生，是图书馆的管理员——罗先生。灰袍执事从他住处搜出一本《深渊谱系》的抄本，当场带走了他。",
 "罗先生被拖过广场时，看见你，张了张嘴，只说了两个字：“……灯下。”",
@@ -205,7 +205,7 @@ N["acad_life_y3_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中",pace:"
 },effects:{},onOk:{flag:"acad_ledger_found"},onCrit:{flag:"acad_brass_key"},go:"acad_life_y3_final"},
 {t:"不冒险。把“灯下”记在心里，静观其变",effects:{xp:8},tier:{ok:["你按住了好奇心。罗先生那句“灯下”，像一根刺扎在心里。","你决定等一个更安全的机会。"]},go:"acad_life_y3_final"}
 ]};
-N["acad_life_y3_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace:"normal",text:[
+N["acad_life_y3_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期末",pace:"normal",text:[
 "第三学年结束。罗先生的事，学院里再没人提起——像一页被撕掉的账。",
 "你的排名又往前挪了。但这一年，你学到最多的，不是书上的东西。",
 "假期前夜，墨丘利教授把你叫到办公室。他给你倒了杯茶，忽然说：“学院里，有人在数日子。”",
@@ -221,7 +221,7 @@ N["acad_life_y3_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
 {t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y3_end_1"}
 ]};
 /* ---------- 第四学年 ---------- */
-N["acad_life_y4_open"]={tag:"main",place:"艾尔达魔法学院 · 第四学年",pace:"normal",text:[
+N["acad_life_y4_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 第四学年",pace:"normal",text:[
 "第四学年，你已经是学院里的“老人”了。新生见了你，会叫一声“学长”“学姐”。",
 "这一年，学院的暗流终于浮上了水面——",
 "先是奥利弗教授忽然离校，说是“南方来信，家中急事”。走的那天，他朝你温和地点头，像第一次见面时一样。",
@@ -231,7 +231,7 @@ N["acad_life_y4_open"]={tag:"main",place:"艾尔达魔法学院 · 第四学年"
 {t:"【职业·任意】这年你选修《毕业试炼预备》（实战）",req:function(){return true;},effects:{flag:"acad_life_y4_course",xp:15},go:"acad_life_y4_dorm"},
 {t:"【职业·任意】这年你选修《毕业论文·古代封印专题》（费尔曼指导）",req:function(){return true;},effects:{flag:"acad_life_y4_course",xp:15},go:"acad_life_y4_dorm"}
 ]};
-N["acad_life_y4_dorm"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
+N["acad_life_y4_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "你选了费尔曼指导的论文专题。",
 "他给你的题目是：《第七节点封印术的失守与重建》。他给了你一份长长的参考文献，全是禁书区的书目。",
 "“这篇论文，”他说，“可能救很多人的命。也可能，让写它的人万劫不复。你自己选。”",
@@ -239,7 +239,7 @@ N["acad_life_y4_dorm"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",pa
 {t:"接过笔，写下去",effects:{flag:"acad_thesis_accepted",xp:15},tier:{ok:["你接过笔。费尔曼笑了：“好。每周三深夜，禁书区，我单独辅导你。”","你点头。心里清楚，这条路的每一步，都在往深水里走。"]},go:"acad_life_y4_friend"},
 {t:"推回笔：我想换个题目",effects:{xp:5},tier:{ok:["费尔曼看着被推回的笔，笑意不减：“谨慎，是学者最好的品质。”他收回提纲，“那就写《古代封印术的伦理沿革》吧。同样是好题目。”","你松了口气。但你知道，他记住了你的拒绝。"]},go:"acad_life_y4_friend"}
 ]};
-N["acad_life_y4_friend"]={tag:"main",place:"艾尔达魔法学院 · 禁书区（周三夜）",pace:"normal",text:[
+N["acad_life_y4_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 禁书区（周三夜）",pace:"normal",text:[
 "每周三深夜，你跟着费尔曼进禁书区。",
 "他教你解读封印阵图、辨认深渊谱系的文字、分辨“眼”与“瞳”的区别。他说得很慢，讲得很细，像一个真正的好老师。",
 "但有一夜，他讲完课，没有立刻走。他站在书架最深处，忽然说：“你知道为什么第七节点会失守吗？”",
@@ -252,7 +252,7 @@ N["acad_life_y4_friend"]={tag:"main",place:"艾尔达魔法学院 · 禁书区�
 },effects:{},onCrit:{flag:"acad_ferman_confession"},go:"acad_life_y4_mid"},
 {t:"沉默地点头，不再追问",effects:{xp:8},tier:{ok:["你点头。费尔曼也没再说话。","那一夜，禁书区的灯，一直亮到天明。"]},go:"acad_life_y4_mid"}
 ]};
-N["acad_life_y4_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中",pace:"normal",text:[
+N["acad_life_y4_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期中",pace:"normal",text:[
 "期中前几天，艾莉丝急匆匆来找你：“费尔曼教授，上周没去图书馆。”",
 "“你怎么知道？”",
 "“我……我最近在替他整理办公室。”她脸一红，随即压低声音：“我在他抽屉里，看见一封信。只扫到一句——‘第七个已就位。灯灭之日，即为睁眼之时。’”",
@@ -265,7 +265,7 @@ N["acad_life_y4_mid"]={tag:"main",place:"艾尔达魔法学院 · 期中",pace:"
 },effects:{},onCrit:{flag:"acad_sein_alias"},go:"acad_life_y4_final"},
 {t:"不动声色，继续观察",effects:{xp:8},tier:{ok:["你把“席恩”两个字记在心里，像记一根刺。","你继续每周三深夜去禁书区，装作什么都不知道。"]},go:"acad_life_y4_final"}
 ]};
-N["acad_life_y4_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace:"normal",text:[
+N["acad_life_y4_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期末",pace:"normal",text:[
 "第四学年结束那天，费尔曼教授提交了辞呈。",
 "“家中有事。”他对院长说。院长没有挽留。",
 "他走之前，在教室门口等你。他递给你一本薄薄的手抄本：“这是我这些年的笔记。你写得比我好，留给你。”",
@@ -278,7 +278,7 @@ N["acad_life_y4_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
 {t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y4_end_1"}
 ]};
 /* ---------- 第五学年 ---------- */
-N["acad_life_y5_open"]={tag:"main",place:"艾尔达魔法学院 · 第五学年",pace:"normal",text:[
+N["acad_life_y5_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 第五学年",pace:"normal",text:[
 "第五学年，毕业年。",
 "学院的暗流，在这年夏天彻底浮出水面：",
 "圣痕司发布了新的净化令——对象不再是奥术师，而是“一切与古代封印有关的学者”。",
@@ -289,7 +289,7 @@ N["acad_life_y5_open"]={tag:"main",place:"艾尔达魔法学院 · 第五学年"
 {t:"【职业·任意】参加毕业试炼（实战）",req:function(){return true;},effects:{flag:"acad_life_y5_course",xp:15},go:"acad_life_y5_dorm"},
 {t:"【职业·任意】先去找墨丘利，问清楚净化令的事",req:function(){return true;},effects:{flag:"acad_life_y5_course",xp:15},go:"acad_life_y5_dorm"}
 ]};
-N["acad_life_y5_dorm"]={tag:"main",place:"艾尔达魔法学院 · 墨丘利办公室",pace:"normal",text:[
+N["acad_life_y5_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 墨丘利办公室",pace:"normal",text:[
 "墨丘利坐在办公室里，桌上堆着没拆的信。他见你进来，苦笑：“你来晚了——他们刚走。”",
 "“净化令的事，是真的。圣痕司给学院下了最后通牒：交出名册，或者学院‘配合调查’。”",
 "他看着你，目光很复杂：“我教了三十年书。三十年来，我告诉每一个学生：先识己，后识人。”",
@@ -301,7 +301,7 @@ N["acad_life_y5_dorm"]={tag:"main",place:"艾尔达魔法学院 · 墨丘利办�
  crit:["墨丘利站起身，走到窗前：“我年轻时，也收到过一枚这样的徽章。送徽章的人，后来去了第七节点，再没回来。”","“他叫席恩。费尔曼……是他。”"]
 },effects:{},onCrit:{flag:"acad_mercury_sein"},go:"acad_life_y5_friend"}
 ]};
-N["acad_life_y5_friend"]={tag:"main",place:"艾尔达魔法学院 · 毕业试炼场",pace:"normal",text:[
+N["acad_life_y5_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 毕业试炼场",pace:"normal",text:[
 "毕业试炼在学院的演武场举行。",
 "试炼分两场：第一场考实战，第二场考心性。",
 "实战你打得干净利落——五年的课上下来，你的根基早已扎实。",
@@ -310,7 +310,7 @@ N["acad_life_y5_friend"]={tag:"main",place:"艾尔达魔法学院 · 毕业试�
 {t:"写下你的答案（按你的理想）",effects:{xp:15},tier:{ok:["你写下的答案，和你出发那天在路口说的话，是同一句。","主考官合上卷子，说了句：“很好。没有变过的人，值得毕业。”"]},go:"acad_life_y5_mid"},
 {t:"写下：守护这座学院",effects:{xp:12},tier:{ok:["你写的是“守护这座学院”。","主考官看了你一眼，难得露出一点笑意：“学院需要记得它的人。”"]},go:"acad_life_y5_mid"}
 ]};
-N["acad_life_y5_mid"]={tag:"main",place:"艾尔达魔法学院 · 毕业典礼前夜",pace:"normal",text:[
+N["acad_life_y5_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 毕业典礼前夜",pace:"normal",text:[
 "毕业典礼的前一夜，你失眠了。",
 "你坐在西三舍的窗台上，看着图书馆塔顶的灯。它今晚没有自己灭——安安静静地亮着，像一个终于睡着了的人。",
 "五年，你从铁门关外的村庄，走到这座大陆最古老的知识圣地。你学会了很多，也失去了一些。",
@@ -319,7 +319,7 @@ N["acad_life_y5_mid"]={tag:"main",place:"艾尔达魔法学院 · 毕业典礼�
 "明天，就是毕业典礼了。", "出了毕业典礼前夜，风迎面扑来。你认了认方向，启程。"],options:[
 {t:"入睡。明天，是毕业的日子",effects:{hp:20,xp:10},tier:{ok:["你躺下，闭上眼。北境的风，在窗外吹了一夜。","五年，一晃就过去了。"]},go:"acad_life_y5_final"}
 ]};
-N["acad_life_y5_final"]={tag:"main",place:"艾尔达魔法学院 · 毕业典礼",pace:"normal",text:[
+N["acad_life_y5_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 毕业典礼",pace:"normal",text:[
 "毕业典礼在中央广场举行。和五年前开学典礼时一样，法神黄林晶的石像立在广场中央，负手而立。",
 "你站在毕业生队列里，抬头看那座石像。五年前，你在这里听见院长说“塔顶的灯，不是用来数的”；五年后，你终于明白那句话的意思。",
 "院长念到你的名字时，你走上前。他递给你毕业证书，忽然压低声音说了一句只有你听得见的话：",

@@ -2,7 +2,7 @@
 // anchor_finale_1~8：七锚齐鸣 → 封印之门三择 → 战争汇合
 // 全部对象式节点；goldscale_10 的 go 指向 anchor_finale_1（见注入）
 
-N["anchor_finale_1"]={tag:"main",place:"北境 · 第三哨 · 墓园",where:"黑夜",pace:"deep",text:[
+N["anchor_finale_1"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 墓园",where:"黑夜",pace:"deep",text:[
 "你回到第三哨，是在一场大雪之后。",
 "墓园里那棵歪脖子的老榆树压满了雪，枝桠低垂，像一排垂手站着的老人。金老人的坟前没有供品——他来这世间一趟，守的是秤，不是香火。",
 "你把他留下的那枚铜叶插进坟头土里，站了一小会儿。风从北边来，穿过钟楼，发出一阵低沉的呜咽。",
@@ -14,7 +14,7 @@ N["anchor_finale_1"]={tag:"main",place:"北境 · 第三哨 · 墓园",where:"�
 {t:"（把七枚锚印一枚一枚放进石槽）",effects:{xp:80},go:"anchor_finale_2"}
 ]};
 
-N["anchor_finale_2"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"deep",text:[
+N["anchor_finale_2"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"deep",text:[
 "第一枚铜叶入槽，钟身嗡了一声，像咽下一口气。",
 "第二枚铁牌入槽，雪地里的影子晃了晃，多出半个轮廓。",
 "第三枚玉印入槽，你听见风声变了——不再是呜呜的，而是一线极细的啸音，贴着地面游走。",
@@ -27,7 +27,7 @@ N["anchor_finale_2"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"�
 {t:"（站稳，看地脉的变化）",effects:{xp:80},go:"anchor_finale_3"}
 ]};
 
-N["anchor_finale_3"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"epic",text:[
+N["anchor_finale_3"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"epic",text:[
 "地动只有一瞬，却像整座山翻了身。",
 "钟楼东墙裂开一道缝，从檐角直劈到地基，砖石簌簌往下掉。老卒被震得伏在地上，你一把拽住他后领，把人拖到门廊下——身后，整座钟楼在雪夜里发出一声闷响，像一头老牛一寸一寸跪了下去。",
 "烟尘散开。钟楼没有倒。它只是沉了——整座楼往下沉了三尺，钟座底下的石槽连成一片，变成一个完整的圆。圆的正中，浮着一面铜镜大小的旧盘子，盘面上刻着山河纹，纹路里嵌着细雪，正一片一片化成水。",
@@ -40,7 +40,7 @@ N["anchor_finale_3"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"�
 {t:"（握住秤杆，往北看去）",effects:{xp:80,flag:"anchor_7"},go:"anchor_finale_4"}
 ]};
 
-N["anchor_finale_4"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"deep",text:[
+N["anchor_finale_4"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黑夜",pace:"deep",text:[
 "你握住秤杆。",
 "触手不是金属的凉，而是一种沉——像握住了一整条河的重量，河的上下游、两岸的人家、船上的灯火，都顺着秤杆往你手心里淌。",
 "北边的雪原上，地裂开一道口子。没有光，没有声音，只有一股极淡的、腐败的甜腥气从裂缝里升起来，像窖了三百年的酒坛子被掀开了盖。",
@@ -55,7 +55,7 @@ N["anchor_finale_4"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"�
 {t:"（握秤不动，把自己交给秤——超脱）",effects:{xp:100,flag:"finale_transcend"},go:"anchor_finale_7"}
 ]};
 
-N["anchor_finale_5"]={tag:"main",place:"北境 · 第三哨 · 封印之地",where:"白昼",pace:"deep",text:[
+N["anchor_finale_5"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 封印之地",where:"白昼",pace:"deep",text:[
 "你双手按住秤杆，一寸一寸往下压。",
 "秤盘里的七枚锚印重得像山。你每压下一寸，地裂就合上一分；每合上一分，那股甜腥气就淡一分。压到第七寸的时候，裂缝已经合得只剩一道线，像一道陈年的疤。",
 "你听见地底深处传来一声极远的、像是叹息的声音。不是人声，也不是兽声——像一整片海在退潮。",
@@ -71,7 +71,7 @@ N["anchor_finale_5"]={tag:"main",place:"北境 · 第三哨 · 封印之地",whe
 {t:"（把秤交还金家，守着金老人的坟过活）",effects:{xp:80},go:"ending_anchor_goldscale_1"}
 ]};
 
-N["anchor_finale_6"]={tag:"main",place:"北境 · 第三哨 · 封印之地",where:"黑夜",pace:"epic",text:[
+N["anchor_finale_6"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 封印之地",where:"黑夜",pace:"epic",text:[
 "你拎起秤杆。",
 "七枚锚印在秤盘里跳起来，叮叮当当响成一片，像一挂铜钱摔在石板上。秤杆在你手里越来越轻——不是失重，是那头的『天』卸了力。",
 "地裂轰然洞开。",
@@ -86,7 +86,7 @@ N["anchor_finale_6"]={tag:"main",place:"北境 · 第三哨 · 封印之地",whe
 {t:"（把断秤拾起来，走向灰白的光）",effects:{xp:120},go:"ending_anchor_open_1"}
 ]};
 
-N["anchor_finale_7"]={tag:"main",place:"北境 · 第三哨 · 封印之地",where:"白昼",pace:"epic",text:[
+N["anchor_finale_7"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 封印之地",where:"白昼",pace:"epic",text:[
 "你没有压，也没有拎。",
 "你握着秤杆站着，让风从你身上过去，让雪落满你的肩。秤在你手里没有重量——不是因为轻，是因为你不再和它较劲。",
 "秤盘一寸一寸转起来，七枚锚印在盘里划出七个圈，圈圈相套，像一个慢下来的漩涡。你看着那个漩涡，忽然想起金老人的话：",
@@ -103,7 +103,7 @@ N["anchor_finale_7"]={tag:"main",place:"北境 · 第三哨 · 封印之地",whe
 {t:"（归位——与秤合一，镇守这一方天地）",effects:{xp:120},go:"ending_anchor_transcend_1"}
 ]};
 
-N["anchor_finale_8"]={tag:"main",place:"北境 · 第三哨 · 城头",where:"白昼",pace:"deep",text:{default:[
+N["anchor_finale_8"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · 城头",where:"白昼",pace:"deep",text:{default:[
 "你带着秤回到第三哨城头，是在战报最密的时候。",
 "北境的雪没停过，城下的路却热闹起来了——南下的商队断了，北上的军队多了。铁门关的烽火，一天能点三回。",
 "你把秤立在城头，七枚锚印在晨光里泛着冷光。守城的兵卒没见过这物什，远远围着看，没人敢上前。",

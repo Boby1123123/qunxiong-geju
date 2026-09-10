@@ -239,7 +239,7 @@ N["desert_ruins"] = {
     {t:"不深入，先退出去喘口气",go:"desert_leave"}
   ]
 };
-N["desert_seal_watch"] = {
+N["desert_seal_watch"] = {tags:["main:seal"],
   tag:"branch",
   place:"死亡沙漠 · 古代遗迹 · 封印节点", where:"黑暗", pace:"epic",
   text:[

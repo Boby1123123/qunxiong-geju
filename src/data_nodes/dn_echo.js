@@ -49,7 +49,7 @@
     text: { default: ["铁门关东侧的城门前，进出的人流排成长队，守卒挨个查验文牒。"],
       ifFlag: { "council_support_purification": ["你支持净化令那天的表决，后来在铁门关的茶摊上被人反复提起。有人赞你果断，也有人在你背后啐了一口，说你手里的圣光沾了血。", "城门下，一个抱着孩子的妇人排在你前头。她的包袱角露出半卷盖着教会火漆的文牒。你看了一眼，没有多话。"] } },
     options: [{ t: "（移开视线，排队入城）", go: "echo_purge_intensified" }] };
-  N["echo_purge_intensified"] = { tag: "main", place: "东部王国 · 铁门关（东侧）", where: "白昼", pace: "normal",
+  N["echo_purge_intensified"] = {tags:["main:purge"], tag: "main", place: "东部王国 · 铁门关（东侧）", where: "白昼", pace: "normal",
     text: { default: ["铁门关城头上，旗子换了一面新的，颜色比旧的更深。"],
       ifFlag: { "purge_intensified": ["净化令加码之后，铁门关的宵禁提前了一个时辰。你入城那夜，正撞上一队白袍押着人往南去，锁链拖在石板路上，响得刺耳。", "客栈掌柜给你留的房间里，窗纸糊了三层。他压着嗓子说：“外乡人，这几日城里风声紧，灯别点太亮。”你吹熄油灯，在黑暗里坐了很久。"] } },
     options: [{ t: "（和衣躺下，明日再探消息）", go: "echo_dragon_companion" }] };

@@ -372,7 +372,7 @@
   };
 
   /* ---------- 封印抉择（seal 主线 day200 联动，不改判定） ---------- */
-  N["frontier_seal_1"] = {
+  N["frontier_seal_1"] = {tags:["main:seal"],
     tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "deep",
     sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
     arc: "arc_frontier", vol: "vol_north",
@@ -388,7 +388,7 @@
     ]
   };
 
-  N["frontier_seal_2"] = {
+  N["frontier_seal_2"] = {tags:["main:seal"],
     tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "deep",
     sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
     arc: "arc_frontier", vol: "vol_north",
@@ -402,7 +402,7 @@
     ]
   };
 
-  N["frontier_seal_3"] = {
+  N["frontier_seal_3"] = {tags:["main:seal"],
     tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "deep",
     sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
     arc: "arc_frontier", vol: "vol_north",
@@ -416,7 +416,7 @@
     ]
   };
 
-  N["frontier_seal_4"] = {
+  N["frontier_seal_4"] = {tags:["main:seal"],
     tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "normal",
     sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
     arc: "arc_frontier", vol: "vol_north",
@@ -430,7 +430,7 @@
     ]
   };
 
-  N["frontier_seal_after_1"] = {
+  N["frontier_seal_after_1"] = {tags:["main:seal"],
     tag: "main", place: "北境 · 第三哨 · 地窖口", where: "白昼", pace: "normal",
     sceneTitle: "「北境 · 第三哨 · 地窖口」",
     arc: "arc_frontier", vol: "vol_north",
@@ -444,7 +444,7 @@
     ]
   };
 
-  N["frontier_seal_after_2"] = {
+  N["frontier_seal_after_2"] = {tags:["main:seal"],
     tag: "main", place: "北境 · 第三哨 · 战报栏", where: "白昼", pace: "light",
     sceneTitle: "「北境 · 第三哨 · 战报栏」",
     arc: "arc_frontier", vol: "vol_north",
@@ -607,7 +607,7 @@
   };
 
   /* ---------- 铜钟异响守卫战（越级战例 · 四段式） ---------- */
-  N["frontier_bell_fight_1"] = {
+  N["frontier_bell_fight_1"] = {tags:["combat"],
     tag: "combat", place: "北境 · 第三哨 · 城墙", where: "黑夜", pace: "epic",
     sceneTitle: "「北境 · 第三哨 · 城墙」",
     arc: "arc_frontier", vol: "vol_north",
@@ -631,7 +631,7 @@
     ]
   };
 
-  N["frontier_bell_fight_2"] = {
+  N["frontier_bell_fight_2"] = {tags:["combat"],
     tag: "combat", place: "北境 · 第三哨 · 城墙", where: "黑夜", pace: "epic",
     sceneTitle: "「北境 · 第三哨 · 城墙」",
     arc: "arc_frontier", vol: "vol_north",
@@ -655,7 +655,7 @@
     ]
   };
 
-  N["frontier_bell_fight_3"] = {
+  N["frontier_bell_fight_3"] = {tags:["combat"],
     tag: "combat", place: "北境 · 第三哨 · 城墙", where: "黑夜", pace: "deep",
     sceneTitle: "「北境 · 第三哨 · 城墙」",
     arc: "arc_frontier", vol: "vol_north",

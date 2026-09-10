@@ -4802,6 +4802,30 @@ window.CAUSALITY_LEDGER = [
     "importance": 4,
     "keywords": ["重大抉择回响网"],
     "irreversible": false
+  },
+  {
+    "id": "led_f5_city",
+    "type": "设定",
+    "desc": "交汇城生活深描：蜜尔娜丈夫走镖旧怀表/晨市代写家书/镖局木牌——城与人情的底色",
+    "plant": "flag:f5_city_done",
+    "reap": "flag:f5_city_letter",
+    "status": "open",
+    "world": "金秤家族线",
+    "importance": 3,
+    "keywords": ["交汇城生活深描"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f5_city",
+    "type": "设定",
+    "desc": "交汇城生活深描：蜜尔娜丈夫走镖旧怀表/晨市代写家书/镖局木牌——城与人情的底色",
+    "plant": "flag:f5_city_done",
+    "reap": "flag:f5_city_letter",
+    "status": "open",
+    "world": "金秤家族线",
+    "importance": 3,
+    "keywords": ["交汇城生活深描"],
+    "irreversible": false
   }
 ];
 

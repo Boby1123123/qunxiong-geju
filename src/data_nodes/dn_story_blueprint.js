@@ -938,7 +938,15 @@ window.STORY_BLUEPRINT = {
 "world_f4_echo_1": {tag:"event", vol:"vol_north", arc:"arc_medici", pace:"normal"},
 "world_f4_echo_2": {tag:"event", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
 "world_f4_echo_3": {tag:"event", vol:"vol_race", arc:"arc_orc", pace:"normal"},
-"world_f4_echo_4": {tag:"event", vol:"vol_north", arc:"arc_medici", pace:"normal"}
+"world_f4_echo_4": {tag:"event", vol:"vol_north", arc:"arc_medici", pace:"normal"},
+"world_f5_city_1": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_2": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_3": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_4": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_1": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_2": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_3": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_4": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"}
 ,
 "world_purge_m1": {tag:"main", vol:"vol_church", arc:"arc_purge", pace:"normal"},
 "world_purge_m2": {tag:"main", vol:"vol_church", arc:"arc_purge", pace:"normal"},

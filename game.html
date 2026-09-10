@@ -5192,7 +5192,15 @@ const EVENT_POOL_EXT = [
 {id:"f4_blood", day:152, cls:"奇遇", text:"旧货街来了只黑漆匣子，边角包铜，锁是焊死的。摊主说，这东西在货仓里躺了二十年，上一手是孤儿院的老嬷嬷。"},
 {id:"f4_echo2", day:243, cls:"奇遇", text:"学院图书馆的旧报堆里，有人翻出一张十年前的通告：禁书区藏品一律登记造册。纸角卷着，像被人反复折过。"},
 {id:"f4_echo3", day:318, cls:"天灾", text:"北境官道上，皮货商们说边市风声紧。有人说，关外递进来一枚狼牙，上头传话：顺着牙尖的方向走。"},
-{id:"f4_echo4", day:355, cls:"商机", text:"交汇城告示栏底角贴着一张旧寻人告示：寻洛伦佐·美第奇。字迹褪色，纸角卷起，像贴了很久很久。"}
+{id:"f4_echo4", day:355, cls:"商机", text:"交汇城告示栏底角贴着一张旧寻人告示：寻洛伦佐·美第奇。字迹褪色，纸角卷起，像贴了很久很久。"},
+{id:"f5_travel_north", day:115, cls:"天灾", text:"北境官道上暴雪封路，驿站的房梁压断了两根。商队全堵在山口，有人砍了冻死的马烤火。这路，一时半会儿走不得了。"},
+{id:"f5_travel_west", day:145, cls:"天灾", text:"西境荒原又起元素风暴，沙石打得人脸生疼。行省会挂出告示：风暴期间，商路不通，胆敢进荒原者，生死自负。"},
+{id:"f5_travel_desert", day:175, cls:"商机", text:"沙漠商队带回消息：绿洲集市新到了一批水囊和遮阳布，价比往常低了三分。走沙漠的人，都赶着去换。"},
+{id:"f5_travel_east", day:205, cls:"人祸", text:"东境官道出了劫案，一队运粮车在铁门关外被截，押车的兵士死了三个。官府封了官道查问，商旅只能绕行山路。"},
+{id:"f5_travel_north", day:115, cls:"天灾", text:"北境官道上暴雪封路，驿站的房梁压断了两根。商队全堵在山口，有人砍了冻死的马烤火。这路，一时半会儿走不得了。"},
+{id:"f5_travel_west", day:145, cls:"天灾", text:"西境荒原又起元素风暴，沙石打得人脸生疼。行省会挂出告示：风暴期间，商路不通，胆敢进荒原者，生死自负。"},
+{id:"f5_travel_desert", day:175, cls:"商机", text:"沙漠商队带回消息：绿洲集市新到了一批水囊和遮阳布，价比往常低了三分。走沙漠的人，都赶着去换。"},
+{id:"f5_travel_east", day:205, cls:"人祸", text:"东境官道出了劫案，一队运粮车在铁门关外被截，押车的兵士死了三个。官府封了官道查问，商旅只能绕行山路。"}
 ]; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
 
 const RACES = {"human": {"cn": "人类", "desc": "大陆数量最多、适应力最强的种族。七大地域孕育出七种截然不同的活法。", "ic": "🧑"}, "half": {"cn": "混血", "desc": "人类与其他种族的血脉交汇。长寿与短命、偏见与机遇，都写在血脉里。", "ic": "🌓"}, "elf": {"cn": "精灵", "desc": "长寿的森林之民。魔法天赋流淌在血脉里，岁月在他们脸上刻下宁静。", "ic": "🧝"}, "dwarf": {"cn": "矮人", "desc": "山腹与熔炉之子。短矮的身躯里装着铁一般的意志与手艺。", "ic": "🧔"}, "orc": {"cn": "兽人", "desc": "草原与蛮荒的战士。力量与战意是他们的第一语言。", "ic": "👹"}, "halfling": {"cn": "半身人", "desc": "田野与市井间的小个子。幸运仿佛偏爱他们，麻烦也总绕着他们走。", "ic": "🍀"}, "dragon": {"cn": "龙裔", "desc": "体内流淌着巨龙血脉的古老种族。鳞片、吐息与血脉的骄傲。", "ic": "🐉"}}; window.RACES = RACES; /* /v60inj:winx2:RACES/ */
@@ -8879,6 +8887,12 @@ N["fc_jiaohui_entry"] = {tag:"main",
   options:[
     {t:"先去跛脚酒桶，找蜜尔娜打听消息",go:"echo_floating_tower_blessed"},
     {t:"去联合冒险者公会，看看有什么活计",go:"fc_guild"},
+    {t:"去码头转转，看看那位记账的姑娘",go:"world_f3_lu_1"},
+
+    {t:"去旧货街碰碰运气",go:"world_f4_blood_1"},
+
+    {t:"（在交汇城再待两日）看看这座城的活法",go:"world_f5_city_1"},
+
     {t:"跟上前方那个半精灵的身影",check:{a:"AGI",sk:"detect",label:"跟踪"},tier:{
       ok:["你隔着人群缀住那抹身影。她拐进一条窄巷，在一扇钉着铁皮的门前停住，回头——你及时把脸转开。她推门进去了。门缝里飘出一缕烛火和药草的气味。"],
       fail:["你跟得太近。她骤然停步，转身，眼神像刀一样钉在你脸上。你装成问路的，她看了你三息，没说话，走了。那扇铁皮门终究没让你看见。"],
@@ -80643,6 +80657,30 @@ window.CAUSALITY_LEDGER = [
     "importance": 4,
     "keywords": ["重大抉择回响网"],
     "irreversible": false
+  },
+  {
+    "id": "led_f5_city",
+    "type": "设定",
+    "desc": "交汇城生活深描：蜜尔娜丈夫走镖旧怀表/晨市代写家书/镖局木牌——城与人情的底色",
+    "plant": "flag:f5_city_done",
+    "reap": "flag:f5_city_letter",
+    "status": "open",
+    "world": "金秤家族线",
+    "importance": 3,
+    "keywords": ["交汇城生活深描"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f5_city",
+    "type": "设定",
+    "desc": "交汇城生活深描：蜜尔娜丈夫走镖旧怀表/晨市代写家书/镖局木牌——城与人情的底色",
+    "plant": "flag:f5_city_done",
+    "reap": "flag:f5_city_letter",
+    "status": "open",
+    "world": "金秤家族线",
+    "importance": 3,
+    "keywords": ["交汇城生活深描"],
+    "irreversible": false
   }
 ];
 
@@ -82983,6 +83021,65 @@ N["world_f3_duo_2"] = {tag:"branch", place:"学院 · 禁书区东墙", where:"�
   ],
   options:[
     {t:"（走上前）我陪你去见费尔曼",tier:{ok:["她看了你一眼，没有推辞：“……好。”你们并肩穿过月光下的学院。风从山那边来，带着雪和松脂的气息。她走了一段，忽然开口：“普路托斯——等见了费尔曼，不管他说什么，你都帮我记着。我怕，我一个人记不全。”"],fail:[]},effects:{relation:{npc:"gu_qingwu",v:8},flag:"f3_duo2_ferman"},go:"world_continue"}
+  ]
+};
+})();
+
+/* /u1inj:data-nodes:dn_f_travel.js/ */
+/* /f5inj:city/ F-5 自由城第二幕：交汇城生活深描 + 离城抉择（旅途事件并入事件池）
+ * 入口：fc_jiaohui_entry hub 选项；对象式；pace 标注；V66 文风 + 30 治理词约束 */
+window.N = window.N || {};
+(function(){
+N["world_f5_city_1"] = {tag:"branch", place:"自由城邦 · 交汇城 · 晨市", where:"白昼", pace:"normal",
+  text:[
+    "你在交汇城多留了两日。晨市的摊子从码头一路铺到城门口：卖咸鱼的、补锅的、代人写信的、兜售护身符的——一个瘸腿的退伍兵在街角支了张桌，代人写家书，每封三个铜子。你路过时，他正给一个妇人念信，念到一半，咳了一声：“你家男人说，钱都兑成了粮票，托商队捎回来了。叫你别担心。”妇人应了一声，攥着衣角走了。",
+    "你看了半晌。乱世里，能写一封平安信，也是一种手艺。"
+  ],
+  options:[
+    {t:"（在晨市走走）听听这座城的活法",tier:{ok:["你在晨市从头走到尾。粮价、船期、镖价、谁家死了人、哪家娶了亲——一个时辰下来，你心里有了本账。城里的日子，比看起来的更薄，也更韧。"],fail:[]},effects:{xp:15},go:"world_f5_city_2"},
+    {t:"（掏三个铜子）让退伍兵也给你写一封",tier:{ok:["你坐下来，报了孤儿院的名字。退伍兵提笔就写，写到一半停住，抬头看你：“给院里哪位？”你说，给老嬷嬷。他点点头，把“平安”两个字写得格外用力。写完，他把信纸叠好递给你：“寄信去东城邮驿，两个铜子一封。要是舍不得邮费，就揣着，当个念想。”","你捏着那封信，忽然不知道该不该寄。"],fail:[]},effects:{gold:-3,flag:"f5_city_letter"},go:"world_f5_city_2"}
+  ]
+};
+N["world_f5_city_2"] = {tag:"branch", place:"自由城邦 · 交汇城 · 镖局", where:"白昼", pace:"normal",
+  text:[
+    "镖局的告示栏贴着一张红纸：北境线，缺一个熟路的。你进去打听，柜台后的老镖师上下打量你：“走北境？铁门关那边正打仗，镖价翻了三倍，就是死了人，也只赔一半。”他叼着烟杆，“敢接？”",
+    "窗外，一队镖车正装货。车上捆着麻袋，袋口露出一角——是粮食，也是铁器。"
+  ],
+  options:[
+    {t:"（接下这趟镖）北境线，走一趟",tier:{ok:["你按了按腰间的短刀，点头。老镖师吐了口烟，从柜台下拎出一面木牌：“拿着。明日卯时，城门口集合。”他顿了顿，“这趟活儿，运气好，半个月打个来回；运气不好，你家里人半个月后去衙门领抚恤。”他说完自己先笑了，笑里没什么暖意。你攥着木牌走出镖局，夕阳把你的影子拉得很长。"],fail:[]},effects:{gold:12,flag:"f5_escort"},go:"world_f5_city_3"},
+    {t:"（摇头）这钱烫手，不接",tier:{ok:["你摇了摇头。老镖师也不意外，把红纸又往上贴了贴：“也好。北境那条路，不是谁都有命走的。”他低头继续擦他的烟杆。你走出镖局，回头看了一眼那面红纸——它还在那儿，等着下一个不要命的人。"],fail:[]},effects:{},go:"world_f5_city_3"}
+  ]
+};
+N["world_f5_city_3"] = {tag:"branch", place:"自由城邦 · 交汇城 · 跛脚酒桶", where:"黑夜", pace:"normal",
+  text:{ default:[
+    "夜里，你在跛脚酒桶找了个角落。蜜尔娜擦着杯子，见你坐下，没问话，先给你倒了一碗麦酒。",
+    "酒桶里人声嗡嗡。你听见邻桌在说铁门关的战事，说圣城的封条，说沙漠里又走丢了一支商队。乱世的消息，像这碗麦酒——苦，但能暖身子。",
+    "蜜尔娜在你对面坐下，拿抹布擦着手：“听人说，你明天要出城？”她没等你答，又说，“交汇城这地方，留不住人。你走你的，别回头。”"
+  ], ifFlag:{ "f5_escort":[
+    "夜里，你在跛脚酒桶找了个角落。蜜尔娜擦着杯子，见你坐下，没问话，先给你倒了一碗麦酒。",
+    "她把酒桶上那盏灯拨亮了点：“听说你接了北境的镖？”她摇了摇头，“你这人，专挑刀口上的路走。”她顿了一下，从围裙口袋里摸出一只旧怀表，搁在桌上，“我男人以前也走镖。这东西他带了十年，最后人没回来，表回来了。你带上——不是好彩头，是个念想。”",
+    "你看着那只表。表壳磨得发亮，指针还在走。你没有推辞，收进了怀里。有些东西，接了就是接了。"
+  ] } },
+  options:[
+    {t:"（喝下这碗酒）明日启程",tier:{ok:["你把那碗麦酒一口喝了，搁下碗，起身。蜜尔娜没有送你，只是把灯又拨亮了一点。你推门出去，夜风迎面，街上的灯火还亮着。你忽然觉得，这座城你住了没几天，却像是住了很久。"],fail:[]},effects:{},go:"world_f5_city_4"}
+  ]
+};
+N["world_f5_city_4"] = {tag:"branch", place:"自由城邦 · 交汇城 · 城门口", where:"白昼", pace:"normal",
+  text:{ default:[
+    "离城那日，天没亮你就醒了。行囊收拾齐整，黑漆匣、铜钱、铁牌、信——几样东西各归其位。你最后看了一眼客栈的窗，窗台上还搁着昨夜那半碗麦酒，已经凉透了。",
+    "你走出城门。城门口的告示栏换了新的告示：粮价又涨了。你不再看，迈开步子，往选定的方向去了。",
+    "身后，交汇城的晨光漫起来，把城墙染成一片暖色。你没有回头——你知道，这座城记不记得你，都无所谓了。你要去的地方，名字还很远。"
+  ], ifFlag:{ "f5_escort":[
+    "离城那日，天没亮你就醒了。行囊收拾齐整，怀表贴身放着，指针的声音很轻，一下一下，像在数路。",
+    "你走出城门。镖局的木牌别在腰带上，硌着你的胯骨。城门口，老镖师居然在——他蹲在石狮子旁边抽烟，看见你，没说话，只朝北边扬了扬下巴。",
+    "你点头，迈开步子。身后，交汇城的晨光漫起来。你没有回头——你知道，从接下那面木牌起，你就不再是城里的人了。"
+  ], "f5_city_letter":[
+    "离城那日，天没亮你就醒了。行囊收拾齐整，衣袋里还揣着那封信——写给老嬷嬷的，到底没有寄。",
+    "你走出城门，在邮驿门口站了一会儿。晨光里，邮驿的伙计正在卸信袋。你最终还是把那封信掏出来，递给伙计：“东城孤儿院，老嬷嬷收。”",
+    "伙计接过去，往信袋里一塞。你看着那封信被塞进袋口，心里忽然松了一块。你转身出城，步子比来时轻了些。有些话，寄出去了，就是寄出去了。"
+  ] } },
+  options:[
+    {t:"（出城）",tier:{ok:["你迈出城门。交汇城被甩在身后，越走越远。前方的路还很长，你想起蜜尔娜的话：这城里有的是比你急的事。可你的事，比城里的都急。你紧了紧行囊，大步向前。"],fail:[]},effects:{flag:"f5_city_done"},go:"world_continue"}
   ]
 };
 })();
@@ -89515,7 +89612,15 @@ window.STORY_BLUEPRINT = {
 "world_f4_echo_1": {tag:"event", vol:"vol_north", arc:"arc_medici", pace:"normal"},
 "world_f4_echo_2": {tag:"event", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
 "world_f4_echo_3": {tag:"event", vol:"vol_race", arc:"arc_orc", pace:"normal"},
-"world_f4_echo_4": {tag:"event", vol:"vol_north", arc:"arc_medici", pace:"normal"}
+"world_f4_echo_4": {tag:"event", vol:"vol_north", arc:"arc_medici", pace:"normal"},
+"world_f5_city_1": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_2": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_3": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_4": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_1": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_2": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_3": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"},
+"world_f5_city_4": {tag:"branch", vol:"vol_north", arc:"arc_freedom", pace:"normal"}
 ,
 "world_purge_m1": {tag:"main", vol:"vol_church", arc:"arc_purge", pace:"normal"},
 "world_purge_m2": {tag:"main", vol:"vol_church", arc:"arc_purge", pace:"normal"},

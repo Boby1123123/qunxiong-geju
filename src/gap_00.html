@@ -866,6 +866,22 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
 .v74-rs-dot{width:14px;height:14px;border-radius:50%;background:rgba(122,90,16,.2);border:1px solid rgba(122,90,16,.5)}
 .v74-rs-dot.done{background:linear-gradient(135deg,#a8842a,#d4b45a)}
 .v74-rs-dot.now{background:linear-gradient(135deg,#6b4a10,#a8842a);box-shadow:0 0 6px rgba(166,124,46,.6)}
+/* /v92ui:welcome/ 空态欢迎主界面：未开始游戏时 story 区不再空白 */
+.v92-welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:62vh;max-width:44em;margin:0 auto;padding:36px 24px;text-align:center;position:relative}
+.v92-welcome::before{content:"";position:absolute;inset:12px;border:1px solid rgba(139,111,71,.35);border-radius:14px;pointer-events:none}
+.v92-welcome::after{content:"✦ ✧ ✦";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#f3ecdc;color:#8b6f47;padding:0 14px;font-size:12px;letter-spacing:6px}
+.v92-w-title{font-size:30px;font-weight:800;color:#4a3310;letter-spacing:4px;margin:8px 0 4px;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.v92-w-sub{font-size:14px;color:#8a7355;letter-spacing:3px;margin-bottom:18px}
+.v92-w-scroll{font-size:15px;line-height:1.9;color:#5d4a2c;max-width:34em;margin:0 auto 22px}
+.v92-w-scroll b{color:#8a6410;font-weight:700}
+.v92-w-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.v92-w-btn{min-height:46px;padding:10px 28px;font-size:16px;border-radius:10px;cursor:pointer;background:linear-gradient(135deg,#8b6f47,#a8842a);color:#fff;border:1px solid #6b4a10;letter-spacing:2px;box-shadow:0 2px 8px rgba(107,74,16,.25)}
+.v92-w-btn:hover{filter:brightness(1.08)}
+.v92-w-btn.ghost{background:transparent;color:#6b5322;border:1px solid #8b6f47;box-shadow:none}
+.v92-w-btn.ghost:hover{background:rgba(139,111,71,.08)}
+.v92-w-meta{font-size:12px;color:#9a8a6a;letter-spacing:1px;margin-top:6px}
+.v92-w-anchor{display:inline-block;margin:0 4px;font-size:13px;color:#8b6f47}
+.v92-w-anchors{margin-top:10px}
 </style>
 </head>
 <body>
@@ -919,7 +935,18 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
   <div id="v68-announce" aria-label="世界纪闻"><span class='va-ic'>🌍</span><span class='va-txt muted'>世界暂无大事。太安静了，安静得让人不安。</span><span class='va-btn' onclick='V68_UI.announceOpen()'>展开</span></div>
   <div id="main">
     <div id="stage">
-      <div id="story"></div>
+      <div id="story"><div class="v92-welcome">
+        <div class="v92-w-title">艾尔达大陆 · 群雄割据</div>
+        <div class="v92-w-sub">艾尔达历 4037 年 · 七锚之下 · 诸国并立</div>
+        <div class="v92-w-scroll">你从灰港的渡船上走下来，身无长物。<br>北境的风雪压着铁门关，自由城的酒旗招着过路的商旅，东境承天城的老墙根下，有人压着嗓子念叨<tt>金秤</tt>家的旧事——<br>这世道，<b>乱，且深</b>。八家势力各自打着算盘，五条主线正在地脉里缓缓抬头。<br>而你，还只是一个无名旅者。</div>
+        <div class="v92-w-btns">
+          <button class="v92-w-btn" onclick="showCreation()">⚔ 开始旅程</button>
+          <button class="v92-w-btn ghost" onclick="v34_openSavePanel()">📜 读取存档</button>
+          <button class="v92-w-btn ghost" onclick="v34_openSettings()">⚙ 设置</button>
+        </div>
+        <div class="v92-w-anchors"><span class="v92-w-anchor">M 地图</span><span class="v92-w-anchor">B 行囊</span><span class="v92-w-anchor">T 修炼</span><span class="v92-w-anchor">L 日志</span><span class="v92-w-anchor">F 势力</span><span class="v92-w-anchor">S 存档</span></div>
+        <div class="v92-w-meta">d100 六档判定 · 序章依出身/种族/理想而变 · 存档保存于本机</div>
+      </div></div>
       <div id="options"></div>
       <div id="v68-status"></div>
       <div id="ending"></div>

@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8723794,
-    "chunked_html_bytes_max": 6005575,
+    "game_html_bytes_max": 8726825,
+    "chunked_html_bytes_max": 6008606,
     "node_total_min": 4649,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8673794,
-    "chunked_html_bytes": 5905575,
+    "game_html_bytes": 8676825,
+    "chunked_html_bytes": 5908606,
     "node_total": 4699,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "F-6 结局互锁+战役战斗：battle/medici/2结局/epilogue 6节点+事件2",
+    "reason": "v92空态欢迎主界面：story区未开始不再空白（标题/引言/开始·读档·设置按钮）",
     "history": [
       {
         "date": "2026-09-09",
@@ -866,6 +866,13 @@
         "chunked_bytes": 5905575,
         "nodes": 4699,
         "reason": "F-6 结局互锁+战役战斗：battle/medici/2结局/epilogue 6节点+事件2"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8676825,
+        "chunked_bytes": 5908606,
+        "nodes": 4699,
+        "reason": "v92空态欢迎主界面：story区未开始不再空白（标题/引言/开始·读档·设置按钮）"
       }
     ]
   },

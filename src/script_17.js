@@ -4,6 +4,31 @@
   try{
     var MAP = {
       ZOOMS: [0.8, 1, 1.3, 1.7, 2.2, 2.8],
+      /* /upg09inj:hints/ UPG-09 区域解锁条件提示（纯展示数据，不改变 unlock 判定；随内容包扩充） */
+      HINTS: {
+        elf: "精灵王国的门扉由圣树守卫。传闻达成某些林中盟约后，使者自会引路。",
+        dwarf: "矮人山国的隧道封着铁闸。矿脉深处有人欠你一笔人情，闸门才会打开。",
+        orc: "兽人草原的狼烟只在战争与盟约时升起。草原的线，要从北境第三哨问起。",
+        east: "东部王国的关隘由承天城把守。东境的商路与官署，认银子也认官印。",
+        church: "圣城的光辉笼罩在净化令之下。教廷的门，向虔信者与猎物同时敞开。",
+        desert: "死亡沙漠吞噬过无数商队。驼铃声在商路尽头响起时，绿洲才会现身。",
+        west: "西境的元素荒原风暴不息。游侠学院的灯，照亮风墙另一侧的路。"
+      },
+      _eventCount: function(){
+        try{
+          var n = 0;
+          if(typeof EVENT_POOL_EXT !== 'undefined' && EVENT_POOL_EXT && EVENT_POOL_EXT.length){
+            var w = (typeof S !== 'undefined' && S && S.world) ? S.world : null;
+            for(var i=0;i<EVENT_POOL_EXT.length;i++){
+              if(w && w['ev_'+EVENT_POOL_EXT[i].id]) n++;
+            }
+          }
+          return n;
+        }catch(e){ return 0; }
+      },
+      _regionHint: function(rk){
+        try{ return MAP.HINTS[rk] || ''; }catch(e){ return ''; }
+      },
       zoomIdx: 1,
       _box: null,
       _sel: null,
@@ -36,9 +61,10 @@
         html += "<div style='display:flex;align-items:center;gap:8px;margin-bottom:8px;color:var(--text-secondary);font-size:13px'>";
         html += "<span>缩放</span><button class='btn' onclick='v67_map.zoom(1)'>＋</button><button class='btn' onclick='v67_map.zoom(-1)'>－</button>";
         html += "<span id='v67-map-zoom-label'>"+Math.round(z*100)+"%</span>";
-        html += "<span style='margin-left:auto;color:var(--text-muted)'>金圈 = 你所在</span></div>";
-        html += "<div style='position:relative;'>";
-        html += "<svg viewBox='"+vx+" "+vy+" "+ww+" "+wh+"' style='width:100%;height:440px;background:linear-gradient(160deg,#efe6cf,#e4d8bc);border:1px solid var(--border);border-radius:10px;' xmlns='http://www.w3.org/2000/svg'>";
+        html += "<button class='btn' onclick='v67_map.zoomReset()' title='重置缩放'>⌂</button>";
+        html += "<span style='margin-left:auto;color:var(--text-muted)' title='已触发世界事件数'>🗺 " + MAP._eventCount() + " 事件</span></div>";
+        html += "<div style='position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;'>";
+        html += "<svg viewBox='"+vx+" "+vy+" "+ww+" "+wh+"' style='width:100%;height:440px;background:linear-gradient(160deg,#efe6cf,#e4d8bc);border:1px solid var(--border);border-radius:10px;' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid meet'>";
         var gi, gx, gy;
         for(gx=d.minX; gx<=d.minX+d.w; gx+=100){ html += "<line x1='"+gx+"' y1='"+d.minY+"' x2='"+gx+"' y2='"+(d.minY+d.h)+"' stroke='rgba(90,70,30,.08)' stroke-width='1'/>"; }
         for(gy=d.minY; gy<=d.minY+d.h; gy+=100){ html += "<line x1='"+d.minX+"' y1='"+gy+"' x2='"+(d.minX+d.w)+"' y2='"+gy+"' stroke='rgba(90,70,30,.08)' stroke-width='1'/>"; }
@@ -63,11 +89,22 @@
           var label = locked ? "？？？" : c2.cn;
           html += "<text x='"+cx2+"' y='"+(cy2-r-6)+"' font-size='"+(isHere?14:13)+"' fill='"+(locked?"#8a7a5a":"#3a2e10")+"' text-anchor='middle' style='font-family:Georgia,serif'>"+label+"</text>";
           html += "</g>";
+          /* /upg09inj:locklabel/ UPG-09 未解锁区域解锁条件提示（只画一次：每区域第一个城市处） */
+          if(locked && c2.id.indexOf(rk+"_")===0 && c2.id===rk+"_"+Object.keys(R.cities)[0]){
+            var _hk = MAP._regionHint(c2.region);
+            if(_hk){
+              html += "<g><text x='"+cx2+"' y='"+(cy2+r+16)+"' font-size='11' fill='#8a7a5a' text-anchor='middle' style='font-family:Georgia,serif;font-style:italic'>"+_hk.slice(0,14)+"…</text></g>";
+            }
+          }
         }
         html += "</svg>";
         html += "<div id='v67-map-card' style='position:absolute;left:10px;top:10px;min-width:210px;max-width:300px;background:rgba(24,18,8,.88);color:#e8dcc0;border:1px solid #d4a017;border-radius:8px;padding:10px 12px;font-size:13px;display:none;box-shadow:0 6px 20px rgba(0,0,0,.4)'></div>";
         html += "</div>";
         return html;
+      },
+      zoomReset: function(){
+        MAP.zoomIdx = 1;
+        if(MAP._box){ MAP._box.innerHTML = MAP._render(); MAP._showCard(MAP._sel); }
       },
       zoom: function(dir){
         MAP.zoomIdx = Math.max(0, Math.min(MAP.ZOOMS.length-1, MAP.zoomIdx + dir));
@@ -85,7 +122,14 @@
         for(var rk in REGIONS){ var R=REGIONS[rk]; for(var ck in R.cities){ if((rk+"_"+ck)===id){ c=R.cities[ck]; } } }
         if(!c) return;
         var here = (typeof S!=="undefined" && S) ? S.loc : "";
+        var rk7 = id.split("_")[0];
+        var locked7 = !(REGIONS[rk7] && REGIONS[rk7].unlock);
         var html = "<div style='font-weight:bold;color:#d4a017;margin-bottom:4px'>"+c.cn+"</div>";
+        if(locked7){
+          var _hk7 = MAP._regionHint(rk7);
+          html += "<div style='color:#c98a5a;margin-bottom:6px;font-style:italic'>🔒 区域未解锁</div>";
+          if(_hk7) html += "<div style='opacity:.8;margin-bottom:6px'>解锁线索："+_hk7+"</div>";
+        }
         html += "<div style='opacity:.85;margin-bottom:6px'>"+(c.desc||"")+"</div>";
         if(here===id){ html += "<div style='color:#7fbf7f;margin-bottom:6px'>◆ 你正在此地</div>"; }
         html += "<div style='display:flex;gap:6px;flex-wrap:wrap'>";

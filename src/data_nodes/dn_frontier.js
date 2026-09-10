@@ -88,7 +88,8 @@ N["frontier_tower_gate"]={tag:"main",place:"北境 · 第三哨 · 钟楼脚下"
 "钟楼是第三哨最高的石头建筑，塔身被风雪打磨得圆润，砖缝里塞着干枯的苔藓。楼门虚掩着，门环上拴着一根红布条，被风吹得猎猎响。",
 "你推门进去，楼梯又窄又陡，光线从高处的小窗漏进来，一格一格地爬在墙上。越往上走，风越大，铜钟的嗡鸣声越清楚——不是有人在敲，是风穿过钟身，自己发出的声音。"
 ],options:[
-{t:"登上钟楼顶，看那口铜钟",go:"frontier_bell_1"}
+{t:"登上钟楼顶，看那口铜钟",go:"frontier_bell_1"},
+{t:"细看钟身：裂口里似乎嵌着什么东西",effects:{xp:8},go:"anchor_tower_1"}
 ]};
 
 N["frontier_bell_1"]={tag:"main",place:"北境 · 第三哨 · 钟楼顶",where:"白昼",pace:"deep",sceneTitle:"铜钟之下（一）",arc:"arc_frontier",vol:"vol_north",text:[

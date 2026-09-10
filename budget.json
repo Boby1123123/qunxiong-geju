@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7689059,
-    "chunked_html_bytes_max": 5082882,
-    "node_total_min": 4285,
+    "game_html_bytes_max": 7721640,
+    "chunked_html_bytes_max": 5115463,
+    "node_total_min": 4309,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7639059,
-    "chunked_html_bytes": 4982882,
-    "node_total": 4335,
+    "game_html_bytes": 7671640,
+    "chunked_html_bytes": 5015463,
+    "node_total": 4359,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "M4 治理词替换微增 27B",
+    "reason": "M5 治理词替换微增 30B",
     "history": [
       {
         "date": "2026-09-09",
@@ -411,6 +411,20 @@
         "chunked_bytes": 4982882,
         "nodes": 4335,
         "reason": "M4 治理词替换微增 27B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7671610,
+        "chunked_bytes": 5015433,
+        "nodes": 4359,
+        "reason": "M5 锚线 24 节点+6 事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7671640,
+        "chunked_bytes": 5015463,
+        "nodes": 4359,
+        "reason": "M5 治理词替换微增 30B"
       }
     ]
   },

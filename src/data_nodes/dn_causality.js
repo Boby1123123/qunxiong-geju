@@ -100,7 +100,11 @@ window.CAUSALITY_LEDGER = [
 {id:"led_alumni_07",type:"伏笔",desc:"矮人矿洞石室与标路记号，莫里线呼应神谕枯井波浪纹",plant:"alumni_mori_5",reap:"anchor_mine_1",status:"open",world:"vol_academy"},
 {id:"led_alumni_08",type:"伏笔",desc:"圣痕封伤与封纹铁片，艾琳娜线指向净仪与圣痕司隐秘",plant:"alumni_elena_4",reap:"anchor_church_1",status:"open",world:"vol_academy"},
 {id:"led_alumni_09",type:"伏笔",desc:"铜钟裂口与钟楼铁板地图，老铁线标记北境地下门扉",plant:"alumni_tie_3",reap:"anchor_tower_1",status:"open",world:"vol_academy"},
-{id:"led_alumni_10",type:"伏笔",desc:"导师遗物黄铜钥匙与七块铁碑文，指向七锚封镇真相",plant:"grad_mentor_3",reap:"goldscale_1",status:"open",world:"vol_academy"}
+{id:"led_alumni_10",type:"伏笔",desc:"导师遗物黄铜钥匙与七块铁碑文，指向七锚封镇真相",plant:"grad_mentor_3",reap:"goldscale_1",status:"open",world:"vol_academy"},
+{id:"led_anchor_01",type:"伏笔",desc:"七锚之首·哨楼锚：铜叶与半枚铁牌，守钟人传承",plant:"anchor_tower_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
+{id:"led_anchor_02",type:"伏笔",desc:"七锚之二·矿洞锚：铁门铁牌与锚形铜印，刘矿头旧线",plant:"anchor_mine_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
+{id:"led_anchor_03",type:"伏笔",desc:"七锚之三·墓园锚：无字碑下锚形玉印，金秤守门人三代",plant:"anchor_grave_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
+{id:"led_anchor_04",type:"伏笔",desc:"七锚之四·学院金库锚：铁锚印与陆昭失窃铁牌，指向承天城",plant:"anchor_vault_1",reap:"anchor_finale_1",status:"open",world:"vol_academy"}
 
 ];
 /* ===== /v91inj:ledger:end/ ===== */

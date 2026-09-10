@@ -591,7 +591,31 @@ window.STORY_BLUEPRINT = {
   "alumni_squad_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
   "alumni_squad_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
   "alumni_squad_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
-  "grad_home_8": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"}
+  "grad_home_8": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "anchor_tower_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_tower_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_tower_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_tower_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_tower_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_tower_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_mine_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_mine_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_mine_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_mine_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_mine_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_mine_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_grave_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_grave_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_grave_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_grave_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"epic"},
+  "anchor_grave_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_grave_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_vault_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "anchor_vault_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "anchor_vault_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "anchor_vault_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"epic"},
+  "anchor_vault_5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "anchor_vault_6": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"}
 
 
 

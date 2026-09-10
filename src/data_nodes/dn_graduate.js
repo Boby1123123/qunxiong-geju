@@ -266,7 +266,7 @@ N["grad_stay_8"]={tag:"main",place:"艾尔达魔法学院 · 钟楼",where:"白�
 "口袋里，铁牌和锈钥匙沉甸甸的。北边墓园那封信，你翻来覆去看了十几遍——“碑下的东西，撑不了几年了。”",
 "你知道，留校不是终点。这座学院，是你出发的地方。北边，有人在等一块铁牌。"
 ],options:[
-{t:"（择日北上，先去北境第三哨落脚）",effects:{xp:15,flag:"grad_path_stay_north"},go:"frontier_city"}
+{t:"（择日北上，先去北境第三哨落脚）",effects:{xp:15,flag:"grad_path_stay_north"},go:"anchor_grave_1"}
 ,
 {t:"（顺路去驿站，看看有没有信）",effects:{xp:5},go:"alumni_hub"}
 ]};

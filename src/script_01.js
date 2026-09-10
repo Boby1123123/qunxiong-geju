@@ -157,7 +157,13 @@ const EVENT_POOL_EXT = [
   {id:"alumni_draft",day:218,cls:"商机",text:"北境发布征兵令，铁门关开出了前所未有的饷银。商队闻风而动，往北的粮价一夜涨了三成。"},
   {id:"alumni_hall",day:242,cls:"奇遇",text:"学院动工重建旧礼堂。工人在墙根下挖出一块刻着花纹的旧基石，被送到典藏室封存。"},
   {id:"alumni_home_call",day:267,cls:"奇遇",text:"草原捎来口信：洛克在部落里立了功，得了一顶镶铜的皮帽。信里说，狼群今年没再南迁。"},
-  {id:"alumni_plague",day:292,cls:"天灾",text:"东境入冬后疫病又起，行会封了三个村子。洛卡留在一线，托人带话：药还够，人还撑得住。"}
+  {id:"alumni_plague",day:292,cls:"天灾",text:"东境入冬后疫病又起，行会封了三个村子。洛卡留在一线，托人带话：药还够，人还撑得住。"},
+  {id:"anchor_tower_sound",day:74,cls:"奇遇",text:"第三哨铜钟夜半又响了一记，守钟老卒说是钟在自鸣，哨上人心惶惶。"},
+  {id:"anchor_mine_cave",day:134,cls:"天灾",text:"第三哨外矿洞二次坍塌，洞口彻底封死，矿工们改去河滩淘沙。"},
+  {id:"anchor_grave_light",day:188,cls:"奇遇",text:"北境墓园无字碑前，夜里浮起一点青白的光，有人说是碑下的东西在翻身。"},
+  {id:"anchor_vault_audit",day:214,cls:"人祸",text:"学院金库年内二次盘点，账房查出三卷旧档失踪，院长下令彻查内贼。"},
+  {id:"anchor_world_shake",day:234,cls:"天灾",text:"北境与东境交界处地脉轻震，井水发浑，老人说是地底有什么东西在换气。"},
+  {id:"anchor_birds_south",day:271,cls:"奇遇",text:"入冬前群鸟反常南飞，连北境深山的雪鸮都弃巢而去，猎户说这是大变的兆头。"}
 
 ]; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
 const RACES = {"human": {"cn": "人类", "desc": "大陆数量最多、适应力最强的种族。七大地域孕育出七种截然不同的活法。", "ic": "🧑"}, "half": {"cn": "混血", "desc": "人类与其他种族的血脉交汇。长寿与短命、偏见与机遇，都写在血脉里。", "ic": "🌓"}, "elf": {"cn": "精灵", "desc": "长寿的森林之民。魔法天赋流淌在血脉里，岁月在他们脸上刻下宁静。", "ic": "🧝"}, "dwarf": {"cn": "矮人", "desc": "山腹与熔炉之子。短矮的身躯里装着铁一般的意志与手艺。", "ic": "🧔"}, "orc": {"cn": "兽人", "desc": "草原与蛮荒的战士。力量与战意是他们的第一语言。", "ic": "👹"}, "halfling": {"cn": "半身人", "desc": "田野与市井间的小个子。幸运仿佛偏爱他们，麻烦也总绕着他们走。", "ic": "🍀"}, "dragon": {"cn": "龙裔", "desc": "体内流淌着巨龙血脉的古老种族。鳞片、吐息与血脉的骄傲。", "ic": "🐉"}}; window.RACES = RACES; /* /v60inj:winx2:RACES/ */

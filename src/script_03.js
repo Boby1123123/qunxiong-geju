@@ -45,6 +45,7 @@ function applyDefaults(s){
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
   if(s.settings.globalHooks===undefined) s.settings.globalHooks=true;
   if(!s.hooksState) s.hooksState={};
+  if(!s.chronicle) s.chronicle=[];
     if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
@@ -3778,6 +3779,69 @@ window.v92_scanLedgerReminder = function(){
   }catch(e){ try{ console.log("[upg14:ledger:err]", e); }catch(_){} }
 };
 
+/* ===== /upg17inj:chronicle/ UPG-17 编年史系统（世界史自适应叙事）
+ * v92_chronicleAdd：写入 {date,eventType,description,importance,discoveredBy}，容量 200 滚动。
+ * v92_chronicleCheck(node)：按 CHRONICLE_RULES 匹配节点 → 去重 → 写入（玩家没到过的节点不记录）。
+ * v92_chronicleReview：结局节点渲染时生成"艾尔达大陆编年史回顾"，按玩家发现顺序叙事。
+ * 独立键 S.chronicle（applyDefaults 兜底）；不触碰判定公式 / writeNext 核心语义 / choose。 ===== */
+window.v92_chronicleAdd = function(eventType, description, importance){
+  try{
+    if(!S) return;
+    if(!S.chronicle) S.chronicle = [];
+    S.chronicle.push({
+      date: (typeof S.day==='number'?S.day:0),
+      eventType: String(eventType||"事件"),
+      description: String(description||""),
+      importance: (typeof importance==='number'?importance:1),
+      discoveredBy: String(curNode||"")
+    });
+    if(S.chronicle.length > 200) S.chronicle.splice(0, S.chronicle.length - 200);
+    try{ console.log("[upg17inj:chronicle]", eventType, S.day); }catch(e){}
+  }catch(e){ try{ console.log("[upg17:chronicle:err]", e); }catch(_){} }
+};
+window.v92_chronicleCheck = function(node){
+  try{
+    if(!S || !node || !node.id) return;
+    if(!S.chronicle) S.chronicle = [];
+    const R = window.CHRONICLE_RULES; if(!R || !R.length) return;
+    const nid = String(node.id);
+    for(let i=0;i<R.length;i++){
+      const r = R[i];
+      const hit = (r.kind==='exact') ? (nid===r.match) : (nid.indexOf(r.match)===0);
+      if(!hit) continue;
+      // 去重：同 eventType 已存在于最近 200 条则不重复记录
+      let dup = false;
+      for(let k=S.chronicle.length-1;k>=Math.max(0,S.chronicle.length-30);k--){
+        if(S.chronicle[k] && S.chronicle[k].eventType===r.eventType){ dup=true; break; }
+      }
+      if(dup) continue;
+      let desc = String(r.desc||"");
+      desc = desc.split("{n}").join(String(S.name||"旅人"));
+      desc = desc.split("{homeland}").join(String(S.homeland||""));
+      v92_chronicleAdd(r.eventType, desc, r.importance);
+    }
+  }catch(e){ try{ console.log("[upg17:check:err]", e); }catch(_){} }
+};
+window.v92_chronicleReview = function(){
+  try{
+    if(!S || !S.chronicle || !S.chronicle.length) return null;
+    const ev = [];
+    for(let i=0;i<S.chronicle.length;i++){
+      const c = S.chronicle[i];
+      if(!c) continue;
+      if(c.importance >= 2 && c.description) ev.push(c);
+    }
+    if(!ev.length) return null;
+    const lines = ["——艾尔达大陆编年史·片段——"];
+    lines.push("（按你亲历的顺序，这些事被记了下来）");
+    for(let i=0;i<ev.length;i++){
+      const c = ev[i];
+      lines.push("〔第" + c.date + "日 · " + c.eventType + "〕" + c.description);
+    }
+    return lines;
+  }catch(e){ try{ console.log("[upg17:review:err]", e); }catch(_){} return null; }
+};
+
 /* ===== /v92inj:mem2/ UPG-02 记忆注入 v3：双层加权检索（只读钩子；世界规则层=LOREBOOK constant，事件记忆层=CAUSALITY_LEDGER 按 keywords×importance×recency Top-K；开关 S.settings.memoryBank；不写任何状态） ===== */
 window.v92_memoryBank = function(node){
   try{
@@ -4050,6 +4114,15 @@ function writeNext(_v46f){
         /* /upg14inj:hookscan/ UPG-14 全局钩子扫描（节点切换后；事件池新增触发不改变既有判定） */
     try{ if(window.v92_scanHooks) v92_scanHooks(); }catch(e){}
     try{ if(window.v92_scanLedgerReminder) v92_scanLedgerReminder(); }catch(e){}
+    /* /upg17inj:cron/ UPG-17 编年史：节点匹配记录 + 结局回顾注入 */
+    try{ if(window.v92_chronicleCheck) v92_chronicleCheck(node); }catch(e){}
+    /* /upg17inj:review/ UPG-17 结局回顾（ending_* 节点渲染时，按发现顺序生成编年史回顾；非结局零注入） */
+    try{
+      if(window.v92_chronicleReview && typeof node!=='undefined' && node && String(node.id||"").indexOf("ending_")===0){
+        var _cv = v92_chronicleReview();
+        if(_cv && _cv.length){ _txt = _cv.concat(_txt); }
+      }
+    }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */

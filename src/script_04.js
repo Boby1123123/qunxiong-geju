@@ -8184,8 +8184,9 @@ function v74_journalAppend(appended){
 }
 window.v74_journalAppend = v74_journalAppend;
 
-function v74_openJournal(){
+function v74_openJournal(tab){
   try{
+    tab = tab || 'journal';
     var j = {};
     try{ j = JSON.parse(localStorage.getItem(window.ELDA_JOURNAL_KEY)||'{}') || {}; }catch(e){ j={}; }
     var days = Object.keys(j.days||{}).sort(function(a,b){ return parseInt(a.slice(3),10)-parseInt(b.slice(3),10); });
@@ -8207,9 +8208,35 @@ function v74_openJournal(){
         html += '<p style="margin:4px 0;font-size:14px">'+String(d.entries[k]).replace(/</g,'&lt;')+'</p>';
       }
     }
-    html += '</div><div class="panel-footer" style="display:flex;gap:8px;justify-content:space-between">'
-      +'<button class="btn" onclick="v74_clearJournal()">🗑 清空手记</button>'
-      +'<button class="btn btn-gold" onclick="closePanel()">合上</button></div></div>';
+    html += '</div>';
+    /* /upg17inj:jtabs/ UPG-17 编年史分页：手记 / 编年史 */
+    html += '<div class="panel-footer" style="display:flex;gap:8px;justify-content:space-between;align-items:center">'
+      +'<div style="display:flex;gap:6px">'
+      +'<button class="btn'+(tab==='journal'?' btn-gold':'')+'" onclick="v74_openJournal(\'journal\')">📔 手记</button>'
+      +'<button class="btn'+(tab==='chronicle'?' btn-gold':'')+'" onclick="v74_openJournal(\'chronicle\')">📜 编年史</button>'
+      +'</div>'
+      +(tab==='journal'
+        ? '<button class="btn" onclick="v74_clearJournal()">🗑 清空手记</button>'
+        : '<button class="btn btn-gold" onclick="closePanel()">合上</button>')
+      +'</div></div>';
+    if(tab==='chronicle'){
+      /* 编年史分页：S.chronicle 按发现顺序列出 */
+      var cbody = '';
+      var ch = (typeof S!=='undefined' && S && S.chronicle) ? S.chronicle : [];
+      if(ch && ch.length){
+        for(var ci=0; ci<ch.length; ci++){
+          var ce = ch[ci];
+          if(!ce) continue;
+          cbody += '<div style="margin:8px 0;padding:8px 10px;border-left:3px solid var(--m-04,#C9A7E8);background:rgba(201,167,232,0.08);border-radius:6px">'
+            +'<div style="font-size:12px;color:var(--text-muted)">第'+String(ce.date||0)+'日 · '+String(ce.eventType||'').replace(/</g,'&lt;')+' · 重要度'+String(ce.importance||1)+'</div>'
+            +'<div style="font-size:14px;margin-top:2px">'+String(ce.description||'').replace(/</g,'&lt;')+'</div></div>';
+        }
+        cbody += '<div style="font-size:12px;color:var(--text-muted);margin-top:6px">——按你亲历的顺序记录。你没有见证的事，编年史上不会出现。</div>';
+      } else {
+        cbody = '<p style="color:var(--text-muted);font-size:14px">编年史还是空的。你走过的路、做过的选择，会一条一条被记在这里。</p>';
+      }
+      html = html.replace('</div></div>', cbody+'</div></div>');
+    }
     openModal(elFromHtml(html));
   }catch(e){ try{ console.log('journal open:', e); }catch(_){} }
 }

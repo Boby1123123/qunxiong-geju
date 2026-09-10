@@ -26396,6 +26396,7 @@ function applyDefaults(s){
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
   if(s.settings.globalHooks===undefined) s.settings.globalHooks=true;
   if(!s.hooksState) s.hooksState={};
+  if(!s.chronicle) s.chronicle=[];
     if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
@@ -30129,6 +30130,69 @@ window.v92_scanLedgerReminder = function(){
   }catch(e){ try{ console.log("[upg14:ledger:err]", e); }catch(_){} }
 };
 
+/* ===== /upg17inj:chronicle/ UPG-17 编年史系统（世界史自适应叙事）
+ * v92_chronicleAdd：写入 {date,eventType,description,importance,discoveredBy}，容量 200 滚动。
+ * v92_chronicleCheck(node)：按 CHRONICLE_RULES 匹配节点 → 去重 → 写入（玩家没到过的节点不记录）。
+ * v92_chronicleReview：结局节点渲染时生成"艾尔达大陆编年史回顾"，按玩家发现顺序叙事。
+ * 独立键 S.chronicle（applyDefaults 兜底）；不触碰判定公式 / writeNext 核心语义 / choose。 ===== */
+window.v92_chronicleAdd = function(eventType, description, importance){
+  try{
+    if(!S) return;
+    if(!S.chronicle) S.chronicle = [];
+    S.chronicle.push({
+      date: (typeof S.day==='number'?S.day:0),
+      eventType: String(eventType||"事件"),
+      description: String(description||""),
+      importance: (typeof importance==='number'?importance:1),
+      discoveredBy: String(curNode||"")
+    });
+    if(S.chronicle.length > 200) S.chronicle.splice(0, S.chronicle.length - 200);
+    try{ console.log("[upg17inj:chronicle]", eventType, S.day); }catch(e){}
+  }catch(e){ try{ console.log("[upg17:chronicle:err]", e); }catch(_){} }
+};
+window.v92_chronicleCheck = function(node){
+  try{
+    if(!S || !node || !node.id) return;
+    if(!S.chronicle) S.chronicle = [];
+    const R = window.CHRONICLE_RULES; if(!R || !R.length) return;
+    const nid = String(node.id);
+    for(let i=0;i<R.length;i++){
+      const r = R[i];
+      const hit = (r.kind==='exact') ? (nid===r.match) : (nid.indexOf(r.match)===0);
+      if(!hit) continue;
+      // 去重：同 eventType 已存在于最近 200 条则不重复记录
+      let dup = false;
+      for(let k=S.chronicle.length-1;k>=Math.max(0,S.chronicle.length-30);k--){
+        if(S.chronicle[k] && S.chronicle[k].eventType===r.eventType){ dup=true; break; }
+      }
+      if(dup) continue;
+      let desc = String(r.desc||"");
+      desc = desc.split("{n}").join(String(S.name||"旅人"));
+      desc = desc.split("{homeland}").join(String(S.homeland||""));
+      v92_chronicleAdd(r.eventType, desc, r.importance);
+    }
+  }catch(e){ try{ console.log("[upg17:check:err]", e); }catch(_){} }
+};
+window.v92_chronicleReview = function(){
+  try{
+    if(!S || !S.chronicle || !S.chronicle.length) return null;
+    const ev = [];
+    for(let i=0;i<S.chronicle.length;i++){
+      const c = S.chronicle[i];
+      if(!c) continue;
+      if(c.importance >= 2 && c.description) ev.push(c);
+    }
+    if(!ev.length) return null;
+    const lines = ["——艾尔达大陆编年史·片段——"];
+    lines.push("（按你亲历的顺序，这些事被记了下来）");
+    for(let i=0;i<ev.length;i++){
+      const c = ev[i];
+      lines.push("〔第" + c.date + "日 · " + c.eventType + "〕" + c.description);
+    }
+    return lines;
+  }catch(e){ try{ console.log("[upg17:review:err]", e); }catch(_){} return null; }
+};
+
 /* ===== /v92inj:mem2/ UPG-02 记忆注入 v3：双层加权检索（只读钩子；世界规则层=LOREBOOK constant，事件记忆层=CAUSALITY_LEDGER 按 keywords×importance×recency Top-K；开关 S.settings.memoryBank；不写任何状态） ===== */
 window.v92_memoryBank = function(node){
   try{
@@ -30401,6 +30465,15 @@ function writeNext(_v46f){
         /* /upg14inj:hookscan/ UPG-14 全局钩子扫描（节点切换后；事件池新增触发不改变既有判定） */
     try{ if(window.v92_scanHooks) v92_scanHooks(); }catch(e){}
     try{ if(window.v92_scanLedgerReminder) v92_scanLedgerReminder(); }catch(e){}
+    /* /upg17inj:cron/ UPG-17 编年史：节点匹配记录 + 结局回顾注入 */
+    try{ if(window.v92_chronicleCheck) v92_chronicleCheck(node); }catch(e){}
+    /* /upg17inj:review/ UPG-17 结局回顾（ending_* 节点渲染时，按发现顺序生成编年史回顾；非结局零注入） */
+    try{
+      if(window.v92_chronicleReview && typeof node!=='undefined' && node && String(node.id||"").indexOf("ending_")===0){
+        var _cv = v92_chronicleReview();
+        if(_cv && _cv.length){ _txt = _cv.concat(_txt); }
+      }
+    }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */
@@ -40123,8 +40196,9 @@ function v74_journalAppend(appended){
 }
 window.v74_journalAppend = v74_journalAppend;
 
-function v74_openJournal(){
+function v74_openJournal(tab){
   try{
+    tab = tab || 'journal';
     var j = {};
     try{ j = JSON.parse(localStorage.getItem(window.ELDA_JOURNAL_KEY)||'{}') || {}; }catch(e){ j={}; }
     var days = Object.keys(j.days||{}).sort(function(a,b){ return parseInt(a.slice(3),10)-parseInt(b.slice(3),10); });
@@ -40146,9 +40220,35 @@ function v74_openJournal(){
         html += '<p style="margin:4px 0;font-size:14px">'+String(d.entries[k]).replace(/</g,'&lt;')+'</p>';
       }
     }
-    html += '</div><div class="panel-footer" style="display:flex;gap:8px;justify-content:space-between">'
-      +'<button class="btn" onclick="v74_clearJournal()">🗑 清空手记</button>'
-      +'<button class="btn btn-gold" onclick="closePanel()">合上</button></div></div>';
+    html += '</div>';
+    /* /upg17inj:jtabs/ UPG-17 编年史分页：手记 / 编年史 */
+    html += '<div class="panel-footer" style="display:flex;gap:8px;justify-content:space-between;align-items:center">'
+      +'<div style="display:flex;gap:6px">'
+      +'<button class="btn'+(tab==='journal'?' btn-gold':'')+'" onclick="v74_openJournal(\'journal\')">📔 手记</button>'
+      +'<button class="btn'+(tab==='chronicle'?' btn-gold':'')+'" onclick="v74_openJournal(\'chronicle\')">📜 编年史</button>'
+      +'</div>'
+      +(tab==='journal'
+        ? '<button class="btn" onclick="v74_clearJournal()">🗑 清空手记</button>'
+        : '<button class="btn btn-gold" onclick="closePanel()">合上</button>')
+      +'</div></div>';
+    if(tab==='chronicle'){
+      /* 编年史分页：S.chronicle 按发现顺序列出 */
+      var cbody = '';
+      var ch = (typeof S!=='undefined' && S && S.chronicle) ? S.chronicle : [];
+      if(ch && ch.length){
+        for(var ci=0; ci<ch.length; ci++){
+          var ce = ch[ci];
+          if(!ce) continue;
+          cbody += '<div style="margin:8px 0;padding:8px 10px;border-left:3px solid var(--m-04,#C9A7E8);background:rgba(201,167,232,0.08);border-radius:6px">'
+            +'<div style="font-size:12px;color:var(--text-muted)">第'+String(ce.date||0)+'日 · '+String(ce.eventType||'').replace(/</g,'&lt;')+' · 重要度'+String(ce.importance||1)+'</div>'
+            +'<div style="font-size:14px;margin-top:2px">'+String(ce.description||'').replace(/</g,'&lt;')+'</div></div>';
+        }
+        cbody += '<div style="font-size:12px;color:var(--text-muted);margin-top:6px">——按你亲历的顺序记录。你没有见证的事，编年史上不会出现。</div>';
+      } else {
+        cbody = '<p style="color:var(--text-muted);font-size:14px">编年史还是空的。你走过的路、做过的选择，会一条一条被记在这里。</p>';
+      }
+      html = html.replace('</div></div>', cbody+'</div></div>');
+    }
     openModal(elFromHtml(html));
   }catch(e){ try{ console.log('journal open:', e); }catch(_){} }
 }
@@ -50769,6 +50869,39 @@ window.CHAPTERS_I12 = {
   "ending_prelude_hub":     {vol:"终章", title:"序章回响", sub:""},
   "ending_seal_chain":      {vol:"终章", title:"封印之链 · 七环", sub:""}
 };
+
+/* /u1inj:data-nodes:dn_chronicle.js/ */
+/* /u1inj:data-nodes:dn_chronicle.js/ UPG-17 编年史系统（世界史自适应叙事）
+ * 纯数据层：CHRONICLE_RULES = 编年史自动记录规则表。
+ * 每条 {match, kind(prefix|exact), eventType, desc, importance(1-5)}：
+ *   writeNext 渲染节点时，v92_chronicleCheck 按 kind 匹配 node.id，
+ *   命中且该 eventType 尚未记录（S.chronicle 最近 200 条内去重）→ v92_chronicleAdd 写入。
+ * desc 支持 {n} 占位（游戏名/主角名），由引擎替换。
+ * 玩家不知道的事件不出现：只有玩家实际到达的节点才会触发记录（Heaven's Vault 知识模型）。
+ */
+const CHRONICLE_RULES = [
+  {match:"origin_", kind:"prefix", eventType:"出身", desc:"{n} 自 {homeland} 出发，踏上了流浪之路。", importance:1},
+  {match:"fc_", kind:"prefix", eventType:"自由城", desc:"{n} 抵达自由城邦，在这座灰与金的城市里谋生。", importance:1},
+  {match:"acad_", kind:"prefix", eventType:"学院", desc:"{n} 进入艾尔达魔法学院，成为一名学生。", importance:2},
+  {match:"grad_", kind:"prefix", eventType:"毕业", desc:"{n} 完成学业，选择了毕业后的道路。", importance:3},
+  {match:"goldscale_", kind:"prefix", eventType:"金秤真相", desc:"金秤家族的真相传到了 {n} 耳中——守门人世家的秘密。", importance:5},
+  {match:"anchor_", kind:"prefix", eventType:"七锚", desc:"{n} 触及了七锚之一的秘密。", importance:5},
+  {match:"frontier_bell", kind:"prefix", eventType:"铁牌", desc:"第三哨的铜钟铭文，把 {n} 引向铁牌之谜。", importance:4},
+  {match:"frontier_seal", kind:"prefix", eventType:"封印", desc:"{n} 在第三哨参与了封印抉择。", importance:4},
+  {match:"alumni_ata", kind:"prefix", eventType:"神谕", desc:"{n} 从狼骨与神谕之地，听到了兽人的古老声音。", importance:4},
+  {match:"warphase_", kind:"prefix", eventType:"战争", desc:"七阶段战争推进，{n} 亲历了战局变化。", importance:4},
+  {match:"purge_", kind:"prefix", eventType:"净化令", desc:"教会净化令的风暴刮过，{n} 身在局中。", importance:3},
+  {match:"silver_", kind:"prefix", eventType:"银穗商路", desc:"银穗商路的风波波及 {n}。", importance:3},
+  {match:"seal_", kind:"prefix", eventType:"深渊封印", desc:"深渊封印的松动，让 {n} 看到了裂隙。", importance:4},
+  {match:"orc_", kind:"prefix", eventType:"兽人战争", desc:"兽人诸部的战争逼近，{n} 见证了大潮。", importance:4},
+  {match:"church_", kind:"prefix", eventType:"教会", desc:"{n} 深入光明教会的核心事务。", importance:3},
+  {match:"dn_desert", kind:"prefix", eventType:"沙漠", desc:"{n} 穿行死亡沙漠，与沙海中的秘密相遇。", importance:2},
+  {match:"dn_west", kind:"prefix", eventType:"西境", desc:"{n} 踏足西境荒原，见识了元素风暴。", importance:2},
+  {match:"dn_east", kind:"prefix", eventType:"东境", desc:"{n} 来到东境承天城，卷入帝京风云。", importance:3},
+  {match:"i_bond_", kind:"prefix", eventType:"羁绊", desc:"{n} 与一位重要之人结下羁绊。", importance:2},
+  {match:"ending_", kind:"prefix", eventType:"终章", desc:"{n} 的故事走到了终点。", importance:5}
+];
+if (typeof window !== 'undefined') { window.CHRONICLE_RULES = CHRONICLE_RULES; }
 
 /* /u1inj:data-nodes:dn_church.js/ */
 /* /bd3inj:church/ BD-3 光明教会辖区包（三大路线 · 线二 内容包 3）

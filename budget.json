@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8460376,
-    "chunked_html_bytes_max": 5743897,
+    "game_html_bytes_max": 8469115,
+    "chunked_html_bytes_max": 5752536,
     "node_total_min": 4581,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8410376,
-    "chunked_html_bytes": 5643897,
+    "game_html_bytes": 8419115,
+    "chunked_html_bytes": 5652536,
     "node_total": 4631,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UPG-14 事件池全局钩子 5钩子+引擎扫描+账本提醒",
+    "reason": "UPG-17 编年史系统 20规则+3API+面板分页",
     "history": [
       {
         "date": "2026-09-09",
@@ -677,6 +677,13 @@
         "chunked_bytes": 5643897,
         "nodes": 4631,
         "reason": "UPG-14 事件池全局钩子 5钩子+引擎扫描+账本提醒"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8419115,
+        "chunked_bytes": 5652536,
+        "nodes": 4631,
+        "reason": "UPG-17 编年史系统 20规则+3API+面板分页"
       }
     ]
   },

@@ -4727,6 +4727,7 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
         <button class="btn" id="btn-strong" title="强者名册 (G)">⚔ 强者</button>
         <button class="btn" id="btn-chronicle" title="编年史 (C)">📖 编年史</button>
         <button class="btn" id="btn-threads" title="叙事线 (N)：并行叙事线进度" onclick="v92_openThreadPanel()">☰ 叙事线</button>
+        <button class="btn" id="btn-world" title="世界局势 (W)：九域现状与主线走向" onclick="v92_openWorldPanel()">🌍 局势</button>
         <button class="btn" id="btn-save" title="存档 (Ctrl+S)" onclick="v34_openSavePanel()">💾 存档</button>
         <button class="btn" id="btn-settings" title="设置" onclick="v34_openSettings()">⚙ 设置</button>
         <button class="btn" id="btn-immersive" title="沉浸模式 (I)：隐藏界面只读剧情" onclick="V68_UI.immersive()">📖 沉浸</button>
@@ -26401,6 +26402,7 @@ function applyDefaults(s){
     if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
+    if(!s.settings.npcWeave) s.settings.npcWeave=true; /* W-N3 NPC 状态回指（默认开，旧档兜底） */
   /* /v92inj:defaults/ TQ-1 天气句开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.weatherLine===undefined) s.settings.weatherLine=true;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
@@ -30460,11 +30462,120 @@ window.v92_openThreadPanel = function(){
       if(t.pos){ h += "<button class='btn' style='padding:4px 10px;font-size:12px' onclick='try{closeModal();v488_go(\""+t.pos+"\");}catch(e){}'>前往</button>"; }
       h += "</div></div>";
     }
+    var npcs = (typeof window.v92_npcStatusList==="function") ? window.v92_npcStatusList() : [];
+    if(npcs && npcs.length){
+      h += "<div style='margin-top:14px;border-top:1px solid var(--line,#2d4566);padding-top:10px'><b style='color:var(--gold,#e8c468)'>大陆人物动态</b><span class='mini' style='color:var(--dim)'>（共 "+npcs.length+" 位——他们在你视线之外，也在过日子）</span></div>";
+      var _n = Math.min(npcs.length, 8);
+      for(var _i=0;_i<_n;_i++){
+        var _s = npcs[_i];
+        h += "<p style='margin:6px 0;line-height:1.7'><b>"+(_s.name||"")+"</b> <span class='mini' style='color:var(--dim)'>"+(_s.mood||"")+"</span><br/><span style='color:var(--text)'>"+(_s.doing||"")+"</span></p>";
+      }
+    }
     h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 关闭</button>";
     box.innerHTML = h;
     openModal(box);
   }catch(e){ try{ console.log("[pn3:panel:err]",e); }catch(_){} }
 };
+/* /wn1inj:snap/ W-N1 世界局势快照（活的世界）：只读 S.day/REGIONS/flags 生成九域局势
+ * 与既有 v92 worldBanner（顶栏"世界暂无大事"）并存：banner 是短句，本面板是完整快照。
+ */
+
+/* /wn2inj:npc/ W-N2 NPC 独立状态机（推导式）：只读 S.day/npcRelations，无状态写入 */
+window.v92_npcStatus = function(npcId){
+  try{
+    var ns = window.NPC_STATE; if(!ns) return null;
+    var d = (S && typeof S.day==="number") ? S.day : 0;
+    var item = null;
+    for(var i=0;i<ns.length;i++){ if(ns[i].id===npcId){ item=ns[i]; break; } }
+    if(!item || !item.stages || !item.stages.length) return null;
+    var st = item.stages[0];
+    for(var j=0;j<item.stages.length;j++){ if(d >= item.stages[j].day){ st = item.stages[j]; } }
+    var rel = 0;
+    if(S && S.npcRelations){ rel = S.npcRelations[npcId] || 0; }
+    var mood = "";
+    if(rel>=60) mood="（与你是挚交）";
+    else if(rel<=-20) mood="（与你结过梁子）";
+    return {id:npcId, name:item.name, where:st.where, doing:st.doing, mood:mood};
+  }catch(e){ return null; }
+};
+window.v92_npcStatusList = function(){
+  try{
+    var ns = window.NPC_STATE; if(!ns) return [];
+    var out = [];
+    for(var i=0;i<ns.length;i++){
+      var s = window.v92_npcStatus(ns[i].id);
+      if(s){ out.push(s); }
+    }
+    return out;
+  }catch(e){ return []; }
+};
+/* /wn3inj:npcweave/ W-N3 NPC 状态回指注入：正文提及 NPC（好感<30，与 CM-1 互斥）时
+ * 注入其此刻动态 1 句；开关 S.settings.npcWeave（默认 true）；前缀 /w3inj:npc/ */
+window.v92_npcWeave = function(node, txt){
+  try{
+    if(!S || !S.settings || S.settings.npcWeave===false) return null;
+    var ns = window.NPC_STATE; if(!ns) return null;
+    var body = "";
+    try{
+      if(txt && txt.join){ body = txt.join(""); }
+      else if(node && node.text){ body = (typeof node.text==="string") ? node.text : String(node.text); }
+    }catch(e){}
+    if(!body) return null;
+    var out = [];
+    for(var i=0;i<ns.length;i++){
+      var n = ns[i];
+      if(!n || !n.name) continue;
+      if(body.indexOf(n.name) < 0) continue;
+      var rel = 0;
+      if(S && S.npcRelations){ rel = S.npcRelations[n.id] || 0; }
+      if(rel>=30) continue;
+      var st = window.v92_npcStatus(n.id);
+      if(!st || !st.doing) continue;
+      out.push("（他此刻在"+st.where+"："+st.doing+"）");
+      break;
+    }
+    return out.length ? out : null;
+  }catch(e){ try{ console.log("[wn3:npcweave:err]",e); }catch(_){} return null; }
+};
+window.v92_worldSnapshot = function(){
+  try{
+    var out = [];
+    var d = (S && typeof S.day==="number") ? S.day : 0;
+    var ph = window.WORLD_PHASE ? window.WORLD_PHASE(d) : "early";
+    var ws = window.WORLD_SNAPSHOT;
+    if(!ws || !ws.regions || !ws.regions.length) return out;
+    out.push("第 "+d+" 日 · 大陆九域局势");
+    for(var i=0;i<ws.regions.length;i++){
+      var r = ws.regions[i];
+      var t = (r && (r[ph] || r.early)) ? (r[ph] || r.early) : "";
+      if(t){ out.push("· " + (r.name||"") + "：" + t); }
+    }
+    if(ws.majors){
+      for(var j=0;j<ws.majors.length;j++){
+        var m = ws.majors[j];
+        if(m && d >= m.day){ out.push("◆ " + (m.name||"") + "：" + (m.text||"")); }
+      }
+    }
+    return out;
+  }catch(e){ try{ console.log("[wn1:snap:err]",e); }catch(_){} return []; }
+};
+window.v92_openWorldPanel = function(){
+  try{
+    if(typeof openModal!=="function") return;
+    var box = document.createElement("div");
+    box.className = "box";
+    var lines = window.v92_worldSnapshot();
+    var h = "<h2>🌍 世界局势</h2><p class='sub'>大陆上发生的事，不因你是否在场而停步。九域各有各的走向。</p>";
+    for(var i=0;i<lines.length;i++){
+      var cls = (lines[i].indexOf("◆")===0) ? "v92-ws-major" : "v92-ws-region";
+      h += "<p style='margin:6px 0;line-height:1.7' class='"+cls+"'>"+lines[i]+"</p>";
+    }
+    h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 关闭</button>";
+    box.innerHTML = h;
+    openModal(box);
+  }catch(e){ try{ console.log("[wn1:panel:err]",e); }catch(_){} }
+};
+
 
 /* ===== /A1inj:proffn/ A-1 个性化开局注入（只读钩子；序章前 3 节点各注入 1 段五维专属文本；S.flags.origin_profile_done 完成后零注入；开关 S.settings.originProfile） ===== */
 window.__v91prof = window.__v91prof || {step:0, used:false, segs:null};
@@ -30671,6 +30782,8 @@ function writeNext(_v46f){
     }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
+    /* /wn3inj:npchook/ W-N3 NPC 状态回指注入（只读钩子；顺序在记忆注入之后，好感<30 与 CM-1 互斥） */
+    try{ var _nw = window.v92_npcWeave(node,_txt); if(_nw&&_nw.length){ _txt=_nw.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */
     try{ var _prof = window.v91_originProfile(node,_txt); if(_prof&&_prof.length){ _txt=_prof.concat(_txt); } }catch(e){}
     try{ window.v91_arcAdvance(node); }catch(e){} /* /sp3inj:archook/ SP-3 弧线推进（只读注入点） */
@@ -56311,6 +56424,147 @@ window.MEMORY_TPL = {
 };
 /* /v91inj:memtpl:end/ */
 
+/* /u1inj:data-nodes:dn_npc_state.js/ */
+/* /wn2inj:npcstate/ W-N2 NPC 独立状态机（活的世界·人物动态）
+ * 纯数据：NPC 按 day 分段的所在/动向。引擎 v92_npcStatus 只读推导（不写存档、不新增状态）。
+ * 阶段 day 与五主线一致（60/120/200/250/280），人物动向呼应各自支线归属。
+ */
+window.NPC_STATE = [
+  {id:"li_guan", name:"李管事", base:"自由城邦·交汇城商会",
+   stages:[
+     {day:0,   where:"自由城邦·交汇城", doing:"商会账房里的算盘声没停过，你送的那只木盒他再没提起。"},
+     {day:120, where:"自由城邦·交汇城", doing:"商货改了道，他整夜核对账册，灯油烧下去半寸。"},
+     {day:200, where:"自由城邦·交汇城", doing:"他把细软装箱，商会仓库的门锁换成了三道。"},
+     {day:280, where:"南方商盟·核心五港", doing:"他跟着最后一批商队南撤，走前托人给你留了句话。"}
+   ]},
+  {id:"lao_tie", name:"老铁", base:"北境·第三哨",
+   stages:[
+     {day:0,   where:"北境·第三哨", doing:"老卒守着铁门关的火塘，讲三十年前矿洞里的事。"},
+     {day:120, where:"北境·第三哨", doing:"雪原上有人见过他在追踪什么，脚印一路往北。"},
+     {day:200, where:"北境·矿洞", doing:"他消失在矿洞深处，哨塔上只留下一柄豁口的铁锹。"},
+     {day:280, where:"北境·前线", doing:"有人说他在前线见过他，白头发，背着两把刀。"}
+   ]},
+  {id:"a_yan", name:"阿岩", base:"兽人草原",
+   stages:[
+     {day:0,   where:"兽人草原", doing:"他在狼旗下磨刀，草原的风把篝火吹得忽明忽暗。"},
+     {day:120, where:"兽人草原", doing:"各部盟约初成，他替头人传话，马蹄跑烂了两副。"},
+     {day:200, where:"兽人草原·南缘", doing:"狼群南迁的消息是他先报的，他把家当捆上了马背。"},
+     {day:280, where:"铁门关外", doing:"战争部族南下，他走在队伍最前，回头看了一眼草原。"}
+   ]},
+  {id:"jin_xiansheng", name:"金先生", base:"东境·承天城",
+   stages:[
+     {day:0,   where:"东境·承天城", doing:"金秤家族在故都的旧宅落了灰，他守着墓园无字碑。"},
+     {day:200, where:"东境·承天城", doing:"无字碑裂了一道缝，他整夜坐在碑前，谁也不见。"},
+     {day:250, where:"东境·晨天故都", doing:"他进了晨天故都的地下，出来时手里多了一卷旧档。"},
+     {day:280, where:"东境·承天城", doing:"他把旧档交给你的人，说该知道的都在里面了。"}
+   ]},
+  {id:"feierman", name:"费尔曼教授", base:"北境·艾尔达魔法学院",
+   stages:[
+     {day:0,   where:"北境·魔法学院", doing:"禁书区最深的书架后面，他的烛台彻夜亮着。"},
+     {day:120, where:"北境·魔法学院", doing:"他连着三天没出塔，学生说塔尖的窗玻璃结了霜。"},
+     {day:200, where:"北境·魔法学院", doing:"禁书区的传闻上了街，他锁了塔门，谁也不见。"},
+     {day:250, where:"北境·魔法学院", doing:"学院暗流涌动，他托人把第三把钥匙送出了学院。"}
+   ]},
+  {id:"ailin", name:"艾琳", base:"圣城·圣痕司",
+   stages:[
+     {day:0,   where:"圣城·圣痕司", doing:"她在抄录异端名单，笔尖蘸的是黑墨。"},
+     {day:120, where:"圣城·圣痕司", doing:"圣痕司的地基动了土，她亲自下去看过三回。"},
+     {day:200, where:"圣城·圣痕司", doing:"圣物库失窃后她一夜白头，第二天照常当值。"},
+     {day:280, where:"圣城·审判庭", doing:"她把一摞卷宗锁进铁柜，钥匙挂在脖子上。"}
+   ]},
+  {id:"saixiliya", name:"塞西莉娅", base:"东境·帝京",
+   stages:[
+     {day:0,   where:"东境·帝京", doing:"贵族小姐的马车日日经过官署，帘子遮得严实。"},
+     {day:120, where:"东境·帝京", doing:"银穗商路出事，她家的商队一夜之间改挂了别家旗。"},
+     {day:200, where:"东境·承天城", doing:"她私下往承天城递了一封信，收信人没有名字。"},
+     {day:280, where:"东境·京畿", doing:"京畿戒严，她的马车停在城门口，等人。"}
+   ]},
+  {id:"luoka", name:"洛卡", base:"南方商盟·药剂行会",
+   stages:[
+     {day:0,   where:"南方商盟·药剂行会", doing:"药臼里捣着新配的方子，满屋子苦艾味。"},
+     {day:120, where:"南方商盟·药剂行会", doing:"瘟疫的传闻让他加订了三倍药材，仓库堆到房梁。"},
+     {day:200, where:"南方商盟·药剂行会", doing:"他亲自押着药车北上，说南边够用了。"},
+     {day:280, where:"北境·军营", doing:"军医营里他管最凶的那个棚子，袖子总是卷到肘。"}
+   ]},
+  {id:"ata", name:"阿塔", base:"兽人草原·神谕之地",
+   stages:[
+     {day:0,   where:"兽人草原·神谕之地", doing:"他在神谕之地守着一根狼骨，风吹过会响。"},
+     {day:120, where:"兽人草原·神谕之地", doing:"狼骨上的刻痕多了一道，他数了三遍。"},
+     {day:200, where:"兽人草原·神谕之地", doing:"神谕之地降了异象，他把狼骨收进皮囊，上了马。"},
+     {day:280, where:"北境·前线", doing:"他带着狼骨北上，说神谕指向铁门关。"}
+   ]},
+  {id:"luo_ke", name:"洛克", base:"兽人草原",
+   stages:[
+     {day:0,   where:"兽人草原", doing:"他在草原上吹哨，哨音能唤来狼群。"},
+     {day:120, where:"兽人草原", doing:"狼群南迁的消息传开，他的哨子一夜没响。"},
+     {day:200, where:"兽人草原·南缘", doing:"他把狼群引向更南的草场，人瘦了一圈。"},
+     {day:280, where:"铁门关外", doing:"战争部族过境，他拦不住，只能看着。"}
+   ]},
+  {id:"kai_en", name:"凯恩", base:"北境·铁门关",
+   stages:[
+     {day:0,   where:"北境·铁门关", doing:"新兵营里他站得最直，夜里擦枪到三更。"},
+     {day:120, where:"北境·铁门关", doing:"他升了伍长，腰牌换成了铜的。"},
+     {day:200, where:"北境·铁门关", doing:"他成了守将手下的传令官，关墙上的脚印都是他的。"},
+     {day:280, where:"北境·前线", doing:"铁门关战起，他第一个上的城头。"}
+   ]},
+  {id:"ailisi", name:"艾丽斯", base:"北境·魔法学院",
+   stages:[
+     {day:0,   where:"北境·魔法学院", doing:"火系法师塔的烟囱四季冒烟，她在塔顶养了一只灰鸽。"},
+     {day:120, where:"北境·魔法学院", doing:"灰楼夜火的事让她闭门三月，再出来时火候稳了许多。"},
+     {day:200, where:"北境·魔法学院", doing:"她替学院管了失火的档案室，灰烬里翻出半页信。"},
+     {day:250, where:"北境·魔法学院", doing:"学院暗流起，她把那半页信贴身收着。"}
+   ]},
+  {id:"molici", name:"莫里茨", base:"北境·魔法学院",
+   stages:[
+     {day:0,   where:"北境·魔法学院", doing:"老教授的书房堆到天花板，他记得每一本书的位置。"},
+     {day:120, where:"北境·魔法学院", doing:"他把一本旧日记锁进铁盒，钥匙给了最信得过的学生。"},
+     {day:200, where:"北境·魔法学院", doing:"他病了一场，出院后第一件事是去墓园看无字碑。"},
+     {day:250, where:"北境·魔法学院", doing:"他托付完身后事，说金秤的真相该有人知道了。"}
+   ]},
+  {id:"shen_yan", name:"沈砚", base:"东境·承天城",
+   stages:[
+     {day:0,   where:"东境·承天城", doing:"落第书生在城东租了间屋，墙上贴满晨天故都的抄本。"},
+     {day:120, where:"东境·承天城", doing:"他替官署抄了三个月文书，为的是翻旧档。"},
+     {day:200, where:"东境·晨天故都", doing:"他第一个摸进故都地下，出来时手在抖。"},
+     {day:280, where:"东境·承天城", doing:"他把抄本缝进书皮，走哪带哪。"}
+   ]},
+  {id:"aidemeng", name:"艾德蒙", base:"圣城·教会",
+   stages:[
+     {day:0,   where:"圣城·教会", doing:"他在教堂地下室写信，火漆印是只天平。"},
+     {day:120, where:"圣城·教会", doing:"圣痕司地基下的石柱被他拓了纹样，夹进经书。"},
+     {day:200, where:"圣城·教会", doing:"净化令风声紧，他把信烧了，灰拌进圣水。"},
+     {day:280, where:"圣城·教会", doing:"他把遗信交给可靠的人，说教会底下压着一条线。"}
+   ]},
+  {id:"ruoye", name:"若耶", base:"西境·游侠学院",
+   stages:[
+     {day:0,   where:"西境·游侠学院", doing:"灰袍游侠在院里擦弓，弓弦是新换的。"},
+     {day:120, where:"西境·游侠学院", doing:"军阀火并，他带队守了学院三天三夜。"},
+     {day:200, where:"西境·游侠学院", doing:"元素风暴逼近，他把学徒送下山，自己留下。"},
+     {day:280, where:"西境·荒原", doing:"他站在风暴边缘，回头朝学院方向看了一眼。"}
+   ]},
+  {id:"bai_tuo", name:"白驼", base:"死亡沙漠·绿洲集市",
+   stages:[
+     {day:0,   where:"死亡沙漠·绿洲集市", doing:"驼队首领在集市上讨价还价，笑声隔着三条街听得见。"},
+     {day:120, where:"死亡沙漠·绿洲集市", doing:"深渊神殿方向有异响，他给每峰骆驼都挂了铃铛。"},
+     {day:200, where:"死亡沙漠·深渊神殿", doing:"他带人探了一次神殿外围，回来只字不提。"},
+     {day:280, where:"死亡沙漠·绿洲集市", doing:"他把集市改成了堡垒，水井上了锁。"}
+   ]},
+  {id:"qin_changfeng", name:"秦·长风", base:"北境·铁门关",
+   stages:[
+     {day:0,   where:"北境·铁门关", doing:"北境名将在关墙上立着，看雪看了一整天。"},
+     {day:120, where:"北境·铁门关", doing:"他把家眷送去了东境，自己搬进军帐。"},
+     {day:200, where:"北境·铁门关", doing:"铁门关守将的刀在城头磨了三遍，探马一日三报。"},
+     {day:280, where:"北境·铁门关", doing:"兽人前锋压境，他披甲上墙，一夜未下。"}
+   ]},
+  {id:"lu_zhao", name:"陆昭", base:"东境·承天城",
+   stages:[
+     {day:0,   where:"东境·承天城", doing:"金库的钥匙挂在他腰上，走路都带着铁响。"},
+     {day:120, where:"东境·承天城", doing:"金库失窃后他闭门谢客，账册翻烂了三本。"},
+     {day:200, where:"东境·承天城", doing:"他把铁牌碎片锁进新铸的铁箱，钥匙熔进炉里。"},
+     {day:280, where:"东境·承天城", doing:"戒严令下他亲自守库，腰刀夜夜出鞘。"}
+   ]}
+];
+
 /* /u1inj:data-nodes:dn_orc_deep.js/ */
 /* /pe1inj:orc-deep/ PE-1 兽人草原深度包（P2 剩余 + 大幅方向内容展开）
    兽人草原日常探索层：黑石部族营地生活 / 圣山信仰 / 狼骑兵营
@@ -60647,6 +60901,41 @@ N["west_leave"] = {
   options:[
     {t:"离开西境，返回大陆腹地",run:function(){ travelTo("free_jiaohui"); }}
   ]
+};
+
+/* /u1inj:data-nodes:dn_world.js/ */
+/* /wn1inj:world/ W-N1 世界局势快照数据（活的世界）
+ * 九域 × 三阶段（early/mid/late）局势模板 + 五主线事件状态。
+ * 纯数据；引擎 v92_worldSnapshot() 在 script_03.js 读取（只读 S.day/REGIONS/flags）。
+ * 阶段划分：early <60 日 / mid 60-199 / late >=200（与五主线 day 表一致）。
+ */
+window.WORLD_SNAPSHOT = {
+  regions: [
+    {id:"north", name:"北境七公国", early:"铁门关的雪比往年厚，七公国按兵不动，只把探马派得更勤。", mid:"铁门关战云密布，北境联军的军旗在关墙后猎猎作响，商队绕道而行。", late:"北境已入战时，关隘封锁，难民背着行李向南涌去。"},
+    {id:"east", name:"东部王国", early:"帝京的科举刚放榜，官署里磨着新的奏章，墙角的兵甲蒙着一层薄灰。", mid:"承天城银穗商路告急，朝廷两派为军费争执不休，武官腰间的刀比从前亮。", late:"东境兵甲集结，京畿戒严，出城的文书要盖三道印。"},
+    {id:"south", name:"南方商盟", early:"五大城邦的船队照常进出，码头上的金币声盖过钟声。", mid:"商路被战火切断，商盟连夜改道沙漠，驼铃替了船笛。", late:"南方商盟全线收缩，只保核心五港，城墙上架起了弩。"},
+    {id:"west", name:"西境", early:"元素荒原的风暴比往年更烈，游侠学院照常收徒，只是退学的多了。", mid:"西境军阀火并，行省会关闭西门，城门洞用沙袋垒了半截。", late:"西境流民东逃，元素风暴逼近人烟，游侠学院的钟楼三天没响。"},
+    {id:"desert", name:"死亡沙漠", early:"驼队沿着旧商路走，绿洲的水位比去年低了一指。", mid:"深渊神殿方向传出异响，沙民夜不点灯，驼铃都系了布条。", late:"封印松动的传闻传遍沙海，诸部开始备战，绿洲集市只卖铁器与干粮。"},
+    {id:"elf", name:"精灵林邦", early:"迷雾森林的边缘晨雾不散，精灵对外保持沉默，只有猎手在林线出没。", mid:"林邦派出信使，向四方询问封印之事，森林深处的古钟被敲响。", late:"精灵射手在林线集结，古老盟约被重新提起，箭囊里装着白羽。"},
+    {id:"dwarf", name:"矮人山国", early:"山腹里的锤声日夜不停，熔炉的火映红矿道，新打的铁锭堆到门口。", mid:"矮人议会为矿洞塌方与深渊气息争吵，山门在夜里落下了半截。", late:"矮人关闭了王国外围矿道，只守不出，熔炉改打守城重弩。"},
+    {id:"church", name:"光明教会", early:"圣城的钟声照常响起，净化令的告示刚贴上城门，墨迹还没干。", mid:"圣痕司频繁调动，异端名单越拉越长，夜里常有马车出城。", late:"教会宣布全境戒严，审判庭四处巡行，圣殿骑士的甲胄映着火光。"},
+    {id:"orc", name:"兽人草原", early:"狼旗插在旧营地上，各部族还在为春草吵架，刀刃对的是自己人。", mid:"草原诸部达成盟约，矛头齐齐指向南方，篝火彻夜不熄。", late:"兽人战争部族南下，前锋已至草原边缘，狼烟一道接一道。"}
+  ],
+  majors: [
+    {id:"purge", day:60, name:"净化令", text:"教会发布净化令，圣城及辖区的异端清查全面展开——城里开始有人失踪，没人敢提。"},
+    {id:"silver", day:120, name:"银穗商路危机", text:"银穗商路告急，东部商队成批改道，承天城官署为此焦头烂额，税银少了三成。"},
+    {id:"seal", day:200, name:"封印松动", text:"深渊封印出现松动，死亡沙漠与圣城异象频传，古老传言再次上街，夜里有人听见地底的声音。"},
+    {id:"academy", day:250, name:"学院暗流", text:"北境魔法学院暗流涌动，禁书区的传闻传到市井，费尔曼教授的名字被反复提起。"},
+    {id:"orc", day:280, name:"兽人南征", text:"兽人战争部族大举南征，铁门关首当其冲，大陆全面战争的帷幕正式拉开。"}
+  ]
+};
+window.WORLD_PHASE = function(day){
+  try{
+    var d = (typeof day==="number") ? day : (S&&typeof S.day==="number" ? S.day : 0);
+    if(d < 60) return "early";
+    if(d < 200) return "mid";
+    return "late";
+  }catch(e){ return "early"; }
 };
 
 /* /u1inj:data-nodes-end/ */

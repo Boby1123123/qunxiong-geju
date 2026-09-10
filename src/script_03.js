@@ -49,6 +49,7 @@ function applyDefaults(s){
     if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
+    if(!s.settings.npcWeave) s.settings.npcWeave=true; /* W-N3 NPC 状态回指（默认开，旧档兜底） */
   /* /v92inj:defaults/ TQ-1 天气句开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.weatherLine===undefined) s.settings.weatherLine=true;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
@@ -4108,11 +4109,120 @@ window.v92_openThreadPanel = function(){
       if(t.pos){ h += "<button class='btn' style='padding:4px 10px;font-size:12px' onclick='try{closeModal();v488_go(\""+t.pos+"\");}catch(e){}'>前往</button>"; }
       h += "</div></div>";
     }
+    var npcs = (typeof window.v92_npcStatusList==="function") ? window.v92_npcStatusList() : [];
+    if(npcs && npcs.length){
+      h += "<div style='margin-top:14px;border-top:1px solid var(--line,#2d4566);padding-top:10px'><b style='color:var(--gold,#e8c468)'>大陆人物动态</b><span class='mini' style='color:var(--dim)'>（共 "+npcs.length+" 位——他们在你视线之外，也在过日子）</span></div>";
+      var _n = Math.min(npcs.length, 8);
+      for(var _i=0;_i<_n;_i++){
+        var _s = npcs[_i];
+        h += "<p style='margin:6px 0;line-height:1.7'><b>"+(_s.name||"")+"</b> <span class='mini' style='color:var(--dim)'>"+(_s.mood||"")+"</span><br/><span style='color:var(--text)'>"+(_s.doing||"")+"</span></p>";
+      }
+    }
     h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 关闭</button>";
     box.innerHTML = h;
     openModal(box);
   }catch(e){ try{ console.log("[pn3:panel:err]",e); }catch(_){} }
 };
+/* /wn1inj:snap/ W-N1 世界局势快照（活的世界）：只读 S.day/REGIONS/flags 生成九域局势
+ * 与既有 v92 worldBanner（顶栏"世界暂无大事"）并存：banner 是短句，本面板是完整快照。
+ */
+
+/* /wn2inj:npc/ W-N2 NPC 独立状态机（推导式）：只读 S.day/npcRelations，无状态写入 */
+window.v92_npcStatus = function(npcId){
+  try{
+    var ns = window.NPC_STATE; if(!ns) return null;
+    var d = (S && typeof S.day==="number") ? S.day : 0;
+    var item = null;
+    for(var i=0;i<ns.length;i++){ if(ns[i].id===npcId){ item=ns[i]; break; } }
+    if(!item || !item.stages || !item.stages.length) return null;
+    var st = item.stages[0];
+    for(var j=0;j<item.stages.length;j++){ if(d >= item.stages[j].day){ st = item.stages[j]; } }
+    var rel = 0;
+    if(S && S.npcRelations){ rel = S.npcRelations[npcId] || 0; }
+    var mood = "";
+    if(rel>=60) mood="（与你是挚交）";
+    else if(rel<=-20) mood="（与你结过梁子）";
+    return {id:npcId, name:item.name, where:st.where, doing:st.doing, mood:mood};
+  }catch(e){ return null; }
+};
+window.v92_npcStatusList = function(){
+  try{
+    var ns = window.NPC_STATE; if(!ns) return [];
+    var out = [];
+    for(var i=0;i<ns.length;i++){
+      var s = window.v92_npcStatus(ns[i].id);
+      if(s){ out.push(s); }
+    }
+    return out;
+  }catch(e){ return []; }
+};
+/* /wn3inj:npcweave/ W-N3 NPC 状态回指注入：正文提及 NPC（好感<30，与 CM-1 互斥）时
+ * 注入其此刻动态 1 句；开关 S.settings.npcWeave（默认 true）；前缀 /w3inj:npc/ */
+window.v92_npcWeave = function(node, txt){
+  try{
+    if(!S || !S.settings || S.settings.npcWeave===false) return null;
+    var ns = window.NPC_STATE; if(!ns) return null;
+    var body = "";
+    try{
+      if(txt && txt.join){ body = txt.join(""); }
+      else if(node && node.text){ body = (typeof node.text==="string") ? node.text : String(node.text); }
+    }catch(e){}
+    if(!body) return null;
+    var out = [];
+    for(var i=0;i<ns.length;i++){
+      var n = ns[i];
+      if(!n || !n.name) continue;
+      if(body.indexOf(n.name) < 0) continue;
+      var rel = 0;
+      if(S && S.npcRelations){ rel = S.npcRelations[n.id] || 0; }
+      if(rel>=30) continue;
+      var st = window.v92_npcStatus(n.id);
+      if(!st || !st.doing) continue;
+      out.push("（他此刻在"+st.where+"："+st.doing+"）");
+      break;
+    }
+    return out.length ? out : null;
+  }catch(e){ try{ console.log("[wn3:npcweave:err]",e); }catch(_){} return null; }
+};
+window.v92_worldSnapshot = function(){
+  try{
+    var out = [];
+    var d = (S && typeof S.day==="number") ? S.day : 0;
+    var ph = window.WORLD_PHASE ? window.WORLD_PHASE(d) : "early";
+    var ws = window.WORLD_SNAPSHOT;
+    if(!ws || !ws.regions || !ws.regions.length) return out;
+    out.push("第 "+d+" 日 · 大陆九域局势");
+    for(var i=0;i<ws.regions.length;i++){
+      var r = ws.regions[i];
+      var t = (r && (r[ph] || r.early)) ? (r[ph] || r.early) : "";
+      if(t){ out.push("· " + (r.name||"") + "：" + t); }
+    }
+    if(ws.majors){
+      for(var j=0;j<ws.majors.length;j++){
+        var m = ws.majors[j];
+        if(m && d >= m.day){ out.push("◆ " + (m.name||"") + "：" + (m.text||"")); }
+      }
+    }
+    return out;
+  }catch(e){ try{ console.log("[wn1:snap:err]",e); }catch(_){} return []; }
+};
+window.v92_openWorldPanel = function(){
+  try{
+    if(typeof openModal!=="function") return;
+    var box = document.createElement("div");
+    box.className = "box";
+    var lines = window.v92_worldSnapshot();
+    var h = "<h2>🌍 世界局势</h2><p class='sub'>大陆上发生的事，不因你是否在场而停步。九域各有各的走向。</p>";
+    for(var i=0;i<lines.length;i++){
+      var cls = (lines[i].indexOf("◆")===0) ? "v92-ws-major" : "v92-ws-region";
+      h += "<p style='margin:6px 0;line-height:1.7' class='"+cls+"'>"+lines[i]+"</p>";
+    }
+    h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 关闭</button>";
+    box.innerHTML = h;
+    openModal(box);
+  }catch(e){ try{ console.log("[wn1:panel:err]",e); }catch(_){} }
+};
+
 
 /* ===== /A1inj:proffn/ A-1 个性化开局注入（只读钩子；序章前 3 节点各注入 1 段五维专属文本；S.flags.origin_profile_done 完成后零注入；开关 S.settings.originProfile） ===== */
 window.__v91prof = window.__v91prof || {step:0, used:false, segs:null};
@@ -4319,6 +4429,8 @@ function writeNext(_v46f){
     }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
+    /* /wn3inj:npchook/ W-N3 NPC 状态回指注入（只读钩子；顺序在记忆注入之后，好感<30 与 CM-1 互斥） */
+    try{ var _nw = window.v92_npcWeave(node,_txt); if(_nw&&_nw.length){ _txt=_nw.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */
     try{ var _prof = window.v91_originProfile(node,_txt); if(_prof&&_prof.length){ _txt=_prof.concat(_txt); } }catch(e){}
     try{ window.v91_arcAdvance(node); }catch(e){} /* /sp3inj:archook/ SP-3 弧线推进（只读注入点） */

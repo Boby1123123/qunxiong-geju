@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8507560,
-    "chunked_html_bytes_max": 5790481,
+    "game_html_bytes_max": 8528184,
+    "chunked_html_bytes_max": 5810821,
     "node_total_min": 4587,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8457560,
-    "chunked_html_bytes": 5690481,
+    "game_html_bytes": 8478184,
+    "chunked_html_bytes": 5710821,
     "node_total": 4637,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "PN-FIX threadTick 惰性初始化（+0.06KB）",
+    "reason": "W-N1~3 世界局势快照+NPC状态机+状态回指（数据+引擎+面板，+8.6KB）",
     "history": [
       {
         "date": "2026-09-09",
@@ -733,6 +733,13 @@
         "chunked_bytes": 5690481,
         "nodes": 4637,
         "reason": "PN-FIX threadTick 惰性初始化（+0.06KB）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8478184,
+        "chunked_bytes": 5710821,
+        "nodes": 4637,
+        "reason": "W-N1~3 世界局势快照+NPC状态机+状态回指（数据+引擎+面板，+8.6KB）"
       }
     ]
   },

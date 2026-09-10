@@ -2244,6 +2244,66 @@ window.CAUSALITY_LEDGER = [
       "CON"
     ],
     "irreversible": false
+  },
+  {
+    "id": "led_f1_purge",
+    "type": "伏笔",
+    "desc": "净化令三幕：默页书肆牛皮账（金秤老账房旧账）——圣城线伏笔，通向 F-2 代价节点",
+    "plant": "flag:purge_account",
+    "reap": "node:world_f1_after_purge",
+    "status": "open",
+    "world": "净化令线",
+    "importance": 3,
+    "keywords": ["净化令三幕：默页书肆牛皮账（金秤老账房旧账）——圣城线伏笔，通向 F-2 代价节点"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_silver",
+    "type": "伏笔",
+    "desc": "银穗商路三幕：柳巷七号银月商会 + 码头姑娘七笔旧账（金秤家）——商路线伏笔",
+    "plant": "flag:silver_account",
+    "reap": "node:world_f1_after_silver",
+    "status": "open",
+    "world": "银穗商路线",
+    "importance": 3,
+    "keywords": ["银穗商路三幕：柳巷七号银月商会 + 码头姑娘七笔旧账（金秤家）——商路线伏笔"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_seal",
+    "type": "伏笔",
+    "desc": "深渊封印三幕：南二铁牌 + 灰袍守夜人（南二醒了北七不远）——封印线伏笔",
+    "plant": "flag:seal_talisman",
+    "reap": "node:world_f1_after_seal",
+    "status": "open",
+    "world": "深渊封印线",
+    "importance": 3,
+    "keywords": ["深渊封印三幕：南二铁牌 + 灰袍守夜人（南二醒了北七不远）——封印线伏笔"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_academy",
+    "type": "伏笔",
+    "desc": "学院暗流三幕：费尔曼禁书区密道 + 金秤铜钱 + 顾青梧目击——学院线伏笔",
+    "plant": "flag:academy_vault",
+    "reap": "node:world_f1_after_academy",
+    "status": "open",
+    "world": "学院暗流线",
+    "importance": 3,
+    "keywords": ["学院暗流三幕：费尔曼禁书区密道 + 金秤铜钱 + 顾青梧目击——学院线伏笔"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_orc",
+    "type": "伏笔",
+    "desc": "兽人南下三幕：狼营地图账字 + 兽人老妇羊皮密信（第七封在学院问费尔曼）——兽人线伏笔",
+    "plant": "flag:orc_ledger",
+    "reap": "node:world_f1_after_orc",
+    "status": "open",
+    "world": "兽人南下线",
+    "importance": 3,
+    "keywords": ["兽人南下三幕：狼营地图账字 + 兽人老妇羊皮密信（第七封在学院问费尔曼）——兽人线伏笔"],
+    "irreversible": false
   }
 ];
 /* ===== /v91inj:ledger:end/ ===== */

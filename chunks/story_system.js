@@ -2689,213 +2689,402 @@ N["relic_grail_boss"] = function( /*v58eng:aifresh:misc*/){return{place:"光明�
   
 
 N["board_north"] = function(){
+
   const picks = shuffle(NORTH_BOARD).slice(0,3);
+
   return {
+
     place:"北方公国联盟 · 冒险者公会委托板", where:"白昼",
+
     text:["委托板前人头攒动。战争时期，活计比平时多了一倍，赏金也厚。你扫了一遍，挑了三个顺眼的。", "出了冒险者公会委托板，风迎面扑来。你认了认方向，启程。"],pace:"light",
+
     options: picks.map(b=>({
+
       t:b.t, check:b.check, tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},
+
       effects:b.okEff, onFail:b.failEff, go:"board_north_done"
+
     })).concat([{t:"不接了，办正事要紧",go:"north_leave"}])
+
   };
+
 };
+
 
 N["board_north_done"] = {tag:"branch",
+
   place:"委托板", text:["你把委托交了，赏金落袋。这年头，力气和胆量，都是硬通货。","你把委托交了，赏金落袋。铁门关的委托板钉在兵营外墙，纸上沾着灰尘和几点暗色的旧渍——不知是酒还是别的什么。","","旁边一个老兵正往板上钉新告示：“北边雪原闹狼群，猎队缺人手，酬金面议。”他钉完，转头看你：“小子，要是缺钱，这单不错。就是路远，风大。”","","你谢过他。风从关外灌进来，带着雪和铁的味道。你掂了掂钱袋——这年头的安稳日子，都是用脚走出来的。","", "你与委托板作别，踏上旅途。尘土扑上靴面，像旧识。"],pace:"light",
+
   options:[
+
     {t:"再接一单",go:"board_north"},
+
     {t:"继续赶路",run:function(){ togglePanel("map"); }}
+
   ]
+
 };
+
 
 N["board_south"] = function(){
+
   const picks = shuffle(SOUTH_BOARD).slice(0,3);
+
   return {
+
     place:"南方商业城邦联盟 · 冒险者公会委托板", where:"白昼",
+
     text:["南方联盟的委托板比北方多了一倍，活计也五花八门：护送、送信、鉴定、采集。你扫了一遍，挑了三个。", "冒险者公会委托板已被抛在身后。路在脚下延伸，你不回头，行至前方。"],pace:"light",
+
     options: picks.map(b=>({
+
       t:b.t, check:b.check, tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},
+
       effects:b.okEff, onFail:b.failEff, go:"board_south_done"
+
     })).concat([{t:"不接了，办正事要紧",go:"south_moxie_go"}])
+
   };
+
 };
+
 
 N["board_south_done"] = {tag:"branch",
+
   place:"委托板", text:["南方联盟的活计，来钱快，水也深。你把赏金收好，掂了掂分量。", "委托板已被抛在身后。路在脚下延伸，你不回头，行至前方。"],pace:"light",
+
   options:[
+
     {t:"再接一单",go:"board_south"},
+
     {t:"继续赶路",run:function(){ togglePanel("map"); }}
+
   ]
+
 };
 
+
 N["board_elf"] = function(){
+
   const picks = shuffle(ELF_BOARD).slice(0,2);
+
   return {place:"精灵边境 · 委托板",text:["精灵边境的活计不多，但都干净。", "委托板的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_elf_done"})).concat([{t:"离开",go:"elf_done"}])};
+
 };
+
 
 N["board_elf_done"] = {place:"委托板",text:["活计办妥，赏金落袋。", "委托板已被抛在身后。路在脚下延伸，你不回头，行至前方。"],pace:"light",options:[{t:"再接一单",go:"board_elf"},{t:"离开",go:"elf_done"}]};
 
+
 N["board_dwarf"] = function(){
+
   const picks = shuffle(DWARF_BOARD).slice(0,3);
+
   return {place:"矮人王国 · 委托板",text:["矮人的活计，都跟铁与力有关。你扫了一眼委托板。", "你离了委托板，脚步声在空旷处格外清晰。赶路要紧。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_dwarf_done"})).concat([{t:"离开",go:"dwarf_done"}])};
+
 };
+
 
 N["board_dwarf_done"] = {place:"委托板",text:["活计办妥，赏金落袋。", "委托板的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],pace:"light",options:[{t:"再接一单",go:"board_dwarf"},{t:"离开",go:"dwarf_done"}]};
 
+
 N["board_orc"] = function(){
+
   const picks = shuffle(ORC_BOARD).slice(0,2);
+
   return {place:"兽人草原 · 边市",text:["草原边市上的活计，粗犷而直接。你扫了一眼。", "你与边市作别，踏上旅途。尘土扑上靴面，像旧识。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_orc_done"})).concat([{t:"离开",go:"orc_done"}])};
+
 };
+
 
 N["board_orc_done"] = {tags:["main:orc"],place:"边市",text:["活计办妥，赏金落袋。", "从边市出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_orc"},{t:"离开",go:"orc_done"}]};
 
+
 N["board_east"] = function(){
+
   const picks = shuffle(EAST_BOARD).slice(0,3);
+
   return {place:"东部王国 · 委托板",text:["东部的活计，规矩多，赏钱也准。你扫了一眼。", "别过委托板，你沿官道走出里许，回头已看不清来处。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_east_done"})).concat([{t:"离开",go:"east_after"}])};
+
 };
+
 
 N["board_east_done"] = {place:"委托板",text:["活计办妥，赏金落袋。","委托板上，那张泛黄的纸被取下，露出下面一排新的告示。赏金袋在手里沉甸甸的，铜星碰着银角，叮当作响。","","你把袋子收进怀里。板子旁边的木柱上，用炭笔写着几行小字，是别的佣兵留的：“东境粮价又涨了——跑商的人说，边关在囤货。”","","你记下这句话，转身走进市集。叫卖声迎面扑来，热腾腾的炊饼气味混着铁器的腥味。这座城，从来不缺活计，也不缺消息。","", "委托板的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],pace:"light",options:[{t:"再接一单",go:"board_east"},{t:"离开",go:"east_after"}]};
 
+
 N["board_church"] = function(){
+
   const picks = shuffle(CHURCH_BOARD).slice(0,2);
+
   return {place:"圣城 · 委托板",text:["圣城的活计，干净，赏钱也干净。你扫了一眼。", "委托板在雾里模糊了轮廓。你紧了紧衣领，迈步上路。"],pace:"light",options:picks.map(b=>({t:b.t,check:b.check,tier:{ok:b.ok,fail:b.fail,crit:b.ok,critfail:b.fail},effects:b.okEff,onFail:b.failEff,go:"board_church_done"})).concat([{t:"离开",go:"church_after"}])};
+
 };
+
 
 N["board_church_done"] = {tag:"branch",place:"委托板",text:["活计办妥，赏金落袋。","委托板钉在教堂侧门的廊柱上，纸页被烛火熏得微黄。你交了活计，赏金袋落进掌心，铜钱带着圣城特有的、被香火熏过的温热。","","一个修士从你身边走过，看了你一眼，欲言又止。他最终还是开口：“最近别接那些‘关于圣物的委托’——教会那边，最近查得严。”","","你点头谢过他，把赏金收好。圣城的钟声正好响起，一声接一声，把市集的喧闹盖了过去。","", "离开委托板时天光正好，靴子踏上路面的声音很稳。一路向前。"],pace:"light",options:[{t:"再接一单",go:"board_church"},{t:"离开",go:"church_after"}]};
 
+
 N["board_free"] = {
+
   place:"自由城邦 · 冒险者之城 · 委托板",where:"白昼",
+
   text:[
+
     "委托板上贴满了纸片。风一吹，纸角哗哗地响。",
+
     "你扫了一圈，挑出几张还算靠谱的。", "冒险者之城的灯火远了。夜风凉，你把心思收回来，专心赶路。"],pace:"light",
+
   options:(function(){
+
     const picks = FREE_BOARD.slice().sort(function(){return Math.random()-0.5;}).slice(0,2);
+
     return picks.map(function(q,i){
+
       return {t:q.t,check:q.check,tier:{ok:q.ok,fail:q.fail},okEff:q.okEff,failEff:q.failEff,go:"board_free_after"};
+
     });
+
   })()
+
 };
 
+
 N["board_free_after"] = {
+
   place:"自由城邦 · 冒险者之城",where:"白昼",
+
   text:[
+
     "委托交了。报酬入袋，沉甸甸的。",
+
     "公会的墙上，贴着一张大陆全图。你的视线沿着商路，从自由城邦出发，扫过北方、南方、精灵、矮人、草原、东境、圣城、沙漠。",
+
     "路还长。"
+
   ],pace:"light",
+
   options:[
+
     {t:"继续在自由城邦转转",go:"arrive_free_gonghui"},
+
     {t:"打开地图，规划下一段旅途",run:function(){ togglePanel("map"); }}
+
   ]
+
 };
+
+
+
 
 
 
 N["quest_bandit_camp"] = function(){ return {tag:"branch",
+
   place:"自由城邦 · 北郊山贼营地", where:"",
+
   text:[
+
     "你按照告示板上的描述，找到了山贼的营地。",
+
     "在一片小树林里，几个帐篷，一堆篝火，火上烤着什么东西，散发着油腻的香味。",
+
     "两个山贼在营地门口站岗，手里拿着长矛，矛尖已经锈了。",
+
     "你数了数，营地里大概有五六个人。不算多，但也不算少。"
+
   ],pace:"light",
+
   options:[
+
     {t:"潜行靠近，逐个解决", check:{a:"AGI",sk:"stealth",label:"潜行"},
+
   tier:{
+
     crit:function(){return[pickV(["你绕到营地的侧面，借着树木的掩护，一点点靠近。风很配合，把你的气味带走了。你摸到第一个山贼身后——他正在打哈欠，嘴张得很大。你捂住他的嘴，一刀抹了脖子。第二个山贼听到动静，转过头来，你已经到了他身后。第三个、第四个——你像影子一样，在营地里穿梭，每个山贼都在毫无察觉的情况下被解决。最后一个山贼是在睡梦中被你解决的。整个过程，没有发出一点声音。你擦了擦刀上的血，看着营地——五具尸体，安静地躺着，像睡着了一样。","你潜行的时候，注意到山贼们的站位有漏洞——两个站岗的山贼，视线的交汇点有一个三秒的盲区。你算准时间，在盲区里移动，逐个解决。第一个山贼被你从后面勒住脖子，无声无息。第二个山贼转身的时候，你已经躲在了帐篷后面。你用了不到一刻钟，就解决了所有山贼。最妙的是，你在解决最后一个山贼的时候，他甚至还在说梦话——'别抢我的酒……'"],"bandit_stealth_crit")]},
+
     ok:function(){return[pickV(["你绕到营地侧面，借着树木掩护靠近。你摸到第一个山贼身后，捂住他的嘴，一刀抹了脖子。第二个山贼听到了动静，转过头来——你及时解决了他。虽然有些惊险，但你成功地逐个解决了山贼。","你潜行靠近，逐个解决山贼。过程中差点被发现，但最终成功了。"],"bandit_stealth_ok")]},
+
     fail:function(){return[pickV(["你潜行靠近，但踩到了一根树枝——'咔嚓'一声，在安静的树林里格外响亮。'谁？！'一个山贼喊了一声，拿起长矛朝你这边走过来。你屏住呼吸，躲在树后面。他走过来查看，你趁他不注意，一刀捅了过去。但动静已经惊动了其他人——剩下的山贼都拿起了武器，朝你围了过来。你不得不正面迎战。","你潜行时被发现了，不得不正面战斗。虽然最终赢了，但受了些伤。"],"bandit_stealth_fail")]},
+
     critfail:function(){return[pickV(["你潜行靠近，但太紧张了——你的手在抖，刀鞘撞到了树干上，发出'当'的一声。'有人！'山贼们立刻警觉起来，火把亮了，长矛对准了你藏身的方向。'出来！'一个山贼喊，'我看到你了！'你知道自己暴露了，转身就跑。但一支长矛从后面飞过来，扎进了你的大腿。你惨叫一声，摔倒在地。山贼们围上来，把你绑了。'又是一个想当英雄的。'山贼头子冷笑，'搜他的身。'他们把你的钱袋、武器、甚至靴子都抢走了。最后把你扔在树林里，光着脚，大腿上还插着半截矛杆。你花了整整一天才爬回城里。","你潜行时不仅被发现了，还被山贼们包围了。你试图反抗，但寡不敌众，被打倒在地。他们把你揍了一顿，抢走了所有值钱的东西，然后把你扔在树林里。你浑身是伤，钱也没了，武器也没了——这趟委托，亏大了。"],"bandit_stealth_cf")]}
+
   },
+
   onCrit:{flag:"bandit_camp_clean_stealth",skillUp:"stealth",rep_free:3},
+
   onOk:{rep_free:1},
+
   onFail:{hp:-10,wound:"刀伤"},
+
   onCritFail:{hp:-25,gold:-50,wound:"矛伤+瘀伤",flag:"bandit_camp_robbed",item_lose:true},
+
   go:"quest_bandit_stealth"},
+
     {t:"正面冲进去", run:function(){ startCombat("bandit","山贼营地","quest_bandit_camp_after"); }},
+
     {t:"在营地外面放火，把他们逼出来", check:{a:"INT",sk:"survival",label:"火攻"},
+
   tier:{
+
     crit:function(){return[pickV(["你在营地的上风头堆了干草和枯枝，然后点着了。但你没有只点一堆——你在三个不同的位置同时点火，形成了一个半包围的火墙。风把烟吹进营地，山贼们咳嗽着冲出来。但他们冲出来的方向，正是你预设的伏击点。你趁乱摸进营地，找到了钱箱——一个铁盒子，沉甸甸的。然后你又趁乱出来，整个过程没有被任何人发现。火还在烧，山贼们在救火，根本没人注意到你。'完美。'你心里说。","你放火的时候，注意到了风向——风是从西北往东南吹的。你在上风头堆了干草，还特意加了一些潮湿的树枝——这样烟会更浓，更呛人。火点着之后，浓烟滚滚，灌进营地。山贼们咳嗽着、叫骂着冲出来。你趁乱摸进去，不仅找到了钱箱，还在山贼头子的帐篷里找到了一封信——封蜡上印着暗蚀会的标记。你把信和钱箱一起带走了。这把火，放得值。"],"bandit_fire_crit")]},
+
     ok:function(){return[pickV(["你在上风头堆了干草和枯枝，点着了。火很快烧起来，烟顺着风飘进营地。山贼们咳嗽着冲出来，乱成一团。你趁乱摸进营地，找到了钱箱。","你用火攻把山贼逼出来，趁乱拿走了钱箱。计划成功了。"],"bandit_fire_ok")]},
+
     fail:function(){return[pickV(["你放火了，但风向突然变了——烟朝你这边吹过来。你被烟呛得直咳嗽，眼泪直流。山贼们发现了火，也发现了你——'有人放火！抓住他！'你转身就跑，虽然最终逃脱了，但火攻没有达到预期的效果——山贼们没有乱，反而组织起来救火了。你什么都没拿到。","你放火了，但火势不够大，山贼们很快就控制住了。你不得不撤退，什么都没拿到。"],"bandit_fire_fail")]},
+
     critfail:function(){return[pickV(["你放火了，但你犯了一个致命的错误——你在下风头点的火。风把火和烟全吹回了你身上。你的衣服烧着了，头发也焦了。你在地上打滚灭火，惨叫声引来了山贼。'放火的家伙在那里！'山贼们冲过来，把你按在地上。'胆子不小啊。'山贼头子冷笑，'敢烧我的营地？'他们把你打了一顿，然后把你绑在营地的柱子上，'让你看着我们怎么收拾你。'幸好，到了晚上，你趁他们喝醉了，咬断绳子逃了出来。但你浑身是伤，钱也被抢了，头发也烧没了一半——这趟委托，简直是灾难。","你放火的时候，不小心把自己也烧着了。你在地上打滚，惨叫声引来了山贼。他们把你抓住，揍了一顿，抢走了所有东西。最后把你扔在火边——'让你跟火作伴。'你好不容易才爬出来，半边脸都烧伤了。"],"bandit_fire_cf")]}
+
   },
+
   onCrit:{gold:15,flag:"bandit_camp_fire_perfect",item:"山贼钱箱",flag:"darkcult_bandit_letter"},
+
   onOk:{gold:15,item:"山贼钱箱"},
+
   onFail:{hp:-8,wound:"烟熏"},
+
   onCritFail:{hp:-20,gold:-30,wound:"烧伤",flag:"bandit_camp_fire_disaster"},
+
   go:"quest_bandit_fire"}
+
   ]
+
 };};
+
+
 
 
 N["quest_bandit_stealth"] = function(){ return {tag:"branch",
+
   place:"自由城邦 · 北郊山贼营地", where:"",
+
   text:[
+
     "你绕到营地的侧面，借着树木的掩护，一点点靠近。",
+
     "风很配合，吹向营地的方向，把你的气味带走了。",
+
     "你摸到第一个山贼身后。他正在打哈欠，嘴张得很大——你捂住他的嘴，一刀抹了脖子。他哼都没哼一声，就软了下去。",
+
     "第二个山贼听到了动静，转过头来。他的眼睛瞪得很大，但已经来不及了。"
+
   ],pace:"light",
+
   options:[
+
     {t:"（成功）无声解决两个，继续潜入", req:function(){return lastLvl==="normal"||lastLvl==="hard"||lastLvl==="extreme"||lastLvl==="crit";}, run:function(){ startCombat("bandit","潜入被发现","quest_bandit_camp_after"); }},
+
     {t:"（失败）踩到树枝，被发现了", req:function(){return lastLvl==="fail"||lastLvl==="critfail";}, run:function(){ startCombat("bandit","潜行暴露","quest_bandit_camp_after"); }}
+
   ]
+
 };};
+
+
 
 
 N["quest_bandit_fire"] = function(){ return {tag:"branch",
+
   place:"自由城邦 · 北郊山贼营地", where:"",
+
   text:[
+
     "你在营地的上风头堆了一些干草和枯枝，然后点着了。",
+
     "火很快烧起来。烟顺着风飘进营地，山贼们开始咳嗽、叫骂。",
+
     "“着火了！着火了！”有人喊。",
+
     "山贼们从帐篷里冲出来，乱成一团。你趁乱摸进营地，找到了他们的钱箱——一个铁盒子，沉甸甸的。"
+
   ],pace:"light",
+
   options:[
+
     {t:"拿了钱箱就跑", effect:{gold:15,item:"山贼钱箱"}, go:"quest_bandit_camp_after"},
+
     {t:"趁乱再杀几个", run:function(){ startCombat("bandit","火攻混乱中","quest_bandit_camp_after"); }}
+
   ]
+
 };};
+
+
 
 
 N["quest_bandit_camp_after"] = function(){ return {tag:"branch",
+
   place:"自由城邦 · 北郊山贼营地", where:"",
+
   text:[
+
     "营地安静了。",
+
     "你搜了搜，找到一些钱和物资。还有一封信，封蜡上印着一只闭着的眼睛——暗蚀会的标记。",
+
     "信的内容很简单：“继续截断商路。三个月内，让自由城邦的粮价翻三倍。”",
+
     "你把信收好。原来这些山贼，不是普通的山贼。他们是暗蚀会的棋子。", "从北郊山贼营地出来，路上行人渐稀。你脚步不停，一路向前。"],pace:"light",
+
   options:[
+
     {t:"回城里交委托", effect:{gold:10,rep:2,flag:"bandit_camp_cleared",flag:"darkcult_bandit_letter"}, go:"arrive_generic"},
+
     {t:"仔细研究这封信", check:{a:"INT",sk:"lore",label:"分析"},
+
   tier:{
+
     crit:function(){return[pickV(["你把信翻来覆去看了几遍。信纸的质地很特别——不是普通的纸，是一种很薄的羊皮，上面有极细的纹路。你认出来了，这是教会专用的信纸。而且，你还注意到一个细节——信纸的角落有一个极小的水印，是教会文书处的标记。'暗蚀会在用教会的信纸。'你喃喃道，'而且是教会内部专用的信纸——这种纸，只有红衣主教以上级别的人才能使用。'这意味着什么？要么暗蚀会渗透进了教会的最高层，要么——教会的最高层，有人在跟暗蚀会合作。你把信烧掉了，但你记住了这个发现。这个秘密，比一百金龙还值钱。","你分析这封信的时候，不仅认出了信纸是教会专用的，还破译了信末的署名——'密眼司·第三联络人'。密眼司是暗蚀会的第五部门，专司监视与情报。第三联络人，意味着在自由城邦地区，至少还有两个联络人。而且，信的内容里有一个暗语——'让粮价翻三倍'。这不是普通的截断商路，这是经济战——暗蚀会想通过制造饥荒来动摇自由城邦的稳定。你把这些信息都记在了心里。"],"bandit_letter_crit")]},
+
     ok:function(){return[pickV(["你把信翻来覆去看了几遍。信纸是教会专用的羊皮纸。暗蚀会在用教会的信纸——这意味着暗蚀会渗透进了教会，或者教会里有人在给暗蚀会提供物资。你把信烧掉了，但记住了信末的署名。","你分析出这封信是用教会专用信纸写的，暗蚀会与教会内部有勾结。你记住了这个重要发现。"],"bandit_letter_ok")]},
+
     fail:function(){return[pickV(["你看了这封信，但除了'继续截断商路'和'密眼司'之外，看不出更多的东西。信纸的质地你也说不上来——就是觉得有点特别。你把信收起来，打算以后找人问问。","你分析了信，但知识不够，只看出这是暗蚀会的命令，看不出更深的含义。"],"bandit_letter_fail")]},
+
     critfail:function(){return[pickV(["你研究这封信的时候，忍不住念出了声——'密眼司·第三联络人……'话刚出口，你就感觉到了——空气里有什么东西动了一下。你猛地抬头，营地外面的树林里，有一双眼睛在看着你。不是动物的眼睛——是人的。你立刻把信塞进怀里，拔出武器。但那双眼睛消失了——像从来没有存在过一样。你站在原地，心跳如擂鼓。你知道，你被盯上了。暗蚀会的人，一直在监视这个营地。而你刚才念出了他们的联络人代号——他们知道你看懂了这封信。从那以后，你总觉得背后有人在跟着你。夜里也经常做同一个噩梦——一双眼睛，在黑暗中盯着你。"],"bandit_letter_cf")]}
+
   },
+
   onCrit:{flag:"darkcult_church_link_deep",skillUp:"lore",flag:"darkcult_bandit_letter"},
+
   onOk:{flag:"darkcult_church_link",flag:"darkcult_bandit_letter"},
+
   onFail:{flag:"darkcult_bandit_letter"},
+
   onCritFail:{sanLoss:8,flag:"darkcult_watching",wound:"被监视的偏执"},
+
   go:"quest_bandit_letter"}
+
   ]
+
 };};
 
 
+
+
 N["quest_bandit_letter"]={tag:"branch",
+
   place:"自由城邦 · 北郊山贼营地", where:"",
+
   text:[
+
     "你把信翻来覆去看了几遍。",
+
     "信纸的质地很特别——不是普通的纸，是一种很薄的羊皮，上面有极细的纹路。你认出来了，这是教会专用的信纸。",
+
     "暗蚀会在用教会的信纸。这意味着什么？",
+
     "要么，暗蚀会渗透进了教会。要么——教会里有人，在给暗蚀会提供物资。",
+
     "你把信烧掉了。灰烬被风吹散，像一群黑色的蝴蝶。",
+
     "但你记住了信末的署名：“密眼司·第三联络人。”"
+
   ],pace:"normal",
+
   options:[{t:"回城，把这个秘密藏在心里", effect:{flag:"darkcult_church_link"}, go:"arrive_generic"}]
+
 };
+
+
 
 
 N["quest_research"] = function(){ return {tag:"branch",

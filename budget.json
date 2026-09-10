@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8571717,
-    "chunked_html_bytes_max": 5853681,
-    "node_total_min": 4587,
+    "game_html_bytes_max": 8625818,
+    "chunked_html_bytes_max": 5903515,
+    "node_total_min": 4607,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8521717,
-    "chunked_html_bytes": 5753681,
-    "node_total": 4637,
+    "game_html_bytes": 8575818,
+    "chunked_html_bytes": 5803515,
+    "node_total": 4657,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "G-C1-C3 内容深化（+6货/+4事件/图鉴触点/实力行）：商路与收集系统内容扩充",
+    "reason": "F-1 ifJob变体重构 文本微增",
     "history": [
       {
         "date": "2026-09-09",
@@ -817,6 +817,20 @@
         "chunked_bytes": 5753681,
         "nodes": 4637,
         "reason": "G-C1-C3 内容深化（+6货/+4事件/图鉴触点/实力行）：商路与收集系统内容扩充"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8575002,
+        "chunked_bytes": 5802699,
+        "nodes": 4657,
+        "reason": "F-1 主线三幕 20节点 新增文本"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8575818,
+        "chunked_bytes": 5803515,
+        "nodes": 4657,
+        "reason": "F-1 ifJob变体重构 文本微增"
       }
     ]
   },

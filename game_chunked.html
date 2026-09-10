@@ -40217,6 +40217,16 @@ window.v91_storyPanel = v91_storyPanel;
         rb.textContent = '↩ 回退';
         rb.onclick = function(){ try{ window.v92_rollback(); }catch(e){} };
         b.insertAdjacentElement('afterend', rb);
+        /* /upg08inj:btn/ UPG-08 属性总览按钮 */
+        if(!document.getElementById('btn-stats')){
+          var sb = document.createElement('button');
+          sb.id = 'btn-stats';
+          sb.className = 'btn';
+          sb.title = '属性总览：角色卡/六维/状态/影响力';
+          sb.textContent = '📋 属性';
+          sb.onclick = function(){ try{ v34_openStatsPanel(); }catch(e){} };
+          rb.insertAdjacentElement('afterend', sb);
+        }
         try{
           var _rbc = function(){
             var n = 0; try{ n = window.v92_rollbackCount?window.v92_rollbackCount():0; }catch(e){}
@@ -41192,6 +41202,83 @@ function v42_clearErrorLog(){
   v34_openErrorLog();
   flashMsg("错误日志已清空");
 }
+
+/* /upg08inj:stats/ UPG-08 属性总览面板（ChoiceScript stats 屏模式；吃同一份 S 状态；与 ELDA.observe 联动自动刷新；纯 UI 层） */
+function v34_openStatsPanel(){
+  try{
+    const old = document.getElementById('v34-stats-panel');
+    if(old) old.remove();
+    const box = document.createElement('div');
+    box.className = 'box v34-stats-box';
+    box.setAttribute('data-panel','stats');
+    box.innerHTML = '<div id="v34-stats-panel" class="v34-stats-panel"></div>';
+    openModal(box);
+    v34_renderStatsPanel();
+    if(window.ELDA && typeof window.ELDA.observe === 'function' && !window.__v92statsSub){
+      window.__v92statsSub = true;
+      window.ELDA.observe('*', function(){ try{ v34_renderStatsPanel(); }catch(e){} });
+    }
+  }catch(e){}
+}
+function v34_closeStatsPanel(){ try{ closeModal(); }catch(e){} }
+function v34_renderStatsPanel(){
+  const panel = document.getElementById('v34-stats-panel');
+  if(!panel || typeof S === 'undefined' || !S) return;
+  const R = (typeof REALMS !== 'undefined' && REALMS[S.realm]) ? REALMS[S.realm] : null;
+  const A = (typeof ATTR_CN !== 'undefined') ? ATTR_CN : {};
+  const attrOrder = ['SPR','STR','AGI','INT','CHA','CON'];
+  let attrsHtml = '';
+  for(let i=0;i<attrOrder.length;i++){
+    const k = attrOrder[i];
+    const v = (S.attrs && typeof S.attrs[k] === 'number') ? S.attrs[k] : 0;
+    attrsHtml += '<div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>' + (A[k]||k) + '</span><span>' + v + '</span></div>'
+      + '<div style="height:6px;background:rgba(0,0,0,0.08);border-radius:3px;margin-top:2px"><div style="height:6px;width:' + Math.min(100, v) + '%;background:linear-gradient(90deg,#8BC8EA,#5B8DEF);border-radius:3px"></div></div></div>';
+  }
+  const inflKeys = S.infl ? Object.keys(S.infl) : [];
+  let inflHtml = '';
+  if(inflKeys.length){
+    inflHtml = '<div style="font-size:13px">' + inflKeys.slice(0,9).map(function(k){
+      const cn = (typeof regionCn === 'function') ? regionCn(k) : k;
+      const v = S.infl[k];
+      return '<span style="display:inline-block;background:rgba(0,0,0,0.05);border-radius:8px;padding:2px 8px;margin:2px;font-size:12px">' + cn + ' ' + (v>0?'+':'') + v + '</span>';
+    }).join('') + '</div>';
+  }
+  const row = function(label, val){ return '<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:13px"><span style="color:var(--dim,#888)">' + label + '</span><span>' + val + '</span></div>'; };
+  const hpMax = (typeof maxHp === 'function') ? maxHp() : (R ? R.hp : 100);
+  const sanMax = S.maxSan || 100;
+  panel.innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:16px;font-weight:700">📋 属性总览</span><button class="panel-close" style="cursor:pointer" onclick="v34_closeStatsPanel()">✕</button></div>'
+    + '<div style="display:flex;gap:12px;flex-wrap:wrap">'
+    + '<div style="flex:1 1 210px;min-width:0">'
+    + '<div style="background:linear-gradient(135deg,rgba(91,141,239,0.12),rgba(139,200,234,0.2));border-radius:12px;padding:12px;margin-bottom:10px">'
+    + '<div style="font-size:18px;font-weight:700">' + (S.name || '无名者') + '</div>'
+    + '<div style="font-size:12px;color:var(--dim,#888);margin-top:4px">' + ((S.subrace||'')+' · '+(S.job||'')+' · '+(S.ideal||'')) + '</div>'
+    + '<div style="font-size:12px;color:var(--dim,#888)">天赋：' + (S.talent||'-') + '　境界：' + (R ? R.cn : (S.realm||'-')) + '</div>'
+    + '</div>'
+    + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">' + attrsHtml + '</div>'
+    + '</div>'
+    + '<div style="flex:1 1 210px;min-width:0">'
+    + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px;margin-bottom:10px">'
+    + '<div style="font-weight:700;font-size:14px;margin-bottom:6px">关键状态</div>'
+    + row('金币', S.gold || 0)
+    + row('声望', S.rep || 0)
+    + row('生命', S.hp + ' / ' + hpMax)
+    + row('理智', (S.san||0) + ' / ' + sanMax)
+    + row('疲劳', S.fatigue || 0)
+    + row('伤势', (S.wound||0) + ' 级')
+    + row('业力', S.karma || 0)
+    + '</div>'
+    + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">'
+    + '<div style="font-weight:700;font-size:14px;margin-bottom:6px">地域影响力</div>'
+    + (inflHtml || '<div style="color:var(--dim,#888);font-size:13px">暂无影响力记录</div>')
+    + '</div>'
+    + '</div>'
+    + '</div>'
+    + '<div style="text-align:center;margin-top:12px"><button class="btn btn-back" onclick="v34_closeStatsPanel()">返回游戏</button></div>';
+}
+window.v34_openStatsPanel = v34_openStatsPanel;
+window.v34_renderStatsPanel = v34_renderStatsPanel;
+window.v34_closeStatsPanel = v34_closeStatsPanel;
 
 function v34_openAchievements(){
   try{

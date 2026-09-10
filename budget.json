@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7464172,
-    "chunked_html_bytes_max": 4863442,
-    "node_total_min": 4100,
+    "game_html_bytes_max": 7499323,
+    "chunked_html_bytes_max": 4898593,
+    "node_total_min": 4126,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7414172,
-    "chunked_html_bytes": 4763442,
-    "node_total": 4150,
+    "game_html_bytes": 7449323,
+    "chunked_html_bytes": 4798593,
+    "node_total": 4176,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "B-5 死链与治理词修复后重建",
+    "reason": "M1 第三哨区域骨架 26节点+4事件",
     "history": [
       {
         "date": "2026-09-09",
@@ -355,6 +355,13 @@
         "chunked_bytes": 4763442,
         "nodes": 4150,
         "reason": "B-5 死链与治理词修复后重建"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7449323,
+        "chunked_bytes": 4798593,
+        "nodes": 4176,
+        "reason": "M1 第三哨区域骨架 26节点+4事件"
       }
     ]
   },

@@ -101,5 +101,11 @@ window.CAUSALITY_WORDS = [
     {id:"led_b5_05",type:"伏笔",desc:"费尔曼与六钥匙：刘矿头死于矿洞、老铁守第三哨失踪；费尔曼手背青纹更深",plant:"acad_magic_y5_ferman",reap:"north_road_1",status:"open",world:"vol_academy"},
     {id:"led_b5_06",type:"地点",desc:"第三哨铜钟，十年未鸣；守钟人独臂老兵言敲钟会出事",plant:"acad_magic_y4_quiet",reap:"north_road_1",status:"open",world:"vol_academy"},
     {id:"led_b5_07",type:"人物",desc:"陆昭（鸦羽），炼金系偷铁牌者，休学去南，灰楼夜火持铁盒再现，铁盒或已交费尔曼",plant:"acad_story_vault_end",reap:"acad_story_fire_after",status:"open",world:"vol_academy"},
-    {id:"led_b5_08",type:"人物",desc:"秦策，东境承天城演武场之约；东境动荡避风北上，秦·长风线人物网络延伸",plant:"acad_story_duel_after",reap:"east_chengtian_old",status:"open",world:"vol_academy"}];
+    {id:"led_b5_08",type:"人物",desc:"秦策，东境承天城演武场之约；东境动荡避风北上，秦·长风线人物网络延伸",plant:"acad_story_duel_after",reap:"east_chengtian_old",status:"open",world:"vol_academy"},
+    {id:"led_frontier_01",type:"地点",desc:"第三哨城，联盟最北军事要塞。铜钟铭文刻七锚之图，地脉蛇头在此，七锚之约第一环。",plant:"frontier_bell_4",reap:"frontier_bell_5",status:"open",world:"vol_north"},
+    {id:"led_frontier_02",type:"伏笔",desc:"老周之子三十年前在矿洞失踪，尸首未寻；失踪前曾说钟底下那个东西在叫他。",plant:"frontier_old_2",reap:"frontier_old_5",status:"open",world:"vol_north"},
+    {id:"led_frontier_03",type:"伏笔",desc:"矿洞封洞二十年仍传出水声，矿工旧物沉在巷道深处，锚2所在。",plant:"frontier_mine_gate",reap:"frontier_mine_1",status:"open",world:"vol_north"},
+    {id:"led_frontier_04",type:"伏笔",desc:"雪原狼群由黑皮两足人影指挥，狼王悬赏与城门告示同图。",plant:"frontier_infirmary",reap:"frontier_ev_wolves",status:"open",world:"vol_north"},
+    {id:"led_frontier_05",type:"人物",desc:"独臂军需官，掌矿洞钥匙与铜钟旧事，知七锚铭文来历。",plant:"frontier_sergeant",reap:"frontier_bell_4",status:"open",world:"vol_north"},
+    {id:"led_frontier_06",type:"伏笔",desc:"王三失踪于钟楼，雪地留下首枚铁牌，与钟身刻痕同纹（方牌中竖纹），七锚之首。",plant:"frontier_bell_2",reap:"frontier_bell_3",status:"open",world:"vol_north"}];
 /* ===== /v91inj:ledgerwords:end/ ===== */

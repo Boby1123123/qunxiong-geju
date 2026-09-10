@@ -433,6 +433,8 @@ function changeRelation(npcId,delta,reason){
   if(old<60&&S.npcRelations[npcId]>=60){ triggerRelationEvent(npcId,"close_friend"); }
   if(old<80&&S.npcRelations[npcId]>=80){ triggerRelationEvent(npcId,"lover"); }
   if(old>-60&&S.npcRelations[npcId]<=-60){ triggerRelationEvent(npcId,"enemy"); }
+  /* /upg07inj:relnotify/ UPG-07 关系变更广播（只读 UI 通知） */
+  try{ window.ELDA && window.ELDA.notify && window.ELDA.notify({relation:{npc:npcId}}); }catch(e){}
 }
 
 function triggerRelationEvent(npcId,type){

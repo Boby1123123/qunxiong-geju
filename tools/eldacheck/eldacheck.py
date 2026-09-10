@@ -23,7 +23,7 @@ def C(code, s):
 
 def load_checks():
     sys.path.insert(0, HERE)
-    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements
+    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements, c_observe
     return {
         'quick': [
             ('语法检查', c_syntax.run),
@@ -63,6 +63,7 @@ def load_checks():
             ('世界书Lorebook', c_lorebook.run),
             ('记忆注入v3', c_memorybank.run),
             ('成就/图鉴', c_achievements.run),
+            ('响应式UI', c_observe.run),
         ],
     }
 

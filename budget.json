@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8421694,
-    "chunked_html_bytes_max": 5718715,
+    "game_html_bytes_max": 8437781,
+    "chunked_html_bytes_max": 5721756,
     "node_total_min": 4581,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8371694,
-    "chunked_html_bytes": 5618715,
+    "game_html_bytes": 8387781,
+    "chunked_html_bytes": 5621756,
     "node_total": 4631,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UPG-06 结局图鉴+成就系统",
+    "reason": "UPG-07 响应式UI同步",
     "history": [
       {
         "date": "2026-09-09",
@@ -635,6 +635,13 @@
         "chunked_bytes": 5618715,
         "nodes": 4631,
         "reason": "UPG-06 结局图鉴+成就系统"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8387781,
+        "chunked_bytes": 5621756,
+        "nodes": 4631,
+        "reason": "UPG-07 响应式UI同步"
       }
     ]
   },

@@ -1112,6 +1112,26 @@ const _orig_loadGame = loadGame;
 }; window.loadGame = loadGame; })();
 
 /* ---------- 十六、UI 绑定 ---------- */
+/* /upg07inj:subs/ UPG-07 默认订阅：状态栏/属性/声望/图鉴随结算自动刷新（兜底 ELDA.refresh 手动刷新保留） */
+(function(){
+  function bindObserve(){
+    try{
+      if(!window.ELDA || typeof window.ELDA.observe !== 'function') return false;
+      window.ELDA.observe('*', function(ch){
+        try{ if(typeof renderTop === 'function') renderTop(); }catch(e){}
+        try{ if(typeof renderStats === 'function') renderStats(); }catch(e){}
+        try{ if(window.V68_UI && typeof V68_UI.statusBar === 'function') V68_UI.statusBar(); }catch(e){}
+      });
+      window.ELDA.observe('npcRelations', function(){
+        try{ if(typeof openRelationPanel === 'function' && typeof window.__v92relOpen === 'function') window.__v92relOpen(); }catch(e){}
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  if(!bindObserve()){
+    try{ setTimeout(bindObserve, 400); }catch(e){}
+  }
+})();
 function mechBindUI(){
   // 行动 / 图鉴 / 潜行 / 音效按钮
   const nav=document.querySelector("#topbar .nav");

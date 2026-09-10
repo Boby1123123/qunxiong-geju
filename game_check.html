@@ -23271,6 +23271,8 @@ function changeRelation(npcId,delta,reason){
   if(old<60&&S.npcRelations[npcId]>=60){ triggerRelationEvent(npcId,"close_friend"); }
   if(old<80&&S.npcRelations[npcId]>=80){ triggerRelationEvent(npcId,"lover"); }
   if(old>-60&&S.npcRelations[npcId]<=-60){ triggerRelationEvent(npcId,"enemy"); }
+  /* /upg07inj:relnotify/ UPG-07 关系变更广播（只读 UI 通知） */
+  try{ window.ELDA && window.ELDA.notify && window.ELDA.notify({relation:{npc:npcId}}); }catch(e){}
 }
 
 function triggerRelationEvent(npcId,type){
@@ -50799,6 +50801,8 @@ function applyEffects(eff,label){
       window.__v92lastFX = {day:S.day, lines:lines.slice(0,3)};
     }
   }catch(_e){}
+  /* /upg07inj:notify/ UPG-07 响应式 UI 通知：结算后广播本次变更键（只读广播，不触碰任何语义） */
+  try{ window.ELDA && window.ELDA.notify && window.ELDA.notify(eff); }catch(_e){}
   if(lines.length) return "◆ 结果："+lines.join("，")+"。";
   return null;
 }
@@ -54144,6 +54148,50 @@ window.v92_hasNodeTag = function(id, tag){
   try{ const t=window.v92_nodeTags(id); return t.indexOf(tag)>=0; }catch(e){ return false; }
 };
 window.ELDA = window.ELDA || {};
+/* ===== /upg07inj:observer/ UPG-07 响应式 UI 同步（Ink ObserveVariable 模式）：声明式注册 + 结算点广播；纯 UI 层，不触碰 S 语义/判定/存档） ===== */
+window.ELDA.__obs = {};
+window.ELDA.observe = function(key, fn){
+  try{
+    if(typeof fn !== 'function') return;
+    (window.ELDA.__obs[key] || (window.ELDA.__obs[key] = [])).push(fn);
+  }catch(e){}
+};
+window.ELDA.notify = function(eff){
+  try{
+    if(!eff) return;
+    /* 由 effects 结算对象推导变更键 */
+    var ch = {};
+    if(eff.gold) ch.gold = true;
+    if(eff.xp) ch.xp = true;
+    if(eff.hp || eff.heal || eff.wound) ch.hp = true;
+    if(eff.san || eff.sanmax) ch.san = true;
+    if(eff.rep) ch.rep = true;
+    if(eff.karma) ch.karma = true;
+    if(eff.aura) ch.aura = true;
+    if(eff.infl) ch.infl = true;
+    if(eff.attr) ch.attrs = true;
+    if(eff.skill) ch.skills = true;
+    if(eff.flag || eff.setflag || eff.cond) ch.flags = true;
+    if(eff.relation) ch.npcRelations = true;
+    if(eff.item || eff.loseItem) ch.items = true;
+    if(eff.mat || eff.loseMat) ch.mats = true;
+    ch.any = true;
+    var obs = window.ELDA.__obs || {};
+    for(var key in obs){
+      if(key !== '*' && !ch[key]) continue;
+      var arr = obs[key];
+      for(var i = 0; i < arr.length; i++){
+        try{ arr[i](ch); }catch(e){}
+      }
+    }
+  }catch(e){}
+};
+window.ELDA.refresh = function(){
+  try{ if(typeof renderTop === 'function') renderTop(); }catch(e){}
+  try{ if(typeof renderStats === 'function') renderStats(); }catch(e){}
+  try{ if(window.V68_UI && typeof V68_UI.statusBar === 'function') V68_UI.statusBar(); }catch(e){}
+  try{ if(window.V68_UI && typeof V68_UI.announceRefresh === 'function') V68_UI.announceRefresh(); }catch(e){}
+};
 window.ELDA.tags = {
   of: window.v92_nodeTags,
   has: window.v92_hasNodeTag,
@@ -57142,6 +57190,26 @@ const _orig_loadGame = loadGame;
 }; window.loadGame = loadGame; })();
 
 /* ---------- 十六、UI 绑定 ---------- */
+/* /upg07inj:subs/ UPG-07 默认订阅：状态栏/属性/声望/图鉴随结算自动刷新（兜底 ELDA.refresh 手动刷新保留） */
+(function(){
+  function bindObserve(){
+    try{
+      if(!window.ELDA || typeof window.ELDA.observe !== 'function') return false;
+      window.ELDA.observe('*', function(ch){
+        try{ if(typeof renderTop === 'function') renderTop(); }catch(e){}
+        try{ if(typeof renderStats === 'function') renderStats(); }catch(e){}
+        try{ if(window.V68_UI && typeof V68_UI.statusBar === 'function') V68_UI.statusBar(); }catch(e){}
+      });
+      window.ELDA.observe('npcRelations', function(){
+        try{ if(typeof openRelationPanel === 'function' && typeof window.__v92relOpen === 'function') window.__v92relOpen(); }catch(e){}
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  if(!bindObserve()){
+    try{ setTimeout(bindObserve, 400); }catch(e){}
+  }
+})();
 function mechBindUI(){
   // 行动 / 图鉴 / 潜行 / 音效按钮
   const nav=document.querySelector("#topbar .nav");

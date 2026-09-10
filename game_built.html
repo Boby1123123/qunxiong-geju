@@ -54573,7 +54573,8 @@ window.v92_weatherLine = function(node){
  */
 window.v92_threadTick = function(node){
   try{
-    if(!S||!S.threads) return null;
+    if(!S) return null;
+    if(!S.threads) S.threads={};
     const id = (node && node.id) ? node.id : (typeof curNode!=='undefined' ? curNode : '');
     if(!id) return null;
     const TH = window.THREADS; if(!TH) return null;

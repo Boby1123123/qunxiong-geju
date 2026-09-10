@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8507538,
-    "chunked_html_bytes_max": 5790460,
+    "game_html_bytes_max": 8507560,
+    "chunked_html_bytes_max": 5790481,
     "node_total_min": 4587,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8457538,
-    "chunked_html_bytes": 5690460,
+    "game_html_bytes": 8457560,
+    "chunked_html_bytes": 5690481,
     "node_total": 4637,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "PN3 叙事线面板+顶栏按钮（+0.8KB 合法增长）",
+    "reason": "PN-FIX threadTick 惰性初始化（+0.06KB）",
     "history": [
       {
         "date": "2026-09-09",
@@ -726,6 +726,13 @@
         "chunked_bytes": 5690460,
         "nodes": 4637,
         "reason": "PN3 叙事线面板+顶栏按钮（+0.8KB 合法增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8457560,
+        "chunked_bytes": 5690481,
+        "nodes": 4637,
+        "reason": "PN-FIX threadTick 惰性初始化（+0.06KB）"
       }
     ]
   },

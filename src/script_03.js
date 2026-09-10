@@ -3450,11 +3450,30 @@ window.v91_resolveText = function(node){
   try{
     const raw=(typeof node.text==="function")?node.text():node.text;
     if(raw==null) return [];
+    /* /v92inj:rec/ DEEP-1 递归变体解析：yes/no/default/ifFlag 值可为数组或嵌套对象（四态好感链）；数组行为与旧版逐字节一致，纯增强 */
+    function _v91R(sg){
+      if(sg==null) return null;
+      if(Array.isArray(sg)||typeof sg==="string") return sg;
+      if(typeof sg==="object"){
+        if(sg.ifRelation&&S&&S.npcRelations){
+          const r=sg.ifRelation, v=(S.npcRelations[r.npc]||0); let ok=false;
+          if(r.op===">=") ok=v>=r.val; else if(r.op==="<=") ok=v<=r.val; else if(r.op===">") ok=v>r.val; else if(r.op==="<") ok=v<r.val; else if(r.op==="===") ok=v===r.val;
+          return _v91R(ok?(r.yes!=null?r.yes:null):(r.no!=null?r.no:null));
+        }
+        if(sg.ifFlag&&S&&S.flags){
+          const keys=Object.keys(sg.ifFlag);
+          for(let i=0;i<keys.length;i++){ if(S.flags[keys[i]]&&sg.ifFlag[keys[i]]!=null){ const sub=_v91R(sg.ifFlag[keys[i]]); if(sub!=null) return sub; } }
+        }
+        if(sg.default!=null) return _v91R(sg.default);
+        return null;
+      }
+      return sg;
+    }
     /* 变体解析：node 级字段优先，其次 text 内嵌对象形态 */
     let seg=null;
     if(node.ifFlag&&S&&S.flags){
       const keys=Object.keys(node.ifFlag);
-      for(let i=0;i<keys.length;i++){ if(S.flags[keys[i]]){ seg=node.ifFlag[keys[i]]; break; } }
+      for(let i=0;i<keys.length;i++){ if(S.flags[keys[i]]){ seg=_v91R(node.ifFlag[keys[i]]); break; } }
     }
     if(seg==null&&node.ifRelation&&S&&S.npcRelations){
       const r=node.ifRelation;
@@ -3465,14 +3484,14 @@ window.v91_resolveText = function(node){
       else if(r.op===">") ok=v>r.val;
       else if(r.op==="<") ok=v<r.val;
       else if(r.op==="===") ok=v===r.val;
-      seg=ok?(r.yes||null):(r.no||null);
+      seg=_v91R(ok?(r.yes||null):(r.no||null));
     }
     /* /A1inj:fivekeys/ A-1 五维状态变体（ifJob/ifIdeal/ifHobby/ifTalent/ifSubrace；与 ifFlag 同构，读 S 五维键；向后兼容零回归） */
     if(seg==null){
       const _kv=["ifJob","ifIdeal","ifHobby","ifTalent","ifSubrace"];
       const _sv=["job","ideal","hobby","talent","subrace"];
       for(let _i=0;_i<_kv.length;_i++){
-        if(node[_kv[_i]]&&S&&S[_sv[_i]]!=null&&node[_kv[_i]][S[_sv[_i]]]!=null){ seg=node[_kv[_i]][S[_sv[_i]]]; break; }
+        if(node[_kv[_i]]&&S&&S[_sv[_i]]!=null&&node[_kv[_i]][S[_sv[_i]]]!=null){ seg=_v91R(node[_kv[_i]][S[_sv[_i]]]); break; }
       }
     }
     if(seg!=null) return Array.isArray(seg)?seg:[seg];
@@ -3480,7 +3499,7 @@ window.v91_resolveText = function(node){
     if(typeof raw==="object"){
       if(raw.ifFlag&&S&&S.flags){
         const keys=Object.keys(raw.ifFlag);
-        for(let i=0;i<keys.length;i++){ if(S.flags[keys[i]]){ seg=raw.ifFlag[keys[i]]; break; } }
+        for(let i=0;i<keys.length;i++){ if(S.flags[keys[i]]){ seg=_v91R(raw.ifFlag[keys[i]]); break; } }
       }
       if(seg==null&&raw.ifRelation&&S&&S.npcRelations){
         const r=raw.ifRelation;
@@ -3491,17 +3510,17 @@ window.v91_resolveText = function(node){
         else if(r.op===">") ok=v>r.val;
         else if(r.op==="<") ok=v<r.val;
         else if(r.op==="===") ok=v===r.val;
-        seg=ok?(r.yes||null):(r.no||null);
+        seg=_v91R(ok?(r.yes||null):(r.no||null));
       }
       /* /A1inj:fivekeys-raw/ A-1 五维状态变体（raw 对象内嵌形态，与 ifFlag/ifRelation 内嵌同构） */
       if(seg==null){
         const _kv=["ifJob","ifIdeal","ifHobby","ifTalent","ifSubrace"];
         const _sv=["job","ideal","hobby","talent","subrace"];
         for(let _i=0;_i<_kv.length;_i++){
-          if(raw[_kv[_i]]&&S&&S[_sv[_i]]!=null&&raw[_kv[_i]][S[_sv[_i]]]!=null){ seg=raw[_kv[_i]][S[_sv[_i]]]; break; }
+          if(raw[_kv[_i]]&&S&&S[_sv[_i]]!=null&&raw[_kv[_i]][S[_sv[_i]]]!=null){ seg=_v91R(raw[_kv[_i]][S[_sv[_i]]]); break; }
         }
       }
-      if(seg==null) seg=raw.default||null;
+      if(seg==null) seg=_v91R(raw.default||null);
       if(seg==null) return [];
       return Array.isArray(seg)?seg:[seg];
     }

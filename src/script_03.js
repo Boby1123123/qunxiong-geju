@@ -378,6 +378,88 @@ function writeDice(roll,target,tierLabel){
   try{ v44_diceFX(roll,target,tierLabel); }catch(e){}
 }
 function clearOptions(){ $("options").innerHTML=""; }
+/* ===== /v92inj:ach/ UPG-06 结局图鉴 + 成就系统（跨周目累积；localStorage 独立键 elda_achievements，与存档 key 分离；不触碰存档结构/saveVersion） ===== */
+window.ELDA_ACHIEVEMENTS_KEY = 'elda_achievements';
+window.v92_achLoad = function(){
+  try{
+    var d = JSON.parse(localStorage.getItem(window.ELDA_ACHIEVEMENTS_KEY) || 'null');
+    if(!d || typeof d !== 'object') d = {};
+    d.unlockedEndings = Array.isArray(d.unlockedEndings) ? d.unlockedEndings : [];
+    d.achievements = (d.achievements && typeof d.achievements === 'object') ? d.achievements : {};
+    d.stats = (d.stats && typeof d.stats === 'object') ? d.stats : {decisions:0, rollbacks:0, endings:0};
+    return d;
+  }catch(e){ return {unlockedEndings:[], achievements:{}, stats:{decisions:0, rollbacks:0, endings:0}}; }
+};
+window.v92_achSave = function(d){
+  try{ localStorage.setItem(window.ELDA_ACHIEVEMENTS_KEY, JSON.stringify(d)); }catch(e){}
+};
+window.v92_achUnlock = function(id){
+  try{
+    if(!id) return false;
+    var d = window.v92_achLoad();
+    if(d.achievements[id]) return false;
+    d.achievements[id] = Date.now();
+    window.v92_achSave(d);
+    try{ window.flashMsg('🏆 成就解锁：' + (window.v92_ACH_DEFS && v92_ACH_DEFS[id] ? v92_ACH_DEFS[id].name : id)); }catch(e){}
+    return true;
+  }catch(e){ return false; }
+};
+window.v92_achEnding = function(node){
+  try{
+    if(!node) return;
+    var isEnd = (node.tag === 'ending') || (node.tags && Array.isArray(node.tags) && node.tags.some(function(t){ return t.indexOf('ending:') === 0; })) || (String(curNode||'').indexOf('ending_') === 0);
+    if(!isEnd) return;
+    var d = window.v92_achLoad();
+    var key = String(curNode || '').replace(/_\d+$/, '');
+    if(!key) key = String(node.id || curNode || '');
+    if(d.unlockedEndings.indexOf(key) < 0){
+      d.unlockedEndings.push(key);
+      d.stats.endings = d.unlockedEndings.length;
+      window.v92_achSave(d);
+      try{ window.flashMsg('📖 结局图鉴解锁：' + key); }catch(e){}
+    }
+  }catch(e){}
+};
+window.v92_achTick = function(node){
+  try{
+    var d = window.v92_achLoad();
+    var fl = (S && S.flags) ? S.flags : {};
+    var flagsHave = function(sub){ for(var k in fl){ if(k.indexOf(sub) >= 0) return true; } return false; };
+    /* 结局图鉴 */
+    try{ window.v92_achEnding(node); }catch(e){}
+    /* 统计型 */
+    var visitedN = (S && S.visited) ? Object.keys(S.visited).length : 0;
+    var anchors = 0;
+    for(var ai=1; ai<=7; ai++){ if(fl['anchor_' + ai]) anchors++; }
+    var defs = {
+      ach_first_choice: { name:'初入抉择', desc:'做出你的第一个选择', hit: function(){ return d.stats.decisions >= 1; } },
+      ach_travel_5: { name:'踏遍五城', desc:'足迹遍布五座城市', hit: function(){ return visitedN >= 5; } },
+      ach_academy: { name:'学院学生', desc:'踏入艾尔达魔法学院', hit: function(){ return flagsHave('academy_student'); } },
+      ach_grad: { name:'学业有成', desc:'完成一段学业旅程', hit: function(){ return flagsHave('grad_') || flagsHave('academy_graduat'); } },
+      ach_anchor: { name:'七锚集齐', desc:'集齐七枚锚', hit: function(){ return anchors >= 7; } },
+      ach_goldscale: { name:'金秤真相', desc:'揭露金秤家族的隐秘', hit: function(){ return flagsHave('goldscale_done') || flagsHave('old_moritz_talk'); } },
+      ach_end1: { name:'初窥结局', desc:'见证第一个结局', hit: function(){ return d.unlockedEndings.length >= 1; } },
+      ach_end5: { name:'结局猎手', desc:'见证五个不同结局', hit: function(){ return d.unlockedEndings.length >= 5; } },
+      ach_endAll: { name:'全结局见证', desc:'见证全部 21 个结局', hit: function(){ return d.unlockedEndings.length >= 21; } },
+      ach_rollback: { name:'时空回溯', desc:'使用回退功能回溯时间', hit: function(){ return d.stats.rollbacks >= 1; } }
+    };
+    window.v92_ACH_DEFS = defs;
+    var unlocked = false;
+    for(var id in defs){
+      if(d.achievements[id]) continue;
+      try{ if(defs[id].hit()){ d.achievements[id] = Date.now(); unlocked = true; try{ window.flashMsg('🏆 成就解锁：' + defs[id].name); }catch(e){} } }catch(e){}
+    }
+    if(unlocked) window.v92_achSave(d);
+  }catch(e){}
+};
+/* ===== /v92inj:ach2/ 统计钩子：决策计数（showOptions 触发）/ 回退计数 ===== */
+window.v92_achStat = function(k){
+  try{
+    var d = window.v92_achLoad();
+    d.stats[k] = (d.stats[k] || 0) + 1;
+    window.v92_achSave(d);
+  }catch(e){}
+};
 /* ===== /v92inj:rollback/ UPG-05 回退系统（决策点快照栈；Ren'Py block_rollback 式；localStorage 独立键 elda-rollback，不入存档结构；irreversible 账本项阻断回退跨越；不触碰判定/存档语义） ===== */
 window.__v92rb = window.__v92rb || {lastNode:""};
 window.v92_rollbackIrreversible = function(node){
@@ -444,6 +526,7 @@ window.v92_rollback = function(){
       curNode=d.node;
       try{ if(window.v91_sessReset) v91_sessReset(); }catch(_){}
       writeNext();
+      try{ window.v92_achStat('rollbacks'); }catch(_){}
       try{ window.flashMsg("已回退到上一个决策点。"); }catch(_){}
       return true;
     }catch(e){
@@ -461,6 +544,7 @@ window.v92_rollbackCount = function(){
 };
 function showOptions(node){
   try{ window.v92_rollbackPush(node); }catch(e){}
+  try{ window.v92_achStat('decisions'); }catch(e){}
   clearOptions();
   if(!node || !node.options){ try{ window.v67_busyClear(); }catch(e){} return; }
   var opts = typeof node.options === "function" ? node.options() : node.options;
@@ -3887,6 +3971,7 @@ function writeNext(_v46f){
       renderPerf.record(Date.now()-_wnT0);
       return;
     }
+    try{ window.v92_achTick(node); }catch(e){}
     showOptions(node);
 
     if(curNode && curNode.indexOf("arrive_")===0 && S && S.loc) renderCityActs();

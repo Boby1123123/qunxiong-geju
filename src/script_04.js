@@ -9298,9 +9298,42 @@ function v42_clearErrorLog(){
 
 function v34_openAchievements(){
   try{
+    /* /upg06inj:panel/ UPG-06 结局图鉴 + 成就面板（跨周目累积；独立键 elda_achievements） */
+    const d = (window.v92_achLoad) ? window.v92_achLoad() : {unlockedEndings:[], achievements:{}, stats:{}};
+    const defs = (window.v92_ACH_DEFS) ? window.v92_ACH_DEFS : {};
+    const endIds = ['anchor_seal','anchor_open','anchor_transcend','anchor_war','anchor_goldscale','academy','purge','silver','seal','orc','church','desert','west','east','north','free','dwarf','elf','death','goldscale'];
+    const seen = d.unlockedEndings || [];
+    let rows = '';
+    const allEnd = endIds.slice();
+    for(let i=0;i<allEnd.length;i++){
+      const eid = allEnd[i];
+      const got = seen.some(function(s){ return s.indexOf(eid) >= 0; });
+      rows += '<div style="display:flex;justify-content:space-between;padding:4px 2px;border-bottom:1px solid var(--border,rgba(0,0,0,0.06));font-size:13px">'
+        + '<span>' + (got ? '📖 ' : '🔒 ') + eid + '</span>'
+        + '<span style="color:' + (got ? '#52C41A' : 'var(--dim,#888)') + '">' + (got ? '已见证' : '未解锁') + '</span></div>';
+    }
+    const defIds = Object.keys(defs);
+    let achRows = '';
+    for(let i=0;i<defIds.length;i++){
+      const id = defIds[i];
+      const def = defs[id];
+      const got = !!d.achievements[id];
+      achRows += '<div style="display:flex;justify-content:space-between;padding:4px 2px;border-bottom:1px solid var(--border,rgba(0,0,0,0.06));font-size:13px">'
+        + '<span>' + (got ? '🏆 ' : '· ') + (def ? def.name : id) + '<span style="color:var(--dim,#888);font-size:12px">　' + (def ? def.desc : '') + '</span></span>'
+        + '<span style="color:' + (got ? '#52C41A' : 'var(--dim,#888)') + '">' + (got ? '达成' : '未达成') + '</span></div>';
+    }
     const box = document.createElement('div');
     box.className = 'box';
-    box.innerHTML = '<h2>🏆 成就</h2><div style="color:var(--dim);font-size:13px;text-align:center;padding:20px 0">成就系统数据由图鉴面板呈现</div><div style="text-align:center;margin-top:14px"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
+    box.innerHTML = '<h2>🏆 结局图鉴与成就</h2>'
+      + '<div style="display:flex;gap:16px;flex-wrap:wrap;margin:10px 0 14px">'
+      + '<div style="flex:1 1 140px;background:rgba(0,0,0,0.04);border-radius:10px;padding:10px;text-align:center"><div style="font-size:24px;font-weight:700">' + seen.length + ' <span style="font-size:13px;color:var(--dim,#888)">/ ' + endIds.length + '</span></div><div style="font-size:12px;color:var(--dim,#888)">已见结局</div></div>'
+      + '<div style="flex:1 1 140px;background:rgba(0,0,0,0.04);border-radius:10px;padding:10px;text-align:center"><div style="font-size:24px;font-weight:700">' + Object.keys(d.achievements).length + ' <span style="font-size:13px;color:var(--dim,#888)">/ ' + defIds.length + '</span></div><div style="font-size:12px;color:var(--dim,#888)">成就</div></div>'
+      + '<div style="flex:1 1 140px;background:rgba(0,0,0,0.04);border-radius:10px;padding:10px;text-align:center"><div style="font-size:24px;font-weight:700">' + ((d.stats && d.stats.decisions)||0) + '</div><div style="font-size:12px;color:var(--dim,#888)">决策次数</div></div>'
+      + '</div>'
+      + '<div style="max-height:300px;overflow-y:auto;border:1px solid var(--border,rgba(0,0,0,0.08));border-radius:10px;padding:6px 10px;margin-bottom:12px"><div style="font-weight:700;font-size:14px;margin:6px 0">成就进度</div>' + achRows + '</div>'
+      + '<details style="margin-bottom:12px"><summary style="cursor:pointer;font-size:14px;font-weight:700">结局图鉴（' + seen.length + '/' + endIds.length + '）</summary><div style="max-height:260px;overflow-y:auto;border:1px solid var(--border,rgba(0,0,0,0.08));border-radius:10px;padding:6px 10px;margin-top:6px">' + rows + '</div></details>'
+      + '<div style="color:var(--dim,#888);font-size:12px;text-align:center;margin-bottom:10px">成就与图鉴跨周目保留（独立存储，与存档分离）</div>'
+      + '<div style="text-align:center"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
     openModal(box);
   }catch(e){}
 }

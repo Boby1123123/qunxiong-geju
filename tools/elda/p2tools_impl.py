@@ -345,24 +345,33 @@ def cmd_content_causality(args):
             return nid in ids and (nid in gos or dyn)
         return text.count(anchor) > 0
 
-    open_items, closed = [], 0
+    open_items, closed, field_missing = [], 0, []
     for it in ledger:
         if anchor_ok(it.get('plant')) and anchor_ok(it.get('reap')):
             closed += 1
         elif anchor_ok(it.get('plant')):
-            open_items.append((it['id'], it.get('world', '?'), it.get('desc', '')[:36]))
+            imp = it.get('importance', 0)
+            irr = '⚠不可逆' if it.get('irreversible') else ''
+            flag = '[HIGH]' if imp >= 4 else ''
+            open_items.append((it['id'], it.get('world', '?'), it.get('desc', '')[:36], flag, irr))
+        for f in ('importance', 'keywords', 'irreversible'):
+            if f not in it:
+                field_missing.append('%s:%s' % (it['id'], f))
 
     missing = [w.get('word') for w in words if text.count(w.get('word', '')) == 0]
     print('因果/伏笔账本：共 %d 项，核销 closed=%d，未回收 open=%d' % (len(ledger), closed, len(open_items)))
     print('设定词冻结：%d/%d 覆盖' % (len(words) - len(missing), len(words)))
     if open_items:
         print('── 未回收伏笔清单 ──')
-        for i, w, d in open_items:
-            print('  [OPEN] %s (%s) %s' % (i, w, d))
+        for i, w, d, flag, irr in open_items:
+            print('  [OPEN]%s %s (%s) %s %s' % (flag, i, w, d, irr))
+    if field_missing:
+        print('[FAIL] 账本四字段缺失(UPG-03): %s' % ','.join(field_missing[:20]))
+        return 1
     if missing:
         print('[FAIL] 设定词缺失: %s' % ','.join(missing))
         return 1
-    print('[OK] 账本核销与设定词冻结全部通过')
+    print('[OK] 账本核销与设定词冻结全部通过（UPG-03 四字段完整）')
     return 0
 
 

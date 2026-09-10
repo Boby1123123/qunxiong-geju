@@ -732,19 +732,14 @@ body.v68-theme{
   --c-parch-50:#f0e2c4; --c-parch-100:#e6d3a8; --c-ink-900:#2e1f12; --c-ink-700:#4a3420;
   --c-gold-600:#a67c2e; --c-gold-400:#d4a94f; --c-blood-600:#7a2e22; --c-moss-500:#5a6b3a;
   --c-parch-50a:rgba(240,226,196,.95); --c-parch-100a:rgba(230,211,168,.92);
-  background:
-    radial-gradient(ellipse at 18% 0%, rgba(214,169,79,.18), transparent 55%),
-    radial-gradient(ellipse at 88% 100%, rgba(122,46,34,.12), transparent 52%),
-    radial-gradient(ellipse at 60% 30%, rgba(240,226,196,.55), transparent 70%),
-    var(--c-parch-100);
+  background-color:#f3ecdc;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.05'/></feComponentTransfer></filter><rect width='180' height='180' filter='url(%23p)'/></svg>");
   color:var(--c-ink-900);
 }
+/* /v93ui:bg/ 方案一 v4：纯色羊皮纸底 + 羊皮纸屑颗粒，去卷轴/纹章图形标志 */
 body.v68-theme #app::before, body.v68-theme #app::after{
-  content:"⚜"; position:fixed; font-size:20px; color:var(--c-gold-600); opacity:.5;
-  pointer-events:none; z-index:9;
+  content:none;
 }
-body.v68-theme #app::before{ top:5px; left:8px; }
-body.v68-theme #app::after{ bottom:5px; right:8px; transform:rotate(180deg); }
 /* 顶部栏 */
 body.v68-theme #topbar{
   background:linear-gradient(180deg, var(--c-parch-50a), var(--c-parch-100a));
@@ -882,11 +877,99 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
 .v92-w-meta{font-size:12px;color:#9a8a6a;letter-spacing:1px;margin-top:6px}
 .v92-w-anchor{display:inline-block;margin:0 4px;font-size:13px;color:#8b6f47}
 .v92-w-anchors{margin-top:10px}
+
+/* ============ /v93ui:v4/ 方案一 v4 正式落地：书签导航/齿轮设置/收纳/旁白栏/指引条/居中弹窗/成就动效 ============ */
+/* 左上角齿轮设置（无文字） */
+body.v68-theme .v93-gear{
+  position:fixed; left:10px; top:7px; z-index:120;
+  width:36px; height:36px; padding:0; border-radius:50%;
+  background:linear-gradient(160deg,var(--c-parch-50),var(--c-parch-100));
+  border:2px solid var(--c-gold-600); color:var(--c-gold-600);
+  font-size:19px; line-height:1; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 2px 8px rgba(74,52,32,.35); transition:transform .2s, box-shadow .2s;
+}
+body.v68-theme .v93-gear:hover{ transform:rotate(35deg); box-shadow:0 0 12px rgba(166,124,46,.55); }
+body.v68-theme #topbar .title{ margin-left:44px; }
+/* 主书签（描金书签样式，单行不换行） */
+body.v68-theme #topbar .nav{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; }
+body.v68-theme #topbar .nav::-webkit-scrollbar{ display:none; }
+body.v68-theme #topbar .nav .btn.v93-main{
+  position:relative; padding:6px 13px 9px; font-size:13.5px; letter-spacing:.5px;
+  background:linear-gradient(180deg, var(--c-parch-50) 60%, var(--c-parch-100));
+  border:1px solid var(--c-ink-700); border-bottom:3px solid var(--c-gold-600);
+  border-radius:6px 6px 2px 2px; color:var(--c-ink-900); font-weight:700;
+  box-shadow:0 1px 3px rgba(74,52,32,.25);
+}
+body.v68-theme #topbar .nav .btn.v93-main:hover{
+  border-color:var(--c-gold-600); transform:translateY(-2px);
+  box-shadow:0 4px 10px rgba(166,124,46,.4);
+}
+/* 收纳按钮：默认隐藏，保留 id/onclick（快捷键仍可触发），经设置面板「功能入口」打开 */
+body.v68-theme #topbar .nav .btn.v93-ghost{ display:none; }
+/* 动态注入按钮收纳（图鉴/法术/手记/回退/属性/潜行/音效/叙事罗盘；行动按钮保留） */
+body.v68-theme #topbar #btn-gallery,
+body.v68-theme #topbar #btn-spellbook,
+body.v68-theme #topbar #btn-journal,
+body.v68-theme #topbar #btn-rollback,
+body.v68-theme #topbar #btn-stats,
+body.v68-theme #topbar #btn-stealth,
+body.v68-theme #topbar #btn-sound,
+body.v68-theme #topbar #btn-story{ display:none; }
+/* 顶部栏左侧留白给齿轮 */
+body.v68-theme #topbar{ padding-left:52px; }
+/* 弹窗垂直居中（覆盖旧贴底定位，不动元素/逻辑） */
+body.v68-theme #modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; visibility:hidden; pointer-events:none; z-index:900; }
+body.v68-theme #modal.show{ visibility:visible; pointer-events:auto; }
+body.v68-theme #modal .v31-modal-container{ margin:auto; }
+body.v68-theme #modal .box.v68-panel-box, body.v68-theme #modal .box.v35-panel-box,
+body.v68-theme #modal .box{ width:min(92vw,640px); max-width:min(92vw,760px); max-height:80vh; }
+/* 大陆纪闻旁白栏（桌面 1280+ 显示） */
+#v93-aside{
+  position:fixed; left:10px; top:112px; width:206px; max-height:64vh; overflow-y:auto;
+  background:linear-gradient(180deg, var(--c-parch-50a), var(--c-parch-100a));
+  border:1px solid var(--c-gold-600); border-radius:8px;
+  box-shadow:0 2px 12px rgba(74,52,32,.3); padding:8px 10px; z-index:55;
+  font-size:12px; color:var(--c-ink-700);
+}
+.v93-aside-head{ font-family:Georgia,"Times New Roman",serif; font-weight:700; color:var(--c-gold-600); letter-spacing:2px; border-bottom:2px solid var(--c-gold-600); padding-bottom:4px; margin-bottom:6px; text-align:center; }
+.v93-aside-warn{ margin-bottom:6px; }
+.v93-aside-item{ padding:6px 2px; border-bottom:1px dashed rgba(74,52,32,.3); cursor:pointer; }
+.v93-aside-item:hover{ background:rgba(166,124,46,.12); }
+.v93-aside-item .ai-tag{ display:inline-block; min-width:18px; margin-right:4px; font-weight:700; }
+.v93-aside-item .ai-tag.w{ color:var(--c-blood-600); }
+.v93-aside-item .ai-tag.s{ color:var(--c-gold-600); }
+.v93-aside-item .ai-tag.d{ color:var(--c-moss-500); }
+.v93-aside-item .ai-tag.c{ color:var(--c-ink-700); }
+.v93-aside-item .ai-day{ color:#9a8a6a; font-size:11px; }
+.v93-aside-warn-card{ background:rgba(122,46,34,.08); border:1px dashed var(--c-blood-600); border-radius:6px; padding:6px 8px; margin-bottom:6px; color:var(--c-blood-600); font-weight:600; }
+.v93-aside-foot{ text-align:center; color:#9a8a6a; font-size:11px; margin-top:6px; font-style:italic; }
+@media (max-width:1279px){ #v93-aside{ display:none; } }
+@media (min-width:1280px){ body.v68-theme #stage{ margin-left:232px; } }
+/* 目标指引条 */
+.v93-guide{
+  display:none; margin:0 auto 6px; max-width:46em; padding:6px 16px;
+  background:rgba(240,226,196,.55); border-left:4px solid var(--c-gold-600);
+  border-radius:4px; font-size:13px; color:var(--c-ink-700); letter-spacing:.5px;
+}
+body.v68-theme #main .v93-guide{ display:block; }
+.v93-guide b{ color:var(--c-gold-600); }
+/* 快捷键总览弹窗 */
+.v93-keys{ display:grid; grid-template-columns:1fr 1fr; gap:6px 18px; font-size:14px; margin:10px 0; }
+.v93-keys .k{ color:var(--c-gold-600); font-weight:700; }
+/* 成就解锁动效（纯 CSS） */
+.achievement-card.unlocked{ animation:v93-ach-in .5s ease-out both; }
+.achievement-card.unlocked:hover{ transform:translateY(-2px); box-shadow:0 4px 12px rgba(166,124,46,.4); }
+@keyframes v93-ach-in{ from{ opacity:0; transform:scale(.85); } to{ opacity:1; transform:scale(1); } }
+/* 功能入口网格（设置面板内） */
+.v93-fn-grid{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
+.v93-fn-grid .btn{ flex:1 1 96px; min-height:40px; font-size:13px; }
+.v93-fn-sec{ margin-top:14px; font-weight:700; color:var(--c-gold-600); border-bottom:1px dashed rgba(74,52,32,.3); padding-bottom:3px; letter-spacing:1px; }
 </style>
 </head>
 <body>
 <div id="app">
   <div id="topbar">
+    <button class="btn v93-gear" id="btn-settings" title="设置" onclick="v34_openSettings()">⚙</button>
     <span class="title">艾尔达大陆 · 群雄割据</span>
     <span class="sep">|</span>
     <span class="stat" id="tb-date">4037年 · 春一月 · 一日</span>
@@ -896,31 +979,30 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
     <span class="stat" id="tb-weather" title="天气">☀️</span>
     <span class="nav">
       <span class="v68-nav-group">
-        <button class="btn" id="btn-map" title="世界地图 (M)" onclick="v67_map.open()">🗺 地图</button>
-        <button class="btn" id="btn-pack" title="行囊 (B)">🎒 行囊</button>
-        <button class="btn" id="btn-realm" title="修炼 (T)">⚡ 修炼</button>
-        <button class="btn" id="btn-log" title="日志 (L)">📜 日志</button>
+        <button class="btn v93-main" id="btn-map" title="世界地图 (M)" onclick="v67_map.open()">🗺 地图</button>
+        <button class="btn v93-main" id="btn-pack" title="行囊 (B)">🎒 行囊</button>
+        <button class="btn v93-main" id="btn-realm" title="修炼 (T)">⚡ 修炼</button>
+        <button class="btn v93-main" id="btn-log" title="日志 (L)">📜 日志</button>
       </span>
       <span class="v68-nav-sep"></span>
       <span class="v68-nav-group">
-        <button class="btn" id="btn-faction" title="势力 (F)" onclick="v35_openFactionPanel()">⚜ 势力</button>
-        <button class="btn" id="btn-task" title="任务与目标 (Q)">✉ 任务</button>
-        <button class="btn" id="btn-strong" title="强者名册 (G)">⚔ 强者</button>
-        <button class="btn" id="btn-chronicle" title="编年史 (C)">📖 编年史</button>
-        <button class="btn" id="btn-threads" title="叙事线 (N)：并行叙事线进度" onclick="v92_openThreadPanel()">☰ 叙事线</button>
-        <button class="btn" id="btn-world" title="世界局势 (W)：九域现状与主线走向" onclick="v92_openWorldPanel()">🌍 局势</button>
-        <button class="btn" id="btn-tier" title="实力 (G)：战力评级与九域难度" onclick="v92_openTierPanel()">⚔ 实力</button>
-<button class="btn" id="btn-trade" title="商路 (G)：倒买倒卖赚差价" onclick="v92_openTradePanel()">🛒 商路</button>
-<button class="btn" id="btn-nodeedit" title="✎ 节点编辑器（作者工具）：搜索/编辑/脚手架/导出补丁" onclick="v92_openNodeEditor()">✎ 编辑</button>
-        <button class="btn" id="btn-save" title="存档 (Ctrl+S)" onclick="v34_openSavePanel()">💾 存档</button>
-        <button class="btn" id="btn-settings" title="设置" onclick="v34_openSettings()">⚙ 设置</button>
-        <button class="btn" id="btn-immersive" title="沉浸模式 (I)：隐藏界面只读剧情" onclick="V68_UI.immersive()">📖 沉浸</button>
+        <button class="btn v93-main" id="btn-faction" title="势力 (F)" onclick="v35_openFactionPanel()">⚜ 势力</button>
+        <button class="btn v93-main" id="btn-task" title="任务与目标 (Q)">✉ 任务</button>
+        <button class="btn v93-main" id="btn-chronicle" title="编年史 (C)">📖 编年史</button>
+        <button class="btn v93-main" id="btn-save" title="存档 (Ctrl+S)" onclick="v34_openSavePanel()">💾 存档</button>
+        <button class="btn v93-main" id="btn-immersive" title="沉浸模式 (I)：隐藏界面只读剧情" onclick="V68_UI.immersive()">📖 沉浸</button>
+        <button class="btn v93-ghost" id="btn-strong" title="强者名册 (G)">⚔ 强者</button>
+        <button class="btn v93-ghost" id="btn-threads" title="叙事线 (N)：并行叙事线进度" onclick="v92_openThreadPanel()">☰ 叙事线</button>
+        <button class="btn v93-ghost" id="btn-world" title="世界局势 (W)：九域现状与主线走向" onclick="v92_openWorldPanel()">🌍 局势</button>
+        <button class="btn v93-ghost" id="btn-tier" title="实力 (G)：战力评级与九域难度" onclick="v92_openTierPanel()">⚔ 实力</button>
+<button class="btn v93-ghost" id="btn-trade" title="商路 (G)：倒买倒卖赚差价" onclick="v92_openTradePanel()">🛒 商路</button>
+<button class="btn v93-ghost" id="btn-nodeedit" title="✎ 节点编辑器（作者工具）：搜索/编辑/脚手架/导出补丁" onclick="v92_openNodeEditor()">✎ 编辑</button>
       </span>
       <span class="v68-nav-sep"></span>
       <span class="v68-nav-group">
-        <button class="btn btn-v68-mini" id="btn-ach" title="成就" onclick="v34_openAchievements()">⚑</button>
-        <button class="btn btn-v68-mini" id="btn-magic" title="魔法" onclick="v35_openMagicPanel()">✦</button>
-        <button class="btn btn-v68-mini" id="btn-llm" title="AI润色">✨</button>
+        <button class="btn v93-ghost btn-v68-mini" id="btn-ach" title="成就" onclick="v34_openAchievements()">⚑</button>
+        <button class="btn v93-ghost btn-v68-mini" id="btn-magic" title="魔法" onclick="v35_openMagicPanel()">✦</button>
+        <button class="btn v93-ghost btn-v68-mini" id="btn-llm" title="AI润色">✨</button>
       </span>
     </span>
     <div class="v44-topbar2">
@@ -928,12 +1010,18 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
       <div class="v44-quick">
         <button class="btn" onclick="v44_quickRest()">休整</button>
         <button class="btn" onclick="saveGame()">存档</button>
-        <button class="btn" onclick="v34_openSettings()">设置</button>
       </div>
     </div>
   </div>
   <div id="v68-announce" aria-label="世界纪闻"><span class='va-ic'>🌍</span><span class='va-txt muted'>世界暂无大事。太安静了，安静得让人不安。</span><span class='va-btn' onclick='V68_UI.announceOpen()'>展开</span></div>
+  <aside id="v93-aside" aria-label="大陆纪闻旁白栏">
+    <div class="v93-aside-head">大陆纪闻</div>
+    <div id="v93-aside-warn" class="v93-aside-warn"></div>
+    <div id="v93-aside-list"></div>
+    <div class="v93-aside-foot">· 大陆正在呼吸 ·</div>
+  </aside>
   <div id="main">
+    <div id="v93-guide" class="v93-guide" role="note" aria-label="目标指引"></div>
     <div id="stage">
       <div id="story"><div class="v92-welcome">
         <div class="v92-w-title">艾尔达大陆 · 群雄割据</div>

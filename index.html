@@ -4567,19 +4567,14 @@ body.v68-theme{
   --c-parch-50:#f0e2c4; --c-parch-100:#e6d3a8; --c-ink-900:#2e1f12; --c-ink-700:#4a3420;
   --c-gold-600:#a67c2e; --c-gold-400:#d4a94f; --c-blood-600:#7a2e22; --c-moss-500:#5a6b3a;
   --c-parch-50a:rgba(240,226,196,.95); --c-parch-100a:rgba(230,211,168,.92);
-  background:
-    radial-gradient(ellipse at 18% 0%, rgba(214,169,79,.18), transparent 55%),
-    radial-gradient(ellipse at 88% 100%, rgba(122,46,34,.12), transparent 52%),
-    radial-gradient(ellipse at 60% 30%, rgba(240,226,196,.55), transparent 70%),
-    var(--c-parch-100);
+  background-color:#f3ecdc;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.05'/></feComponentTransfer></filter><rect width='180' height='180' filter='url(%23p)'/></svg>");
   color:var(--c-ink-900);
 }
+/* /v93ui:bg/ 方案一 v4：纯色羊皮纸底 + 羊皮纸屑颗粒，去卷轴/纹章图形标志 */
 body.v68-theme #app::before, body.v68-theme #app::after{
-  content:"⚜"; position:fixed; font-size:20px; color:var(--c-gold-600); opacity:.5;
-  pointer-events:none; z-index:9;
+  content:none;
 }
-body.v68-theme #app::before{ top:5px; left:8px; }
-body.v68-theme #app::after{ bottom:5px; right:8px; transform:rotate(180deg); }
 /* 顶部栏 */
 body.v68-theme #topbar{
   background:linear-gradient(180deg, var(--c-parch-50a), var(--c-parch-100a));
@@ -4717,11 +4712,99 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
 .v92-w-meta{font-size:12px;color:#9a8a6a;letter-spacing:1px;margin-top:6px}
 .v92-w-anchor{display:inline-block;margin:0 4px;font-size:13px;color:#8b6f47}
 .v92-w-anchors{margin-top:10px}
+
+/* ============ /v93ui:v4/ 方案一 v4 正式落地：书签导航/齿轮设置/收纳/旁白栏/指引条/居中弹窗/成就动效 ============ */
+/* 左上角齿轮设置（无文字） */
+body.v68-theme .v93-gear{
+  position:fixed; left:10px; top:7px; z-index:120;
+  width:36px; height:36px; padding:0; border-radius:50%;
+  background:linear-gradient(160deg,var(--c-parch-50),var(--c-parch-100));
+  border:2px solid var(--c-gold-600); color:var(--c-gold-600);
+  font-size:19px; line-height:1; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 2px 8px rgba(74,52,32,.35); transition:transform .2s, box-shadow .2s;
+}
+body.v68-theme .v93-gear:hover{ transform:rotate(35deg); box-shadow:0 0 12px rgba(166,124,46,.55); }
+body.v68-theme #topbar .title{ margin-left:44px; }
+/* 主书签（描金书签样式，单行不换行） */
+body.v68-theme #topbar .nav{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; }
+body.v68-theme #topbar .nav::-webkit-scrollbar{ display:none; }
+body.v68-theme #topbar .nav .btn.v93-main{
+  position:relative; padding:6px 13px 9px; font-size:13.5px; letter-spacing:.5px;
+  background:linear-gradient(180deg, var(--c-parch-50) 60%, var(--c-parch-100));
+  border:1px solid var(--c-ink-700); border-bottom:3px solid var(--c-gold-600);
+  border-radius:6px 6px 2px 2px; color:var(--c-ink-900); font-weight:700;
+  box-shadow:0 1px 3px rgba(74,52,32,.25);
+}
+body.v68-theme #topbar .nav .btn.v93-main:hover{
+  border-color:var(--c-gold-600); transform:translateY(-2px);
+  box-shadow:0 4px 10px rgba(166,124,46,.4);
+}
+/* 收纳按钮：默认隐藏，保留 id/onclick（快捷键仍可触发），经设置面板「功能入口」打开 */
+body.v68-theme #topbar .nav .btn.v93-ghost{ display:none; }
+/* 动态注入按钮收纳（图鉴/法术/手记/回退/属性/潜行/音效/叙事罗盘；行动按钮保留） */
+body.v68-theme #topbar #btn-gallery,
+body.v68-theme #topbar #btn-spellbook,
+body.v68-theme #topbar #btn-journal,
+body.v68-theme #topbar #btn-rollback,
+body.v68-theme #topbar #btn-stats,
+body.v68-theme #topbar #btn-stealth,
+body.v68-theme #topbar #btn-sound,
+body.v68-theme #topbar #btn-story{ display:none; }
+/* 顶部栏左侧留白给齿轮 */
+body.v68-theme #topbar{ padding-left:52px; }
+/* 弹窗垂直居中（覆盖旧贴底定位，不动元素/逻辑） */
+body.v68-theme #modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; visibility:hidden; pointer-events:none; z-index:900; }
+body.v68-theme #modal.show{ visibility:visible; pointer-events:auto; }
+body.v68-theme #modal .v31-modal-container{ margin:auto; }
+body.v68-theme #modal .box.v68-panel-box, body.v68-theme #modal .box.v35-panel-box,
+body.v68-theme #modal .box{ width:min(92vw,640px); max-width:min(92vw,760px); max-height:80vh; }
+/* 大陆纪闻旁白栏（桌面 1280+ 显示） */
+#v93-aside{
+  position:fixed; left:10px; top:112px; width:206px; max-height:64vh; overflow-y:auto;
+  background:linear-gradient(180deg, var(--c-parch-50a), var(--c-parch-100a));
+  border:1px solid var(--c-gold-600); border-radius:8px;
+  box-shadow:0 2px 12px rgba(74,52,32,.3); padding:8px 10px; z-index:55;
+  font-size:12px; color:var(--c-ink-700);
+}
+.v93-aside-head{ font-family:Georgia,"Times New Roman",serif; font-weight:700; color:var(--c-gold-600); letter-spacing:2px; border-bottom:2px solid var(--c-gold-600); padding-bottom:4px; margin-bottom:6px; text-align:center; }
+.v93-aside-warn{ margin-bottom:6px; }
+.v93-aside-item{ padding:6px 2px; border-bottom:1px dashed rgba(74,52,32,.3); cursor:pointer; }
+.v93-aside-item:hover{ background:rgba(166,124,46,.12); }
+.v93-aside-item .ai-tag{ display:inline-block; min-width:18px; margin-right:4px; font-weight:700; }
+.v93-aside-item .ai-tag.w{ color:var(--c-blood-600); }
+.v93-aside-item .ai-tag.s{ color:var(--c-gold-600); }
+.v93-aside-item .ai-tag.d{ color:var(--c-moss-500); }
+.v93-aside-item .ai-tag.c{ color:var(--c-ink-700); }
+.v93-aside-item .ai-day{ color:#9a8a6a; font-size:11px; }
+.v93-aside-warn-card{ background:rgba(122,46,34,.08); border:1px dashed var(--c-blood-600); border-radius:6px; padding:6px 8px; margin-bottom:6px; color:var(--c-blood-600); font-weight:600; }
+.v93-aside-foot{ text-align:center; color:#9a8a6a; font-size:11px; margin-top:6px; font-style:italic; }
+@media (max-width:1279px){ #v93-aside{ display:none; } }
+@media (min-width:1280px){ body.v68-theme #stage{ margin-left:232px; } }
+/* 目标指引条 */
+.v93-guide{
+  display:none; margin:0 auto 6px; max-width:46em; padding:6px 16px;
+  background:rgba(240,226,196,.55); border-left:4px solid var(--c-gold-600);
+  border-radius:4px; font-size:13px; color:var(--c-ink-700); letter-spacing:.5px;
+}
+body.v68-theme #main .v93-guide{ display:block; }
+.v93-guide b{ color:var(--c-gold-600); }
+/* 快捷键总览弹窗 */
+.v93-keys{ display:grid; grid-template-columns:1fr 1fr; gap:6px 18px; font-size:14px; margin:10px 0; }
+.v93-keys .k{ color:var(--c-gold-600); font-weight:700; }
+/* 成就解锁动效（纯 CSS） */
+.achievement-card.unlocked{ animation:v93-ach-in .5s ease-out both; }
+.achievement-card.unlocked:hover{ transform:translateY(-2px); box-shadow:0 4px 12px rgba(166,124,46,.4); }
+@keyframes v93-ach-in{ from{ opacity:0; transform:scale(.85); } to{ opacity:1; transform:scale(1); } }
+/* 功能入口网格（设置面板内） */
+.v93-fn-grid{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
+.v93-fn-grid .btn{ flex:1 1 96px; min-height:40px; font-size:13px; }
+.v93-fn-sec{ margin-top:14px; font-weight:700; color:var(--c-gold-600); border-bottom:1px dashed rgba(74,52,32,.3); padding-bottom:3px; letter-spacing:1px; }
 </style>
 </head>
 <body>
 <div id="app">
   <div id="topbar">
+    <button class="btn v93-gear" id="btn-settings" title="设置" onclick="v34_openSettings()">⚙</button>
     <span class="title">艾尔达大陆 · 群雄割据</span>
     <span class="sep">|</span>
     <span class="stat" id="tb-date">4037年 · 春一月 · 一日</span>
@@ -4731,31 +4814,30 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
     <span class="stat" id="tb-weather" title="天气">☀️</span>
     <span class="nav">
       <span class="v68-nav-group">
-        <button class="btn" id="btn-map" title="世界地图 (M)" onclick="v67_map.open()">🗺 地图</button>
-        <button class="btn" id="btn-pack" title="行囊 (B)">🎒 行囊</button>
-        <button class="btn" id="btn-realm" title="修炼 (T)">⚡ 修炼</button>
-        <button class="btn" id="btn-log" title="日志 (L)">📜 日志</button>
+        <button class="btn v93-main" id="btn-map" title="世界地图 (M)" onclick="v67_map.open()">🗺 地图</button>
+        <button class="btn v93-main" id="btn-pack" title="行囊 (B)">🎒 行囊</button>
+        <button class="btn v93-main" id="btn-realm" title="修炼 (T)">⚡ 修炼</button>
+        <button class="btn v93-main" id="btn-log" title="日志 (L)">📜 日志</button>
       </span>
       <span class="v68-nav-sep"></span>
       <span class="v68-nav-group">
-        <button class="btn" id="btn-faction" title="势力 (F)" onclick="v35_openFactionPanel()">⚜ 势力</button>
-        <button class="btn" id="btn-task" title="任务与目标 (Q)">✉ 任务</button>
-        <button class="btn" id="btn-strong" title="强者名册 (G)">⚔ 强者</button>
-        <button class="btn" id="btn-chronicle" title="编年史 (C)">📖 编年史</button>
-        <button class="btn" id="btn-threads" title="叙事线 (N)：并行叙事线进度" onclick="v92_openThreadPanel()">☰ 叙事线</button>
-        <button class="btn" id="btn-world" title="世界局势 (W)：九域现状与主线走向" onclick="v92_openWorldPanel()">🌍 局势</button>
-        <button class="btn" id="btn-tier" title="实力 (G)：战力评级与九域难度" onclick="v92_openTierPanel()">⚔ 实力</button>
-<button class="btn" id="btn-trade" title="商路 (G)：倒买倒卖赚差价" onclick="v92_openTradePanel()">🛒 商路</button>
-<button class="btn" id="btn-nodeedit" title="✎ 节点编辑器（作者工具）：搜索/编辑/脚手架/导出补丁" onclick="v92_openNodeEditor()">✎ 编辑</button>
-        <button class="btn" id="btn-save" title="存档 (Ctrl+S)" onclick="v34_openSavePanel()">💾 存档</button>
-        <button class="btn" id="btn-settings" title="设置" onclick="v34_openSettings()">⚙ 设置</button>
-        <button class="btn" id="btn-immersive" title="沉浸模式 (I)：隐藏界面只读剧情" onclick="V68_UI.immersive()">📖 沉浸</button>
+        <button class="btn v93-main" id="btn-faction" title="势力 (F)" onclick="v35_openFactionPanel()">⚜ 势力</button>
+        <button class="btn v93-main" id="btn-task" title="任务与目标 (Q)">✉ 任务</button>
+        <button class="btn v93-main" id="btn-chronicle" title="编年史 (C)">📖 编年史</button>
+        <button class="btn v93-main" id="btn-save" title="存档 (Ctrl+S)" onclick="v34_openSavePanel()">💾 存档</button>
+        <button class="btn v93-main" id="btn-immersive" title="沉浸模式 (I)：隐藏界面只读剧情" onclick="V68_UI.immersive()">📖 沉浸</button>
+        <button class="btn v93-ghost" id="btn-strong" title="强者名册 (G)">⚔ 强者</button>
+        <button class="btn v93-ghost" id="btn-threads" title="叙事线 (N)：并行叙事线进度" onclick="v92_openThreadPanel()">☰ 叙事线</button>
+        <button class="btn v93-ghost" id="btn-world" title="世界局势 (W)：九域现状与主线走向" onclick="v92_openWorldPanel()">🌍 局势</button>
+        <button class="btn v93-ghost" id="btn-tier" title="实力 (G)：战力评级与九域难度" onclick="v92_openTierPanel()">⚔ 实力</button>
+<button class="btn v93-ghost" id="btn-trade" title="商路 (G)：倒买倒卖赚差价" onclick="v92_openTradePanel()">🛒 商路</button>
+<button class="btn v93-ghost" id="btn-nodeedit" title="✎ 节点编辑器（作者工具）：搜索/编辑/脚手架/导出补丁" onclick="v92_openNodeEditor()">✎ 编辑</button>
       </span>
       <span class="v68-nav-sep"></span>
       <span class="v68-nav-group">
-        <button class="btn btn-v68-mini" id="btn-ach" title="成就" onclick="v34_openAchievements()">⚑</button>
-        <button class="btn btn-v68-mini" id="btn-magic" title="魔法" onclick="v35_openMagicPanel()">✦</button>
-        <button class="btn btn-v68-mini" id="btn-llm" title="AI润色">✨</button>
+        <button class="btn v93-ghost btn-v68-mini" id="btn-ach" title="成就" onclick="v34_openAchievements()">⚑</button>
+        <button class="btn v93-ghost btn-v68-mini" id="btn-magic" title="魔法" onclick="v35_openMagicPanel()">✦</button>
+        <button class="btn v93-ghost btn-v68-mini" id="btn-llm" title="AI润色">✨</button>
       </span>
     </span>
     <div class="v44-topbar2">
@@ -4763,12 +4845,18 @@ body.v68-theme #options .opt .oh{ color:var(--c-moss-500); font-size:12px; }
       <div class="v44-quick">
         <button class="btn" onclick="v44_quickRest()">休整</button>
         <button class="btn" onclick="saveGame()">存档</button>
-        <button class="btn" onclick="v34_openSettings()">设置</button>
       </div>
     </div>
   </div>
   <div id="v68-announce" aria-label="世界纪闻"><span class='va-ic'>🌍</span><span class='va-txt muted'>世界暂无大事。太安静了，安静得让人不安。</span><span class='va-btn' onclick='V68_UI.announceOpen()'>展开</span></div>
+  <aside id="v93-aside" aria-label="大陆纪闻旁白栏">
+    <div class="v93-aside-head">大陆纪闻</div>
+    <div id="v93-aside-warn" class="v93-aside-warn"></div>
+    <div id="v93-aside-list"></div>
+    <div class="v93-aside-foot">· 大陆正在呼吸 ·</div>
+  </aside>
   <div id="main">
+    <div id="v93-guide" class="v93-guide" role="note" aria-label="目标指引"></div>
     <div id="stage">
       <div id="story"><div class="v92-welcome">
         <div class="v92-w-title">艾尔达大陆 · 群雄割据</div>
@@ -46815,7 +46903,14 @@ function v34_renderAchievements(){
     html += '</div>';
   }
   html += '</div>';
-  html += '<div style="text-align:center;margin:14px 0;font-size:14px;color:#5a4a30">已解锁：' + unlocked + ' / ' + total + '</div>';
+    try{
+    var _leg=null; try{ _leg=(window.legacySave)?legacySave():null; }catch(_){}
+    var _endAll=(_leg&&_leg.endings)||{}; var _ec=0; for(var _k in _endAll){ if(_endAll[_k]) _ec++; }
+    var _endTotal=0; try{ if(typeof window.N!=='undefined'&&N){ for(var _nn in N){ try{ if(N[_nn] && N[_nn].tag==='ending') _endTotal++; }catch(_){} } } }catch(_){}
+    var _pct = _endTotal>0 ? Math.round((_ec||0)*100/_endTotal) : 0;
+    html += '<div style="text-align:center;margin:8px 0;font-size:14px;color:#6b4a10">🏆 结局收集度：' + _ec + ' / ' + (_endTotal||17) + '（' + _pct + '%）——多周目可解锁更多结局</div>';
+  }catch(_){}
+html += '<div style="text-align:center;margin:14px 0;font-size:14px;color:#5a4a30">已解锁：' + unlocked + ' / ' + total + '</div>';
   html += '<div style="text-align:center"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
   return html;
 }
@@ -46862,7 +46957,28 @@ function v34_renderSettings(){
   html += '<h4 style="color:#5a4a10;margin:16px 0 8px">显示</h4>';
   html += '<div class="v34-setting-row"><div><div class="v34-setting-label">字号</div><div class="v34-setting-desc">故事正文大小</div></div><div class="v44-seg" id="v44-fontsize-seg"></div></div>';
   html += '<div class="v34-setting-row"><div><div class="v34-setting-label">主题</div><div class="v34-setting-desc">界面配色方案</div></div><div class="v44-seg" id="v44-theme-seg"></div></div>';
-  html += '<h4 style="color:#5a4a10;margin:16px 0 8px">云存档 <span id="v63-cloud-status" style="font-size:11px;color:var(--dim);font-weight:400"></span></h4>';
+    html += '<h4 style="color:#5a4a10;margin:16px 0 8px">功能入口 <span style="font-size:11px;color:var(--dim);font-weight:400">常用功能收纳于此，不影响主界面布局</span></h4>';
+  html += '<div class="v93-fn-grid">';
+  html += '<button class="btn" onclick="openGallery()">📖 图鉴</button>';
+  html += '<button class="btn" onclick="if(window.v92_openSpellbook)v92_openSpellbook();else if(window.v35_openMagicPanel)v35_openMagicPanel()">📖 法术书</button>';
+  html += '<button class="btn" onclick="v35_openMagicPanel()">✦ 魔法</button>';
+  html += '<button class="btn" onclick="if(window.v34_openStatsPanel)v34_openStatsPanel()">📋 属性</button>';
+  html += '<button class="btn" onclick="V68_UI.strongPanel()">⚔ 强者</button>';
+  html += '<button class="btn" onclick="v92_openThreadPanel()">☰ 叙事线</button>';
+  html += '<button class="btn" onclick="v92_openWorldPanel()">🌍 局势</button>';
+  html += '<button class="btn" onclick="v92_openTierPanel()">⚔ 实力</button>';
+  html += '<button class="btn" onclick="v92_openTradePanel()">🛒 商路</button>';
+  html += '<button class="btn" onclick="v34_openAchievements()">⚑ 成就</button>';
+  html += '<button class="btn" onclick="if(window.v74_openJournal)v74_openJournal()">📔 手记</button>';
+  html += '<button class="btn" onclick="if(window.v92_rollback)v92_rollback()">↩ 回退</button>';
+  html += '<button class="btn" onclick="v91_storyPanel()">🗺 叙事罗盘</button>';
+  html += '<button class="btn" onclick="toggleStealth()">🌙 潜行</button>';
+  html += '<button class="btn" onclick="v34_openErrorLog()">🧾 错误日志</button>';
+  html += '<button class="btn" onclick="DebugPanel.toggle()">🔧 调试面板</button>';
+  html += '<button class="btn" onclick="v92_openNodeEditor()">✎ 节点编辑</button>';
+  html += '<button class="btn" onclick="V68_UI.immersive()">📖 沉浸模式</button>';
+  html += '</div>';
+html += '<h4 style="color:#5a4a10;margin:16px 0 8px">云存档 <span id="v63-cloud-status" style="font-size:11px;color:var(--dim);font-weight:400"></span></h4>';
   html += '<div style="font-size:11px;color:var(--dim);margin:4px 0 8px">云存档为本地存档的第三副本：上传成功仍保留本地；下载失败自动回退本地；未配置时按钮置灰。</div>';
   html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">';
   html += '<button class="btn" id="v63-btn-up" onclick="v63_upload()" style="flex:1 1 100px">☁ 上传存档</button>';
@@ -46999,6 +47115,12 @@ window.v92_autoTick = function(){
     snap.slotId = 'autosave';
     snap.saveTime = Date.now();
     if(typeof curNode !== 'undefined') snap.curNode = curNode;
+    try{
+      var _kf = /^(anchor_|ending_|purge_|silver_|seal_|academy_|orc_|goldscale_|frontier_seal_|warphase_)/;
+      if(typeof curNode!=='undefined' && curNode && _kf.test(String(curNode))){
+        try{ if(window.flashMsg) flashMsg('关键节点已自动存档'); }catch(_){}
+      }
+    }catch(_){}
     StorageKit.save(snap);
   }catch(e){}
 };
@@ -47133,6 +47255,178 @@ v34_afterFlush = function(appended){
 
 /* /v74ui:guard:again/ V74 末尾二次保护：v34_* 面板存在后定义覆盖，需重包 */
 try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
+
+
+/* ============ /v93ui:v4/ 方案一 v4：大陆纪闻旁白栏 + 目标指引条 + 快捷键总览 + 主书签行保障 ============ */
+(function(){
+  function _s(){ try{ return (typeof S!=='undefined'&&S)?S:null; }catch(e){ return null; } }
+  function _we(){ try{ return (typeof WORLD_EVENTS!=='undefined'&&WORLD_EVENTS)?WORLD_EVENTS:null; }catch(e){ return null; } }
+  function _pool(){ try{ return (typeof EVENT_POOL_EXT!=='undefined'&&EVENT_POOL_EXT)?EVENT_POOL_EXT:null; }catch(e){ return null; } }
+  function _clsTag(cls){ return {天灾:'w',人祸:'c',商机:'s',奇遇:'d'}[cls]||'d'; }
+  function _clsSym(cls){ return {天灾:'⚠',人祸:'⚔',商机:'◆',奇遇:'✦'}[cls]||'·'; }
+
+  /* ① 大陆纪闻旁白栏：五主线预告置顶 + 最近事件 3-5 则，点击展开详情 */
+  window.v93_renderAside = function(){
+    try{
+      var list = document.getElementById('v93-aside-list');
+      var warn = document.getElementById('v93-aside-warn');
+      if(!list) return;
+      var Sd = _s();
+      var out = '';
+      var day = (Sd && typeof Sd.day==='number') ? Sd.day : 1;
+      /* 五主线临近预告（只读 day 表，不改判定） */
+      if(warn){
+        var we = _we(); var wout = '';
+        if(we && Sd){
+          var keys = ['purge','silver','seal','academy','orc'];
+          var near = null;
+          for(var i=0;i<keys.length;i++){
+            var e = we[keys[i]];
+            if(!e || typeof e.day!=='number') continue;
+            if(e.day > day && e.day - day <= 5){ if(!near || e.day < near.day) near = e; }
+          }
+          if(near){ wout = '<div class="v93-aside-warn-card">⚠ 距『' + near.cn + '』还有 ' + (near.day-day) + ' 日</div>'; }
+          if(wout){ warn.innerHTML = wout; } else { warn.innerHTML = ''; }
+        }
+      }
+      /* 最近事件（day<=今日，取最近 5 则） */
+      var pool = _pool();
+      if(pool && pool.length){
+        var items = [];
+        for(var j=0;j<pool.length;j++){
+          var ev = pool[j];
+          if(ev && typeof ev.day==='number' && ev.day <= day) items.push(ev);
+        }
+        items.sort(function(a,b){ return (b.day||0)-(a.day||0); });
+        var show = items.slice(0,5);
+        if(!show.length){
+          out = '<div class="v93-aside-item" style="cursor:default"><span class="ai-tag d">·</span>大陆尚无异动。</div>';
+        } else {
+          for(var k=0;k<show.length;k++){
+            var it = show[k];
+            var tag = _clsTag(it.cls); var sym = _clsSym(it.cls);
+            var txt = (it.text||'').length>34 ? (it.text.slice(0,34)+'…') : (it.text||'');
+            out += '<div class="v93-aside-item" title="点击查看详情" onclick="v93_openEventDetail(' + (k) + ')"><span class="ai-tag ' + tag + '">' + sym + '</span><span>' + txt + '</span><span class="ai-day"> · 第' + it.day + '日</span></div>';
+          }
+        }
+      } else {
+        out = '<div class="v93-aside-item" style="cursor:default">纪闻待启。</div>';
+      }
+      list.innerHTML = out;
+      window.__v93AsideItems = show || [];
+    }catch(e){}
+  };
+
+  /* 事件详情弹窗 */
+  window.v93_openEventDetail = function(idx){
+    try{
+      var arr = window.__v93AsideItems || [];
+      var it = arr[idx]; if(!it) return;
+      var box = document.createElement('div');
+      box.className = 'box v68-panel-box';
+      box.innerHTML = '<h3>大陆纪闻 · 第' + it.day + '日（' + (it.cls||'事件') + '）</h3><div class="row" style="line-height:1.8">' + (it.text||'') + '</div>';
+      openModal(box);
+    }catch(e){}
+  };
+
+  /* ③ 目标指引条：主线临近 + 当前去向提示（只读 S，不改判定） */
+  window.v93_renderGuide = function(){
+    try{
+      var g = document.getElementById('v93-guide');
+      if(!g) return;
+      var Sd = _s(); if(!Sd){ g.style.display='none'; return; }
+      var day = (typeof Sd.day==='number')?Sd.day:1;
+      var we = _we(); var parts = [];
+      if(we){
+        var keys = ['purge','silver','seal','academy','orc'];
+        for(var i=0;i<keys.length;i++){
+          var e = we[keys[i]];
+          if(!e || typeof e.day!=='number') continue;
+          if(e.day > day && e.day - day <= 8){ parts.push('🜂 <b>『' + e.cn + '』</b>将至（还有 ' + (e.day-day) + ' 日）'); }
+        }
+      }
+      if(Sd.curCity){ parts.push('📍 当前：' + Sd.curCity); }
+      if(parts.length){
+        g.innerHTML = parts.join('　·　');
+        g.style.display = 'block';
+      } else {
+        g.innerHTML = ''; g.style.display = 'none';
+      }
+    }catch(e){}
+  };
+
+  /* ② 快捷键总览弹窗（按 ? 或 / 呼出） */
+  window.v93_keyHelp = function(){
+    try{
+      var box = document.createElement('div');
+      box.className = 'box v68-panel-box';
+      box.innerHTML =
+        '<h3>⌨ 快捷键总览</h3>' +
+        '<div class="v93-keys">' +
+        '<span><span class="k">M</span> 世界地图</span>' +
+        '<span><span class="k">B</span> 行囊</span>' +
+        '<span><span class="k">T</span> 修炼</span>' +
+        '<span><span class="k">L</span> 日志</span>' +
+        '<span><span class="k">F</span> 势力</span>' +
+        '<span><span class="k">Q</span> 任务</span>' +
+        '<span><span class="k">G</span> 强者</span>' +
+        '<span><span class="k">C</span> 编年史</span>' +
+        '<span><span class="k">Z</span> 魔法书</span>' +
+        '<span><span class="k">A</span> 成就</span>' +
+        '<span><span class="k">S</span> 存档</span>' +
+        '<span><span class="k">I</span> 沉浸模式</span>' +
+        '<span><span class="k">空格/Enter</span> 推进剧情</span>' +
+        '<span><span class="k">Esc</span> 退出沉浸</span>' +
+        '<span><span class="k">?</span> 本总览</span>' +
+        '</div>' +
+        '<div class="mini">其余功能（图鉴/魔法/属性/强者/商路/局势等）已收纳进左上角 ⚙ 设置 → 功能入口。</div>';
+      openModal(box);
+    }catch(e){}
+  };
+
+  /* 初始化：定时刷新旁白栏与指引条 */
+  function init(){
+    try{
+      if(!window.__v93bound){
+        window.__v93bound = 1;
+        document.addEventListener('keydown', function(e){
+          try{
+            if(e.target && (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')) return;
+            if(e.key === '?' || e.key === '/'){ e.preventDefault(); v93_keyHelp(); }
+          }catch(_){}
+        });
+      }
+      var t0 = function(){ try{ v93_renderAside(); v93_renderGuide(); }catch(_){} };
+      if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', t0); } else { t0(); }
+      setInterval(t0, 5000);
+      /* 动态按钮可能晚于本 init 注入：定时兜底收容（不触碰 btn-acts 行动按钮） */
+      try{
+        setInterval(function(){
+          var _ids = ['btn-gallery','btn-spellbook','btn-journal','btn-rollback','btn-stats','btn-stealth','btn-sound','btn-story'];
+          for(var _i=0;_i<_ids.length;_i++){
+            var _el = document.getElementById(_ids[_i]);
+            if(_el && _el.className.indexOf('v93-ghost')<0 && _el.className.indexOf('v93-main')<0){
+              _el.className += ' v93-ghost';
+            }
+          }
+        }, 3000);
+      }catch(_){}
+
+      /* 收容保障：脚本动态插入 nav 的按钮（图鉴/法术/手记/回退/属性/潜行/音效等）若漏 class，隐藏之 */
+      try{
+        var ids = ['btn-gallery','btn-spellbook','btn-journal','btn-rollback','btn-stats','btn-stealth','btn-sound','btn-story'];
+        for(var i=0;i<ids.length;i++){
+          var el = document.getElementById(ids[i]);
+          if(el && el.className.indexOf('v93-ghost')<0 && el.className.indexOf('v93-main')<0){
+            el.className += ' v93-ghost';
+          }
+        }
+      }catch(_){}
+    }catch(e){}
+  }
+  init();
+})();
+
 </script>
 <script>
 /* ============ v44 表现层引擎（IIFE 封装，不污染 S） ============ */

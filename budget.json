@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8726825,
-    "chunked_html_bytes_max": 6008606,
+    "game_html_bytes_max": 8743881,
+    "chunked_html_bytes_max": 6025456,
     "node_total_min": 4649,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8676825,
-    "chunked_html_bytes": 5908606,
+    "game_html_bytes": 8693881,
+    "chunked_html_bytes": 5925456,
     "node_total": 4699,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "v92空态欢迎主界面：story区未开始不再空白（标题/引言/开始·读档·设置按钮）",
+    "reason": "UI93 v4 齿轮z-index提升至120",
     "history": [
       {
         "date": "2026-09-09",
@@ -873,6 +873,41 @@
         "chunked_bytes": 5908606,
         "nodes": 4699,
         "reason": "v92空态欢迎主界面：story区未开始不再空白（标题/引言/开始·读档·设置按钮）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8692816,
+        "chunked_bytes": 5924407,
+        "nodes": 4699,
+        "reason": "UI93 v4 方案一落地：齿轮设置/主书签收纳/旁白栏/指引条/功能入口，节点内容未变"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8692806,
+        "chunked_bytes": 5924396,
+        "nodes": 4699,
+        "reason": "UI93 v4 成就收集度改用 window.N 统计"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8693832,
+        "chunked_bytes": 5925409,
+        "nodes": 4699,
+        "reason": "UI93 v4 收纳兜底+动态按钮CSS隐藏，代码层增长 1032B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8693880,
+        "chunked_bytes": 5925455,
+        "nodes": 4699,
+        "reason": "UI93 v4 成就收集度判空加固+动态收纳兜底"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8693881,
+        "chunked_bytes": 5925456,
+        "nodes": 4699,
+        "reason": "UI93 v4 齿轮z-index提升至120"
       }
     ]
   },

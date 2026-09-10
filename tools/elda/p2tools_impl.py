@@ -940,6 +940,80 @@ def cmd_content_transition(args):
     return 0
 
 
+# ---------------- content: combat ----------------
+# DEEP-2：列出"交战场景但缺受创段"（来源+部位+程度）的 combat 节点
+COMBAT_DEGREE_WORDS = ('骨裂', '皮开肉绽', '重创', '断裂', '撕裂', '崩裂', '淤青', '血痕', '见骨', '皮破',
+                       '发麻', '剧痛', '灼伤', '冻伤', '震得', '闷响', '裂开', '凹陷', '划破', '斩开',
+                       '伤口', '流血', '浸透', '渗出', '冷汗', '发颤', '发软', '钝痛', '擦破', '豁开')
+COMBAT_SOURCE_WORDS = ('拳', '掌', '腿', '膝', '肘', '剑', '刀', '枪', '矛', '锤', '斧', '箭', '弩',
+                       '爪', '牙', '角', '尾', '盾', '杖', '匕', '鞭', '锁链', '火球', '冰锥', '雷', '风刃',
+                       '法术', '斗气', '圣光', '毒', '图腾', '骨', '铁链', '石块', '飞石', '火', '水',
+                       '刀背', '弓弦', '靴', '肩甲', '盾沿')
+COMBAT_PART_WORDS = ('左臂', '右臂', '左腿', '右腿', '肩', '肋', '背', '腹', '胸', '腰', '手', '脚',
+                     '头', '面', '膝', '踝', '腕', '肘', '指', '颈', '眼', '额', '小臂', '大腿', '腰侧')
+COMBAT_ACTION_WORDS = ('交手', '交锋', '迎战', '反击', '还击', '缠斗', '挥刀', '挥剑', '砍下', '劈下', '刺出',
+                       '斩下', '格开', '架住', '格挡', '闪身', '扑上', '冲杀', '搏杀', '搏斗', '对练', '对拆',
+                       '弯弓', '搭箭', '箭矢', '掷出', '甩出', '砸下', '横扫', '上撩', '劈落', '钉在', '钉住',
+                       '缠住', '咬住', '撞来', '掀翻')
+# 收尾/回避语义节点（逃跑/谈判/宽恕/战后），非交战场景，一律豁免
+COMBAT_EXEMPT_ID_HINTS = ('flee', 'deny', 'mercy', 'robbed', 'after', 'talk', 'road', 'symbol',
+                          'given', 'fought', 'leave', 'exit', 'end')
+
+
+def cmd_content_combat(args):
+    """elda content combat [--top 300]：列出"交战场景但缺受创段"的 combat 节点。
+    口径：tag=combat 或 id 含 combat_；正文须含打斗动作词（交战场景）且含 程度+部位+来源 三类才合规；
+    逃跑/谈判/收尾（无动作词）与 <60 字节点不计。"""
+    ap = argparse.ArgumentParser(prog='elda content combat')
+    ap.add_argument('--top', type=int, default=300)
+    a = ap.parse_args(args)
+    nodes = {}
+    for p in _src_files():
+        t = _read(p)
+        for nid, nd in _extract_nodes(t).items():
+            if nid not in nodes:
+                nodes[nid] = dict(nd)
+                nodes[nid]['file'] = os.path.basename(p)
+                nodes[nid]['fields'] = _extract_node_fields(nd['body'])
+    missing = []
+    combat_total = 0
+    exempt = 0
+    for nid, nd in nodes.items():
+        body = nd.get('body', '')
+        is_combat = ('tag:"combat"' in body) or ('combat_' in nid)
+        if not is_combat:
+            continue
+        combat_total += 1
+        f = nd['fields']
+        joined = f.get('text_joined') or ''
+        if len(joined) < 60:
+            exempt += 1
+            continue
+        has_action = any(w in joined for w in COMBAT_ACTION_WORDS)
+        if not has_action:
+            exempt += 1
+            continue  # 非交战场景（逃跑/谈判/收尾）
+        if any(h in nid for h in COMBAT_EXEMPT_ID_HINTS):
+            exempt += 1
+            continue  # 收尾/回避语义节点豁免（flee/deny/mercy 等）
+        has_deg = any(w in joined for w in COMBAT_DEGREE_WORDS)
+        has_part = any(w in joined for w in COMBAT_PART_WORDS)
+        has_src = any(w in joined for w in COMBAT_SOURCE_WORDS)
+        if not (has_deg and has_part and has_src):
+            missing.append((nid, nd['file'], '缺程度' if not has_deg else '', '缺部位' if not has_part else '',
+                            '缺来源' if not has_src else '', len(joined)))
+    print('== elda content combat：交战场景缺受创段（%d / 全部 combat %d，豁免 %d）==' % (len(missing), combat_total, exempt))
+    print('  口径：含打斗动作词 + 同时含 程度(%d)+部位(%d)+来源(%d) 三类；逃跑/谈判/收尾与 <60 字节点豁免' %
+          (len(COMBAT_DEGREE_WORDS), len(COMBAT_PART_WORDS), len(COMBAT_SOURCE_WORDS)))
+    for r in sorted(missing, key=lambda x: (x[1], x[0]))[:a.top]:
+        print('  %-26s | %-22s | %s%s%s | %d字' % (r[0], r[1], r[2], r[3], r[4], r[5]))
+    if len(missing) > a.top:
+        print('  （仅显示前 %d 条，共 %d 条）' % (a.top, len(missing)))
+    print('RESULT: 待补 %d 条' % len(missing))
+    return 0
+
+
+
 
 
 def cmd_content_new(args):
@@ -1444,6 +1518,7 @@ def cmd_content(args):
     if sub == 'dup': return cmd_content_dup()
     if sub == 'chain': return cmd_content_chain(args[1:])
     if sub == 'transition': return cmd_content_transition(args[1:])
+    if sub == 'combat': return cmd_content_combat(args[1:])
     if sub == 'causality': return cmd_content_causality(args[1:])
     if sub == 'stat': return cmd_content_stat(args[1:])
     if sub == 'new': return cmd_content_new(args[1:])

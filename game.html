@@ -50692,6 +50692,12 @@ function applyEffects(eff,label){
       try{ var _m = worldDelta(_w.force, _w.inf||0, _w.stance); if(_m) lines.push(_m); }catch(e){}
     }
   }
+  /* /v92inj:fxrec/ CON-1 触发⑥ 事件余波记录（只读钩子：记录最近一次有实质结算的摘要，供 v91_memoryInjection 生成后果句；独立 window 键，不入存档） */
+  try{
+    if(eff&&(eff.gold||eff.xp||eff.hp||eff.san||eff.rep||eff.karma||eff.aura||eff.wound||eff.item||eff.mat||eff.book||eff.skill||eff.flag||eff.setflag||eff.cond||eff.loseItem||eff.loseMat||eff.loseGold||eff.heal||eff.attr)){
+      window.__v92lastFX = {day:S.day, lines:lines.slice(0,3)};
+    }
+  }catch(_e){}
   if(lines.length) return "◆ 结果："+lines.join("，")+"。";
   return null;
 }
@@ -53829,18 +53835,35 @@ window.v91_memoryInjection = function(node, txt){
       const gap=S.day-st.day;
       if(gap>7){ const tpl=TPL.time_gap[Math.floor(Math.random()*TPL.time_gap.length)]; inj.push(String(tpl).split("{n}").join(gap)); }
     }
-    /* ③ 好感回指（扫描正文中出现的中文名） */
+    /* ③ 好感回指（扫描正文中出现的中文名）——CON-1 升级：四档语气 30-59 泛泛 / 60-79 挚友 / 80+ 恋人 / -20 及以下 敌意 */
     if(TPL.npcs&&TPL.friend&&TPL.enemy){
       const joined=Array.isArray(txt)?txt.join(" "):String(txt||"");
-      for(let i=0;i<TPL.npcs.length;i++){
+      for(let i=0;i<TPL.npcs.length&&inj.length<2;i++){
         const npc=TPL.npcs[i];
         if(!npc||!npc.word||joined.indexOf(npc.word)<0) continue;
         const v=(S.npcRelations&&S.npcRelations[npc.id])||0;
         const nm=npc.name||npc.id;
-        if(v>=60&&TPL.friend.length){ const tpl=TPL.friend[Math.floor(Math.random()*TPL.friend.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
-        else if(v<=-20&&TPL.enemy.length){ const tpl=TPL.enemy[Math.floor(Math.random()*TPL.enemy.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        if(v<=-20&&TPL.person_neg&&TPL.person_neg.length){ const tpl=TPL.person_neg[Math.floor(Math.random()*TPL.person_neg.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        else if(v>=80&&TPL.person_80&&TPL.person_80.length){ const tpl=TPL.person_80[Math.floor(Math.random()*TPL.person_80.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        else if(v>=60&&TPL.person_60&&TPL.person_60.length){ const tpl=TPL.person_60[Math.floor(Math.random()*TPL.person_60.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        else if(v>=30&&TPL.person_30&&TPL.person_30.length){ const tpl=TPL.person_30[Math.floor(Math.random()*TPL.person_30.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
         break;
       }
+    }
+    /* ⑤ 事件余波（上一节点有实质结算时，当前节点开头补 1 句后果感知） */
+    if(TPL.aftermath&&TPL.aftermath.length&&window.__v92lastFX){
+      try{
+        const fx=window.__v92lastFX;
+        if(fx.day===(S.day||0)&&fx.lines&&fx.lines.length&&inj.length<2){
+          const tpl=TPL.aftermath[Math.floor(Math.random()*TPL.aftermath.length)];
+          const ln=String(fx.lines[0]||"").replace(/^[+\-◆结果：]+/,"").trim();
+          let s=String(tpl);
+          if(ln){ s=s.split("{d}").join(ln).split("{u}").join(""); }
+          else{ s=s.split("{d}").join("些").split("{u}").join(""); }
+          inj.push(s);
+        }
+        window.__v92lastFX=null;
+      }catch(_e){}
     }
     /* ④ flag 回响池（延迟触发，每 flag 至多一次） */
     if(TPL.echo&&TPL.echo.length){
@@ -53859,9 +53882,9 @@ window.v91_memoryInjection = function(node, txt){
     }
     if(inj.length>=2) inj.length=2; /* 0-2 段 */
     if(S){ st.loc=S.loc; st.day=S.day; }
-    if(inj.length){ try{ console.log("[v91mem]", inj.length, inj[0].slice(0,40)); }catch(_){} }
+    if(inj.length){ try{ console.log("[v92inj:mem]", inj.length, inj[0].slice(0,40)); }catch(_){} }
     return inj.length?inj:null;
-  }catch(e){ try{ console.log("[v91mem:err]",e); }catch(_){} return null; }
+  }catch(e){ try{ console.log("[v92inj:mem:err]",e); }catch(_){} return null; }
 };
 /* ===== /v92inj:wxfn/ TQ-1 天气句（只读钩子；按季节×区域返回 1 句天气句；开关 S.settings.weatherLine；不写任何状态） ===== */
 window.v92_weatherLine = function(node){
@@ -65755,6 +65778,7 @@ function v34_renderSettings(){
   html += v34_settingRow('文字特效', '低语/呐喊/古老等特效', 'textEffects', 'checkbox');
   html += v34_settingRow('自动滚动', '新内容自动滚动到底部', 'autoScroll', 'checkbox');
   html += v34_settingRow('分段阅读', '长剧情逐段显示，点击正文或 Space/Enter 继续', 'pagedReading', 'checkbox');
+  html += v34_settingRow('记忆注入', '按地点/时间/好感/事件余波自动插入衔接句', 'memoryInjection', 'checkbox');
   
   html += '<h4 style="color:#5a4a10;margin:16px 0 8px">场景氛围</h4>';
   html += v34_settingRow('粒子效果', '雨/雪/雾等天气粒子', 'particlesEnabled', 'checkbox');
@@ -65822,6 +65846,7 @@ function v34_toggleSetting(key, value){
   else if(key === 'audioEnabled') v34_toggleAudio();
   else if(key === 'compactMode') v34_setCompactMode(value);
   else if(key === 'pagedReading'){ if(typeof S!=='undefined'&&S){ if(!S.settings) S.settings={}; S.settings.pagedReading = !!value; } }
+  else if(key === 'memoryInjection'){ if(typeof S!=='undefined'&&S){ if(!S.settings) S.settings={}; S.settings.memoryInjection = !!value; } }
 }
 
 function v34_setSettingValue(key, value){
@@ -77150,7 +77175,7 @@ window.MEMORY_TPL = {
   enemy: [
     "{name}看见你，脸侧的线绷了一下，随即移开。那一眼里的东西，比骂人还冷。",
     "你与{name}照面，谁都没先开口。中间的空气像绷紧的弓弦。",
-    "{name}见你走近，手不动声色地按上了刀柄。",
+    "{name}见你走近，手按上了刀柄。",
     "你和{name}之间的账，还没清。彼此都记得，只是不提。",
     "{name}侧过身，把背对着你——比瞪你更直白的表态。",
     "你开口叫{name}，对方脚步没停。话头就这么晾在了半空。",
@@ -77159,7 +77184,71 @@ window.MEMORY_TPL = {
   ],
   npcs: [
     {id:"orc_graymane", name:"灰鬃", word:"灰鬃"},
-    {id:"elf_linge", name:"林歌", word:"林歌"}
+    {id:"elf_linge", name:"林歌", word:"林歌"},
+    {id:"npc_li", name:"李管事", word:"李管事"},
+    {id:"npc_tie", name:"老铁", word:"老铁"},
+    {id:"npc_ayan", name:"阿岩", word:"阿岩"},
+    {id:"npc_gold", name:"金老人", word:"金老人"},
+    {id:"npc_ferman", name:"费尔曼", word:"费尔曼"},
+    {id:"npc_luzhao", name:"陆昭", word:"陆昭"},
+    {id:"npc_cassia", name:"塞西莉娅", word:"塞西莉娅"},
+    {id:"npc_elena", name:"艾琳娜", word:"艾琳娜"},
+    {id:"npc_ata", name:"阿塔", word:"阿塔"},
+    {id:"npc_moritz", name:"老莫里茨", word:"老莫里茨"}
+  ],
+  /* ===== /v92inj:memtpl:p5/ CON-1 触发⑤ 人名回指四档模板 ===== */
+  person_30: [
+    "你与{name}有过几面之缘。对方见你，点了个头，算是记得这张脸。",
+    "{name}跟你打过照面，谈不上熟，但认得出你。你也没多寒暄。",
+    "你在人群里认出{name}。没有上去搭话，只是各自忙各自的。",
+    "{name}看了你一眼，像是想说什么，又咽了回去——交情没到那份上。",
+    "上回和{name}打交道，还是几天前的事。谈不上深交，但彼此都留了个印象。",
+    "你和{name}没有深谈过。不过这一路走来，也算有过几桩来往。",
+    "{name}还记得你上次帮的那点小忙，客气地拱了拱手。",
+    "你和{name}的交情，浅得像是井沿的一层霜。够得着，但不深。"
+  ],
+  person_60: [
+    "你走近时，{name}的眼睛先于嘴认出了你。熟人的默契，不用寒暄。",
+    "{name}没多话，把位置给你让了半边——这份情分，是一桩桩事攒出来的。",
+    "在{name}面前，你不必端着。对方也看得出你今天没睡好。",
+    "{name}拍了拍你的肩头，力道不大，分量不轻。",
+    "你开口前，{name}已经把话接了过去。你们之间，省了这一道。",
+    "{name}把你让到火边坐下，又添了根柴。这待遇，不是谁都有的。",
+    "你和{name}相视一眼，都明白对方想说什么。有些话说出来反而多余。",
+    "{name}把新打的猎物分了你一份，没问缘由。这就是情分该有的样子。"
+  ],
+  person_80: [
+    "{name}见你回来，没出声，但眼睛里的东西骗不了人。",
+    "你与{name}之间，已不必用言语试探。一个眼神，就能接住对方的话。",
+    "{name}走近你时，先替你掸了掸肩上的灰，才开口说话。这动作，比千言万语都亲。",
+    "你在{name}身边坐下来，两人就这样静了一会儿。有些亲近，不必找话说。",
+    "{name}把一直替你留着的东西递过来——连你自己都忘了的，对方记得。",
+    "这一路风尘，{name}都看在眼里。你坐下时，一碗热水已经放在你手边。",
+    "你和{name}之间，早已过了客气的阶段。有些话，只对彼此说。",
+    "{name}看着你，像看着一件失而复得的物什。那份珍重，是装不出来的。"
+  ],
+  person_neg: [
+    "{name}看见你，脸侧的线绷了一下，随即移开。那一眼里的东西，比骂人还冷。",
+    "你与{name}照面，谁都没先开口。中间的空气像绷紧的弓弦。",
+    "{name}见你走近，手按上了刀柄，又松开——但那份戒备，你读得懂。",
+    "你和{name}之间的账，还没清。彼此都记得，只是不提。",
+    "{name}侧过身，把背对着你——比瞪你更直白的表态。",
+    "你开口叫{name}，对方脚步没停。话头就这么晾在了半空。",
+    "{name}脸上没什么表情，但你分明看见对方指节发白。",
+    "这一次照面，{name}连招呼都省了。你们之间，早没了那个必要。"
+  ],
+  /* ===== /v92inj:memtpl:p6/ CON-1 触发⑥ 事件余波模板（{d}=数值差，{u}=单位） ===== */
+  aftermath: [
+    "刚才那场折腾下来，你摸了摸怀里的钱袋——比先前{d}{u}。",
+    "你低头看了看腰间的旧伤，绷带底下还在一跳一跳地疼。这一趟，代价不小。",
+    "事情办完，你才觉出腿肚子在发软。刚才那口气撑着，现在松了。",
+    "你数了数身上的家当，{d}{u}出入，够让人琢磨一阵的了。",
+    "那股劲儿过去之后，你才感到后背的衣裳被汗溻透了。",
+    "你揉了揉手腕，刚才那一记使力，到现在还有些发酸。",
+    "口袋里多出的{d}{u}，让接下来的路宽裕了一些。",
+    "损失不小——{d}{u}。你把账记在心里，打算将来找补回来。",
+    "你摸了摸胸口，那处旧伤被扯了一下，不碍事，但提醒你别忘。",
+    "经这一遭，你走路时绕开了那片地界——吃一堑，长一智。"
   ],
   echo: [
     {flag:"khan_aware", name:"黑石大汗", minDays:45, tpl:[

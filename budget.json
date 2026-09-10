@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8109963,
-    "chunked_html_bytes_max": 5479541,
+    "game_html_bytes_max": 8116661,
+    "chunked_html_bytes_max": 5486239,
     "node_total_min": 4551,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8059963,
-    "chunked_html_bytes": 5379541,
+    "game_html_bytes": 8066661,
+    "chunked_html_bytes": 5386239,
     "node_total": 4601,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "TQ-4 五主线+七锚+金秤+终局 deep 化 26 节点扩写",
+    "reason": "CON-1 设置面板加记忆注入开关",
     "history": [
       {
         "date": "2026-09-09",
@@ -509,6 +509,27 @@
         "chunked_bytes": 5379541,
         "nodes": 4601,
         "reason": "TQ-4 五主线+七锚+金秤+终局 deep 化 26 节点扩写"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8066379,
+        "chunked_bytes": 5385957,
+        "nodes": 4601,
+        "reason": "CON-1 记忆注入 v2：模板库扩充+触发⑤⑥"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8066385,
+        "chunked_bytes": 5385963,
+        "nodes": 4601,
+        "reason": "CON-1 marker 修正后字节微调"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8066661,
+        "chunked_bytes": 5386239,
+        "nodes": 4601,
+        "reason": "CON-1 设置面板加记忆注入开关"
       }
     ]
   },

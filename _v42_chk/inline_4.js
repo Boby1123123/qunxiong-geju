@@ -239,6 +239,12 @@ function applyEffects(eff,label){
       try{ var _m = worldDelta(_w.force, _w.inf||0, _w.stance); if(_m) lines.push(_m); }catch(e){}
     }
   }
+  /* /v92inj:fxrec/ CON-1 触发⑥ 事件余波记录（只读钩子：记录最近一次有实质结算的摘要，供 v91_memoryInjection 生成后果句；独立 window 键，不入存档） */
+  try{
+    if(eff&&(eff.gold||eff.xp||eff.hp||eff.san||eff.rep||eff.karma||eff.aura||eff.wound||eff.item||eff.mat||eff.book||eff.skill||eff.flag||eff.setflag||eff.cond||eff.loseItem||eff.loseMat||eff.loseGold||eff.heal||eff.attr)){
+      window.__v92lastFX = {day:S.day, lines:lines.slice(0,3)};
+    }
+  }catch(_e){}
   if(lines.length) return "◆ 结果："+lines.join("，")+"。";
   return null;
 }
@@ -3376,18 +3382,35 @@ window.v91_memoryInjection = function(node, txt){
       const gap=S.day-st.day;
       if(gap>7){ const tpl=TPL.time_gap[Math.floor(Math.random()*TPL.time_gap.length)]; inj.push(String(tpl).split("{n}").join(gap)); }
     }
-    /* ③ 好感回指（扫描正文中出现的中文名） */
+    /* ③ 好感回指（扫描正文中出现的中文名）——CON-1 升级：四档语气 30-59 泛泛 / 60-79 挚友 / 80+ 恋人 / -20 及以下 敌意 */
     if(TPL.npcs&&TPL.friend&&TPL.enemy){
       const joined=Array.isArray(txt)?txt.join(" "):String(txt||"");
-      for(let i=0;i<TPL.npcs.length;i++){
+      for(let i=0;i<TPL.npcs.length&&inj.length<2;i++){
         const npc=TPL.npcs[i];
         if(!npc||!npc.word||joined.indexOf(npc.word)<0) continue;
         const v=(S.npcRelations&&S.npcRelations[npc.id])||0;
         const nm=npc.name||npc.id;
-        if(v>=60&&TPL.friend.length){ const tpl=TPL.friend[Math.floor(Math.random()*TPL.friend.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
-        else if(v<=-20&&TPL.enemy.length){ const tpl=TPL.enemy[Math.floor(Math.random()*TPL.enemy.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        if(v<=-20&&TPL.person_neg&&TPL.person_neg.length){ const tpl=TPL.person_neg[Math.floor(Math.random()*TPL.person_neg.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        else if(v>=80&&TPL.person_80&&TPL.person_80.length){ const tpl=TPL.person_80[Math.floor(Math.random()*TPL.person_80.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        else if(v>=60&&TPL.person_60&&TPL.person_60.length){ const tpl=TPL.person_60[Math.floor(Math.random()*TPL.person_60.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
+        else if(v>=30&&TPL.person_30&&TPL.person_30.length){ const tpl=TPL.person_30[Math.floor(Math.random()*TPL.person_30.length)]; inj.push(String(tpl).split("{name}").join(nm)); }
         break;
       }
+    }
+    /* ⑤ 事件余波（上一节点有实质结算时，当前节点开头补 1 句后果感知） */
+    if(TPL.aftermath&&TPL.aftermath.length&&window.__v92lastFX){
+      try{
+        const fx=window.__v92lastFX;
+        if(fx.day===(S.day||0)&&fx.lines&&fx.lines.length&&inj.length<2){
+          const tpl=TPL.aftermath[Math.floor(Math.random()*TPL.aftermath.length)];
+          const ln=String(fx.lines[0]||"").replace(/^[+\-◆结果：]+/,"").trim();
+          let s=String(tpl);
+          if(ln){ s=s.split("{d}").join(ln).split("{u}").join(""); }
+          else{ s=s.split("{d}").join("些").split("{u}").join(""); }
+          inj.push(s);
+        }
+        window.__v92lastFX=null;
+      }catch(_e){}
     }
     /* ④ flag 回响池（延迟触发，每 flag 至多一次） */
     if(TPL.echo&&TPL.echo.length){
@@ -3406,9 +3429,9 @@ window.v91_memoryInjection = function(node, txt){
     }
     if(inj.length>=2) inj.length=2; /* 0-2 段 */
     if(S){ st.loc=S.loc; st.day=S.day; }
-    if(inj.length){ try{ console.log("[v91mem]", inj.length, inj[0].slice(0,40)); }catch(_){} }
+    if(inj.length){ try{ console.log("[v92inj:mem]", inj.length, inj[0].slice(0,40)); }catch(_){} }
     return inj.length?inj:null;
-  }catch(e){ try{ console.log("[v91mem:err]",e); }catch(_){} return null; }
+  }catch(e){ try{ console.log("[v92inj:mem:err]",e); }catch(_){} return null; }
 };
 /* ===== /v92inj:wxfn/ TQ-1 天气句（只读钩子；按季节×区域返回 1 句天气句；开关 S.settings.weatherLine；不写任何状态） ===== */
 window.v92_weatherLine = function(node){

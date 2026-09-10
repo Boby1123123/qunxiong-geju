@@ -10174,6 +10174,7 @@ function v34_renderSettings(){
   html += v34_settingRow('文字特效', '低语/呐喊/古老等特效', 'textEffects', 'checkbox');
   html += v34_settingRow('自动滚动', '新内容自动滚动到底部', 'autoScroll', 'checkbox');
   html += v34_settingRow('分段阅读', '长剧情逐段显示，点击正文或 Space/Enter 继续', 'pagedReading', 'checkbox');
+  html += v34_settingRow('记忆注入', '按地点/时间/好感/事件余波自动插入衔接句', 'memoryInjection', 'checkbox');
   
   html += '<h4 style="color:#5a4a10;margin:16px 0 8px">场景氛围</h4>';
   html += v34_settingRow('粒子效果', '雨/雪/雾等天气粒子', 'particlesEnabled', 'checkbox');
@@ -10241,6 +10242,7 @@ function v34_toggleSetting(key, value){
   else if(key === 'audioEnabled') v34_toggleAudio();
   else if(key === 'compactMode') v34_setCompactMode(value);
   else if(key === 'pagedReading'){ if(typeof S!=='undefined'&&S){ if(!S.settings) S.settings={}; S.settings.pagedReading = !!value; } }
+  else if(key === 'memoryInjection'){ if(typeof S!=='undefined'&&S){ if(!S.settings) S.settings={}; S.settings.memoryInjection = !!value; } }
 }
 
 function v34_setSettingValue(key, value){

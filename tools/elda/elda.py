@@ -404,6 +404,9 @@ def main():
     if cmd == 'budget':
         import budget_impl
         return budget_impl.main(sys.argv[2:])
+    if cmd == 'test':
+        import test_impl
+        return test_impl.cmd_test(sys.argv[2:])
     if cmd == 'content' or cmd == 'text':
         import p2tools_impl
         if cmd == 'content':

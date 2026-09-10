@@ -18,7 +18,7 @@
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "W-N1~3 世界局势快照+NPC状态机+状态回指（数据+引擎+面板，+8.6KB）",
+    "reason": "WN-fix 面板结构修复（字节不变级）",
     "history": [
       {
         "date": "2026-09-09",
@@ -740,6 +740,13 @@
         "chunked_bytes": 5710821,
         "nodes": 4637,
         "reason": "W-N1~3 世界局势快照+NPC状态机+状态回指（数据+引擎+面板，+8.6KB）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8478184,
+        "chunked_bytes": 5710821,
+        "nodes": 4637,
+        "reason": "WN-fix 面板结构修复（字节不变级）"
       }
     ]
   },

@@ -30462,15 +30462,6 @@ window.v92_openThreadPanel = function(){
       if(t.pos){ h += "<button class='btn' style='padding:4px 10px;font-size:12px' onclick='try{closeModal();v488_go(\""+t.pos+"\");}catch(e){}'>前往</button>"; }
       h += "</div></div>";
     }
-    var npcs = (typeof window.v92_npcStatusList==="function") ? window.v92_npcStatusList() : [];
-    if(npcs && npcs.length){
-      h += "<div style='margin-top:14px;border-top:1px solid var(--line,#2d4566);padding-top:10px'><b style='color:var(--gold,#e8c468)'>大陆人物动态</b><span class='mini' style='color:var(--dim)'>（共 "+npcs.length+" 位——他们在你视线之外，也在过日子）</span></div>";
-      var _n = Math.min(npcs.length, 8);
-      for(var _i=0;_i<_n;_i++){
-        var _s = npcs[_i];
-        h += "<p style='margin:6px 0;line-height:1.7'><b>"+(_s.name||"")+"</b> <span class='mini' style='color:var(--dim)'>"+(_s.mood||"")+"</span><br/><span style='color:var(--text)'>"+(_s.doing||"")+"</span></p>";
-      }
-    }
     h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 关闭</button>";
     box.innerHTML = h;
     openModal(box);
@@ -30569,6 +30560,15 @@ window.v92_openWorldPanel = function(){
     for(var i=0;i<lines.length;i++){
       var cls = (lines[i].indexOf("◆")===0) ? "v92-ws-major" : "v92-ws-region";
       h += "<p style='margin:6px 0;line-height:1.7' class='"+cls+"'>"+lines[i]+"</p>";
+    }
+    var npcs = (typeof window.v92_npcStatusList==="function") ? window.v92_npcStatusList() : [];
+    if(npcs && npcs.length){
+      h += "<div style='margin-top:14px;border-top:1px solid var(--line,#2d4566);padding-top:10px'><b style='color:var(--gold,#e8c468)'>大陆人物动态</b><span class='mini' style='color:var(--dim)'>（共 "+npcs.length+" 位——他们在你视线之外，也在过日子）</span></div>";
+      var _n = Math.min(npcs.length, 8);
+      for(var _i=0;_i<_n;_i++){
+        var _s = npcs[_i];
+        h += "<p style='margin:6px 0;line-height:1.7'><b>"+(_s.name||"")+"</b> <span class='mini' style='color:var(--dim)'>"+(_s.mood||"")+"</span><br/><span style='color:var(--text)'>"+(_s.doing||"")+"</span></p>";
+      }
     }
     h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 关闭</button>";
     box.innerHTML = h;

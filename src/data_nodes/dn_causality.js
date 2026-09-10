@@ -4826,6 +4826,30 @@ window.CAUSALITY_LEDGER = [
     "importance": 3,
     "keywords": ["交汇城生活深描"],
     "irreversible": false
+  },
+  {
+    "id": "led_f6_battle",
+    "type": "伏笔",
+    "desc": "北境石门战役：东军散兵占门/美第奇家纹章皮箱/洛伦佐遗信——身世线收束入口",
+    "plant": "flag:f4_blood_heir",
+    "reap": "flag:f6_medici_done",
+    "status": "open",
+    "world": "金秤家族线",
+    "importance": 4,
+    "keywords": ["北境石门战役"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f6_medici",
+    "type": "伏笔",
+    "desc": "晨天故都秦氏旧档：洛伦佐末封家书寄北境金秤旧号——双线互锁伏笔",
+    "plant": "flag:f6_medici_done",
+    "reap": "flag:f6_medici_passed",
+    "status": "open",
+    "world": "金秤家族线",
+    "importance": 3,
+    "keywords": ["晨天故都秦氏旧档"],
+    "irreversible": false
   }
 ];
 

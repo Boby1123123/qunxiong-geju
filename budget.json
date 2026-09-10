@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8053677,
-    "chunked_html_bytes_max": 5432645,
+    "game_html_bytes_max": 8109963,
+    "chunked_html_bytes_max": 5479541,
     "node_total_min": 4551,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8003677,
-    "chunked_html_bytes": 5332645,
+    "game_html_bytes": 8059963,
+    "chunked_html_bytes": 5379541,
     "node_total": 4601,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "TQ-3 学院67节点+城市hub 27节点薄节点扩写注入",
+    "reason": "TQ-4 五主线+七锚+金秤+终局 deep 化 26 节点扩写",
     "history": [
       {
         "date": "2026-09-09",
@@ -502,6 +502,13 @@
         "chunked_bytes": 5332645,
         "nodes": 4601,
         "reason": "TQ-3 学院67节点+城市hub 27节点薄节点扩写注入"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8059963,
+        "chunked_bytes": 5379541,
+        "nodes": 4601,
+        "reason": "TQ-4 五主线+七锚+金秤+终局 deep 化 26 节点扩写"
       }
     ]
   },

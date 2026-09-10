@@ -1,6 +1,6 @@
 /* ===== 群雄割据 M9 卷D 后四势力线（dn_faction2.js）=====
  * 东境承天/兽人诸部/矮人山国/精灵林邦 各 13 节点
- * schema：N["id"]={tag,place,where,pace,sceneTitle,text[],options[]}
+ * schema：N["id"]={pace:"light",tag,place,where,pace,sceneTitle,text[],options[]}
  * 阵营互斥 run + 背叛出口 faction_traitor_1（与 M8 同构）
  * 文风：V66 古典白描；30 治理词禁；战斗四段式；中文引号成对
  */

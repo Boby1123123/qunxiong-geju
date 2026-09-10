@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7990504,
-    "chunked_html_bytes_max": 5389417,
+    "game_html_bytes_max": 8014548,
+    "chunked_html_bytes_max": 5400458,
     "node_total_min": 4551,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7940504,
-    "chunked_html_bytes": 5289417,
+    "game_html_bytes": 7964548,
+    "chunked_html_bytes": 5300458,
     "node_total": 4601,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "M9 治理词修复后重建",
+    "reason": "TQ-1 修正天气模板治理词",
     "history": [
       {
         "date": "2026-09-09",
@@ -474,6 +474,20 @@
         "chunked_bytes": 5289417,
         "nodes": 4601,
         "reason": "M9 治理词修复后重建"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7964521,
+        "chunked_bytes": 5300431,
+        "nodes": 4601,
+        "reason": "TQ-1 天气系统+pace补标：新增48条天气模板约4KB"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7964548,
+        "chunked_bytes": 5300458,
+        "nodes": 4601,
+        "reason": "TQ-1 修正天气模板治理词"
       }
     ]
   },

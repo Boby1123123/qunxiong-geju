@@ -4425,7 +4425,7 @@ N["worldtree_help"] = function(){ return {
     {t:"“我会找到其他办法的。”", effect:{flag:"worldtree_promise"}, go:"arrive_generic"}
   ]
 };};
-N["worldtree_guardian"]={
+N["worldtree_guardian"]={pace:"deep",
   place:"精灵王国 · 世界树根部 · 净化池", where:"",
   text:[
     "精灵带你走下世界树的根部。",
@@ -4599,7 +4599,7 @@ N["floating_tower_paintings"]={
     {t:"“如果我封死那扇门呢？”", go:"floating_tower_seal"}
   ]
 };
-N["floating_tower_notyet"]={
+N["floating_tower_notyet"]={pace:"normal",
   place:"浮空塔 · 大厅", where:"",
   text:[
     "老人看着你，看了很久。",

@@ -46,6 +46,8 @@ function applyDefaults(s){
     if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
+  /* /v92inj:defaults/ TQ-1 天气句开关兜底（旧档兼容；独立键默认 true） */
+  if(s.settings.weatherLine===undefined) s.settings.weatherLine=true;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.originProfile===undefined) s.settings.originProfile=true;
   /* /sp3inj:defaults/ SP-3 弧线进度兜底（旧档兼容；新档为空对象） */
@@ -3408,6 +3410,35 @@ window.v91_memoryInjection = function(node, txt){
     return inj.length?inj:null;
   }catch(e){ try{ console.log("[v91mem:err]",e); }catch(_){} return null; }
 };
+/* ===== /v92inj:wxfn/ TQ-1 天气句（只读钩子；按季节×区域返回 1 句天气句；开关 S.settings.weatherLine；不写任何状态） ===== */
+window.v92_weatherLine = function(node){
+  try{
+    if(!S||!S.settings||S.settings.weatherLine===false) return null;
+    const T=window.WEATHER_TPL; if(!T) return null;
+    const m=(S.month||1);
+    const season = m<=3?"春":(m<=6?"夏":(m<=9?"秋":"冬"));
+    const locS=String(S.loc||"")+String((node&&node.place)||"");
+    let grp="generic";
+    const KM=[["north",["北境","雪原","第三哨","铁门关","北地"]],["academy",["学院","学府"]],["free",["自由城","交汇城"]],
+              ["desert",["沙漠","绿洲"]],["orc",["草原","兽人"]],["church",["圣城","教会","教堂"]],
+              ["east",["承天","东境","帝京"]],["west",["西境","荒原"]],["elf",["精灵","林海","林邦"]],
+              ["dwarf",["矮人","山国","山腹"]],["south",["南境","城邦"]]];
+    for(let i=0;i<KM.length;i++){
+      for(let j=0;j<KM[i][1].length;j++){ if(locS.indexOf(KM[i][1][j])>=0){ grp=KM[i][0]; break; } }
+      if(grp!=="generic") break;
+    }
+    const g=T[grp]||{};
+    let pool=g[season]||g.any||null;
+    if(!pool||!pool.length){ const gg=T.generic||{}; pool=gg[season]||null; }
+    if(!pool||!pool.length) return null;
+    const st=window.__v92wxState=window.__v92wxState||{last:""};
+    let s=pool[Math.floor(Math.random()*pool.length)];
+    if(s===st.last&&pool.length>1){ s=pool[(pool.indexOf(s)+1)%pool.length]; }
+    st.last=s;
+    try{ console.log("[v92inj:wx]", s.slice(0,40)); }catch(_){}
+    return s;
+  }catch(e){ try{ console.log("[v92wx:err]",e); }catch(_){} return null; }
+};
 /* ===== /A1inj:proffn/ A-1 个性化开局注入（只读钩子；序章前 3 节点各注入 1 段五维专属文本；S.flags.origin_profile_done 完成后零注入；开关 S.settings.originProfile） ===== */
 window.__v91prof = window.__v91prof || {step:0, used:false, segs:null};
 window.v91_originProfile = function(node, txt){
@@ -3568,6 +3599,8 @@ function writeNext(_v46f){
     var _txt = (typeof window.v91_resolveText==="function") ? window.v91_resolveText(node) : ((typeof node.text==="function") ? node.text() : node.text);
     if(!Array.isArray(_txt)){ _txt=[_txt]; }
     try{ window.v91_sessCount(_txt); }catch(e){}
+    /* /v92inj:wxhook/ TQ-1 天气句注入（只读钩子；天气句排最前=环境先行；开关 S.settings.weatherLine；关闭时零注入） */
+    try{ var _wx = window.v92_weatherLine(node); if(_wx){ _txt=[_wx].concat(_txt); } }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */

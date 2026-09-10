@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8539541,
-    "chunked_html_bytes_max": 5821991,
+    "game_html_bytes_max": 8547645,
+    "chunked_html_bytes_max": 5829933,
     "node_total_min": 4587,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8489541,
-    "chunked_html_bytes": 5721991,
+    "game_html_bytes": 8497645,
+    "chunked_html_bytes": 5729933,
     "node_total": 4637,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "T-N1~3 节点编辑器作者工具（搜索/编辑/脚手架/导出，+12KB）",
+    "reason": "A-N 钩子补挂 v45 分页渲染（+0.3KB）",
     "history": [
       {
         "date": "2026-09-09",
@@ -754,6 +754,27 @@
         "chunked_bytes": 5721991,
         "nodes": 4637,
         "reason": "T-N1~3 节点编辑器作者工具（搜索/编辑/脚手架/导出，+12KB）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8497304,
+        "chunked_bytes": 5729598,
+        "nodes": 4637,
+        "reason": "A-N1~3 演出层：场景环境音+氛围主题+专名高亮（+10KB）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8497343,
+        "chunked_bytes": 5729634,
+        "nodes": 4637,
+        "reason": "A-N1~3 演出层：场景环境音+氛围主题+专名高亮（+10KB）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8497645,
+        "chunked_bytes": 5729933,
+        "nodes": 4637,
+        "reason": "A-N 钩子补挂 v45 分页渲染（+0.3KB）"
       }
     ]
   },

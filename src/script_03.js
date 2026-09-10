@@ -42,6 +42,8 @@ function applyDefaults(s){
   if(!s.p12Quest) s.p12Quest={a:0,b:0,c:0};
   /* /t11inj:defaults/ I1-1 分段阅读开关兜底（旧档兼容） */
   if(!s.settings) s.settings={};
+  if(s.settings.ambience===undefined) s.settings.ambience=true;
+  if(s.settings.nameHighlight===undefined) s.settings.nameHighlight=true;
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
   if(s.settings.globalHooks===undefined) s.settings.globalHooks=true;
   if(!s.hooksState) s.hooksState={};
@@ -363,6 +365,7 @@ function writePar(p,cls){
   const d = document.createElement("p");
   if(cls) d.className=cls;
   d.innerHTML = rich(p);
+  try{ window.v92_highlightNames && window.v92_highlightNames(d); }catch(e){}
   RenderBatch.push(d);
   return d;
 }
@@ -3227,6 +3230,9 @@ options:[
           if(p) writePar(p);
         }
         RenderBatch.flush();
+        try{ window.v92_hlInit(); window.v92_ambCSS(); }catch(e){}
+        try{ window.v92_applyAmbience(); }catch(e){}
+        try{ if(window.ambScene){ var _ap2=(typeof curNode!=="undefined"&&curNode&&N[curNode]&&N[curNode].place)?String(N[curNode].place):""; window.ambScene(_ap2); } }catch(e){}
         try{ if(oldTw&&typeof V34!=='undefined'&&V34&&V34.textSettings) V34.textSettings.typewriterEnabled=oldTw; }catch(e){}
         try{ v44_afterRender(); }catch(e){}
         try{ v34_afterFlush&&v34_afterFlush([]); }catch(e){}
@@ -4240,6 +4246,117 @@ window.v92_nodeCreate = function(){
     try{ v92_nodeEditOpen(id); }catch(e){}
   }catch(e){ try{ console.log("[tn:create:err]",e); }catch(_){} }
 };
+
+/* ===== /an2inj:ambclass/ A-N2 ambience 氛围主题：按时间+地点给正文容器加氛围 CSS 类（只读视觉） ===== */
+window.v92_ambClass = function(){
+  try{
+    var cls = [];
+    var place = (typeof curNode!=="undefined" && curNode && window.N && N[curNode] && N[curNode].place) ? String(N[curNode].place) : "";
+    var h = (S&&S.world&&typeof S.world.hour==="number") ? S.world.hour : 8;
+    if(h<6||h>=20) cls.push("amb-night");
+    else if(h<10) cls.push("amb-morning");
+    else if(h<16) cls.push("amb-noon");
+    else cls.push("amb-dusk");
+    if(place.indexOf("森林")>=0||place.indexOf("林海")>=0) cls.push("amb-forest");
+    else if(place.indexOf("雪")>=0||place.indexOf("北境")>=0||place.indexOf("铁门关")>=0) cls.push("amb-snow");
+    else if(place.indexOf("沙漠")>=0) cls.push("amb-desert");
+    else if(place.indexOf("草原")>=0) cls.push("amb-steppe");
+    else if(place.indexOf("圣城")>=0||place.indexOf("教堂")>=0||place.indexOf("圣域")>=0) cls.push("amb-church");
+    else if(place.indexOf("酒馆")>=0||place.indexOf("客栈")>=0) cls.push("amb-tavern");
+    return cls;
+  }catch(e){ return []; }
+};
+window.v92_applyAmbience = function(){
+  try{
+    var el = document.getElementById("story");
+    if(!el) return;
+    var all = ["story-amb","amb-night","amb-morning","amb-noon","amb-dusk","amb-forest","amb-snow","amb-desert","amb-steppe","amb-church","amb-tavern"];
+    for(var i=0;i<all.length;i++){ if(el.classList) el.classList.remove(all[i]); }
+    if(S && S.settings && S.settings.ambience===false) return;
+    var cls = window.v92_ambClass();
+    if(el.classList) el.classList.add("story-amb");
+    for(var j=0;j<cls.length;j++){ if(cls[j] && el.classList) el.classList.add(cls[j]); }
+  }catch(e){}
+};
+/* /an3inj:hl/ A-N3 专名高亮：LOREBOOK.triggers 构建专名表（长名优先），DOM 层包 span（title=世界书条目） */
+window.v92_hlDisable = false;
+window.v92_hlNames = [];
+window.v92_hlDesc = {};
+window.v92_hlInit = function(){
+  try{
+    if(!window.LOREBOOK) return;
+    var map = {};
+    for(var i=0;i<LOREBOOK.length;i++){
+      var lb = LOREBOOK[i];
+      if(!lb || !lb.triggers || !lb.title) continue;
+      for(var j=0;j<lb.triggers.length;j++){
+        var w = String(lb.triggers[j]);
+        if(w.length<2) continue;
+        if(!map[w]) map[w] = lb.title;
+      }
+    }
+    var keys = Object.keys(map);
+    keys.sort(function(a,b){ return b.length-a.length; });
+    window.v92_hlNames = keys;
+    window.v92_hlDesc = map;
+  }catch(e){}
+};
+window.v92_highlightNames = function(el){
+  try{
+    if(window.v92_hlDisable) return;
+    if(!el || !el.childNodes) return;
+    var names = window.v92_hlNames;
+    if(!names || !names.length) return;
+    var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    var tns = []; var tn;
+    while((tn = walk.nextNode())){ tns.push(tn); }
+    for(var i=0;i<tns.length;i++){
+      var t = tns[i];
+      var v = t.nodeValue; if(!v) continue;
+      var esc = v.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+      var out = esc; var hit = false;
+      for(var j=0;j<names.length;j++){
+        var nm = names[j];
+        if(!nm || out.indexOf(nm)<0) continue;
+        var re;
+        try{ re = new RegExp(nm.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g"); }catch(e){ continue; }
+        if(!re.test(out)) continue;
+        re.lastIndex = 0;
+        var _hl = "<span class='v92-name' title='";
+        _hl += String(window.v92_hlDesc[nm]||'');
+        _hl += "'>" + nm + "</span>";
+        out = out.replace(re, _hl);
+        hit = true;
+      }
+      if(hit){
+        var sp = document.createElement("span");
+        sp.innerHTML = out;
+        t.parentNode.replaceChild(sp, t);
+      }
+    }
+  }catch(e){}
+};
+window.v92_ambCSS = function(){
+  try{
+    if(document.getElementById("v92-amb-css")) return;
+    var st = document.createElement("style");
+    st.id = "v92-amb-css";
+    st.textContent = ".story-amb{transition:background .8s ease,border-color .8s ease;border-radius:10px;padding:2px 10px;}"+
+      ".amb-night{background:linear-gradient(180deg,rgba(15,20,40,.14),rgba(15,20,40,.04));}"+
+      ".amb-morning{background:linear-gradient(180deg,rgba(255,214,140,.08),transparent);}"+
+      ".amb-noon{background:linear-gradient(180deg,rgba(255,244,214,.10),transparent);}"+
+      ".amb-dusk{background:linear-gradient(180deg,rgba(140,90,60,.10),transparent);}"+
+      ".amb-forest{box-shadow:inset 0 0 40px rgba(60,110,60,.08);}"+
+      ".amb-snow{box-shadow:inset 0 0 40px rgba(140,180,220,.08);}"+
+      ".amb-desert{box-shadow:inset 0 0 40px rgba(200,160,80,.08);}"+
+      ".amb-steppe{box-shadow:inset 0 0 40px rgba(140,160,80,.06);}"+
+      ".amb-church{box-shadow:inset 0 0 50px rgba(180,150,90,.10);}"+
+      ".amb-tavern{box-shadow:inset 0 0 40px rgba(120,70,30,.10);}"+
+      ".v92-name{border-bottom:1px dotted #a8842a;cursor:help;}"+
+      ".v92-name:hover{background:rgba(168,132,42,.12);}";
+    (document.head||document.documentElement).appendChild(st);
+  }catch(e){}
+};
 window.v92_openNodeEditor = function(){
   try{
     if(typeof openModal!=="function") return;
@@ -4633,6 +4750,9 @@ function writeNext(_v46f){
     }
     for(const t of _txt) writePar(t);
     RenderBatch.flush();
+    try{ window.v92_hlInit(); window.v92_ambCSS(); }catch(e){}
+    try{ window.v92_applyAmbience(); }catch(e){}
+    try{ if(window.ambScene){ var _ap=(typeof curNode!=="undefined"&&curNode&&N[curNode]&&N[curNode].place)?String(N[curNode].place):""; window.ambScene(_ap); } }catch(e){}
     try{ v44_afterRender(); }catch(e){}
     try{ v45_afterNode(node); }catch(e){}
     try{ window.v91_sessRender(node); }catch(e){}

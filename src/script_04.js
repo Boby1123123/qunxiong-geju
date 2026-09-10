@@ -966,9 +966,51 @@ function ambNight(){
   }catch(e){}
 }
 function ambStop(){ ambNodes.forEach(n=>{try{ n.stop&&n.stop(); }catch(e){}}); ambNodes=[]; }
+
+function ambScene(place){
+  try{
+    if(!AC||!sfxOn||ambNodes.length) return;
+    const kw = String(place||"");
+    let kind = "plain";
+    if(kw.indexOf("森林")>=0||kw.indexOf("林海")>=0) kind="forest";
+    else if(kw.indexOf("雪")>=0||kw.indexOf("北境")>=0||kw.indexOf("冰")>=0) kind="snow";
+    else if(kw.indexOf("沙漠")>=0) kind="desert";
+    else if(kw.indexOf("草原")>=0) kind="steppe";
+    else if(kw.indexOf("圣城")>=0||kw.indexOf("教堂")>=0||kw.indexOf("圣域")>=0) kind="church";
+    else if(kw.indexOf("酒馆")>=0||kw.indexOf("客栈")>=0) kind="tavern";
+    else if(kw.indexOf("城")>=0||kw.indexOf("市集")>=0) kind="city";
+    if(kind==="plain") return;
+    const dur=8;
+    const buf=AC.createBuffer(1,AC.sampleRate*dur,AC.sampleRate);
+    const d=buf.getChannelData(0);
+    let cfg={amp:0.03, lp:900, lfo:0, hum:0};
+    if(kind==="forest"){ cfg={amp:0.035,lp:1400,lfo:0.05,hum:0}; }
+    else if(kind==="snow"){ cfg={amp:0.05,lp:700,lfo:0.12,hum:0}; }
+    else if(kind==="desert"){ cfg={amp:0.03,lp:1600,lfo:0.03,hum:0}; }
+    else if(kind==="steppe"){ cfg={amp:0.04,lp:1000,lfo:0.08,hum:0}; }
+    else if(kind==="church"){ cfg={amp:0.025,lp:600,lfo:0.02,hum:55}; }
+    else if(kind==="tavern"){ cfg={amp:0.04,lp:1200,lfo:0.06,hum:0}; }
+    else if(kind==="city"){ cfg={amp:0.04,lp:1500,lfo:0.04,hum:0}; }
+    for(let i=0;i<d.length;i++){
+      const t=i/AC.sampleRate;
+      const ph=(i%4000)/4000*6.28;
+      const wind=(Math.random()*2-1)*cfg.amp*(0.5+0.5*Math.sin(t*2*Math.PI*cfg.lfo+ph));
+      let s=wind;
+      if(cfg.hum){ s+=Math.sin(t*2*Math.PI*cfg.hum)*0.02; }
+      d[i]=s;
+    }
+    const src=AC.createBufferSource(); src.buffer=buf; src.loop=true;
+    const flt=AC.createBiquadFilter(); flt.type="lowpass"; flt.frequency.value=cfg.lp;
+    const g=AC.createGain(); g.gain.value=1;
+    src.connect(flt); flt.connect(g); g.connect(AC.destination); src.start();
+    ambNodes=[src,flt,g];
+  }catch(e){}
+}
+
 function syncAmbient(){
   if(!S||!S.world) return;
   if(isNightH(S.world.hour||8)) ambNight(); else ambStop();
+  try{ var _plc=(typeof curNode!=="undefined"&&curNode&&window.N&&N[curNode]&&N[curNode].place)?String(N[curNode].place):""; ambScene(_plc); }catch(e){}
 }
 
 /* ---------- 十五、包装：与 v2 引擎对接 ---------- */

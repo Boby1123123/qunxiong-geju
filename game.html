@@ -4899,7 +4899,12 @@ const EVENT_POOL_EXT = [
   {id:"frontier_ev_blizzard",day:172,cls:"天灾",text:"第三哨被暴雪封了三天三夜。城门推不开，粮道断了，哨兵们轮着班铲雪，钟楼上的铜钟被冰壳裹住，敲不出声。"},
   {id:"frontier_ev_wolves",day:188,cls:"天灾",text:"雪原狼群逼近第三哨城墙。巡夜的老兵说，狼群后面站着个黑皮的人影，两条腿的，看了城墙一眼，就带着狼群退进了雾里。"},
   {id:"frontier_ev_bell",day:232,cls:"奇遇",text:"深夜，第三哨的铜钟无风自鸣，响了一记就停了。守钟的老周拎着灯爬上钟楼，下来时脸色发白，只说了一句：钟里面，有个声音应了。"},
-  {id:"frontier_ev_mutiny",day:268,cls:"人祸",text:"第三哨的军饷迟了两个月，老兵们堵在军需处门口，锅碗摆了一地。军需官独臂按着账本，喊了一嗓子：饷，我去讨；哨，你们得守。"}
+  {id:"frontier_ev_mutiny",day:268,cls:"人祸",text:"第三哨的军饷迟了两个月，老兵们堵在军需处门口，锅碗摆了一地。军需官独臂按着账本，喊了一嗓子：饷，我去讨；哨，你们得守。"},
+  {id:"frontier_ev_mine2",day:214,cls:"天灾",text:"第三哨矿洞二次坍塌，洞口碎石滑落，露出更深的巷道。老钱蹲在栅栏边听了一夜，说水声变大了。"},
+  {id:"frontier_ev_rift",day:244,cls:"天灾",text:"第三哨地窖裂缝黑气外溢，哨兵们用铁砧与石板压了三天才勉强压住。断牙老兵说，裂缝像是自己会呼吸。"},
+  {id:"frontier_ev_pay",day:258,cls:"人祸",text:"运军饷的车队在雪原被劫，押车的老兵只回来一个，说劫匪穿着黑皮斗篷，赶着一群狼。"},
+  {id:"frontier_ev_church",day:264,cls:"人祸",text:"教会执事带圣痕司修士进驻第三哨，挨户登记地窖与矿洞。老兵们把矿洞口的栅栏又加固了一道。"},
+  {id:"frontier_ev_wolfmove",day:274,cls:"奇遇",text:"雪原狼群开始南迁，成群结队越过第三哨城墙下。守钟老卒说，狼往南走，说明北边的东西醒了。"}
 ]; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
 const RACES = {"human": {"cn": "人类", "desc": "大陆数量最多、适应力最强的种族。七大地域孕育出七种截然不同的活法。", "ic": "🧑"}, "half": {"cn": "混血", "desc": "人类与其他种族的血脉交汇。长寿与短命、偏见与机遇，都写在血脉里。", "ic": "🌓"}, "elf": {"cn": "精灵", "desc": "长寿的森林之民。魔法天赋流淌在血脉里，岁月在他们脸上刻下宁静。", "ic": "🧝"}, "dwarf": {"cn": "矮人", "desc": "山腹与熔炉之子。短矮的身躯里装着铁一般的意志与手艺。", "ic": "🧔"}, "orc": {"cn": "兽人", "desc": "草原与蛮荒的战士。力量与战意是他们的第一语言。", "ic": "👹"}, "halfling": {"cn": "半身人", "desc": "田野与市井间的小个子。幸运仿佛偏爱他们，麻烦也总绕着他们走。", "ic": "🍀"}, "dragon": {"cn": "龙裔", "desc": "体内流淌着巨龙血脉的古老种族。鳞片、吐息与血脉的骄傲。", "ic": "🐉"}}; window.RACES = RACES; /* /v60inj:winx2:RACES/ */
 const SUBRACES = {"nordic": {"cn": "北境人", "race": "human", "attrs": {"STR": 2, "CON": 1}, "skills": {"survive": 5}, "traits": ["寒冷抗性"], "flags": ["cold_blooded"], "desc": "冰原与铁甲之地的人。沉默、耐寒，骨子里埋着北境的雪。"}, "midland": {"cn": "中境人", "race": "human", "attrs": {"INT": 2, "CHA": 1}, "skills": {"lore": 5}, "traits": ["博学"], "desc": "大陆腹地的平原之民。见多识广，学什么都快。"}, "southland": {"cn": "南境人", "race": "human", "attrs": {"CHA": 2, "INT": 1}, "skills": {"bargain": 5}, "traits": ["商才"], "desc": "南方城邦的商人血脉。算盘声比摇篮曲更熟。"}, "eastland": {"cn": "东境人", "race": "human", "attrs": {"INT": 2, "AGI": 1}, "skills": {"craft": 5}, "traits": ["巧手"], "desc": "帝京与工坊之间的人。读书、作画、铸器，样样能上手。"}, "westland": {"cn": "西境人", "race": "human", "attrs": {"CHA": 1, "INT": 1, "AGI": 1}, "skills": {"bargain": 5}, "traits": ["识途"], "desc": "西海岸的航海之民。风浪与远方养大的人。"}, "plateau": {"cn": "高原人", "race": "human", "attrs": {"CON": 2, "STR": 1}, "skills": {"survive": 5}, "traits": ["耐力"], "desc": "高原山地之民。肺活量大，脚步稳，天生能扛。"}, "islander": {"cn": "海岛人", "race": "human", "attrs": {"AGI": 2, "CON": 1}, "skills": {"survive": 5}, "traits": ["水行"], "flags": ["waterborne"], "desc": "群岛之民。船是摇篮，海是庭院。"}, "halfelf": {"cn": "半精灵", "race": "half", "attrs": {"SPR": 2, "CHA": 1}, "skills": {"lore": 5}, "traits": ["夜视", "长寿"], "flags": ["night_vision"], "desc": "人类与精灵的混血。比人长寿，比精灵短命，两边都沾，两边都不全是。"}, "halforc": {"cn": "半兽人", "race": "half", "attrs": {"STR": 2, "CON": 1}, "skills": {"martial": 5}, "traits": ["铁骨"], "desc": "人类与兽人的混血。力量与怒意流淌在血脉里，走到哪里都被人多看一眼。"}, "halfdwarf": {"cn": "半矮人", "race": "half", "attrs": {"CON": 2, "STR": 1}, "skills": {"alchemy": 5}, "traits": ["地脉"], "desc": "人类与矮人的混血。矮小的身板，铁打的胃口，炉火边长大的手艺。"}, "highelf": {"cn": "高等精灵", "race": "elf", "attrs": {"SPR": 2, "INT": 1}, "skills": {"magic": 5}, "traits": ["奥术", "长寿"], "desc": "精灵王庭的高贵血脉。魔法在他们指尖，如同呼吸一般自然。"}, "woodelf": {"cn": "森林精灵", "race": "elf", "attrs": {"AGI": 2, "SPR": 1}, "skills": {"survive": 5}, "traits": ["林语"], "desc": "林间巡猎的精灵。脚步比落叶更轻，箭矢比风更快。"}, "darkelf": {"cn": "黑暗精灵", "race": "elf", "attrs": {"AGI": 2, "SPR": 1}, "skills": {"stealth": 5}, "traits": ["夜视", "影行"], "flags": ["night_vision"], "desc": "地底与阴影中的精灵。银发紫瞳，视线在黑暗里比光更利。"}, "seaelff": {"cn": "海精灵", "race": "elf", "attrs": {"AGI": 1, "CON": 2}, "skills": {"survive": 5}, "traits": ["水行"], "flags": ["waterborne"], "desc": "碧波之下的精灵。鳞光与珊瑚，是他们熟悉的穹顶。"}, "valelf": {"cn": "山谷精灵", "race": "elf", "attrs": {"INT": 1, "CHA": 1, "CON": 1}, "skills": {"craft": 5}, "traits": ["巧手"], "desc": "山谷聚落中的精灵。融手艺、商贾与山地为一体。"}, "hilldwarf": {"cn": "高山矮人", "race": "dwarf", "attrs": {"STR": 1, "CON": 2}, "skills": {"alchemy": 5}, "traits": ["石肤"], "desc": "雄山之中的矮人。打铁、凿石、酿酒，祖传的手艺。"}, "vulcdwarf": {"cn": "火山矮人", "race": "dwarf", "attrs": {"STR": 2, "CON": 1}, "skills": {"craft": 5}, "traits": ["火锻"], "desc": "火山熔炉边的矮人。浑身透着一股硫磺与热铁的味儿。"}, "valdwarf": {"cn": "丘陵矮人", "race": "dwarf", "attrs": {"CHA": 1, "INT": 1, "CON": 1}, "skills": {"bargain": 5}, "traits": ["识途"], "desc": "丘陵农庄间的矮人。酿酒、种麦，也做买卖。"}, "grayelf": {"cn": "灰矮人", "race": "dwarf", "attrs": {"INT": 2, "AGI": 1}, "skills": {"stealth": 5}, "traits": ["夜视", "影行"], "flags": ["night_vision"], "desc": "灰岩地底的矮人。隐于阴影，心思深沉。"}, "seadwarf": {"cn": "海矮人", "race": "dwarf", "attrs": {"CON": 1, "STR": 1, "AGI": 1}, "skills": {"survive": 5}, "traits": ["水行"], "flags": ["waterborne"], "desc": "海岸与船坞的矮人。铁匠兼水手，两样都硬。"}, "plainorc": {"cn": "草原兽人", "race": "orc", "attrs": {"STR": 3}, "skills": {"martial": 5}, "traits": ["战意"], "desc": "草原游牧的兽人。骑术与战歌，是他们与生俱来的语言。"}, "mountorc": {"cn": "山地兽人", "race": "orc", "attrs": {"CON": 2, "STR": 1}, "skills": {"survive": 5}, "traits": ["耐力"], "desc": "山地部族的兽人。攀岩如走平地，耐性惊人。"}, "shadoworc": {"cn": "暗影兽人", "race": "orc", "attrs": {"AGI": 2, "STR": 1}, "skills": {"stealth": 5}, "traits": ["夜视", "影行"], "flags": ["night_vision"], "desc": "暗夜中行动的兽人。潜行如影，一击即走。"}, "swamporc": {"cn": "沼泽兽人", "race": "orc", "attrs": {"CON": 2, "AGI": 1}, "skills": {"survive": 5}, "traits": ["毒抗"], "flags": ["poison_resist"], "desc": "沼泽部族的兽人。泥泞与瘴气，于他们是家常便饭。"}, "hobfarm": {"cn": "田园半身人", "race": "halfling", "attrs": {"AGI": 2, "CHA": 1}, "skills": {"stealth": 5}, "traits": ["幸运"], "flags": ["lucky"], "desc": "田野间的半身人。炊烟、麦田与暖烘烘的炉火。"}, "hobnomad": {"cn": "游牧半身人", "race": "halfling", "attrs": {"AGI": 1, "CHA": 1, "CON": 1}, "skills": {"bargain": 5}, "traits": ["识途"], "desc": "车队里的半身人。跟着商队走四方，好话一箩筐。"}, "hobcity": {"cn": "城市半身人", "race": "halfling", "attrs": {"AGI": 2, "INT": 1}, "skills": {"stealth": 5}, "traits": ["巧手"], "desc": "城巷里的半身人。开锁、探路、讨价还价，样样在行。"}, "reddra": {"cn": "红龙裔", "race": "dragon", "attrs": {"STR": 2, "CON": 1}, "skills": {"martial": 5}, "traits": ["火息"], "desc": "红龙血脉的后裔。吐息灼热，脾气也随血脉一起滚烫。"}, "bluedra": {"cn": "蓝龙裔", "race": "dragon", "attrs": {"INT": 2, "SPR": 1}, "skills": {"magic": 5}, "traits": ["雷语"], "desc": "蓝龙血脉的后裔。电光在血脉里跳跃，天生与魔法亲近。"}, "golddra": {"cn": "金龙裔", "race": "dragon", "attrs": {"SPR": 2, "CHA": 1}, "skills": {"divine": 5}, "traits": ["圣辉"], "desc": "金龙血脉的后裔。鳞甲泛金，天生带着一缕圣洁的气息。"}}; window.SUBRACES = SUBRACES; /* /v60inj:winx2:SUBRACES/ */
@@ -54367,6 +54372,7 @@ function bindCreation(){
     S.name = name.slice(0,12);
     if(!S.subrace){ flashMsg("请选择亚种族"); return; }
     S.maxSan = Math.round(S.attrs.SPR*1.5);
+    if(!S.san) S.san=S.maxSan; /* M2b 新档san初始化修复：原逻辑仅故乡带H.san才赋值，否则新档san=0直接疯狂结局 */
     // 种族亚种生效
     const SR = SUBRACES[S.subrace]||{};
     for(const k in (SR.attrs||{})) S.attrs[k]=Math.min(80,S.attrs[k]+SR.attrs[k]);
@@ -71027,7 +71033,39 @@ window.CAUSALITY_LEDGER = [
   {id:"led_a1_05", type:"设定", desc:"理想线·自由自在：雪原独行与雪崩村守望", plant:"node:goal_intro_free", reap:"node:goal_free_3", status:"open", world:"理想线"},
   {id:"led_a1_06", type:"设定", desc:"理想线·登临神座：符文石板参悟与第一缕微光", plant:"node:goal_intro_god", reap:"node:goal_god_3", status:"open", world:"理想线"},
   {id:"led_a1_07", type:"设定", desc:"理想线·名留青史：救人扬名与吟游诗人的传唱", plant:"node:goal_intro_fame", reap:"node:goal_fame_3", status:"open", world:"理想线"},
-  {id:"led_a1_08", type:"设定", desc:"理想线·以血还血：旧伤溯源与刀鞘刻名", plant:"node:goal_intro_revenge", reap:"node:goal_revenge_3", status:"open", world:"理想线"}
+  {id:"led_a1_08", type:"设定", desc:"理想线·以血还血：旧伤溯源与刀鞘刻名", plant:"node:goal_intro_revenge", reap:"node:goal_revenge_3", status:"open", world:"理想线"},
+    {id:"led_b5_01",type:"道具",desc:"钥匙收集线：矿洞铜牌+元素池底黑铁+金库失窃铁牌，皆旧封印之钥（acad_magic_y1_pool / acad_story_vault）",plant:"acad_magic_y1_pool",reap:"acad_magic_y5_choice",status:"open",world:"vol_academy"},
+    {id:"led_b5_02",type:"伏笔",desc:"封印之门位于北境地脉蛇头·第三哨；门缝青光渐亮，封印松动（seal 主线弱呼应）",plant:"acad_magic_y3_seal",reap:"north_road_1",status:"open",world:"vol_academy"},
+    {id:"led_b5_03",type:"人物",desc:"金先生（金秤的金），老莫里茨之师，地脉学派五人小团体领袖，失踪；墓园无字碑即其葬地",plant:"acad_story_oldman",reap:"acad_story_graveyard",status:"open",world:"vol_academy"},
+    {id:"led_b5_04",type:"人物",desc:"艾琳·霜叶，北境民谣歌者，旧礼堂歌声、荣誉墙墨叉、档案被涂，与教会异端调查有关",plant:"acad_story_ghost",reap:"acad_story_archives",status:"open",world:"vol_academy"},
+    {id:"led_b5_05",type:"伏笔",desc:"费尔曼与六钥匙：刘矿头死于矿洞、老铁守第三哨失踪；费尔曼手背青纹更深",plant:"acad_magic_y5_ferman",reap:"north_road_1",status:"open",world:"vol_academy"},
+    {id:"led_b5_06",type:"地点",desc:"第三哨铜钟，十年未鸣；守钟人独臂老兵言敲钟会出事",plant:"acad_magic_y4_quiet",reap:"north_road_1",status:"open",world:"vol_academy"},
+    {id:"led_b5_07",type:"人物",desc:"陆昭（鸦羽），炼金系偷铁牌者，休学去南，灰楼夜火持铁盒再现，铁盒或已交费尔曼",plant:"acad_story_vault_end",reap:"acad_story_fire_after",status:"open",world:"vol_academy"},
+    {id:"led_b5_08",type:"人物",desc:"秦策，东境承天城演武场之约；东境动荡避风北上，秦·长风线人物网络延伸",plant:"acad_story_duel_after",reap:"east_chengtian_old",status:"open",world:"vol_academy"},
+    {id:"led_frontier_01",type:"地点",desc:"第三哨城，联盟最北军事要塞。铜钟铭文刻七锚之图，地脉蛇头在此，七锚之约第一环。",plant:"frontier_bell_4",reap:"frontier_bell_5",status:"open",world:"vol_north"},
+    {id:"led_frontier_02",type:"伏笔",desc:"老周之子三十年前在矿洞失踪，尸首未寻；失踪前曾说钟底下那个东西在叫他。",plant:"frontier_old_2",reap:"frontier_old_5",status:"open",world:"vol_north"},
+    {id:"led_frontier_03",type:"伏笔",desc:"矿洞封洞二十年仍传出水声，矿工旧物沉在巷道深处，锚2所在。",plant:"frontier_mine_gate",reap:"frontier_mine_1",status:"open",world:"vol_north"},
+    {id:"led_frontier_04",type:"伏笔",desc:"雪原狼群由黑皮两足人影指挥，狼王悬赏与城门告示同图。",plant:"frontier_infirmary",reap:"frontier_ev_wolves",status:"open",world:"vol_north"},
+    {id:"led_frontier_05",type:"人物",desc:"独臂军需官，掌矿洞钥匙与铜钟旧事，知七锚铭文来历。",plant:"frontier_sergeant",reap:"frontier_bell_4",status:"open",world:"vol_north"},
+    {id:"led_frontier_06",type:"伏笔",desc:"王三失踪于钟楼，雪地留下首枚铁牌，与钟身刻痕同纹（方牌中竖纹），七锚之首。",plant:"frontier_bell_2",reap:"frontier_bell_3",status:"open",world:"vol_north"},
+    {id:"led_frontier_07",type:"伏笔",desc:"风洞铁皮棺材：黑皮人组织运送，棺内传出敲击声，与矿洞水声同源；风洞深处另有铁门需钥匙。",plant:"frontier_tie_6",reap:"frontier_tie_8",status:"open",world:"vol_north"},
+    {id:"led_frontier_08",type:"人物",desc:"老铁：第三哨老兵，其父三十年前死于矿洞，遗物铁牌被矿上收走；手上有风洞铁门钥匙。",plant:"frontier_tie_1",reap:"frontier_tie_7",status:"open",world:"vol_north"},
+    {id:"led_frontier_09",type:"伏笔",desc:"黑纹伤病：被咬老兵伤口渗黑纹，做同一个敲击噩梦，指向矿洞方向；军医宋记录在册。",plant:"frontier_medic_2",reap:"frontier_medic_5",status:"open",world:"vol_north"},
+    {id:"led_frontier_10",type:"地点",desc:"地窖裂缝：第三哨地底深渊地脉，seal 主线 day200 联动；玩家侧加固/观望/上报教会三路影响文本。",plant:"frontier_seal_1",reap:"frontier_seal_after_2",status:"open",world:"vol_north"},
+    {id:"led_a3_01",type:"伏笔",desc:"北境灰烬村废墟之眼（深渊生物窥视）",plant:"origin_expand_north_edge",reap:"origin_expand_north_6",status:"open",world:"vol_north"},
+    {id:"led_a3_02",type:"设定",desc:"南方深海绿光·第七印在海底（商船线）",plant:"origin_expand_south_4",reap:"",status:"open",world:"vol_south"},
+    {id:"led_a3_03",type:"人物",desc:"杜嬷嬷送阿禾东去承天城投奔姓秦者（教会孤儿线）",plant:"origin_expand_church_4",reap:"",status:"open",world:"vol_church"},
+    {id:"led_a3_04",type:"设定",desc:"世界树根部封印·晨星之泪可洗蚀痕（精灵线）",plant:"origin_expand_elf_6",reap:"",status:"open",world:"vol_elf"},
+    {id:"led_a3_05",type:"设定",desc:"矮人南矿洞铁门·七道封印之一（矮人线）",plant:"origin_expand_dwarf_4",reap:"",status:"open",world:"vol_dwarf"},
+    {id:"led_a3_06",type:"人物",desc:"铁门关斥候托信交汇城李管事·暗蚀会挖地寻物（兽人线）",plant:"origin_expand_orc_7",reap:"",status:"open",world:"vol_orc"},
+    {id:"led_a3_07",type:"人物",desc:"秦·长风：晨天城秦氏幸存者，居交汇城，官署暗探在找（东境线）",plant:"origin_expand_east_7",reap:"",status:"open",world:"vol_east"},
+    {id:"led_a3_08",type:"伏笔",desc:"承天城井水变浑·晨天城覆灭征兆重现",plant:"origin_expand_east_6",reap:"",status:"open",world:"vol_east"},
+    {id:"led_b1_01",type:"设定",desc:"学院入学引导链：自由城/王都/铁门关前线三入口可达学院（acad_road_1~5），开学典礼埋塔灯传说",plant:"acad_road_1",reap:"academy_admission",status:"open",world:"vol_academy"},
+    {id:"led_b1_02",type:"伏笔",desc:"塔顶之灯数人之说（acad_tower_rumor）与图书馆塔灯呼应，待学院线回收",plant:"acad_road_4",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b2_01",type:"设定",desc:"学院五学年生活线（acad_life_y1~y5，30 节点：课程ifJob/宿舍/同窗/期中/期末/假期/学年事件），north_academy_gate 生活区入口",plant:"acad_life_y1_open",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"},
+    {id:"led_b3_01",type:"人物",desc:"学院人际网：塞西莉娅（东境政务/晨天水）/灰须·莫里（矮人符文/铁门七封印）/伊莲娜（精灵治愈/忘忧草）/老铁（铁门关铁匠），各 4 节点闭环",plant:"acad_people_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
+    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"}
 ];
 /* ===== /v91inj:ledger:end/ ===== */
 
@@ -71053,35 +71091,7 @@ window.CAUSALITY_WORDS = [
   {word:"大汗", world:"兽人草原", file:"script_02a.js"},
   {word:"青叶", world:"精灵线", file:"dn_elf_dwarf.js"},
   {word:"净化令", world:"净化令线", file:"script_02g.js"}
-,
-    {id:"led_a3_01",type:"伏笔",desc:"北境灰烬村废墟之眼（深渊生物窥视）",plant:"origin_expand_north_edge",reap:"origin_expand_north_6",status:"open",world:"vol_north"},
-    {id:"led_a3_02",type:"设定",desc:"南方深海绿光·第七印在海底（商船线）",plant:"origin_expand_south_4",reap:"",status:"open",world:"vol_south"},
-    {id:"led_a3_03",type:"人物",desc:"杜嬷嬷送阿禾东去承天城投奔姓秦者（教会孤儿线）",plant:"origin_expand_church_4",reap:"",status:"open",world:"vol_church"},
-    {id:"led_a3_04",type:"设定",desc:"世界树根部封印·晨星之泪可洗蚀痕（精灵线）",plant:"origin_expand_elf_6",reap:"",status:"open",world:"vol_elf"},
-    {id:"led_a3_05",type:"设定",desc:"矮人南矿洞铁门·七道封印之一（矮人线）",plant:"origin_expand_dwarf_4",reap:"",status:"open",world:"vol_dwarf"},
-    {id:"led_a3_06",type:"人物",desc:"铁门关斥候托信交汇城李管事·暗蚀会挖地寻物（兽人线）",plant:"origin_expand_orc_7",reap:"",status:"open",world:"vol_orc"},
-    {id:"led_a3_07",type:"人物",desc:"秦·长风：晨天城秦氏幸存者，居交汇城，官署暗探在找（东境线）",plant:"origin_expand_east_7",reap:"",status:"open",world:"vol_east"},
-    {id:"led_a3_08",type:"伏笔",desc:"承天城井水变浑·晨天城覆灭征兆重现",plant:"origin_expand_east_6",reap:"",status:"open",world:"vol_east"},
-    {id:"led_b1_01",type:"设定",desc:"学院入学引导链：自由城/王都/铁门关前线三入口可达学院（acad_road_1~5），开学典礼埋塔灯传说",plant:"acad_road_1",reap:"academy_admission",status:"open",world:"vol_academy"},
-    {id:"led_b1_02",type:"伏笔",desc:"塔顶之灯数人之说（acad_tower_rumor）与图书馆塔灯呼应，待学院线回收",plant:"acad_road_4",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b2_01",type:"设定",desc:"学院五学年生活线（acad_life_y1~y5，30 节点：课程ifJob/宿舍/同窗/期中/期末/假期/学年事件），north_academy_gate 生活区入口",plant:"acad_life_y1_open",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"},
-    {id:"led_b3_01",type:"人物",desc:"学院人际网：塞西莉娅（东境政务/晨天水）/灰须·莫里（矮人符文/铁门七封印）/伊莲娜（精灵治愈/忘忧草）/老铁（铁门关铁匠），各 4 节点闭环",plant:"acad_people_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b5_01",type:"道具",desc:"钥匙收集线：矿洞铜牌+元素池底黑铁+金库失窃铁牌，皆旧封印之钥（acad_magic_y1_pool / acad_story_vault）",plant:"acad_magic_y1_pool",reap:"acad_magic_y5_choice",status:"open",world:"vol_academy"},
-    {id:"led_b5_02",type:"伏笔",desc:"封印之门位于北境地脉蛇头·第三哨；门缝青光渐亮，封印松动（seal 主线弱呼应）",plant:"acad_magic_y3_seal",reap:"north_road_1",status:"open",world:"vol_academy"},
-    {id:"led_b5_03",type:"人物",desc:"金先生（金秤的金），老莫里茨之师，地脉学派五人小团体领袖，失踪；墓园无字碑即其葬地",plant:"acad_story_oldman",reap:"acad_story_graveyard",status:"open",world:"vol_academy"},
-    {id:"led_b5_04",type:"人物",desc:"艾琳·霜叶，北境民谣歌者，旧礼堂歌声、荣誉墙墨叉、档案被涂，与教会异端调查有关",plant:"acad_story_ghost",reap:"acad_story_archives",status:"open",world:"vol_academy"},
-    {id:"led_b5_05",type:"伏笔",desc:"费尔曼与六钥匙：刘矿头死于矿洞、老铁守第三哨失踪；费尔曼手背青纹更深",plant:"acad_magic_y5_ferman",reap:"north_road_1",status:"open",world:"vol_academy"},
-    {id:"led_b5_06",type:"地点",desc:"第三哨铜钟，十年未鸣；守钟人独臂老兵言敲钟会出事",plant:"acad_magic_y4_quiet",reap:"north_road_1",status:"open",world:"vol_academy"},
-    {id:"led_b5_07",type:"人物",desc:"陆昭（鸦羽），炼金系偷铁牌者，休学去南，灰楼夜火持铁盒再现，铁盒或已交费尔曼",plant:"acad_story_vault_end",reap:"acad_story_fire_after",status:"open",world:"vol_academy"},
-    {id:"led_b5_08",type:"人物",desc:"秦策，东境承天城演武场之约；东境动荡避风北上，秦·长风线人物网络延伸",plant:"acad_story_duel_after",reap:"east_chengtian_old",status:"open",world:"vol_academy"},
-    {id:"led_frontier_01",type:"地点",desc:"第三哨城，联盟最北军事要塞。铜钟铭文刻七锚之图，地脉蛇头在此，七锚之约第一环。",plant:"frontier_bell_4",reap:"frontier_bell_5",status:"open",world:"vol_north"},
-    {id:"led_frontier_02",type:"伏笔",desc:"老周之子三十年前在矿洞失踪，尸首未寻；失踪前曾说钟底下那个东西在叫他。",plant:"frontier_old_2",reap:"frontier_old_5",status:"open",world:"vol_north"},
-    {id:"led_frontier_03",type:"伏笔",desc:"矿洞封洞二十年仍传出水声，矿工旧物沉在巷道深处，锚2所在。",plant:"frontier_mine_gate",reap:"frontier_mine_1",status:"open",world:"vol_north"},
-    {id:"led_frontier_04",type:"伏笔",desc:"雪原狼群由黑皮两足人影指挥，狼王悬赏与城门告示同图。",plant:"frontier_infirmary",reap:"frontier_ev_wolves",status:"open",world:"vol_north"},
-    {id:"led_frontier_05",type:"人物",desc:"独臂军需官，掌矿洞钥匙与铜钟旧事，知七锚铭文来历。",plant:"frontier_sergeant",reap:"frontier_bell_4",status:"open",world:"vol_north"},
-    {id:"led_frontier_06",type:"伏笔",desc:"王三失踪于钟楼，雪地留下首枚铁牌，与钟身刻痕同纹（方牌中竖纹），七锚之首。",plant:"frontier_bell_2",reap:"frontier_bell_3",status:"open",world:"vol_north"}];
+];
 /* ===== /v91inj:ledgerwords:end/ ===== */
 
 /* /u1inj:data-nodes:dn_chapters.js/ */
@@ -72551,6 +72561,8 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 ],options:[
 {t:"去钟楼看看那口铜钟",go:"frontier_tower_gate"},
 {t:"去矿洞口看看（守卫拦着）",go:"frontier_mine_gate"},
+{t:"打听老兵老铁的下落（他昨夜失踪了）",go:"frontier_tie_1"},
+
 {t:"去军械库转转",go:"frontier_armory"},
 {t:"去伤兵营看看",go:"frontier_infirmary"},
 {t:"去流民营看看",go:"frontier_camp"},
@@ -72665,10 +72677,11 @@ N["frontier_old_5"]={tag:"main",place:"北境 · 第三哨 · 钟楼下",where:"
 
 N["frontier_mine_gate"]={tag:"main",place:"北境 · 第三哨 · 矿洞口",where:"白昼",pace:"light",arc:"arc_frontier",vol:"vol_north",text:[
 "矿洞口在城西的山脚下，被一扇铁栅栏封得严严实实。栅栏上的锁有拳头大，锁孔里塞着蜡，显然很久没人开过。洞口黑黝黝的，往里看，什么都看不见，只有一股潮气夹着铁锈味，从深处一阵一阵地冒出来。",
-"守栅栏的是一个年轻的哨兵，他看见你走近，把枪一横：“矿洞封了二十年，军令，任何人不得入内。”",
+"栅栏边蹲着一个瘸腿的老人，是矿工出身的老钱，正拿旧砂纸磨一把短镐；旁边站着一个年轻的哨兵，他看见你走近，把枪一横：“矿洞封了二十年，军令，任何人不得入内。”",
 "你注意到，他说话的时候，眼睛一直盯着洞口深处，嘴唇有点发白。你问他怎么了，他摇了摇头，过了好一会儿才说：“没事。就是……你站近一点，能听见底下有水声。可这矿洞，二十年前就抽干了。”"
 ],options:[
 {t:"（侧耳听了一会儿——确实有水声，很轻，像有什么东西在深处流动）",go:"frontier_city"},
+{t:"向老钱搭话，问他这矿洞的来历",go:"frontier_mine_1"},
 {t:"（不多逗留，转身离开）",go:"frontier_city"}
 ]};
 
@@ -72725,6 +72738,696 @@ N["frontier_leave"]={tag:"main",place:"北境 · 第三哨 · 城门",where:"白
 ],options:[
 {t:"返回铁门关方向",go:"arrive_north_tiebi"}
 ]};
+
+})();
+
+/* /u1inj:data-nodes:dn_frontier_deep.js/ */
+/* ===== /v91inj:dn/ M2 第三哨钥匙寻踪 + 封印抉择 + 双支线 + 铜钟守卫战 =====
+ * 七锚之约 卷A 深化（N["id"] 全对象式；arc:"arc_frontier"；vol:"vol_north"）
+ * 涉及设定：七锚/铁牌（锚2矿洞、锚1铜钟）、深渊封印（seal 主线 day200 联动，不改判定）、
+ *           黑皮人影组织（雪原狼群指挥者）、金先生=金秤（墓园无字碑，卷C前置）、陆昭鸦羽（金库）、费尔曼（学院）
+ */
+(function () {
+  "use strict";
+  var N = window.N || (window.N = {});
+  if (typeof window.N === "undefined") window.N = N;
+
+  /* ---------- 矿洞线（锚2 · 水声与铁链） ---------- */
+  N["frontier_mine_1"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞口", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 矿洞口」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "矿洞口堆着半人高的碎石，洞口架了一道木栅栏，栅栏上挂一块牌子：塌方禁入。",
+      "守洞的是个叫老钱的矿工，瘸着一条腿，正蹲在栅栏边剥一碗冻硬的豆子。他听你提矿洞，先不说话，把豆子一颗一颗数完，才抬眼：“矿头刘三，上个月死在这洞里。埋都没埋出来。”",
+      "他朝洞深处努努嘴：“水声听见没有？二十年前封洞那会儿就有，一天没停过。刘三不信邪，非要下去找什么矿脉，结果塌方压死的。你要下去，签生死状。”"
+    ],
+    options: [
+      { t: "签生死状，下去看看（需要铁锹与火把）", go: "frontier_mine_2" },
+      { t: "先回哨上转转", go: "frontier_city" }
+    ]
+  };
+
+  N["frontier_mine_2"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞巷道", where: "任意", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 矿洞巷道」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "洞里的空气潮得发沉，火把烧起来都是黄的，照不亮三步以外。巷道两壁的矿脉早被挖空，只剩黑黢黢的凹槽，顶上不时滴下水，砸在石头上，一声接一声。",
+      "你走了约莫百步，听见那水声大了——不是滴水，是闷闷的、一波一波的响，像有人在地底翻动一大锅稀粥。老钱在洞口喊了一句：“到底了就回，别往里。”",
+      "前方塌了一面墙，碎石堆到腰高。石缝里露出一截木柄，像是矿镐。"
+    ],
+    options: [
+      { t: "把木柄拽出来看看", go: "frontier_mine_3" },
+      { t: "贴着石壁往里挤", go: "frontier_mine_3" }
+    ]
+  };
+
+  N["frontier_mine_3"] = {
+    tag: "main", place: "北境 · 第三哨 · 坍塌巷道", where: "任意", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 坍塌巷道」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "木柄拽出来，是一把断了头的矿镐，镐柄上刻着一个“刘”字。石堆下面压着一只掀翻的藤箱，箱盖裂了，滚出几样东西：一盏砸扁的矿灯、一卷浸透水的账本、半张烧过的羊皮纸。",
+      "羊皮纸上画着一幅草图——像是一条巷道的地形，中间用红炭标了个叉，旁边写了两个小字：锚线。叉的位置，就在这面塌墙更深处。",
+      "账本翻开来，刘三的字迹糊了大半，只有末页几行还能认：“……三更闻水响，去到底。那东西不是水。铁链。拴着一口……”字到这里断了，页脚有一道深深的指甲刮痕。"
+    ],
+    options: [
+      { t: "把草图与账本收进怀里，扒开石堆往里走", go: "frontier_mine_4" },
+      { t: "先退回洞口，把发现告诉老钱", go: "frontier_mine_8" }
+    ]
+  };
+
+  N["frontier_mine_4"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞深坑", where: "任意", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 矿洞深坑」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "石堆后面是一条斜向下的窄道，你侧着身子滑了十几步，脚底突然踏空——火把一晃，照出个三丈见方的深坑。坑底积着半尺黑水，水面上浮着一层铁锈似的油花。",
+      "水声就是从这坑底来的。你蹲在坑边听了半晌，那响动隔着水，闷闷的，一下，又一下，不紧不慢，像是有人在坑底用什么硬物一下一下敲石壁。",
+      "坑壁离水两尺的地方，钉着一枚铁环，铁环上拴着一截手臂粗的铁链。链子垂进水里，绷得笔直——水底下那头，拴着东西。链子上磨出一道亮痕，说明底下那东西动过，而且力气不小。"
+    ],
+    options: [
+      { t: "拽住铁链，用力往上拉", go: "frontier_mine_5" },
+      { t: "用火把照水面，先看清底下是什么", go: "frontier_mine_6" }
+    ]
+  };
+
+  N["frontier_mine_5"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞深坑", where: "任意", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 矿洞深坑」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "你双手攥住铁链，脚蹬坑壁往上拽。链子一寸一寸地出水，锈水顺着你的手腕淌。拽了七八下，链子那头猛地一沉，你脚下打了个趔趄，差点栽进坑里。",
+      "水下传来一声响——不是水声，是一声长长的、贴着石壁滑过去的闷响，像什么大家伙翻了个身。你手里的链子松了半尺，又绷直了。",
+      "链头拽上来的部分，系着一块巴掌大的铁牌，方方正正，中间一道竖纹，和钟楼上刻的那枚轮廓一模一样。牌面锈透了，只有边角露出一点银亮的底色。"
+    ],
+    options: [
+      { t: "把铁牌摘下收好，松链退出", go: "frontier_mine_7" },
+      { t: "把铁牌留在原处，原样退出", go: "frontier_mine_7" }
+    ]
+  };
+
+  N["frontier_mine_6"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞深坑", where: "任意", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 矿洞深坑」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "火把往前探，黑水照不透，只映出你自己的影子。你把火把换到左手，贴着坑壁伏下身子，让火光照进水里——水色发黑，油花底下，隐约有一片灰白的东西，贴着坑底，一动不动。",
+      "是骨头。一大片骨头，肋骨、腿骨、还有半副拼不齐的骨架，全泡在黑水里，码得整整齐齐，头骨都朝着同一个方向——朝坑壁最深那道裂缝。",
+      "裂缝里嵌着一枚铁牌，方方正正，中间一道竖纹。风从裂缝里灌出来，带着一股又潮又腥的寒气。你身上的火把焰苗被吹得朝后倒，几乎要灭。"
+    ],
+    options: [
+      { t: "伸手进裂缝，把铁牌抠出来", go: "frontier_mine_5" },
+      { t: "不碰那牌子，退出矿洞", go: "frontier_mine_8" }
+    ]
+  };
+
+  N["frontier_mine_7"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞深坑", where: "任意", pace: "light",
+    sceneTitle: "「北境 · 第三哨 · 矿洞深坑」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "铁牌到手，沉甸甸的，冰得扎手。你把链子放回水里，链子沉下去，那闷响也跟着远了，像是底下的东西退进了更深处。",
+      "你扶着坑壁爬回窄道，回头看了一眼——黑水还在，油花还在，只是那一下一下的敲击声，停了。",
+      "洞口的光透进来的时候，你出了一身冷汗。铁牌贴着胸口，硌得生疼。"
+    ],
+    options: [
+      { t: "回到哨上，把这枚铁牌与钟楼刻痕比对", go: "frontier_mine_8" }
+    ]
+  };
+
+  N["frontier_mine_8"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞口", where: "任意", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 矿洞口」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "老钱还在栅栏边剥豆子，看你出来，上下打量你一眼：“活着出来了？刘三可没这运气。”",
+      "你把矿镐柄上的“刘”字给他看，他愣了好一会儿，把碗放下，又端起来，半晌说：“刘三是个犟驴。去年冬，他说洞底下那水声不对，要去找源头。我劝过他，他不听。”他顿了顿，“他死那天，账本少了一页。”",
+      "你从怀里掏出那半张羊皮纸草图，老钱接过去看了半天，指着那个红叉：“这地方……是二十年前封洞的主巷道。封洞那晚，是矿主亲自带人填的土，说底下出了矿难。现在想想，矿难死了几个人，谁也没见过尸首。”"
+    ],
+    options: [
+      { t: "把铁牌和草图收好，谢过老钱，回哨上", go: "frontier_city" },
+      { t: "追问封洞那晚的事", go: "frontier_mine_8b" }
+    ]
+  };
+
+  N["frontier_mine_8b"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞口", where: "任意", pace: "light",
+    sceneTitle: "「北境 · 第三哨 · 矿洞口」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "老钱又剥了一颗豆子，才说：“封洞那晚我在场。矿主带人抬了三口棺材出来，说是瓦斯炸的。可棺材是空的，我亲手搭过手，轻得不像话。”",
+      "他抬头看矿洞口，声音低下去：“后来矿主第二天就搬走了，再没回来过。第三哨换了几任统领，没一个人问过这洞的事。”",
+      "豆子剥完了，他把碗扣在膝盖上：“牌子的事，别往外说。这哨上，有人耳朵长。”"
+    ],
+    options: [
+      { t: "点头应下，回哨上", go: "frontier_city" }
+    ]
+  };
+
+  /* ---------- 老铁线（钥匙其二 · tie 好感联动） ---------- */
+  N["frontier_tie_1"] = {
+    tag: "main", place: "北境 · 第三哨 · 营房", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 营房」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "营房里少了一张铺。老兵们围着炉子烤火，谁也不提老铁，可空铺上那床叠得方方正正的被子，谁都看得见。",
+      "军需官独臂在门口站了一会儿，把一份口粮搁在老铁铺头，压低嗓子说：“昨天夜里，他说去城墙根撒泡尿，人就没回来。哨兵说他翻墙出去，往雪原上走了。”",
+      "老兵们你看我，我看你。一个断牙的老兵先开口：“老铁这个人，认死理。上个月他跟你们那帮北上的商队吵过一架，说商队里有人半夜往矿洞方向运东西。商队走了，他天天蹲城头盯雪原，说要看清楚那帮人到底往哪儿去。”"
+    ],
+    options: [
+      { t: "带上干粮与火把，出城往雪原方向找", go: "frontier_tie_2" },
+      { t: "先问清老铁跟商队吵架的细节", go: "frontier_tie_1b" }
+    ]
+  };
+
+  N["frontier_tie_1b"] = {
+    tag: "main", place: "北境 · 第三哨 · 营房", where: "白昼", pace: "light",
+    sceneTitle: "「北境 · 第三哨 · 营房」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "断牙老兵说：“那商队领头的是个白脸，说话带东边口音。他们运的东西都拿油布裹着，一箱一箱往雪原深处去。老铁跟踪了两回，回来说箱子底下有铁链子拖过的印子，可商队说是铁器。”",
+      "他吐了口唾沫：“铁器？往这鸟不拉屎的雪原运铁器？谁信。”",
+      "墙角有个年轻哨兵补了一句：“老铁走前那天，在他铺底下塞了张纸，我扫到一眼，画的像是个牢房。”"
+    ],
+    options: [
+      { t: "翻看老铁铺底下的纸", go: "frontier_tie_1c" }
+    ]
+  };
+
+  N["frontier_tie_1c"] = {
+    tag: "main", place: "北境 · 第三哨 · 营房", where: "白昼", pace: "light",
+    sceneTitle: "「北境 · 第三哨 · 营房」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "铺底下压着一张揉皱的纸，上面画着几道歪歪扭扭的线，标了三个点：一个画圈，写着“哨”；一个画叉，写着“风洞”；一个画三角，写着“牢”。三角旁边写了一行小字：雪原西北，半天脚程，黑皮人看守。",
+      "你把纸折好收进怀里。老铁的字丑，但地图画得明白——他早就摸清了地方，只等夜里动手。",
+      "营房外风声紧了一阵，夹着雪粒，扑在窗纸上簌簌地响。"
+    ],
+    options: [
+      { t: "出城，往雪原西北方向去找风洞", go: "frontier_tie_2" }
+    ]
+  };
+
+  N["frontier_tie_2"] = {
+    tag: "main", place: "北境 · 第三哨 · 雪原", where: "白昼", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 雪原」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "雪原白得晃眼，一脚踩下去没到小腿。风贴地刮，卷起的雪粒像砂纸一样磨脸。你顺着老铁的脚印走——脚印很新，步子大，走得急，方向正对西北。",
+      "走了约莫两个时辰，脚印在一处冰裂缝边上拐了个弯。裂缝边上有一串新的痕迹：不是脚印，是拖痕，宽宽的一道，像是有人把什么重东西从裂缝里拖上来，又拖进了更深的雪窝。",
+      "拖痕尽头，风里夹着一股焦味。你伏低身子往前摸，雪窝里露出半截烧黑的木桩，木桩上钉着一块布条——是军服的布料，袖口，缺了扣子的那一截。老铁的军服袖口，昨天还缝着那道补丁。"
+    ],
+    options: [
+      { t: "循着焦味和拖痕继续往前摸", go: "frontier_tie_3" },
+      { t: "先退回裂缝里藏身，等天黑再说", go: "frontier_tie_3" }
+    ]
+  };
+
+  N["frontier_tie_3"] = {
+    tag: "main", place: "北境 · 第三哨 · 雪原风洞", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 雪原风洞」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "翻过一道雪梁，风洞里透出火光。你趴在梁上往下看——风洞是个天然的冰窟，洞口支着几根兽骨，兽骨上挂着油灯，灯火黄而稳，说明洞里有风路，烧的是好油。",
+      "洞口守着两个人，裹着黑皮斗篷，从头包到脚。其中一个个子极高，肩宽得像扇门；另一个驼背，手里拄着一根铁钎。两人都不说话，一个面朝洞外，一个面朝洞里，像是石像。",
+      "洞深处传来一声闷哼，是你熟悉的声音——老铁的声音，忍着疼的那种。"
+    ],
+    options: [
+      { t: "摸近洞口，等守夜换班的空当", go: "frontier_tie_4" },
+      { t: "直接现身，喊一嗓子把人引出来", go: "frontier_tie_5" }
+    ]
+  };
+
+  N["frontier_tie_4"] = {
+    tag: "main", place: "北境 · 第三哨 · 雪原风洞", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 雪原风洞」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "你在雪梁后蹲了约莫两炷香。风洞里换了一班人——高个子进洞，驼背拄着铁钎出来，沿着洞壁往东走，像是去巡夜。他走得不快，铁钎在冰面上一下一下地拄，声音在风里传出很远。",
+      "你贴着冰壁滑进风洞。洞口一段没有灯，黑得伸手不见五指，你摸着冰壁慢慢挪，摸到一处拐弯，拐角后面透出灯光，还透出说话声。",
+      "一个尖嗓子在说：“……上头说了，这东西今晚就走。老铁这个人，本来不该留，是他自己撞上来的。等货装完，一并处理。”另一个声音闷闷地应了一声。"
+    ],
+    options: [
+      { t: "趁他们说话，摸进关人的地方", go: "frontier_tie_5" },
+      { t: "先退出去，回哨上搬救兵", go: "frontier_tie_8b" }
+    ]
+  };
+
+  N["frontier_tie_5"] = {
+    tag: "main", place: "北境 · 第三哨 · 雪原风洞囚室", where: "黑夜", pace: "epic",
+    sceneTitle: "「北境 · 第三哨 · 雪原风洞囚室」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "囚室是风洞深处凿出的一间冰屋，门是两根兽骨夹着一块冻硬的皮子。你掀开皮子一角，看见老铁被绑在一根冰柱上，胳膊上一道血口子，冻得发紫。他听见动静抬头，看见你，眼睛瞪圆了，拼命摇头——嘴被堵着，说不出话。",
+      "身后脚步声响。尖嗓子那人回来了，手里提着一盏灯，灯光扫过你半边脸。他停住，灯抬高，照出一张白净的脸，下巴一道疤：“哟，送菜的来了？”他朝洞里喊，“黑皮，把人拿了。”",
+      "驼背的铁钎从暗处抡过来，带着风声。你侧身让过，铁钎砸在冰墙上，崩下一块冰。尖嗓子拔出一把短刀，刀身乌黑，刀尖朝你胸口扎来——这一下又快又刁，你避无可避，只能拿左臂去格。",
+      "刀尖从你小臂外侧划过去，皮肉翻开，血一下子涌出来，顺着腕子滴在冰面上。那一刀很深，左臂使不上力，你手里的火把差点脱手。尖嗓子舔了舔刀尖上的血，笑了：“还行，有点血性。”"
+    ],
+    options: [
+      { t: "咬牙不退，抡起火把砸向驼背，抢那把铁钎", check: { a: "STR", sk: "martial", label: "格斗" }, tier: {
+        ok: ["火把糊在驼背脸上，焦皮味一起，他惨叫着丢了铁钎。你抄起铁钎横扫，尖嗓子退了两步。老铁趁乱挣断皮绳，一拳砸翻灯台——洞里黑了。", "你拽住老铁往洞外冲。"],
+        fail: ["火把砸在驼背肩上，他闷哼一声没倒，反而一把攥住你的手腕，力气大得吓人。尖嗓子的刀又捅过来，你侧身，刀尖划过肋下，衣服撕开一道口子，血顺着腰往下淌。", "你挣开驼背的手，拖着老铁往洞外滚。"],
+        crit: ["火把结结实实糊在驼背脸上，他嚎着丢了铁钎。你顺势一记顶膝撞在尖嗓子手腕，刀脱手飞出。老铁挣断皮绳，抄起冰柱边的兽骨，一骨砸在尖嗓子腿弯，他单膝跪地。", "三个人贴着冰壁往外跑，身后的骂声被风灌散。"]
+      }, effects: { xp: 30, relation: { npc: "tie", v: 8 } }, go: "frontier_tie_6" },
+      { t: "不恋战，趁乱砍断老铁绳索，从侧路撤", check: { a: "AGI", sk: "stealth", label: "潜行" }, tier: {
+        ok: ["你一刀割断老铁手上的皮绳，两人猫腰贴冰壁往外摸。驼背的铁钎在身后空砸了几下，尖嗓子骂骂咧咧追出两步，被洞外的风雪呛回去。", "一口气跑出三里地才停下。"],
+        fail: ["皮绳又粗又韧，你割了三刀才断。就这几息的工夫，驼背的铁钎已经抡到——你推了老铁一把，自己背上挨了一下，骨头响了一声，疼得你眼前发黑。", "两人连滚带爬逃出风洞，血顺着你的脊背滴了一路。"],
+        crit: ["刀快，一割就断。你扶着老铁从侧路溜出去，贴着冰缝走，雪把脚印盖得干干净净。身后的风洞渐渐远了，只有风在冰棱间呜呜地响。", "你俩在雪梁后头趴了半天，确认没人追来，才互相搀着站起来。"]
+      }, effects: { xp: 30, relation: { npc: "tie", v: 8 } }, go: "frontier_tie_6" }
+    ]
+  };
+
+  N["frontier_tie_6"] = {
+    tag: "main", place: "北境 · 第三哨 · 雪原", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 雪原」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "风雪越来越大，天彻底黑了。你搀着老铁在雪梁之间摸路，身后的风洞早看不见了，只有风声和两个人的喘息。老铁把堵嘴的布扯掉，第一句话是：“你不该来。”",
+      "“你也不该一个人来。”你答。老铁沉默了一会儿，说：“我看见他们运的东西了——一口棺材，铁皮的，上面刻着花纹。他们把棺材抬进风洞最深处，里面有声音在敲。”",
+      "他停下来，看着你：“那声音，我听过。三十年前，我家老头子下矿洞那阵，每天晚上都做噩梦，说听见有人在敲铁。后来他死在矿洞里，矿上说是塌方。我不信，一直不信。”"
+    ],
+    options: [
+      { t: "问他棺材上的花纹是什么样的", go: "frontier_tie_7" },
+      { t: "先别说话，赶路回哨要紧", go: "frontier_tie_7" }
+    ]
+  };
+
+  N["frontier_tie_7"] = {
+    tag: "main", place: "北境 · 第三哨 · 营房", where: "黑夜", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 营房」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "老铁描述棺材上的花纹：“一圈一圈的，像水波，又像蛇盘着。中间有个记号，方的，像块牌子。”他比划了一下，“跟你身上那块，一个样子。”",
+      "你掏出矿洞里得来的铁牌，老铁接过去，用指腹摩挲那道竖纹：“一模一样。我爹死前给我留过一块，说是他年轻时候在矿底下捡的。后来我爹没了，那牌子也不见了——矿上的人来收遗物，说没看见。”",
+      "他把铁牌还给你，从贴身的里衣口袋里摸出一把钥匙，铜的，指头长：“这是他们运棺材那伙人的钥匙，我摸到的。风洞深处还有一道铁门，钥匙对得上。”",
+      "钥匙在他掌心躺着，还带着体温。营房外风声小了些，雪还在下。"
+    ],
+    options: [
+      { t: "收下钥匙（第二枚钥匙）", effects: { flag: "frontier_key2", relation: { npc: "tie", v: 10 } }, go: "frontier_tie_8" }
+    ]
+  };
+
+  N["frontier_tie_8"] = {
+    tag: "main", place: "北境 · 第三哨 · 营房", where: "黑夜", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 营房」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "老铁歇下了。军需官独臂来看了他一趟，把伤药搁在枕边，没说话，只朝你点了点头。",
+      "你在炉子边坐下来，把两枚铁牌并排摆着——钟楼刻痕那块，矿洞铁链那块，一样的方，一样的竖纹。风洞里的棺材、刘三的账本、老钱的空棺材、老铁爹的遗物……这些事像一根线，慢慢串了起来。",
+      "炉火噼啪响了一声。你听见窗外有人低声说话，凑到窗边——是两个老兵在巡夜：“……商队又来了，说是运铁器，可那车辙，比上次深了半尺。”"
+    ],
+    options: [
+      { t: "把铁牌收好，记下商队的事，去战报栏看看", go: "frontier_herald" },
+      { t: "回要塞 hub", go: "frontier_city" }
+    ]
+  };
+
+  N["frontier_tie_8b"] = {
+    tag: "main", place: "北境 · 第三哨 · 雪原", where: "黑夜", pace: "light",
+    sceneTitle: "「北境 · 第三哨 · 雪原」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "你决定不冒险，先回哨上搬救兵。风雪把来时的脚印盖了大半，你只能凭方向摸回去，走了一个多时辰才看见城墙上的灯火。",
+      "城门官听你说了风洞的事，脸色变了，连夜点了一队人跟你去。天亮前赶到风洞——洞里已经空了，只剩烧焦的兽骨和几根断绳。老铁被带走了，地上留下一道拖痕，和一块撕下来的军服布条。",
+      "你攥着那块布条，站在风洞里，听着风声灌进来，像什么东西在远处敲。"
+    ],
+    options: [
+      { t: "把布条收好，回哨上想办法", go: "frontier_tie_1" }
+    ]
+  };
+
+  /* ---------- 四钥线索（卷 C 前置，只给线索不闭环） ---------- */
+  N["frontier_key_hint_1"] = {
+    tag: "main", place: "北境 · 第三哨 · 战报栏", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 战报栏」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "战报栏上贴着一张泛黄的告示，被雪水洇得字迹模糊，落款是学院。告示说，北境魔法学院图书馆失窃了一卷古籍，正在追查，有线索者赏金五十金龙。",
+      "告示边角有人用炭笔写了一行小字，笔画很细，像是读书人的手笔：“古籍丢的那天，禁书区有人看见费尔曼教授半夜进出。钥匙在墓园的无字碑底下。”",
+      "字迹到这里就断了。那行字的下半截被撕掉了，只剩撕口毛糙的边。"
+    ],
+    options: [
+      { t: "记下费尔曼与无字碑的线索", effects: { flag: "frontier_hint_ferman" }, go: "frontier_city" }
+    ]
+  };
+
+  N["frontier_key_hint_2"] = {
+    tag: "main", place: "北境 · 第三哨 · 山后乱葬岗", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 山后乱葬岗」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "乱葬岗在哨所山背后，一片冻土坡，插着稀稀拉拉的木牌。最里头立着一块无字碑，碑面光洁，没刻一个字，却擦得干干净净，像是有人常来。",
+      "碑座底下压着一块石头，石头底下是一把铜钥匙，样式古旧，匙柄上缠着一圈褪色的红绳。钥匙旁边压着一张纸条，纸上只有一行字：“欠你的，还你。金秤第三代。”",
+      "你拿起钥匙，纸条被风一吹，翻了个面，背面还有一个字：北。"
+    ],
+    options: [
+      { t: "收下钥匙（无字碑下）", effects: { flag: "frontier_key_hint_grave" }, go: "frontier_city" }
+    ]
+  };
+
+  N["frontier_key_hint_3"] = {
+    tag: "main", place: "北境 · 第三哨 · 军需处", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 军需处」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "军需官独臂在清点账册，听你问起失窃的事，头也没抬：“学院金库丢东西？那事儿在学院那边传得开，说是炼金系一个姓陆的学生干的，拿了一枚铁牌。”",
+      "他翻了一页账：“那学生姓陆，单名一个昭，外号鸦羽。东西丢了他就休学跑了，往南边去了。学院追了半年，人没追到，铁牌也没追回来。”",
+      "他把账册合上，从抽屉里摸出一张通缉令的边角：“不过前阵子，南边传回消息，说鸦羽在南边现过身，身边跟着一口铁盒子。”"
+    ],
+    options: [
+      { t: "记下陆昭与铁盒的线索", effects: { flag: "frontier_hint_luzhao" }, go: "frontier_city" }
+    ]
+  };
+
+  N["frontier_key_hint_4"] = {
+    tag: "main", place: "北境 · 第三哨 · 战报栏", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 战报栏」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "战报栏最底下压着一封旧信，信封已经发黄，收信人写着“第三哨守钟人亲启”。信里只有短短几行：“钟响之时，故都当醒。晨天城地下，埋着第四枚。七锚不全，钟鸣不止。——署名：一个欠金秤的人。”",
+      "信的落款处盖着一枚小印，印文模糊，依稀能认出两个字：晨天。",
+      "你翻过信封——背面用炭笔画着一道门，门上刻着一圈一圈的纹路，像水波，又像蛇盘着。"
+    ],
+    options: [
+      { t: "收好这封信（指向晨天故都）", effects: { flag: "frontier_hint_chentian" }, go: "frontier_city" }
+    ]
+  };
+
+  /* ---------- 封印抉择（seal 主线 day200 联动，不改判定） ---------- */
+  N["frontier_seal_1"] = {
+    tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "深夜，哨所地底传来一阵闷响，像雷从地底下滚过去。你披衣起来，循声找到军械库后面的地窖——窖底裂开一道口子，黑气正从裂缝里一缕一缕地往外冒，带着一股硫磺似的臭味。",
+      "裂缝边围着几个老兵，没人敢靠太近。断牙老兵举着灯照了照，裂缝深不见底，黑气在灯光下翻涌，像是活的。",
+      "“这底下，”他说，“是深渊的地脉。二十年前那矿难，怕就是这东西闹的。”他回头看你，“上头的教会隔三差五来查，可他们只管登记，不管堵。你是新来的，你说了算——堵，还是等？”"
+    ],
+    options: [
+      { t: "连夜搬石布阵，把裂缝先压住", go: "frontier_seal_2" },
+      { t: "先不动它，等天亮看情况", go: "frontier_seal_3" },
+      { t: "派人去请教会的人来", go: "frontier_seal_4" }
+    ]
+  };
+
+  N["frontier_seal_2"] = {
+    tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "你带头搬石。裂缝口的碎石不够，老兵们把军械库的旧铁砧、废铁锭都搬下来，一层石头一层铁，压了个严实。断牙老兵在顶上画了个圈，念了几句不知从哪儿学来的咒，把一壶酒浇在石堆上。",
+      "黑气被压下去一些，可还是从石缝里往外渗，像烧不尽的烟。你蹲在石堆边守了半宿，裂缝里那股臭味淡了，又浓回来，反复了三次。",
+      "天亮时，裂缝没有再扩大，可谁也不敢说它堵住了。断牙老兵拍拍手上的土：“管用一时，管不了一世。这东西，得有人拿命去镇。”"
+    ],
+    options: [
+      { t: "记下裂缝的位置（加固过）", effects: { flag: "frontier_seal_reinforce" }, go: "frontier_seal_after_1" }
+    ]
+  };
+
+  N["frontier_seal_3"] = {
+    tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "你决定先不动它。黑气这东西，越动越躁，不如先摸清它的性子。你把老兵们劝回去，自己搬了张凳子坐在裂缝边上，一坐坐到天亮。",
+      "这一夜，黑气涨了三次，退了三次，像是在呼吸。每一次涨的时候，你都能听见地底下有极细的、像是铁链拖地的声音，又远又近。",
+      "天亮时你揉着发僵的腿站起来，断牙老兵在窖口探了个头：“没闹大吧？”你摇摇头。他松了口气：“不动它就好。这东西，你越较劲，它越来劲。”"
+    ],
+    options: [
+      { t: "记下裂缝的规律（选择观望）", effects: { flag: "frontier_seal_wait" }, go: "frontier_seal_after_1" }
+    ]
+  };
+
+  N["frontier_seal_4"] = {
+    tag: "main", place: "北境 · 第三哨 · 地底裂隙", where: "黑夜", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 地底裂隙」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "你派老兵骑快马去最近的教堂报信。第三天傍晚，教会的执事带了两名圣痕司的见习修士赶来，一进地窖就皱眉，把老兵们都赶了出去，只留你在场。",
+      "执事绕着裂缝走了三圈，用圣水浇了一圈，黑气果然缩回去不少。他直起身，问你：“这裂缝，什么时候开的？”你说昨夜。他摇摇头：“不止。你们哨所底下，这裂缝开了至少十年，只是昨夜才裂到地表。”",
+      "他临走时给你留了一道符纸，贴在裂缝口的石壁上：“压住它，别让它见光。教会会派人来接手——不过，”他顿了顿，“来不来得及，要看它涨得快不快。”"
+    ],
+    options: [
+      { t: "收下符纸（上报教会）", effects: { flag: "frontier_seal_church" }, go: "frontier_seal_after_1" }
+    ]
+  };
+
+  N["frontier_seal_after_1"] = {
+    tag: "main", place: "北境 · 第三哨 · 地窖口", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 地窖口」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "第三天夜里，地窖里的动静小了下去。断牙老兵下去看了一眼，上来时脸上带着怪色：“裂缝……合了一点。那些石头，像是被什么东西从底下顶上来，自己把口子填住了。”",
+      "没人相信石头会自己填缝。可事实摆在眼前——裂缝确实窄了半尺，黑气也淡了。老兵们私下说，是地底那东西自己退的，跟咱们堵不堵没关系。",
+      "只有你在场知道，你做的那个选择，像一根楔子，把裂缝的势头别住了。至少眼下，它是安静了。"
+    ],
+    options: [
+      { t: "把这件事记进战报（不影响主线判定）", effects: { flag: "frontier_seal_done" }, go: "frontier_seal_after_2" }
+    ]
+  };
+
+  N["frontier_seal_after_2"] = {
+    tag: "main", place: "北境 · 第三哨 · 战报栏", where: "白昼", pace: "light",
+    sceneTitle: "「北境 · 第三哨 · 战报栏」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "战报栏上多了一行字，是你自己写的：地窖裂缝，暂稳。日期、时辰，都记了。",
+      "断牙老兵路过看了一眼，咂咂嘴：“你写这个，是给后人看。可我活了几十年，这哨上的事，没一件是写了就完的。”",
+      "他把烟杆在鞋底磕了磕，走了。风从北边吹来，夹着雪粒，扑在战报栏上，把那行新字糊了一层白。"
+    ],
+    options: [
+      { t: "回要塞 hub", go: "frontier_city" }
+    ]
+  };
+
+  /* ---------- 支线一：流民营母女 ---------- */
+  N["frontier_refugee_1"] = {
+    tag: "main", place: "北境 · 第三哨 · 流民营", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 流民营」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "流民营搭在城墙根避风处，几块油布支着，挤了七八户人家。最里头那顶帐篷里，一个五六岁的小丫头蹲在门口，拿树枝在雪地上画圈，画一个，抹掉，再画一个。",
+      "她娘躺在帐篷里，裹着一床破被，烧得脸通红，咳嗽一声接一声，痰里带着血丝。小丫头听见娘咳，跑进去给她喂水，水碗沿碰着牙，磕磕响。",
+      "你站了一会儿，小丫头抬头看你，眼睛大而干：“叔叔，你有药吗？我娘说，没药也撑得过去。可她的手，老是抖。”"
+    ],
+    options: [
+      { t: "去伤兵营找军医宋，问问有没有药", go: "frontier_refugee_2" },
+      { t: "先掏出身上的干粮给她们", go: "frontier_refugee_2" }
+    ]
+  };
+
+  N["frontier_refugee_2"] = {
+    tag: "main", place: "北境 · 第三哨 · 伤兵营", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 伤兵营」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "军医宋是个三十来岁的瘦高个，正给一个断腿的老兵换药。听你提起流民营那对母女，他手上动作没停：“流民那女的，我见过，烧了有七八天了。不是风寒，是雪原上染的怪病，药不对路，吃多少都没用。”",
+      "他把换下来的绷带丢进火盆：“你要真想帮，去找老钱。他是矿工出身，认得雪原上几种草药。配一剂试试。”",
+      "断腿的老兵在旁边插嘴：“老钱那人，抠。你空手去，他连草根都不给你一根。”"
+    ],
+    options: [
+      { t: "去找老钱，讨一味雪原草药", go: "frontier_refugee_3" }
+    ]
+  };
+
+  N["frontier_refugee_3"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞口", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 矿洞口」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "老钱听你说完，把碗里最后一颗豆子嚼完，才慢慢开口：“雪原上有种草，叫火绒花，治热病。长在冰缝边上，白花，花心里头一点红。”",
+      "他站起来，瘸着腿往栅栏边上走了两步：“那花不好采——冰缝边上，雪狼常出没。你一个人去，回不回得来，两说。”",
+      "他顿了顿，补了一句：“我腿脚不行，替不了你。你要去，把我这把旧镐带上，防身。”他把一把磨得发亮的短镐递过来，镐柄上缠着布条，还带着体温。"
+    ],
+    options: [
+      { t: "接过短镐，去雪原找火绒花", go: "frontier_refugee_4" },
+      { t: "谢过老钱，另想办法", go: "frontier_refugee_5" }
+    ]
+  };
+
+  N["frontier_refugee_4"] = {
+    tag: "main", place: "北境 · 第三哨 · 雪原冰缝", where: "白昼", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 雪原冰缝」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "冰缝在哨所以东三里，一道裂缝劈开冻土，缝底能听见流水声。火绒花就长在缝壁上——白花，花心一点红，一丛一丛，在风口里颤。",
+      "你探身下去采了六七朵，揣进怀里。正要上来，缝那头传来一阵低沉的呼噜声——一头雪狼蹲在缝口，盯着你，耳朵压平了，尾巴慢慢竖起来。",
+      "狼没有立刻扑。它在等——等你慌，等你先动。风把雪沫子灌进缝里，你抓着缝壁的冰棱，短镐就挂在腰上。"
+    ],
+    options: [
+      { t: "慢慢退到缝壁死角，摸出短镐对峙", check: { a: "SPR", sk: "animal", label: "驯兽" }, tier: {
+        ok: ["你蹲下，把花举在身前，慢慢放低身子，不跟它对眼。雪狼嗅了嗅空气里的花味，喉咙里那声呼噜低了下去，又看了你两眼，转身踏进雪里，不见了。", "你揣着花爬回地面，后背的汗已经凉透了。"],
+        fail: ["雪狼扑下来，你拿短镐去挡，狼爪划在你右手背上，三道血口子，深可见白。你疼得闷哼一声，却借着这个机会把镐尖捅进狼肩——狼哀嚎一声，夹着尾巴跑了。", "手背的血滴在雪上，你扯了块布条缠住，把花护在怀里往回走。"],
+        crit: ["你慢慢蹲下，把花放在雪地上，退开两步。雪狼走过来，低头嗅了嗅花，又抬头看你——那双黄眼珠里，敌意慢慢散了。它叼起那朵花，转身走进风雪里。", "你怔了一下，把剩下的花收好，回了哨上。"]
+      }, effects: { xp: 25, relation: { npc: "song", v: 5 } }, go: "frontier_refugee_5" }
+    ]
+  };
+
+  N["frontier_refugee_5"] = {
+    tag: "main", place: "北境 · 第三哨 · 流民营", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 流民营」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "药配好了。军医宋把火绒花捣碎，掺了两味药，煎了一碗。小丫头端碗进去，一勺一勺喂给她娘，喂到一半，她娘的手不抖了，人也醒了。",
+      "小丫头从帐篷里探出头，眼睛亮亮的，冲你喊：“叔叔，我娘说她想坐起来！”她想了想，又补了一句，“我娘说，等她能走了，要给你纳双鞋。”",
+      "你摆摆手。风从城墙根吹过来，带着炊烟的味道，暖了一瞬。"
+    ],
+    options: [
+      { t: "（流民营母女记住了你的恩）", effects: { flag: "frontier_refugee_done", relation: { npc: "song", v: 5 } }, go: "frontier_city" }
+    ]
+  };
+
+  /* ---------- 支线二：军医宋与黑纹伤 ---------- */
+  N["frontier_medic_1"] = {
+    tag: "main", place: "北境 · 第三哨 · 伤兵营", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 伤兵营」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "伤兵营里横七竖八躺着八九个人，军医宋忙得脚不沾地。他刚给一个老兵缝合完伤口，抬头看你一眼：“来帮忙的？帮忙就搭把手，不是帮忙就外头等着。”",
+      "你搭了把手，按住一个伤兵的胳膊让他别动。宋缝合的手法很稳，针脚细密，可他缝到一半，忽然停住，盯着伤口边缘看。",
+      "伤口边缘的肉，泛着一层极淡的黑。宋拿镊子挑了挑，黑纹像是渗进肉里的，擦不掉。他眉峰聚起来，把那块肉周围的皮肉又剪了一小块：“这东西，不是毒。”"
+    ],
+    options: [
+      { t: "问他黑纹是什么", go: "frontier_medic_2" }
+    ]
+  };
+
+  N["frontier_medic_2"] = {
+    tag: "main", place: "北境 · 第三哨 · 伤兵营", where: "白昼", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 伤兵营」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "宋把那块剪下来的肉放进一只陶碗里，盖上盖子：“这个伤兵，是三天前在城墙根巡逻时被什么东西咬的。他说没看清，只觉着一阵风，腿上就多了口子。”",
+      "“我当军医十年，毒、疫、瘴气都见过。这个黑纹，不是毒，不是疫——倒像是被什么东西从里头往外染的。”他抬眼，“这个老兵，前天开始做噩梦，说有人在他床底下敲东西。一夜没睡。”",
+      "他顿了一下：“你说巧不巧，哨上几个被咬过的人，做的是同一个梦。”"
+    ],
+    options: [
+      { t: "提出去看看那个做噩梦的老兵", go: "frontier_medic_3" }
+    ]
+  };
+
+  N["frontier_medic_3"] = {
+    tag: "main", place: "北境 · 第三哨 · 伤兵营", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 伤兵营」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "夜里，你蹲在那老兵铺边。他睡得不踏实，翻来覆去，嘴里含混地念着什么。后半夜，他忽然坐起来，眼睛睁着，可没看你——他盯着床底，手指头指着，说：“下面，有人敲。”",
+      "你趴下去看床底。床底是夯实的冻土，什么也没有。可你把耳朵贴上去——冻土下面，传来极细的、一下一下的敲击声，像有人用指节叩地。",
+      "那声音很有规律，三下，停，三下。宋不知什么时候站到你身后，手里提着灯，脸色发白：“地底下……是矿洞的方向。”"
+    ],
+    options: [
+      { t: "跟宋合计：这跟矿洞水声、风洞棺材是一路", go: "frontier_medic_4" }
+    ]
+  };
+
+  N["frontier_medic_4"] = {
+    tag: "main", place: "北境 · 第三哨 · 伤兵营", where: "黑夜", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 伤兵营」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "宋把灯放在地上，压着嗓子说：“矿洞、风洞、地窖裂缝，全是通的。底下那东西，在咱们脚底下爬。”他抬头看你，“我原来不信这些。可这黑纹，这梦，这敲声——它们是一路的。”",
+      "他沉默了一会儿，说：“我在这哨上待了八年，见过三批人被这东西缠上。前两批，都死了。死前都一样：先做噩梦，再听见敲声，最后人自己往矿洞方向走。”",
+      "“哨上的人不让说。说了，军心就散了。”他把灯提起来，“可我得记下来。你帮我个忙——要是哪天我也被缠上了，别让我往矿洞走。”"
+    ],
+    options: [
+      { t: "答应他，并问他记下来的东西在哪", go: "frontier_medic_5" }
+    ]
+  };
+
+  N["frontier_medic_5"] = {
+    tag: "main", place: "北境 · 第三哨 · 伤兵营药柜", where: "任意", pace: "normal",
+    sceneTitle: "「北境 · 第三哨 · 伤兵营药柜」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "宋从药柜最底层摸出一本册子，封皮是牛皮，磨得发亮。翻开来，里面记着日期、人名、症状：“……第三批，四月初七，马夫老张，梦敲声，五日，北走，夜半于矿洞口寻获，已僵。”",
+      "他翻到最后一页，新添了一行：“我若北走，亦记于此。宋。”字迹比前面的都重，像是用力写下的。",
+      "他把册子合上，塞回药柜底层，站起来拍拍手上的灰：“行了，事说开了，心里反倒踏实。你记着，这册子的事，别往外说——哨上有些人，听了会当我是妖言惑众。”"
+    ],
+    options: [
+      { t: "点头应下（军医宋的嘱托）", effects: { flag: "frontier_medic_done", relation: { npc: "song", v: 10 } }, go: "frontier_city" }
+    ]
+  };
+
+  /* ---------- 铜钟异响守卫战（越级战例 · 四段式） ---------- */
+  N["frontier_bell_fight_1"] = {
+    tag: "combat", place: "北境 · 第三哨 · 城墙", where: "黑夜", pace: "epic",
+    sceneTitle: "「北境 · 第三哨 · 城墙」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "后半夜，铜钟响了。没有风，没有雾，钟自己响了一记，声音又沉又远，震得城墙上的雪簌簌往下掉。守钟老卒在钟楼顶喊了一嗓子：“狼！城下全是狼！”",
+      "你披甲上城。城墙下的雪原上，黑压压一片狼群，数不清多少头，绿眼睛像一片点着的灯。狼群正中站着一个人——黑皮斗篷，从头包到脚，两条腿，站在狼群里，纹丝不动。",
+      "老兵们握紧了兵器，没人说话。断牙老兵嗓子发紧：“这是头一回……狼群跟人一起来。”他转头看你，“你是新来的，没见过。这阵仗，平时得三倍的人才能扛住。”",
+      "黑皮人抬起手，朝城墙一指。狼群动了，像一片黑潮涌过来，前头的狼叼着什么东西往城墙上甩——是几根削尖的兽骨，破空而来，钉在墙垛上，嗡嗡地颤。"
+    ],
+    options: [
+      { t: "抄起弓，先射倒冲在最前的头狼", check: { a: "AGI", sk: "martial", label: "射术" }, tier: {
+        ok: ["你拉满弓，一箭穿进头狼肩胛。狼群顿了一瞬，头狼倒地的空当，城墙上的箭雨压下去，冲在最前的狼倒了一片。你换了个垛口继续射，箭筒里的箭一根根见底。"],
+        fail: ["箭擦着头狼的脊背飞过去，只削掉一撮毛。头狼反而红了眼，加快速度扑到墙根，狼爪扒着墙缝往上蹿，几头狼已经够到了垛口。"],
+        crit: ["一箭正穿头狼咽喉，它闷声栽倒，狼群炸了窝，乱了一炷香。你连射三箭，箭箭咬肉，城下的绿眼睛退出去十几步。"],
+      }, effects: { xp: 25 }, go: "frontier_bell_fight_2" },
+      { t: "带人守住墙梯口，防狼从梯子爬上", check: { a: "STR", sk: "martial", label: "格斗" }, tier: {
+        ok: ["你守在墙梯口，狼爪子刚搭上梯沿，你一枪杆子捅下去，连捅三头。身后的老兵跟上来，把梯子掀翻，城下传来闷响。"],
+        fail: ["一头狼趁你捅梯子的空当，从侧面扑上垛口，狼爪在你左肩抓出一道血口子，皮肉翻卷。你疼得差点脱手，一脚把它踹下城去，血顺着胳膊流进指缝。"],
+        crit: ["你在梯口立了一杆枪，连捅带踹，狼群连梯沿都摸不着。身后的老兵喊着号子，把备用的滚木推下去，城下砸出一片哀嚎。"]
+      }, effects: { xp: 25 }, go: "frontier_bell_fight_2" }
+    ]
+  };
+
+  N["frontier_bell_fight_2"] = {
+    tag: "combat", place: "北境 · 第三哨 · 城墙", where: "黑夜", pace: "epic",
+    sceneTitle: "「北境 · 第三哨 · 城墙」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "狼群退了第一波，可没人松气——黑皮人动了。他从狼群里走出来，一步一步，走得极慢，可每一步落下，脚下的雪都往两边退，像是有什么东西给他开路。",
+      "他走到城墙根下，仰头看你。兜帽底下看不清脸，只有一双眼睛，亮得不像人。他开口，声音像是砂纸磨铁：“钟……谁敲的？”",
+      "话音没落，他抬手往城墙上一按。你脚下的墙砖一颤，一股黑气顺着砖缝窜上来，城墙上几个老兵惨叫着后退——他们脚下的砖缝里，伸出黑气凝成的手，攥住他们的脚踝。",
+      "黑皮人一步踏出，人已经上了墙头，站在你面前三丈远。他比你高出一头，站在风里，黑斗篷猎猎作响，身后是漫天大雪。你握紧了手里的兵器——这一仗，你一个人挡不住。"
+    ],
+    options: [
+      { t: "不退，迎上去缠住他，拖到援军来", check: { a: "CON", sk: "martial", label: "死战" }, tier: {
+        ok: ["你咬牙冲上去，一枪刺他腰眼。他侧身让过，反手一掌拍在你肩头——你整个人砸在墙垛上，后背撞得发麻，嘴里一股腥味。但你没倒，拄着枪站起来，又冲了上去。"],
+        fail: ["你冲上去，他抬脚一踹，正中小腹。你像断线的风筝砸在城砖上，眼前发黑，血从嘴角溢出来。他走过来，居高临下看你，那双手上缠着黑气：“就这点本事？”"],
+        crit: ["你虚晃一枪，他侧身让，枪杆子却横扫在他小腿上——他踉跄一步，黑气散了一瞬。你抓住那空当，枪尖在他肋下划出一道口子，黑血溅出来，他第一次退了半步。"]
+      }, effects: { xp: 40 }, go: "frontier_bell_fight_3" },
+      { t: "边打边退，把他引向军械库（那里有铁网和火油）", check: { a: "AGI", sk: "stealth", label: "游斗" }, tier: {
+        ok: ["你且战且退，引着他往军械库走。他追得急，脚下被绊索一勾——那是老兵们备下的绊马索，黑皮人栽了个趔趄。你趁势退出十步，老兵们把火油泼了一地，一根火把扔过去，火光冲天。"],
+        fail: ["你退得急，脚下一滑，他一把攥住你的后领，把你提起来，像提一只鸡。黑气顺着他的手指渗进你衣领，一阵透骨的凉。他凑到你耳边说了一句：“跑什么？”" ],
+        crit: ["你退三步进两步，把他的节奏带乱。退到军械库门口时，你一个转身，铁网兜头罩下——那是晾铁器的大网，他挣了两下没挣开，火油紧跟着泼上来，火光腾起，他裹着一身火滚下城墙。"]
+      }, effects: { xp: 40 }, go: "frontier_bell_fight_3" }
+    ]
+  };
+
+  N["frontier_bell_fight_3"] = {
+    tag: "combat", place: "北境 · 第三哨 · 城墙", where: "黑夜", pace: "deep",
+    sceneTitle: "「北境 · 第三哨 · 城墙」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "黑皮人退了，带着一身火，从城墙上跳下去，落进狼群里。狼群呜咽着散开，跟着他退进雪原，像一片退去的潮水。城墙上安静下来，只剩风声和粗重的喘息。",
+      "你靠着墙垛坐下来，才发现左臂的伤口还在流血，血在城砖上积了一小滩。断牙老兵跑过来，往你嘴里塞了一块干饼：“活着就好。这东西，今晚是头一回亲自上来——以前它只赶狼。”",
+      "守钟老卒在钟楼顶慢慢站起来，看着雪原尽头：“它来问钟的事了。钟一响，它就坐不住。”他转头看你，浑浊的眼睛里有东西在动，“你今晚露了脸，它记住你了。往后的日子，夜里别一个人走。”",
+      "城墙下的雪原上，那团火光越来越远，最后变成一个红点，熄了。风从北边灌过来，夹着雪粒，吹在你伤口上，又冷又疼。"
+    ],
+    options: [
+      { t: "（铜钟守卫战·战毕）", effects: { flag: "frontier_bell_fight_win", xp: 30, relation: { npc: "zhou", v: 10 } }, go: "frontier_bell_5" }
+    ]
+  };
+
+  /* ---------- 收束：矿洞线衔接（M2 内环） ---------- */
+  N["frontier_mine_combat_after"] = {
+    tag: "main", place: "北境 · 第三哨 · 矿洞口", where: "任意", pace: "light",
+    sceneTitle: "「北境 · 第三哨 · 矿洞口」",
+    arc: "arc_frontier", vol: "vol_north",
+    text: [
+      "你在矿洞口把短镐还给老钱。他接过去，拿布条又缠了一圈镐柄，没头没尾地说了一句：“你是个实心眼的。雪原上，实心眼的人活得久。”",
+      "他朝洞里努努嘴：“那水声，我听了二十年。你下去一趟，它消停了几日——不管是不是你干的，它怕你了。”",
+      "你回身看了一眼矿洞口。黑黢黢的洞口像一张嘴，安安静静地张着。"
+    ],
+    options: [
+      { t: "回要塞 hub", go: "frontier_city" }
+    ]
+  };
 
 })();
 
@@ -75366,7 +76069,51 @@ window.STORY_BLUEPRINT = {
   "frontier_camp": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
   "frontier_snow": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
   "frontier_herald": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
-  "frontier_leave": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"}
+  "frontier_leave": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_7": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_8": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_8b": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_1b": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_1c": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_7": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_8": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_tie_8b": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_key_hint_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_key_hint_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_key_hint_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_key_hint_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_seal_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_seal_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_seal_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_seal_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_seal_after_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_seal_after_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_refugee_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_refugee_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_refugee_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_refugee_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_refugee_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_medic_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_medic_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_medic_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_medic_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_medic_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_bell_fight_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_bell_fight_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_bell_fight_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "frontier_mine_combat_after": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"}
 
 
 

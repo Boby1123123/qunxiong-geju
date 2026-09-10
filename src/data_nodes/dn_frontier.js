@@ -74,6 +74,8 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 ],options:[
 {t:"去钟楼看看那口铜钟",go:"frontier_tower_gate"},
 {t:"去矿洞口看看（守卫拦着）",go:"frontier_mine_gate"},
+{t:"打听老兵老铁的下落（他昨夜失踪了）",go:"frontier_tie_1"},
+
 {t:"去军械库转转",go:"frontier_armory"},
 {t:"去伤兵营看看",go:"frontier_infirmary"},
 {t:"去流民营看看",go:"frontier_camp"},
@@ -188,10 +190,11 @@ N["frontier_old_5"]={tag:"main",place:"北境 · 第三哨 · 钟楼下",where:"
 
 N["frontier_mine_gate"]={tag:"main",place:"北境 · 第三哨 · 矿洞口",where:"白昼",pace:"light",arc:"arc_frontier",vol:"vol_north",text:[
 "矿洞口在城西的山脚下，被一扇铁栅栏封得严严实实。栅栏上的锁有拳头大，锁孔里塞着蜡，显然很久没人开过。洞口黑黝黝的，往里看，什么都看不见，只有一股潮气夹着铁锈味，从深处一阵一阵地冒出来。",
-"守栅栏的是一个年轻的哨兵，他看见你走近，把枪一横：“矿洞封了二十年，军令，任何人不得入内。”",
+"栅栏边蹲着一个瘸腿的老人，是矿工出身的老钱，正拿旧砂纸磨一把短镐；旁边站着一个年轻的哨兵，他看见你走近，把枪一横：“矿洞封了二十年，军令，任何人不得入内。”",
 "你注意到，他说话的时候，眼睛一直盯着洞口深处，嘴唇有点发白。你问他怎么了，他摇了摇头，过了好一会儿才说：“没事。就是……你站近一点，能听见底下有水声。可这矿洞，二十年前就抽干了。”"
 ],options:[
 {t:"（侧耳听了一会儿——确实有水声，很轻，像有什么东西在深处流动）",go:"frontier_city"},
+{t:"向老钱搭话，问他这矿洞的来历",go:"frontier_mine_1"},
 {t:"（不多逗留，转身离开）",go:"frontier_city"}
 ]};
 

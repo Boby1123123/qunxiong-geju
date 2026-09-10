@@ -3983,6 +3983,7 @@ function bindCreation(){
     S.name = name.slice(0,12);
     if(!S.subrace){ flashMsg("请选择亚种族"); return; }
     S.maxSan = Math.round(S.attrs.SPR*1.5);
+    if(!S.san) S.san=S.maxSan; /* M2b 新档san初始化修复：原逻辑仅故乡带H.san才赋值，否则新档san=0直接疯狂结局 */
     // 种族亚种生效
     const SR = SUBRACES[S.subrace]||{};
     for(const k in (SR.attrs||{})) S.attrs[k]=Math.min(80,S.attrs[k]+SR.attrs[k]);

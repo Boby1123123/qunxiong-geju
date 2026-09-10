@@ -271,5 +271,7 @@ N["alumni_ata_6"]={tag:"main",place:"草原南缘",where:"白昼",pace:"normal",
 "你把狼骨和铁牌贴身收好。风从南边吹来，带着一点暖意。草原的冬天快过去了，但有些事，才刚刚开始。",
 "远处传来马蹄声，是洛克的信使追了上来，手里扬着一封信：“洛克让我给你的——他说，南边要是有什么动静，捎个信回来。”"
 ],options:[
-{t:"（收好信件与线索，继续南下）",effects:{xp:20,relation:{npc:"ata",v:8}},go:"alumni_hub"}
+{t:"（收好信件与线索，继续南下）",effects:{xp:20,relation:{npc:"ata",v:8}},go:"alumni_hub"},
+{t:"（循着狼骨的指向，北上神谕之地）",effects:{xp:25,flag:"anchor_oracle_entry"},go:"anchor_oracle_1"},
+{t:"（循着狼骨的指向，北上神谕之地）",effects:{xp:25,flag:"anchor_oracle_entry"},go:"anchor_oracle_1"}
 ]};

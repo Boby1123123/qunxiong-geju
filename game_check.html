@@ -4925,7 +4925,10 @@ const EVENT_POOL_EXT = [
   {id:"anchor_grave_light",day:188,cls:"奇遇",text:"北境墓园无字碑前，夜里浮起一点青白的光，有人说是碑下的东西在翻身。"},
   {id:"anchor_vault_audit",day:214,cls:"人祸",text:"学院金库年内二次盘点，账房查出三卷旧档失踪，院长下令彻查内贼。"},
   {id:"anchor_world_shake",day:234,cls:"天灾",text:"北境与东境交界处地脉轻震，井水发浑，老人说是地底有什么东西在换气。"},
-  {id:"anchor_birds_south",day:271,cls:"奇遇",text:"入冬前群鸟反常南飞，连北境深山的雪鸮都弃巢而去，猎户说这是大变的兆头。"}
+  {id:"anchor_birds_south",day:271,cls:"奇遇",text:"入冬前群鸟反常南飞，连北境深山的雪鸮都弃巢而去，猎户说这是大变的兆头。"},
+{id:"anchor_chen_echo",day:256,cls:"奇遇",text:"承天城官仓地窖夜里传出闷响，守仓老吏说听见地下有人走路。有人认出那声音像是从老城墙底下传来的——承天城的城墙，底下埋着一座更老的城。"},
+{id:"anchor_grave_crack",day:191,cls:"天灾",text:"北境第三哨墓园的无字碑，一夜之间裂开一道细缝。守碑的金老人说是年头久了；可村里人说，裂缝的方向，正对着哨所钟楼。"},
+{id:"anchor_oracle_sign",day:274,cls:"奇遇",text:"草原神谕石林深处，狼群彻夜长嗥。老萨满说，那是狼神在跟什么人说话——一百多年没听它这样叫过了。"}
 
 ]; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
 const RACES = {"human": {"cn": "人类", "desc": "大陆数量最多、适应力最强的种族。七大地域孕育出七种截然不同的活法。", "ic": "🧑"}, "half": {"cn": "混血", "desc": "人类与其他种族的血脉交汇。长寿与短命、偏见与机遇，都写在血脉里。", "ic": "🌓"}, "elf": {"cn": "精灵", "desc": "长寿的森林之民。魔法天赋流淌在血脉里，岁月在他们脸上刻下宁静。", "ic": "🧝"}, "dwarf": {"cn": "矮人", "desc": "山腹与熔炉之子。短矮的身躯里装着铁一般的意志与手艺。", "ic": "🧔"}, "orc": {"cn": "兽人", "desc": "草原与蛮荒的战士。力量与战意是他们的第一语言。", "ic": "👹"}, "halfling": {"cn": "半身人", "desc": "田野与市井间的小个子。幸运仿佛偏爱他们，麻烦也总绕着他们走。", "ic": "🍀"}, "dragon": {"cn": "龙裔", "desc": "体内流淌着巨龙血脉的古老种族。鳞片、吐息与血脉的骄傲。", "ic": "🐉"}}; window.RACES = RACES; /* /v60inj:winx2:RACES/ */
@@ -71284,7 +71287,9 @@ N["alumni_ata_6"]={tag:"main",place:"草原南缘",where:"白昼",pace:"normal",
 "你把狼骨和铁牌贴身收好。风从南边吹来，带着一点暖意。草原的冬天快过去了，但有些事，才刚刚开始。",
 "远处传来马蹄声，是洛克的信使追了上来，手里扬着一封信：“洛克让我给你的——他说，南边要是有什么动静，捎个信回来。”"
 ],options:[
-{t:"（收好信件与线索，继续南下）",effects:{xp:20,relation:{npc:"ata",v:8}},go:"alumni_hub"}
+{t:"（收好信件与线索，继续南下）",effects:{xp:20,relation:{npc:"ata",v:8}},go:"alumni_hub"},
+{t:"（循着狼骨的指向，北上神谕之地）",effects:{xp:25,flag:"anchor_oracle_entry"},go:"anchor_oracle_1"},
+{t:"（循着狼骨的指向，北上神谕之地）",effects:{xp:25,flag:"anchor_oracle_entry"},go:"anchor_oracle_1"}
 ]};
 
 /* /u1inj:data-nodes:dn_alumni2.js/ */
@@ -71413,7 +71418,9 @@ N["alumni_cecy_6"]={tag:"main",place:"承天城 · 长乐坊茶室",where:"夜",
 "茶室的灯芯爆了个灯花。她低头看着茶汤，声音很轻：“你在学院里说过，读书人的骨气，是‘知不可为而为之’。我以前觉得这句话太硬了。现在……”她抬起头，笑了笑，“现在我觉得，硬一点也好。”",
 "你点了点头。窗外，承天城的灯火铺了满城，像一地碎金。"
 ],options:[
-{t:"（辞别塞西莉娅，记下晨天与粮印的线索）",effects:{xp:20},go:"alumni_hub"}
+{t:"（辞别塞西莉娅，记下晨天与粮印的线索）",effects:{xp:20},go:"alumni_hub"},
+{t:"（循着笔记的线索，探一探承天城地下的故都）",effects:{xp:25,flag:"anchor_chen_entry"},go:"anchor_chen_1"},
+{t:"（循着笔记的线索，探一探承天城地下的故都）",effects:{xp:25,flag:"anchor_chen_entry"},go:"anchor_chen_1"}
 ]};
 
 /* ---- 同学七：莫里（矮人·铁匠） ---- */
@@ -71535,7 +71542,9 @@ N["alumni_elena_6"]={tag:"main",place:"圣城 · 医馆门口",where:"白昼",pa
 "你接过瓷瓶，瓶身温热。她朝你点了点头，转身走回医馆，白袍在晨光里晃了晃，消失在门廊深处。",
 "你握紧瓷瓶，走出圣城大门。城门口，一群带着大件行李的旅人正排队进城，其中一个人背着的包袱里，露出一截黑布裹着的长条物——形状，像是一把剑，又像是一块铁牌。"
 ],options:[
-{t:"（把药瓶收好，留意那个旅人）",effects:{xp:20},go:"alumni_hub"}
+{t:"（把药瓶收好，留意那个旅人）",effects:{xp:20},go:"alumni_hub"},
+{t:"（追着那个旅人的行踪，留意圣痕司的圣物库）",effects:{xp:25,flag:"anchor_church_entry"},go:"anchor_church_1"},
+{t:"（追着那个旅人的行踪，留意圣痕司的圣物库）",effects:{xp:25,flag:"anchor_church_entry"},go:"anchor_church_1"}
 ]};
 
 /* ---- 老铁来信（卷 A 救老铁后） ---- */
@@ -71894,6 +71903,204 @@ N["anchor_vault_6"]={tag:"main",place:"学院 · 钟楼",where:"夜",pace:"norma
 {t:"（南下东行，前往承天城）",effects:{xp:20},go:"alumni_cecy_2"}
 ]};
 
+/* /u1inj:data-nodes:dn_anchor2.js/ */
+/* ============================================================
+ * dn_anchor2.js — 卷 C 后三锚（M6 批）
+ * 锚5 晨天故都 anchor_chen_1~8（承天城地下，接塞西莉娅/秦策之约）
+ * 锚6 教会圣物库 anchor_church_1~6（圣痕司/艾琳异端调查）
+ * 锚7 兽人神谕之地 anchor_oracle_1~6（狼骨/灰鬃/阿塔前置）
+ * 战斗节点四段式（tag:combat）
+ * ============================================================ */
+
+/* ---- 锚5 · 晨天故都 ---- */
+N["anchor_chen_1"]={tag:"main",place:"承天城 · 官仓地窖",where:"夜",pace:"deep",text:[
+"塞西莉娅给的笔记里，夹着一页旧官仓图。图上的地窖位置，画着一道细细的箭头，指向地底深处，旁边批着两个字：“故城”。",
+"你趁夜摸进官仓。守仓的老吏喝了酒，鼾声震天。你掀开地窖板，沿木梯下去，走了三十几级，脚下的砖忽然变了——不再是官仓的青砖，而是一种更老、更厚的黑石砖，砖缝里嵌着灰白色的浆，像是几百年前的手艺。",
+"你举着火把，沿着黑石砖道往前走。墙上一行刻字，被岁月磨得只剩轮廓，你凑近认了半天：“……晨天之民，凿石为城。城在，则天门不开。”",
+"地道的尽头，一扇铁门半掩着。门上没有锁，门缝里透出一线极淡的光——地底深处，有什么东西在发光。"
+],options:[
+{t:"（推开铁门）",effects:{xp:20,flag:"anchor_chen_enter"},go:"anchor_chen_2"}
+]};
+
+N["anchor_chen_2"]={tag:"main",place:"晨天故都 · 城门废墟",where:"夜",pace:"deep",text:[
+"铁门后是一片巨大的地下空间。火光照出去，照见高耸的石柱、坍塌的拱顶、半埋的石像——这里曾经是一座城，一座被整座埋进地下的城。",
+"你站在城门废墟前，抬头看见门楣上铸着一行字：“晨天。”字是铜铸的，嵌在门楣里，锈成了墨绿色。",
+"你想起塞西莉娅说的：“承天城的官仓粮印，跟晨天故城的铁门花纹一模一样。”你蹲下来，看城门基座上的纹样——一道波浪，一环环向外荡开，跟你在神谕石林枯井井底、矮人矿道石室、以及北境矿洞铁门上看到的波浪纹，如出一辙。",
+"晨天故城——东境王朝的旧都。它没有被毁，而是被埋了起来。埋它的，是它自己的城墙。"
+],options:[
+{t:"（沿主道深入故城）",effects:{xp:20},go:"anchor_chen_3"}
+]};
+
+N["anchor_chen_3"]={tag:"main",place:"晨天故都 · 主街",where:"夜",pace:"deep",text:[
+"故城的主街宽得能并行八驾马车，两旁的店铺门板紧闭，招牌上的字还清晰可辨：“晨天钱庄”“永昌绸缎”“和记药铺”。风从街尾吹来，卷起地上的灰，像有人刚刚走过。",
+"你推开一间店铺的门。柜台上摆着一架算盘，算珠上落着厚厚一层灰。账本摊开着，墨迹还新：“景和三年，冬。北境铁牌失窃，库银封存。”",
+"你翻过几页，又看见一行：“七枚铁牌，晨天四枚，北境两枚，西境一枚。铁牌安，则天门安；铁牌乱，则天柱摇。”",
+"你合上账本，指尖发凉。晨天王朝——它在被埋进地下之前，在管着七枚铁牌。"
+],options:[
+{t:"（记下账目，继续往城中心走）",effects:{xp:22,flag:"anchor_chen_ledger"},go:"anchor_chen_4"}
+]};
+
+N["anchor_chen_4"]={tag:"main",place:"晨天故都 · 宫城前",where:"夜",pace:"normal",text:[
+"城中心是一座宫城，宫门紧闭，门楣上的匾额写着“天衡殿”三个字。你刚走近，门侧的阴影里忽然传出一个声音：“你来晚了。”",
+"一个人从阴影里走出来——身形修长，披着黑斗篷，一只黑鸦落在他肩上。他摘下兜帽，露出一张年轻的脸，眉目清俊，眉间却拢着一层倦意。",
+"“陆昭。”你叫出他的名字。他点点头，把手里的一枚铁牌抛了抛：“学院的铁牌，我拿走了。你知道我为什么拿它。”",
+"他指了指身后的宫门：“这扇门后面，埋着晨天王朝最后一笔账。我陆家三代人，都在查这笔账。你身上的锚印，是开门的一半钥匙。”他顿了顿，“另一半，在我手里。”"
+],options:[
+{t:"（与他对视，等他继续说）",effects:{xp:20},go:"anchor_chen_5"},
+{t:"（质问：为什么从学院金库偷铁牌）",effects:{xp:15,flag:"anchor_chen_accuse"},go:"anchor_chen_5"}
+]};
+
+N["anchor_chen_5"]={tag:"combat",place:"晨天故都 · 宫门",where:"夜",pace:"epic",sceneTitle:"宫门之约",text:[
+"陆昭没有正面回答你。他忽然一抬手，黑鸦腾空而起，翼尖带起一阵劲风，直扑你面门。你侧身躲过，鸦爪擦着你耳根划过，割断了几根头发。",
+"“先让我看看，你有几分本事，敢来开这扇门。”陆昭话音未落，人已欺到近前，掌中翻出一柄短刃，刀光在火光里一闪，直取你咽喉。你横刀格挡，两刃相撞，迸出一串火星。他变招极快，刀锋一转，沿着你刀身滑下，在你右小臂上划开一道口子——伤口不深，却正切在握刀的筋上，血顺着指缝淌下来，握刀的手一阵发麻，虎口几乎捏不住刀柄。",
+"你退后半步，刀交左手。陆昭又攻上来，这一刀又快又狠，直奔你心口。你不再退，在他刀尖堪堪触及衣襟的瞬间，侧身让过，右肘顺势撞在他肋下。他闷哼一声，踉跄后退，黑鸦在空中一个盘旋，落在两人之间，嘎嘎地叫了两声，像在劝架。",
+"陆昭捂着肋下，看了你半天，忽然收刀入鞘：“不错。受了伤还肯换命，不是那些只会背书的。”他抹了一把唇边的血，“天衡殿的门，我开一半，你开一半——我信你了。”"
+],options:[
+{t:"（撕布裹住右小臂，与他并肩推门）",effects:{xp:35,hp:-15,relation:{npc:"lu_zhao",v:10}},go:"anchor_chen_6"}
+]};
+
+N["anchor_chen_6"]={tag:"main",place:"晨天故都 · 天衡殿",where:"夜",pace:"deep",text:[
+"宫门后是真正的天衡殿。殿内空旷，正中的石台上嵌着一枚巨大的锚形铜印，比北境矿洞那枚大了整整一圈，印面刻着繁复的纹路，像是一整幅星图。",
+"陆昭走到铜印前，把从学院金库取来的铁牌放进印面中央的凹槽——严丝合缝。他退开两步：“这是第五锚的锁。铜印归你，铁牌归我。取不取，你说了算。”",
+"你站在石台前。铜印在火把下泛着暗金色的光，印面那些纹路，像一圈圈荡开的水波，又像一扇扇推开又合拢的门。",
+"殿外的黑鸦叫了一声。陆昭说：“晨天王朝管铁牌管到最后一刻——王朝没了，铁牌还在。你说，是牌守着人，还是人守着牌？”"
+],options:[
+{t:"（取下铜印，接住这份传承）",effects:{xp:30,flag:"anchor_5"},go:"anchor_chen_7"},
+{t:"（把铜印留在原处，只记下位置）",effects:{xp:18,flag:"anchor_chen_refuse"},go:"anchor_chen_7"}
+]};
+
+N["anchor_chen_7"]={tag:"main",place:"晨天故都 · 宫城外",where:"白昼",pace:"normal",text:[
+"你出宫城时，天光已经从地缝里漏下来。陆昭站在城门口，黑鸦落在他肩上，正歪头梳理羽毛。",
+"“第五锚，归你了。”他说，“我拿铁牌，不为锚，为的是我爷爷记了一辈子的那笔账——晨天王朝的库银，到底去了哪里。”他顿了顿，“你查你的锚，我查我的账。路不一样，门是同一扇。”",
+"他把一块旧玉牌抛给你：“承天城陆家的腰牌。往后在东境地面上，有用得着的地方。”你接住玉牌，入手温润。",
+"第五锚，已在掌中。你望着故都深处，那扇天衡殿的门，在晨光里静静立着。"
+],options:[
+{t:"（收好玉牌，循着教会的线索南下）",effects:{xp:25},go:"anchor_chen_8"}
+]};
+
+N["anchor_chen_8"]={tag:"main",place:"承天城 · 城南官道",where:"白昼",pace:"normal",text:[
+"你从官仓地窖出来时，承天城刚开市。守仓的老吏宿醉未醒，没人知道你夜里下去过。",
+"你站在城南官道口，把五枚锚印理了一遍：铜叶、铁牌、玉印、铁锚印，如今又添了天衡殿的铜印——第五锚，已在掌中。",
+"铜印入手比别的沉，像是晨天王朝三百年的分量都压在印上。你想起陆昭的话：“路不一样，门是同一扇。”",
+"南边传来钟声——是圣城的方向。你想起圣痕司那间医馆，想起艾琳娜白袍上沾着的药渍，和她说的那句“医者见伤，当见其源”。",
+"五锚已得，还剩两锚。你握紧布囊，踏上南下圣城的路。"
+],options:[
+{t:"（南下圣城，查圣物库的锚印）",effects:{xp:25,flag:"anchor_5"},go:"anchor_church_1"}
+]};
+
+/* ---- 锚6 · 教会圣物库 ---- */
+N["anchor_church_1"]={tag:"main",place:"圣城 · 圣痕司",where:"白昼",pace:"normal",text:[
+"圣城的圣痕司设在光明大教堂东侧，是教会里管“圣痕”的地方——凡身上出现异常印记的信徒，都会先送到这里查验。",
+"你到圣痕司时，门口排着长队。一个执事模样的人站在队首，挨个查看信徒手上的印记，看完一个，摇一次头。你排在队尾，听见前面的人窃窃私语：“这几天收进来的‘圣痕’，都是同一个模子刻的——像是有人仿的。”",
+"你走到执事面前，伸出左手。执事看了一眼你的掌心，眉头动了动，压低嗓门：“你这手，不是圣痕。跟我来。”",
+"他把你领进侧厅，掩上门：“你是艾琳娜学士提起的那个人吧？她来信说，你要查圣痕的事。”他顿了顿，“圣痕司底下，有一座圣物库。库里锁着的东西，这些年，丢过三回。”"
+],options:[
+{t:"（问清圣物库的位置与失窃详情）",effects:{xp:20},go:"anchor_church_2"}
+]};
+
+N["anchor_church_2"]={tag:"main",place:"圣城 · 圣痕司侧厅",where:"白昼",pace:"deep",text:[
+"执事给你倒了一杯水，压低嗓门：“圣物库在地下三层，钥匙只有司长和红衣主教各一把。三回失窃，丢的都是同一样东西——铁牌。”",
+"“铁牌？”你心口一跳。执事点头：“三十年前丢过一回，十一年前丢过一回，去年又丢了一回。每回丢完，库里就多一道裂痕。司长说那是圣物在警示，可我看——”他顿住，改口道，“我看是有人跟铁牌有仇。”",
+"你问他：“丢的铁牌，长什么样？”执事想了想：“巴掌大，生铁的，上面刻着锚形纹。司长说过，那叫‘锚牌’，是教会的根基信物，一共——”他竖起两根手指，“两块。现在只剩一块了。”",
+"他叹了口气：“还有一桩怪事。去年丢牌之后，圣痕司收进来的‘仿圣痕’就多了起来。有人怀疑是异端干的，红衣主教已经把艾琳娜学士的名字，写进了异端审查名单。”"
+],options:[
+{t:"（追问艾琳娜被审查的详情）",effects:{xp:18},go:"anchor_church_3"}
+]};
+
+N["anchor_church_3"]={tag:"main",place:"圣城 · 圣痕司地下走廊",where:"夜",pace:"normal",text:[
+"夜里，你借着执事给的旧钥匙，摸进圣痕司地下走廊。走廊尽头是圣物库的铁门，门上嵌着两块锚形凹槽——一块空着，一块嵌着一枚铁牌，铁牌在火把下泛着暗沉的光。",
+"你没有急着开门。你蹲下来，看铁门底部的刻痕——一道细细的裂痕，从门缝底部一直延伸到墙角，像是被什么东西从里面反复撞击留下的。",
+"你伸手摸了摸裂痕边缘，指尖冰凉。裂痕的走向，绕过凹槽里的铁牌，直指墙壁深处。你顺着裂痕的方向看过去——墙角的砖缝里，塞着一片发黄的纸角。",
+"你抽出纸片，展开。纸上写着一行字，笔迹潦草：“第六锚，镇于教会圣库。守库人已叛，勿信司长。”落款没有名字，只画着一只简笔的眼睛。"
+],options:[
+{t:"（记下纸条，靠近铁门查看凹槽）",effects:{xp:22,flag:"anchor_church_note"},go:"anchor_church_4"}
+]};
+
+N["anchor_church_4"]={tag:"combat",place:"圣城 · 圣物库内",where:"夜",pace:"epic",sceneTitle:"圣库惊变",text:[
+"你推开圣物库的铁门。库内陈列着一排排石架，架上摆着各色圣物——旧经卷、银器、骨匣。最里侧的石台上，立着一枚锚形铁印，乌沉沉，比金库那枚还沉。",
+"你刚走近石台，头顶忽然一阵风响。你侧身急闪，一根铁链“哗啦”一声砸在你刚才站的地方，石砖被砸出一道裂纹。一个披着黑斗篷的身影从石架后走出来，手里拖着铁链，兜帽下露出一双灰白的眼睛——是圣痕司的守库人。",
+"“私闯圣库，罪当火刑。”守库人话音沙哑，铁链一挥，链头挂着铁钩，直取你面门。你矮身躲过，钩子擦着你头皮划过，扯断一缕头发。他手腕一抖，铁链倒卷回来，链身扫过你左肩——你肩头的旧伤还没好利索，这一下正抽在旧伤上，火辣辣地疼，左臂一下抬不起来，血顺着衣襟往下淌。",
+"你退到石台边，右手够到那枚铁印。守库人拖着铁链逼上来，铁钩在火光里闪着寒光。你攥紧铁印，在他挥链的刹那，把铁印砸在他胸口——铁印上的锚形纹路骤然发亮，守库人浑身一僵，发出一声不似人声的嘶吼，斗篷下露出的脸，灰白的皮肤一寸寸开裂，露出底下烧焦般的纹路。",
+"他栽倒在地，不动了。你弯腰捡起铁印，喘着粗气。石架后传来一声轻响——你转头，看见一个穿白袍的身影站在门口，是艾琳娜。她看着地上那具焦黑的躯体，声音发颤：“他……他也是被‘源’浸透的人。”"
+],options:[
+{t:"（撕布裹住左肩，与艾琳娜对视）",effects:{xp:35,hp:-15,relation:{npc:"elena",v:10}},go:"anchor_church_5"}
+]};
+
+N["anchor_church_5"]={tag:"main",place:"圣城 · 圣物库外",where:"夜",pace:"deep",text:[
+"艾琳娜把你带到圣痕司后院的静室，替你重新包扎了左肩。她动作很轻，指尖却一直在抖：“我查了三个月，一直没敢相信。守库人……他每年给司长递一份异端名单，名单上的人，第二年就‘失踪’了。”",
+"她抬起头看你：“他说他看见了‘源’——就是你们北边说的‘深渊’、‘裂缝’背后的东西。他说圣痕司收进来的那些‘仿圣痕’，其实是‘源’渗出来的记号，长在人身上，人会慢慢变成……刚才那样。”",
+"你问她：“铁印怎么办？”艾琳娜看着你怀里的锚形铁印：“你拿走吧。它在我手里，只会再丢一回。司长——司长是好的，但有些事，他看不见。”她顿了顿，“你说得对，医者见伤，当见其源。我打算留在圣痕司，把‘源’的事，查到底。”",
+"第六锚的传承，落在你手里。窗外，圣城的钟声敲过三响，悠长而沉。"
+],options:[
+{t:"（收好铁印，与艾琳娜道别）",effects:{xp:30,flag:"anchor_6"},go:"anchor_church_6"}
+]};
+
+N["anchor_church_6"]={tag:"main",place:"圣城 · 城门口",where:"白昼",pace:"normal",text:[
+"你出圣城时，晨光铺在石板路上。怀里的布囊已经装了不少东西——铜叶、铁牌、铜印、玉印、铜印大印、铁锚印，现在又多了一枚铁印。",
+"第六锚，已在掌中。",
+"你站在城门口，往北望去。草原的方向，云层压得很低。阿塔说过，狼骨发烫，就往发烫的方向去——而这一刻，你怀里的铁印、玉印、铜印，都在朝着同一个方向发热。",
+"那是北方。是神谕之地。是第七锚，也是最后一锚的方向。"
+],options:[
+{t:"（北上草原，前往神谕之地）",effects:{xp:25},go:"anchor_oracle_1"}
+]};
+
+/* ---- 锚7 · 兽人神谕之地 ---- */
+N["anchor_oracle_1"]={tag:"main",place:"草原 · 神谕之地",where:"白昼",pace:"deep",text:[
+"神谕之地位于草原最北端，是一片被风蚀成蜂窝状的石林。石柱高矮错落，柱身上刻满了兽人先民的图腾——狼、鹰、熊，还有一圈圈首尾相衔的波浪纹。",
+"你到石林时，阿塔已经等在那里。她盘腿坐在一块石头上，手里攥着一根狼骨：“你来了。昨晚狼骨又发烫了，比前几次都烫。”她抬眼看你，“我爷爷说，神谕之地有一样东西，等了一百多年，在等一个能让它‘安息’的人。”",
+"她带你穿过石林。风穿过石柱的孔隙，发出呜咽般的声响，像是整片石林在说话。走到最深处，你看见一根最高的石柱——柱身被凿成一个石龛，龛内放着一只石匣，匣盖半开，露出里面的东西：一枚乌黑的铁牌，牌面刻着一只仰天长啸的狼头。",
+"你伸手要碰，阿塔忽然按住你的手腕：“等等。我爷爷还有一句话——‘神谕之物，不认血，认心。心不正者，碰之则噬。’”"
+],options:[
+{t:"（在石龛前站定，先看狼头铁牌旁的刻字）",effects:{xp:20},go:"anchor_oracle_2"}
+]};
+
+N["anchor_oracle_2"]={tag:"main",place:"草原 · 神谕石林",where:"白昼",pace:"deep",text:[
+"石龛两侧的柱身上，刻着两行字。左边的字迹古拙，像兽人先民的笔意：“狼神低头之日，天门将开。”右边的字迹是后刻的，笔画刚劲：“第七锚，镇于神谕。守者，即狼神选中的行走者。”",
+"你蹲下来，看石龛底部的刻痕——一圈波浪纹，首尾相衔，围成一个圆。圆的中央，刻着一枚狼头印记，跟铁牌上的狼头一模一样。",
+"阿塔站在你身后，压着嗓子说：“我爷爷说，神谕之地原本有一对铁牌，一百多年前丢了一块。丢牌那年，狼群发疯，连袭了三个部落。老萨满说，那是狼神在发怒——镇物的另一半，被人带走了。”",
+"你取出怀里的狼骨，与石龛里的铁牌并排放在一起。狼骨上的纹路，与铁牌上的狼头印记，严丝合缝。"
+],options:[
+{t:"（把狼骨安放进石龛）",effects:{xp:22,flag:"anchor_oracle_bone"},go:"anchor_oracle_3"}
+]};
+
+N["anchor_oracle_3"]={tag:"main",place:"草原 · 神谕石林",where:"黄昏",pace:"normal",text:[
+"狼骨入龛的瞬间，石林里忽然静了——风声、鸟鸣，全都消失了。过了一阵，石龛深处传来一声极轻的“咔”，像是锁扣弹开。",
+"你伸手进去，石匣底部露出一枚锚形石印，灰白色，像被岁月磨了千年。石印旁的壁上，刻着一行小字：“持此印者，为狼神行走者。狼群见印，俯首。”",
+"阿塔看着那枚石印，眼神复杂：“我爷爷等了一辈子，就是想看它一眼。他说，神谕之物现世之日，就是草原大变之时。”她顿了顿，问你：“你打算怎么处置它？”",
+"你握着石印。它入手微凉，却在你掌心慢慢变温，像一颗跳动的心。"
+],options:[
+{t:"（把石印举到面前，郑重收好）",effects:{xp:25},go:"anchor_oracle_4"}
+]};
+
+N["anchor_oracle_4"]={tag:"combat",place:"草原 · 神谕石林外",where:"夜",pace:"epic",sceneTitle:"狼祸",text:[
+"当夜你宿在石林外。后半夜，篝火忽然一暗——四周的黑暗里，亮起一双双绿莹莹的眼睛，密密麻麻，像是整片草原的狼都围了过来。",
+"领头是一头巨大的白狼，肩高齐人胸，颈间挂着一圈旧铁环。它没有扑上来，而是蹲在火光边缘，绿眼盯着你，喉咙里发出一声低沉的呜咽——像是威胁，又像是试探。",
+"狼群开始骚动，两头灰狼率先扑上来。你挥刀逼退一头，另一头从侧面蹿上，獠牙直取你大腿——你侧身一让，狼爪擦过你小腿，皮甲被撕开一道口子，血顺着脚踝淌进靴子。你退到篝火边，脚跟踩进灰烬，踉跄了一下。",
+"白狼仍蹲着没动，绿眼一瞬不瞬地看着你。你喘息着，忽然想起阿塔的话——“神谕之物，不认血，认心。”你握紧怀里的石印，一步步走向白狼，在它面前蹲下来，把石印举到它眼前。",
+"石印上的狼头印记，在夜色里泛出一点灰白的光。白狼凑近，鼻尖几乎触到石印，忽然“呜”了一声，前腿一曲伏低下去，头贴到了地上。四周的狼群像得到号令，一只接一只伏下，绿眼在火光里明明灭灭，像一地星子。",
+"你蹲在原地，小腿的伤还在流血，握石印的手却稳稳的。白狼抬起头，看了你一眼，转身走向黑暗，狼群无声地跟了上去，像潮水退去。"
+],options:[
+{t:"（撕布裹住小腿，目送狼群远去）",effects:{xp:35,hp:-15},go:"anchor_oracle_5"}
+]};
+
+N["anchor_oracle_5"]={tag:"main",place:"草原 · 神谕石林",where:"白昼",pace:"normal",text:[
+"天亮时，阿塔赶到石林，看见你腿上的伤和地上的狼爪印，脸色变了又变：“你……昨晚狼群围了你？”你点头。她沉默半晌，忽然说：“白狼低头，是认主。你这一夜，把草原一百年的债，接了一半。”",
+"她看着你怀里的石印：“神谕之物认了你。往后草原的事，你不能只当个过客了。”她从怀里掏出一串狼牙，套在你脖子上，“这是我爷爷留下的。他说，戴着它，狼群认你，部落也认你。”",
+"你摸了摸狼牙串，上面还带着阿塔的体温。她别过脸去：“别多想。只是……神谕之地认了你，草原就欠你一份人情。人情，是要还的。”",
+"第七锚，已在掌中。七枚锚印，你已得其七。"
+],options:[
+{t:"（向阿塔道别，握紧七枚锚印）",effects:{xp:30,flag:"anchor_7",relation:{npc:"ata",v:10}},go:"anchor_oracle_6"}
+]};
+
+N["anchor_oracle_6"]={tag:"main",place:"草原 · 神谕石林外",where:"黄昏",pace:"normal",text:[
+"你走出石林时，落日正悬在草原尽头。你解开布囊，把七枚锚印一样一样摆在膝上——钟楼的铜叶、矿洞的铁牌与铜印、墓园的玉印、金库的铁锚印、晨天故都的铜印、教会的铁印、神谕之地的石印。",
+"七枚锚印，纹路各不相同，却都朝着同一个方向，透着温热——那是北境，是第三哨，是七锚齐鸣的地方。",
+"你想起金老人的话：“七锚齐鸣之日，即是天门将开之时。”又想起守钟老卒的话：“铁牌认主，认的不是血，是胆。”",
+"你攥紧七枚锚印，望向北方。雪原深处，那口铜钟，在等它三十一年没等到的回响。"
+],options:[
+{t:"（北上第三哨，让七锚归位）",effects:{xp:30},go:"goldscale_1"}
+]};
+
 /* /u1inj:data-nodes:dn_causality.js/ */
 /* ===== /v91inj:ledger/ CM-3 因果/伏笔账本（纯数据；elda content causality 读取核销；不改引擎） =====
  * 字段：id / type(伏笔|设定|人物|地点|事件) / desc / plant(埋设锚点) / reap(回收锚点) / status(open|closed) / world(所属卷/域)
@@ -72001,7 +72208,14 @@ window.CAUSALITY_LEDGER = [
 {id:"led_anchor_01",type:"伏笔",desc:"七锚之首·哨楼锚：铜叶与半枚铁牌，守钟人传承",plant:"anchor_tower_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
 {id:"led_anchor_02",type:"伏笔",desc:"七锚之二·矿洞锚：铁门铁牌与锚形铜印，刘矿头旧线",plant:"anchor_mine_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
 {id:"led_anchor_03",type:"伏笔",desc:"七锚之三·墓园锚：无字碑下锚形玉印，金秤守门人三代",plant:"anchor_grave_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
-{id:"led_anchor_04",type:"伏笔",desc:"七锚之四·学院金库锚：铁锚印与陆昭失窃铁牌，指向承天城",plant:"anchor_vault_1",reap:"anchor_finale_1",status:"open",world:"vol_academy"}
+{id:"led_anchor_04",type:"伏笔",desc:"七锚之四·学院金库锚：铁锚印与陆昭失窃铁牌，指向承天城",plant:"anchor_vault_1",reap:"anchor_finale_1",status:"open",world:"vol_academy"},
+{id:"led_anchor_05",type:"伏笔",desc:"七锚之五·晨天故都锚：天衡殿铜印，陆昭持学院铁牌合印",plant:"anchor_chen_1",reap:"anchor_finale_1",status:"open",world:"vol_east"},
+{id:"led_anchor_06",type:"伏笔",desc:"七锚之六·教会圣库锚：圣痕司圣物库铁印，守库人已叛",plant:"anchor_church_1",reap:"anchor_finale_1",status:"open",world:"vol_church"},
+{id:"led_anchor_07",type:"伏笔",desc:"七锚之七·兽人神谕锚：神谕石林石印，白狼低头认主",plant:"anchor_oracle_1",reap:"anchor_finale_1",status:"open",world:"vol_race"},
+{id:"led_goldscale_01",type:"设定",desc:"金秤=晨天王朝司秤官金家传世镇器，两头挂一头称天一头称地",plant:"goldscale_1",reap:"goldscale_8",status:"open",world:"vol_north"},
+{id:"led_goldscale_02",type:"设定",desc:"金家守秤三十一代，金望之等持锚人三十一年",plant:"goldscale_2",reap:"goldscale_7",status:"open",world:"vol_north"},
+{id:"led_goldscale_03",type:"伏笔",desc:"金望之第三十代守秤人临终托付秤账与铁牌",plant:"goldscale_3",reap:"goldscale_8",status:"open",world:"vol_north"},
+{id:"led_goldscale_04",type:"伏笔",desc:"晨天王朝天衡殿主簿金秤镇界记载：锚足齐则秤稳",plant:"goldscale_5",reap:"goldscale_8",status:"open",world:"vol_east"}
 
 ];
 /* ===== /v91inj:ledger:end/ ===== */
@@ -74368,6 +74582,108 @@ N["frontier_leave"]={tag:"main",place:"北境 · 第三哨 · 城门",where:"白
   };
 
 })();
+
+/* /u1inj:data-nodes:dn_goldscale.js/ */
+/* ============================================================
+ * dn_goldscale.js — 卷 C 金秤真相章（M6 批）
+ * 金秤家族设定正式收束（用户硬约束：不得与既有设定冲突）
+ * 衔接：M5 锚3 金秤揭示 / B-5 老莫里茨往事 / 晨天故都档案
+ * ============================================================ */
+
+N["goldscale_1"]={tag:"main",place:"北境 · 第三哨 · 墓园",where:"白昼",pace:"deep",sceneTitle:"金秤真相 · 一",text:[
+"你回到北境第三哨时，雪正下得密。你没有先回哨所，而是径直去了墓园。",
+"无字碑还在老松林里立着，碑前的麦饼和清水换过了，是新祭的。你蹲下来，又看了一遍碑脚那行字：“守此碑者，金氏代代相传。”",
+"你在碑前坐下，把七枚锚印一样一样摆在雪地上。雪落在铜叶上，化成一滴滴水珠，顺着纹路滑下去。你看着那枚玉印——墓园里取来的那一枚，印底刻着一个小小的“金”字。",
+"金老人说过，金家不叫它铁器，叫它“秤”。你想起他说这句话时的眼神，浑浊的眼珠里浮起一层薄薄的水光。那不是一个守墓人的眼神，那是一个等了太久的人的眼神。"
+],options:[
+{t:"（叩响碑座，寻找金家留下的东西）",effects:{xp:20,flag:"goldscale_start"},go:"goldscale_2"}
+]};
+
+N["goldscale_2"]={tag:"main",place:"北境 · 第三哨 · 墓园",where:"白昼",pace:"deep",text:[
+"你叩了三下碑座，碑后传来一声极轻的“咔”。你绕到碑后，发现碑脚一块青砖松动了——下面压着一只桐木匣子，匣盖上的漆已经斑驳，像是埋了几十年。",
+"你打开木匣。里面是一册皮面日记，封皮上压着一个烫金的“金”字，和一本泛黄的簿册，封面上写着四个字：“金氏账册”。",
+"日记的第一页，字迹端正，像是年轻人写的：“景和三年，秋。金家守秤，至我已是第二十九代。晨天王朝亡了，王城没了，可秤还在。我爹说，秤在，门就在。”",
+"你往后翻。越翻，字迹越潦草，纸页上的水渍也越多。翻到中间一页，只写着一行字，笔力透纸：“三十一年了。秤还在等它的主人。”"
+],options:[
+{t:"（翻到日记的最后一页）",effects:{xp:25},go:"goldscale_3"}
+]};
+
+N["goldscale_3"]={tag:"main",place:"北境 · 第三哨 · 墓园",where:"白昼",pace:"deep",text:[
+"日记的最后一页，字迹工整得出奇，像是一字一句誊抄的：“金家守秤，三代三十一年，只为一件事：等一个能集齐七锚的人。”",
+"“七锚，是晨天王朝埋在大陆各处的七枚镇物。锚在，则地脉安；锚失，则裂缝开。裂缝开，则‘源’入——这是金家从晨天王朝传下来的话。”",
+"“我金家先祖，原是晨天王朝的司秤官，掌天衡殿大秤。王朝亡时，先祖携秤出宫，隐姓埋名，在北境立碑守秤。秤，就是天衡殿那杆大秤的缩样——金秤两头挂，一头称天，一头称地。天地失衡之日，秤响。”",
+"“守秤人的规矩只有一条：秤响之日，须有人持七锚归位，重镇地脉。若无人持锚——秤会自己断。”",
+"“老朽金望之，第三十代守秤人。今将守秤之责，付于来者。”落款处，按着一个朱红的指印。"
+],options:[
+{t:"（合上日记，心里久久不能平）",effects:{xp:30},go:"goldscale_4"}
+]};
+
+N["goldscale_4"]={tag:"main",place:"北境 · 第三哨 · 墓园",where:"白昼",pace:"deep",text:[
+"你翻开那本金氏账册。账册记的不是银钱，是“秤账”——每代守秤人上任，都要在账册上记一笔：秤在何处，锚在何处，门在何处。",
+"你一路读下去，读到账册最后几页：“第七十七年，北境矿洞铁门现异响，查之，铁牌完好。”……“第一百零三年，学院金库铁牌失踪，寻回，重镇。”……“第一百二十九年，神谕之地铁牌失窃，追之未果，记之，待后人。”",
+"账册的末页，夹着一张薄薄的羊皮纸。你展开——纸上画着一幅图：一口钟、一座山、一方碑、一扇门、一座城、一座殿、一片林，七个图案围成一个圈，圆心画着一杆秤。",
+"秤的两头，一边挂天，一边挂地。天的那头，画着一道裂口；地的那头，画着一个人——一个提着锚印的人。"
+],options:[
+{t:"（把羊皮纸上的图拓印下来）",effects:{xp:25,flag:"goldscale_map"},go:"goldscale_5"}
+]};
+
+N["goldscale_5"]={tag:"main",place:"晨天故都 · 天衡殿旧址",where:"夜",pace:"deep",text:[
+"你带着那幅图，再次南下，潜入晨天故都。这一次，你径直走进天衡殿，在石台前蹲下来，把羊皮纸铺开，与石台上的锚形铜印并排对照。",
+"羊皮纸上的圆心——那杆秤——与铜印印面上的纹路，严丝合缝。你取出玉印，按在铜印中央。两印相合，发出一声极轻的“嗡”。",
+"石台底部，忽然滑开一道暗格。格内放着一卷竹简，竹简上的字是刻的，笔意古拙：“晨天纪年，天衡殿主簿记：金秤，乃镇界之器。秤者，衡天衡地，衡阴阳之界。七锚为足，金秤为心。锚足齐，则秤稳；秤稳，则天门不启，而界不破。”",
+"你握着竹简，忽然明白了金家三代人守的是什么——他们守的不是秤，是门。门后面，是晨天王朝埋了三百年的秘密。"
+],options:[
+{t:"（收好竹简，把金秤的来历想通透）",effects:{xp:30,flag:"goldscale_chen"},go:"goldscale_6"}
+]};
+
+N["goldscale_6"]={tag:"main",place:"北境 · 第三哨 · 墓园",where:"白昼",pace:"deep",sceneTitle:"金秤真相 · 抉择",text:[
+"你回到第三哨时，雪已经停了。你坐在无字碑前，面前摆着七枚锚印、那卷竹简、金望之的日记和账册。",
+"雪光映着碑身。你把这些东西一件一件理清楚：晨天王朝的司秤官金家，携秤出宫，立碑守秤，代代相传——他们守的不是一座墓，是一杆秤，一杆称着天与地、称着门与界的秤。",
+"现在，秤响的日子快到了。你握着七枚锚印，站在两扇门之间：一扇是金家守了三代的“门”，一扇是你自己走进来的“门”。",
+"你问自己：你集齐七锚，为的是什么？是重镇地脉，守住这片土地？是解开晨天王朝的秘密，弄清三百年前到底发生了什么？还是——为了那个站在碑前、等了一辈子的人，金望之？",
+"风穿过松林，松针簌簌地落。你听见自己心跳的声音，一下，一下，像那杆秤在称着什么。"
+],options:[
+{t:"（收好一切，去哨所见金老人）",effects:{xp:30},go:"goldscale_7"},
+{t:"（先把锚印与账册收进桐木匣，交给金老人）",effects:{xp:25,flag:"goldscale_trust"},go:"goldscale_7"}
+]};
+
+N["goldscale_7"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黄昏",pace:"deep",text:[
+"黄昏时，你在钟楼根下找到了金老人。他坐在老位置上，还在擦那口铜钟——钟身上的裂口已经结了一层暗红的锈痂，不再渗水了。",
+"你在他身边坐下来，把桐木匣放在他膝上。他停下擦钟的手，看了匣子一眼，又看了你一眼，浑浊的眼珠里慢慢泛起一层水光。他张了张嘴，没有出声，只是拍了拍你的手背，手是抖的。",
+"过了很久，他才开口，声音哑得像砂纸磨过石头：“你……找到了？”你点头。他低下头，把木匣抱在怀里，枯瘦的手指一遍一遍摩挲着匣盖，像在摸一件失而复得的传家宝。",
+"“三十一年了。”他说，“我爹走的时候，把秤账交给我，跟我说：‘秤响之前，总会有人来的。’我等了三十一年，等到头发都白了，才等到你。”他抬起头，看你，眼神里有一种说不清的东西，“孩子，你知道秤响的时候，守秤人要做什么吗？”"
+],options:[
+{t:"（摇头，等他讲）",effects:{xp:25},go:"goldscale_8"}
+]};
+
+N["goldscale_8"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"黄昏",pace:"deep",text:[
+"金老人没有立刻回答。他扶着钟楼站起来，走到铜钟前，把耳朵贴在钟身上，听了一会儿：“你听——钟心里有回声了。那是秤在响。”",
+"他转回身，看着你：“秤响的时候，守秤人要做的，是把秤杆交出去。金家的规矩：秤响之日，秤归新主。谁是持锚人，谁就是新主。”",
+"他从怀里摸出一样东西，放在你手里——一杆小秤，乌木杆，铜盘，秤杆上刻着细密的刻度，每一道刻度都磨得发亮，像是被人摩挲了一辈子。",
+"“这就是金秤。”他说，“我金家守了它三十一代。今天，我把它交给你。秤给你，规矩也给你：秤响之时，你用它称一称——称称那天门，值不值得开；称称你自己，扛不扛得起。”",
+"你握着那杆小秤。秤杆微凉，却在你掌心慢慢变温。你忽然明白，金家守的不是秤，是一个“选择”——一个三百年来，每一次秤响都有人要做出的选择。"
+],options:[
+{t:"（郑重收下金秤）",effects:{xp:35,flag:"goldscale_own"},go:"goldscale_9"}
+]};
+
+N["goldscale_9"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"夜",pace:"deep",text:[
+"夜里，你独自站在钟楼上。七枚锚印摆在脚下，金秤挂在腰间，羊皮纸图卷塞在怀里。雪后的星空，清冽得像一汪水。",
+"你忽然想起这一路上的所有人——金望之、守钟老卒、刘矿头、老铁、老莫里茨、金先生、陆昭、塞西莉娅、艾琳娜、阿塔……他们每个人，都在各自的命里，守着各自的东西。而他们的守，最后都指向了同一个地方——你脚下这口钟。",
+"你低头看那口铜钟。钟身上那道裂口，在月光下像一道细细的门缝。你把手按上去，钟身温热，像是有人在钟里，隔着铜壁，按住了你的手。",
+"风从雪原深处吹来，卷起地上的雪沫。你听见钟心里那声回声——很轻，很沉，像一杆秤，在称着什么东西。秤的另一头，压着的是整个大陆的地脉；而这一头，站着的是你。"
+],options:[
+{t:"（在钟楼守到天亮，等秤响）",effects:{xp:30},go:"goldscale_10"}
+]};
+
+N["goldscale_10"]={tag:"main",place:"北境 · 第三哨 · 钟楼",where:"白昼",pace:"normal",sceneTitle:"金秤真相 · 终",text:[
+"天亮时，金老人拄着拐杖，慢慢走上钟楼。他看了看你，又看了看你腰间的金秤，点点头：“秤没响，说明还不到时候。但快了。”",
+"他站在你身边，看着雪原尽头：“七锚齐了，秤也认了主。剩下的，就是等——等那道门自己亮起来。”他顿了顿，忽然笑了，脸上的褶子舒展开来，“我爷爷说过一句话：秤响之日，天门将开。可他还说过后半句——”",
+"“天门开了，是人自己走进去的，还是被门拉进去的——那才是秤要称的东西。”",
+"你站在钟楼上，腰间金秤晃了晃。雪原尽头，地平线上，有什么东西正泛起一线极淡的光——那是七锚齐鸣的方向，也是那道门的方向。",
+"金秤真相，至此尘埃落定。而你握着这杆秤，站在门前——下一步，就是七锚齐鸣的那一刻。"
+],options:[
+{t:"（把锚印与金秤收好，等待七锚齐鸣）",effects:{xp:35,flag:"goldscale_done"},go:"anchor_oracle_6"}
+]};
 
 /* /u1inj:data-nodes:dn_graduate.js/ */
 /* dn_graduate.js — M3 卷B 学年过渡 + 毕业四去向（七锚之约） */
@@ -77670,7 +77986,67 @@ window.STORY_BLUEPRINT = {
   "anchor_vault_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
   "anchor_vault_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"epic"},
   "anchor_vault_5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
-  "anchor_vault_6": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"}
+  "anchor_vault_6": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "anchor_chen_1": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
+  "anchor_chen_2": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
+  "anchor_chen_3": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
+  "anchor_chen_4": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_chen_5": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"epic"},
+  "anchor_chen_6": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_chen_7": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_chen_8": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_church_1": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"deep"},
+  "anchor_church_2": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"deep"},
+  "anchor_church_3": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"deep"},
+  "anchor_church_4": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"epic"},
+  "anchor_church_5": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"normal"},
+  "anchor_church_6": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"normal"},
+  "anchor_oracle_1": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"deep"},
+  "anchor_oracle_2": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"deep"},
+  "anchor_oracle_3": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"deep"},
+  "anchor_oracle_4": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"epic"},
+  "anchor_oracle_5": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"normal"},
+  "anchor_oracle_6": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"normal"},
+  "goldscale_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_7": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_8": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_9": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "goldscale_10": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "anchor_chen_1": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
+  "anchor_chen_2": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
+  "anchor_chen_3": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"deep"},
+  "anchor_chen_4": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_chen_5": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"epic"},
+  "anchor_chen_6": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_chen_7": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_chen_8": {tag:"main", vol:"vol_east", arc:"arc_frontier", pace:"normal"},
+  "anchor_church_1": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"deep"},
+  "anchor_church_2": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"deep"},
+  "anchor_church_3": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"deep"},
+  "anchor_church_4": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"epic"},
+  "anchor_church_5": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"normal"},
+  "anchor_church_6": {tag:"main", vol:"vol_church", arc:"arc_frontier", pace:"normal"},
+  "anchor_oracle_1": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"deep"},
+  "anchor_oracle_2": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"deep"},
+  "anchor_oracle_3": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"deep"},
+  "anchor_oracle_4": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"epic"},
+  "anchor_oracle_5": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"normal"},
+  "anchor_oracle_6": {tag:"main", vol:"vol_race", arc:"arc_frontier", pace:"normal"},
+  "goldscale_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_4": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_5": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_6": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_7": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_8": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"deep"},
+  "goldscale_9": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "goldscale_10": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"}
 
 
 

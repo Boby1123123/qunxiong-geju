@@ -123,7 +123,9 @@ N["alumni_cecy_6"]={tag:"main",place:"承天城 · 长乐坊茶室",where:"夜",
 "茶室的灯芯爆了个灯花。她低头看着茶汤，声音很轻：“你在学院里说过，读书人的骨气，是‘知不可为而为之’。我以前觉得这句话太硬了。现在……”她抬起头，笑了笑，“现在我觉得，硬一点也好。”",
 "你点了点头。窗外，承天城的灯火铺了满城，像一地碎金。"
 ],options:[
-{t:"（辞别塞西莉娅，记下晨天与粮印的线索）",effects:{xp:20},go:"alumni_hub"}
+{t:"（辞别塞西莉娅，记下晨天与粮印的线索）",effects:{xp:20},go:"alumni_hub"},
+{t:"（循着笔记的线索，探一探承天城地下的故都）",effects:{xp:25,flag:"anchor_chen_entry"},go:"anchor_chen_1"},
+{t:"（循着笔记的线索，探一探承天城地下的故都）",effects:{xp:25,flag:"anchor_chen_entry"},go:"anchor_chen_1"}
 ]};
 
 /* ---- 同学七：莫里（矮人·铁匠） ---- */
@@ -245,7 +247,9 @@ N["alumni_elena_6"]={tag:"main",place:"圣城 · 医馆门口",where:"白昼",pa
 "你接过瓷瓶，瓶身温热。她朝你点了点头，转身走回医馆，白袍在晨光里晃了晃，消失在门廊深处。",
 "你握紧瓷瓶，走出圣城大门。城门口，一群带着大件行李的旅人正排队进城，其中一个人背着的包袱里，露出一截黑布裹着的长条物——形状，像是一把剑，又像是一块铁牌。"
 ],options:[
-{t:"（把药瓶收好，留意那个旅人）",effects:{xp:20},go:"alumni_hub"}
+{t:"（把药瓶收好，留意那个旅人）",effects:{xp:20},go:"alumni_hub"},
+{t:"（追着那个旅人的行踪，留意圣痕司的圣物库）",effects:{xp:25,flag:"anchor_church_entry"},go:"anchor_church_1"},
+{t:"（追着那个旅人的行踪，留意圣痕司的圣物库）",effects:{xp:25,flag:"anchor_church_entry"},go:"anchor_church_1"}
 ]};
 
 /* ---- 老铁来信（卷 A 救老铁后） ---- */

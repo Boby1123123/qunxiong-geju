@@ -104,7 +104,14 @@ window.CAUSALITY_LEDGER = [
 {id:"led_anchor_01",type:"伏笔",desc:"七锚之首·哨楼锚：铜叶与半枚铁牌，守钟人传承",plant:"anchor_tower_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
 {id:"led_anchor_02",type:"伏笔",desc:"七锚之二·矿洞锚：铁门铁牌与锚形铜印，刘矿头旧线",plant:"anchor_mine_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
 {id:"led_anchor_03",type:"伏笔",desc:"七锚之三·墓园锚：无字碑下锚形玉印，金秤守门人三代",plant:"anchor_grave_1",reap:"anchor_finale_1",status:"open",world:"vol_north"},
-{id:"led_anchor_04",type:"伏笔",desc:"七锚之四·学院金库锚：铁锚印与陆昭失窃铁牌，指向承天城",plant:"anchor_vault_1",reap:"anchor_finale_1",status:"open",world:"vol_academy"}
+{id:"led_anchor_04",type:"伏笔",desc:"七锚之四·学院金库锚：铁锚印与陆昭失窃铁牌，指向承天城",plant:"anchor_vault_1",reap:"anchor_finale_1",status:"open",world:"vol_academy"},
+{id:"led_anchor_05",type:"伏笔",desc:"七锚之五·晨天故都锚：天衡殿铜印，陆昭持学院铁牌合印",plant:"anchor_chen_1",reap:"anchor_finale_1",status:"open",world:"vol_east"},
+{id:"led_anchor_06",type:"伏笔",desc:"七锚之六·教会圣库锚：圣痕司圣物库铁印，守库人已叛",plant:"anchor_church_1",reap:"anchor_finale_1",status:"open",world:"vol_church"},
+{id:"led_anchor_07",type:"伏笔",desc:"七锚之七·兽人神谕锚：神谕石林石印，白狼低头认主",plant:"anchor_oracle_1",reap:"anchor_finale_1",status:"open",world:"vol_race"},
+{id:"led_goldscale_01",type:"设定",desc:"金秤=晨天王朝司秤官金家传世镇器，两头挂一头称天一头称地",plant:"goldscale_1",reap:"goldscale_8",status:"open",world:"vol_north"},
+{id:"led_goldscale_02",type:"设定",desc:"金家守秤三十一代，金望之等持锚人三十一年",plant:"goldscale_2",reap:"goldscale_7",status:"open",world:"vol_north"},
+{id:"led_goldscale_03",type:"伏笔",desc:"金望之第三十代守秤人临终托付秤账与铁牌",plant:"goldscale_3",reap:"goldscale_8",status:"open",world:"vol_north"},
+{id:"led_goldscale_04",type:"伏笔",desc:"晨天王朝天衡殿主簿金秤镇界记载：锚足齐则秤稳",plant:"goldscale_5",reap:"goldscale_8",status:"open",world:"vol_east"}
 
 ];
 /* ===== /v91inj:ledger:end/ ===== */

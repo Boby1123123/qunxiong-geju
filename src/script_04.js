@@ -1120,6 +1120,7 @@ const _orig_loadGame = loadGame;
   let add="";
   /* /v68ui:options/ 行动点已移至底部状态行（全界面唯一），此处移除重复显示 */
   add += "<div class='row'><span>图鉴</span><b>"+galleryCount()+"/"+Object.keys(ITEM_GALLERY).length+"</b></div>";
+  if(window.v92_tierInfo){ try{ add += "<div class='row'><span>实力</span><b>"+v92_tierInfo().name+"</b></div>"; }catch(e){} }
   if(S.world&&S.world.stealthOn) add += "<div class='row'><span>状态</span><b style='color:#6b8fd6'>潜行中</b></div>";
   if(S.world&&S.world.ngBless) add += "<div class='row'><span>传承</span><b style='color:var(--gold2)'>+"+S.world.ngBless+" 祝福</b></div>";
   if(S.notoriety>0) add += "<div class='row'><span>恶名</span><b style='color:#a55'>"+S.notoriety+"</b></div>";

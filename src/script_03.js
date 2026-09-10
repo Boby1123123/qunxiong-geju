@@ -5155,6 +5155,7 @@ function checkWorldEvents(){
       var _ev=_ext[_ei], _key="ev_"+_ev.id;
       if(!w[_key] && S.day>=_ev.day){
         w[_key]=true; S.worldQueue.push(_ev.id);
+        if(window.v92_galleryMark) v92_galleryMark("event_"+_ev.id, _ev.id);
         logMsg("世界事件："+_ev.text+"（第"+S.day+"日）");
         if(_ev.node){ v46_maybeMissed(_ev.id, _ev.text, []); }
       }
@@ -5832,6 +5833,7 @@ function startTravel(dstId,mode,dist){
   advanceDays(days);
   S.fatigue = Math.min(12,S.fatigue+Math.min(days,6));
   S.loc = dstId; S.region = dstId.split("_")[0];
+  if(window.v92_galleryMark){ var _cN=(REGIONS[S.region]&&REGIONS[S.region].cities[S.loc.split("_")[1]])?REGIONS[S.region].cities[S.loc.split("_")[1]].cn:dstId; v92_galleryMark("place_"+S.loc, _cN); }
   S.visited[S.loc]=true; S.visited[S.region]=true;
   S.flags["visited_"+S.region]=true;
   S.flags.arrived = dstId;

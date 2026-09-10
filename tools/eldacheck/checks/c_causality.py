@@ -109,6 +109,8 @@ def run(html):
             return html.count(anchor) > 0
 
         open_items, closed_items = [], []
+        overdue = []
+        high_open = []
         for it in ledger:
             plant_ok = anchor_ok(it.get('plant'))
             reap_ok = anchor_ok(it.get('reap'))
@@ -117,10 +119,27 @@ def run(html):
                 closed_items.append(it['id'])
             elif plant_ok:
                 open_items.append((it['id'], it.get('world', '?'), it.get('desc', '')[:30]))
+                # UPG-05 伏笔超期提醒：importance>=4 且回收点失踪（reap node: 不存在或未被引用）
+                imp = it.get('importance', 1)
+                reap = it.get('reap', '')
+                if imp >= 4:
+                    high_open.append(it['id'])
+                if imp >= 4 and isinstance(reap, str) and reap.startswith('node:'):
+                    nid2 = reap[5:]
+                    dyn = ('curNode=%s' % nid2) in html.replace('"', '').replace("'", '')
+                    reachable = nid2 in ids and (nid2 in gos or dyn)
+                    if not reachable:
+                        overdue.append({'id': it['id'], 'reap': nid2, 'desc': (it.get('desc') or '')[:40]})
         detail['closed'] = len(closed_items)
         detail['open'] = len(open_items)
         detail['unreaped'] = open_items
-        # open 伏笔为叙事待回收项，输出清单但不拦发布（FAIL 仅限账本/设定词缺失）
+        detail['overdue'] = overdue
+        detail['high_open'] = high_open
+        # open 伏笔为叙事待回收项，输出清单但不拦发布（FAIL 仅限账本/设定词缺失/超期回收点失踪）
+        if overdue:
+            problems.append({'name': '伏笔超期', 'line': 0, 'cat': '超期',
+                             'msg': '高优伏笔回收点失踪 %d 项: %s'
+                             % (len(overdue), ','.join(o['id'] + '→' + o['reap'] for o in overdue[:6]))})
 
     if words is None or len(words) < 20:
         problems.append({'name': '设定词', 'line': 0, 'cat': '缺失', 'msg': 'CAUSALITY_WORDS 缺失或 <20 词'})
@@ -136,7 +155,10 @@ def run(html):
 
     ok = len(problems) == 0
     results = [{
-        'name': '因果账本 %(ledger_count)s 项·核销 closed=%(closed)s open=%(open)s·设定词 %(words_cover)s/%(words_total)s' % detail,
+        'name': '因果账本 %(ledger_count)s 项·核销 closed=%(closed)s open=%(open)s·超期=%(overdue_count)s·设定词 %(words_cover)s/%(words_total)s' % dict(
+            ledger_count=detail.get('ledger_count', 0), closed=detail.get('closed', 0),
+            open=detail.get('open', 0), overdue_count=len(detail.get('overdue', [])),
+            words_cover=detail.get('words_cover', 0), words_total=detail.get('words_total', 0)),
         'ok': ok,
         'msg': ('全部通过' if ok else '问题: ' + '; '.join(p['msg'][:150] for p in problems[:4])),
     }]

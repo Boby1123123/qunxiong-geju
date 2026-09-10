@@ -8311,6 +8311,23 @@ window.v91_storyPanel = v91_storyPanel;
       b.textContent = '📔 手记';
       b.onclick = function(){ try{ v74_openJournal(); }catch(e){} };
       ref.insertAdjacentElement('afterend', b);
+      /* /upg05inj:btn/ UPG-05 回退按钮：决策点回退（irreversible 阻断），栈空时置灰 */
+      if(!document.getElementById('btn-rollback')){
+        var rb = document.createElement('button');
+        rb.id = 'btn-rollback';
+        rb.className = 'btn';
+        rb.title = '回退到上一个决策点（不可逆剧情不可回退）';
+        rb.textContent = '↩ 回退';
+        rb.onclick = function(){ try{ window.v92_rollback(); }catch(e){} };
+        b.insertAdjacentElement('afterend', rb);
+        try{
+          var _rbc = function(){
+            var n = 0; try{ n = window.v92_rollbackCount?window.v92_rollbackCount():0; }catch(e){}
+            if(rb){ rb.disabled = (n<=0); }
+          };
+          setInterval(_rbc, 1500);
+        }catch(e){}
+      }
       return true;
     }catch(e){ return false; }
   }

@@ -50928,7 +50928,89 @@ function writeDice(roll,target,tierLabel){
   try{ v44_diceFX(roll,target,tierLabel); }catch(e){}
 }
 function clearOptions(){ $("options").innerHTML=""; }
+/* ===== /v92inj:rollback/ UPG-05 回退系统（决策点快照栈；Ren'Py block_rollback 式；localStorage 独立键 elda-rollback，不入存档结构；irreversible 账本项阻断回退跨越；不触碰判定/存档语义） ===== */
+window.__v92rb = window.__v92rb || {lastNode:""};
+window.v92_rollbackIrreversible = function(node){
+  try{
+    if(!node) return false;
+    const LG=window.CAUSALITY_LEDGER; if(!LG) return false;
+    const irr=LG.filter(function(it){ return it&&it.irreversible; });
+    if(!irr.length) return false;
+    /* 拼节点文本+选项 effects 的 flag 写入，与 irreversible 项 keywords 匹配 */
+    let hay="";
+    try{
+      const raw=(typeof node.text==="function")?node.text():node.text;
+      if(typeof raw==="string") hay+=raw; else if(Array.isArray(raw)) hay+=raw.join(" ");
+      if(node.options){
+        const opts=typeof node.options==="function"?node.options():node.options;
+        if(Array.isArray(opts)){ for(let i=0;i<opts.length;i++){ try{ hay+=" "+JSON.stringify(opts[i]||{}); }catch(_){} } }
+      }
+    }catch(_){}
+    for(let i=0;i<irr.length;i++){
+      const kw=irr[i].keywords; if(!kw||!kw.length) continue;
+      for(let k=0;k<kw.length;k++){ if(hay.indexOf(kw[k])>=0) return true; }
+    }
+    return false;
+  }catch(e){ return false; }
+};
+window.v92_rollbackPush = function(node){
+  try{
+    if(!node||!node.options) return;
+    const cur=String(curNode||"");
+    if(cur===window.__v92rb.lastNode) return; /* 同一节点不重复压栈 */
+    window.__v92rb.lastNode=cur;
+    try{
+      const snap=JSON.stringify({s:S, node:cur, t:Date.now(), irr:window.v92_rollbackIrreversible(node)});
+      let arr=[];
+      try{ arr=JSON.parse(localStorage.getItem("elda-rollback")||"[]"); }catch(_){ arr=[]; }
+      if(!Array.isArray(arr)) arr=[];
+      arr.push(snap);
+      if(arr.length>12) arr=arr.slice(arr.length-12);
+      localStorage.setItem("elda-rollback", JSON.stringify(arr));
+    }catch(_){}
+  }catch(_){}
+};
+window.v92_rollback = function(){
+  try{
+    let arr=[];
+    try{ arr=JSON.parse(localStorage.getItem("elda-rollback")||"[]"); }catch(_){ arr=[]; }
+    if(!Array.isArray(arr)||!arr.length){ try{ window.flashMsg("没有可回退的决策点。"); }catch(_){} return false; }
+    let target=null;
+    while(arr.length){
+      const snap=arr.pop();
+      try{
+        const d=JSON.parse(snap);
+        if(d&&d.irr){ continue; } /* irreversible 决策点不跨过 */
+        target=d; break;
+      }catch(_){ continue; }
+    }
+    localStorage.setItem("elda-rollback", JSON.stringify(arr));
+    if(!target){ try{ window.flashMsg("上一个决策点不可回退（不可逆剧情）。"); }catch(_){} return false; }
+    /* 恢复状态并重渲染 */
+    try{ window.v67_busySet(); }catch(_){}
+    try{
+      const d=target;
+      if(d.s){ for(const k in d.s){ S[k]=d.s[k]; } }
+      curNode=d.node;
+      try{ if(window.v91_sessReset) v91_sessReset(); }catch(_){}
+      writeNext();
+      try{ window.flashMsg("已回退到上一个决策点。"); }catch(_){}
+      return true;
+    }catch(e){
+      try{ window.v67_busyClear(); }catch(_){}
+      try{ window.flashMsg("回退失败，请重试。"); }catch(_){}
+      return false;
+    }
+  }catch(e){ return false; }
+};
+window.v92_rollbackCount = function(){
+  try{
+    const arr=JSON.parse(localStorage.getItem("elda-rollback")||"[]");
+    return Array.isArray(arr)?arr.length:0;
+  }catch(e){ return 0; }
+};
 function showOptions(node){
+  try{ window.v92_rollbackPush(node); }catch(e){}
   clearOptions();
   if(!node || !node.options){ try{ window.v67_busyClear(); }catch(e){} return; }
   var opts = typeof node.options === "function" ? node.options() : node.options;
@@ -64174,6 +64256,23 @@ window.v91_storyPanel = v91_storyPanel;
       b.textContent = '📔 手记';
       b.onclick = function(){ try{ v74_openJournal(); }catch(e){} };
       ref.insertAdjacentElement('afterend', b);
+      /* /upg05inj:btn/ UPG-05 回退按钮：决策点回退（irreversible 阻断），栈空时置灰 */
+      if(!document.getElementById('btn-rollback')){
+        var rb = document.createElement('button');
+        rb.id = 'btn-rollback';
+        rb.className = 'btn';
+        rb.title = '回退到上一个决策点（不可逆剧情不可回退）';
+        rb.textContent = '↩ 回退';
+        rb.onclick = function(){ try{ window.v92_rollback(); }catch(e){} };
+        b.insertAdjacentElement('afterend', rb);
+        try{
+          var _rbc = function(){
+            var n = 0; try{ n = window.v92_rollbackCount?window.v92_rollbackCount():0; }catch(e){}
+            if(rb){ rb.disabled = (n<=0); }
+          };
+          setInterval(_rbc, 1500);
+        }catch(e){}
+      }
       return true;
     }catch(e){ return false; }
   }

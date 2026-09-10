@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 8405762,
-    "chunked_html_bytes_max": 5703075,
+    "game_html_bytes_max": 8408938,
+    "chunked_html_bytes_max": 5706251,
     "node_total_min": 4581,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 8355762,
-    "chunked_html_bytes": 5603075,
+    "game_html_bytes": 8358938,
+    "chunked_html_bytes": 5606251,
     "node_total": 4631,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UPG-01 世界书Lorebook 29条",
+    "reason": "UPG-02 记忆注入v3",
     "history": [
       {
         "date": "2026-09-09",
@@ -614,6 +614,13 @@
         "chunked_bytes": 5603075,
         "nodes": 4631,
         "reason": "UPG-01 世界书Lorebook 29条"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8358938,
+        "chunked_bytes": 5606251,
+        "nodes": 4631,
+        "reason": "UPG-02 记忆注入v3"
       }
     ]
   },

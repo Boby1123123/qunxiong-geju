@@ -52,6 +52,8 @@ function applyDefaults(s){
   if(s.settings.originProfile===undefined) s.settings.originProfile=true;
   /* /upg01inj:defaults/ UPG-01 世界书开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.lorebook===undefined) s.settings.lorebook=true;
+  /* /upg02inj:defaults/ UPG-02 记忆库开关兜底（旧档兼容；独立键默认 true） */
+  if(s.settings.memoryBank===undefined) s.settings.memoryBank=true;
   /* /sp3inj:defaults/ SP-3 弧线进度兜底（旧档兼容；新档为空对象） */
   if(!s.arcs) s.arcs={};
   /* /m8inj:defaults/ M8 卷D战争/阵营状态兜底（旧档兼容；独立键） */
@@ -3509,6 +3511,61 @@ window.v92_lorebook = function(node){
     return out;
   }catch(e){ try{ console.log("[v92lore:err]",e); }catch(_){} return []; }
 };
+/* ===== /v92inj:mem2/ UPG-02 记忆注入 v3：双层加权检索（只读钩子；世界规则层=LOREBOOK constant，事件记忆层=CAUSALITY_LEDGER 按 keywords×importance×recency Top-K；开关 S.settings.memoryBank；不写任何状态） ===== */
+window.v92_memoryBank = function(node){
+  try{
+    if(!S||!S.settings||S.settings.memoryBank===false) return [];
+    const LG=window.CAUSALITY_LEDGER; if(!LG||!LG.length) return [];
+    /* 触发源：节点文本+地点+标签 */
+    let hay="";
+    try{
+      const raw=(node&&node.text!=null)?node.text:null;
+      if(typeof raw==="string") hay+=raw;
+      else if(Array.isArray(raw)) hay+=raw.join(" ");
+      else if(raw&&typeof raw==="object"){ try{ hay+=JSON.stringify(raw); }catch(_){} }
+      if(node&&node.place) hay+=" "+node.place;
+      if(node&&node.tags&&Array.isArray(node.tags)) hay+=" "+node.tags.join(" ");
+      if(S.curCity) hay+=" "+S.curCity;
+    }catch(_){}
+    const hayS=String(hay||"");
+    if(!hayS) return [];
+    const st=window.__v92memState=window.__v92memState||{turn:0,last:[]};
+    st.turn++;
+    const cands=[];
+    for(let i=0;i<LG.length;i++){
+      const it=LG[i]; if(!it||!it.desc) continue;
+      const kw=it.keywords;
+      let hit=false;
+      if(kw&&kw.length){
+        for(let k=0;k<kw.length;k++){ if(hayS.indexOf(kw[k])>=0){ hit=true; break; } }
+      }
+      /* 兜底：desc 首词命中 */
+      if(!hit&&it.desc){ const w0=String(it.desc).split(/[,，、\s]/)[0]; if(w0&&w0.length>=2&&hayS.indexOf(w0)>=0) hit=true; }
+      if(!hit) continue;
+      /* score = importance * recency_bonus；最近引用过则降权（防重复刷屏），从未引用或久远引用加权 */
+      const lastT=(typeof it.lastReferencedTurn==="number")?it.lastReferencedTurn:0;
+      const age=st.turn-lastT;
+      const recency=Math.min(3, 1+age/20);
+      const imp=(typeof it.importance==="number")?it.importance:1;
+      const score=imp*recency;
+      cands.push({it:it, score:score});
+    }
+    if(!cands.length) return [];
+    cands.sort(function(a,b){ return b.score-a.score; });
+    const top=cands.slice(0,3);
+    const out=[];
+    for(let i=0;i<top.length;i++){
+      const it=top[i].it;
+      it.lastReferencedTurn=st.turn; /* 运行时内存更新，不写存档 */
+      let d=String(it.desc||"").trim();
+      if(d.length>70) d=d.slice(0,70)+"…";
+      out.push(d);
+    }
+    st.last=out.slice();
+    try{ console.log("[v92inj:mem2]", out.length, top[0].it.id); }catch(_){}
+    return out;
+  }catch(e){ try{ console.log("[v92mem2:err]",e); }catch(_){} return []; }
+};
 /* ===== /v92inj:wxfn/ TQ-1 天气句（只读钩子；按季节×区域返回 1 句天气句；开关 S.settings.weatherLine；不写任何状态） ===== */
 window.v92_weatherLine = function(node){
   try{
@@ -3721,6 +3778,8 @@ function writeNext(_v46f){
     try{ var _wx = window.v92_weatherLine(node); if(_wx){ _txt=[_wx].concat(_txt); } }catch(e){}
     /* /v92inj:lorehook/ UPG-01 世界书注入（只读钩子；设定片段排最前；开关 S.settings.lorebook；关闭时零注入） */
     try{ var _lr = window.v92_lorebook(node); if(_lr&&_lr.length){ _txt=_lr.concat(_txt); } }catch(e){}
+    /* /v92inj:mem2hook/ UPG-02 记忆库注入（只读钩子；世界规则(LOREBOOK)之后、事件记忆(账本Top-K)随后；开关 S.settings.memoryBank；关闭时零注入） */
+    try{ var _mb = window.v92_memoryBank(node); if(_mb&&_mb.length){ _txt=_mb.concat(_txt); } }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */

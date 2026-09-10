@@ -85,7 +85,13 @@ window.CAUSALITY_LEDGER = [
     {id:"led_b2_01",type:"设定",desc:"学院五学年生活线（acad_life_y1~y5，30 节点：课程ifJob/宿舍/同窗/期中/期末/假期/学年事件），north_academy_gate 生活区入口",plant:"acad_life_y1_open",reap:"academy_graduation",status:"open",world:"vol_academy"},
     {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"},
     {id:"led_b3_01",type:"人物",desc:"学院人际网：塞西莉娅（东境政务/晨天水）/灰须·莫里（矮人符文/铁门七封印）/伊莲娜（精灵治愈/忘忧草）/老铁（铁门关铁匠），各 4 节点闭环",plant:"acad_people_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"}
+    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
+{id:"led_grad_01",type:"伏笔",desc:"老莫里茨临终托付——北境封印与七锚的真相入口，金秤家守墓人身份初现",plant:"grad_stay_4",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
+{id:"led_grad_02",type:"伏笔",desc:"金秤家信物铁牌（三道弧线围一圆），老莫里茨遗赠，墓园认亲凭证",plant:"grad_stay_4",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
+{id:"led_grad_03",type:"伏笔",desc:"费尔曼第三把锈钥匙——禁书区铁门钥匙，留校线持有",plant:"grad_y3_end_3",reap:"anchor_vault_1",status:"open",world:"vol_academy"},
+{id:"led_grad_04",type:"设定",desc:"墓园无字碑·金先生=金秤家守墓人，碑下埋锚（第三哨北）",plant:"grad_stay_5",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
+{id:"led_grad_05",type:"设定",desc:"毕业四去向（留校/从军/游历/回乡），各自独立链与北上汇合点",plant:"grad_choose",reap:"grad_path_stay_north",status:"closed",world:"vol_academy"}
+
 ];
 /* ===== /v91inj:ledger:end/ ===== */
 

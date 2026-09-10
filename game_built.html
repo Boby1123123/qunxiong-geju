@@ -4904,7 +4904,13 @@ const EVENT_POOL_EXT = [
   {id:"frontier_ev_rift",day:244,cls:"天灾",text:"第三哨地窖裂缝黑气外溢，哨兵们用铁砧与石板压了三天才勉强压住。断牙老兵说，裂缝像是自己会呼吸。"},
   {id:"frontier_ev_pay",day:258,cls:"人祸",text:"运军饷的车队在雪原被劫，押车的老兵只回来一个，说劫匪穿着黑皮斗篷，赶着一群狼。"},
   {id:"frontier_ev_church",day:264,cls:"人祸",text:"教会执事带圣痕司修士进驻第三哨，挨户登记地窖与矿洞。老兵们把矿洞口的栅栏又加固了一道。"},
-  {id:"frontier_ev_wolfmove",day:274,cls:"奇遇",text:"雪原狼群开始南迁，成群结队越过第三哨城墙下。守钟老卒说，狼往南走，说明北边的东西醒了。"}
+  {id:"frontier_ev_wolfmove",day:274,cls:"奇遇",text:"雪原狼群开始南迁，成群结队越过第三哨城墙下。守钟老卒说，狼往南走，说明北边的东西醒了。"},
+  {id:"grad_storm",day:76,cls:"天灾",text:"毕业季的暴雪封了北境官道，返乡的马车队在驿站挤成一片。学院北门贴出告示：雪停前，出入改走东门。"},
+  {id:"grad_letter",day:134,cls:"奇遇",text:"一只灰羽信鸽落进宿舍窗台，脚环上绑着一卷没有署名的纸，墨迹干透，落款处只画了一个圈。"},
+  {id:"grad_offer",day:168,cls:"商机",text:"北境军需官在自由城邦贴出告示：招募能写会算的年轻人随军北上，饷银加倍，另发冬衣。"},
+  {id:"grad_fire",day:232,cls:"人祸",text:"学院东区仓库夜半起火，烧毁一批旧档案。校方说是烛火走水，可灰烬里翻出一块铁牌残片，上头的弧线纹路没烧化。"},
+  {id:"grad_home_call",day:296,cls:"奇遇",text:"故乡捎来口信：南麓今年收成好，族长说，若你在外头不如意，随时可以回来。"}
+
 ]; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
 const RACES = {"human": {"cn": "人类", "desc": "大陆数量最多、适应力最强的种族。七大地域孕育出七种截然不同的活法。", "ic": "🧑"}, "half": {"cn": "混血", "desc": "人类与其他种族的血脉交汇。长寿与短命、偏见与机遇，都写在血脉里。", "ic": "🌓"}, "elf": {"cn": "精灵", "desc": "长寿的森林之民。魔法天赋流淌在血脉里，岁月在他们脸上刻下宁静。", "ic": "🧝"}, "dwarf": {"cn": "矮人", "desc": "山腹与熔炉之子。短矮的身躯里装着铁一般的意志与手艺。", "ic": "🧔"}, "orc": {"cn": "兽人", "desc": "草原与蛮荒的战士。力量与战意是他们的第一语言。", "ic": "👹"}, "halfling": {"cn": "半身人", "desc": "田野与市井间的小个子。幸运仿佛偏爱他们，麻烦也总绕着他们走。", "ic": "🍀"}, "dragon": {"cn": "龙裔", "desc": "体内流淌着巨龙血脉的古老种族。鳞片、吐息与血脉的骄傲。", "ic": "🐉"}}; window.RACES = RACES; /* /v60inj:winx2:RACES/ */
 const SUBRACES = {"nordic": {"cn": "北境人", "race": "human", "attrs": {"STR": 2, "CON": 1}, "skills": {"survive": 5}, "traits": ["寒冷抗性"], "flags": ["cold_blooded"], "desc": "冰原与铁甲之地的人。沉默、耐寒，骨子里埋着北境的雪。"}, "midland": {"cn": "中境人", "race": "human", "attrs": {"INT": 2, "CHA": 1}, "skills": {"lore": 5}, "traits": ["博学"], "desc": "大陆腹地的平原之民。见多识广，学什么都快。"}, "southland": {"cn": "南境人", "race": "human", "attrs": {"CHA": 2, "INT": 1}, "skills": {"bargain": 5}, "traits": ["商才"], "desc": "南方城邦的商人血脉。算盘声比摇篮曲更熟。"}, "eastland": {"cn": "东境人", "race": "human", "attrs": {"INT": 2, "AGI": 1}, "skills": {"craft": 5}, "traits": ["巧手"], "desc": "帝京与工坊之间的人。读书、作画、铸器，样样能上手。"}, "westland": {"cn": "西境人", "race": "human", "attrs": {"CHA": 1, "INT": 1, "AGI": 1}, "skills": {"bargain": 5}, "traits": ["识途"], "desc": "西海岸的航海之民。风浪与远方养大的人。"}, "plateau": {"cn": "高原人", "race": "human", "attrs": {"CON": 2, "STR": 1}, "skills": {"survive": 5}, "traits": ["耐力"], "desc": "高原山地之民。肺活量大，脚步稳，天生能扛。"}, "islander": {"cn": "海岛人", "race": "human", "attrs": {"AGI": 2, "CON": 1}, "skills": {"survive": 5}, "traits": ["水行"], "flags": ["waterborne"], "desc": "群岛之民。船是摇篮，海是庭院。"}, "halfelf": {"cn": "半精灵", "race": "half", "attrs": {"SPR": 2, "CHA": 1}, "skills": {"lore": 5}, "traits": ["夜视", "长寿"], "flags": ["night_vision"], "desc": "人类与精灵的混血。比人长寿，比精灵短命，两边都沾，两边都不全是。"}, "halforc": {"cn": "半兽人", "race": "half", "attrs": {"STR": 2, "CON": 1}, "skills": {"martial": 5}, "traits": ["铁骨"], "desc": "人类与兽人的混血。力量与怒意流淌在血脉里，走到哪里都被人多看一眼。"}, "halfdwarf": {"cn": "半矮人", "race": "half", "attrs": {"CON": 2, "STR": 1}, "skills": {"alchemy": 5}, "traits": ["地脉"], "desc": "人类与矮人的混血。矮小的身板，铁打的胃口，炉火边长大的手艺。"}, "highelf": {"cn": "高等精灵", "race": "elf", "attrs": {"SPR": 2, "INT": 1}, "skills": {"magic": 5}, "traits": ["奥术", "长寿"], "desc": "精灵王庭的高贵血脉。魔法在他们指尖，如同呼吸一般自然。"}, "woodelf": {"cn": "森林精灵", "race": "elf", "attrs": {"AGI": 2, "SPR": 1}, "skills": {"survive": 5}, "traits": ["林语"], "desc": "林间巡猎的精灵。脚步比落叶更轻，箭矢比风更快。"}, "darkelf": {"cn": "黑暗精灵", "race": "elf", "attrs": {"AGI": 2, "SPR": 1}, "skills": {"stealth": 5}, "traits": ["夜视", "影行"], "flags": ["night_vision"], "desc": "地底与阴影中的精灵。银发紫瞳，视线在黑暗里比光更利。"}, "seaelff": {"cn": "海精灵", "race": "elf", "attrs": {"AGI": 1, "CON": 2}, "skills": {"survive": 5}, "traits": ["水行"], "flags": ["waterborne"], "desc": "碧波之下的精灵。鳞光与珊瑚，是他们熟悉的穹顶。"}, "valelf": {"cn": "山谷精灵", "race": "elf", "attrs": {"INT": 1, "CHA": 1, "CON": 1}, "skills": {"craft": 5}, "traits": ["巧手"], "desc": "山谷聚落中的精灵。融手艺、商贾与山地为一体。"}, "hilldwarf": {"cn": "高山矮人", "race": "dwarf", "attrs": {"STR": 1, "CON": 2}, "skills": {"alchemy": 5}, "traits": ["石肤"], "desc": "雄山之中的矮人。打铁、凿石、酿酒，祖传的手艺。"}, "vulcdwarf": {"cn": "火山矮人", "race": "dwarf", "attrs": {"STR": 2, "CON": 1}, "skills": {"craft": 5}, "traits": ["火锻"], "desc": "火山熔炉边的矮人。浑身透着一股硫磺与热铁的味儿。"}, "valdwarf": {"cn": "丘陵矮人", "race": "dwarf", "attrs": {"CHA": 1, "INT": 1, "CON": 1}, "skills": {"bargain": 5}, "traits": ["识途"], "desc": "丘陵农庄间的矮人。酿酒、种麦，也做买卖。"}, "grayelf": {"cn": "灰矮人", "race": "dwarf", "attrs": {"INT": 2, "AGI": 1}, "skills": {"stealth": 5}, "traits": ["夜视", "影行"], "flags": ["night_vision"], "desc": "灰岩地底的矮人。隐于阴影，心思深沉。"}, "seadwarf": {"cn": "海矮人", "race": "dwarf", "attrs": {"CON": 1, "STR": 1, "AGI": 1}, "skills": {"survive": 5}, "traits": ["水行"], "flags": ["waterborne"], "desc": "海岸与船坞的矮人。铁匠兼水手，两样都硬。"}, "plainorc": {"cn": "草原兽人", "race": "orc", "attrs": {"STR": 3}, "skills": {"martial": 5}, "traits": ["战意"], "desc": "草原游牧的兽人。骑术与战歌，是他们与生俱来的语言。"}, "mountorc": {"cn": "山地兽人", "race": "orc", "attrs": {"CON": 2, "STR": 1}, "skills": {"survive": 5}, "traits": ["耐力"], "desc": "山地部族的兽人。攀岩如走平地，耐性惊人。"}, "shadoworc": {"cn": "暗影兽人", "race": "orc", "attrs": {"AGI": 2, "STR": 1}, "skills": {"stealth": 5}, "traits": ["夜视", "影行"], "flags": ["night_vision"], "desc": "暗夜中行动的兽人。潜行如影，一击即走。"}, "swamporc": {"cn": "沼泽兽人", "race": "orc", "attrs": {"CON": 2, "AGI": 1}, "skills": {"survive": 5}, "traits": ["毒抗"], "flags": ["poison_resist"], "desc": "沼泽部族的兽人。泥泞与瘴气，于他们是家常便饭。"}, "hobfarm": {"cn": "田园半身人", "race": "halfling", "attrs": {"AGI": 2, "CHA": 1}, "skills": {"stealth": 5}, "traits": ["幸运"], "flags": ["lucky"], "desc": "田野间的半身人。炊烟、麦田与暖烘烘的炉火。"}, "hobnomad": {"cn": "游牧半身人", "race": "halfling", "attrs": {"AGI": 1, "CHA": 1, "CON": 1}, "skills": {"bargain": 5}, "traits": ["识途"], "desc": "车队里的半身人。跟着商队走四方，好话一箩筐。"}, "hobcity": {"cn": "城市半身人", "race": "halfling", "attrs": {"AGI": 2, "INT": 1}, "skills": {"stealth": 5}, "traits": ["巧手"], "desc": "城巷里的半身人。开锁、探路、讨价还价，样样在行。"}, "reddra": {"cn": "红龙裔", "race": "dragon", "attrs": {"STR": 2, "CON": 1}, "skills": {"martial": 5}, "traits": ["火息"], "desc": "红龙血脉的后裔。吐息灼热，脾气也随血脉一起滚烫。"}, "bluedra": {"cn": "蓝龙裔", "race": "dragon", "attrs": {"INT": 2, "SPR": 1}, "skills": {"magic": 5}, "traits": ["雷语"], "desc": "蓝龙血脉的后裔。电光在血脉里跳跃，天生与魔法亲近。"}, "golddra": {"cn": "金龙裔", "race": "dragon", "attrs": {"SPR": 2, "CHA": 1}, "skills": {"divine": 5}, "traits": ["圣辉"], "desc": "金龙血脉的后裔。鳞甲泛金，天生带着一缕圣洁的气息。"}}; window.SUBRACES = SUBRACES; /* /v60inj:winx2:SUBRACES/ */
@@ -50432,6 +50438,7 @@ function applyDefaults(s){
   /* /t11inj:defaults/ I1-1 分段阅读开关兜底（旧档兼容） */
   if(!s.settings) s.settings={};
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
+    if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
@@ -68257,6 +68264,8 @@ N["acad_life_y1_final"]={tag:"main",place:"艾尔达魔法学院 · 期末排名
  fail:["你读着读着就趴在桌上睡着了。醒来时，罗先生给你留了条毯子和一碗热汤。"],
  crit:["你在典藏室深处，又摸到一本没书脊的册子。翻开来，是半本日记，字迹工整：“……第七节点，裂缝在扩大。学院里，有人替他们数着日子。”","你默默记下这行字。"]
 },effects:{xp:25},onCrit:{flag:"acad_diary_fragment"},go:"acad_life_y1_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y1_end_1"}
 ]};
 /* ---------- 第二学年 ---------- */
 N["acad_life_y2_open"]={tag:"main",place:"艾尔达魔法学院 · 第二学年",pace:"normal",text:[
@@ -68327,6 +68336,8 @@ N["acad_life_y2_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
  fail:["你查了一冬，一无所获。那串数字像一串无解的谜。"],
  crit:["你不但查到了含义，还在附录的夹页里发现半张地图——标着七节点的位置，其中第七节点被红笔圈了三圈，旁边写着：“已失守。静候。”","你抄下地图，原样放回。"]
 },effects:{xp:22},onCrit:{flag:"acad_seven_map"},go:"acad_life_y2_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y2_end_1"}
 ]};
 /* ---------- 第三学年 ---------- */
 N["acad_life_y3_open"]={tag:"main",place:"艾尔达魔法学院 · 第三学年",pace:"normal",text:[
@@ -68396,6 +68407,8 @@ N["acad_life_y3_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
  crit:["墨丘利压低声音：“第三拨人，袖口没有银叶。他们自称‘看守者’，说自己在替大陆‘守眼’——但我查过，七节点早就失守了四个。他们在守的，是什么眼？”","“别信任何一边。信你自己看见的。”"]
 },effects:{},onCrit:{flag:"acad_mercury_warning"},go:"acad_life_y3_holiday"},
 {t:"谢过墨丘利，假期照旧",effects:{xp:8},tier:{ok:["你谢过他，走出办公室。塔顶的灯，静静地亮着。"]},go:"acad_life_y3_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y3_end_1"}
 ]};
 /* ---------- 第四学年 ---------- */
 N["acad_life_y4_open"]={tag:"main",place:"艾尔达魔法学院 · 第四学年",pace:"normal",text:[
@@ -68456,6 +68469,8 @@ N["acad_life_y4_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
 ],options:[
 {t:"连夜检查那本笔记",effects:{xp:10},tier:{ok:["笔记里夹着一张纸条：“第七节点的封印阵图，在圣城大教堂地下。钥匙在守夜人手里。”","你合上笔记，窗外的塔灯，重新亮了。"]},go:"acad_life_y4_holiday"},
 {t:"把笔记收好，等一个合适的时机",effects:{xp:8},tier:{ok:["你把笔记锁进箱底。学院第五年，就要来了。"]},go:"acad_life_y4_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y4_end_1"}
 ]};
 /* ---------- 第五学年 ---------- */
 N["acad_life_y5_open"]={tag:"main",place:"艾尔达魔法学院 · 第五学年",pace:"normal",text:[
@@ -68513,6 +68528,8 @@ N["acad_life_y5_final"]={tag:"main",place:"艾尔达魔法学院 · 毕业典礼
 "你终于，毕业了。"
 ],options:[
 {t:"转身，正式踏出学院（进入主线）",effects:{flag:"acad_life_complete",xp:50},go:"north_academy_2"}
+,
+{t:"（典礼散场，独自在钟楼下站一会儿，想想这五年）",effects:{xp:8},go:"grad_y5_end_1"}
 ]};
 })();
 
@@ -71065,7 +71082,13 @@ window.CAUSALITY_LEDGER = [
     {id:"led_b2_01",type:"设定",desc:"学院五学年生活线（acad_life_y1~y5，30 节点：课程ifJob/宿舍/同窗/期中/期末/假期/学年事件），north_academy_gate 生活区入口",plant:"acad_life_y1_open",reap:"academy_graduation",status:"open",world:"vol_academy"},
     {id:"led_b2_02",type:"伏笔",desc:"费尔曼教授=席恩（看守者），禁书区夜课、净化令、第七节点钥匙（acad_brass_key）",plant:"acad_life_y2_friend",reap:"academy_elda_forbidden_1",status:"open",world:"vol_academy"},
     {id:"led_b3_01",type:"人物",desc:"学院人际网：塞西莉娅（东境政务/晨天水）/灰须·莫里（矮人符文/铁门七封印）/伊莲娜（精灵治愈/忘忧草）/老铁（铁门关铁匠），各 4 节点闭环",plant:"acad_people_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
-    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"}
+    {id:"led_b3_02",type:"人物",desc:"导师四人（墨丘利银叶/戈拉铁门关铁片/特蕾莎枯木/老莫里茨商路），各 2 节点闭环",plant:"acad_mentor_hub",reap:"academy_graduation",status:"open",world:"vol_academy"},
+{id:"led_grad_01",type:"伏笔",desc:"老莫里茨临终托付——北境封印与七锚的真相入口，金秤家守墓人身份初现",plant:"grad_stay_4",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
+{id:"led_grad_02",type:"伏笔",desc:"金秤家信物铁牌（三道弧线围一圆），老莫里茨遗赠，墓园认亲凭证",plant:"grad_stay_4",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
+{id:"led_grad_03",type:"伏笔",desc:"费尔曼第三把锈钥匙——禁书区铁门钥匙，留校线持有",plant:"grad_y3_end_3",reap:"anchor_vault_1",status:"open",world:"vol_academy"},
+{id:"led_grad_04",type:"设定",desc:"墓园无字碑·金先生=金秤家守墓人，碑下埋锚（第三哨北）",plant:"grad_stay_5",reap:"anchor_grave_1",status:"open",world:"vol_academy"},
+{id:"led_grad_05",type:"设定",desc:"毕业四去向（留校/从军/游历/回乡），各自独立链与北上汇合点",plant:"grad_choose",reap:"grad_path_stay_north",status:"closed",world:"vol_academy"}
+
 ];
 /* ===== /v91inj:ledger:end/ ===== */
 
@@ -73430,6 +73453,479 @@ N["frontier_leave"]={tag:"main",place:"北境 · 第三哨 · 城门",where:"白
   };
 
 })();
+
+/* /u1inj:data-nodes:dn_graduate.js/ */
+/* dn_graduate.js — M3 卷B 学年过渡 + 毕业四去向（七锚之约） */
+/* 入口：acad_life_y<N>_final 追加选项 → grad_y<N>_end_1；y5_end → grad_choose 四去向 */
+/* 费尔曼第三把钥匙：grad_y3_end_3 交付（flag: grad_key_ferman） */
+/* S.gradPath 独立键（applyDefaults 兜底 + grad_choose 选项 run 设置） */
+
+/* ============ 第一学年过渡 ============ */
+N["grad_y1_end_1"]={tag:"main",place:"艾尔达魔法学院 · 火塘",where:"夜",pace:"normal",text:[
+"期末排名贴出来那晚，你在火塘边坐到很晚。炉膛里的柴烧成暗红，偶尔爆一粒火星。你想起入学那天老货郎的话——眼睛不一样的，学院会收。",
+"现在你知道了，学院收的不只是眼睛。它还收走你的懒觉、你的犹豫，以及你对北境冬天的全部错误想象。",
+"排名在中游，你没什么不满。这一年你学会了一个道理：在学院里，稳，本身就是一种天赋。"
+],options:[
+{t:"（把火拨旺些，把这一年的账在心里算一遍）",effects:{xp:8},go:"grad_y1_end_2"}
+]};
+
+N["grad_y1_end_2"]={tag:"main",place:"艾尔达魔法学院 · 火塘",where:"夜",pace:"normal",text:{default:[
+"冬假你做了些什么，现在想起来还带着炉火的温度。"
+],ifFlag:{
+"acad_life_y1_holiday_guard":["你替守夜人巡了整冬的夜。雪夜里钟楼的影子拉得很长，你把每一条走廊的灯都摸清了。有一夜，你看见一个戴金边眼镜的身影拐进灰楼，手里提着盏没点亮的灯——你记住了，没跟任何人说。"],
+"acad_diary_fragment":["你在图书馆泡了一冬，从典藏室摸到半本没书脊的日记。字迹工整，写着什么节点、什么裂缝。你合上那本册子的时候，手指是凉的——你意识到自己可能看见了不该看的东西。"],
+"acad_kain_ideal":["你和凯恩在雪地里走过好几趟。他说他将来要回铁门关，去当个守关的将领。你说你还没想好。他笑：“没想好的人，才走得最远。”"]
+}},options:[
+{t:"（把冬假的事放下，看向下一学年）",effects:{xp:6},go:"grad_y1_end_3"}
+]};
+
+N["grad_y1_end_3"]={tag:"main",place:"艾尔达魔法学院 · 钟楼回廊",where:"白昼",pace:"normal",text:[
+"开学前一天，你站在钟楼回廊上，看学院在雪里慢慢醒来。食堂的烟囱先冒了烟，然后是宿舍的窗户一扇扇亮起来。",
+"第一学年教给你的，不是咒语，也不是课本。是北境的冬天怎么过、食堂几点去人最少、哪条走廊夜里不能走。这些事，书上没有。",
+"你把这年过成了自己的。这就是最大的收获。"
+],options:[
+{t:"（走下回廊，准备第二学年）",effects:{xp:6},go:"grad_y1_end_4"}
+]};
+
+N["grad_y1_end_4"]={tag:"main",place:"艾尔达魔法学院 · 告示栏",where:"白昼",pace:"normal",text:[
+"告示栏贴出了新学年的课程单。你扫了一眼，第二学年的课表里，多了一门你听过的名字——《禁书区档案与禁制咒》。",
+"旁边有人嘀咕：“禁书区那地方，进去的人出来都变了个样。”另一个声音接：“你听谁说的？我表哥去年就在里面抄了一个月书，出来照样打牌喝酒。”",
+"你看着那行课名，想起图书馆深处那道没上锁的暗门。这一学年，也许该去看看。"
+],options:[
+{t:"（记住这门课，前往第二学年）",effects:{xp:8},go:"acad_life_y2_open"}
+]};
+
+/* ============ 第二学年过渡 ============ */
+N["grad_y2_end_1"]={tag:"main",place:"艾尔达魔法学院 · 火塘",where:"夜",pace:"normal",text:[
+"第二学年的期末排名出来，你往前挪了几名。洛卡从矮人那边带回来一壶新酿的热酒，说是庆祝，其实就是想找人陪他喝。",
+"酒过两轮，洛卡又开始说禁书区那扇门的事。“我跟你说过吧，那扇门后头是空的。墙上画满圈，每个圈里都有一只竖瞳。”他打了个嗝，“我去年见它开过一次。今年……它好像又开了一次。”",
+"你没接话。火塘里的柴噼啪响了一声。"
+],options:[
+{t:"（把这句记在心里，等酒凉了再想）",effects:{xp:10},go:"grad_y2_end_2"}
+]};
+
+N["grad_y2_end_2"]={tag:"main",place:"艾尔达魔法学院 · 宿舍窗边",where:"夜",pace:"normal",text:{default:[
+"冬假前夜，你收拾行李。窗外雪又下了起来，把学院盖成一张白纸。"
+],ifFlag:{
+"acad_diary_fragment":["你把那半本日记又翻出来看了几页。后面几页的字迹潦草了些，有一行写着：“第七节点已渗水。他们把裂缝填了，可水是从底下渗上来的。学院里，有人替他们数着日子。”你数了数，日记里提到“第七节点”的，一共三次。"],
+"acad_clean_water":["洛卡那天喝高了，提到圣痕司有一种叫“净水”的东西，喝下去的人会忘了自己是谁。你一直没想明白，一个人要忘了什么，才需要这种东西。"],
+"acad_kain_ideal":["凯恩写信来说，他已经在铁门关的守军里挂了名，开春就要去报到。“这地方冷，但是清楚。谁是谁的敌人，一眼就能看出来。”信纸边角，他画了个箭头，指着北边。"]
+}},options:[
+{t:"（把窗关上，冬假好好歇一歇）",effects:{xp:6},go:"grad_y2_end_3"}
+]};
+
+N["grad_y2_end_3"]={tag:"main",place:"艾尔达魔法学院 · 雪径",where:"白昼",pace:"normal",text:[
+"开春，雪开始化了。屋檐下滴答滴答，像有一百只钟在走。",
+"第二学年过完，你摸清了一件事：学院表面上是一所学校，底下的东西比课表复杂得多。有人管着禁书区，有人盯着灰楼，有人在数日子。",
+"你站在化雪的路口，雪水顺着靴缝渗进来，凉得清醒。你知道自己明年得选一条路走了——不是课程的路，是别的路。"
+],options:[
+{t:"（沿着雪径，走向第三学年）",effects:{xp:8},go:"grad_y2_end_4"}
+]};
+
+N["grad_y2_end_4"]={tag:"main",place:"艾尔达魔法学院 · 校门",where:"白昼",pace:"normal",text:[
+"校门外的路被雪水泡得松软。一辆北上的马车陷在泥里，赶车的老把式正骂骂咧咧地垫石头。",
+"你过去搭了把手。老把式拍拍你的肩：“学生娃，有把子力气。去哪？”",
+"你还没想好。他说：“没想好就对了。这世道，想得太明白的人，活不长。”",
+"你目送马车晃晃悠悠往北走。北边，是铁门关，再往北，是第三哨——听说那边来了新的守将。"
+],options:[
+{t:"（记住北边的方向，前往第三学年）",effects:{xp:8},go:"acad_life_y3_open"}
+]};
+
+/* ============ 第三学年过渡（含费尔曼第三把钥匙） ============ */
+N["grad_y3_end_1"]={tag:"main",place:"艾尔达魔法学院 · 期末考场",where:"白昼",pace:"normal",text:[
+"第三学年的期末考，你交卷的时候，监考的费尔曼教授多看了你一眼。他向来不多话，那一眼却让门口的学徒都放轻了脚步。",
+"成绩出来，你进了前三十。费尔曼在走廊上叫住你，说了一句话：“你这一年，心思不只在课本上。”",
+"他说得很平，像在陈述天气。可你知道，他看出来了。"
+],options:[
+{t:"（跟上费尔曼，听听他要说什么）",effects:{xp:10},go:"grad_y3_end_2"}
+]};
+
+N["grad_y3_end_2"]={tag:"main",place:"艾尔达魔法学院 · 图书馆典藏室",where:"夜",pace:"normal",text:[
+"费尔曼带你进了典藏室。这里你熟——你在角落里熬过好几个冬夜。",
+"他在一张旧桌前坐下，把一盏灯拨亮：“第三学年结束了。按学院的规矩，四年级的学生可以申请典藏室的夜间权限。”",
+"他顿了顿：“但我今天找你来，不是为这个。”他从抽屉里拿出一本卷宗，翻开，里面夹着一页泛黄的纸，“你去年冬天，在典藏室翻到过一本没书脊的册子？”",
+"你心里一紧。他抬眼：“别紧张。那本册子，是我放的。”"
+],options:[
+{t:"（盯着他，等他下文）",effects:{xp:12},go:"grad_y3_end_3"}
+]};
+
+N["grad_y3_end_3"]={tag:"main",place:"艾尔达魔法学院 · 图书馆典藏室",where:"夜",pace:"deep",text:[
+"费尔曼合上卷宗，指尖在灯影里交叠。“你看到的那页，写着第七节点，裂缝，有人替他们数着日子。”他说，“那是我三十年前写的。那时候，我跟你一样，以为学院是安全的。”",
+"他把卷宗推到你面前。里面除了那页纸，还有一把锈得发黑的钥匙，钥匙柄上錾着一个小小的图案——你眯起眼，辨认出那是一个被三道弧线围住的圆圈，像一只竖瞳。",
+"“禁书区最深处有一道铁门。门上的锁，用的是铁匠铺最老的那批料。”费尔曼说，“这把钥匙，是第三把。第一把在第三哨的矿洞里，第二把在雪原上某个老兵手里。你若是哪天凑齐了它们，就明白这扇门后面是什么了。”",
+"他把钥匙放进你手心，金属凉得刺骨。“不着急。等你毕业了，想清楚自己是谁，再决定开不开那扇门。”",
+"窗外，雪又开始下了。"
+],options:[
+{t:"（收下钥匙，放进贴身的袋子里）",effects:{xp:15,flag:"grad_key_ferman"},go:"grad_y3_end_4"}
+]};
+
+N["grad_y3_end_4"]={tag:"main",place:"艾尔达魔法学院 · 城墙",where:"夜",pace:"normal",text:[
+"你站在学院城墙上，把玩着那把锈钥匙。它在你手里，比任何课本都沉。",
+"第三学年就这么收了尾。你学的课程越来越深，可你知道，真正重要的是这把钥匙，和费尔曼那句话背后的分量。",
+"你把它贴身收好。有些东西，不能摆在明面上。"
+],options:[
+{t:"（把钥匙藏好，前往第四学年）",effects:{xp:8},go:"grad_y3_end_5"}
+]};
+
+N["grad_y3_end_5"]={tag:"main",place:"艾尔达魔法学院 · 告示栏",where:"白昼",pace:"normal",text:[
+"第四学年的告示栏上，贴着一张新布告：图书馆夜间权限开放申请，名额三人。",
+"布告下面有人写了个小字：“典藏室那扇暗门，最近夜里会自己响。”被墨迹划掉了。",
+"你看了一眼那张被划掉的字，想起费尔曼的话。四年级，是学院开始向学生打开暗门的一年。你要走进去，还是绕着走？"
+],options:[
+{t:"（申请夜间权限，走向第四学年）",effects:{xp:8},go:"acad_life_y4_open"}
+]};
+
+/* ============ 第四学年过渡 ============ */
+N["grad_y4_end_1"]={tag:"main",place:"艾尔达魔法学院 · 禁书区外",where:"夜",pace:"normal",text:[
+"第四学年期末，你在禁书区外站了很久。门上的锁换过一遭，新的锁比旧的大了一圈。",
+"费尔曼的钥匙在你口袋里，凉得像块冰。你始终没用它开过那扇门。",
+"你知道自己在等什么——等一个非开不可的理由。"
+],options:[
+{t:"（摸了摸钥匙，转身离开）",effects:{xp:10},go:"grad_y4_end_2"}
+]};
+
+N["grad_y4_end_2"]={tag:"main",place:"艾尔达魔法学院 · 火塘",where:"夜",pace:"normal",text:{default:[
+"冬假前的最后一晚，学院里比往年冷清。听说北境那边不太平，征兵令都贴到学院墙根了。"
+],ifFlag:{
+"grad_key_ferman":["你把那把锈钥匙放在火上烤了烤，纹路里渗出一点暗色的东西——不是锈，是干涸很久的什么东西。你把它擦了又擦，收好。禁书区那道铁门的锁孔，你比划过，尺寸对得上。"],
+"acad_diary_fragment":["日记里那行字在你脑子里挥之不去：“裂缝在扩大。”你在地图上比划过学院的位置——北境，铁门关以北，往北是第三哨。第七节点，也许就在那条线上。"]
+}},options:[
+{t:"（把火拨旺，想清楚自己的路）",effects:{xp:8},go:"grad_y4_end_3"}
+]};
+
+N["grad_y4_end_3"]={tag:"main",place:"艾尔达魔法学院 · 雪径",where:"白昼",pace:"normal",text:[
+"第四学年过完，你站在化雪的路口——和两年前一模一样的路口。",
+"不同的是，这一次你知道自己要去哪了。不管是留校、从军、游历还是回乡，这都只是一条路；重要的是，路的尽头，你要去见谁、问什么、讨什么。",
+"雪水顺着靴缝渗进来，还是凉的。可你已经不觉得冷了。"
+],options:[
+{t:"（走向第五学年，也走向答案）",effects:{xp:8},go:"grad_y4_end_4"}
+]};
+
+N["grad_y4_end_4"]={tag:"main",place:"艾尔达魔法学院 · 校门",where:"白昼",pace:"normal",text:[
+"校门口那辆北上的马车又陷在泥里了——还是那个老把式，他居然认出了你：“学生娃，又见面了。这回去哪？”",
+"你说：“还没定。”他大笑：“好，还没定最好。定了的人，都是被事推着走的。”",
+"他扬鞭的时候回头补了一句：“往北走的话，第三哨那边前阵子死了个矿头，闹得挺大。你若要往北，留个心眼。”",
+"你目送马车北上。北边的天，比两年前灰了些。"
+],options:[
+{t:"（记住矿头的事，走向第五学年）",effects:{xp:10},go:"acad_life_y5_open"}
+]};
+
+/* ============ 第五学年（毕业）过渡 ============ */
+N["grad_y5_end_1"]={tag:"main",place:"艾尔达魔法学院 · 毕业答辩厅",where:"白昼",pace:"normal",text:[
+"毕业答辩那天，厅里坐满了人。你站在讲台上，把五年的答卷铺开，一个字一个字念。",
+"台下，费尔曼坐在角落，没提问，也没点头。你念完最后一句，他才开口，声音不大：“你选的这个题目，够你研究一辈子。”",
+"你听懂了。他说的不是论文，是你往后的人生。"
+],options:[
+{t:"（向费尔曼颔首，走下讲台）",effects:{xp:12},go:"grad_y5_end_2"}
+]};
+
+N["grad_y5_end_2"]={tag:"main",place:"艾尔达魔法学院 · 毕业典礼",where:"白昼",pace:"normal",text:[
+"毕业典礼在雪里举行。院长念着冗长的致辞，没人认真听，大家都在看天——雪下得又密又急，像是要把这五年一起盖住。",
+"你的同学们站成一排：凯恩已经穿上了铁门关的军服，洛卡抱着他那箱药剂，塞西莉娅的行李上插着东境的旗。",
+"老莫里茨教授坐在前排，比去年瘦了一圈。他看见你，招招手，你走过去，他抓住你的手，掌心干枯而热：“孩子，毕业了。有些事，我想在你还留着这身学生皮的时候，跟你说。”"
+],options:[
+{t:"（在典礼散场后，去老莫里茨的住处）",effects:{xp:12},go:"grad_y5_end_3"}
+]};
+
+N["grad_y5_end_3"]={tag:"main",place:"艾尔达魔法学院 · 老莫里茨书房",where:"夜",pace:"deep",text:[
+"老莫里茨的书房比记忆中更乱，桌上堆着没整理的旧卷宗。他让你坐下，自己却站着，在书架前摸了半天，抽出一本封皮磨白的册子。",
+"“学院教了你五年，有些事学院没教——不是不教，是教不了。”他把册子放在你面前，“我年轻时，在北境做过守夜人。守的不是学院，是更北的地方。那里有一道封印，压着不该出来的东西。”",
+"他咳了两声，声音哑下去：“封印靠七枚锚钉着。七枚锚，散在大陆各处。有人守着它们，守了一辈子；有人想把它们拔出来。”",
+"他看着你：“你这些年，见过铁牌吗？三块铁牌，凑在一起，能打开一道门。我老啦，记不清门后面是什么了。但你得记住——金秤家的人，不是你想的那样。”",
+"窗外雪声呜咽。他摆摆手：“去吧，孩子。典礼还没完呢。”"
+],options:[
+{t:"（把老莫里茨的话记牢，走出书房）",effects:{xp:15,flag:"grad_old_moritz_talk"},go:"grad_y5_end_4"}
+]};
+
+N["grad_y5_end_4"]={tag:"main",place:"艾尔达魔法学院 · 钟楼",where:"夜",pace:"normal",text:[
+"典礼散场后，你一个人爬上钟楼。雪停了，北境的夜空干净得像冻住的湖。",
+"五年前，你从灰港的渡船上走下来，身无长物。现在你带着一身本事、一把锈钥匙，和一句还没听懂的话——“金秤家的人，不是你想的那样。”",
+"你听见钟楼下有人喊你。是同学们，在雪地里点了一堆篝火，招手让你下去。",
+"你在钟楼上最后看了一眼北边——那里有第三哨，有矿洞，有雪原，有等你去找的答案。"
+],options:[
+{t:"（下楼，与同窗们道别，然后走向自己的路）",effects:{xp:15},go:"grad_choose"}
+]};
+
+/* ============ 毕业四去向选择 ============ */
+N["grad_choose"]={tag:"main",place:"艾尔达魔法学院 · 校门外",where:"白昼",pace:"normal",sceneTitle:"毕业 · 四路分岔",text:[
+"校门外，路在雪原上分成了四个方向。你的同窗们已经各自上路，雪地上留下一串串脚印，很快又被新雪盖住。",
+"你站在分岔口。这一走，学院就成了旧事；前面的路，谁也不知道通向哪里。",
+"北境的雪落在你肩上。你看着四个方向，心里那个问题终于有了形状——你这一生，要守什么，要破什么，要去找谁。"
+],options:[
+{t:"（留校：接过导师的教鞭，守这座学院）",effects:{xp:10},run:function(){S.gradPath="stay";},go:"grad_stay_1"},
+{t:"（从军：去铁门关，把本事用在刀上）",effects:{xp:10},run:function(){S.gradPath="army";},go:"grad_army_1"},
+{t:"（游历：走遍大陆，去找五年前没找到的东西）",effects:{xp:10},run:function(){S.gradPath="roam";},go:"grad_roam_1"},
+{t:"（回乡：回到出发的地方，看看故乡变成了什么样）",effects:{xp:10},run:function(){S.gradPath="home";},go:"grad_home_1"}
+]};
+
+/* ============ 毕业去向一：留校 ============ */
+N["grad_stay_1"]={tag:"main",place:"艾尔达魔法学院 · 教务楼",where:"白昼",pace:"normal",text:[
+"留校的申请交上去，教务长看了你一眼，没说话，只在申请表角落批了个“可”。",
+"墨丘利教授知道后，把你叫去办公室，指着一把旧教鞭：“学院五年，你没把这里当客栈。留下来，就把它当自己的家。家是要有人守的。”",
+"你接过教鞭。木头磨得发亮，比任何兵刃都顺手。"
+],options:[
+{t:"（接下教鞭，领了宿舍钥匙）",effects:{xp:12},go:"grad_stay_2"}
+]};
+
+N["grad_stay_2"]={tag:"main",place:"艾尔达魔法学院 · 禁书区入口",where:"白昼",pace:"normal",text:[
+"留校第一周，禁书区的老保管员递来一串钥匙：“我干了三十年，该歇了。上头说，让你顶我的缺。”",
+"他带你走了一遍禁书区的规矩：哪条走廊夜里不能去、哪扇门要登记、哪本书翻页要戴手套。末了他压低嗓子：“最里头那道铁门，别碰。锁是死的，钥匙在别处。”",
+"你摸了摸贴身那把锈钥匙。他没看见。"
+],options:[
+{t:"（接过钥匙串，正式成为禁书区保管员）",effects:{xp:15,flag:"grad_stay_warden"},go:"grad_stay_3"}
+]};
+
+N["grad_stay_3"]={tag:"main",place:"艾尔达魔法学院 · 老莫里茨病房",where:"夜",pace:"normal",text:[
+"入冬前，老莫里茨病倒了。学院请了三位医者，都摇头。",
+"你去病房看他，他靠在枕上，瘦得只剩一把骨头，眼睛倒还亮。“来得正好。”他招手让你坐到床边，“我教了你五年……最后这门课，现在讲，你听好。”",
+"他握住你的手，掌心又干又热：“我守了一辈子，没守明白。你别学我，守要守得明白。”"
+],options:[
+{t:"（坐在床边，听他把话说完）",effects:{xp:15},go:"grad_stay_4"}
+]};
+
+N["grad_stay_4"]={tag:"main",place:"艾尔达魔法学院 · 老莫里茨病房",where:"夜",pace:"deep",text:[
+"老莫里茨讲了一夜。他说他年轻时在北境做守夜人，守的是更北的一道封印。封印靠七枚锚钉着，锚散在大陆各处，有人守锚，有人拔锚。",
+"“我守的那枚，在第三哨北边的墓园里。墓碑上没有字，底下埋的不是人，是锚。”他咳出一口带血的痰，你扶住他，“守墓的是个姓金的——金秤家。他们家在墓园守了三代，外人当他们是守墓人，其实不是。”",
+"他从枕下摸出一块铁牌，牌面錾着三道弧线围一个圈：“这块牌子，是金秤家的信物。我年轻时救过老金一命，他拿它谢我。”他把铁牌放进你手心，“你拿着。将来若走到墓园，把牌子还给他家的人，他们会认你。”",
+"窗外雪声渐密。他闭上眼睛，声音轻得像在说梦话：“金秤家……不是你想的那样。”",
+"天亮时，老莫里茨走了。他睡着的样子，像只是累了一宿。"
+],options:[
+{t:"（收好铁牌，替他合上房门）",effects:{xp:20,flag:"grad_iron_tab_old_moritz"},go:"grad_stay_5"}
+]};
+
+N["grad_stay_5"]={tag:"main",place:"艾尔达魔法学院 · 老莫里茨书房",where:"白昼",pace:"normal",text:[
+"老莫里茨的后事办完，你替他收拾书房。旧卷宗堆里，夹着一封信，封口没粘，落款是“墓园·金”。",
+"信上只有一行字：“莫里茨兄，铁牌若有人带来，叫他来墓园。碑下的东西，撑不了几年了。”日期是三十年前。",
+"你把信和铁牌放在一起，收进贴身的口袋。北边的墓园，看来得去一趟。"
+],options:[
+{t:"（把信收好，继续整理遗物）",effects:{xp:12},go:"grad_stay_6"}
+]};
+
+N["grad_stay_6"]={tag:"main",place:"艾尔达魔法学院 · 西三舍",where:"夜",pace:"normal",text:[
+"留校的日子过得很快。白天带课，夜里巡楼，周末去镇上采买。你从学生变成了先生，宿舍从大通铺换成了一间带窗的小屋。",
+"窗台上摆着费尔曼送的那盏旧灯。夜里点起来，光晕昏黄，照着你批改的卷子。",
+"有一回你改卷改到半夜，听见走廊尽头传来很轻的脚步声——那个方向，是典藏室。你披衣出去看，走廊空荡荡的，只有风从窗缝里钻进来。"
+],options:[
+{t:"（记住这夜的声音，继续守夜）",effects:{xp:10},go:"grad_stay_7"}
+]};
+
+N["grad_stay_7"]={tag:"main",place:"艾尔达魔法学院 · 禁书区",where:"夜",pace:"normal",text:{default:[
+"作为保管员，你有一把能开禁书区所有门的钥匙——除了最里头那道铁门。"
+],ifFlag:{
+"grad_key_ferman":["你夜里巡到铁门前，四下无人。你掏出费尔曼给的那把锈钥匙，对着锁孔比了比——尺寸严丝合缝。手停在半空，你想起费尔曼的话：“等你想清楚自己是谁，再决定开不开。”你收了钥匙，转身走开。门后传来一声极轻的叹息，像风，又不像风。"],
+"grad_diary_fragment":["你凭着保管员的权限，把典藏室那本没书脊的日记找齐了。最后几页，字迹更乱了：“第七节点已渗水……他们填了裂缝……可水是从底下渗上来的。学院里，有人替他们数着日子。”你数了数页码，最后一页，只写了三个字：别开门。"]
+}},options:[
+{t:"（把钥匙收好，让门继续锁着）",effects:{xp:12},go:"grad_stay_8"}
+]};
+
+N["grad_stay_8"]={tag:"main",place:"艾尔达魔法学院 · 钟楼",where:"白昼",pace:"normal",sceneTitle:"留校 · 第一年冬",text:[
+"第一年冬天，你站在钟楼上，看学院在雪里安安静静地亮着。你守住了它，它也守住了你。",
+"口袋里，铁牌和锈钥匙沉甸甸的。北边墓园那封信，你翻来覆去看了十几遍——“碑下的东西，撑不了几年了。”",
+"你知道，留校不是终点。这座学院，是你出发的地方。北边，有人在等一块铁牌。"
+],options:[
+{t:"（择日北上，先去北境第三哨落脚）",effects:{xp:15,flag:"grad_path_stay_north"},go:"frontier_city"}
+]};
+
+/* ============ 毕业去向二：从军 ============ */
+N["grad_army_1"]={tag:"main",place:"铁门关 · 征兵营",where:"白昼",pace:"normal",text:[
+"铁门关的征兵营设在瓮城里。新兵排着队，挨个报名字、测身手。轮到你，把学院出具的推荐信拍在桌上，募兵官扫了一眼，抬头：“魔法学院毕业的？”",
+"他把信叠好收进怀里：“学院的人，从前年才放出来当兵。你算是头一批。”他上下打量你，“北边缺人，能写会算的，比能打的还缺。”",
+"你在他递来的名册上摁了手印。手印落下去的那一刻，你就不再是学生了。"
+],options:[
+{t:"（领了新兵服，走进营房）",effects:{xp:12},go:"grad_army_2"}
+]};
+
+N["grad_army_2"]={tag:"main",place:"铁门关 · 新兵营",where:"白昼",pace:"normal",text:{default:[
+"新兵营的床板硬，半夜有人打呼噜，有人磨牙，有人翻来覆去地叹气。你睡得还行——学院宿舍也没软到哪去。"
+],ifFlag:{
+"acad_kain_ideal":["报到那天，你在校场上看见了凯恩。他如今是个什长了，腰间别着把新刀，看见你，咧开嘴笑了：“我就说你会来。”他锤了你一拳，“学院里你那套拳脚，搁这儿够不够用，得练练才知道。”"]
+}},options:[
+{t:"（在营里安顿下来，熟悉规矩）",effects:{xp:10},go:"grad_army_3"}
+]};
+
+N["grad_army_3"]={tag:"main",place:"铁门关 · 校场",where:"白昼",pace:"normal",text:[
+"校场上的操练从晨光刚亮练到日头偏西。你学的那些咒术，在战场上用不太上——这里看的是刀快不快、腿稳不稳、令行不行。",
+"你把学院练出来的身手重新过了一遍：盾阵怎么站、长枪怎么使、巷战怎么走。教官看了三天，丢给你一副臂甲：“不错，没白念那五年书。”",
+"臂甲上有一道旧划痕，擦不掉。教官说：“那是上一任主人的。他死在北边。”"
+],options:[
+{t:"（收下臂甲，记住这句话）",effects:{xp:15},go:"grad_army_4"}
+]};
+
+N["grad_army_4"]={tag:"combat",place:"铁门关 · 北墙外",where:"夜",pace:"deep",text:[
+"入秋，北墙外来了一股流匪，说是从雪原那边绕过来的，抢了两支商队，还伤了几个巡边的弟兄。",
+"你跟着什队出城设伏。流匪头子是个又高又瘦的汉子，手里一把长柄镰刀，专削马腿。夜色里，他先发现了你们——镰刀抡起来，带着一股腥风。",
+"你提刀去架，那一下力道远超预料，震得你虎口发麻。他趁你脚下不稳，刀柄回抽，杆头重重捣在你右肋。骨头闷响一声，你眼前发黑，喘不上气——肋下那一下，让你半身使不上力，呼吸带起一阵钝痛。",
+"你退了两步，背抵住城墙。血从嘴角渗出来，你咽回去，盯着他握镰的姿势。他手臂长，下盘却虚——每次抡完，右腿总要慢半拍才收回来。",
+"他第二下劈来时，你不闪不避，矮身从他腋下钻过，刀尖挑他右膝窝。他惨叫一声跪倒，长镰脱手。弟兄们一拥而上，把他摁在雪地里。",
+"回营后军医给你缠了三天肋骨。你躺在床板上，看着房梁，把这一战从头到尾想了一遍。"
+],options:[
+{t:"（养好伤，把这一战的经验记下来）",effects:{xp:25,hp:-20},tier:{ok:["伤养了半个月。你学会了一件事：越厉害的对手，越有收不住的那一下。"],fail:["那一夜你疼得没睡着。军医说，肋骨要养足一个月。"],crit:["军医说你运气好，没伤到内脏。那一战之后，什队里的人看你的眼神变了。"]},go:"grad_army_5"}
+]};
+
+N["grad_army_5"]={tag:"main",place:"铁门关 · 军功簿",where:"白昼",pace:"normal",text:[
+"年关前，军功簿上添了你的名字。募兵官把你叫去，递上一枚铜制军章：“北墙那一战，记你一功。”",
+"他把军章别在你胸口，退后半步看了看：“人靠衣装。你这模样，倒像个兵了。”",
+"你低头看那枚铜章。半年前你还是个学生，现在你是北境的兵。这身份换得不算亏。"
+],options:[
+{t:"（领了军章，听候调令）",effects:{xp:12,infl:{north:5}},go:"grad_army_6"}
+]};
+
+N["grad_army_6"]={tag:"main",place:"铁门关 · 帅帐",where:"白昼",pace:"normal",text:[
+"开春，帅帐里传出调令：北境第三哨缺人手，点名要能写会算的军士随行。",
+"你是第一批被点名的。募兵官把行装单子拍给你：“第三哨在北边，比铁门关冷，比铁门关偏。去了，可能一年半载回不来。”",
+"你接过行装单，想起了校门口那辆陷在泥里的马车，和老把式的话——“往北走的话，第三哨那边，前阵子死了个矿头。”"
+],options:[
+{t:"（背上行装，随队北上）",effects:{xp:15},go:"grad_army_7"}
+]};
+
+N["grad_army_7"]={tag:"main",place:"北境 · 雪原官道",where:"白昼",pace:"normal",text:[
+"北上走了十天。雪原的官道被雪盖了又清，清了又盖。夜里扎营，火堆烤着冻硬的干粮，老兵们缩在皮袄里讲闲话。",
+"有人讲第三哨的铜钟：“那口钟比城还老，响的时候，必有大事。”有人讲矿洞：“上个月死了个矿头，听说死在矿洞最里头，找到的时候，眼睛瞪得老大。”",
+"你听着，没插话。火堆噼啪响，雪在帐篷外下了一夜。"
+],options:[
+{t:"（记下这些话，继续赶路）",effects:{xp:12},go:"grad_army_8"}
+]};
+
+N["grad_army_8"]={tag:"main",place:"北境 · 第三哨城墙外",where:"白昼",pace:"normal",sceneTitle:"从军 · 初抵第三哨",text:[
+"第十一天晌午，雪停了一阵，你看见了第三哨的城墙——青黑色的石墙，雪白的屋顶，城中心立着一座钟楼，锈迹斑斑的铜钟在日光里泛着暗色。",
+"守城的哨兵验过你的文书，放你入城。城门洞里的风又冷又硬，吹得军旗猎猎作响。",
+"你踏进城门的石阶，知道从今天起，你就是这座北境要塞的兵了。城里的日子，会比铁门关更冷，也更接近那些你听见过的名字——铜钟、矿洞、老兵老铁。"
+],options:[
+{t:"（入城报到，先熟悉这座要塞）",effects:{xp:15},go:"frontier_city"}
+]};
+
+/* ============ 毕业去向三：游历 ============ */
+N["grad_roam_1"]={tag:"main",place:"艾尔达魔法学院 · 校门外",where:"白昼",pace:"normal",text:[
+"游历的决定，你在毕业前一年就想好了。同窗们各有去处，你只有一个方向：走。",
+"墨丘利送你到校门，没说什么煽情的话，只塞给你一袋干粮和一卷北境的地图：“地图是旧的。这世道，路会变，人也一样。”",
+"你背上行囊。地图边角卷着，露出一个地名：自由城邦。五年前，你就是从那里上路的。"
+],options:[
+{t:"（沿着来时的路，先回自由城邦）",effects:{xp:12},go:"grad_roam_2"}
+]};
+
+N["grad_roam_2"]={tag:"main",place:"自由城邦 · 汇流口",where:"白昼",pace:"normal",text:[
+"自由城邦还是老样子：渡口挤着船，街上飘着麦酒和烤饼的味，商贩的吆喝声盖过了钟楼报时。",
+"你站在汇流口，想起五年前自己从这里走进学院的情形。那个又瘦又生涩的年轻人在人群里张望的样子，还像昨天的事。",
+"城里的变化也有：商会换了新招牌，李管事的老伙计认出了你，隔着街喊：“哎，学院那个！回来啦？”"
+],options:[
+{t:"（在城里走走，会一会故人）",effects:{xp:12},go:"grad_roam_3"}
+]};
+
+N["grad_roam_3"]={tag:"main",place:"西境 · 元素荒原边界",where:"白昼",pace:"normal",text:[
+"离开自由城邦，你往西走。过了几道山梁，草木渐渐稀疏，风里开始带着一股干裂的、说不清是矿石还是焦土的气味。",
+"路边的牧民指给你看：“前头就是元素荒原。风暴来的时候，整片天都是紫的，石头自己会飘起来。行省会那边戒严好些日子了。”",
+"你站在荒原边界上，看远处天际线有一道紫色的光带，缓缓明灭。西境，比你听说的还要躁动。"
+],options:[
+{t:"（沿着荒原边缘往南，改道沙漠商路）",effects:{xp:12},go:"grad_roam_4"}
+]};
+
+N["grad_roam_4"]={tag:"main",place:"死亡沙漠 · 驼队驿站",where:"夜",pace:"normal",text:[
+"沙漠的商路比北境更磨人。白天沙烫，夜里沙凉，驼队走两步歇一步。",
+"驿站的老板是个豁牙的老汉，见你一身学院打扮，话就多了：“学院娃？上回来个学院娃，是跟着商队去深渊神殿看热闹的。回来的时候，人瘦了一圈，说再也不去了。”",
+"你嚼着干硬的饼，听驼铃在风里响。沙漠深处，传说有一座神殿，压着什么东西。你没急着去——先让传闻再飞一会儿。"
+],options:[
+{t:"（在驿站歇一夜，明日往东去铁门关）",effects:{xp:12},go:"grad_roam_5"}
+]};
+
+N["grad_roam_5"]={tag:"main",place:"铁门关 · 城门口",where:"白昼",pace:"normal",text:[
+"铁门关的城墙比想象中厚。城门洞里进出的除了商队，还有一队队往北开的军车，车上蒙着油布，看不清装的是什么。",
+"你在城门口的酒肆歇脚。邻桌两个老兵在聊天：“第三哨那边又闹腾了，铜钟半夜自己响，守钟的老卒说那不是钟响，是地底在响。”",
+"你握着温热的酒杯，没有接话。北边的事，你迟早要去看看——但游历的第一步，得先把该见的人见了。"
+],options:[
+{t:"（出铁门关，继续向东）",effects:{xp:12},go:"grad_roam_6"}
+]};
+
+N["grad_roam_6"]={tag:"main",place:"东境 · 承天城郊",where:"白昼",pace:"normal",text:[
+"东境的风比北境温，比西境润。承天城的城墙远远地横在天边，城楼上的旗子绣着东境官署的纹样。",
+"你听说，承天城的科举特科今年破例扩了名额，各地的人才都在往这里赶。城郊的官道上，赶考的、贩货的、寻亲的，挤成一条长龙。",
+"你排在队尾，看着那面旗。五年前你做梦也想不到，自己会走到东境的城墙根下。"
+],options:[
+{t:"（入城转转，然后决定下一站）",effects:{xp:12},go:"grad_roam_7"}
+]};
+
+N["grad_roam_7"]={tag:"main",place:"东境 · 承天城",where:"白昼",pace:"normal",text:{default:[
+"游历了这么多地方，你在承天城的客栈里铺开地图，把走过的路一条条勾出来。北境、西境、沙漠、铁门关、东境——画下来，像一只没闭合的环。"
+],ifFlag:{
+"grad_key_ferman":["你把那把锈钥匙从怀里摸出来，放在地图上。它沉甸甸地压着地图的西北角——那个方向，是第三哨，是矿洞，是费尔曼说的那道门。游历归游历，你知道自己终究要往那个方向走一趟。"],
+"grad_iron_tab_old_moritz":["铁牌在你贴身口袋里贴着。老莫里茨说，墓园在北边，碑下的东西撑不了几年了。你看着地图上北境那片空白，把它翻过去，先不急着看。"]
+}},options:[
+{t:"（合上地图，心里有了主意）",effects:{xp:12},go:"grad_roam_8"}
+]};
+
+N["grad_roam_8"]={tag:"main",place:"东境 · 官道",where:"白昼",pace:"normal",sceneTitle:"游历 · 归途",text:[
+"游历的最后一站，你站在东境官道上，看太阳从平原尽头升起来。一年前你从学院出发，现在你走完了大陆的小半圈。",
+"你学会了跟不同的口音讨价还价，学会了看云识天气，学会了在陌生人的火堆边过夜而不卸刀。",
+"但你也知道，走再远，有些事终究要回去面对。地图上那个没闭合的环，缺的那一角，在西北——第三哨，雪原，以及那把锈钥匙指向的铁门。",
+"你把行囊紧了紧，转向北。风从那个方向吹来，带着雪的味道。"
+],options:[
+{t:"（转道北上，走向游历的终点与起点）",effects:{xp:15,flag:"grad_path_roam_north"},go:"frontier_city"}
+]};
+
+/* ============ 毕业去向四：回乡 ============ */
+N["grad_home_1"]={tag:"main",place:"艾尔达魔法学院 · 校门外",where:"白昼",pace:"normal",text:[
+"回乡的路，你走了五年才踏上。行囊里除了书和衣裳，还多了一样东西——五年前从家里带出来的那枚护身符，磨得发亮。",
+"同窗们往北的往北、往东的往东，只有你，向着出发的方向走。",
+"出了学院的地界，雪渐渐薄了。再往南走，风里开始带上泥土和草的气味——那是故乡的味道，你差点认不出来了。"
+],options:[
+{t:"（沿着回家的路，一步一步走回去）",effects:{xp:12},go:"grad_home_2"}
+]};
+
+N["grad_home_2"]={tag:"main",place:"北境 · 南麓驿道",where:"白昼",pace:"normal",text:[
+"北境的驿道走了五天，翻过南麓那道山梁，地势一下子平缓下来。农田、水渠、土墙的村子，一个接一个出现在视野里。",
+"你在山梁上站了一会儿。风从南边来，暖烘烘的，带着麦子和炊烟的气味。",
+"下山的时候，你脚步放慢了。近乡情怯，原来是真的。"
+],options:[
+{t:"（下山，走进第一座村子）",effects:{xp:10},go:"grad_home_3"}
+]};
+
+N["grad_home_3"]={tag:"main",place:"故乡 · 村口",where:"白昼",pace:"normal",text:[
+"村口的老槐树还在，树上系红绳的习俗也还在——只是红绳比五年前多了不少，系的人家，有的你认识，有的已经不在了。",
+"一个放牛的老汉打量你半天，忽然喊出你的小名：“是……是你？学院那个？出息了啊！”他嗓门大，半条街的人都探出头来。",
+"你被簇拥着往村里走。五年前你离开时，村里人觉得你去北边念书是瞎折腾；现在，他们觉得你出息了。你笑了笑，没解释。"
+],options:[
+{t:"（被乡亲们迎进村，先去见家里人）",effects:{xp:12},go:"grad_home_4"}
+]};
+
+N["grad_home_4"]={tag:"main",place:"故乡 · 老屋",where:"夜",pace:"normal",text:[
+"老屋的灯还亮着。你推开门，母亲在灯下补衣裳，抬头看见你，针停在空中，半天没说话。",
+"她放下针线，走过来，摸了摸你的脸：“瘦了。”就这两个字，你的鼻子忽然酸了一下。",
+"这一夜，你睡回了小时候那张床。床板吱呀响，窗外有蛙鸣，一切好像没变，又好像什么都变了。"
+],options:[
+{t:"（在家住下，帮家里把地里的活计理一理）",effects:{xp:10,hp:10},go:"grad_home_5"}
+]};
+
+N["grad_home_5"]={tag:"main",place:"故乡 · 田间",where:"白昼",pace:"normal",text:[
+"回乡住了半个月，你把地里的活计理了一遍。母亲说你读书读傻了，割麦的姿势还跟小时候一样笨。你笑着没反驳。",
+"村里的平静没能维持太久。这天傍晚，两个外乡人骑马进村，敲锣召集村民，说是北边的军阀要征粮，每户按人头加三成。",
+"村里炸了锅。老汉们蹲在墙根叹气，年轻媳妇抱着孩子抹眼泪。你站在人群边上，看着那个敲锣的外乡人——他腰里别着刀，眼睛却发虚。"
+],options:[
+{t:"（站出来，替村里跟外乡人交涉）",effects:{xp:15},go:"grad_home_6"}
+]};
+
+N["grad_home_6"]={tag:"main",place:"故乡 · 村口",where:"白昼",pace:"normal",text:[
+"你走上前，报了自己的来路——学院毕业，游历过半个大陆，见过比军阀更大的阵仗。",
+"你指着外乡人腰间的刀：“征粮的文书，拿出来看看。”他愣了一下，掏出来的文书皱皱巴巴，红印是拿萝卜刻的。",
+"“假的。”你扫了一眼，声音不大，但整条街都听见了。两个外乡人对视一眼，灰溜溜地翻身上马走了。",
+"村里人你看我，我看你，然后爆出一阵哄笑和叫好。放牛的老汉拍着你的肩：“好小子，学的东西没白学！”"
+],options:[
+{t:"（摆摆手，把这事翻过去）",effects:{xp:20,infl:{north:8}},go:"grad_home_7"}
+]};
+
+N["grad_home_7"]={tag:"main",place:"故乡 · 祠堂",where:"白昼",pace:"normal",text:[
+"征粮的事过去后，村里人看你的眼神不一样了。族长把你请进祠堂，倒了一碗自家酿的米酒：“你读过书，见过世面，往后村里有事，得有人拿主意。”",
+"你在祠堂坐了一下午。米酒很甜，窗外的蝉叫得正欢。",
+"你知道自己不会永远留在村里——外面的世界还有没走完的路。但你也不会忘记这碗米酒，和这座祠堂。这是你出发的地方。"
+],options:[
+{t:"（谢过族长，准备再次上路）",effects:{xp:12},go:"grad_home_8"}
+]};
+
+N["grad_home_8"]={tag:"main",place:"故乡 · 村口",where:"白昼",pace:"normal",sceneTitle:"回乡 · 再启程",text:[
+"离开那天，母亲送我到村口，往我手里塞了一包干粮，没说话，只拍了拍我的背包。",
+"我走出老远回头，她还站在槐树下，身影在晨光里小小的。",
+"我转回身，朝着北边走去。那里有第三哨，有雪原，有矿洞，也有五年前我在学院课堂上听见的第一句咒语没能解答的东西。故乡给了我底气，而北边，有我要去弄明白的事。"
+],options:[
+{t:"（朝北走，走向新的路）",effects:{xp:15,flag:"grad_path_home_north"},go:"frontier_city"}
+]};
 
 /* /u1inj:data-nodes:dn_ideal_goals.js/ */
 /* /A1inj:goals/ A-1 八条理想目标线（8 intro + 24 里程碑，闭环：intro → _1 → _2 → _3 → done）
@@ -76113,7 +76609,61 @@ window.STORY_BLUEPRINT = {
   "frontier_bell_fight_1": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
   "frontier_bell_fight_2": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
   "frontier_bell_fight_3": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
-  "frontier_mine_combat_after": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"}
+  "frontier_mine_combat_after": {tag:"main", vol:"vol_north", arc:"arc_frontier", pace:"normal"},
+  "grad_y1_end_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y1_end_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y1_end_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y1_end_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y2_end_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y2_end_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y2_end_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y2_end_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y3_end_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y3_end_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y3_end_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y3_end_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y4_end_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y4_end_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y4_end_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y4_end_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y5_end_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y5_end_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y5_end_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_y5_end_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_choose": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_6": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_7": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_stay_8": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_6": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_7": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_army_8": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_6": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_7": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_roam_8": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_2": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_3": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_4": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_5": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_6": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_7": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "grad_home_8": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"}
+
 
 
 

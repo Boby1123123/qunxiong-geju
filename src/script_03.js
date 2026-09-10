@@ -43,6 +43,7 @@ function applyDefaults(s){
   /* /t11inj:defaults/ I1-1 分段阅读开关兜底（旧档兼容） */
   if(!s.settings) s.settings={};
   if(s.settings.pagedReading===undefined) s.settings.pagedReading=true;
+    if(s.gradPath===undefined) s.gradPath="";
   /* /v91inj:defaults/ CM-1 记忆注入开关兜底（旧档兼容） */
   if(s.settings.memoryInjection===undefined) s.settings.memoryInjection=true;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */

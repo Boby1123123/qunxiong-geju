@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "U3 存档层强化(20260909): StorageKit 导出时间戳/CloudProvider 契约 +141B（合法功能增长）；四路重建 chunked=3,394,538B",
   "budgets": {
-    "game_html_bytes_max": 7557675,
-    "chunked_html_bytes_max": 4956945,
-    "node_total_min": 4170,
+    "game_html_bytes_max": 7614100,
+    "chunked_html_bytes_max": 5004823,
+    "node_total_min": 4224,
     "dead_links_max": 0,
     "full_seconds_max": 20.0
   },
   "baseline": {
-    "game_html_bytes": 7507675,
-    "chunked_html_bytes": 4856945,
-    "node_total": 4220,
+    "game_html_bytes": 7564100,
+    "chunked_html_bytes": 4904823,
+    "node_total": 4274,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "M2b san初始化修复",
+    "reason": "M3 毕业四去向53节点+5事件",
     "history": [
       {
         "date": "2026-09-09",
@@ -390,6 +390,13 @@
         "chunked_bytes": 4856945,
         "nodes": 4220,
         "reason": "M2b san初始化修复"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 7564100,
+        "chunked_bytes": 4904823,
+        "nodes": 4274,
+        "reason": "M3 毕业四去向53节点+5事件"
       }
     ]
   },

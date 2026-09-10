@@ -87,6 +87,8 @@ N["acad_life_y1_final"]={tag:"main",place:"艾尔达魔法学院 · 期末排名
  fail:["你读着读着就趴在桌上睡着了。醒来时，罗先生给你留了条毯子和一碗热汤。"],
  crit:["你在典藏室深处，又摸到一本没书脊的册子。翻开来，是半本日记，字迹工整：“……第七节点，裂缝在扩大。学院里，有人替他们数着日子。”","你默默记下这行字。"]
 },effects:{xp:25},onCrit:{flag:"acad_diary_fragment"},go:"acad_life_y1_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y1_end_1"}
 ]};
 /* ---------- 第二学年 ---------- */
 N["acad_life_y2_open"]={tag:"main",place:"艾尔达魔法学院 · 第二学年",pace:"normal",text:[
@@ -157,6 +159,8 @@ N["acad_life_y2_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
  fail:["你查了一冬，一无所获。那串数字像一串无解的谜。"],
  crit:["你不但查到了含义，还在附录的夹页里发现半张地图——标着七节点的位置，其中第七节点被红笔圈了三圈，旁边写着：“已失守。静候。”","你抄下地图，原样放回。"]
 },effects:{xp:22},onCrit:{flag:"acad_seven_map"},go:"acad_life_y2_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y2_end_1"}
 ]};
 /* ---------- 第三学年 ---------- */
 N["acad_life_y3_open"]={tag:"main",place:"艾尔达魔法学院 · 第三学年",pace:"normal",text:[
@@ -226,6 +230,8 @@ N["acad_life_y3_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
  crit:["墨丘利压低声音：“第三拨人，袖口没有银叶。他们自称‘看守者’，说自己在替大陆‘守眼’——但我查过，七节点早就失守了四个。他们在守的，是什么眼？”","“别信任何一边。信你自己看见的。”"]
 },effects:{},onCrit:{flag:"acad_mercury_warning"},go:"acad_life_y3_holiday"},
 {t:"谢过墨丘利，假期照旧",effects:{xp:8},tier:{ok:["你谢过他，走出办公室。塔顶的灯，静静地亮着。"]},go:"acad_life_y3_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y3_end_1"}
 ]};
 /* ---------- 第四学年 ---------- */
 N["acad_life_y4_open"]={tag:"main",place:"艾尔达魔法学院 · 第四学年",pace:"normal",text:[
@@ -286,6 +292,8 @@ N["acad_life_y4_final"]={tag:"main",place:"艾尔达魔法学院 · 期末",pace
 ],options:[
 {t:"连夜检查那本笔记",effects:{xp:10},tier:{ok:["笔记里夹着一张纸条：“第七节点的封印阵图，在圣城大教堂地下。钥匙在守夜人手里。”","你合上笔记，窗外的塔灯，重新亮了。"]},go:"acad_life_y4_holiday"},
 {t:"把笔记收好，等一个合适的时机",effects:{xp:8},tier:{ok:["你把笔记锁进箱底。学院第五年，就要来了。"]},go:"acad_life_y4_holiday"}
+,
+{t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y4_end_1"}
 ]};
 /* ---------- 第五学年 ---------- */
 N["acad_life_y5_open"]={tag:"main",place:"艾尔达魔法学院 · 第五学年",pace:"normal",text:[
@@ -343,5 +351,7 @@ N["acad_life_y5_final"]={tag:"main",place:"艾尔达魔法学院 · 毕业典礼
 "你终于，毕业了。"
 ],options:[
 {t:"转身，正式踏出学院（进入主线）",effects:{flag:"acad_life_complete",xp:50},go:"north_academy_2"}
+,
+{t:"（典礼散场，独自在钟楼下站一会儿，想想这五年）",effects:{xp:8},go:"grad_y5_end_1"}
 ]};
 })();

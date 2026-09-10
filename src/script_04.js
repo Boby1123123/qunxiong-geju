@@ -8063,6 +8063,9 @@ const RenderBatch = (function(){
     try{ if(typeof v74_journalAppend === 'function') v74_journalAppend(appended); }catch(e){}
     /* /v74ui:arch/ V74 剧情正文自动归档（DOM 上限控制，可回看） */
     try{ if(typeof v74_archiveIfNeeded === 'function') v74_archiveIfNeeded(el); }catch(e){}
+    /* /upg10inj:flush/ UPG-10 节点渲染后：会话快照 + 自动存档计数 */
+    try{ if(typeof v92_sessionSave === 'function') v92_sessionSave(); }catch(e){}
+    try{ if(typeof v92_autoTick === 'function') v92_autoTick(); }catch(e){}
     try{ el.scrollTop = el.scrollHeight; }catch(e){}
   }
   return {
@@ -8937,6 +8940,36 @@ function v34_openSettings(){
 function v34_renderSaveSlots(){
   var html = '<h2>📦 存档管理</h2>';
   html += '<div style="text-align:center;font-size:12px;color:var(--dim);margin-bottom:10px">槽位1为主存档位，旧版存档自动兼容 · 写入自动双备份（本地+IndexedDB）</div>';
+  /* /upg10inj:panel/ UPG-10 会话恢复 + 自动存档槽 */
+  try{
+    var _ss = window.v92_sessionKey ? sessionStorage.getItem(window.v92_sessionKey()) : null;
+    if(_ss){
+      var _so = v61_lzstring.sniffRaw(_ss);
+      if(_so && _so.name){
+        html += '<div class="save-slot-v34" style="border-color:var(--gold);background:rgba(255,215,0,0.06)">';
+        html += '<div class="save-slot-thumb">⏱</div>';
+        html += '<div class="save-slot-info">';
+        html += '<div class="save-slot-name">会话快照 · ' + _so.name + '（第' + (_so.day||1) + '天）</div>';
+        html += '<div class="save-slot-meta"><span>页面刷新后可恢复（本次未保存的进度）</span></div>';
+        html += '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">';
+        html += '<button class="btn btn-gold" onclick="try{v92_sessionRestore();closeModal();}catch(e){}">⏱ 恢复会话</button>';
+        html += '<button class="btn" onclick="try{v92_sessionClear();v34_openSavePanel();}catch(e){}">🗑 清除快照</button>';
+        html += '</div></div></div>';
+      }
+    }
+    var _as = window.v92_autosaveInfo ? window.v92_autosaveInfo() : null;
+    if(_as && _as.name){
+      html += '<div class="save-slot-v34" style="border-color:#8BC8EA">';
+      html += '<div class="save-slot-thumb">🔄</div>';
+      html += '<div class="save-slot-info">';
+      html += '<div class="save-slot-name">自动存档 · ' + _as.name + '（第' + (_as.day||1) + '天）</div>';
+      html += '<div class="save-slot-meta"><span>每 10 个节点自动写入</span></div>';
+      html += '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">';
+      html += '<button class="btn" onclick="v34_loadAutosave()">📖 读取</button>';
+      html += '<button class="btn btn-danger" onclick="v34_deleteAutosave()">🗑 删除</button>';
+      html += '</div></div></div>';
+    }
+  }catch(e){}
   for(var i=1;i<=5;i++){
     var saved = localStorage.getItem(i===1 ? RULESET_ID+"-save" : 'elda-save-slot-slot'+i);
     var empty = !saved;
@@ -9004,6 +9037,30 @@ function v34_deleteSlot(i){
   StorageKit.deleteSlot("slot" + i);
   closeModal(); flashMsg("已删除槽位" + i); v34_openSavePanel();
 }
+function v34_loadAutosave(){
+  try{
+    var data = v61_lzstring.sniffRaw(localStorage.getItem('elda-save-slot-autosave'));
+    if(!data){ flashMsg('没有自动存档'); return; }
+    v61_clearAll && v61_clearAll();
+    S = applyDefaults(data);
+    S.saveVersion = 48;
+    curNode = S.curNode || 'fc_jiaohui_entry';
+    renderTop(); renderStats(); renderMapPanel && renderMapPanel();
+    writeNext();
+    closeModal();
+    flashMsg('已读取自动存档（第' + (S.day||1) + '天）');
+  }catch(e){ flashMsg('读取失败：' + e.message); }
+}
+function v34_deleteAutosave(){
+  try{
+    if(!confirm('确定删除自动存档？')) return;
+    localStorage.removeItem('elda-save-slot-autosave');
+    try{ if(window.indexedDB){ var rq = indexedDB.open('elda-saves',1); rq.onsuccess = function(){ try{ var tx = rq.result.transaction('saves','readwrite'); tx.objectStore('saves').delete('autosave'); }catch(e){} }; } }catch(e){}
+    flashMsg('自动存档已删除');
+    v34_openSavePanel();
+  }catch(e){}
+}
+
 
 function v34_exportSave(){
   try{
@@ -10019,6 +10076,36 @@ function v34_setVolume(type, value){
 function v34_renderSaveSlots(){
   var html = '<h2>📦 存档管理</h2>';
   html += '<div style="text-align:center;font-size:12px;color:var(--dim);margin-bottom:10px">槽位1为主存档位，旧版存档自动兼容 · 写入自动双备份（本地+IndexedDB）</div>';
+  /* /upg10inj:panel/ UPG-10 会话恢复 + 自动存档槽 */
+  try{
+    var _ss = window.v92_sessionKey ? sessionStorage.getItem(window.v92_sessionKey()) : null;
+    if(_ss){
+      var _so = v61_lzstring.sniffRaw(_ss);
+      if(_so && _so.name){
+        html += '<div class="save-slot-v34" style="border-color:var(--gold);background:rgba(255,215,0,0.06)">';
+        html += '<div class="save-slot-thumb">⏱</div>';
+        html += '<div class="save-slot-info">';
+        html += '<div class="save-slot-name">会话快照 · ' + _so.name + '（第' + (_so.day||1) + '天）</div>';
+        html += '<div class="save-slot-meta"><span>页面刷新后可恢复（本次未保存的进度）</span></div>';
+        html += '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">';
+        html += '<button class="btn btn-gold" onclick="try{v92_sessionRestore();closeModal();}catch(e){}">⏱ 恢复会话</button>';
+        html += '<button class="btn" onclick="try{v92_sessionClear();v34_openSavePanel();}catch(e){}">🗑 清除快照</button>';
+        html += '</div></div></div>';
+      }
+    }
+    var _as = window.v92_autosaveInfo ? window.v92_autosaveInfo() : null;
+    if(_as && _as.name){
+      html += '<div class="save-slot-v34" style="border-color:#8BC8EA">';
+      html += '<div class="save-slot-thumb">🔄</div>';
+      html += '<div class="save-slot-info">';
+      html += '<div class="save-slot-name">自动存档 · ' + _as.name + '（第' + (_as.day||1) + '天）</div>';
+      html += '<div class="save-slot-meta"><span>每 10 个节点自动写入</span></div>';
+      html += '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">';
+      html += '<button class="btn" onclick="v34_loadAutosave()">📖 读取</button>';
+      html += '<button class="btn btn-danger" onclick="v34_deleteAutosave()">🗑 删除</button>';
+      html += '</div></div></div>';
+    }
+  }catch(e){}
   for(var i=1;i<=5;i++){
     var saved = localStorage.getItem(i===1 ? RULESET_ID+"-save" : 'elda-save-slot-slot'+i);
     var empty = !saved;
@@ -10354,7 +10441,71 @@ if(document.readyState === 'loading'){
 /* ===== v43 沉浸演出接入层（引擎钩子） ===== */
 (function(){
   // 段落渲染后: 渐显动画 + 纯文本段落打字机
-  window.v34_afterFlush = function(appended){
+  window./* /upg10inj:persist/ UPG-10 三级持久化 + 会话恢复（SugarCube Save.slots 模式）
+   ① sessionStorage 临时快照：每次节点渲染后写入，刷新/杀页后恢复上次节点
+   ② 自动存档：每 10 节点写入 autosave 槽（elda-save-slot-autosave，LS+IDB 双写）
+   ③ 导出/导入 JSON：既有 exportJSON/importJSON（含口令加密）沿用
+   ④ 槽位 UI：存档面板新增 autosave 槽 + 恢复会话按钮
+   全部独立键；saveVersion=48 不变；applyDefaults 兜底链不变 */
+window.__v92nodeCount = 0;
+window.v92_sessionKey = function(){
+  return (typeof RULESET_ID !== 'undefined' ? RULESET_ID : 'elda-qunxiong-v3') + '-session';
+};
+window.v92_sessionSave = function(){
+  try{
+    if(typeof S === 'undefined' || !S || !S.name) return;
+    if(typeof curNode === 'undefined' || !curNode) return;
+    const snap = JSON.parse(JSON.stringify(S));
+    snap.saveVersion = 48;
+    snap._node = curNode;
+    let enc = JSON.stringify(snap);
+    try{ enc = 'lz1:' + v61_lzstring.compressToUTF16(enc); }catch(e){}
+    sessionStorage.setItem(window.v92_sessionKey(), enc);
+  }catch(e){}
+};
+window.v92_autoTick = function(){
+  try{
+    window.__v92nodeCount = (window.__v92nodeCount || 0) + 1;
+    if(window.__v92nodeCount % 10 !== 0) return;
+    if(typeof S === 'undefined' || !S || !S.name) return;
+    if(typeof StorageKit === 'undefined' || !StorageKit.save) return;
+    const snap = JSON.parse(JSON.stringify(S));
+    snap.saveVersion = 48;
+    snap.slotId = 'autosave';
+    snap.saveTime = Date.now();
+    if(typeof curNode !== 'undefined') snap.curNode = curNode;
+    StorageKit.save(snap);
+  }catch(e){}
+};
+window.v92_sessionRestore = function(){
+  try{
+    const raw = sessionStorage.getItem(window.v92_sessionKey());
+    if(!raw) return false;
+    if(typeof v61_lzstring === 'undefined' || !v61_lzstring.sniffRaw) return false;
+    const obj = v61_lzstring.sniffRaw(raw);
+    if(!obj || !obj.name || !obj._node) return false;
+    S = applyDefaults(obj);
+    S.saveVersion = 48;
+    const target = obj._node;
+    if(typeof writeNext !== 'function') return false;
+    setTimeout(function(){ try{ writeNext(target); }catch(e){ try{ writeNext(); }catch(_e){} } }, 60);
+    try{ if(typeof flashMsg === 'function') flashMsg('已恢复上次未保存的会话（第' + (S.day||1) + '天，' + S.name + '）'); }catch(e){}
+    try{ renderTop(); renderStats(); }catch(e){}
+    return true;
+  }catch(e){ return false; }
+};
+window.v92_sessionClear = function(){
+  try{ sessionStorage.removeItem(window.v92_sessionKey()); }catch(e){}
+};
+window.v92_autosaveInfo = function(){
+  try{
+    const raw = localStorage.getItem('elda-save-slot-autosave');
+    if(!raw) return null;
+    return v61_lzstring.sniffRaw(raw);
+  }catch(e){ return null; }
+};
+
+v34_afterFlush = function(appended){
     try{
       if(typeof V34 === 'undefined' || !V34 || !appended || !appended.length) return;
       var lastPlain = null;

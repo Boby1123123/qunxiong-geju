@@ -4481,6 +4481,8 @@ function bindCreation(){
     }
     S.day = 1; S.date = fmtDate(S.day);
     renderTop(); renderStats();
+    /* /upg10inj:newgame/ UPG-10 新游戏清除旧会话快照 */
+    try{ if(typeof v92_sessionClear === 'function') v92_sessionClear(); }catch(e){}
     writeNext();
   };
 }
@@ -5278,6 +5280,8 @@ async function init(){
   $("btn-save").onclick=()=>saveGame();
   $("btn-llm").onclick=()=>openLLMSettings();
   storyEl = $("story");
+  /* /upg10inj:restore/ UPG-10 会话恢复优先（比本地存档更新鲜；失败则正常走读档/建号） */
+  try{ if(typeof v92_sessionRestore === "function" && v92_sessionRestore()) return; }catch(e){}
   const saved = v61_lzstring.sniffRaw(localStorage.getItem(RULESET_ID+"-save")); /* /v61inj:save-init/ */
   if(saved){
     try{

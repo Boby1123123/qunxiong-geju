@@ -8326,6 +8326,19 @@ window.v91_storyPanel = v91_storyPanel;
 (function(){
   function inject2(){
     try{
+      /* /upg16inj:spellbtn/ UPG-16 法术书按钮（插在手记/叙事按钮之后） */
+      try{
+        var refSpell = document.getElementById('btn-story') || document.getElementById('btn-journal') || document.getElementById('btn-chronicle');
+        if(refSpell && !document.getElementById('btn-spellbook')){
+          var bs = document.createElement('button');
+          bs.id = 'btn-spellbook';
+          bs.className = 'btn';
+          bs.innerHTML = '📖 法术';
+          bs.title = '四系奥术法术书';
+          bs.onclick = function(){ try{ if(window.v92_openSpellbook) v92_openSpellbook(); }catch(e){} };
+          refSpell.parentNode.insertBefore(bs, refSpell.nextSibling);
+        }
+      }catch(e){}
       var ref = document.getElementById('btn-journal') || document.getElementById('btn-chronicle');
       if(!ref) return false;
       if(document.getElementById('btn-story')) return true;

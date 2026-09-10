@@ -3779,6 +3779,80 @@ window.v92_scanLedgerReminder = function(){
   }catch(e){ try{ console.log("[upg14:ledger:err]", e); }catch(_){} }
 };
 
+/* ===== /upg16inj:fantasy/ UPG-16 西幻体系深化（种族特长/职业事件/阵营感知/法术书）
+ * 只读/渲染层钩子：不触碰判定公式 / writeNext 核心语义 / choose。
+ * v92_raceShown：建号后首次渲染播报种族特长（flag 防重复）。
+ * v92_campFlags：按 S.rep 维护阵营感知 flag（upg16_rep_high/low），驱动 dn_camp.js 变体。
+ * v92_scanJobEvents：职业专属事件池扫描（并入 v92_scanHooks 调用链）。
+ * v92_openSpellbook：法术书面板（四系法术配方展示）。 ===== */
+window.v92_raceShown = function(){
+  try{
+    if(!S) return;
+    if(S.flags && S.flags.upg16_raceShown) return;
+    const RT = window.RACE_TRAITS; if(!RT) return;
+    const key = String(S.race||"human");
+    const r = RT[key] || RT.human;
+    if(!r) return;
+    if(S.flags) S.flags.upg16_raceShown = true;
+    const lines = ["【血脉 · " + r.name + "】" + r.desc];
+    for(let i=0;i<(r.traits||[]).length;i++){
+      lines.push("◆" + r.traits[i].t + "：" + r.traits[i].d);
+    }
+    try{ if(window.logMsg) logMsg(lines.join("\n"), "lore"); }catch(e){}
+    try{ console.log("[upg16inj:race]", key); }catch(e){}
+  }catch(e){ try{ console.log("[upg16:race:err]", e); }catch(_){} }
+};
+window.v92_campFlags = function(){
+  try{
+    if(!S || !S.flags) return;
+    const rep = (typeof S.rep==='number') ? S.rep : 50;
+    if(rep >= 70) S.flags.upg16_rep_high = true;
+    else if(rep <= 30) S.flags.upg16_rep_low = true;
+  }catch(e){}
+};
+window.v92_scanJobEvents = function(){
+  try{
+    if(!S) return;
+    const JE = window.JOB_EVENTS; if(!JE || !JE.length) return;
+    if(!S.world) S.world = {};
+    for(let i=0;i<JE.length;i++){
+      const e = JE[i]; if(!e || !e.id) continue;
+      if(S.world['ev_'+e.id]) continue;
+      if(e.day && S.day < e.day) continue;
+      if(e.job && S.job !== e.job) continue;
+      S.world['ev_'+e.id] = true;
+      try{ if(window.logMsg) logMsg("世界事件："+e.text+"（第"+S.day+"日）"); }catch(_){}
+      try{ console.log("[upg16inj:jobev]", e.id, S.day); }catch(_){}
+    }
+  }catch(e){ try{ console.log("[upg16:jobev:err]", e); }catch(_){} }
+};
+window.v92_openSpellbook = function(){
+  try{
+    const SP = window.MAGIC_SPELLS; if(!SP || !SP.length) return;
+    const schools = ["元素", "神圣", "深渊", "秘术"];
+    let h = '<div class="panel-wrap" style="max-width:640px;max-height:80vh;display:flex;flex-direction:column">'
+      +'<div class="panel-header"><span class="panel-title">📖 法术书 · 四系奥术</span><button class="panel-close" onclick="closePanel()">✕</button></div>'
+      +'<div class="panel-body" style="flex:1;overflow-y:auto;line-height:1.7">';
+    const mp = (typeof S!=='undefined'&&S)?(S.mp||0):0;
+    for(let s=0;s<schools.length;s++){
+      h += '<div style="margin-top:10px;font-weight:600;color:var(--m-04,#C9A7E8)">【'+schools[s]+'系】</div>';
+      for(let i=0;i<SP.length;i++){
+        const sp = SP[i];
+        if(sp.school !== schools[s]) continue;
+        const can = mp >= (sp.manaCost||0);
+        h += '<div style="margin:6px 0;padding:6px 8px;border-left:3px solid '+(can?'#8BC8EA':'#999')+';background:rgba(139,200,234,0.08);border-radius:6px">'
+          +'<b>'+sp.name+'</b> <span style="font-size:12px;color:var(--text-muted)">消耗 '+sp.manaCost+' 法力 · 你当前 '+mp+'</span>'
+          +'<div style="font-size:13px;margin-top:2px">成分：'+(sp.comps||[]).join('、')+'</div>'
+          +'<div style="font-size:13px;color:#555">吟唱：「'+sp.chant+'」</div>'
+          +'<div style="font-size:13px;color:#555">效果：'+sp.effect+'</div></div>';
+      }
+    }
+    h += '</div><div class="panel-footer"><button class="btn btn-gold" onclick="closePanel()">合上</button></div></div>';
+    try{ if(typeof elFromHtml==='function' && typeof openModal==='function') openModal(elFromHtml(h)); else if(window.flashMsg) flashMsg("法术书已就绪（需在游戏界面打开）"); }catch(e){ try{ console.log('spellbook', e); }catch(_){} }
+  }catch(e){ try{ console.log("[upg16:spell:err]", e); }catch(_){} }
+};
+window.v92_openSpellbook = v92_openSpellbook;
+
 /* ===== /upg17inj:chronicle/ UPG-17 编年史系统（世界史自适应叙事）
  * v92_chronicleAdd：写入 {date,eventType,description,importance,discoveredBy}，容量 200 滚动。
  * v92_chronicleCheck(node)：按 CHRONICLE_RULES 匹配节点 → 去重 → 写入（玩家没到过的节点不记录）。
@@ -4116,6 +4190,10 @@ function writeNext(_v46f){
     try{ if(window.v92_scanLedgerReminder) v92_scanLedgerReminder(); }catch(e){}
     /* /upg17inj:cron/ UPG-17 编年史：节点匹配记录 + 结局回顾注入 */
     try{ if(window.v92_chronicleCheck) v92_chronicleCheck(node); }catch(e){}
+    /* /upg16inj:fantasyhook/ UPG-16 阵营感知flag维护 + 种族特长首播 + 职业事件扫描 */
+    try{ if(window.v92_campFlags) v92_campFlags(); }catch(e){}
+    try{ if(window.v92_raceShown) v92_raceShown(); }catch(e){}
+    try{ if(window.v92_scanJobEvents) v92_scanJobEvents(); }catch(e){}
     /* /upg17inj:review/ UPG-17 结局回顾（ending_* 节点渲染时，按发现顺序生成编年史回顾；非结局零注入） */
     try{
       if(window.v92_chronicleReview && typeof node!=='undefined' && node && String(node.id||"").indexOf("ending_")===0){

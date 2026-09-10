@@ -6890,7 +6890,9 @@ N["fc_tavern"] = {tag:"main",
       fail:["酒馆太吵。你听了半天，只记住隔壁桌划拳的吆喝和麦酒的味道。"],
       crit:["你从嘈杂中捕捉到最关键的一句。角落里那个醉汉被同伴架走前，含糊地说：'……那门后面有人说话，说的是……话，不是人话……'你追出去，醉汉已经消失在巷子里。但你记住了：下水道，有一扇门。"]
     },effects:{},onCrit:{flag:"sewer_door"},go:"fc_guild"},
-    {t:"天色不早，找掌柜要间房住下",go:"fc_lodging"}
+    {t:"天色不早，找掌柜要间房住下",go:"fc_lodging"},
+    /* /upg16inj:camp/ UPG-16 阵营感知入口（自由城长街：声望变体正文） */
+    {t:"（出门，去长街上走走，看看这座城怎么看自己）",go:"fc_camp_street"}
   ]
 };
 N["fc_guild"] = {tag:"main",
@@ -54331,6 +54333,80 @@ window.v92_scanLedgerReminder = function(){
   }catch(e){ try{ console.log("[upg14:ledger:err]", e); }catch(_){} }
 };
 
+/* ===== /upg16inj:fantasy/ UPG-16 西幻体系深化（种族特长/职业事件/阵营感知/法术书）
+ * 只读/渲染层钩子：不触碰判定公式 / writeNext 核心语义 / choose。
+ * v92_raceShown：建号后首次渲染播报种族特长（flag 防重复）。
+ * v92_campFlags：按 S.rep 维护阵营感知 flag（upg16_rep_high/low），驱动 dn_camp.js 变体。
+ * v92_scanJobEvents：职业专属事件池扫描（并入 v92_scanHooks 调用链）。
+ * v92_openSpellbook：法术书面板（四系法术配方展示）。 ===== */
+window.v92_raceShown = function(){
+  try{
+    if(!S) return;
+    if(S.flags && S.flags.upg16_raceShown) return;
+    const RT = window.RACE_TRAITS; if(!RT) return;
+    const key = String(S.race||"human");
+    const r = RT[key] || RT.human;
+    if(!r) return;
+    if(S.flags) S.flags.upg16_raceShown = true;
+    const lines = ["【血脉 · " + r.name + "】" + r.desc];
+    for(let i=0;i<(r.traits||[]).length;i++){
+      lines.push("◆" + r.traits[i].t + "：" + r.traits[i].d);
+    }
+    try{ if(window.logMsg) logMsg(lines.join("\n"), "lore"); }catch(e){}
+    try{ console.log("[upg16inj:race]", key); }catch(e){}
+  }catch(e){ try{ console.log("[upg16:race:err]", e); }catch(_){} }
+};
+window.v92_campFlags = function(){
+  try{
+    if(!S || !S.flags) return;
+    const rep = (typeof S.rep==='number') ? S.rep : 50;
+    if(rep >= 70) S.flags.upg16_rep_high = true;
+    else if(rep <= 30) S.flags.upg16_rep_low = true;
+  }catch(e){}
+};
+window.v92_scanJobEvents = function(){
+  try{
+    if(!S) return;
+    const JE = window.JOB_EVENTS; if(!JE || !JE.length) return;
+    if(!S.world) S.world = {};
+    for(let i=0;i<JE.length;i++){
+      const e = JE[i]; if(!e || !e.id) continue;
+      if(S.world['ev_'+e.id]) continue;
+      if(e.day && S.day < e.day) continue;
+      if(e.job && S.job !== e.job) continue;
+      S.world['ev_'+e.id] = true;
+      try{ if(window.logMsg) logMsg("世界事件："+e.text+"（第"+S.day+"日）"); }catch(_){}
+      try{ console.log("[upg16inj:jobev]", e.id, S.day); }catch(_){}
+    }
+  }catch(e){ try{ console.log("[upg16:jobev:err]", e); }catch(_){} }
+};
+window.v92_openSpellbook = function(){
+  try{
+    const SP = window.MAGIC_SPELLS; if(!SP || !SP.length) return;
+    const schools = ["元素", "神圣", "深渊", "秘术"];
+    let h = '<div class="panel-wrap" style="max-width:640px;max-height:80vh;display:flex;flex-direction:column">'
+      +'<div class="panel-header"><span class="panel-title">📖 法术书 · 四系奥术</span><button class="panel-close" onclick="closePanel()">✕</button></div>'
+      +'<div class="panel-body" style="flex:1;overflow-y:auto;line-height:1.7">';
+    const mp = (typeof S!=='undefined'&&S)?(S.mp||0):0;
+    for(let s=0;s<schools.length;s++){
+      h += '<div style="margin-top:10px;font-weight:600;color:var(--m-04,#C9A7E8)">【'+schools[s]+'系】</div>';
+      for(let i=0;i<SP.length;i++){
+        const sp = SP[i];
+        if(sp.school !== schools[s]) continue;
+        const can = mp >= (sp.manaCost||0);
+        h += '<div style="margin:6px 0;padding:6px 8px;border-left:3px solid '+(can?'#8BC8EA':'#999')+';background:rgba(139,200,234,0.08);border-radius:6px">'
+          +'<b>'+sp.name+'</b> <span style="font-size:12px;color:var(--text-muted)">消耗 '+sp.manaCost+' 法力 · 你当前 '+mp+'</span>'
+          +'<div style="font-size:13px;margin-top:2px">成分：'+(sp.comps||[]).join('、')+'</div>'
+          +'<div style="font-size:13px;color:#555">吟唱：「'+sp.chant+'」</div>'
+          +'<div style="font-size:13px;color:#555">效果：'+sp.effect+'</div></div>';
+      }
+    }
+    h += '</div><div class="panel-footer"><button class="btn btn-gold" onclick="closePanel()">合上</button></div></div>';
+    try{ if(typeof elFromHtml==='function' && typeof openModal==='function') openModal(elFromHtml(h)); else if(window.flashMsg) flashMsg("法术书已就绪（需在游戏界面打开）"); }catch(e){ try{ console.log('spellbook', e); }catch(_){} }
+  }catch(e){ try{ console.log("[upg16:spell:err]", e); }catch(_){} }
+};
+window.v92_openSpellbook = v92_openSpellbook;
+
 /* ===== /upg17inj:chronicle/ UPG-17 编年史系统（世界史自适应叙事）
  * v92_chronicleAdd：写入 {date,eventType,description,importance,discoveredBy}，容量 200 滚动。
  * v92_chronicleCheck(node)：按 CHRONICLE_RULES 匹配节点 → 去重 → 写入（玩家没到过的节点不记录）。
@@ -54668,6 +54744,10 @@ function writeNext(_v46f){
     try{ if(window.v92_scanLedgerReminder) v92_scanLedgerReminder(); }catch(e){}
     /* /upg17inj:cron/ UPG-17 编年史：节点匹配记录 + 结局回顾注入 */
     try{ if(window.v92_chronicleCheck) v92_chronicleCheck(node); }catch(e){}
+    /* /upg16inj:fantasyhook/ UPG-16 阵营感知flag维护 + 种族特长首播 + 职业事件扫描 */
+    try{ if(window.v92_campFlags) v92_campFlags(); }catch(e){}
+    try{ if(window.v92_raceShown) v92_raceShown(); }catch(e){}
+    try{ if(window.v92_scanJobEvents) v92_scanJobEvents(); }catch(e){}
     /* /upg17inj:review/ UPG-17 结局回顾（ending_* 节点渲染时，按发现顺序生成编年史回顾；非结局零注入） */
     try{
       if(window.v92_chronicleReview && typeof node!=='undefined' && node && String(node.id||"").indexOf("ending_")===0){
@@ -64539,6 +64619,19 @@ window.v91_storyPanel = v91_storyPanel;
 (function(){
   function inject2(){
     try{
+      /* /upg16inj:spellbtn/ UPG-16 法术书按钮（插在手记/叙事按钮之后） */
+      try{
+        var refSpell = document.getElementById('btn-story') || document.getElementById('btn-journal') || document.getElementById('btn-chronicle');
+        if(refSpell && !document.getElementById('btn-spellbook')){
+          var bs = document.createElement('button');
+          bs.id = 'btn-spellbook';
+          bs.className = 'btn';
+          bs.innerHTML = '📖 法术';
+          bs.title = '四系奥术法术书';
+          bs.onclick = function(){ try{ if(window.v92_openSpellbook) v92_openSpellbook(); }catch(e){} };
+          refSpell.parentNode.insertBefore(bs, refSpell.nextSibling);
+        }
+      }catch(e){}
       var ref = document.getElementById('btn-journal') || document.getElementById('btn-chronicle');
       if(!ref) return false;
       if(document.getElementById('btn-story')) return true;
@@ -72719,6 +72812,173 @@ N["anchor_oracle_6"]={tags:["anchor"],tag:"main",place:"草原 · 神谕石林�
 {t:"（北上第三哨，让七锚归位）",effects:{xp:30},go:"goldscale_1"}
 ]};
 
+/* /u1inj:data-nodes:dn_camp.js/ */
+/* /u1inj:data-nodes:dn_camp.js/ UPG-16 阵营态度文本变体（数据驱动内容）
+ * 6 个阵营感知节点：同一场景按玩家声望/影响力（S.rep / S.infl）与关键 flag 呈现不同正文。
+ * 复用 v91_resolveText 的 ifFlag 变体（rep≥70 → 民望 flag；rep≤30 → 恶名 flag；infl 某域高 → 域望 flag）；
+ * 挂载：自由城邦 hub 入口（fc_camp_*），选项零新增，只补可玩入口。
+ */
+N["fc_camp_street"] = {
+  tag: "branch", place: "自由城邦 · 交汇城 · 长街", where: "任意", pace: "normal",
+  text: {
+    default: [
+      "你走在交汇城的长街上。商贩的叫卖声、车马的辘辘声、铁匠铺的叮当声混成一片，没有人多看你一眼——在这座城里，过客和尘埃一样多。",
+      "你在一家茶馆门口站了一会儿。里头的说书人正讲着北境战事，听客们嗑着瓜子，谁也没注意到你。",
+      "你在街角停下，把身上的灰拍净。这座城市认得每一个有钱人，却记不住任何一个穷人——现在的你，是哪种人？"
+    ],
+    ifFlag: {
+      "upg16_rep_high": [
+        "你走在交汇城的长街上。商贩的叫卖声、车马的辘辘声、铁匠铺的叮当声混成一片。",
+        "有人认出你，低声招呼：“这位爷，前日那桩事办得漂亮，城里的老人都念着您的好。”茶馆里说书人正讲着你的名字，虽然添油加醋，但你听得出，那是在夸你。",
+        "你在街角停下，一个孩子跑过来塞给你一颗糖，又跑开了。这座城市认得你——不是因为钱，是因为你做过的事。"
+      ],
+      "upg16_rep_low": [
+        "你走在交汇城的长街上。商贩的叫卖声、车马的辘辘声、铁匠铺的叮当声混成一片。",
+        "几个巡丁看见你，下意识握紧了腰间的刀。茶馆里说书人正讲着北境战事，可你一进门，声音就低了下去。",
+        "你在街角停下，把兜帽压了压。这座城市记得你做过的事——那些事，让好人避着你，让坏人想找你。"
+      ]
+    }
+  },
+  options: [
+    { t: "（走进茶馆，听一耳朵）", go: "fc_camp_tavern" },
+    { t: "（去集市看看行情）", go: "fc_camp_market" },
+    { t: "（原路离开，回自己的事）", go: "fc_tavern" }
+  ]
+};
+N["fc_camp_tavern"] = {
+  tag: "branch", place: "自由城邦 · 交汇城 · 茶馆", where: "任意", pace: "normal",
+  text: {
+    default: [
+      "茶馆里烟气缭绕。说书人一拍醒木：“话说北境那位铁面将军，单人匹马……”台下哄然叫好。",
+      "你找了个角落坐下，要了一碗粗茶。邻桌的客人在议论银穗商路——有人说要通了，有人说要打起来。",
+      "你听着，没插话。这座城的消息，一半真一半假，剩下的，要拿命去验。"
+    ],
+    ifFlag: {
+      "upg16_rep_high": [
+        "茶馆里烟气缭绕。说书人一拍醒木，讲的竟是你前日的作为——虽然添了三成水分，但满堂叫好。",
+        "邻桌一个老客转过头来，冲你举了举碗：“英雄，请一碗茶。”你接了，没多话。",
+        "这世道，名声是刀，也是盾。你如今这柄刀，举起来能伤人，放下来能护人。"
+      ],
+      "upg16_rep_low": [
+        "茶馆里烟气缭绕。你刚坐下，邻桌的客人就住了嘴，交换一个眼神，起身换了张桌。",
+        "小二端着茶上来，手有点抖，碗沿碰得直响。你付了钱，茶没喝，走了。",
+        "这世道，名声是刀，也是债。你欠下的，迟早要还。"
+      ]
+    }
+  },
+  options: [
+    { t: "（向说书人打听北境战事）", go: "fc_guild" },
+    { t: "（回住处歇息）", go: "fc_tavern" }
+  ]
+};
+N["fc_camp_market"] = {
+  tag: "branch", place: "自由城邦 · 交汇城 · 集市", where: "白昼", pace: "normal",
+  text: {
+    default: [
+      "集市上人头攒动。粮食、铁器、香料、旧书——什么东西都有人卖，什么东西都有人买。",
+      "一个商人模样的胖子在吆喝：“上好的银穗河盐，北境都断货了！”你走过去看了看，货是盐，价是刀。",
+      "你摸了摸钱袋。在这座城，钱不是万能的——但没有钱，你连这市集的一角都站不稳。"
+    ],
+    ifFlag: {
+      "upg16_rep_high": [
+        "集市上人头攒动。你走到粮摊前，摊主一见你，主动压低价格：“您前日救了城东那家孤儿寡母，这袋粮，按进价给您。”",
+        "一路走过去，七八个摊主跟你打招呼。有个卖刀的汉子还塞给你一把磨刀石：“下回打架，用得上。”",
+        "你提着粮，心里盘算着——名声这东西，原来真能在市集上换钱。"
+      ],
+      "upg16_rep_low": [
+        "集市上人头攒动。你刚凑近一个摊位，摊主就捂住钱匣子，警惕地看着你。",
+        "有个巡丁远远跟着你，不近不远。你转了两圈，什么都没买，走了。",
+        "这城里的商人认钱不认人——可他们更怕惹麻烦。你现在，就是那个麻烦。"
+      ]
+    }
+  },
+  options: [
+    { t: "（买些干粮补给）", effects: { gold: -2 }, go: "fc_camp_street" },
+    { t: "（离开集市）", go: "fc_camp_street" }
+  ]
+};
+N["fc_camp_temple"] = {
+  tag: "branch", place: "自由城邦 · 交汇城 · 旧神殿", where: "白昼", pace: "normal",
+  text: {
+    default: [
+      "交汇城的旧神殿香火冷清。牧师在台阶上洒水，几只鸽子啄着谷粒。",
+      "你进去，在长椅上坐了一会儿。神像的脸在烛火里明明灭灭，看不出悲喜。",
+      "你想起自己听过的那句预言。神没有回答你，但离开时，你觉得心里稍微静了一些。"
+    ],
+    ifFlag: {
+      "upg16_rep_high": [
+        "交汇城的旧神殿香火冷清。牧师认出你，欠身让路。",
+        "你在神像前坐了一会儿，烛火跳了跳。你想起那句预言，也想起自己做过的事——神没有回答你，但你知道，路是自己走出来的。",
+        "离开时，牧师在门口低声道：“善者不问神明，只问良心。您的心，不亏。”"
+      ],
+      "upg16_rep_low": [
+        "交汇城的旧神殿香火冷清。你走进去，牧师看了你一眼，没有说话，只是把募捐箱往身边拢了拢。",
+        "你在长椅上坐了一会儿。烛火跳了跳，你想起那些被你伤害的人的脸。",
+        "神没有审判你——但你自己知道，有些账，不是捐几个银币就能还清的。"
+      ]
+    }
+  },
+  options: [
+    { t: "（捐一枚银币）", effects: { gold: -1, karma: 1 }, go: "fc_camp_street" },
+    { t: "（起身离开）", go: "fc_camp_street" }
+  ]
+};
+N["fc_camp_guild"] = {
+  tag: "branch", place: "自由城邦 · 交汇城 · 行会大厅", where: "白昼", pace: "normal",
+  text: {
+    default: [
+      "行会大厅里人来人往。佣兵、商人、工匠、跑腿的——各色人等在这里接活、交货、讨价还价。",
+      "公告栏上贴满了委托。最上面一张用红笔写着：“北境军需，重金急购。”",
+      "你扫了一眼，心里记下。机会这东西，在这座城里从来不少——看你能不能接住。"
+    ],
+    ifFlag: {
+      "upg16_rep_high": [
+        "行会大厅里人来人往。你一进门，管事的老刘就迎上来：“您来得正好，有几桩好买卖，别人接不动，您接得动。”",
+        "他把三张委托单推到你面前，最上面那张写着北境军需——赏金后面，多了三个零。",
+        "声望这东西，在行会里比金币还硬。你现在，就是那张硬通货。"
+      ],
+      "upg16_rep_low": [
+        "行会大厅里人来人往。你走到公告栏前，刚伸手，一个佣兵头子就横过来：“这活，你这种名声的，接了也没人跟。”",
+        "你看了他一眼，没动手。在行会里打架，比在街上打架贵十倍。",
+        "你退后一步，记住了他的脸。名声坏了可以挣回来——但你得先知道，是谁在背后压你的价。"
+      ]
+    }
+  },
+  options: [
+    { t: "（接下一桩委托）", go: "fc_guild" },
+    { t: "（离开行会）", go: "fc_camp_street" }
+  ]
+};
+N["fc_camp_night"] = {
+  tag: "branch", place: "自由城邦 · 交汇城 · 夜巷", where: "黑夜", pace: "deep",
+  text: {
+    default: [
+      "入夜的交汇城换了副面孔。白天的叫卖声熄了，取而代之的是酒馆的喧闹、暗巷里的低语、更夫敲梆子的声音。",
+      "你走在夜巷里，脚步放轻。两边的窗户大多黑了，只有几家酒馆还亮着昏黄的光。",
+      "拐角处，一个黑影闪了一下，又消失了。你停下来，屏住呼吸——在这座城，夜晚的眼睛比白天多。",
+      "你想起白天听到的消息，又想起自己口袋里那点钱。今夜的交汇城，像一头半睡半醒的野兽。而你，正走在它牙缝边上。"
+    ],
+    ifFlag: {
+      "upg16_rep_high": [
+        "入夜的交汇城换了副面孔。白天的叫卖声熄了，酒馆的喧闹和暗巷的低语亮起来。",
+        "你走在夜巷里，脚步放轻。拐角处一个巡夜的老卒认出你，冲你点了点头——在夜里，被认出来，有时候是好事，有时候不是。",
+        "你回了一礼，继续走。名声在夜里是一盏灯，照得见路，也照得见你。"
+      ],
+      "upg16_rep_low": [
+        "入夜的交汇城换了副面孔。你走在夜巷里，阴影比别处更浓。",
+        "一个醉汉从酒馆里晃出来，看见你，酒醒了一半，贴着墙根溜了。有人认出了你——不是好事。",
+        "你加快了脚步。在这座城，夜晚的眼睛比白天多，而你现在，最怕被人看见。"
+      ]
+    }
+  },
+  options: [
+    { t: "（回住处）", go: "fc_tavern" },
+    { t: "（继续探查夜巷）", go: "fc_sewer" }
+  ]
+};
+/* 阵营变体入口挂载：fc_ 链 hub 处由引擎 v92_campHooks 自动插入提示（非选项，仅正文回响） */
+if (typeof window !== 'undefined') { window.FC_CAMP_NODES = ["fc_camp_street", "fc_camp_tavern", "fc_camp_market", "fc_camp_temple", "fc_camp_guild", "fc_camp_night"]; }
+
 /* /u1inj:data-nodes:dn_causality.js/ */
 /* ===== /v91inj:ledger/ CM-3 因果/伏笔账本（纯数据；elda content causality 读取核销；不改引擎） =====
  * 字段：id / type(伏笔|设定|人物|地点|事件) / desc / plant(埋设锚点) / reap(回收锚点) / status(open|closed) / world(所属卷/域)
@@ -79834,6 +80094,35 @@ N["goal_revenge_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",te
 {t:"收刀（理想里程碑·完成）",effect:{flag:"ideal_goal_revenge_done"},go:"fc_tavern"}
 ]};
 
+/* /u1inj:data-nodes:dn_job_events.js/ */
+/* /u1inj:data-nodes:dn_job_events.js/ UPG-16 职业事件池（数据驱动）
+ * JOB_EVENTS：职业专属世界事件（CoffeeMud 职业权重差异的落地——按职业过滤触发）。
+ * 每条 {job, day, cls, text, cond}；由 v92_scanJobEvents 扫描（并入 v92_scanHooks 调用链）：
+ *   S.job 匹配 + day 到达 + S.world['ev_'+id] 未触发 → 播报。与 EVENT_POOL_EXT 176 事件互不干扰。
+ * 铁律：day 与五主线错开；数组末项无尾逗号（此文件末尾一项）；不触碰现有事件触发逻辑。
+ */
+const JOB_EVENTS = [
+  { id: "je_mage_mana", job: "魔法师", day: 72, cls: "奇遇", text: "奥术潮汐漫过北境，法师塔的灯整夜不熄。元素结晶在集市上被抢购一空——正是懂行的人出手的时候。" },
+  { id: "je_mage_archive", job: "魔法师", day: 156, cls: "奇遇", text: "学院禁书区传来异响，图书馆长闭馆三日。有传言说，是某本古书的封印松动了。" },
+  { id: "je_soul_spirit", job: "灵魂法师", day: 88, cls: "奇遇", text: "墓园的烛火无风自动。守墓人说，最近亡者的低语比往年密——灵魂法师能听见别人听不见的。" },
+  { id: "je_soul_echo", job: "灵魂法师", day: 214, cls: "人祸", text: "老莫里茨生前留下的账册，被人在旧书店里翻了出来。上面记着一些不该记的名字。" },
+  { id: "je_sor_wild", job: "术士", day: 96, cls: "天灾", text: "元素风暴在荒原上空盘旋三日。术士的血脉在躁动——混沌之力离得更近了。" },
+  { id: "je_sor_omen", job: "术士", day: 240, cls: "奇遇", text: "有术士梦见七枚铁牌在黑暗中互相叩击。醒来时，枕边多了一片焦黑的铁屑。" },
+  { id: "je_war_levy", job: "战士", day: 68, cls: "人祸", text: "铁门关发出征兵令，北境联军四处征召壮丁。老兵说，这一仗怕是躲不掉了。" },
+  { id: "je_war_tourney", job: "战士", day: 148, cls: "商机", text: "自由城邦举办比武大会，赏金丰厚。各路的刀客剑客，都往斗兽场赶。" },
+  { id: "je_knight_oath", job: "骑士", day: 82, cls: "奇遇", text: "圣城骑士团重开誓约仪式，老骑士们检验新一代的忠诚与剑术。" },
+  { id: "je_knight_crusade", job: "骑士", day: 208, cls: "人祸", text: "教会发布圣战令，号召骑士南下清剿异端。教廷的旗帜，第一次越过银穗河。" },
+  { id: "je_ranger_wild", job: "游侠", day: 70, cls: "天灾", text: "狼群大规模南迁，猎人们说它们是被什么东西赶出来的。草原上的兽人部族也动了。" },
+  { id: "je_ranger_path", job: "游侠", day: 176, cls: "奇遇", text: "林间古道被藤蔓封死，有人在里面听见了精灵的号角声。" },
+  { id: "je_thief_guild", job: "盗贼", day: 78, cls: "商机", text: "地下黑市放出风声：有人出高价收购铁牌残片。不问来路。" },
+  { id: "je_thief_heist", job: "盗贼", day: 184, cls: "人祸", text: "美第奇商会的金库失窃，陆昭亲自督办。城里的暗巷一夜之间搜了个遍。" },
+  { id: "je_priest_mass", job: "牧师", day: 74, cls: "奇遇", text: "圣城大教堂举行大弥撒，圣痕司的执事在人群里挑选「受印者」。" },
+  { id: "je_priest_inq", job: "牧师", day: 206, cls: "人祸", text: "审判官带着异端名单进了城。名单上的人，一夜之间全部消失了。" },
+  { id: "je_merch_market", job: "商人", day: 66, cls: "商机", text: "银穗商路短暂复通，第一批商队赚得盆满钵满。消息灵通的人已经开始囤货。" },
+  { id: "je_merch_blockade", job: "商人", day: 162, cls: "天灾", text: "商路被军阀切断，货物积压在驿站。商会紧急开会，商量绕道西境的路线。" }
+];
+if (typeof window !== 'undefined') { window.JOB_EVENTS = JOB_EVENTS; }
+
 /* /u1inj:data-nodes:dn_lorebook.js/ */
 /* ===== UPG-01 世界书 Lorebook（关键词触发式设定注入） =====
  * SillyTavern World Info 式：constant 常驻 / triggers 命中注入 / recursive 递归链
@@ -81615,6 +81904,70 @@ window.IDEAL_GOALS = {
   revenge: { cn:"以血还血", intro:"goal_intro_revenge", steps:["goal_revenge_1","goal_revenge_2","goal_revenge_3"] }
 };
 
+/* /u1inj:data-nodes:dn_races.js/ */
+/* /u1inj:data-nodes:dn_races.js/ UPG-16 西幻种族特长（数据驱动）
+ * RACE_TRAITS：按 S.race 键（human/elf/dwarf/orc/half/nordic）绑定种族特长。
+ * 特长用于：属性面板种族卡展示 + 世界书关键词注入（UPG-01 机制）+ 事件池权重提示（JOB_EVENTS 配合）。
+ * 只读数据；不改判定公式；建号 attrs 修正由 PROLOGUES.startBonus 承担（本表不重复加属性）。
+ */
+const RACE_TRAITS = {
+  human: {
+    name: "人类", alias: ["人类", "中境人", "南境人", "北境人", "西境人", "东境人", "人类（东部）", "人类（多元）", "人类（教会）"],
+    desc: "短命而坚韧的种族。没有精灵的长寿、矮人的铁骨，却以惊人的适应力散布大陆各处。",
+    traits: [
+      { t: "适应力", d: "人类学习新技能时更有天赋，转职与跨领域成长限制更宽。" },
+      { t: "多面手", d: "人类可在九大职业与各势力间周旋，是唯一不被任何一方血脉束缚的种族。" }
+    ],
+    loreKeys: ["人类", "九大职业", "自由城邦"]
+  },
+  elf: {
+    name: "精灵", alias: ["精灵", "精灵（默认）", "森林精灵", "半精灵"],
+    desc: "林海与月光的后裔。寿命以百年计，与自然元素的共鸣刻在血脉里。",
+    traits: [
+      { t: "元素亲和", d: "精灵对元素魔法感知敏锐，魔法系技能成长更快。" },
+      { t: "林海之眼", d: "在森林与自然区域，精灵的洞察与潜行更得心应手。" }
+    ],
+    loreKeys: ["精灵", "元素", "林海"]
+  },
+  dwarf: {
+    name: "矮人", alias: ["矮人", "矮人（默认）", "山地矮人"],
+    desc: "山腹与熔炉的子民。固执、守信，一锤一凿间藏着千年的工艺。",
+    traits: [
+      { t: "铁骨", d: "矮人耐力惊人，对物理创伤的耐受更强。" },
+      { t: "匠心", d: "锻造与机关之术代代相传，工艺类检定有血脉加成。" }
+    ],
+    loreKeys: ["矮人", "锻造", "山国"]
+  },
+  orc: {
+    name: "兽人", alias: ["兽人", "草原兽人"],
+    desc: "草原与战吼的种族。崇尚力量与荣耀，狼是他们的兄弟。",
+    traits: [
+      { t: "战吼血脉", d: "兽人在正面冲突中气势如虹，近战倾向更明显。" },
+      { t: "狼之盟", d: "兽人与狼群有古老契约，驯兽与追踪有天赋。" }
+    ],
+    loreKeys: ["兽人", "狼群", "草原"]
+  },
+  half: {
+    name: "半身人", alias: ["半身人", "田园半身人", "半精灵", "混血"],
+    desc: "游走于诸族之间的混血儿。血脉混杂，也带来不拘一格的可能。",
+    traits: [
+      { t: "混血天赋", d: "半身人可从双亲血脉中各取一分特长，选择更灵活。" },
+      { t: "灵活", d: "身形灵巧，闪避与逃脱更占优势。" }
+    ],
+    loreKeys: ["半身人", "混血", "流浪"]
+  },
+  nordic: {
+    name: "北境人", alias: ["北境人", "nordic"],
+    desc: "铁门关风雪里长大的北境血脉。战争是他们的摇篮，寒铁是他们的语言。",
+    traits: [
+      { t: "寒铁意志", d: "北境人在苦寒与战争中磨出的意志，面对压迫更不易屈服。" },
+      { t: "军旅传承", d: "北境诸族世代从军，战术与格斗有血脉优势。" }
+    ],
+    loreKeys: ["北境", "铁门关", "军队"]
+  }
+};
+if (typeof window !== 'undefined') { window.RACE_TRAITS = RACE_TRAITS; }
+
 /* /u1inj:data-nodes:dn_sp8_ranger.js/ */
 /* /sp8inj:nodes/ SP-8 示范章 · 西境游侠学院（arc_west_ranger 支线，30 节点闭环）
    流水线全流程示范：纯数据对象式节点 + pace 元数据 + flag/好感 + 蓝图弧归属
@@ -81818,6 +82171,33 @@ N["sp8_ranger_18b"]={tag:"main",place:"西境 · 元素荒原",pace:"normal",tex
 ],options:[
 {t:"（循着遗迹的方向，继续深入）",go:"west_hub"}
 ]};
+
+/* /u1inj:data-nodes:dn_spells.js/ */
+/* /u1inj:data-nodes:dn_spells.js/ UPG-16 西幻法术体系（数据驱动）
+ * MAGIC_SPELLS：四系法术配方表（元素/神圣/深渊/秘术）。
+ * 每条 {id, school, name, manaCost, comps[], chant, effect}——纯展示+内容数据；
+ * 施法选项由对应法术节点承载（check/effects 走既有引擎），面板只读展示。
+ * 不触碰判定公式；法力以 S.mp 展示（战斗系统既有字段）。
+ */
+const MAGIC_SPELLS = [
+  // 元素系
+  { id: "sp_ember", school: "元素", name: "烬火", manaCost: 8, comps: ["硫磺粉", "火绒"], chant: "以火之名，烬而生焰。", effect: "投出一团灼热烬火，点燃目标。" },
+  { id: "sp_gale", school: "元素", name: "烈风刃", manaCost: 10, comps: ["风羽", "银针"], chant: "风聚于刃，割裂长空。", effect: "凝聚风刃横扫，切割范围内敌人。" },
+  { id: "sp_tide", school: "元素", name: "潮汐环", manaCost: 12, comps: ["海盐", "蓝晶"], chant: "潮起潮落，环守吾身。", effect: "召唤水环护体，化解近身冲击。" },
+  // 神圣系
+  { id: "sp_hallow", school: "神圣", name: "圣辉", manaCost: 9, comps: ["圣水", "银符"], chant: "光辉所至，暗影退散。", effect: "圣光绽放，驱散诅咒与亡者之力。" },
+  { id: "sp_mend", school: "神圣", name: "愈伤", manaCost: 11, comps: ["草药", "圣灰"], chant: "以圣之名，血肉归位。", effect: "金色光芒渗入伤口，加速愈合。" },
+  { id: "sp_judge", school: "神圣", name: "审判之矛", manaCost: 15, comps: ["圣徽", "银矛"], chant: "罪与罚，皆在圣裁之下。", effect: "掷出光矛，对不洁之物造成重创。" },
+  // 深渊系
+  { id: "sp_whisper", school: "深渊", name: "低语", manaCost: 7, comps: ["黑曜石", "暗血"], chant: "深渊低语，心念成影。", effect: "以低语扰乱心神，令敌迟疑。" },
+  { id: "sp_fissure", school: "深渊", name: "裂隙", manaCost: 16, comps: ["裂晶", "骨灰"], chant: "大地裂开，渊气上涌。", effect: "撕开地表裂隙，涌出蚀骨渊气。" },
+  { id: "sp_voidgaze", school: "深渊", name: "虚空凝视", manaCost: 13, comps: ["镜片", "暗纹"], chant: "凝视虚空者，终被虚空凝视。", effect: "以虚空之眼压制目标的意志。" },
+  // 秘术系
+  { id: "sp_ward", school: "秘术", name: "守护刻印", manaCost: 9, comps: ["秘银粉", "符文纸"], chant: "刻印为界，外邪莫入。", effect: "在地面刻下守护符文，抵御法术。" },
+  { id: "sp_foresight", school: "秘术", name: "预见", manaCost: 12, comps: ["星尘", "水银"], chant: "因果微动，未来显影。", effect: "短暂窥见数息之后的轨迹。" },
+  { id: "sp_anchorbind", school: "秘术", name: "锚定", manaCost: 14, comps: ["铁牌残片", "蓝绳"], chant: "以锚为凭，锁住此身。", effect: "将目标固定在原地，难以移动。" }
+];
+if (typeof window !== 'undefined') { window.MAGIC_SPELLS = MAGIC_SPELLS; }
 
 /* /u1inj:data-nodes:dn_story_blueprint.js/ */
 /* ============================================================

@@ -326,7 +326,7 @@ N["fc_sewer2"] = {tag:"main",
 
       critfailCon:true
 
-    },effects:{xp:30},onFail:{hp:-15},onCritFail:{hp:-25,san:-8,flag:"marked_sewer"},go:"fc_sewer3"},
+    },effects:{xp:30},onFail:{hp:-15},onCritFail:{hp:-25,san:-8,flag:"marked_sewer"},fail:"failpath_sewer_1",go:"fc_sewer3"},
 
     {t:"先稳住心神，找机会破坏阵纹",check:{a:"SPR",sk:"will",label:"意志",note:"抵抗精神侵蚀"},tier:{
 

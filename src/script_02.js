@@ -393,7 +393,7 @@ N["fc_sewer2"] = {tag:"main",
 
       critfailCon:true
 
-    },effects:{xp:30},onFail:{hp:-15},onCritFail:{hp:-25,san:-8,flag:"marked_sewer"},go:"fc_sewer3"},
+    },effects:{xp:30},onFail:{hp:-15},onCritFail:{hp:-25,san:-8,flag:"marked_sewer"},fail:"failpath_sewer_1",go:"fc_sewer3"},
 
     {t:"先稳住心神，找机会破坏阵纹",check:{a:"SPR",sk:"will",label:"意志",note:"抵抗精神侵蚀"},tier:{
 
@@ -641,7 +641,7 @@ N["pro_realm1"] = {tag:"main",
 
       critfail:["你强行冲击，力量在体内乱窜。胸口剧痛，你哇地吐出一口血。那簇火苗非但没燃起来，反而烫伤了你。","你扶着石板喘了很久。耳边隐约响起下水道里那种声音——它在笑。","（破境失败：受创，SAN-5。勿强行冲关，先稳固心境。）"]
 
-    },effects:{xp:20},onOk:{cond:"pra",attr:{SPR:2}},onCrit:{attr:{SPR:2,INT:2}},onFail:{hp:-10},onCritFail:{hp:-15,san:-5},go:"pro_after"}
+    },effects:{xp:20},onOk:{cond:"pra",attr:{SPR:2}},onCrit:{attr:{SPR:2,INT:2}},onFail:{hp:-10},onCritFail:{hp:-15,san:-5},fail:"failpath_realm_1",go:"pro_after"}
 
   ]
 
@@ -10871,7 +10871,7 @@ var ENDINGS_V9 = {
 
 };
 
-N["world_bandit"]={place:"天下大势 · bandit",where:"商路驿站",text:["你落脚的那间驿站，今晚住满了脸色发白的行商。","“黑风寨那群人疯了，连银月商会的旗号都敢劫。三支货队，一个活口都没回来。”","驿站的老板往火塘里添了根柴：“客官，天亮前要是没伴儿，我劝你别上路。”"],pace:"light",options:[{t:"天亮前抄小路赶路",check:{a:"AGI",sk:"survive",label:"穿林"},tier:{ok:["你天没亮就进了林子，踩着猎径穿过去。日上三竿时，已经把黑风寨的地盘甩在身后。"],fail:["林子里钻出两个蒙面人，你拼了老命才甩脱，行囊里的干粮却丢了一袋。"],crit:["你不但穿过林子，还沿着兽道绕到黑风寨后山，远远看见寨子里火光冲天。你把路线记在心里。"]},go:"world_continue"},{t:"跟大商队结伴而行",run:function(){S.gold-=20; writePar('你花二十金币搭上银月商会的武装商队。一路刀光剑影，但护卫硬是护着你过了黑风寨的地界。','res'); curNode='world_continue'; writeNext();},go:"world_continue"},{t:"先歇一晚，明日再说",go:"world_continue"}]};
+N["world_bandit"]={place:"天下大势 · bandit",where:"商路驿站",text:["你落脚的那间驿站，今晚住满了脸色发白的行商。","“黑风寨那群人疯了，连银月商会的旗号都敢劫。三支货队，一个活口都没回来。”","驿站的老板往火塘里添了根柴：“客官，天亮前要是没伴儿，我劝你别上路。”"],pace:"light",options:[{t:"天亮前抄小路赶路",check:{a:"AGI",sk:"survive",label:"穿林"},tier:{ok:["你天没亮就进了林子，踩着猎径穿过去。日上三竿时，已经把黑风寨的地盘甩在身后。"],fail:["林子里钻出两个蒙面人，你拼了老命才甩脱，行囊里的干粮却丢了一袋。"],crit:["你不但穿过林子，还沿着兽道绕到黑风寨后山，远远看见寨子里火光冲天。你把路线记在心里。"]},fail:"failpath_bandit_1",go:"world_continue"},{t:"跟大商队结伴而行",run:function(){S.gold-=20; writePar('你花二十金币搭上银月商会的武装商队。一路刀光剑影，但护卫硬是护着你过了黑风寨的地界。','res'); curNode='world_continue'; writeNext();},go:"world_continue"},{t:"先歇一晚，明日再说",go:"world_continue"}]};
 
 N["world_grain"]={place:"天下大势 · grain",where:"自由港 · 粮市",text:["今天的粮市，静得反常。几个大粮商的铺子都挂出“今日无货”，可你分明看见后面的仓门一袋袋粮食正往内库搬。","一个跑腿的小伙计凑过来：“客官，东境已经开仓限购了。这粮价，还得涨。”","你掂了掂钱袋。这世道，粮食比金币更像个东西。", "你最后回望一眼grain，转身穿过街口，往下一程赶路。"],pace:"light",options:[{t:"囤两袋粮食（花 30 金币）",run:function(){S.gold-=30; S.mats.grain=(S.mats.grain||0)+2; writePar('你用三十枚金币换了满满两袋粮，藏进行囊深处。日后闹起粮荒，这两袋粮就是命。','res'); curNode='world_continue'; writeNext();},go:"world_continue"},{t:"查查是谁在背后囤粮",check:{a:"INT",sk:"detect",label:"追查"},tier:{ok:["你顺着粮车的辙印查下去，发现几个大粮商背后都指向同一家银号。有人在拿粮市当棋盘。"],fail:["你还没摸到门路，就被粮行的伙计客客气气地请了出来。水太深，看不清底。"],crit:["你不但查出了银号，还从账房的只言片语里拼出一个名字——铁门关守将。粮价，只是他落子的第一步。"]},go:"world_continue"},{t:"不凑这个热闹",go:"world_continue"}]};
 
@@ -10879,7 +10879,7 @@ N["world_hstorm"]={place:"天下大势 · hstorm",where:"西境 · 风暴荒原�
 
 N["world_meteor"]={place:"天下大势 · meteor",where:"东境 · 铁门关外荒山",text:["流星坠落后第七天，你赶到了那座荒山。山腰上多了一个冒着热气的大坑，坑底嵌着一块黑沉沉、泛暗红纹路的铁。","坑边围了十几拨人：铁门关军士、贵族私兵、还有几个黑袍“收购者”。谁都想动那块铁，谁都不敢先动。","一个老铁匠蹲在坑边用烟杆敲敲地面：“陨铁。千年难得一见。可这东西邪性——它烧不红，也锤不动。”", "别过meteor，你沿官道走出里许，回头已看不清来处。"],pace:"light",options:[{t:"趁乱捡块碎铁就跑",check:{a:"AGI",sk:"stealth",label:"抢铁"},tier:{ok:["你趁两拨人争执的工夫，猫腰摸进坑边，捡了块巴掌大的碎陨铁就跑。背后有人喊，但没人敢离开队伍追你。"],fail:["你刚伸手就被军士喝住：“干什么的！”你赔着笑退开，手心全是汗。"],crit:["你不但捡了陨铁，还听见黑袍人小声交谈：“这铁不干净，带回去要请执事净化。”你记在心里。"]},go:"world_continue"},{t:"不掺和，远远看个热闹",go:"world_continue"}]};
 
-N["world_sflood"]={place:"天下大势 · sflood",where:"南境 · 银穗河渡口",text:["银穗河涨水了，涨得吓人。浑浊的河水漫过堤坝，把下游的粮田泡成一片汪洋。","渡口的船全停了。船夫们蹲在岸边抽旱烟：“这水，没个十天半月退不下去。南境的粮，怕是要断供了。”","你想起自由港粮市的动静，心头一沉。这水，怕是比刀剑还狠。", "别过sflood，你沿官道走出里许，回头已看不清来处。"],pace:"light",options:[{t:"帮渡口的人抢运物资",run:function(){S.rep+=5; writePar('你撸起袖子帮渡口的人搬了半天物资，一身泥水。船夫们冲你点头：“客官是个实在人。”','res'); curNode='world_continue'; writeNext();},go:"world_continue"},{t:"托商行帮你囤货",check:{a:"CHA",sk:"bargain",label:"囤货"},tier:{ok:["你的信赶在粮价大涨前送到商行，替你囤下两批平价粮。等水退时转手，能赚一笔。"],fail:["信倒是送到了，可掌柜回信：粮早被人定光了。你只能看着粮价一路往上跳。"],crit:["你的信让商行提前锁了三批粮，还谈下一条灾后运粮契约。等水退，这笔买卖能让荷包鼓一圈。"]},go:"world_continue"},{t:"无能为力，继续赶路",go:"world_continue"}]};
+N["world_sflood"]={place:"天下大势 · sflood",where:"南境 · 银穗河渡口",text:["银穗河涨水了，涨得吓人。浑浊的河水漫过堤坝，把下游的粮田泡成一片汪洋。","渡口的船全停了。船夫们蹲在岸边抽旱烟：“这水，没个十天半月退不下去。南境的粮，怕是要断供了。”","你想起自由港粮市的动静，心头一沉。这水，怕是比刀剑还狠。", "别过sflood，你沿官道走出里许，回头已看不清来处。"],pace:"light",options:[{t:"帮渡口的人抢运物资",run:function(){S.rep+=5; writePar('你撸起袖子帮渡口的人搬了半天物资，一身泥水。船夫们冲你点头：“客官是个实在人。”','res'); curNode='world_continue'; writeNext();},go:"world_continue"},{t:"托商行帮你囤货",check:{a:"CHA",sk:"bargain",label:"囤货"},tier:{ok:["你的信赶在粮价大涨前送到商行，替你囤下两批平价粮。等水退时转手，能赚一笔。"],fail:["信倒是送到了，可掌柜回信：粮早被人定光了。你只能看着粮价一路往上跳。"],crit:["你的信让商行提前锁了三批粮，还谈下一条灾后运粮契约。等水退，这笔买卖能让荷包鼓一圈。"]},fail:"failpath_flood_1",go:"world_continue"},{t:"无能为力，继续赶路",go:"world_continue"}]};
 
 N["world_silverbank"]={place:"天下大势 · silverbank",where:"自由港 · 银号门前",text:["自由港最大的银号“金穗号”门前，排起了一条长龙。柜台上方的告示写着：因故暂停兑付三日。","“东家跑路了？”有人问。“跑什么跑，”一个掌柜模样的中年人冷笑，“金穗号的东家是银月商会的女婿。这局，怕是冲着谁来的。”","你站在人群外，看着那条长龙。挤兑，是会传染的。", "你离了silverbank，脚步声在空旷处格外清晰。赶路要紧。"],pace:"light",options:[{t:"不凑热闹，看戏",go:"world_continue"},{t:"低价收一张银票（花 50 金币）",check:{a:"INT",sk:"lore",label:"赌局"},tier:{ok:["你花五十金币，从急着兑钱的人手里收下一张面值一百的银票。三天后银号开门兑付，你净赚一倍。"],fail:["你收的银票是张旧票，盖的章都对不上。五十金币，打了水漂。"],crit:["你不但低价收了银票，还从伙计嘴里套出消息：这波挤兑是有人做局，为的是压价收购金穗号股份。你记下了幕后黑手。"]},go:"world_continue"}]};
 

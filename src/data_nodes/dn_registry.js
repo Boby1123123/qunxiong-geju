@@ -53,7 +53,7 @@ const NODE_REGISTRY = {
   fail: {
     name: "失败专线", prefixes: ["failpath"],
     desc: "F 工程失败开门专线（失败后可见的边缘人群/地下信息渠道，跨域）",
-    files: ["dn_failpath.js"]
+    files: ["dn_failpath.js", "dn_failpath2.js"]
   }
 };
 if (typeof window !== 'undefined') { window.NODE_REGISTRY = NODE_REGISTRY; }

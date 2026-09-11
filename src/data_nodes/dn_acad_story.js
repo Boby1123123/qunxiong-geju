@@ -28,7 +28,7 @@ N["acad_story_vault"]={tags:["region:north"],tag:"main",place:"学院金库 · �
 "院长震怒，召集全院训话：“这是学院的耻辱！谁干的，自己站出来，从轻发落！”没人站出来。训话结束后，费尔曼把你叫到一边，声音很低：“失窃的铁牌，跟‘钥匙’是同一炉的。查一查。”",
 "你这才意识到，那不是普通纪念品——那是钥匙的碎片。有人也在收集它们。", "失窃疑云已被抛在身后。路在脚下延伸，你不回头，行至前方。"],options:[
 {t:"（主动去找戈拉教官，申请协助调查）",effects:{xp:8,flag:"acad_story_vault_investigate"},tier:{ok:["戈拉叼着烟斗听完，眯起眼：‘行，你跟着我。记住——查案子，先查谁最想偷，再查谁最会偷。’他顿了顿，‘还有，最像贼的，往往不是贼。’"]},go:"acad_story_vault_clue"},
-{t:"（不动声色，自己去金库附近转）",check:{a:"AGI",sk:"detect",label:"勘察"},tier:{ok:["你趁午休绕到金库外，蹲下细看。锁孔周围没有撬痕——是钥匙开的。门口泥地上有半枚脚印，靴底的花纹很浅，是学院配发的制式靴。你心头一跳：内贼。"],fail:["你在金库附近转了半天，什么也没发现。傍晚，管库的老管理员看见你，狐疑地打量了几眼。你只好讪讪离开。"]},effects:{flag:"acad_story_vault_self"},go:"acad_story_vault_clue"}
+{t:"（不动声色，自己去金库附近转）",check:{a:"AGI",sk:"detect",label:"勘察"},tier:{ok:["你趁午休绕到金库外，蹲下细看。锁孔周围没有撬痕——是钥匙开的。门口泥地上有半枚脚印，靴底的花纹很浅，是学院配发的制式靴。你心头一跳：内贼。"],fail:["你在金库附近转了半天，什么也没发现。傍晚，管库的老管理员看见你，狐疑地打量了几眼。你只好讪讪离开。"]},effects:{flag:"acad_story_vault_self"},fail:"failpath_vault_1",go:"acad_story_vault_clue"}
 ]};
 N["acad_story_vault_clue"]={tags:["region:north"],tag:"main",place:"学院 · 侧廊",pace:"normal",text:[
 "线索断了两天。第三天，管库的老管理员被发现晕在金库门口，手里攥着一角布片，是制式学员袍的料子。",

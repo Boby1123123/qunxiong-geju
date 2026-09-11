@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9209419,
-    "chunked_html_bytes_max": 6449623,
-    "node_total_min": 4868,
+    "game_html_bytes_max": 9272225,
+    "chunked_html_bytes_max": 6491080,
+    "node_total_min": 4929,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9159419,
-    "chunked_html_bytes": 6329825,
-    "node_total": 4918,
+    "game_html_bytes": 9222225,
+    "chunked_html_bytes": 6391080,
+    "node_total": 4979,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "F1 第二轮构建：registry 域注册后产物 9,159,419B，baseline 对齐",
+    "reason": "F-2 failpath2 修复死链回接+蓝图尾逗号修复后重建体积",
     "history": [
       {
         "date": "2026-09-09",
@@ -1195,6 +1195,20 @@
         "chunked_bytes": 6329825,
         "nodes": 4918,
         "reason": "F1 第二轮构建：registry 域注册后产物 9,159,419B，baseline 对齐"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9221470,
+        "chunked_bytes": 6390985,
+        "nodes": 4979,
+        "reason": "F-2 failpath2 61 nodes + 19 ledger + 16 fail fields"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9222225,
+        "chunked_bytes": 6391080,
+        "nodes": 4979,
+        "reason": "F-2 failpath2 修复死链回接+蓝图尾逗号修复后重建体积"
       }
     ]
   },

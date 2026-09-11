@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8969689,
-    "chunked_html_bytes_max": 6257428,
-    "node_total_min": 4799,
+    "game_html_bytes_max": 8998511,
+    "chunked_html_bytes_max": 6268922,
+    "node_total_min": 4806,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8919689,
-    "chunked_html_bytes": 6157428,
-    "node_total": 4849,
+    "game_html_bytes": 8948511,
+    "chunked_html_bytes": 6168922,
+    "node_total": 4856,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "FS-3 蓝图补登记 fs_north_01~04（四路 +3317B）",
+    "reason": "FS-5/6 势力面板未知态+专属技能显示 + 考核链深化7节点（兽人角斗/精灵信物/守望者邀请链）+ 账本2项",
     "history": [
       {
         "date": "2026-09-09",
@@ -1139,6 +1139,13 @@
         "chunked_bytes": 6157428,
         "nodes": 4849,
         "reason": "FS-3 蓝图补登记 fs_north_01~04（四路 +3317B）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8948511,
+        "chunked_bytes": 6168922,
+        "nodes": 4856,
+        "reason": "FS-5/6 势力面板未知态+专属技能显示 + 考核链深化7节点（兽人角斗/精灵信物/守望者邀请链）+ 账本2项"
       }
     ]
   },

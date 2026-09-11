@@ -4850,6 +4850,30 @@ window.CAUSALITY_LEDGER = [
     "importance": 3,
     "keywords": ["晨天故都秦氏旧档"],
     "irreversible": false
+  },
+  {
+    "id": "led_fs6_watch",
+    "type": "设定",
+    "desc": "守望者被邀请制正式化：不招募只认人，主动上门者一律扑空，唯有收到铜哨并赴约者可见灰袍人（fs_watchers_02~join）",
+    "plant": "flag:fs_watchers_01_done",
+    "reap": "flag:fs_watchers_joined",
+    "status": "open",
+    "world": "守望者线",
+    "importance": 3,
+    "keywords": ["守望者", "铜哨", "被邀请制"],
+    "irreversible": false
+  },
+  {
+    "id": "led_fs6_orctrial",
+    "type": "设定",
+    "desc": "兽人王庭三试炼：徒手搏狼王/猎双狼/赤手撑一炷香——王庭认本事不认出身（fs_orc_trial）",
+    "plant": "flag:fs_orc_trial_king",
+    "reap": "flag:fs_orc_trial_pack",
+    "status": "closed",
+    "world": "兽人草原",
+    "importance": 2,
+    "keywords": ["王庭试炼", "狼王"],
+    "irreversible": false
   }
 ];
 

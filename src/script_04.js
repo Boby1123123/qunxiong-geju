@@ -3167,6 +3167,7 @@ function v35_renderFactionTab(tab) {
             <div><span style="color:#8a9bb0;">政治资本:</span> <span style="color:#f0d68a;">${V35_FACTION_STATE.politicalCapital}</span></div>
             <div><span style="color:#8a9bb0;">已完成任务:</span> <span style="color:#7fd68f;">${V35_FACTION_STATE.completedQuests.length}</span></div>
           </div>
+          <div style="color:#b8c5d6;font-size:13px;margin-bottom:20px;">专属能力：${(myFaction.skills||[]).map(sk=>V35_SKILLS[sk]?V35_SKILLS[sk].name:sk).join(' / ')||'无'}</div>
           <button class="battle-btn" onclick="if(v35_promoteRank()){v35_renderFactionPanel('overview')}">晋升职位</button>
           <button class="battle-btn" style="margin-left:10px;background:#5a3a3a;border-color:#8a5a5a;" onclick="if(confirm('离开当前势力？声望与职务将一并清空，且短期内难以回头。')){v35_leaveFaction();v35_renderFactionPanel('overview')}">退出势力</button>
         ` : `
@@ -3184,10 +3185,13 @@ function v35_renderFactionTab(tab) {
           const rep = v35_getRep(f.id);
           const isJoined = V35_FACTION_STATE.joined === f.id;
           const isEnemy = V35_FACTION_STATE.enemies.includes(f.id);
+          const known = isJoined || !!(S.flags && V35_JOIN_PATHS && V35_JOIN_PATHS[f.id] && S.flags[V35_JOIN_PATHS[f.id].knownFlag]);
+          const showName = known ? f.name : '？？？';
+          const showDesc = known ? f.description : '城里的传闻含糊不清，只说那批人行事隐秘，寻常人连他们的名号都打听不到。';
           return `
             <div class="faction-card ${isJoined?'joined':''} ${isEnemy?'enemy':''}">
               <div class="faction-name">
-                <span style="color:${f.color};">${f.name}</span>
+                <span style="color:${f.color};">${showName}</span>
                 ${isJoined ? '<span class="faction-rank">已加入</span>' : ''}
                 ${isEnemy ? '<span style="color:#ff8a8a;font-size:12px;">敌对</span>' : ''}
               </div>
@@ -3196,10 +3200,9 @@ function v35_renderFactionTab(tab) {
                 <div class="faction-rep-track"><div class="faction-rep-fill ${rep>=0?'positive':'negative'}" style="width:${Math.abs(rep)}%"></div></div>
                 <span class="faction-rep-value">${rep} (${v35_getRepLevel(rep)})</span>
               </div>
-              <div class="faction-desc">${f.description}</div>
+              <div class="faction-desc">${showDesc}</div>
               <div style="margin-top:8px;font-size:12px;color:#8a9bb0;">
-                盟友: ${f.allies.map(a=>V35_FACTIONS[a]?.name||a).join(', ') || '无'} | 
-                敌对: ${f.enemies.map(e=>V35_FACTIONS[e]?.name||e).join(', ') || '无'}
+                ${known ? '盟友: '+(f.allies.map(a=>V35_FACTIONS[a]?.name||a).join(', ') || '无')+' | 敌对: '+(f.enemies.map(e=>V35_FACTIONS[e]?.name||e).join(', ') || '无') : '传闻：尚未探明其立场'}
               </div>
               ${!isJoined && !V35_FACTION_STATE.joined ? `
                 <div style="margin-top:8px;padding:8px 10px;background:rgba(240,214,138,.08);border:1px solid rgba(240,214,138,.25);border-radius:6px;font-size:12px;color:#f0d68a;line-height:1.6;">✦ 加入路径：${(window.V35_JOIN_PATHS&&V35_JOIN_PATHS[f.id]&&V35_JOIN_PATHS[f.id].joinPath)||'前往该地打听消息'}</div>

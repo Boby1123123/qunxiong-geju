@@ -2974,4 +2974,11 @@ window.STORY_BLUEPRINT = {
 
 
 
-};
+,
+  "fs_orc_trial": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+  "fs_orc_trial_done": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+  "fs_elf_trial": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+  "fs_watchers_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "fs_watchers_02b": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "fs_watchers_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "fs_watchers_join": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"}};

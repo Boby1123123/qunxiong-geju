@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8998511,
-    "chunked_html_bytes_max": 6268922,
+    "game_html_bytes_max": 9022353,
+    "chunked_html_bytes_max": 6291742,
     "node_total_min": 4806,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8948511,
-    "chunked_html_bytes": 6168922,
+    "game_html_bytes": 8972353,
+    "chunked_html_bytes": 6191742,
     "node_total": 4856,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "FS-5/6 势力面板未知态+专属技能显示 + 考核链深化7节点（兽人角斗/精灵信物/守望者邀请链）+ 账本2项",
+    "reason": "G-1~G-7 大型增量：伤口系统/技能熟练度/城市作息/渐进教学/事件连锁/关系网回指/抉择回顾 新增数据与引擎钩子",
     "history": [
       {
         "date": "2026-09-09",
@@ -1146,6 +1146,13 @@
         "chunked_bytes": 6168922,
         "nodes": 4856,
         "reason": "FS-5/6 势力面板未知态+专属技能显示 + 考核链深化7节点（兽人角斗/精灵信物/守望者邀请链）+ 账本2项"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8972353,
+        "chunked_bytes": 6191742,
+        "nodes": 4856,
+        "reason": "G-1~G-7 大型增量：伤口系统/技能熟练度/城市作息/渐进教学/事件连锁/关系网回指/抉择回顾 新增数据与引擎钩子"
       }
     ]
   },

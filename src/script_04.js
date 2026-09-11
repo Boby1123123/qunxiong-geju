@@ -9618,6 +9618,8 @@ function v34_renderStatsPanel(){
     + row('疲劳', S.fatigue || 0)
     + row('伤势', (S.wound||0) + ' 级')
     + row('业力', S.karma || 0)
+    + ((S.wounds && S.wounds.length) ? '<div style="font-size:13px;color:var(--bad,#c0392b);padding:4px 0">伤口：' + S.wounds.map(function(w){return w.lvl + '·' + w.part + '(' + w.src + '，尚需' + w.days + '日)';}).join('；') + '</div>' : '')
+    + ((S.skillProg && Object.keys(S.skillProg).length) ? '<div style="font-size:13px;padding:4px 0">技能：' + Object.keys(S.skillProg).slice(0,6).map(function(k){return k + ' Lv' + S.skillProg[k].lvl + ' (' + S.skillProg[k].xp + '/' + (S.skillProg[k].next||10) + ')';}).join(' · ') + '</div>' : '')
     + '</div>'
     + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">'
     + '<div style="font-weight:700;font-size:14px;margin-bottom:6px">地域影响力</div>'
@@ -11638,5 +11640,184 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       box.innerHTML = h;
       openModal(box);
     }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /g1inj:mod/ G-1~G-7 大型增量模块（伤口 / 熟练度 / 作息 / 教学 / 事件连锁 / 关系回指 / 抉择回顾）
+   全部独立键 / 独立数据 / 只读注入；不触碰判定公式 / writeNext 核心语义 / 存档结构
+   ============================================================ */
+(function(){
+  /* ---------- G-1 伤口系统 ---------- */
+  window.v93g1_addWound = function(src, part, lvl){
+    try{
+      if(!S) return null;
+      if(!S.wounds) S.wounds=[];
+      var P={轻伤:{days:2,pen:{str:-1,agi:-1}},重伤:{days:5,pen:{str:-3,agi:-2,con:-2}},致命:{days:10,pen:{str:-5,agi:-4,con:-4,spr:-2}}};
+      var p=P[lvl]||P.轻伤;
+      var w={id:"w"+Date.now(), src:src, part:part, lvl:lvl, days:p.days, pen:p.pen};
+      S.wounds.push(w);
+      if(S.wounds.length>8) S.wounds.shift();
+      return w;
+    }catch(e){ return null; }
+  };
+  window.v93g1_woundTick = function(){
+    try{
+      if(!S||!S.wounds||!S.wounds.length) return;
+      var remain=[];
+      for(var i=0;i<S.wounds.length;i++){
+        var w=S.wounds[i]; if(!w) continue;
+        w.days=(w.days||1)-1;
+        if(w.days>0) remain.push(w);
+      }
+      S.wounds=remain;
+    }catch(e){}
+  };
+  window.v93g1_woundLine = function(node){
+    try{
+      if(!S||!S.wounds||!S.wounds.length) return null;
+      var arr=[];
+      for(var i=0;i<S.wounds.length;i++){
+        var w=S.wounds[i]; if(!w) continue;
+        arr.push(w.lvl+"·"+w.part+"（"+w.src+"，尚需"+w.days+"日）");
+      }
+      return ["【伤势】"+arr.join("；")];
+    }catch(e){ return null; }
+  };
+  window.v93g1_healWound = function(idx){
+    try{
+      if(!S||!S.wounds) return false;
+      if(idx<0||idx>=S.wounds.length) return false;
+      S.wounds.splice(idx,1);
+      return true;
+    }catch(e){ return false; }
+  };
+  /* ---------- G-2 技能熟练度 ---------- */
+  window.v93g2_gainProg = function(sk,v){
+    try{
+      if(!S||!sk) return;
+      if(!S.skillProg) S.skillProg={};
+      var p=S.skillProg[sk]||{lvl:1,xp:0};
+      p.xp=(p.xp||0)+(v||1);
+      while(p.xp>=p.lvl*10){ p.xp-=p.lvl*10; p.lvl++; }
+      S.skillProg[sk]=p;
+    }catch(e){}
+  };
+  /* ---------- G-3 城市作息句 ---------- */
+  window.v93g3_hoursLine = function(node){
+    try{
+      if(!S||!window.CITY_HOURS) return null;
+      if(!node||String(node.id).indexOf("arrive_")!==0) return null;
+      var cands=[];
+      if(S.region&&CITY_HOURS[S.region]) cands.push(CITY_HOURS[S.region]);
+      if(S.loc&&CITY_HOURS[S.loc]) cands.push(CITY_HOURS[S.loc]);
+      for(var k in CITY_HOURS){
+        if(S.loc&&String(S.loc).indexOf(k)===0){ cands.push(CITY_HOURS[k]); break; }
+      }
+      if(!cands.length) return null;
+      var lines=(cands[0].lines)||[];
+      if(!lines.length) return null;
+      return [lines[(S.day*7)%lines.length]];
+    }catch(e){ return null; }
+  };
+  /* ---------- G-4 渐进教学 ---------- */
+  window.v93g4_tipLine = function(node){
+    try{
+      if(!S||!S.settings||S.settings.progressiveTips===false) return null;
+      if(!window.PROGRESS_TIPS) return null;
+      if(!S.flags) S.flags={};
+      for(var i=0;i<PROGRESS_TIPS.length;i++){
+        var tp=PROGRESS_TIPS[i];
+        if(S.day<tp.day) continue;
+        var k="v93tip_"+tp.key;
+        if(S.flags[k]) continue;
+        S.flags[k]=true;
+        return ["【提示】"+tp.title+"："+tp.text];
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  /* ---------- G-5 世界事件连锁 ---------- */
+  window.v93g5_chainTick = function(){
+    try{
+      if(!S||!window.WIND_CHAINS) return;
+      if(!S.flags) S.flags={};
+      S.worldQueue=S.worldQueue||[];
+      for(var c=0;c<WIND_CHAINS.length;c++){
+        var ch=WIND_CHAINS[c];
+        if(!ch||!ch.id) continue;
+        var doneKey="v93chain_"+ch.id+"_done";
+        if(S.flags[doneKey]) continue;
+        if(ch.pre&&!S.flags["v93chain_"+ch.pre+"_done"]) continue;
+        if(S.day<ch.day) continue;
+        S.flags[doneKey]=true;
+        S.worldQueue.push(ch.id);
+        if(typeof logMsg==="function"){ try{ logMsg(ch.title+"（第"+S.day+"日）"); }catch(e){} }
+        if(typeof v46_maybeMissed==="function"){ try{ v46_maybeMissed(ch.id, ch.text, ch.areas||[]); }catch(e){} }
+      }
+    }catch(e){}
+  };
+  /* ---------- G-6 NPC 关系网回指 ---------- */
+  window.v93g6_npcNetLine = function(node){
+    try{
+      if(!S||!window.NPC_NET) return null;
+      var txt="";
+      if(node){
+        if(Array.isArray(node.text)) txt=node.text.join("");
+        else if(typeof node.text==="string") txt=node.text;
+        else if(node.text&&node.text.default) txt=(Array.isArray(node.text.default)?node.text.default.join(""):String(node.text.default));
+      }
+      if(!txt) return null;
+      var cnOf=function(id){
+        try{
+          if(typeof NPCS!=="undefined"&&NPCS&&NPCS[id]&&NPCS[id].cn) return NPCS[id].cn;
+          if(typeof PROLOGUE_NPCS!=="undefined"&&PROLOGUE_NPCS&&PROLOGUE_NPCS[id]&&PROLOGUE_NPCS[id].cn) return PROLOGUE_NPCS[id].cn;
+        }catch(e){}
+        return id;
+      };
+      var hits=null;
+      for(var k in NPC_NET){
+        var net=NPC_NET[k];
+        var present = txt.indexOf(k)>=0 || (net&&net.cn&&txt.indexOf(net.cn)>=0);
+        if(!present) continue;
+        var rel=(S.npcRelations&&S.npcRelations[k])||0;
+        if(Math.abs(rel)<30) continue;
+        var f=(net&&net.friends)||[], r=(net&&net.rivals)||[];
+        var fh=null, rh=null;
+        for(var i=0;i<f.length;i++){ var fr=S.npcRelations&&S.npcRelations[f[i]]; if(fr&&fr>=30){ fh=cnOf(f[i]); break; } }
+        for(var j=0;j<r.length;j++){ var rv=S.npcRelations&&S.npcRelations[r[j]]; if(rv&&rv<=-30){ rh=cnOf(r[j]); break; } }
+        if(rel>=60&&fh){ hits="你想起"+cnOf(k)+"最亲近的人是"+fh+"。"; }
+        else if(rel<=-60&&rh){ hits="你想起"+cnOf(k)+"与"+rh+"早已反目。"; }
+        else if(rel>=60){ hits="你与"+cnOf(k)+"交情不浅。"; }
+        if(hits) break;
+      }
+      if(!hits) return null;
+      return [hits+"这事若传开，怕要起波澜。"];
+    }catch(e){ return null; }
+  };
+  /* ---------- G-7 抉择回顾（图鉴新 tab 内容） ---------- */
+  window.v93_choicesBody = function(){
+    try{
+      var h="<div style='color:var(--gold2);margin-bottom:6px'><b>抉择回顾</b> · 此生关键岔路</div>";
+      var shown=0;
+      if(window.CHOICE_MAP&&S&&S.choices&&S.choices.length){
+        var seen={};
+        for(var ci=0;ci<S.choices.length;ci++){
+          var cid=S.choices[ci];
+          if(!cid) continue;
+          for(var pk in CHOICE_MAP){
+            if(seen[pk]) continue;
+            if(String(cid).indexOf(pk)===0){
+              seen[pk]=true;
+              var cm=CHOICE_MAP[pk];
+              h+="<div style='border-bottom:1px solid #333;padding:6px 0'><b style='color:var(--ok)'>◆ "+esc(cm.t)+"</b><div style='font-size:12px;color:var(--dim);margin-top:2px'>"+esc(cm.d)+"</div></div>";
+              shown++;
+            }
+          }
+        }
+      }
+      if(!shown) h+="<div style='color:var(--dim);font-size:13px'>尚未走到任何重大岔路。</div>";
+      return h;
+    }catch(e){ return '<div style="color:var(--dim);font-size:13px">抉择回顾暂不可用。</div>'; }
   };
 })();

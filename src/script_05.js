@@ -388,7 +388,7 @@ try{
     V44.atlasTab=t;
     var b=document.getElementById('v44-atlas-body');
     if(b){
-      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='readings'?v45_readingsBody():(t==='strong'?v53_strongBody():v44_endingBody()))));
+      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='readings'?v45_readingsBody():(t==='strong'?v53_strongBody():(t==='choices'?(window.v93_choicesBody?v93_choicesBody():v44_endingBody()):v44_endingBody())))));
     }
   }
   function galleryBody(){
@@ -525,7 +525,7 @@ try{
     }catch(e){ return '<div style="color:var(--text-muted);font-size:13px">结局图谱暂不可用。</div>'; }
   }
   function renderAtlas(){
-    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱']];
+    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱'],['choices','抉择']];
     var h='<div style="padding:4px 2px">';
     h+='<div class="v44-atlas-tabs">';
     for(var i=0;i<tabs.length;i++){
@@ -538,6 +538,7 @@ try{
     else if(V44.atlasTab==='chronicle') h+=v47_chronicleBody();
     else if(V44.atlasTab==='readings') h+=v45_readingsBody();
     else if(V44.atlasTab==='strong') h+=v53_strongBody();
+    else if(V44.atlasTab==='choices') h+=(window.v93_choicesBody?v93_choicesBody():endingBody());
     else h+=endingBody();
     h+='</div></div>';
     return h;

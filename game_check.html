@@ -52898,6 +52898,12 @@ function applyDefaults(s){
   /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
   if(s.settings.worldEcho===undefined) s.settings.worldEcho=true;
   if(!s.worldState) s.worldState={};
+  /* /g1inj:defaults/ G-1 伤口系统兜底（旧档兼容；独立键空数组） */
+  if(!s.wounds) s.wounds=[];
+  /* /g2inj:defaults/ G-2 技能熟练度兜底（旧档兼容；独立键空对象） */
+  if(!s.skillProg) s.skillProg={};
+  /* /g4inj:defaults/ G-4 渐进教学开关兜底（旧档兼容；默认开） */
+  if(s.settings.progressiveTips===undefined) s.settings.progressiveTips=true;
   /* /v93mkt:defaults/ EC-3 经济闭环独立键（旧档兼容） */
   if(!s.market) s.market={lastDiv:0,divTotal:0};
   /* /v93news:defaults/ WD-4 世界日报独立键（旧档兼容） */
@@ -53058,6 +53064,7 @@ function applyEffects(eff,label){
   if(typeof eff.book==="function") eff.book = eff.book() || null;
   const add = (v,unit,pos) => { if(v!==0) lines.push((v>0?"+":"")+v+unit); };
   if(eff.gold){S.gold+=eff.gold; add(eff.gold,"金币",eff.gold>0);}
+  if(eff.prog && eff.prog.sk){ if(!S.skillProg) S.skillProg={}; var _p=S.skillProg[eff.prog.sk]||{lvl:1,xp:0}; _p.xp=(_p.xp||0)+(eff.prog.v||1); while(_p.xp>=_p.lvl*10){_p.xp-=_p.lvl*10;_p.lvl++;} S.skillProg[eff.prog.sk]=_p; }
   if(eff.xp){S.xp=Math.max(0,S.xp+eff.xp); add(eff.xp,"修为");}
   if(eff.hp){S.hp=Math.max(0,Math.min(maxHp(),S.hp+eff.hp)); add(eff.hp,"生命",eff.hp>0);}
   if(eff.san){S.san=Math.max(0,Math.min(S.maxSan,S.san+eff.san)); add(eff.san,"SAN",eff.san>0);}
@@ -53167,6 +53174,10 @@ function renderStats(){
   if(S.wound>=2) st.push("重伤"); else if(S.wound>=1) st.push("轻伤");
   if(S.disease) st.push("患病");
   if(st.length) h += "<div class='row'><span>状态</span><b style='color:var(--bad)'>"+st.join("·")+"</b></div>";
+  const _wds=(S.wounds&&S.wounds.length)?S.wounds:null;
+  if(_wds){ h += "<div class='row'><span>伤势</span><b style='color:var(--bad)'>"+_wds.map(function(w){return w.lvl+"·"+w.part;}).join("；")+"</b></div>"; }
+  const _spk=(S.skillProg&&Object.keys(S.skillProg).length)?S.skillProg:null;
+  if(_spk){ h += "<div class='row'><span>技能</span><b>"+Object.keys(_spk).slice(0,5).map(function(k){return k+" Lv"+_spk[k].lvl;}).join(" · ")+"</b></div>"; }
   // v30: 六维属性使用进度条
   h += "<div style='margin-top:8px;border-top:1px solid var(--border);padding-top:8px'>";
   for(const a of ATTRS){
@@ -56478,6 +56489,7 @@ window.ELDA.notify = function(eff){
     if(eff.infl) ch.infl = true;
     if(eff.attr) ch.attrs = true;
     if(eff.skill) ch.skills = true;
+    if(eff.prog) ch.skillProg = true;
     if(eff.flag || eff.setflag || eff.cond) ch.flags = true;
     if(eff.relation) ch.npcRelations = true;
     if(eff.item || eff.loseItem) ch.items = true;
@@ -57805,6 +57817,14 @@ function writeNext(_v46f){
     }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
+    /* /g1inj:render/ G-1 伤口状态行注入（只读；S.wounds 非空时显示；空时零注入） */
+    try{ var _wnd = window.v93g1_woundLine(node); if(_wnd&&_wnd.length){ _txt=_wnd.concat(_txt); } }catch(e){}
+    /* /g3inj:render/ G-3 城市作息句注入（只读；arrive_* 节点按城返回；空时零注入） */
+    try{ var _hrs = window.v93g3_hoursLine(node); if(_hrs&&_hrs.length){ _txt=_hrs.concat(_txt); } }catch(e){}
+    /* /g4inj:render/ G-4 渐进教学提示注入（只读；按 day 阈值首次提示；读完零注入） */
+    try{ var _tip = window.v93g4_tipLine(node); if(_tip&&_tip.length){ _txt=_tip.concat(_txt); } }catch(e){}
+    /* /g6inj:render/ G-6 关系网回指注入（只读；NPC_NET 命中+好感阈值；空时零注入） */
+    try{ var _nw = window.v93g6_npcNetLine(node); if(_nw&&_nw.length){ _txt=_nw.concat(_txt); } }catch(e){}
     /* /wn3inj:npchook/ W-N3 NPC 状态回指注入（只读钩子；顺序在记忆注入之后，好感<30 与 CM-1 互斥） */
     try{ var _nw = window.v92_npcWeave(node,_txt); if(_nw&&_nw.length){ _txt=_nw.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */
@@ -57973,6 +57993,8 @@ function advanceDays(n){
   try{ if(window.v93_marketTick) window.v93_marketTick(n); }catch(e){}
   try{ if(window.v93_newsTick) window.v93_newsTick(); }catch(e){}
   try{ if(window.v93_festivalTick) window.v93_festivalTick(); }catch(e){}
+  try{ if(window.v93g1_woundTick) window.v93g1_woundTick(); }catch(e){}
+  try{ if(window.v93g5_chainTick) window.v93g5_chainTick(); }catch(e){}
 }
 function checkWorldEvents(){
   const w = S.world;
@@ -69096,6 +69118,8 @@ function v34_renderStatsPanel(){
     + row('疲劳', S.fatigue || 0)
     + row('伤势', (S.wound||0) + ' 级')
     + row('业力', S.karma || 0)
+    + ((S.wounds && S.wounds.length) ? '<div style="font-size:13px;color:var(--bad,#c0392b);padding:4px 0">伤口：' + S.wounds.map(function(w){return w.lvl + '·' + w.part + '(' + w.src + '，尚需' + w.days + '日)';}).join('；') + '</div>' : '')
+    + ((S.skillProg && Object.keys(S.skillProg).length) ? '<div style="font-size:13px;padding:4px 0">技能：' + Object.keys(S.skillProg).slice(0,6).map(function(k){return k + ' Lv' + S.skillProg[k].lvl + ' (' + S.skillProg[k].xp + '/' + (S.skillProg[k].next||10) + ')';}).join(' · ') + '</div>' : '')
     + '</div>'
     + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">'
     + '<div style="font-weight:700;font-size:14px;margin-bottom:6px">地域影响力</div>'
@@ -71118,6 +71142,185 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
     }catch(e){}
   };
 })();
+
+/* ============================================================
+   /g1inj:mod/ G-1~G-7 大型增量模块（伤口 / 熟练度 / 作息 / 教学 / 事件连锁 / 关系回指 / 抉择回顾）
+   全部独立键 / 独立数据 / 只读注入；不触碰判定公式 / writeNext 核心语义 / 存档结构
+   ============================================================ */
+(function(){
+  /* ---------- G-1 伤口系统 ---------- */
+  window.v93g1_addWound = function(src, part, lvl){
+    try{
+      if(!S) return null;
+      if(!S.wounds) S.wounds=[];
+      var P={轻伤:{days:2,pen:{str:-1,agi:-1}},重伤:{days:5,pen:{str:-3,agi:-2,con:-2}},致命:{days:10,pen:{str:-5,agi:-4,con:-4,spr:-2}}};
+      var p=P[lvl]||P.轻伤;
+      var w={id:"w"+Date.now(), src:src, part:part, lvl:lvl, days:p.days, pen:p.pen};
+      S.wounds.push(w);
+      if(S.wounds.length>8) S.wounds.shift();
+      return w;
+    }catch(e){ return null; }
+  };
+  window.v93g1_woundTick = function(){
+    try{
+      if(!S||!S.wounds||!S.wounds.length) return;
+      var remain=[];
+      for(var i=0;i<S.wounds.length;i++){
+        var w=S.wounds[i]; if(!w) continue;
+        w.days=(w.days||1)-1;
+        if(w.days>0) remain.push(w);
+      }
+      S.wounds=remain;
+    }catch(e){}
+  };
+  window.v93g1_woundLine = function(node){
+    try{
+      if(!S||!S.wounds||!S.wounds.length) return null;
+      var arr=[];
+      for(var i=0;i<S.wounds.length;i++){
+        var w=S.wounds[i]; if(!w) continue;
+        arr.push(w.lvl+"·"+w.part+"（"+w.src+"，尚需"+w.days+"日）");
+      }
+      return ["【伤势】"+arr.join("；")];
+    }catch(e){ return null; }
+  };
+  window.v93g1_healWound = function(idx){
+    try{
+      if(!S||!S.wounds) return false;
+      if(idx<0||idx>=S.wounds.length) return false;
+      S.wounds.splice(idx,1);
+      return true;
+    }catch(e){ return false; }
+  };
+  /* ---------- G-2 技能熟练度 ---------- */
+  window.v93g2_gainProg = function(sk,v){
+    try{
+      if(!S||!sk) return;
+      if(!S.skillProg) S.skillProg={};
+      var p=S.skillProg[sk]||{lvl:1,xp:0};
+      p.xp=(p.xp||0)+(v||1);
+      while(p.xp>=p.lvl*10){ p.xp-=p.lvl*10; p.lvl++; }
+      S.skillProg[sk]=p;
+    }catch(e){}
+  };
+  /* ---------- G-3 城市作息句 ---------- */
+  window.v93g3_hoursLine = function(node){
+    try{
+      if(!S||!window.CITY_HOURS) return null;
+      if(!node||String(node.id).indexOf("arrive_")!==0) return null;
+      var cands=[];
+      if(S.region&&CITY_HOURS[S.region]) cands.push(CITY_HOURS[S.region]);
+      if(S.loc&&CITY_HOURS[S.loc]) cands.push(CITY_HOURS[S.loc]);
+      for(var k in CITY_HOURS){
+        if(S.loc&&String(S.loc).indexOf(k)===0){ cands.push(CITY_HOURS[k]); break; }
+      }
+      if(!cands.length) return null;
+      var lines=(cands[0].lines)||[];
+      if(!lines.length) return null;
+      return [lines[(S.day*7)%lines.length]];
+    }catch(e){ return null; }
+  };
+  /* ---------- G-4 渐进教学 ---------- */
+  window.v93g4_tipLine = function(node){
+    try{
+      if(!S||!S.settings||S.settings.progressiveTips===false) return null;
+      if(!window.PROGRESS_TIPS) return null;
+      if(!S.flags) S.flags={};
+      for(var i=0;i<PROGRESS_TIPS.length;i++){
+        var tp=PROGRESS_TIPS[i];
+        if(S.day<tp.day) continue;
+        var k="v93tip_"+tp.key;
+        if(S.flags[k]) continue;
+        S.flags[k]=true;
+        return ["【提示】"+tp.title+"："+tp.text];
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  /* ---------- G-5 世界事件连锁 ---------- */
+  window.v93g5_chainTick = function(){
+    try{
+      if(!S||!window.WIND_CHAINS) return;
+      if(!S.flags) S.flags={};
+      S.worldQueue=S.worldQueue||[];
+      for(var c=0;c<WIND_CHAINS.length;c++){
+        var ch=WIND_CHAINS[c];
+        if(!ch||!ch.id) continue;
+        var doneKey="v93chain_"+ch.id+"_done";
+        if(S.flags[doneKey]) continue;
+        if(ch.pre&&!S.flags["v93chain_"+ch.pre+"_done"]) continue;
+        if(S.day<ch.day) continue;
+        S.flags[doneKey]=true;
+        S.worldQueue.push(ch.id);
+        if(typeof logMsg==="function"){ try{ logMsg(ch.title+"（第"+S.day+"日）"); }catch(e){} }
+        if(typeof v46_maybeMissed==="function"){ try{ v46_maybeMissed(ch.id, ch.text, ch.areas||[]); }catch(e){} }
+      }
+    }catch(e){}
+  };
+  /* ---------- G-6 NPC 关系网回指 ---------- */
+  window.v93g6_npcNetLine = function(node){
+    try{
+      if(!S||!window.NPC_NET) return null;
+      var txt="";
+      if(node){
+        if(Array.isArray(node.text)) txt=node.text.join("");
+        else if(typeof node.text==="string") txt=node.text;
+        else if(node.text&&node.text.default) txt=(Array.isArray(node.text.default)?node.text.default.join(""):String(node.text.default));
+      }
+      if(!txt) return null;
+      var cnOf=function(id){
+        try{
+          if(typeof NPCS!=="undefined"&&NPCS&&NPCS[id]&&NPCS[id].cn) return NPCS[id].cn;
+          if(typeof PROLOGUE_NPCS!=="undefined"&&PROLOGUE_NPCS&&PROLOGUE_NPCS[id]&&PROLOGUE_NPCS[id].cn) return PROLOGUE_NPCS[id].cn;
+        }catch(e){}
+        return id;
+      };
+      var hits=null;
+      for(var k in NPC_NET){
+        var net=NPC_NET[k];
+        var present = txt.indexOf(k)>=0 || (net&&net.cn&&txt.indexOf(net.cn)>=0);
+        if(!present) continue;
+        var rel=(S.npcRelations&&S.npcRelations[k])||0;
+        if(Math.abs(rel)<30) continue;
+        var f=(net&&net.friends)||[], r=(net&&net.rivals)||[];
+        var fh=null, rh=null;
+        for(var i=0;i<f.length;i++){ var fr=S.npcRelations&&S.npcRelations[f[i]]; if(fr&&fr>=30){ fh=cnOf(f[i]); break; } }
+        for(var j=0;j<r.length;j++){ var rv=S.npcRelations&&S.npcRelations[r[j]]; if(rv&&rv<=-30){ rh=cnOf(r[j]); break; } }
+        if(rel>=60&&fh){ hits="你想起"+cnOf(k)+"最亲近的人是"+fh+"。"; }
+        else if(rel<=-60&&rh){ hits="你想起"+cnOf(k)+"与"+rh+"早已反目。"; }
+        else if(rel>=60){ hits="你与"+cnOf(k)+"交情不浅。"; }
+        if(hits) break;
+      }
+      if(!hits) return null;
+      return [hits+"这事若传开，怕要起波澜。"];
+    }catch(e){ return null; }
+  };
+  /* ---------- G-7 抉择回顾（图鉴新 tab 内容） ---------- */
+  window.v93_choicesBody = function(){
+    try{
+      var h="<div style='color:var(--gold2);margin-bottom:6px'><b>抉择回顾</b> · 此生关键岔路</div>";
+      var shown=0;
+      if(window.CHOICE_MAP&&S&&S.choices&&S.choices.length){
+        var seen={};
+        for(var ci=0;ci<S.choices.length;ci++){
+          var cid=S.choices[ci];
+          if(!cid) continue;
+          for(var pk in CHOICE_MAP){
+            if(seen[pk]) continue;
+            if(String(cid).indexOf(pk)===0){
+              seen[pk]=true;
+              var cm=CHOICE_MAP[pk];
+              h+="<div style='border-bottom:1px solid #333;padding:6px 0'><b style='color:var(--ok)'>◆ "+esc(cm.t)+"</b><div style='font-size:12px;color:var(--dim);margin-top:2px'>"+esc(cm.d)+"</div></div>";
+              shown++;
+            }
+          }
+        }
+      }
+      if(!shown) h+="<div style='color:var(--dim);font-size:13px'>尚未走到任何重大岔路。</div>";
+      return h;
+    }catch(e){ return '<div style="color:var(--dim);font-size:13px">抉择回顾暂不可用。</div>'; }
+  };
+})();
 </script>
 <script>
 /* ============ v44 表现层引擎（IIFE 封装，不污染 S） ============ */
@@ -71509,7 +71712,7 @@ try{
     V44.atlasTab=t;
     var b=document.getElementById('v44-atlas-body');
     if(b){
-      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='readings'?v45_readingsBody():(t==='strong'?v53_strongBody():v44_endingBody()))));
+      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='readings'?v45_readingsBody():(t==='strong'?v53_strongBody():(t==='choices'?(window.v93_choicesBody?v93_choicesBody():v44_endingBody()):v44_endingBody())))));
     }
   }
   function galleryBody(){
@@ -71646,7 +71849,7 @@ try{
     }catch(e){ return '<div style="color:var(--text-muted);font-size:13px">结局图谱暂不可用。</div>'; }
   }
   function renderAtlas(){
-    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱']];
+    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱'],['choices','抉择']];
     var h='<div style="padding:4px 2px">';
     h+='<div class="v44-atlas-tabs">';
     for(var i=0;i<tabs.length;i++){
@@ -71659,6 +71862,7 @@ try{
     else if(V44.atlasTab==='chronicle') h+=v47_chronicleBody();
     else if(V44.atlasTab==='readings') h+=v45_readingsBody();
     else if(V44.atlasTab==='strong') h+=v53_strongBody();
+    else if(V44.atlasTab==='choices') h+=(window.v93_choicesBody?v93_choicesBody():endingBody());
     else h+=endingBody();
     h+='</div></div>';
     return h;
@@ -82335,6 +82539,23 @@ window.CHAPTERS_I12 = {
   "ending_seal_chain":      {vol:"终章", title:"封印之链 · 七环", sub:""}
 };
 
+/* /u1inj:data-nodes:dn_choice_map.js/ */
+/* /g7inj:data/ G-7 抉择回顾映射（纯数据；键=节点 id 前缀，匹配 S.choices）
+   v93_choicesBody 读取（图鉴新 tab）；不改判定；saveVersion=48 不变 */
+window.CHOICE_MAP = {
+  "origin_":         {t:"出身之路", d:"你选择了一条出身，也选择了它带来的牵挂与债。"},
+  "fc_":             {t:"自由城岁月", d:"在交汇城的市井里，你学会了一个人在乱世中立足的门道。"},
+  "branch_academy_": {t:"学院门前", d:"面对学院的三条路，你做了决定——那决定了你此后数年的身份。"},
+  "frontier_":       {t:"第三哨的雪", d:"北上之路的抉择，把你推向了大地的边界。"},
+  "grad_":           {t:"毕业去向", d:"离校时你选的路，决定了你以何种姿态走进这片乱世。"},
+  "anchor_":         {t:"七锚之约", d:"七枚锚的线索逐一浮出水面，你在其中站定了位置。"},
+  "goldscale_":      {t:"金秤真相", d:"你触碰了金秤家族的秘密——有些真相，知道即是代价。"},
+  "faction_":        {t:"阵营归属", d:"你加入了某方势力，也在别的势力眼中，从此有了立场。"},
+  "fs_":             {t:"入伙抉择", d:"势力的门槛与考核，你跨过去了。"},
+  "sp8_":            {t:"西境游侠", d:"元素荒原上的三考，你走出了属于自己的答案。"},
+  "ending_":         {t:"终局", d:"故事在此收束——但大陆的记忆里，有你走过的痕迹。"}
+};
+
 /* /u1inj:data-nodes:dn_chronicle.js/ */
 /* /u1inj:data-nodes:dn_chronicle.js/ UPG-17 编年史系统（世界史自适应叙事）
  * 纯数据层：CHRONICLE_RULES = 编年史自动记录规则表。
@@ -88527,6 +88748,73 @@ const GLOBAL_HOOKS = [
 ];
 if (typeof window !== 'undefined') { window.GLOBAL_HOOKS = GLOBAL_HOOKS; }
 
+/* /u1inj:data-nodes:dn_hours.js/ */
+/* /g3inj:data/ G-3 城市作息句（纯数据；arrive_* 节点只读注入）
+   v93g3_hoursLine 读取；按城返回一句市井白描；不改判定
+   V66 白描；治理词回避；saveVersion=48 不变 */
+window.CITY_HOURS = {
+  free: { lines: [
+    "城门口的告示栏换了新纸，墨迹还没干透，围着的人压着嗓子念上面的字。",
+    "市集辰时开市，铁匠铺的锤声一响，卖菜婆子们就开始挪摊抢位置。",
+    "入夜后商铺陆续上板，只有酒馆的灯还亮着，里头传出断断续续的歌声。",
+    "码头的潮水退下去一截，泊船的伙计们蹲在栈桥边抽旱烟，等下一班货。"
+  ]},
+  north: { lines: [
+    "北境的雪又厚了一层，城门兵把门闩擦得锃亮，说是防冻裂。",
+    "学院钟楼敲过三响，街上穿灰袍的学生抱着书卷小跑，雪地上留下一串脚印。",
+    "铁门关的烽火台添了新柴，轮值的哨兵在风里搓手，哈气成霜。",
+    "入夜，城里的灯点得比别处早，窗户纸后头人影晃动，都在赶针线活。"
+  ]},
+  east: { lines: [
+    "承天城的天刚亮，官道上的马车就排成了长龙，车夫们啃着干粮等开城门。",
+    "朱雀大街的铺面一家挨一家，伙计们把新到的绸缎一匹匹挂上架。",
+    "傍晚的鼓楼敲了头更，夜市在城西支起摊子，油锅滋滋响，香气飘过半条街。",
+    "东境官署门口立着两排石狮，差役换了班，扫帚把昨夜的落叶归成一堆。"
+  ]},
+  south: { lines: [
+    "南境的雨季还没过去，青石板路泛着水光，挑担子的货郎鞋上全是泥。",
+    "码头上的渔获刚上岸，鱼贩子们围着船帮子喊价，声音一个比一个高。",
+    "天擦黑，河边的茶棚挂起灯笼，船工们歇了桨，就着花生米喝粗茶。",
+    "稻花田里蛙声一片，田埂上有人举着火把巡夜，怕野物糟蹋庄稼。"
+  ]},
+  west: { lines: [
+    "西境的荒原上风沙刚停，镇口的井台边排着打水的队伍，桶绳磨得发亮。",
+    "游侠学院的演武场传来刀剑碰撞声，学徒们光着膀子对练，尘土飞扬。",
+    "入夜，风从沙丘那边刮过来，带着细砂，窗户纸被扑得簌簌响。",
+    "行省会的巡骑刚回营，马槽边添了草料，骑手们坐在台阶上解靴子。"
+  ]},
+  desert: { lines: [
+    "沙漠城的太阳升得早，集市还没开张，骆驼已经跪了一地，贩子们往驼背上装货。",
+    "绿洲边上的水渠分了三股，守水的老汉拄着拐，盯着每一勺水的去处。",
+    "入夜，沙漠里冷得厉害，帐篷里的火堆烧到后半夜，外头的风呜咽着。",
+    "驼队驿站里人声嘈杂，赶驼人喝着热汤，讲起商路上新近的怪事。"
+  ]},
+  church: { lines: [
+    "圣城的钟声每天准时敲六遍，钟楼下的信徒们低头合掌，路过的行人放轻脚步。",
+    "大教堂的门廊下总有几个乞儿，修士们偶尔出来发一轮黑面包。",
+    "入夜后圣城安静得不像话，路灯在石板路上投下长长的影子，巡逻的圣骑来回走。",
+    "审判庭的门常年半掩着，进出的都是穿黑袍的人，没人多看他们一眼。"
+  ]},
+  dwarf: { lines: [
+    "矮人山国的锻炉从不熄火，铁水映红了半座山崖，锤声昼夜不停。",
+    "矿道口的绞车吱呀呀地转，一筐筐矿石升上来，矿工们浑身是灰，只露出眼睛。",
+    "山城的酒馆在地下，掌柜的用木勺敲着桶沿报菜，声音震得耳朵嗡嗡响。",
+    "清晨的雾气罩着山道，商队的骡子驮着铁锭，蹄声在石板上敲得清脆。"
+  ]},
+  elf: { lines: [
+    "精灵林邦的树屋里漏下碎金似的光，藤蔓桥在风里晃，叶子上还挂着露。",
+    "林间的集市设在最大的那棵树下，精灵们不用钱币，拿手作和草药以物易物。",
+    "入夜，树屋的灯一盏盏亮起来，像萤火虫挂在枝头，林子里有笛声。",
+    "晨雾漫过林间空地，守林的精灵背着弓，踩着露水沿小径巡逻。"
+  ]},
+  orc: { lines: [
+    "兽人草原的营帐间飘着烤肉和草药的气味，萨满的鼓声从远处传来。",
+    "清晨，兽人战士们在河边操练，刀光映着水色，喊声惊起一群野鸟。",
+    "入夜，篝火围成圈，长老们坐在火边讲古，年轻人抱着刀听得入神。",
+    "草原的风掠过帐顶，拴马的桩子被吹得吱呀响，几匹烈马不安地刨蹄子。"
+  ]}
+};
+
 /* /u1inj:data-nodes:dn_ideal_goals.js/ */
 /* /A1inj:goals/ A-1 八条理想目标线（8 intro + 24 里程碑，闭环：intro → _1 → _2 → _3 → done）
    纯数据对象式；pace 元数据；ifIdeal/ifFlag 变体；不入引擎（判定/writeNext/choose 零触碰）
@@ -89321,6 +89609,25 @@ window.NPC_MEMORY_V93 = [
   {id:"maurice", name:"莫里茨", role:"学院老教授"},
   {id:"elena", name:"艾琳娜", role:"精灵治愈师"}
 ];
+
+/* /u1inj:data-nodes:dn_npc_net.js/ */
+/* /g6inj:data/ G-6 NPC 关系网（纯数据；只读回指，不改好感数值）
+   v93g6_npcNetLine 读取；键=角色 id（兼容 NPCS/PROLOGUE_NPCS），cn=中文名
+   V66 白描；治理词回避；saveVersion=48 不变 */
+window.NPC_NET = {
+  rock:   {cn:"罗克",   friends:["ata","tie"], rivals:["loka"], desc:"草原上来的同学，性子直。"},
+  kain:   {cn:"凯恩",   friends:["rock"],     rivals:[],        desc:"从军升迁的同窗。"},
+  alice:  {cn:"艾丽丝", friends:["elena"],    rivals:["cecy"],  desc:"火系法师塔的学徒。"},
+  ata:    {cn:"阿塔",   friends:["rock","elena"], rivals:[],    desc:"与狼骨有关的兽人。"},
+  loka:   {cn:"洛卡",   friends:["mori"],     rivals:["rock"],  desc:"药剂行会的学徒。"},
+  cecy:   {cn:"塞西莉娅", friends:[],          rivals:["alice"], desc:"东境贵族的女儿。"},
+  mori:   {cn:"莫里",   friends:["loka"],     rivals:[],        desc:"矮人工坊的学徒。"},
+  elena:  {cn:"艾琳娜", friends:["alice","ata"], rivals:[],     desc:"精灵治愈师。"},
+  tie:    {cn:"老铁",   friends:["rock"],     rivals:[],        desc:"铁门关的老兵。"},
+  ferman: {cn:"费尔曼", friends:[],           rivals:[],        desc:"学院的藏书教授。"},
+  li:     {cn:"李管事", friends:["loka"],     rivals:[],        desc:"商会的管事。"},
+  tavern_owner: {cn:"客栈老板娘", friends:["li"], rivals:[], desc:"交汇城客栈的老板娘。"}
+};
 
 /* /u1inj:data-nodes:dn_npc_state.js/ */
 /* /wn2inj:npcstate/ W-N2 NPC 独立状态机（活的世界·人物动态）
@@ -94829,6 +95136,22 @@ const THREADS = {
 };
 if (typeof window !== 'undefined') { window.THREADS = THREADS; }
 
+/* /u1inj:data-nodes:dn_tips.js/ */
+/* /g4inj:data/ G-4 渐进教学（纯数据；按 day 阈值首次提示；S.settings.progressiveTips 开关）
+   v93g4_tipLine 读取；只置 flag 不写存档结构；saveVersion=48 不变 */
+window.PROGRESS_TIPS = [
+  {day:2,  key:"act",     title:"行动", text:"顶栏的「行动」面板可探索、打听、修炼、采矿、锻造——每天有行动点，用完了就休整过夜。"},
+  {day:3,  key:"pack",    title:"行囊", text:"「行囊」里放着你的家当：材料、书籍、器物。材料是锻造与炼金的根基。"},
+  {day:4,  key:"realm",   title:"修炼", text:"「修炼」面板推进修为境界。境界越高，战斗与判定的底气越足。"},
+  {day:6,  key:"map",     title:"地图", text:"「地图」展示大陆九域。未解锁的区域需要满足条件才能前往。"},
+  {day:8,  key:"faction", title:"势力", text:"「势力」面板列出大陆各方。加入势力前先打听它的底细——直接叩门是进不去的。"},
+  {day:12, key:"atlas",   title:"图鉴", text:"「图鉴」收录文物、人物关系、时间线与抉择。集齐十件文物有意外收获。"},
+  {day:20, key:"save",    title:"存读档", text:"「设置」里可以存读档。重要抉择前存一档，是走江湖的老规矩。"},
+  {day:30, key:"cloud",   title:"云存档", text:"「设置 → 云存档」可把存档上传云端，换设备也能接上这段故事。"},
+  {day:45, key:"academy", title:"北境", text:"学院在北境雪原深处。自由城、王都、铁门关都有前往学院的路。"},
+  {day:60, key:"wound",   title:"伤势", text:"战斗中受伤会在状态里留下伤口。休养数日或寻药治疗，拖着伤赶路要吃亏。"}
+];
+
 /* /u1inj:data-nodes:dn_trade.js/ */
 /* /g1inj:trade/ G-N1 商路经营小循环 —— 商品表 / 城市行情系数 / 事件价格扰动（纯数据，无逻辑） */
 const TRADE_GOODS_V92 = {
@@ -96563,6 +96886,43 @@ N["west_leave"] = {
     {t:"离开西境，返回大陆腹地",run:function(){ travelTo("free_jiaohui"); }}
   ]
 };
+
+/* /u1inj:data-nodes:dn_wind_chains.js/ */
+/* /g5inj:data/ G-5 世界事件连锁（纯数据；5 链 15 则；day 与五主线错开）
+   v93g5_chainTick 读取；pre=前序链事件 id；触发只置 flag+worldQueue+区域文本
+   不改五主线判定；saveVersion=48 不变 */
+window.WIND_CHAINS = [
+  {id:"wolf_1", day:52,  pre:null,  title:"狼群南迁", cls:"天灾", areas:["fc_","free_","south_"],
+   text:"雪原的狼群比往年早了一个月南下。牧人赶着羊群往城里躲，路边冻死的牲口越来越多。"},
+  {id:"wolf_2", day:90,  pre:"wolf_1", title:"牧民遭袭", cls:"人祸", areas:["north_","frontier_","west_"],
+   text:"一支迁徙的牧民队伍在夜半遭狼群围袭，三顶帐篷被撕碎。天亮后，活下来的人背着伤者往哨站走。"},
+  {id:"wolf_3", day:130, pre:"wolf_2", title:"兽人前锋", cls:"奇遇", areas:["orc_","desert_"],
+   text:"草原深处传来消息：兽人诸部在狼群之后拔营南迁，前锋已抵河对岸。"},
+  {id:"plague_1", day:58,  pre:null,    title:"商队带病", cls:"人祸", areas:["free_","fc_","south_"],
+   text:"一支南来的商队在城里歇脚，次日清晨，队里有三个人发热不起。大夫隔着帘子看了，脸色不好。"},
+  {id:"plague_2", day:100, pre:"plague_1", title:"药价暴涨", cls:"商机", areas:["free_","church_","east_"],
+   text:"退热的草药一夜之间翻了三倍，药铺门前排起长队。有人趁机囤药，也有人把药白送给穷人。"},
+  {id:"plague_3", day:150, pre:"plague_2", title:"城门封锁", cls:"天灾", areas:["north_","frontier_"],
+   text:"北境几座城先后关了城门，只出不进。城门口的告示写着：有发热者，就地隔离十日。"},
+  {id:"silver_1", day:108, pre:null,    title:"银号挤兑", cls:"商机", areas:["free_","fc_"],
+   text:"自由港最大的银号门口排起长队，存户们攥着票据，盯着柜台里的伙计一遍遍念明早开门。"},
+  {id:"silver_2", day:140, pre:"silver_1", title:"银号闭门", cls:"人祸", areas:["east_","south_"],
+   text:"银号终究没开。门板上贴了封条，几个存户蹲在台阶上，把票据叠了又叠。"},
+  {id:"silver_3", day:180, pre:"silver_2", title:"银市重建", cls:"奇遇", areas:["free_","fc_"],
+   text:"两家新银号在旧号原址立了招牌，用红绸盖着。掌柜的当众烧了一沓旧票据，说是替旧号了断。"},
+  {id:"acad_1", day:170, pre:null,    title:"禁书异响", cls:"奇遇", areas:["north_","academy_"],
+   text:"学院图书馆的禁书区夜里传出翻书声。守夜人提着灯进去查了三遍，书架空空，声音还在。"},
+  {id:"acad_2", day:220, pre:"acad_1", title:"学生失踪", cls:"人祸", areas:["academy_","north_"],
+   text:"学院有个学生在禁书区附近失踪，宿舍的铺盖还叠着，人没了。院长下令封了那一段走廊。"},
+  {id:"acad_3", day:260, pre:"acad_2", title:"尘封档案", cls:"奇遇", areas:["academy_"],
+   text:"有人在图书馆地窖翻出一箱旧档案，上头记着三十年前同样一桩失踪案，笔迹与今日卷宗一模一样。"},
+  {id:"border_1", day:190, pre:null,    title:"边境摩擦", cls:"人祸", areas:["north_","frontier_","east_"],
+   text:"铁门关外的哨站夜里被人摸营，死了两个哨兵，兵器没丢，只少了一面军旗。"},
+  {id:"border_2", day:240, pre:"border_1", title:"大军集结", cls:"天灾", areas:["frontier_","north_","east_"],
+   text:"北境各城的驻军开始往铁门关方向集结，官道上的粮车一辆接一辆，夜里也赶路。"},
+  {id:"border_3", day:300, pre:"border_2", title:"烽火连天", cls:"奇遇", areas:["frontier_","north_"],
+   text:"第三哨的烽火台一夜点了三次。火光映着雪地，远近的村庄都醒了，狗吠成一片。"}
+];
 
 /* /u1inj:data-nodes:dn_world.js/ */
 /* /wn1inj:world/ W-N1 世界局势快照数据（活的世界）

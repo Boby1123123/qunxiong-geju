@@ -1,0 +1,35 @@
+/* /g5inj:data/ G-5 世界事件连锁（纯数据；5 链 15 则；day 与五主线错开）
+   v93g5_chainTick 读取；pre=前序链事件 id；触发只置 flag+worldQueue+区域文本
+   不改五主线判定；saveVersion=48 不变 */
+window.WIND_CHAINS = [
+  {id:"wolf_1", day:52,  pre:null,  title:"狼群南迁", cls:"天灾", areas:["fc_","free_","south_"],
+   text:"雪原的狼群比往年早了一个月南下。牧人赶着羊群往城里躲，路边冻死的牲口越来越多。"},
+  {id:"wolf_2", day:90,  pre:"wolf_1", title:"牧民遭袭", cls:"人祸", areas:["north_","frontier_","west_"],
+   text:"一支迁徙的牧民队伍在夜半遭狼群围袭，三顶帐篷被撕碎。天亮后，活下来的人背着伤者往哨站走。"},
+  {id:"wolf_3", day:130, pre:"wolf_2", title:"兽人前锋", cls:"奇遇", areas:["orc_","desert_"],
+   text:"草原深处传来消息：兽人诸部在狼群之后拔营南迁，前锋已抵河对岸。"},
+  {id:"plague_1", day:58,  pre:null,    title:"商队带病", cls:"人祸", areas:["free_","fc_","south_"],
+   text:"一支南来的商队在城里歇脚，次日清晨，队里有三个人发热不起。大夫隔着帘子看了，脸色不好。"},
+  {id:"plague_2", day:100, pre:"plague_1", title:"药价暴涨", cls:"商机", areas:["free_","church_","east_"],
+   text:"退热的草药一夜之间翻了三倍，药铺门前排起长队。有人趁机囤药，也有人把药白送给穷人。"},
+  {id:"plague_3", day:150, pre:"plague_2", title:"城门封锁", cls:"天灾", areas:["north_","frontier_"],
+   text:"北境几座城先后关了城门，只出不进。城门口的告示写着：有发热者，就地隔离十日。"},
+  {id:"silver_1", day:108, pre:null,    title:"银号挤兑", cls:"商机", areas:["free_","fc_"],
+   text:"自由港最大的银号门口排起长队，存户们攥着票据，盯着柜台里的伙计一遍遍念明早开门。"},
+  {id:"silver_2", day:140, pre:"silver_1", title:"银号闭门", cls:"人祸", areas:["east_","south_"],
+   text:"银号终究没开。门板上贴了封条，几个存户蹲在台阶上，把票据叠了又叠。"},
+  {id:"silver_3", day:180, pre:"silver_2", title:"银市重建", cls:"奇遇", areas:["free_","fc_"],
+   text:"两家新银号在旧号原址立了招牌，用红绸盖着。掌柜的当众烧了一沓旧票据，说是替旧号了断。"},
+  {id:"acad_1", day:170, pre:null,    title:"禁书异响", cls:"奇遇", areas:["north_","academy_"],
+   text:"学院图书馆的禁书区夜里传出翻书声。守夜人提着灯进去查了三遍，书架空空，声音还在。"},
+  {id:"acad_2", day:220, pre:"acad_1", title:"学生失踪", cls:"人祸", areas:["academy_","north_"],
+   text:"学院有个学生在禁书区附近失踪，宿舍的铺盖还叠着，人没了。院长下令封了那一段走廊。"},
+  {id:"acad_3", day:260, pre:"acad_2", title:"尘封档案", cls:"奇遇", areas:["academy_"],
+   text:"有人在图书馆地窖翻出一箱旧档案，上头记着三十年前同样一桩失踪案，笔迹与今日卷宗一模一样。"},
+  {id:"border_1", day:190, pre:null,    title:"边境摩擦", cls:"人祸", areas:["north_","frontier_","east_"],
+   text:"铁门关外的哨站夜里被人摸营，死了两个哨兵，兵器没丢，只少了一面军旗。"},
+  {id:"border_2", day:240, pre:"border_1", title:"大军集结", cls:"天灾", areas:["frontier_","north_","east_"],
+   text:"北境各城的驻军开始往铁门关方向集结，官道上的粮车一辆接一辆，夜里也赶路。"},
+  {id:"border_3", day:300, pre:"border_2", title:"烽火连天", cls:"奇遇", areas:["frontier_","north_"],
+   text:"第三哨的烽火台一夜点了三次。火光映着雪地，远近的村庄都醒了，狗吠成一片。"}
+];

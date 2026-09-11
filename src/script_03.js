@@ -73,6 +73,12 @@ function applyDefaults(s){
   /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
   if(s.settings.worldEcho===undefined) s.settings.worldEcho=true;
   if(!s.worldState) s.worldState={};
+  /* /g1inj:defaults/ G-1 伤口系统兜底（旧档兼容；独立键空数组） */
+  if(!s.wounds) s.wounds=[];
+  /* /g2inj:defaults/ G-2 技能熟练度兜底（旧档兼容；独立键空对象） */
+  if(!s.skillProg) s.skillProg={};
+  /* /g4inj:defaults/ G-4 渐进教学开关兜底（旧档兼容；默认开） */
+  if(s.settings.progressiveTips===undefined) s.settings.progressiveTips=true;
   /* /v93mkt:defaults/ EC-3 经济闭环独立键（旧档兼容） */
   if(!s.market) s.market={lastDiv:0,divTotal:0};
   /* /v93news:defaults/ WD-4 世界日报独立键（旧档兼容） */
@@ -233,6 +239,7 @@ function applyEffects(eff,label){
   if(typeof eff.book==="function") eff.book = eff.book() || null;
   const add = (v,unit,pos) => { if(v!==0) lines.push((v>0?"+":"")+v+unit); };
   if(eff.gold){S.gold+=eff.gold; add(eff.gold,"金币",eff.gold>0);}
+  if(eff.prog && eff.prog.sk){ if(!S.skillProg) S.skillProg={}; var _p=S.skillProg[eff.prog.sk]||{lvl:1,xp:0}; _p.xp=(_p.xp||0)+(eff.prog.v||1); while(_p.xp>=_p.lvl*10){_p.xp-=_p.lvl*10;_p.lvl++;} S.skillProg[eff.prog.sk]=_p; }
   if(eff.xp){S.xp=Math.max(0,S.xp+eff.xp); add(eff.xp,"修为");}
   if(eff.hp){S.hp=Math.max(0,Math.min(maxHp(),S.hp+eff.hp)); add(eff.hp,"生命",eff.hp>0);}
   if(eff.san){S.san=Math.max(0,Math.min(S.maxSan,S.san+eff.san)); add(eff.san,"SAN",eff.san>0);}
@@ -342,6 +349,10 @@ function renderStats(){
   if(S.wound>=2) st.push("重伤"); else if(S.wound>=1) st.push("轻伤");
   if(S.disease) st.push("患病");
   if(st.length) h += "<div class='row'><span>状态</span><b style='color:var(--bad)'>"+st.join("·")+"</b></div>";
+  const _wds=(S.wounds&&S.wounds.length)?S.wounds:null;
+  if(_wds){ h += "<div class='row'><span>伤势</span><b style='color:var(--bad)'>"+_wds.map(function(w){return w.lvl+"·"+w.part;}).join("；")+"</b></div>"; }
+  const _spk=(S.skillProg&&Object.keys(S.skillProg).length)?S.skillProg:null;
+  if(_spk){ h += "<div class='row'><span>技能</span><b>"+Object.keys(_spk).slice(0,5).map(function(k){return k+" Lv"+_spk[k].lvl;}).join(" · ")+"</b></div>"; }
   // v30: 六维属性使用进度条
   h += "<div style='margin-top:8px;border-top:1px solid var(--border);padding-top:8px'>";
   for(const a of ATTRS){
@@ -3653,6 +3664,7 @@ window.ELDA.notify = function(eff){
     if(eff.infl) ch.infl = true;
     if(eff.attr) ch.attrs = true;
     if(eff.skill) ch.skills = true;
+    if(eff.prog) ch.skillProg = true;
     if(eff.flag || eff.setflag || eff.cond) ch.flags = true;
     if(eff.relation) ch.npcRelations = true;
     if(eff.item || eff.loseItem) ch.items = true;
@@ -4980,6 +4992,14 @@ function writeNext(_v46f){
     }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
+    /* /g1inj:render/ G-1 伤口状态行注入（只读；S.wounds 非空时显示；空时零注入） */
+    try{ var _wnd = window.v93g1_woundLine(node); if(_wnd&&_wnd.length){ _txt=_wnd.concat(_txt); } }catch(e){}
+    /* /g3inj:render/ G-3 城市作息句注入（只读；arrive_* 节点按城返回；空时零注入） */
+    try{ var _hrs = window.v93g3_hoursLine(node); if(_hrs&&_hrs.length){ _txt=_hrs.concat(_txt); } }catch(e){}
+    /* /g4inj:render/ G-4 渐进教学提示注入（只读；按 day 阈值首次提示；读完零注入） */
+    try{ var _tip = window.v93g4_tipLine(node); if(_tip&&_tip.length){ _txt=_tip.concat(_txt); } }catch(e){}
+    /* /g6inj:render/ G-6 关系网回指注入（只读；NPC_NET 命中+好感阈值；空时零注入） */
+    try{ var _nw = window.v93g6_npcNetLine(node); if(_nw&&_nw.length){ _txt=_nw.concat(_txt); } }catch(e){}
     /* /wn3inj:npchook/ W-N3 NPC 状态回指注入（只读钩子；顺序在记忆注入之后，好感<30 与 CM-1 互斥） */
     try{ var _nw = window.v92_npcWeave(node,_txt); if(_nw&&_nw.length){ _txt=_nw.concat(_txt); } }catch(e){}
     /* /A1inj:profhook/ A-1 个性化开局注入（只读钩子；顺序在记忆注入之后，五维开场文本优先展示） */
@@ -5148,6 +5168,8 @@ function advanceDays(n){
   try{ if(window.v93_marketTick) window.v93_marketTick(n); }catch(e){}
   try{ if(window.v93_newsTick) window.v93_newsTick(); }catch(e){}
   try{ if(window.v93_festivalTick) window.v93_festivalTick(); }catch(e){}
+  try{ if(window.v93g1_woundTick) window.v93g1_woundTick(); }catch(e){}
+  try{ if(window.v93g5_chainTick) window.v93g5_chainTick(); }catch(e){}
 }
 function checkWorldEvents(){
   const w = S.world;

@@ -172,12 +172,12 @@ N["acad_visit_desert"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  fail:["你认不全这些符文，只能含糊地说“像是古物”。头领有些失望，但还是道了谢。"],
  crit:["你不仅认出了大意，还发现符文深处藏着一个更小的印记——你曾在罗先生的笔记里见过：那是“第七节点”的旧标记。你不动声色地记住了，只说“可以埋回去”。","头领给你塞了一小袋银月当茶水钱，你推不掉，收了。"],
  critfail:["你盯着看了半天，说了句外行话。头领的笑容淡了，把木匣收了回去：“看来学院里也不是都懂。”他转身招呼别人去了。"]
-},effects:{xp:15},onCrit:{flag:"acad_blackstone_mark"},go:"acad_outside_hub"},
+},effects:{xp:15},onCrit:{flag:"acad_blackstone_mark"},fail:"failpath_visitdesert_1",go:"acad_outside_hub"},
 {t:"问他古城的位置",check:{a:"CHA",sk:"persu",label:"询问"},tier:{
  ok:["头领压低嗓门：“在死亡沙漠深处，绿洲城再往南，走半个月。那片古城，十年前还没人知道——沙暴过后，露出来的。”他顿了顿，“进去的人，十个回来两三个。”"],
  fail:["头领摇摇头：“那个地方，不能乱说。说了，会有人去找死。”"],
  crit:["头领四下看看，从怀里摸出一张羊皮图：“这是我自己画的路线。送你，算是交个朋友。”他补了一句，“别让第二个人看见。”","羊皮图上，古城的位置画了个叉，旁边写着一行小字：“井底有东西，别往下看。”"]
-},effects:{xp:15},onCrit:{flag:"acad_desert_map"},go:"acad_outside_hub"},
+},effects:{xp:15},onCrit:{flag:"acad_desert_map"},fail:"failpath_visitdesert_1",go:"acad_outside_hub"},
 {t:"谢绝，回学院",effects:{xp:3},tier:{ok:["你婉拒了。沙漠古城的东西，听着就烫手。","但你记住了黑石上那个印记。"]},go:"acad_outside_hub"}
 ]};
 N["acad_visit_west"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 符文教室",pace:"normal",text:[
@@ -188,12 +188,12 @@ N["acad_visit_west"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学
  ok:["你们聊了一下午。若耶讲了西境的元素风暴：沙暴里带电光、能吹走马匹、风暴眼里反而风平浪静——“平静得像假的”。你讲了符文共振的推演。她眼睛越来越亮：“你毕业了，来西境吧。行省会要你这种人。”"],
  fail:["你跟她聊了几句，发现自己对风暴的了解远不如她。她倒也不失望：“能听懂我在说什么的人，学院里也没几个。你算一个。”"],
  crit:["你们聊到深夜。若耶把她在风暴眼里记录的符文拓片给你看——那些符文，和沙漠商队头领那块黑石上的，是同一种风格。","你心头一跳，但没有声张，只说“我好像见过类似的”。"]
-},effects:{xp:18},onCrit:{flag:"acad_west_runes"},go:"acad_outside_hub"},
+},effects:{xp:18},onCrit:{flag:"acad_west_runes"},fail:"failpath_visitwest_1",go:"acad_outside_hub"},
 {t:"问她：风暴眼里是什么",check:{a:"CHA",sk:"persu",label:"询问"},tier:{
  ok:["若耶沉默了一下：“风暴眼里，有一根石柱。柱子上全是符文，从头刻到底。”她顿了顿，“我在柱子上刻过一行字，一年后再去看，字没了——被新长出来的符文盖住了。”"],
  fail:["若耶摇摇头：“那个地方，不是能随便说的地方。我说了，你会被卷进去。”"],
  crit:["若耶压着嗓子：“柱子上有一行字，我认不全，但记下来了——”她从怀里摸出一张纸条，“你帮我看看，是不是古沙漠文。”","纸条上的字，和你记忆里那枚黑石印记，是同一种风格。你认出了其中三个字：“……井下……勿……”"]
-},effects:{xp:18},onCrit:{flag:"acad_west_column"},go:"acad_outside_hub"},
+},effects:{xp:18},onCrit:{flag:"acad_west_column"},fail:"failpath_visitwest_1",go:"acad_outside_hub"},
 {t:"道别，回宿舍",effects:{xp:3},tier:{ok:["你和若耶道别。她走时拍了拍你肩膀：“记住，西境的风暴观测站，缺人。”","你点头，把她的名片收进怀里。"]},go:"acad_outside_hub"}
 ]};
 N["acad_visit_church"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 会客厅",pace:"normal",text:[
@@ -204,7 +204,7 @@ N["acad_visit_church"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  ok:["特蕾莎嬷嬷沉默了一会儿：“圣痕司在找‘守夜人的信物’。”她看着你腰间的铜铃，“你那个铃铛，若是守夜人一脉的，最好收起来。他们找这个东西，找了很多年了。”"],
  fail:["特蕾莎嬷嬷摇摇头：“教会的事，你不要打听。你只需要知道，别让圣痕司的人注意到你。”"],
  crit:["特蕾莎嬷嬷把你拉进屋里，关上门：“你那个铃铛，是不是内壁有个‘七’字？”你点头。她叹了口气：“果然。”她话声放轻，“守夜人的铜铃，一共七枚，对应七个节点。圣痕司收走了六枚，只差你这一枚。”","她顿了顿，“你把它藏好。藏不住，就毁了它。别让它落到他们手里。”"]
-},effects:{xp:18},onCrit:{flag:"acad_church_sevenbells"},go:"acad_outside_hub"},
+},effects:{xp:18},onCrit:{flag:"acad_church_sevenbells"},fail:"failpath_visitchurch_1",go:"acad_outside_hub"},
 {t:"把铜铃解下来，收进怀里",effects:{xp:10,flag:"acad_bell_hidden"},tier:{ok:["你当着她的面把铜铃解下来，收进贴身衣袋。特蕾莎嬷嬷点了点头：“收好。今天起，别再让人看见。”","你走出会客厅时，总觉得暗处有双眼睛。"]},go:"acad_outside_hub"},
 {t:"留在原地，没接话",effects:{xp:5},tier:{ok:["你站在门口，没接话。灰袍执事已经走远了，特蕾莎嬷嬷看着你，张了张嘴，最终只说：“好自为之。”"]},go:"acad_outside_hub"}
 ]};

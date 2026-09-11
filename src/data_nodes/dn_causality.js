@@ -4874,6 +4874,146 @@ window.CAUSALITY_LEDGER = [
     "importance": 2,
     "keywords": ["王庭试炼", "狼王"],
     "irreversible": false
+  },
+  {
+    "id": "led_f1_warwall",
+    "type": "设定",
+    "desc": "铁门关东墙下城边缘通道：伤兵营铁手→私酒铺刘掌柜→独眼辎重兵，军规外的活路网（F-1 failpath_warwall）",
+    "plant": "flag:f_failpath_warwall_liu",
+    "reap": "",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 4,
+    "keywords": [
+      "铁门关东墙下城",
+      "私酒铺",
+      "铁手"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_raid",
+    "type": "设定",
+    "desc": "雪原冰裂隙逃兵村（跛脚汉）：兽人营地加人、一天一车铁自南运来——缺粮军队不运铁（F-1 failpath_raid）",
+    "plant": "flag:f_failpath_raid_iron",
+    "reap": "",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 4,
+    "keywords": [
+      "逃兵村",
+      "兽人运铁"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_intel",
+    "type": "伏笔",
+    "desc": "学院被开除生“耗子”→城东骡马行赵账房递讯切口，暗蚀会黑市情报点（F-1 failpath_intel）",
+    "plant": "flag:f_failpath_intel_zhao",
+    "reap": "",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 3,
+    "keywords": [
+      "耗子",
+      "骡马行",
+      "暗蚀会"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_action",
+    "type": "伏笔",
+    "desc": "白事张殡葬行后院地道通城外乱葬岗；城西破庙铁片为暗蚀会收尾人信物（F-1 failpath_action）",
+    "plant": "flag:f_failpath_action_tunnel",
+    "reap": "flag:f_failpath_action_mark",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 3,
+    "keywords": [
+      "白事张",
+      "殡葬行地道",
+      "铁片"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_forbid",
+    "type": "伏笔",
+    "desc": "禁书区无名旧册“金秤一脉守的不是书，是门。门后有什么，问守夜人”——金秤守门设定在学院图书馆的信息碎片（F-1 failpath_forbid）",
+    "plant": "flag:f_failpath_forbid_goldscale",
+    "reap": "node:anchor_grave_1",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 4,
+    "keywords": [
+      "金秤一脉守门",
+      "守夜人"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_ferman7",
+    "type": "伏笔",
+    "desc": "费尔曼图书馆登记簿备注栏数字“7”；每周三深夜站禁书区门前一盏茶——与第七节点钥匙线同源（F-1 failpath_ferman）",
+    "plant": "flag:f_failpath_ferman_seven",
+    "reap": "flag:acad_brass_key",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": [
+      "登记簿7",
+      "费尔曼",
+      "禁书区"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_log",
+    "type": "伏笔",
+    "desc": "图书馆夹层旧守夜人轮值日志：第七节点雪夜北边有光一明一灭整夜，无人承认，记录未上报（F-1 failpath_winter）",
+    "plant": "flag:f_failpath_winter_log",
+    "reap": "node:acad_brass_key",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": [
+      "守夜人轮值日志",
+      "第七节点"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_blackstone",
+    "type": "伏笔",
+    "desc": "沙漠黑石符文与古语“井”字：商队黑石为十年前沙中挖出、挖者当夜死，灰袍夜访者仅观石不言（F-1 failpath_visitdesert）",
+    "plant": "flag:f_failpath_desert_rune",
+    "reap": "",
+    "status": "open",
+    "world": "vol_desert",
+    "importance": 3,
+    "keywords": [
+      "沙漠黑石",
+      "符文",
+      "井"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_column",
+    "type": "伏笔",
+    "desc": "西境风暴眼石柱柱顶断裂（若耶观测记录：三年前完整，今年断一截）——元素封印线新碎片（F-1 failpath_visitwest）",
+    "plant": "flag:f_failpath_west_column",
+    "reap": "",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": [
+      "风暴眼石柱",
+      "若耶观测"
+    ],
+    "irreversible": false
   }
 ];
 

@@ -77,7 +77,7 @@ N["acad_life_y1_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  ok:["你按学院教的标准答法写了。交卷后无事发生。几天后成绩下来，中规中矩。"],
  fail:["你写到一半卡住了，那题实在超出所学。你胡写了几句，交卷时心里发虚。成绩中下，但没人找你麻烦。","你答得工整，笔迹也端正。卷子发回来，红批只有一句：“背书背得不错。”你把那句看了很久，不知该算夸奖还是别的。"],
  crit:["你在那道题下面多写了一段自己的看法：守夜人第一步不是封门，而是“清点还活着的人”。","成绩下来那天，老执事把你叫住，递回卷子——那道题旁边批了一行字：“留盏灯。下学期来我的守夜课。”"]
-},effects:{xp:20},onCrit:{flag:"acad_watch_invite"},go:"acad_life_y1_final"},
+},effects:{xp:20},onCrit:{flag:"acad_watch_invite"},fail:"failpath_mid_1",go:"acad_life_y1_final"},
 {t:"在卷子上画个圈，只答会的",effects:{xp:8},tier:{ok:["你把会的都答了，不会的留白。老执事没说什么。成绩中等偏上。"]},go:"acad_life_y1_final"}
 ]};
 N["acad_life_y1_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期末排名",pace:"normal",text:[
@@ -91,7 +91,7 @@ N["acad_life_y1_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
  ok:["你泡在图书馆过了一冬。管理员罗先生从摇头到点头，最后给你留了一盏专座灯。","开春时，你的学识扎实了不少。"],
  fail:["你读着读着就趴在桌上睡着了。醒来时，罗先生给你留了条毯子和一碗热汤。"],
  crit:["你在典藏室深处，又摸到一本没书脊的册子。翻开来，是半本日记，字迹工整：“……第七节点，裂缝在扩大。学院里，有人替他们数着日子。”","你默默记下这行字。"]
-},effects:{xp:25},onCrit:{flag:"acad_diary_fragment"},go:"acad_life_y1_holiday"}
+},effects:{xp:25},onCrit:{flag:"acad_diary_fragment"},fail:"failpath_winter_1",go:"acad_life_y1_holiday"}
 ,
 {t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y1_end_1"}
 ]};
@@ -115,7 +115,7 @@ N["acad_life_y2_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  ok:["阿塔的拳风像闷雷。你接下他的冲拳，胳膊震得发麻，但撑住了。他露出白牙笑：“你不错。草原上，能接我一拳的人不多。”"],
  fail:["你被他一拳震得后退三步，一屁股坐进雪堆。阿塔赶紧来拉你，满脸歉意。","你揉着胳膊，心里服气。","阿塔让着你，还是把你摔进了草垛。他咧嘴笑，伸手拉你：“力气不够，下次摔你之前先喊停。”你拍掉身上的草，记住了他出手的节奏。"],
  crit:["你借他的冲劲侧身一让，反手把他带进了雪堆。阿塔在雪里愣了愣，随即大笑出声——那是你第一次听见他笑。"]
-},effects:{xp:12},go:"acad_life_y2_friend"},
+},effects:{xp:12},fail:"failpath_spar_1",go:"acad_life_y2_friend"},
 {t:"问他草原上的事",effects:{xp:8},tier:{ok:["阿塔讲起草原：狼旗、黑石部族、每年秋天的部族会盟。他说到“暗蚀会”三个字时，声音明显低了下去：“他们在草原上挖东西，挖了很久了。”","他顿了顿：“我父亲说，别让那东西挖到。所以把我送来了学院。”"]},go:"acad_life_y2_friend"},
 {t:"把狼皮叠好收进箱底，早睡",effects:{hp:10},tier:{ok:["你把狼皮收好。那上面有草原的味道，混着北境的雪。你睡了个安稳觉。"]},go:"acad_life_y2_friend"}
 ]};
@@ -128,12 +128,12 @@ N["acad_life_y2_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
  fail:["费尔曼太警觉。你刚跟到回廊拐角，他就回头看了一眼——你赶紧低头装作看书。","之后他看你的眼神，多了一丝说不清的意味。","你跟到回廊拐角，一抬眼他不见了。只有风把走廊尽头的门吹得晃了一下。你站在原地，忽然不确定自己看见的到底是不是他。"],
  crit:["你发现费尔曼每次离开图书馆前，都会在门口的登记簿上写点什么。趁他转身，你扫了一眼——那页上写的不是名字，是一串数字：7-3-7-1。","你抄了下来，没敢多留。"],
  critfail:["你靠得太近，费尔曼忽然停步转身，差点撞上你。他微笑着扶住你：“小心些。图书馆地滑。”","他的笑容没有温度。你后背发凉。"]
-},effects:{},onCrit:{flag:"acad_ferman_digits"},go:"acad_life_y2_mid"},
+},effects:{},onCrit:{flag:"acad_ferman_digits"},fail:"failpath_ferman_1",go:"acad_life_y2_mid"},
 {t:"把这件事告诉墨丘利教授",check:{a:"CHA",sk:"persu",label:"告知"},tier:{
  ok:["墨丘利听完，沉默了很久。他说：“费尔曼……我有印象。他是院长特聘的，背景干净得查不出任何问题。”他摘下眼镜擦了擦，“干净到这种程度，本身就是问题。”","他给你留了一句话：“别在夜里去禁书区。如果他约你去，说你在忙。”"],
  fail:["墨丘利不置可否：“学院里教授之间的往来，轮不到学生操心。”他给你倒了杯茶，岔开了话题。","墨丘利听完，摘下眼镜擦了擦，没接你的话，反而问起你昨天的课业。你明白他在岔开话题，可你也明白，话递出去就收不回了。"],
  crit:["墨丘利听完，脸色微变。他走到门口，确认走廊没人，才压低声音：“费尔曼到任那天，档案室丢过一份卷宗——关于七节点的。”他顿了顿：“丢得无声无息。第二天，管档案的老执事就‘退休’了。”","你和他对视一眼，谁都没再说话。"]
-},effects:{},onCrit:{flag:"acad_ferman_mercury"},go:"acad_life_y2_mid"}
+},effects:{},onCrit:{flag:"acad_ferman_mercury"},fail:"failpath_ferman_1",go:"acad_life_y2_mid"}
 ]};
 N["acad_life_y2_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期中考核",pace:"normal",text:[
 "期中考试这天，考场里少了一个人——药剂系的洛卡没来。",

@@ -30,7 +30,7 @@ N["acad_deep_y1_practice"]={tags:["region:north"],tag:"main",place:"艾尔达魔
  fail:["戈拉只说了句“再练”，就去指点别人了。你站在原地，把他的话又嚼了一遍。","他看了你的起手式，没说话，只把剑谱推回给你。你接过时碰到他指尖——凉的。他没再指点，你也没再问。"],
  crit:["你把他画的圈记住了，又问了句：“那断臂之后，您怎么练？”戈拉沉默了一会儿：“左手断了，就用右手。右手学会了，就明白以前左手错了什么。”","他破例多教了你一式收剑。"],
  critfail:["你急着想赢，动作变形，被他一眼看穿：“心浮了。今天就到这。”他转身离开，你攥着剑柄，指节发白。"]
-},effects:{xp:15},onCrit:{flag:"acad_sword_insight"},go:"acad_deep_y1_library"},
+},effects:{xp:15},onCrit:{flag:"acad_sword_insight"},fail:"failpath_practice_1",go:"acad_deep_y1_library"},
 {t:"自己在角落练基础劈砍",effects:{xp:10},tier:{ok:["你对着木桩练了一百下劈砍。寒风把耳朵吹得生疼，但到后来，手臂记住了那股劲道。","收剑时，你发现戈拉站在远处看了你一会儿，没说啥，走了。"]},go:"acad_deep_y1_library"},
 {t:"去场地边的水缸喝水歇脚",effects:{hp:10},tier:{ok:["你蹲在水缸边舀水喝，看见水面上自己的影子——鼻尖冻得通红，眼睛却很亮。你冲自己笑了一下。"]},go:"acad_deep_y1_library"}
 ]};

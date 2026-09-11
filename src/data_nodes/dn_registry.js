@@ -49,6 +49,11 @@ const NODE_REGISTRY = {
     name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "fs", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
     desc: "建号/序章/职业分支/好感/结局/事件池/系统检查前缀；v65* 为历史版本遗留前缀（WARN 豁免）",
     files: []
+  },
+  fail: {
+    name: "失败专线", prefixes: ["failpath"],
+    desc: "F 工程失败开门专线（失败后可见的边缘人群/地下信息渠道，跨域）",
+    files: ["dn_failpath.js"]
   }
 };
 if (typeof window !== 'undefined') { window.NODE_REGISTRY = NODE_REGISTRY; }

@@ -3368,7 +3368,7 @@ N["i_war_battle_morning"] = function(){ return {
   onOk:{time:2,rep_north:15,injury_risk:0.4,gold:100},
   onFail:{time:2,rep_north:8,injury_risk:0.5,gold:50,hp:-10},
   onCritFail:{time:3,rep_north:-5,hp:-25,wound:"左臂重伤+一月不能用剑",karma:-5,sanLoss:10,flag:"defense_breach"},
-  effect:{time:1},go:"i_war_battle_result"},
+  effect:{time:1},fail:"failpath_warwall_1",go:"i_war_battle_result"},
     {t:"用魔法/远程攻击打击兽人",check:{a:"INT",sk:"魔法",label:"远程支援"},
   tier:{
     crit:function(){return[pickV(["你用魔法远程攻击兽人。你没有只是乱放魔法——你瞄准了兽人攻城锤的绳索。一个精准的火球术，绳索断裂，攻城锤砸在地上，把旁边的兽人砸倒一片。然后你又用冰锥术封住了攻城梯的顶端，兽人爬上去就打滑。你不仅造成了大量杀伤，还废掉了兽人的攻城器械！","你用魔法攻击时，发现了兽人萨满的位置。你凝聚全部魔力，一发闪电术精准命中萨满。萨满惨叫着倒下，他周围的亡灵士兵瞬间失去控制，开始攻击自己人。你不仅重创了兽人，还干掉了一个萨满！"],"war_magic_crit")]},
@@ -3380,7 +3380,7 @@ N["i_war_battle_morning"] = function(){ return {
   onOk:{time:2,rep_north:12,injury_risk:0.25},
   onFail:{time:2,rep_north:5,injury_risk:0.3,hp:-5},
   onCritFail:{time:3,rep_north:-10,hp:-20,wound:"烧伤+魔力紊乱",flag:"magic_backfire",sanLoss:8},
-  effect:{time:1},go:"i_war_battle_result"},
+  effect:{time:1},fail:"failpath_warwall_1",go:"i_war_battle_result"},
     {t:"保护身边的小约翰",check:{a:"CON",sk:"生存",label:"保护他人"},
   tier:{
     crit:function(){return[pickV(["你保护身边的小约翰——一个只有十六岁的新兵。战斗中，一个兽人翻过城垛直扑小约翰。你一把推开他，用盾牌挡住了兽人的战斧，然后一刀刺穿了兽人的喉咙。小约翰吓得脸色惨白，但活了下来。战斗结束后，小约翰哭着给你磕头：「大哥，你是我的救命恩人！」你不仅保护了小约翰，还赢得了所有新兵的尊敬！","你保护小约翰时，发现他在发抖。你一边战斗一边喊：「约翰，看着我！跟着我的动作！刺！挡！对！就是这样！」你在战斗中教他基本的格斗技巧。小约翰从一开始的瑟瑟发抖，到后来能独立杀死一个兽人。战斗结束后，小约翰成了一个真正的战士。他说：「大哥，是你让我成为了一个男人。」你不仅保护了小约翰，还在战场上把他训练成了战士！"],"war_protect_crit")]},
@@ -3392,7 +3392,7 @@ N["i_war_battle_morning"] = function(){ return {
   onOk:{time:2,rep_north:10,injury_risk:0.5,karma:5,flag:"john_saved"},
   onFail:{time:2,rep_north:8,injury_risk:0.6,karma:3,hp:-8,flag:"john_saved"},
   onCritFail:{time:3,rep_north:0,karma:-5,hp:-10,wound:"手臂割伤",sanLoss:20,flag:"john_dead",flag:"john_nightmare"},
-  effect:{time:1},go:"i_war_battle_result"}
+  effect:{time:1},fail:"failpath_warwall_1",go:"i_war_battle_result"}
   ]
 }};
 
@@ -3540,7 +3540,7 @@ N["i_war_raid_infiltrate"] = function(){ return {
   onOk:{time:1,rep_north:25,injury_risk:0.3,gold:300,flag:"orc_commander_dead"},
   onFail:{time:1,rep_north:10,injury_risk:0.4,gold:100,flag:"orc_commander_wounded"},
   onCritFail:{time:2,rep_north:5,hp:-20,wound:"腿部刀伤+半月休养",flag:"orc_commander_dead",flag:"orc_berserk_attack",sanLoss:8},
-  effect:{time:1},go:"i_war_raid_success"},
+  effect:{time:1},fail:"failpath_raid_1",go:"i_war_raid_success"},
     {t:"先偷地图和情报",check:{a:"AGI",sk:"潜行",label:"偷窃情报"},
   tier:{
     crit:function(){return[pickV(["你先偷地图和情报。你在指挥官的帐篷里不仅找到了作战地图，还找到了一封密信——是暗蚀会写给兽人指挥官的，承诺在战斗中提供「深渊支援」。你把地图和密信一起带走。回到铁门关，格雷戈尔看到密信后脸色惨白：「暗蚀会……他们和兽人勾结了？」你不仅偷到了情报，还发现了暗蚀会和兽人勾结的证据！","你偷情报时，用了一个技巧——你没有只拿地图，还把指挥官的印章蘸了印泥，在一张空白纸上盖了印。然后你用这张纸伪造了一道调兵命令，放在了指挥官的桌子上。等兽人发现时，部队已经被调走了。你不仅偷到了情报，还伪造命令调走了兽人部队！"],"war_steal_crit")]},
@@ -3552,7 +3552,7 @@ N["i_war_raid_infiltrate"] = function(){ return {
   onOk:{time:1,rep_north:20,injury_risk:0.25,flag:"orc_battle_plan"},
   onFail:{time:1,rep_north:5,injury_risk:0.3},
   onCritFail:{time:2,rep_north:8,hp:-20,wound:"后背中箭",flag:"orc_battle_plan",flag:"orc_early_attack",sanLoss:8},
-  effect:{time:1},go:"i_war_raid_success"},
+  effect:{time:1},fail:"failpath_raid_1",go:"i_war_raid_success"},
     {t:"用绳子勒晕他，带回去审问",check:{a:"STR",sk:"格斗",label:"活捉"},
   tier:{
     crit:function(){return[pickV(["你用绳子勒晕指挥官，干净利落。他挣扎了几下就昏了过去。你把他装进麻袋，扛在肩上，悄无声息地撤离。回到铁门关，格雷戈尔亲自审问。指挥官交代了大量情报——兽人兵力、进攻计划、萨满弱点、暗蚀会的联系。你不仅活捉了指挥官，还获得了决定性的情报！","你勒晕指挥官后，没有立刻走——你把他的衣服换成了普通兽人士兵的衣服，然后把他混在「俘虏」队伍里，大摇大摆地从兽人营地侧门走了出去。守卫以为你是押送俘虏的，没有盘问。你不仅活捉了指挥官，还做到了从正门撤离！"],"war_capture_crit")]},
@@ -3564,7 +3564,7 @@ N["i_war_raid_infiltrate"] = function(){ return {
   onOk:{time:1,rep_north:30,injury_risk:0.5,flag:"orc_commander_captive"},
   onFail:{time:1,rep_north:15,injury_risk:0.6,flag:"orc_commander_captive",flag:"captive_uncooperative",hp:-8},
   onCritFail:{time:2,rep_north:10,hp:-30,wound:"腹部匕首伤+两月休养",flag:"orc_commander_dead",sanLoss:5},
-  effect:{time:1},go:"i_war_raid_success"}
+  effect:{time:1},fail:"failpath_raid_1",go:"i_war_raid_success"}
   ]
 }};
 

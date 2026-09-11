@@ -23794,7 +23794,7 @@ N["i_war_battle_morning"] = function(){ return {
   onOk:{time:2,rep_north:15,injury_risk:0.4,gold:100},
   onFail:{time:2,rep_north:8,injury_risk:0.5,gold:50,hp:-10},
   onCritFail:{time:3,rep_north:-5,hp:-25,wound:"左臂重伤+一月不能用剑",karma:-5,sanLoss:10,flag:"defense_breach"},
-  effect:{time:1},go:"i_war_battle_result"},
+  effect:{time:1},fail:"failpath_warwall_1",go:"i_war_battle_result"},
     {t:"用魔法/远程攻击打击兽人",check:{a:"INT",sk:"魔法",label:"远程支援"},
   tier:{
     crit:function(){return[pickV(["你用魔法远程攻击兽人。你没有只是乱放魔法——你瞄准了兽人攻城锤的绳索。一个精准的火球术，绳索断裂，攻城锤砸在地上，把旁边的兽人砸倒一片。然后你又用冰锥术封住了攻城梯的顶端，兽人爬上去就打滑。你不仅造成了大量杀伤，还废掉了兽人的攻城器械！","你用魔法攻击时，发现了兽人萨满的位置。你凝聚全部魔力，一发闪电术精准命中萨满。萨满惨叫着倒下，他周围的亡灵士兵瞬间失去控制，开始攻击自己人。你不仅重创了兽人，还干掉了一个萨满！"],"war_magic_crit")]},
@@ -23806,7 +23806,7 @@ N["i_war_battle_morning"] = function(){ return {
   onOk:{time:2,rep_north:12,injury_risk:0.25},
   onFail:{time:2,rep_north:5,injury_risk:0.3,hp:-5},
   onCritFail:{time:3,rep_north:-10,hp:-20,wound:"烧伤+魔力紊乱",flag:"magic_backfire",sanLoss:8},
-  effect:{time:1},go:"i_war_battle_result"},
+  effect:{time:1},fail:"failpath_warwall_1",go:"i_war_battle_result"},
     {t:"保护身边的小约翰",check:{a:"CON",sk:"生存",label:"保护他人"},
   tier:{
     crit:function(){return[pickV(["你保护身边的小约翰——一个只有十六岁的新兵。战斗中，一个兽人翻过城垛直扑小约翰。你一把推开他，用盾牌挡住了兽人的战斧，然后一刀刺穿了兽人的喉咙。小约翰吓得脸色惨白，但活了下来。战斗结束后，小约翰哭着给你磕头：「大哥，你是我的救命恩人！」你不仅保护了小约翰，还赢得了所有新兵的尊敬！","你保护小约翰时，发现他在发抖。你一边战斗一边喊：「约翰，看着我！跟着我的动作！刺！挡！对！就是这样！」你在战斗中教他基本的格斗技巧。小约翰从一开始的瑟瑟发抖，到后来能独立杀死一个兽人。战斗结束后，小约翰成了一个真正的战士。他说：「大哥，是你让我成为了一个男人。」你不仅保护了小约翰，还在战场上把他训练成了战士！"],"war_protect_crit")]},
@@ -23818,7 +23818,7 @@ N["i_war_battle_morning"] = function(){ return {
   onOk:{time:2,rep_north:10,injury_risk:0.5,karma:5,flag:"john_saved"},
   onFail:{time:2,rep_north:8,injury_risk:0.6,karma:3,hp:-8,flag:"john_saved"},
   onCritFail:{time:3,rep_north:0,karma:-5,hp:-10,wound:"手臂割伤",sanLoss:20,flag:"john_dead",flag:"john_nightmare"},
-  effect:{time:1},go:"i_war_battle_result"}
+  effect:{time:1},fail:"failpath_warwall_1",go:"i_war_battle_result"}
   ]
 }};
 
@@ -23966,7 +23966,7 @@ N["i_war_raid_infiltrate"] = function(){ return {
   onOk:{time:1,rep_north:25,injury_risk:0.3,gold:300,flag:"orc_commander_dead"},
   onFail:{time:1,rep_north:10,injury_risk:0.4,gold:100,flag:"orc_commander_wounded"},
   onCritFail:{time:2,rep_north:5,hp:-20,wound:"腿部刀伤+半月休养",flag:"orc_commander_dead",flag:"orc_berserk_attack",sanLoss:8},
-  effect:{time:1},go:"i_war_raid_success"},
+  effect:{time:1},fail:"failpath_raid_1",go:"i_war_raid_success"},
     {t:"先偷地图和情报",check:{a:"AGI",sk:"潜行",label:"偷窃情报"},
   tier:{
     crit:function(){return[pickV(["你先偷地图和情报。你在指挥官的帐篷里不仅找到了作战地图，还找到了一封密信——是暗蚀会写给兽人指挥官的，承诺在战斗中提供「深渊支援」。你把地图和密信一起带走。回到铁门关，格雷戈尔看到密信后脸色惨白：「暗蚀会……他们和兽人勾结了？」你不仅偷到了情报，还发现了暗蚀会和兽人勾结的证据！","你偷情报时，用了一个技巧——你没有只拿地图，还把指挥官的印章蘸了印泥，在一张空白纸上盖了印。然后你用这张纸伪造了一道调兵命令，放在了指挥官的桌子上。等兽人发现时，部队已经被调走了。你不仅偷到了情报，还伪造命令调走了兽人部队！"],"war_steal_crit")]},
@@ -23978,7 +23978,7 @@ N["i_war_raid_infiltrate"] = function(){ return {
   onOk:{time:1,rep_north:20,injury_risk:0.25,flag:"orc_battle_plan"},
   onFail:{time:1,rep_north:5,injury_risk:0.3},
   onCritFail:{time:2,rep_north:8,hp:-20,wound:"后背中箭",flag:"orc_battle_plan",flag:"orc_early_attack",sanLoss:8},
-  effect:{time:1},go:"i_war_raid_success"},
+  effect:{time:1},fail:"failpath_raid_1",go:"i_war_raid_success"},
     {t:"用绳子勒晕他，带回去审问",check:{a:"STR",sk:"格斗",label:"活捉"},
   tier:{
     crit:function(){return[pickV(["你用绳子勒晕指挥官，干净利落。他挣扎了几下就昏了过去。你把他装进麻袋，扛在肩上，悄无声息地撤离。回到铁门关，格雷戈尔亲自审问。指挥官交代了大量情报——兽人兵力、进攻计划、萨满弱点、暗蚀会的联系。你不仅活捉了指挥官，还获得了决定性的情报！","你勒晕指挥官后，没有立刻走——你把他的衣服换成了普通兽人士兵的衣服，然后把他混在「俘虏」队伍里，大摇大摆地从兽人营地侧门走了出去。守卫以为你是押送俘虏的，没有盘问。你不仅活捉了指挥官，还做到了从正门撤离！"],"war_capture_crit")]},
@@ -23990,7 +23990,7 @@ N["i_war_raid_infiltrate"] = function(){ return {
   onOk:{time:1,rep_north:30,injury_risk:0.5,flag:"orc_commander_captive"},
   onFail:{time:1,rep_north:15,injury_risk:0.6,flag:"orc_commander_captive",flag:"captive_uncooperative",hp:-8},
   onCritFail:{time:2,rep_north:10,hp:-30,wound:"腹部匕首伤+两月休养",flag:"orc_commander_dead",sanLoss:5},
-  effect:{time:1},go:"i_war_raid_success"}
+  effect:{time:1},fail:"failpath_raid_1",go:"i_war_raid_success"}
   ]
 }};
 
@@ -27678,7 +27678,7 @@ N["eclipse_intel_mission"] = function(){ return {
         fail:function(){return[pickV(["你的渗透被发现了，你不得不赶紧撤退。暗蚀会声望-3。","你没能接近墨丘利，什么情报都没收集到。"],"intel_mission_fail")]},
         critfail:function(){return[pickV(["你被墨丘利识破了，他没有揭穿你，但对你说了一句：「回去告诉影，别再来了。」你吓得赶紧跑了。暗蚀会声望-10，SAN-5。","你暴露了身份，被学院的人追了好几条街。HP-10，暗蚀会声望-15。"],"intel_mission_critfail")]}
       },
-      effect:{time:3}, go:"eclipse_rank_member"},
+      effect:{time:3}, fail:"failpath_intel_1",go:"eclipse_rank_member"},
     {t:"「这个任务太危险了，我能不能换一个？」", effect:{time:1,暗蚀会_rep:-3}, go:"eclipse_rank_member"},
     {t:"离开", effect:{time:0}, go:"fc_jiaohui_entry"}
   ]
@@ -27695,7 +27695,7 @@ N["eclipse_action_mission"] = function(){ return {
         fail:function(){return[pickV(["你没能完成暗杀，官员发现了你的企图，你不得不逃跑。暗蚀会声望-5。","你在最后一刻犹豫了，没有下手。暗蚀会声望-10。"],"action_mission_fail")]},
         critfail:function(){return[pickV(["你被抓住了！虽然你设法逃脱，但受了重伤，而且暗蚀会认为你不可靠。HP-20，暗蚀会声望-20，业力+5（你没有下手）。","你杀错了人！你杀了官员的保镖，而不是官员本人。暗蚀会声望-25，业力-25，SAN-15。"],"action_mission_critfail")]}
       },
-      effect:{time:3}, go:"eclipse_rank_member"},
+      effect:{time:3}, fail:"failpath_action_1",go:"eclipse_rank_member"},
     {t:"「我不做暗杀的事。」", effect:{time:1,暗蚀会_rep:-5,karma:10}, go:"eclipse_rank_member"},
     {t:"离开", effect:{time:0}, go:"fc_jiaohui_entry"}
   ]
@@ -79870,7 +79870,7 @@ N["acad_life_y1_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  ok:["你按学院教的标准答法写了。交卷后无事发生。几天后成绩下来，中规中矩。"],
  fail:["你写到一半卡住了，那题实在超出所学。你胡写了几句，交卷时心里发虚。成绩中下，但没人找你麻烦。","你答得工整，笔迹也端正。卷子发回来，红批只有一句：“背书背得不错。”你把那句看了很久，不知该算夸奖还是别的。"],
  crit:["你在那道题下面多写了一段自己的看法：守夜人第一步不是封门，而是“清点还活着的人”。","成绩下来那天，老执事把你叫住，递回卷子——那道题旁边批了一行字：“留盏灯。下学期来我的守夜课。”"]
-},effects:{xp:20},onCrit:{flag:"acad_watch_invite"},go:"acad_life_y1_final"},
+},effects:{xp:20},onCrit:{flag:"acad_watch_invite"},fail:"failpath_mid_1",go:"acad_life_y1_final"},
 {t:"在卷子上画个圈，只答会的",effects:{xp:8},tier:{ok:["你把会的都答了，不会的留白。老执事没说什么。成绩中等偏上。"]},go:"acad_life_y1_final"}
 ]};
 N["acad_life_y1_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期末排名",pace:"normal",text:[
@@ -79884,7 +79884,7 @@ N["acad_life_y1_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
  ok:["你泡在图书馆过了一冬。管理员罗先生从摇头到点头，最后给你留了一盏专座灯。","开春时，你的学识扎实了不少。"],
  fail:["你读着读着就趴在桌上睡着了。醒来时，罗先生给你留了条毯子和一碗热汤。"],
  crit:["你在典藏室深处，又摸到一本没书脊的册子。翻开来，是半本日记，字迹工整：“……第七节点，裂缝在扩大。学院里，有人替他们数着日子。”","你默默记下这行字。"]
-},effects:{xp:25},onCrit:{flag:"acad_diary_fragment"},go:"acad_life_y1_holiday"}
+},effects:{xp:25},onCrit:{flag:"acad_diary_fragment"},fail:"failpath_winter_1",go:"acad_life_y1_holiday"}
 ,
 {t:"（夜深了，独自在火塘边坐一会儿，想想这一学年）",effects:{xp:6},go:"grad_y1_end_1"}
 ]};
@@ -79908,7 +79908,7 @@ N["acad_life_y2_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  ok:["阿塔的拳风像闷雷。你接下他的冲拳，胳膊震得发麻，但撑住了。他露出白牙笑：“你不错。草原上，能接我一拳的人不多。”"],
  fail:["你被他一拳震得后退三步，一屁股坐进雪堆。阿塔赶紧来拉你，满脸歉意。","你揉着胳膊，心里服气。","阿塔让着你，还是把你摔进了草垛。他咧嘴笑，伸手拉你：“力气不够，下次摔你之前先喊停。”你拍掉身上的草，记住了他出手的节奏。"],
  crit:["你借他的冲劲侧身一让，反手把他带进了雪堆。阿塔在雪里愣了愣，随即大笑出声——那是你第一次听见他笑。"]
-},effects:{xp:12},go:"acad_life_y2_friend"},
+},effects:{xp:12},fail:"failpath_spar_1",go:"acad_life_y2_friend"},
 {t:"问他草原上的事",effects:{xp:8},tier:{ok:["阿塔讲起草原：狼旗、黑石部族、每年秋天的部族会盟。他说到“暗蚀会”三个字时，声音明显低了下去：“他们在草原上挖东西，挖了很久了。”","他顿了顿：“我父亲说，别让那东西挖到。所以把我送来了学院。”"]},go:"acad_life_y2_friend"},
 {t:"把狼皮叠好收进箱底，早睡",effects:{hp:10},tier:{ok:["你把狼皮收好。那上面有草原的味道，混着北境的雪。你睡了个安稳觉。"]},go:"acad_life_y2_friend"}
 ]};
@@ -79921,12 +79921,12 @@ N["acad_life_y2_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
  fail:["费尔曼太警觉。你刚跟到回廊拐角，他就回头看了一眼——你赶紧低头装作看书。","之后他看你的眼神，多了一丝说不清的意味。","你跟到回廊拐角，一抬眼他不见了。只有风把走廊尽头的门吹得晃了一下。你站在原地，忽然不确定自己看见的到底是不是他。"],
  crit:["你发现费尔曼每次离开图书馆前，都会在门口的登记簿上写点什么。趁他转身，你扫了一眼——那页上写的不是名字，是一串数字：7-3-7-1。","你抄了下来，没敢多留。"],
  critfail:["你靠得太近，费尔曼忽然停步转身，差点撞上你。他微笑着扶住你：“小心些。图书馆地滑。”","他的笑容没有温度。你后背发凉。"]
-},effects:{},onCrit:{flag:"acad_ferman_digits"},go:"acad_life_y2_mid"},
+},effects:{},onCrit:{flag:"acad_ferman_digits"},fail:"failpath_ferman_1",go:"acad_life_y2_mid"},
 {t:"把这件事告诉墨丘利教授",check:{a:"CHA",sk:"persu",label:"告知"},tier:{
  ok:["墨丘利听完，沉默了很久。他说：“费尔曼……我有印象。他是院长特聘的，背景干净得查不出任何问题。”他摘下眼镜擦了擦，“干净到这种程度，本身就是问题。”","他给你留了一句话：“别在夜里去禁书区。如果他约你去，说你在忙。”"],
  fail:["墨丘利不置可否：“学院里教授之间的往来，轮不到学生操心。”他给你倒了杯茶，岔开了话题。","墨丘利听完，摘下眼镜擦了擦，没接你的话，反而问起你昨天的课业。你明白他在岔开话题，可你也明白，话递出去就收不回了。"],
  crit:["墨丘利听完，脸色微变。他走到门口，确认走廊没人，才压低声音：“费尔曼到任那天，档案室丢过一份卷宗——关于七节点的。”他顿了顿：“丢得无声无息。第二天，管档案的老执事就‘退休’了。”","你和他对视一眼，谁都没再说话。"]
-},effects:{},onCrit:{flag:"acad_ferman_mercury"},go:"acad_life_y2_mid"}
+},effects:{},onCrit:{flag:"acad_ferman_mercury"},fail:"failpath_ferman_1",go:"acad_life_y2_mid"}
 ]};
 N["acad_life_y2_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期中考核",pace:"normal",text:[
 "期中考试这天，考场里少了一个人——药剂系的洛卡没来。",
@@ -80169,7 +80169,7 @@ N["acad_deep_y1_practice"]={tags:["region:north"],tag:"main",place:"艾尔达魔
  fail:["戈拉只说了句“再练”，就去指点别人了。你站在原地，把他的话又嚼了一遍。","他看了你的起手式，没说话，只把剑谱推回给你。你接过时碰到他指尖——凉的。他没再指点，你也没再问。"],
  crit:["你把他画的圈记住了，又问了句：“那断臂之后，您怎么练？”戈拉沉默了一会儿：“左手断了，就用右手。右手学会了，就明白以前左手错了什么。”","他破例多教了你一式收剑。"],
  critfail:["你急着想赢，动作变形，被他一眼看穿：“心浮了。今天就到这。”他转身离开，你攥着剑柄，指节发白。"]
-},effects:{xp:15},onCrit:{flag:"acad_sword_insight"},go:"acad_deep_y1_library"},
+},effects:{xp:15},onCrit:{flag:"acad_sword_insight"},fail:"failpath_practice_1",go:"acad_deep_y1_library"},
 {t:"自己在角落练基础劈砍",effects:{xp:10},tier:{ok:["你对着木桩练了一百下劈砍。寒风把耳朵吹得生疼，但到后来，手臂记住了那股劲道。","收剑时，你发现戈拉站在远处看了你一会儿，没说啥，走了。"]},go:"acad_deep_y1_library"},
 {t:"去场地边的水缸喝水歇脚",effects:{hp:10},tier:{ok:["你蹲在水缸边舀水喝，看见水面上自己的影子——鼻尖冻得通红，眼睛却很亮。你冲自己笑了一下。"]},go:"acad_deep_y1_library"}
 ]};
@@ -80715,7 +80715,7 @@ N["acad_magic_y2_surge"]={tags:["region:north"],tag:"main",place:"冥想室 · �
 "魔力在体内失控，像烧开的锅盖压不住。你的手背炸开一道青纹，痛得你眼前发黑。你听见自己喉咙里发出一声不像人的低吼，铜灯“啪”地炸裂，青焰溅了一地。",
 "费尔曼推门进来的时候，你正趴在墙角，手背青纹渗血。他一把按住你的脉门，声音很冷：“我让你别深冥，你偏要。地脉里的东西，听见你了。”他往你嘴里塞了一粒苦药，你的意识才慢慢回笼。", "你离了深夜，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"（道谢并认错，收敛修行）",effects:{xp:6,flag:"acad_magic_lesson"},tier:{ok:["费尔曼松开你的脉门，说：“知道怕，就还有救。往后三个月，你不许冥想，只许练发声和步法。”他走到门口，又停住，“你手背这道纹——它不会消。它是地脉给你打的烙印。”你低头看那道青纹，像一道小小的闪电。"]},go:"acad_magic_y2_recover"},
-{t:"（追问‘地脉里的东西’到底是什么）",check:{a:"INT",sk:"lore",label:"探询"},tier:{ok:["费尔曼沉默了很久：“封印。很老的封印，压着一个不该存在的东西。你不是第一个摸到它的人，上一个……是我。”他摘下左手手套，手背上赫然也有一道青纹，比你的更深更密。“别再问。等你学满五年，来我办公室。”"],fail:["费尔曼脸色一沉：“问那么多，是想让地脉里的东西多看你两眼吗？”他摔门走了，你手背的青纹还在隐隐作痛。"]},effects:{flag:"acad_magic_ferman_mark"},go:"acad_magic_y2_recover"}
+{t:"（追问‘地脉里的东西’到底是什么）",check:{a:"INT",sk:"lore",label:"探询"},tier:{ok:["费尔曼沉默了很久：“封印。很老的封印，压着一个不该存在的东西。你不是第一个摸到它的人，上一个……是我。”他摘下左手手套，手背上赫然也有一道青纹，比你的更深更密。“别再问。等你学满五年，来我办公室。”"],fail:["费尔曼脸色一沉：“问那么多，是想让地脉里的东西多看你两眼吗？”他摔门走了，你手背的青纹还在隐隐作痛。"]},effects:{flag:"acad_magic_ferman_mark"},fail:"failpath_surge_1",go:"acad_magic_y2_recover"}
 ]};
 N["acad_magic_y2_recover"]={tags:["region:north"],tag:"main",place:"宿舍 · 休养",pace:"normal",text:[
 "你在床上躺了三天。手背的青纹淡了一些，但没消——像一道浅色的疤痕，摸上去带着一点烫意。",
@@ -80846,7 +80846,7 @@ N["acad_mentor_mercury"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
  ok:["你闭眼，静心。光点里传来极细的声音——像雪落，像钟鸣，像很远的地方有人叫你的名字。","墨丘利收回光点，点头：“你的灵魂里，有一道很深的刻痕。不是伤——是记忆。”他顿了顿，“你记得一些……别人不记得的事。”","你想起出发前的那些夜晚。他没追问，只留下一句：“记得的东西，终有一天会有用。”"],
  fail:["你静不下心，光点在你掌心消散。墨丘利温和地摇头：“不急。灵魂这种东西，急不来。”"],
  crit:["你不但听到了声音，还“看见”了一幅画面：一个圈，圈里一只竖瞳——和你见过的那图案一模一样。","你睁开眼。墨丘利看着你，目光深了：“你见过这个？”你没回答。他沉默片刻：“……如果你见过，那就更该学我的课了。”"]
-},effects:{xp:15},onCrit:{flag:"acad_mentor_eye"},go:"acad_mentor_mercury_2"}
+},effects:{xp:15},onCrit:{flag:"acad_mentor_eye"},fail:"failpath_mentor_1",go:"acad_mentor_mercury_2"}
 ]};
 N["acad_mentor_mercury_2"]={tags:["region:north"],tag:"ending",place:"艾尔达魔法学院 · 墨丘利办公室",pace:"normal",text:{default:["毕业前，墨丘利把你叫到办公室，关上门。","他从抽屉里取出那枚银叶徽章——和五年前给你的一模一样：“这是我三十年来送出的第四枚。第三枚的持有人，叫席恩。”","他看着你：“我年轻时，也和你一样，相信封印能守住一切。后来我明白——能守住东西的，从来不是封印，是记得它的人。”","“你是我教过的学生里，最像当年的我，又最不像我的一个。”他笑了笑，“去吧。记得回来看我。”","他把那枚徽章放进你手心：“学院欠你的，会在你需要的时刻还你。”","——和院长说过的话，一模一样。","出了墨丘利办公室，风迎面扑来。你认了认方向，启程。"],ifRelation:{npc:"mentor_mercury",op:">=",val:80,yes:["他站在窗前，背对着你：“我查了二十年的东西，你一个月就摸到了边。”他转过身，眼睛发亮，“留下来，跟着我做。”"],no:{ifRelation:{npc:"mentor_mercury",op:">=",val:60,yes:["办公室里，墨丘利先生把一本泛黄的笔记放到你手里：“这是我半生的研究——灵魂的印记。”他合上你的手，“你留着，比留在我这儿有用。”"],no:{ifRelation:{npc:"mentor_mercury",op:"<=",val:-60,yes:["他把笔记收了回去：“此事到此为止。你既然不肯守规矩，就别再进我这间办公室。”"],no:null}}}}}},options:[
 {t:"收下第二枚银叶徽章",effects:{item:"银叶徽章",xp:20},run:function(){changeRelation('mentor_mercury',20,'毕业传徽');},tier:{ok:["你握紧那枚徽章。它的边角，已经被摩挲得发亮。"]},go:"acad_people_hub"}
@@ -80915,7 +80915,7 @@ N["acad_forbidden_3"]={tags:["region:north"],tag:"branch",place:"艾尔达魔法
  ok:["费尔曼看着你走出来，没有动怒。他看了你一眼：“你知道这扇门后面是什么吗？”你没答。他点点头，“知道还敢来，有胆色。”","“书你留着。但记住——看过的，别对任何人说。”他转身走了，像来时一样无声。","你站在原地，攥着那本书，心跳如鼓。"],
  fail:["你僵在原地。费尔曼没有催你，只是等着。最终你走出来，他看了一眼你怀里的书：“《守夜人手记》？”他点点头，“好书。”","他没再说什么，走了。你分不清那是放过，还是记下。"],
  crit:["你走出来，直视他的眼睛：“费尔曼教授——或者说，席恩先生？”","费尔曼的动作，顿住了。他看了你很久，最终轻轻叹了口气：“……你已经知道了。”","他沉默片刻：“那这本书，你更该留着。”他转身，“别走我的老路。”"]
-},effects:{xp:15},onCrit:{flag:"acad_face_sein"},go:"acad_forbidden_4"}
+},effects:{xp:15},onCrit:{flag:"acad_face_sein"},fail:"failpath_forbid_1",go:"acad_forbidden_4"}
 ]};
 N["acad_forbidden_4"]={tags:["region:north"],tag:"branch",place:"艾尔达魔法学院 · 禁书区",pace:"normal",text:[
 "那夜之后，你成了学院里“知道太多”的人之一。",
@@ -81105,12 +81105,12 @@ N["acad_visit_desert"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  fail:["你认不全这些符文，只能含糊地说“像是古物”。头领有些失望，但还是道了谢。"],
  crit:["你不仅认出了大意，还发现符文深处藏着一个更小的印记——你曾在罗先生的笔记里见过：那是“第七节点”的旧标记。你不动声色地记住了，只说“可以埋回去”。","头领给你塞了一小袋银月当茶水钱，你推不掉，收了。"],
  critfail:["你盯着看了半天，说了句外行话。头领的笑容淡了，把木匣收了回去：“看来学院里也不是都懂。”他转身招呼别人去了。"]
-},effects:{xp:15},onCrit:{flag:"acad_blackstone_mark"},go:"acad_outside_hub"},
+},effects:{xp:15},onCrit:{flag:"acad_blackstone_mark"},fail:"failpath_visitdesert_1",go:"acad_outside_hub"},
 {t:"问他古城的位置",check:{a:"CHA",sk:"persu",label:"询问"},tier:{
  ok:["头领压低嗓门：“在死亡沙漠深处，绿洲城再往南，走半个月。那片古城，十年前还没人知道——沙暴过后，露出来的。”他顿了顿，“进去的人，十个回来两三个。”"],
  fail:["头领摇摇头：“那个地方，不能乱说。说了，会有人去找死。”"],
  crit:["头领四下看看，从怀里摸出一张羊皮图：“这是我自己画的路线。送你，算是交个朋友。”他补了一句，“别让第二个人看见。”","羊皮图上，古城的位置画了个叉，旁边写着一行小字：“井底有东西，别往下看。”"]
-},effects:{xp:15},onCrit:{flag:"acad_desert_map"},go:"acad_outside_hub"},
+},effects:{xp:15},onCrit:{flag:"acad_desert_map"},fail:"failpath_visitdesert_1",go:"acad_outside_hub"},
 {t:"谢绝，回学院",effects:{xp:3},tier:{ok:["你婉拒了。沙漠古城的东西，听着就烫手。","但你记住了黑石上那个印记。"]},go:"acad_outside_hub"}
 ]};
 N["acad_visit_west"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 符文教室",pace:"normal",text:[
@@ -81121,12 +81121,12 @@ N["acad_visit_west"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学
  ok:["你们聊了一下午。若耶讲了西境的元素风暴：沙暴里带电光、能吹走马匹、风暴眼里反而风平浪静——“平静得像假的”。你讲了符文共振的推演。她眼睛越来越亮：“你毕业了，来西境吧。行省会要你这种人。”"],
  fail:["你跟她聊了几句，发现自己对风暴的了解远不如她。她倒也不失望：“能听懂我在说什么的人，学院里也没几个。你算一个。”"],
  crit:["你们聊到深夜。若耶把她在风暴眼里记录的符文拓片给你看——那些符文，和沙漠商队头领那块黑石上的，是同一种风格。","你心头一跳，但没有声张，只说“我好像见过类似的”。"]
-},effects:{xp:18},onCrit:{flag:"acad_west_runes"},go:"acad_outside_hub"},
+},effects:{xp:18},onCrit:{flag:"acad_west_runes"},fail:"failpath_visitwest_1",go:"acad_outside_hub"},
 {t:"问她：风暴眼里是什么",check:{a:"CHA",sk:"persu",label:"询问"},tier:{
  ok:["若耶沉默了一下：“风暴眼里，有一根石柱。柱子上全是符文，从头刻到底。”她顿了顿，“我在柱子上刻过一行字，一年后再去看，字没了——被新长出来的符文盖住了。”"],
  fail:["若耶摇摇头：“那个地方，不是能随便说的地方。我说了，你会被卷进去。”"],
  crit:["若耶压着嗓子：“柱子上有一行字，我认不全，但记下来了——”她从怀里摸出一张纸条，“你帮我看看，是不是古沙漠文。”","纸条上的字，和你记忆里那枚黑石印记，是同一种风格。你认出了其中三个字：“……井下……勿……”"]
-},effects:{xp:18},onCrit:{flag:"acad_west_column"},go:"acad_outside_hub"},
+},effects:{xp:18},onCrit:{flag:"acad_west_column"},fail:"failpath_visitwest_1",go:"acad_outside_hub"},
 {t:"道别，回宿舍",effects:{xp:3},tier:{ok:["你和若耶道别。她走时拍了拍你肩膀：“记住，西境的风暴观测站，缺人。”","你点头，把她的名片收进怀里。"]},go:"acad_outside_hub"}
 ]};
 N["acad_visit_church"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 会客厅",pace:"normal",text:[
@@ -81137,7 +81137,7 @@ N["acad_visit_church"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
  ok:["特蕾莎嬷嬷沉默了一会儿：“圣痕司在找‘守夜人的信物’。”她看着你腰间的铜铃，“你那个铃铛，若是守夜人一脉的，最好收起来。他们找这个东西，找了很多年了。”"],
  fail:["特蕾莎嬷嬷摇摇头：“教会的事，你不要打听。你只需要知道，别让圣痕司的人注意到你。”"],
  crit:["特蕾莎嬷嬷把你拉进屋里，关上门：“你那个铃铛，是不是内壁有个‘七’字？”你点头。她叹了口气：“果然。”她话声放轻，“守夜人的铜铃，一共七枚，对应七个节点。圣痕司收走了六枚，只差你这一枚。”","她顿了顿，“你把它藏好。藏不住，就毁了它。别让它落到他们手里。”"]
-},effects:{xp:18},onCrit:{flag:"acad_church_sevenbells"},go:"acad_outside_hub"},
+},effects:{xp:18},onCrit:{flag:"acad_church_sevenbells"},fail:"failpath_visitchurch_1",go:"acad_outside_hub"},
 {t:"把铜铃解下来，收进怀里",effects:{xp:10,flag:"acad_bell_hidden"},tier:{ok:["你当着她的面把铜铃解下来，收进贴身衣袋。特蕾莎嬷嬷点了点头：“收好。今天起，别再让人看见。”","你走出会客厅时，总觉得暗处有双眼睛。"]},go:"acad_outside_hub"},
 {t:"留在原地，没接话",effects:{xp:5},tier:{ok:["你站在门口，没接话。灰袍执事已经走远了，特蕾莎嬷嬷看着你，张了张嘴，最终只说：“好自为之。”"]},go:"acad_outside_hub"}
 ]};
@@ -88562,6 +88562,146 @@ window.CAUSALITY_LEDGER = [
     "importance": 2,
     "keywords": ["王庭试炼", "狼王"],
     "irreversible": false
+  },
+  {
+    "id": "led_f1_warwall",
+    "type": "设定",
+    "desc": "铁门关东墙下城边缘通道：伤兵营铁手→私酒铺刘掌柜→独眼辎重兵，军规外的活路网（F-1 failpath_warwall）",
+    "plant": "flag:f_failpath_warwall_liu",
+    "reap": "",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 4,
+    "keywords": [
+      "铁门关东墙下城",
+      "私酒铺",
+      "铁手"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_raid",
+    "type": "设定",
+    "desc": "雪原冰裂隙逃兵村（跛脚汉）：兽人营地加人、一天一车铁自南运来——缺粮军队不运铁（F-1 failpath_raid）",
+    "plant": "flag:f_failpath_raid_iron",
+    "reap": "",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 4,
+    "keywords": [
+      "逃兵村",
+      "兽人运铁"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_intel",
+    "type": "伏笔",
+    "desc": "学院被开除生“耗子”→城东骡马行赵账房递讯切口，暗蚀会黑市情报点（F-1 failpath_intel）",
+    "plant": "flag:f_failpath_intel_zhao",
+    "reap": "",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 3,
+    "keywords": [
+      "耗子",
+      "骡马行",
+      "暗蚀会"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_action",
+    "type": "伏笔",
+    "desc": "白事张殡葬行后院地道通城外乱葬岗；城西破庙铁片为暗蚀会收尾人信物（F-1 failpath_action）",
+    "plant": "flag:f_failpath_action_tunnel",
+    "reap": "flag:f_failpath_action_mark",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 3,
+    "keywords": [
+      "白事张",
+      "殡葬行地道",
+      "铁片"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_forbid",
+    "type": "伏笔",
+    "desc": "禁书区无名旧册“金秤一脉守的不是书，是门。门后有什么，问守夜人”——金秤守门设定在学院图书馆的信息碎片（F-1 failpath_forbid）",
+    "plant": "flag:f_failpath_forbid_goldscale",
+    "reap": "node:anchor_grave_1",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 4,
+    "keywords": [
+      "金秤一脉守门",
+      "守夜人"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_ferman7",
+    "type": "伏笔",
+    "desc": "费尔曼图书馆登记簿备注栏数字“7”；每周三深夜站禁书区门前一盏茶——与第七节点钥匙线同源（F-1 failpath_ferman）",
+    "plant": "flag:f_failpath_ferman_seven",
+    "reap": "flag:acad_brass_key",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": [
+      "登记簿7",
+      "费尔曼",
+      "禁书区"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_log",
+    "type": "伏笔",
+    "desc": "图书馆夹层旧守夜人轮值日志：第七节点雪夜北边有光一明一灭整夜，无人承认，记录未上报（F-1 failpath_winter）",
+    "plant": "flag:f_failpath_winter_log",
+    "reap": "node:acad_brass_key",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": [
+      "守夜人轮值日志",
+      "第七节点"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_blackstone",
+    "type": "伏笔",
+    "desc": "沙漠黑石符文与古语“井”字：商队黑石为十年前沙中挖出、挖者当夜死，灰袍夜访者仅观石不言（F-1 failpath_visitdesert）",
+    "plant": "flag:f_failpath_desert_rune",
+    "reap": "",
+    "status": "open",
+    "world": "vol_desert",
+    "importance": 3,
+    "keywords": [
+      "沙漠黑石",
+      "符文",
+      "井"
+    ],
+    "irreversible": false
+  },
+  {
+    "id": "led_f1_column",
+    "type": "伏笔",
+    "desc": "西境风暴眼石柱柱顶断裂（若耶观测记录：三年前完整，今年断一截）——元素封印线新碎片（F-1 failpath_visitwest）",
+    "plant": "flag:f_failpath_west_column",
+    "reap": "",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": [
+      "风暴眼石柱",
+      "若耶观测"
+    ],
+    "irreversible": false
   }
 ];
 
@@ -92491,6 +92631,513 @@ N["elf_leaf_6"]={tag:"branch",place:"精灵林邦 · 药庐",where:"白昼",pace
 "你握着那包药，药香在鼻尖绕了很久。", "你离了药庐，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"（带着林邦的药，继续走）",effects:{xp:20,infl:{elf:8},flag:"elf_leaf_done"},go:"warphase_14"}
 ]};
+
+/* /u1inj:data-nodes:dn_failpath.js/ */
+/* /f1inj:nodes/ F-1 失败开门·专线骨架（15 组首批 8 组）
+ * 机制：原判定节点选项加 fail:"failpath_<key>_1"，失败/critfail 由引擎 choose 原生分流至专线；
+ * 成功仍走原 go。专线 3-4 节点闭环后接回原 go（fallback），主线流程不断。
+ * 全部纯数据对象式节点 + pace；不触碰判定公式/writeNext/choose/存档语义。
+ * 人物与地点均为失败后可见的边缘人群（伤兵/逃兵/被开除者/收尸人/笨学生），
+ * 不与既有设定冲突；关键新人物在 dn_causality.js 登记。 */
+(function(){
+N["failpath_warwall_1"]={tag:"branch",place:"铁门关·东墙下",pace:"normal",text:[
+"你从城垛上摔下去的时候，左肩先着地。骨头没断，但整条胳膊像灌了铁水，抬不起来。",
+"混乱中，一只有力的手抓住你的领子，把你从兽人脚下拖进箭楼阴影里。是个老兵，脸上横着一道旧疤：“小子，命大。”",
+"他把你往地上一搁，塞给你半块干饼：“嚼了。东墙今天折了十七个，你没在里头，算运气。”",
+"墙头杀声还响着。你靠在箭楼墙上，左肩一跳一跳地疼，干饼硌牙，咽下去像吞砂子。", 
+"哨声从墙头传来——是退兵号。", 
+"你撑墙站起来，左胳膊使不上力，只好用右手按着伤处，一瘸一拐地往城下走。"
+],options:[
+{t:"（顺着伤兵人流，去城下的医帐）",effects:{hp:-8},go:"failpath_warwall_2"},
+{t:"（咬牙返回墙头，再看一眼战况）",effects:{hp:-12},go:"failpath_warwall_2"}
+]};
+N["failpath_warwall_2"]={tag:"branch",place:"铁门关·伤兵营",pace:"normal",text:[
+"伤兵营里挤满了人。地上铺着干草，血浸透了几层，踩上去黏脚。",
+"老军医绰号“铁手”，因为他的右手是铁打的——据说在铁门关守了三十年，右手烂在雪地里，就换了一副铁钩子。他给你看左肩，捏了两下：“没断。脱臼了。”",
+"他两手一错，“咔”一声，肩膀归了位。疼劲过去，你出了一后背汗。",
+"铁手往你手里塞了张纸条：“东墙下城，有个私酒的铺子，掌柜姓刘。你伤没好利索，去他那儿寻碗热酒，比喝药强。”他顿了顿，“别声张。军队的规矩，伤兵不该认得卖酒的。”",
+"你捏着纸条，纸边磨得发毛，像是被人揣了许久。"
+],options:[
+{t:"收下纸条，谢过铁手",effects:{xp:15,flag:"f_failpath_warwall_liu"},go:"failpath_warwall_3"},
+{t:"把纸条还回去：“军规不让。”",effects:{xp:10},go:"failpath_warwall_3"}
+]};
+N["failpath_warwall_3"]={tag:"branch",place:"铁门关·东墙下城·私酒铺",pace:"normal",text:[
+"刘掌柜的铺子开在城墙根下，门脸小得像个老鼠洞，掀开帘子，里头却暖和得紧。",
+"他看了纸条，又看你左肩：“铁手让来的？”他给你舀了碗酒，酒浑，但烫嘴。",
+"铺子里还坐着个辎重兵，一只眼蒙着黑布，独眼。他正往麻袋里装什么，见你进来，也不避讳：“伤兵？正好。明天有趟车往北边哨所送粮，缺个押车的。跑一趟，一吊钱。”",
+"独眼压低嗓子：“哨所那帮人，喝酒认人，不认文书。你要是认识几个字，还能替他们写家书——那钱另算。”",
+"酒碗里的热气扑在脸上。你左肩还疼，但手已经暖了。"
+],options:[
+{t:"应下押车的活（挣一吊钱，也看看北边）",effects:{gold:8,xp:15,flag:"f_failpath_warwall_convoy"},go:"failpath_warwall_4"},
+{t:"谢绝，只喝了碗酒就告辞",effects:{xp:8},go:"failpath_warwall_4"}
+]};
+N["failpath_warwall_4"]={tag:"branch",place:"铁门关·城墙根",pace:"normal",text:[
+"你走出私酒铺时，天已经擦黑。城头的火把一盏盏点起来，把铁门关照得像一条火龙盘在山脊上。",
+"左肩还肿着，但你多认得了一条路：东墙下城，私酒铺，独眼辎重兵。这些名字，正规战报里不会写。",
+"伤兵营里铁手说得对：“打完了仗，活着的人还要过日子。过日子，靠的不全是刀。”",
+"你沿着城墙根往回走，夜风里夹着雪粒和酒气。远处，退兵号又响了一遍。"
+],options:[
+{t:"（回营休整，等下一场战事）",effects:{xp:10},go:"i_war_battle_result"}
+]};
+N["failpath_raid_1"]={tag:"branch",place:"北方雪原·冰裂隙",pace:"normal",text:[
+"你从兽人营地逃出来的时候，身后追兵的火把连成一线。雪深及膝，你跑不快。",
+"脚下一空，冰面裂开——你连人带雪栽进一道裂隙。摔下去的时候你护住了头，肩背撞在冰壁上，疼得眼前发黑。",
+"追兵的脚步声从头顶过去，没人往脚下看。",
+"裂隙不深，约莫三丈。冰壁泛着幽蓝的光，风声从裂缝口灌下来，像有人在远处哭。",
+"你活动了一下手脚——没断，但右踝扭了，一用力就钻心地疼。"
+],options:[
+{t:"（沿着裂隙底部，往风声小的方向摸）",effects:{hp:-10},go:"failpath_raid_2"},
+{t:"（先坐下来，等追兵走远再想办法）",effects:{xp:8},go:"failpath_raid_2"}
+]};
+N["failpath_raid_2"]={tag:"branch",place:"北方雪原·裂隙底·逃兵村",pace:"normal",text:[
+"裂隙底部的冰面下，有一道人工凿出的拱门。门后是一条巷道，尽头有火光，还有人声。",
+"你贴着冰壁摸进去，火光亮处，是个不大的地窝子。几十个人挤在里头，衣衫褴褛，围着几堆火。见你进来，没人动，只有一双双眼睛转过来。",
+"一个跛脚的中年汉子走过来，打量你：“追兵？逃兵？还是探子？”",
+"你还没答。他先摆摆手：“不管你是什么，雪夜进裂隙的，都是活不下去的人。坐吧，火边暖和。”",
+"他给你让了个位置，火堆边有人递过来半碗热粥——碗沿缺了个口子，粥是稀的，但烫。"
+],options:[
+{t:"接过粥，谢过他，说是追兵撵进来的",effects:{xp:15},go:"failpath_raid_3"},
+{t:"警惕地站着，不接粥",effects:{xp:8,hp:5},go:"failpath_raid_3"}
+]};
+N["failpath_raid_3"]={tag:"branch",place:"北方雪原·逃兵村",pace:"normal",text:[
+"夜里，地窝子的火堆噼啪响。跛脚汉坐在你对面，用一根铁钎拨火。",
+"他告诉你，这村子底下原本是条旧矿道，打仗后废了，逃兵和流民就住了进来。“外头的人管我们叫逃兵村。其实我们逃的，不是仗——是打完仗之后没人管的日子。”",
+"他拨了拨火，忽然压低嗓子：“你从兽人营地那边来？我劝你，最近别往北去。兽人营地在加人，一天一车铁，从南边运来的。”",
+"铁钎在火里烧红了一截。“铁门关那帮老爷，还当兽人缺粮。缺粮的军队，不会运铁。”",
+"火光映着地窝子的顶，水汽结成冰凌，挂了一排。"
+],options:[
+{t:"把“兽人运铁”的消息记牢（回关后禀报）",effects:{xp:20,flag:"f_failpath_raid_iron"},go:"failpath_raid_4"},
+{t:"只当闲话听，不往心里去",effects:{xp:10},go:"failpath_raid_4"}
+]};
+N["failpath_raid_4"]={tag:"branch",place:"北方雪原·冰裂隙口",pace:"normal",text:[
+"天蒙蒙亮，你从裂隙口爬出来。雪停了，风也小了些，兽人营地的方向冒着一道烟。",
+"你回头看了一眼裂隙——那道拱门已经冻在冰里，看不出痕迹。",
+"跛脚汉的声音还在耳边：“活着回去的人，才记得住路。”",
+"你拍拍身上的雪，往铁门关的方向走。右踝还疼，但你记住了那条裂隙，也记住了那句话：缺粮的军队，不会运铁。"
+],options:[
+{t:"（回铁门关复命，把雪原见闻一并禀报）",effects:{xp:15},go:"i_war_raid_success"}
+]};
+N["failpath_intel_1"]={tag:"branch",place:"艾尔达魔法学院·墨丘利办公室门口",pace:"normal",text:[
+"你的伪装在第三天就露了馅。",
+"墨丘利把你叫到办公室门口，没有揭穿你，只站在门里，看了你一会儿：“你身上有暗蚀会的味道——不是信物，是习惯。走路先看窗，说话留半句。”",
+"他顿了顿：“回去告诉派你来的人：学院不是筛子。这回我不计较，下回，我不会替他们收尾。”",
+"他说完，把门关了。门缝里漏出一句：“你要真想在学院待下去，就把‘任务’两个字忘了，好好上课。”",
+"你站在走廊里，后背贴着墙，出了一层薄汗。"
+],options:[
+{t:"（低头离开，心里把他的话记牢）",effects:{xp:12},go:"failpath_intel_2"},
+{t:"（还想辩解，又咽了回去）",effects:{xp:6},go:"failpath_intel_2"}
+]};
+N["failpath_intel_2"]={tag:"branch",place:"艾尔达魔法学院·山门外",pace:"normal",text:[
+"你在山门外碰见一个瘦高个，穿着学院旧袍，袖口磨得发白，蹲在石阶上啃干饼。",
+"他看见你，咧嘴一笑：“新来的？我也是学院出来的——被开的那种。”他自称“耗子”，以前在学院抄了三年卷宗，因为“多看了不该看的文件”，被撵了出来。",
+"耗子压低嗓子：“你在里头是不是办砸了什么事？我看你出来时，脸色不对。”",
+"你没答。他倒不在意，从怀里摸出一张折得四方的纸条，塞进你手心：“拿着。城东骡马行，找个姓赵的账房。就说——‘耗子让来的’。他能帮你把消息递出去，也能帮你把尾巴收干净。”",
+"纸条泛黄，边角卷起，像是揣了很久。"
+],options:[
+{t:"收下纸条（多一条递消息的门路）",effects:{xp:18,flag:"f_failpath_intel_zhao"},go:"failpath_intel_3"},
+{t:"把纸条还他：“我不需要。”",effects:{xp:10},go:"failpath_intel_3"}
+]};
+N["failpath_intel_3"]={tag:"branch",place:"艾尔达魔法学院·山门外",pace:"normal",text:[
+"耗子见你收下纸条，拍了拍屁股站起来：“行，那我走了。记住，骡马行姓赵的账房，只认这句切口。换了人，别认。”",
+"他走出几步，又回头：“对了——你要是真没地方去，城西有间旧茶馆，晚上常有人下棋。下棋的人，话多。想听消息，就去那儿坐坐。”",
+"他摆摆手，钻进人群里，再看不见了。",
+"你捏着那张纸条，站在学院山门外。雪又下起来，落在肩头，很快就化了。",
+"山门内，钟楼敲了三下。你回头看了一眼——学院还是那个学院，但你心里清楚，有些门路，踏进来就收不回去了。"
+],options:[
+{t:"（把纸条收进内袋，回暗蚀会据点复命）",effects:{xp:12},go:"eclipse_rank_member"}
+]};
+N["failpath_action_1"]={tag:"branch",place:"北方公国联盟·旧城区",pace:"normal",text:[
+"你动手的那晚，刀没落到该落的位置。官员惊醒了，喊声撕开夜色，城防的锣跟着响起来。",
+"你转身就跑，靴子踏碎巷子里的薄冰。身后的火把越聚越多，像一条火龙咬住你的尾巴。",
+"你拐进一条窄巷，撞开一扇虚掩的木门——门后是间灵堂，白幡垂着，烛火摇摇晃晃。一个穿着麻衣的干瘦老头正在给棺材上漆，头也不抬：“外头在抓人？”",
+"你没答。他搁下刷子：“躲进来吧。追兵不会搜灵堂——晦气。”",
+"他给你让了个角落，又往火盆里添了两张纸钱。火光跳了跳，把他的影子投在墙上，拉得很长。"
+],options:[
+{t:"（谢过他，缩进角落等追兵过去）",effects:{xp:12},go:"failpath_action_2"},
+{t:"（警惕地站在门后，随时准备再跑）",effects:{xp:8},go:"failpath_action_2"}
+]};
+N["failpath_action_2"]={tag:"branch",place:"北方公国联盟·殡葬行",pace:"normal",text:[
+"老头自称“白事张”，在这条街上收尸三十年了。他给棺材上漆的手艺很稳，说话却慢悠悠的：“我收过的人，有寿终的，有横死的，还有……”他顿了顿，“还有不该死的。”",
+"他放下刷子，看着你：“你干的那行，我见得多。收尸收得多了，就认得出来——你身上那股劲儿，跟他们一样。”",
+"他没追问你杀的是谁，只从柜子底下摸出一串钥匙：“后院有条地道，通城外的乱葬岗。夜里走，没人查。”",
+"他把钥匙搁在桌上：“走不走，你自己定。走的话，明早之前还回来。”",
+"烛火晃了一下。白事张又开始刷漆，像什么都没说过。"
+],options:[
+{t:"接过钥匙，从地道出城",effects:{xp:18,flag:"f_failpath_action_tunnel"},go:"failpath_action_3"},
+{t:"谢绝，另找藏身处",effects:{xp:10},go:"failpath_action_3"}
+]};
+N["failpath_action_3"]={tag:"branch",place:"北方公国联盟·城外地道口",pace:"normal",text:[
+"地道又窄又潮，火把的光照出两壁的砖缝，砖缝里长着干苔。",
+"你走到一半，前面拐角处站着一个人——黑衣，蒙面，腰上别着两把短刃。他看见你，没有拔刀，只问了一句：“白事张让来的？”",
+"你点头。他让开路：“回去吧。今晚的事，暗蚀会知道了——办砸了不丢人，办砸了还留下尾巴，才丢人。”",
+"他往你手里塞了一枚铁片：“下次有脏活，城西破庙，夜半三更，拿这个来。”",
+"铁片冰凉，边缘刻着一个模糊的记号。你没细看，揣进怀里。",
+"地道口的冷风灌进来，吹灭火把。你在黑暗里站了一会儿，才迈步往外走。"
+],options:[
+{t:"（收好铁片，沿地道出城回据点）",effects:{xp:18,flag:"f_failpath_action_mark"},go:"eclipse_rank_member"}
+]};
+N["failpath_forbid_1"]={tag:"branch",place:"艾尔达魔法学院·禁书区走廊",pace:"normal",text:[
+"你从禁书区出来的时候，费尔曼就站在走廊那头。他没有堵你，只是站在那里，等你走过去。",
+"你走到他面前，他低头看了一眼你怀里露出的书脊，没有问你怎么进去的，只问了一句：“看完了？”",
+"你点头。他沉默了一会儿：“记过处分，明天贴出来。禁书区抄书一个月，图书管理员罗先生监工。”",
+"他说完就走了，脚步很轻，像来时一样。",
+"走廊的窗开着，北风灌进来，你打了个寒颤。处分不重，但你心里清楚——费尔曼记下的，不是你偷看书这件事。"
+],options:[
+{t:"（认下处分，去图书馆报到）",effects:{xp:12},go:"failpath_forbid_2"},
+{t:"（想找墨丘利求情，又作罢）",effects:{xp:8},go:"failpath_forbid_2"}
+]};
+N["failpath_forbid_2"]={tag:"branch",place:"艾尔达魔法学院·图书馆",pace:"normal",text:[
+"抄书的活不重：把禁书区的旧书目，一份份誊抄到新册子上。罗先生坐在柜台后面，偶尔抬头看你一眼，从不催。",
+"第三天，你抄到一本没有书名的册子。扉页发黄，边角被虫蛀过。翻开来，字迹工整，是三十年前的人写的：",
+"“……第七节点，裂缝在扩大。学院里，有人替他们数着日子。”",
+"你心头一跳，又往后翻了一页。后一页是空白的，只在页脚写着一行小字：“记住这句话的人，别抄进书目里。”",
+"你搁下笔，抬头看见罗先生正看着你。他什么也没说，又低头去整理借书卡了。"
+],options:[
+{t:"（把那一页记在心里，没有抄进书目）",effects:{xp:20,flag:"f_failpath_forbid_diary"},go:"failpath_forbid_3"},
+{t:"（原样抄进书目，装作没看见）",effects:{xp:10},go:"failpath_forbid_3"}
+]};
+N["failpath_forbid_3"]={tag:"branch",place:"艾尔达魔法学院·图书馆",pace:"normal",text:[
+"抄书第二十天，你在典藏室角落发现一本没有书脊的册子，被塞在书架最底层，落满灰。",
+"册子扉页夹着一枚干枯的薄荷叶。你翻开来，是半本日记，字迹与禁书区那本不同，更潦草，像是赶着写的：",
+"“……金秤一脉，守的不是书，是门。门后有什么，问守夜人。”",
+"日记到这里就断了，后半本被撕掉了。你合上册子，把那枚薄荷叶原样夹回去，放回原处。",
+"你走出典藏室时，罗先生正在锁门。他看见你，只说了一句：“明天最后一天了，抄完就没事了。”",
+"他顿了顿，又补了一句：“书里的东西，看过的，别对人说。说过的话，会替你说出去。”"
+],options:[
+{t:"（把“金秤一脉守门”记下）",effects:{xp:22,flag:"f_failpath_forbid_goldscale"},go:"failpath_forbid_4"}
+]};
+N["failpath_forbid_4"]={tag:"branch",place:"艾尔达魔法学院·禁书区门口",pace:"normal",text:[
+"抄书期满那天，罗先生把新册子收进柜子，又看了你一眼：“处分撤了。费尔曼教授批的。”",
+"你愣了一下。罗先生压低嗓子：“他说，抄书这一个月，你比谁都在意书里写的是什么。这样的人，不该记过。”",
+"他把那本无名的旧册子从柜台下拿出来，还给你：“这个，他说让你留着。书比处分值钱。”",
+"你接过册子，纸页冰凉。禁书区的门在你身后合上，锁舌“咔哒”一声。",
+"你站在走廊里，把册子贴身收好。处分是撤了，但你心里清楚，有些东西，一旦翻开，就再也合不上了。"
+],options:[
+{t:"（收好册子，回宿舍）",effects:{xp:15,item:"无书名的旧册子"},go:"acad_forbidden_4"}
+]};
+N["failpath_mentor_1"]={tag:"branch",place:"艾尔达魔法学院·墨丘利办公室",pace:"normal",text:[
+"光点在你掌心散开的时候，你听见自己心里“嗡”的一声——不是疼，是空。",
+"墨丘利看着你，没有失望的神色，只说了句：“不急。灵魂这种东西，急不来。”",
+"他给你倒了杯热茶，茶是苦的：“我像你这么大的时候，也静不下来。第一次试听，光点刚聚起来就散了，散了七次。”",
+"他靠在椅背上，看着窗外：“第八次，我才听见声音——雪落的声音。”",
+"办公室安静了一会儿。炉子上的水壶咕嘟响了一声。",
+"墨丘利收回视线：“你回去吧。过两天，来旁听我的晚课。坐着就行，不用学什么。”"
+],options:[
+{t:"（谢过他，应下晚课旁听）",effects:{xp:15,flag:"f_failpath_mentor_audit"},go:"failpath_mentor_2"},
+{t:"（觉得自己丢人，想推掉）",effects:{xp:8},go:"failpath_mentor_2"}
+]};
+N["failpath_mentor_2"]={tag:"branch",place:"艾尔达魔法学院·图书馆·深夜",pace:"normal",text:[
+"旁听的晚课，比你想象中安静。教室里只有三个人：你，一个记笔记的学长，和讲台上声音很轻的墨丘利。",
+"他讲的是灵魂印记的辨认——不同的人，光点散开的样子不同。讲到一半，他忽然问：“你们有没有想过，为什么有些人的灵魂，会‘记着’别人不记得的事？”",
+"没人答。他也没等答案，继续往下讲。",
+"下课后，你在图书馆角落坐下，想把他讲的话理一遍。",
+"夜渐深。你起身要走时，看见靠窗的桌子边，墨丘利一个人坐着，面前摊着一本旧笔记，正往上面写什么。他写得很慢，像是在斟酌每一个字。",
+"他没有抬头，但你知道他察觉到了你。他开口，声音很轻：“过来坐。写笔记这种事，一个人写，容易写偏。”"
+],options:[
+{t:"（坐过去，看他写什么）",effects:{xp:20,flag:"f_failpath_mentor_note"},go:"failpath_mentor_3"},
+{t:"（悄悄退走，不打扰他）",effects:{xp:12},go:"failpath_mentor_3"}
+]};
+N["failpath_mentor_3"]={tag:"branch",place:"艾尔达魔法学院·图书馆·深夜",pace:"normal",text:[
+"你在墨丘利对面坐下。他面前那本笔记，记的是学院历代守夜人候选的名录——名字、入校年份、毕业去向。你看见有几个名字旁边，画着小小的圈。",
+"他没解释那些圈，只翻到空白页，推给你一支笔：“你要是想记点什么，就记在这本上。记不下来的，也别硬记。”",
+"你接过笔，笔杆还是温的。",
+"窗外，北境的风把雪吹成白雾。图书馆里只剩你们两个人，灯罩下的光把桌面照得发暖。",
+"墨丘利翻着笔记，忽然说了一句：“你听不见光点的声音，不见得是坏事。有些声音，听多了，会把人拖进井里。”",
+"他没抬头。你也没接话。但那一夜，你在他的笔记上，留下了第一行字——你自己的字迹。"
+],options:[
+{t:"（在笔记上写下自己的名字与入学年）",effects:{xp:20,relation:{npc:"mentor_mercury",v:5}},go:"acad_mentor_mercury_2"}
+]};
+N["failpath_practice_1"]={tag:"branch",place:"艾尔达魔法学院·演武场",pace:"normal",text:[
+"戈拉看完你的起手式，只说了一个字：“练。”然后就转身去指点别人了。",
+"你站在原地，把那个字又嚼了一遍，没嚼出别的意思。",
+"演武场的风很大，吹得旗杆上的绳子“啪啪”响。你抡起木剑，对着木桩劈了一百下。手腕酸了，换左手。左手不习惯，砍歪了，木屑崩了一地。",
+"旁边一个矮个子新生蹲在墙角，抱着膝盖看你：“你练得不对。”",
+"你看过去。他缩了缩脖子：“不是，我是说——戈拉教我的时候说，劈砍的劲，从脚底起，从腰上过。你光用手臂了。”",
+"他说完又缩回去，像怕你嫌他多嘴。"
+],options:[
+{t:"（谢过他，按他说的重新找劲道）",effects:{xp:15,flag:"f_failpath_practice_friend"},go:"failpath_practice_2"},
+{t:"（不理会，自顾自练）",effects:{xp:8},go:"failpath_practice_2"}
+]};
+N["failpath_practice_2"]={tag:"branch",place:"艾尔达魔法学院·演武场·傍晚",pace:"normal",text:[
+"傍晚收操，你被留下来补练。戈拉站在演武场边，看着你练完一轮，才开口：“底子不算差。就是心太急。”",
+"他把木剑扔给你：“急的人，剑会抢在身子前头。你今晚回去，对着水缸练劈砍——练到水不晃为止。”",
+"你抱着木剑回宿舍，路过西三舍时，看见那个矮个子新生蹲在门口啃馒头。他看见你，站起来：“戈拉也让我练水缸？他是不是对谁都这么说？”",
+"你摇头。他咧嘴笑了：“那你比我强。他连水缸都没让我练——他说我，先练站。”",
+"他笑完，又蹲回去啃馒头。月光照着他后脑勺，头发乱蓬蓬的。"
+],options:[
+{t:"（和他交换了名字，约好一起练）",effects:{xp:15,relation:{npc:"acad_classmate_luowen",v:8}},go:"failpath_practice_3"}
+]};
+N["failpath_practice_3"]={tag:"branch",place:"艾尔达魔法学院·演武场·清晨",pace:"normal",text:[
+"第二天清早，你对着水缸练劈砍。水缸里的水映着天光，你一出手，水面就晃。",
+"矮个子新生——你后来知道他叫罗文——蹲在旁边看，忽然说：“你手太高了。戈拉说的‘劲从腰过’，不是让你耸肩。”",
+"他站起来，摆了个架势，学着戈拉的样子，连劈三下。水缸里的水纹，一次比一次浅。",
+"他挠挠头：“我练了两年才这样。你比我快。”",
+"你忽然觉得，这间学院里，除了那些眼睛长在头顶的优等生，还有另一种人——像罗文这样的，笨，但肯练。",
+"收剑的时候，戈拉路过，看了一眼水缸：“有进步。”",
+"只有三个字。但你知道，这是他说过的最多的话了。"
+],options:[
+{t:"（继续练，把基本功打扎实）",effects:{xp:15},go:"acad_deep_y1_library"}
+]};
+N["failpath_surge_1"]={tag:"branch",place:"艾尔达魔法学院·元素池边",pace:"normal",text:[
+"魔力激涌的那一刻，你听见耳边“轰”的一声——像是有什么东西在身体里绷断了。",
+"池水炸开，溅起的水花打在墙上，把你的袖子烧出几个焦洞。你摔倒在地，手指蜷着，张不开。",
+"费尔曼教授从人群里走出来，蹲下，按住你的手腕：“魔力走岔了。”",
+"他探了一下你的脉，眉头没有皱，只说了一句：“你的回路，跟别人不一样。别急着按书上的路子冲。”",
+"他把你扶起来，交给赶来的执事：“送去医疗翼。让他歇三天，这三天，别碰任何元素。”",
+"你被他按着的那截手腕，到现在还是麻的。"
+],options:[
+{t:"（由执事扶着，去医疗翼）",effects:{hp:-15},go:"failpath_surge_2"},
+{t:"（坚持自己走，不让人扶）",effects:{hp:-18},go:"failpath_surge_2"}
+]};
+N["failpath_surge_2"]={tag:"branch",place:"艾尔达魔法学院·医疗翼",pace:"normal",text:[
+"医疗翼的药味很重，混着薄荷和艾草。你躺在靠窗的床上，手腕上缠着布条，指尖还能感觉到那阵麻。",
+"看护的老执事给你换了三次药，每次换药都说同一句话：“年轻人，魔力不是牛马，不能硬赶。”",
+"第二天夜里，你睡不着，起来喝水。隔壁床躺着个高年级生，腿上打着夹板，见你醒着，搭了句话：“你也是元素池那事的？”",
+"他压低嗓子：“我听说了。你魔力炸了，费尔曼亲自扶的你——那可是稀罕事。他那人，手都不跟人握的。”",
+"他顿了顿：“他们说，费尔曼年轻时，魔力也炸过一回。炸完之后，他就转去研究封印了。”",
+"走廊尽头的钟敲了一下。他闭上眼，不再说了。"
+],options:[
+{t:"（把“费尔曼也炸过”记在心里）",effects:{xp:18,flag:"f_failpath_surge_ferman"},go:"failpath_surge_3"}
+]};
+N["failpath_surge_3"]={tag:"branch",place:"艾尔达魔法学院·医疗翼·第三天",pace:"normal",text:[
+"第三天早上，费尔曼来看你。他站在床尾，没有坐下：“感觉怎么样？”",
+"你说手还麻。他点头：“正常。你的回路不是按书上的顺序走的——你试着，从‘记住’的感觉里找魔力。”",
+"你听不懂。他没有解释，只在床头的纸上画了个圈，圈里点了一下：“你下次冥想，别按学院教的开头。从这儿开始——从你记得最清楚的那一刻开始。”",
+"他把纸留给你，走了。",
+"你盯着那个圈看了很久。圈里的点，像一只闭着的眼睛。",
+"午后，执事来拆布条，说你明天可以出院了。你活动了一下手指——麻还在，但你知道，有些东西，跟三天前不一样了。"
+],options:[
+{t:"（把那页纸收好，出院）",effects:{xp:20,flag:"f_failpath_surge_circle"},go:"acad_magic_y2_recover"}
+]};
+N["failpath_mid_1"]={tag:"branch",place:"艾尔达魔法学院·考场外",pace:"normal",text:[
+"期中成绩贴出来那天，你在榜单中下游找到了自己的名字。不算垫底，但离你考前估的位置，差了一大截。",
+"你站在榜单前，把名次看了两遍。旁边有人路过，瞟了一眼：“还行，没吊车尾。”",
+"你挤出人群，在走廊拐角站了一会儿。风从窗缝灌进来，你把袍子裹紧了些。",
+"这一科，你是真没考好——不是不会，是卷子最后那道题，你在它面前卡住了。",
+"你知道那道题该怎么做，但写下去的时候，手停了。你想的是：这么答，老执事会怎么批？"
+],options:[
+{t:"（去找老执事要卷子，看看错在哪）",effects:{xp:10},go:"failpath_mid_2"},
+{t:"（闷头回去，下回再说）",effects:{xp:6},go:"failpath_mid_2"}
+]};
+N["failpath_mid_2"]={tag:"branch",place:"艾尔达魔法学院·老执事办公室",pace:"normal",text:[
+"老执事的办公室在走廊尽头，门开着，茶壶在炉子上咕嘟响。他见你进来，没抬头：“来看卷子？”",
+"他把卷子从一摞底下抽出来，摊开。你错的那道题，红批只有一行字：“你写的都对。但你只写了‘对的’，没写‘你的’。”",
+"你看着那行字。老执事合上卷子：“你不敢把话说明白——怕说错。可考试这种事，怕说错的人，永远拿不到分。”",
+"他给你倒了一杯茶：“回去吧。下回答题，先别想我会怎么批。想你自己怎么想。”",
+"你端着茶走出办公室，茶很烫。走廊里，几个学生抱着书经过，没人看你。"
+],options:[
+{t:"（把红批那句话记下，回去重做那道题）",effects:{xp:18,flag:"f_failpath_mid_redline"},go:"failpath_mid_3"}
+]};
+N["failpath_mid_3"]={tag:"branch",place:"艾尔达魔法学院·图书馆·温书",pace:"normal",text:[
+"你把那道题重做了三遍。第一遍照旧，第二遍试着写自己的看法，第三遍，你把它写完整了。",
+"没有交上去的卷子，没有红批。但你合上笔帽的时候，觉得比交上去的那份，踏实。",
+"你顺手翻了翻旁边同学借的旧试题集——扉页上有一行铅笔字，字迹很轻：“别怕答错。怕错的人，连错的机会都没有。”",
+"不知道是谁写的，也不知道是什么时候写的。你把那行字看了两遍，把试题集放回原处。",
+"窗外，北境的雪又下起来。你收拾好桌面的书，往宿舍走。",
+"路过公告板时，你看见下学期的补考名单已经贴出来了。你的名字不在上面。"
+],options:[
+{t:"（回宿舍，为下学期做准备）",effects:{xp:15},go:"acad_life_y1_final"}
+]};
+N["failpath_spar_1"]={tag:"branch",place:"艾尔达魔法学院·西三舍前·雪地",pace:"normal",text:[
+"阿塔那一拳，你没能接下来。",
+"你侧身让了半步，他顺势变拳为抓，扣住你的腕子一拧——你整个人被他带起来，又摔进雪堆里。",
+"雪灌进领口，凉得你一激灵。阿塔赶紧蹲下来拉你，满脸歉意：“我……我没收住力。”",
+"你拍拍身上的雪，右腕火辣辣地疼。他伸手在你腕上捏了捏：“没折。皮肉伤。”",
+"他想了想，认真地说：“我教你。草原上摔跤，不是比力气，是比‘借力’。你刚才侧身那一下，借对了——就是借完了，不知道怎么送出去。”"
+],options:[
+{t:"（让他教你怎么把借来的力送出去）",effects:{xp:15},go:"failpath_spar_2"},
+{t:"（摆手说不用，自己练）",effects:{xp:8},go:"failpath_spar_2"}
+]};
+N["failpath_spar_2"]={tag:"branch",place:"艾尔达魔法学院·演武场·雪后",pace:"normal",text:[
+"阿塔教你的是草原上的摔法：不是把人举起来摔，是顺着对方的重心走。他演示了三遍，你摔了五跤，终于摸到一点门道。",
+"第六跤，你没有被他带倒——你借他的力，把他让进了雪堆。",
+"阿塔在雪里愣了一瞬，然后笑出声来：“你学得快！我父亲说，能借别人力的人，草原上活得久。”",
+"他坐在雪地里，难得话多：“我父亲是黑石部的。我们部落，每年秋天都跟别部摔跤，输了就输牛羊。他说，摔跤跟打仗一样——不丢人，输了才丢人。”",
+"他说到这里，声音低下去：“可打仗不是摔跤。摔跤输了，赔牛羊。打仗输了，赔的是人。”",
+"他站起来，拍掉身上的雪：“我父亲把我送来学院，就是不想让我跟那些挖东西的人一样，把命赔在土里。”"
+],options:[
+{t:"（问他“挖东西的人”是谁）",effects:{xp:18,flag:"f_failpath_spar_dig"},go:"failpath_spar_3"}
+]};
+N["failpath_spar_3"]={tag:"branch",place:"艾尔达魔法学院·西三舍",pace:"normal",text:[
+"阿塔坐在床沿，狼皮垫在窗台上。他压着嗓子：“暗蚀会。他们在我家草原上挖东西，挖了三年了。”",
+"“我父亲带人去看过——挖出来的洞，深不见底，洞口刻着符，是族里老人都认不全的符。”他攥着狼皮一角，“他们白天挖，晚上也挖。不像是找矿。”",
+"“父亲说，草原上那些洞，是‘往下挖的井’。井里有什么，他不敢问。”",
+"他抬头看你：“我把这事告诉你了。你要是哪天去草原，记得——别靠近那些井。”",
+"窗外，雪还在下。阿塔把狼皮铺开：“睡吧。明天还有课。”",
+"你躺下，听见他在黑暗里翻了个身，又翻了个身，很久没有睡着。"
+],options:[
+{t:"（把“草原的井”记下）",effects:{xp:20,flag:"f_failpath_spar_well"},go:"acad_life_y2_friend"}
+]};
+N["failpath_visitdesert_1"]={tag:"branch",place:"艾尔达魔法学院·沙漠之旅·营地",pace:"normal",text:[
+"你认不全黑石上的符文。对着光看了半晌，只能含糊地说：“像是古物。”",
+"商队头领有些失望，但还是道了谢，把木匣收回去：“学院里来的，我还当能看出点名堂。”",
+"他转身招呼别人去了。你站在原地，手里还留着那块黑石的凉意。",
+"夜里，营地篝火烧得旺。你坐在火边，把那几个认不全的符文在脑子里翻来覆去地过——其中一个，你好像在哪儿见过。",
+"你在学院的哪本书上，见过类似的一笔。但一时想不起来。"
+],options:[
+{t:"（把符文样子默画在纸上，收好）",effects:{xp:15,flag:"f_failpath_desert_rune"},go:"failpath_visitdesert_2"}
+]};
+N["failpath_visitdesert_2"]={tag:"branch",place:"艾尔达魔法学院·沙漠之旅·夜营地",pace:"normal",text:[
+"后半夜，你被一阵极轻的脚步声惊醒。",
+"你睁开眼，营地的火已经压成暗红色。一个裹着灰袍的人蹲在黑石木匣旁边，正借着火光看那块石头。",
+"你没有动，半闭着眼看。那人看了很久，把木匣放回原处，站起来，往营地外走。",
+"他走过你身边时，脚步顿了一下。你听见他开口说了一句什么——像是沙漠古语，你只听清了一个音：“井。”",
+"然后他就消失在夜色里。",
+"你躺回去，心跳得很重。天亮后，头领检查木匣，黑石还在，纹丝没动。",
+"你没有提起夜里的事。但那个“井”字，你记住了。"
+],options:[
+{t:"（把“有人半夜来看黑石”记下）",effects:{xp:18,flag:"f_failpath_desert_visitor"},go:"failpath_visitdesert_3"}
+]};
+N["failpath_visitdesert_3"]={tag:"branch",place:"艾尔达魔法学院·沙漠之旅·归途",pace:"normal",text:[
+"回学院的路上，商队头领骑在驼背上，忽然问你：“你昨天看那块石头，是不是没看出来？”",
+"你没答。他笑了笑：“没看出来也好。那块石头，是十来年前从沙里挖出来的。挖出来那天，挖它的人，当晚就死了。”",
+"他顿了顿：“没人知道他是怎么死的。只知道他死前，在沙地上写了几个字——后来被风抹平了。”",
+"他催了一下骆驼：“我把它带着，不是因为它值钱。是因为我想弄明白，他死前写的，到底是什么字。”",
+"驼铃在风里响。你骑在马上，把那几个符文的形状，又在心里过了一遍。",
+"有些事，看不明白的时候，比看明白了更让人惦记。"
+],options:[
+{t:"（回学院后，去图书馆查那笔符文的出处）",effects:{xp:15},go:"acad_outside_hub"}
+]};
+N["failpath_visitwest_1"]={tag:"branch",place:"艾尔达魔法学院·符文教室",pace:"normal",text:[
+"你跟若耶聊了几分钟，就发现自己对风暴的了解，远不如她。",
+"她讲起西境的元素风暴，眼睛是亮的：“沙暴里带电光，能吹走马匹。风暴眼里反而风平浪静——平静得像假的。”",
+"你插不上话。她倒是没有看轻你的意思，说：“能听懂我在说什么的人，学院里也没几个。你算一个。”",
+"她靠在窗边，看着外面的雪：“我在西境等懂符文的人，等了三年。你是第一个没让我失望的。”",
+"她顿了顿：“不过你现在的水平，还差得远。你要是愿意，我这儿有份观测记录，你先拿去翻翻——看不懂的地方，攒着，等我下次来学院问你。”"
+],options:[
+{t:"（收下她的观测记录）",effects:{xp:18,flag:"f_failpath_west_record"},go:"failpath_visitwest_2"},
+{t:"（推辞，说怕耽误她的事）",effects:{xp:10},go:"failpath_visitwest_2"}
+]};
+N["failpath_visitwest_2"]={tag:"branch",place:"艾尔达魔法学院·符文教室外",pace:"normal",text:[
+"若耶把一沓卷边的纸页塞进你手里，纸页上画满了符文和风向图，边角写着密密麻麻的小字。",
+"她拍了一下你的肩膀：“记住，看观测记录，别只看符文。看风——看风从哪里来，往哪里去。符文是风写在地上的字。”",
+"她说完，收拾起短刀，往门口走。走出两步，又回头：“你要是毕业了，来西境找我。行省会的观测站，缺人。”",
+"她笑了笑：“我等你到，你把这些记录看完。”",
+"门在她身后合上。你低头看那沓纸页，第一页画着一根石柱，柱身刻满符文，像一只竖起来的眼睛。"
+],options:[
+{t:"（把记录收好，打算夜里细读）",effects:{xp:15},go:"failpath_visitwest_3"}
+]};
+N["failpath_visitwest_3"]={tag:"branch",place:"艾尔达魔法学院·宿舍",pace:"normal",text:[
+"夜里，你在灯下翻若耶的观测记录。",
+"大部分你读得吃力，但有一页，你停了很久——那是一幅风暴眼的速写，风眼正中画着一根石柱，柱顶断开，像被什么咬掉了一截。",
+"柱身符文旁边，若耶用铅笔写着一行小字：“三年前第一次见：柱顶完整。今年再看：断了一截。”",
+"她在下面画了个圈，圈里写了一个字：“？”",
+"你盯着那个问号看了一会儿，把纸页翻回去，又从头读起。",
+"窗外，北境的风呜呜地响。你合上记录本，吹灭灯。",
+"黑暗里，你闭着眼，那根断了一截的石柱，还在眼前晃。"
+],options:[
+{t:"（记下石柱的变化，待日后查证）",effects:{xp:15,flag:"f_failpath_west_column"},go:"acad_outside_hub"}
+]};
+N["failpath_visitchurch_1"]={tag:"branch",place:"艾尔达魔法学院·会客厅外",pace:"normal",text:[
+"特蕾莎嬷嬷没有回答你的问题。她只摇了摇头：“教会的事，你不要打听。你只需要知道，别让圣痕司的人注意到你。”",
+"她说完，转身回了会客厅，袍角扫过门槛。",
+"你站在走廊里，她的话在耳边转了一圈：“别让圣痕司的人注意到你。”",
+"可你已经注意到了——那个灰袍执事看你的眼神，像在核对什么清单。",
+"你低头看了一眼腰间。铜铃还在，压在衣襟底下，没露出来。",
+"你正想走，会客厅的门又开了一条缝。特蕾莎嬷嬷的声音压得很低：“你那个铃铛，若是还能摘下来——今晚就摘。”"
+],options:[
+{t:"（把铜铃解下来，收进贴身衣袋）",effects:{xp:15,flag:"f_failpath_church_bell"},go:"failpath_visitchurch_2"},
+{t:"（没摘，只是把衣襟掩得更严实）",effects:{xp:8},go:"failpath_visitchurch_2"}
+]};
+N["failpath_visitchurch_2"]={tag:"branch",place:"艾尔达魔法学院·山门外·黄昏",pace:"normal",text:[
+"黄昏，你从学院后门出去买灯油，在巷口看见那个灰袍执事。",
+"他站在一家货摊前，像是在挑东西，眼神却不时往学院方向瞟。你放慢脚步，从他身后绕过去。",
+"他忽然开口，没有回头：“这位学生，你腰间的铃铛，今天没响。”",
+"你脚步一顿。他转过身，脸上带着温和的笑：“我小时候在圣城长大。守夜人的铜铃，走路会响。你今天走路的步子，比昨天轻。”",
+"他压低了声音：“铃铛摘了？还是藏了？”",
+"巷口的暮色漫上来。你站在他面前，没有答话。"
+],options:[
+{t:"（不答话，绕开他走）",effects:{xp:15},go:"failpath_visitchurch_3"},
+{t:"（回他一句：“我不是守夜人。”）",effects:{xp:12},go:"failpath_visitchurch_3"}
+]};
+N["failpath_visitchurch_3"]={tag:"branch",place:"艾尔达魔法学院·山门外·入夜",pace:"normal",text:[
+"你走出巷口时，灰袍执事没有跟上来。但你走出很远，还能感觉到背后那道视线。",
+"你在灯油铺子门口站了一会儿，等心跳平下来，才沿着来路往回走。",
+"路过一棵老树时，你停下，伸手摸了摸怀里的铜铃——它还在，压在心口，凉凉的。",
+"特蕾莎嬷嬷的话又浮上来：“藏不住，就毁了它。别让它落到他们手里。”",
+"你攥了攥衣襟。毁掉一枚铃铛很容易，但你总觉得，这枚铃铛欠着谁一个交代。",
+"夜风卷着雪粒扑在脸上。你紧了紧衣领，往宿舍走去。",
+"身后，学院钟楼敲了一下。声音在雪夜里传出很远。"
+],options:[
+{t:"（把铜铃贴身收好，回宿舍）",effects:{xp:15},go:"acad_outside_hub"}
+]};
+N["failpath_ferman_1"]={tag:"branch",place:"艾尔达魔法学院·图书馆·回廊",pace:"normal",text:[
+"你跟到回廊拐角，一抬眼，费尔曼不见了。",
+"风从走廊尽头的窗灌进来，把门吹得晃了一下。你站在原地，心跳得很快。",
+"身后传来脚步声。你回头，费尔曼站在你三步之外，手里抱着一摞书，看见你，温和地点头：“又来看书？好习惯。”",
+"他的语气和平时一模一样，但你心里清楚——刚才那一瞬，他是什么时候绕到你身后的，你完全没有察觉。",
+"他抱着书走过去了，走过你身边时，停了一下：“图书馆晚上冷。要看，早点回去。”",
+"他没有说别的。但你知道，他看见你了。"
+],options:[
+{t:"（应了一声，看着他走远）",effects:{xp:15},go:"failpath_ferman_2"},
+{t:"（留在原地，等他走远再动）",effects:{xp:12},go:"failpath_ferman_2"}
+]};
+N["failpath_ferman_2"]={tag:"branch",place:"艾尔达魔法学院·图书馆·门口",pace:"normal",text:[
+"费尔曼离开后，你走进图书馆。",
+"管理员罗先生正在整理借书卡，见你进来，头也不抬：“又来看书？”",
+"你随口应着，走到门口登记簿前，翻了翻今天的记录。",
+"费尔曼那页，借的还是老几样：灵魂、封印、深渊。但今天多了一行——他在“备注”栏里写了一个数字：7。",
+"你盯着那个“7”看了几息。罗先生的声音从柜台后面传来：“看什么呢？登记簿不是书，不用细看。”",
+"你合上登记簿，把它放回原处。那个数字，你记在了心里。"
+],options:[
+{t:"（把“7”记下，不声张）",effects:{xp:18,flag:"f_failpath_ferman_seven"},go:"failpath_ferman_3"}
+]};
+N["failpath_ferman_3"]={tag:"branch",place:"艾尔达魔法学院·图书馆·禁书区外",pace:"normal",text:[
+"接下来的几天，你开始留意费尔曼的作息。",
+"他每周三深夜都来图书馆，从不借书——只站在禁书区的门前，站一会儿，又离开。",
+"你远远观察了几次，发现他站的位置，正对着那扇新换的锁。",
+"锁是半年前换的，据说是院长亲自批的。换锁的工匠第二天就“返乡”了，再没人见过。",
+"罗先生有一次在你耳边嘀咕：“费尔曼每次来，都在门口站一盏茶的功夫。不多，不少。像在等什么。”",
+"他没说等什么。你也没问。但禁书区那扇门，在你眼里，越来越像一道关卡。"
+],options:[
+{t:"（把费尔曼的作息记下）",effects:{xp:18,flag:"f_failpath_ferman_routine"},go:"failpath_ferman_4"}
+]};
+N["failpath_ferman_4"]={tag:"branch",place:"艾尔达魔法学院·宿舍·夜",pace:"normal",text:[
+"夜里，你躺在床上，把这几天的见闻在脑子里过了一遍：",
+"费尔曼周三深夜站禁书区门口；他借的书和奥利弗教授是同一类；他在登记簿上写过“7”；他买过军用短刃；他看见你时，眼神温和，却让你后背发凉。",
+"这些事单独看，都说得通。合在一起，却拼不出一个完整的答案。",
+"你翻了个身，窗外北境的雪还在下。",
+"你想起洛卡说过的话：“太干净了——学院里的人，太干净的，都该留个心眼。”",
+"你闭上眼。有些事，你知道自己看见了，但还看不懂。",
+"看不懂的事，先记着。等看懂的那天，再决定怎么办。"
+],options:[
+{t:"（睡下，把这一切压在心底）",effects:{xp:15},go:"acad_life_y2_mid"}
+]};
+N["failpath_winter_1"]={tag:"branch",place:"艾尔达魔法学院·图书馆·冬夜",pace:"normal",text:[
+"你读着读着就趴在桌上睡着了。",
+"醒来时，图书馆已经暗下来，只剩你头顶一盏灯还亮着。桌上放着一碗热汤，旁边压着一张纸条，字迹端正：“喝完汤，早点回去睡。灯油贵。”——落款是罗先生。",
+"你端起汤碗，还是温的。汤是骨头汤，熬得浓，碗底沉着几粒胡椒。",
+"你喝完汤，把碗放回柜台。罗先生已经锁了典藏室的门，正往大衣里揣钥匙，看见你，只说了一句：“冬夜读书，读不进是正常的。能睡是福。”",
+"他走了。图书馆里只剩你一个人，和头顶那盏灯。"
+],options:[
+{t:"（收拾好书，准备回去睡）",effects:{xp:12},go:"failpath_winter_2"}
+]};
+N["failpath_winter_2"]={tag:"branch",place:"艾尔达魔法学院·图书馆·深夜",pace:"normal",text:[
+"你收拾书的时候，不小心碰倒了靠墙的一摞旧册子。",
+"册子散了一地。你弯腰去捡，发现书架最底层，露出一个夹层——那里塞着一本没有封皮的手抄本，纸页发黄发脆，用麻线装订。",
+"你抽出来，翻开来。字迹工整，是几十年前的人写的：",
+"“……第八次轮值，雪夜。第七节点没有异动。但我在城墙上看见，北边有光，一明一灭，持续了整夜。”",
+"“次日问巡哨，都说没见过。我把这件事记下，没有报。”",
+"“——守夜人，轮值日志。”",
+"后面还有几十页，写得密密匝匝。你翻了翻，全是类似的记录：节点异动、火光、无人承认的声响。",
+"最后一页，只写了一行字：“若有人看到这本日志，请把它放回原处。看过的人，当没看过。”"
+],options:[
+{t:"（把日志放回夹层，记住“第七节点”四个字）",effects:{xp:20,flag:"f_failpath_winter_log"},go:"failpath_winter_3"},
+{t:"（把日志带走，想细读）",effects:{xp:22,flag:"f_failpath_winter_log",item:"旧轮值日志"},go:"failpath_winter_3"}
+]};
+N["failpath_winter_3"]={tag:"branch",place:"艾尔达魔法学院·图书馆·清晨",pace:"normal",text:[
+"清晨，罗先生来开门，看见你已经坐在老位置看书，只点了点头：“起得早。”",
+"他走到典藏室门口，开锁时顿了一下，回头看了你一眼。你没抬头，继续翻书。",
+"他什么也没说，进了典藏室。",
+"你合上书，把手抄本里那句“第七节点没有异动”又默念了一遍。",
+"你想起期末排名时老执事的话，想起阿塔说的“草原的井”，想起沙漠里那块黑石。",
+"这些事，像一根线串起来的珠子，散落在各处，但总有什么东西，把它们往一处收。",
+"你走出图书馆时，雪已经停了。阳光照在雪地上，白得晃眼。",
+"你知道，这个冬天，你没有白过。"
+],options:[
+{t:"（回宿舍，等开学）",effects:{xp:15},go:"acad_life_y1_holiday"}
+]};
+})();
 
 /* /u1inj:data-nodes:dn_fc_life.js/ */
 /* /A2inj:fc/ A-2 自由城汇流段三日生活（fc_ 链扩充：落脚/结识/夜半/木盒/四去向/理想入口）
@@ -98105,6 +98752,11 @@ const NODE_REGISTRY = {
     name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "fs", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
     desc: "建号/序章/职业分支/好感/结局/事件池/系统检查前缀；v65* 为历史版本遗留前缀（WARN 豁免）",
     files: []
+  },
+  fail: {
+    name: "失败专线", prefixes: ["failpath"],
+    desc: "F 工程失败开门专线（失败后可见的边缘人群/地下信息渠道，跨域）",
+    files: ["dn_failpath.js"]
   }
 };
 if (typeof window !== 'undefined') { window.NODE_REGISTRY = NODE_REGISTRY; }
@@ -101900,7 +102552,56 @@ window.STORY_BLUEPRINT = {
   "combo_forge_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "combo_forge_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "combo_forge_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
-  "combo_forge_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"}};
+  "combo_forge_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "failpath_warwall_1": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_warwall_2": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_warwall_3": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_warwall_4": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_raid_1": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_raid_2": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_raid_3": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_raid_4": {tag:"branch", vol:"vol_north", arc:null, pace:"normal"},
+  "failpath_intel_1": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "failpath_intel_2": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "failpath_intel_3": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "failpath_action_1": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "failpath_action_2": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "failpath_action_3": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "failpath_forbid_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_forbid_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_forbid_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_forbid_4": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_mentor_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_mentor_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_mentor_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_practice_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_practice_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_practice_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_surge_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_surge_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_surge_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_mid_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_mid_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_mid_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_spar_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_spar_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_spar_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_visitdesert_1": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+  "failpath_visitdesert_2": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+  "failpath_visitdesert_3": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+  "failpath_visitwest_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_visitwest_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_visitwest_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_visitchurch_1": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+  "failpath_visitchurch_2": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+  "failpath_visitchurch_3": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+  "failpath_ferman_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_ferman_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_ferman_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_ferman_4": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_winter_1": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_winter_2": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
+  "failpath_winter_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"}};
 
 /* /u1inj:data-nodes:dn_threads.js/ */
 /* /pn1inj:threads:dn_threads.js/ P-N1 并行叙事线程注册表（纯数据；引擎只读 window.THREADS）

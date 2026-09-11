@@ -9945,7 +9945,7 @@ N["eclipse_intel_mission"] = function(){ return {
         fail:function(){return[pickV(["你的渗透被发现了，你不得不赶紧撤退。暗蚀会声望-3。","你没能接近墨丘利，什么情报都没收集到。"],"intel_mission_fail")]},
         critfail:function(){return[pickV(["你被墨丘利识破了，他没有揭穿你，但对你说了一句：「回去告诉影，别再来了。」你吓得赶紧跑了。暗蚀会声望-10，SAN-5。","你暴露了身份，被学院的人追了好几条街。HP-10，暗蚀会声望-15。"],"intel_mission_critfail")]}
       },
-      effect:{time:3}, go:"eclipse_rank_member"},
+      effect:{time:3}, fail:"failpath_intel_1",go:"eclipse_rank_member"},
     {t:"「这个任务太危险了，我能不能换一个？」", effect:{time:1,暗蚀会_rep:-3}, go:"eclipse_rank_member"},
     {t:"离开", effect:{time:0}, go:"fc_jiaohui_entry"}
   ]
@@ -9963,7 +9963,7 @@ N["eclipse_action_mission"] = function(){ return {
         fail:function(){return[pickV(["你没能完成暗杀，官员发现了你的企图，你不得不逃跑。暗蚀会声望-5。","你在最后一刻犹豫了，没有下手。暗蚀会声望-10。"],"action_mission_fail")]},
         critfail:function(){return[pickV(["你被抓住了！虽然你设法逃脱，但受了重伤，而且暗蚀会认为你不可靠。HP-20，暗蚀会声望-20，业力+5（你没有下手）。","你杀错了人！你杀了官员的保镖，而不是官员本人。暗蚀会声望-25，业力-25，SAN-15。"],"action_mission_critfail")]}
       },
-      effect:{time:3}, go:"eclipse_rank_member"},
+      effect:{time:3}, fail:"failpath_action_1",go:"eclipse_rank_member"},
     {t:"「我不做暗杀的事。」", effect:{time:1,暗蚀会_rep:-5,karma:10}, go:"eclipse_rank_member"},
     {t:"离开", effect:{time:0}, go:"fc_jiaohui_entry"}
   ]

@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9079702,
-    "chunked_html_bytes_max": 6374172,
-    "node_total_min": 4819,
+    "game_html_bytes_max": 9209419,
+    "chunked_html_bytes_max": 6449623,
+    "node_total_min": 4868,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9029702,
-    "chunked_html_bytes": 6274172,
-    "node_total": 4869,
+    "game_html_bytes": 9159419,
+    "chunked_html_bytes": 6329825,
+    "node_total": 4918,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "N-8 flip 分页修复（+243B）",
+    "reason": "F1 第二轮构建：registry 域注册后产物 9,159,419B，baseline 对齐",
     "history": [
       {
         "date": "2026-09-09",
@@ -1174,6 +1174,27 @@
         "chunked_bytes": 6274172,
         "nodes": 4869,
         "reason": "N-8 flip 分页修复（+243B）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9103582,
+        "chunked_bytes": 6349623,
+        "nodes": 4869,
+        "reason": "F8八工程开工基线：N批后体积更新（game=9103582B）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9159215,
+        "chunked_bytes": 6329626,
+        "nodes": 4918,
+        "reason": "F1 失败开门专线：+49 节点/+9 账本项（dn_failpath.js），文本增量 ~1.5 万字"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9159419,
+        "chunked_bytes": 6329825,
+        "nodes": 4918,
+        "reason": "F1 第二轮构建：registry 域注册后产物 9,159,419B，baseline 对齐"
       }
     ]
   },

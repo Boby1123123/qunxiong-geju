@@ -66119,6 +66119,7 @@ function mechMine(){
     if(lvl==="critfail"){ window.v93_actLog("大失败：矿道顶部的碎石簌簌落下，你险险避开，却被塌方埋了半截身子。你挣扎出来，灰头土脸，镐头折了。","risky"); applyEffects({hp:-10},null); }
     sfxFail();
   }
+  try{ window.v93_refreshAfterAct(); }catch(e){ renderTop(); renderStats(); }
 }
 /* 锻造：词缀洗练 */
 function mechForge(){
@@ -66153,6 +66154,7 @@ function mechForge(){
     if(lvl==="critfail"){ window.v93_actLog("大失败：你失手把材料掉进了炉膛深处，只捞出一团焦黑的铁渣。","risky"); S.gold=Math.max(0,S.gold-8); }
     sfxFail();
   }
+  try{ window.v93_refreshAfterAct(); }catch(e){ renderTop(); renderStats(); }
 }
 /* 夜巡：高风险高回报 */
 function mechPatrol(){
@@ -66178,6 +66180,7 @@ function mechPatrol(){
     if(ev.fail&&ev.fail.eff) applyEffects(ev.fail.eff,null);
     sfxFail();
   }
+  try{ window.v93_refreshAfterAct(); }catch(e){ renderTop(); renderStats(); }
 }
 
 /* ---------- 九、告示板（跨地区委托） ---------- */

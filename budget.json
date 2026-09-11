@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9426580,
-    "chunked_html_bytes_max": 6689794,
+    "game_html_bytes_max": 9436402,
+    "chunked_html_bytes_max": 6730742,
     "node_total_min": 4967,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9376580,
-    "chunked_html_bytes": 6552117,
+    "game_html_bytes": 9386402,
+    "chunked_html_bytes": 6630742,
     "node_total": 5017,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "W 事件扩充 校准2（隐约词修复后基线）",
+    "reason": "ACT-2 收尾：mechMine/Forge/Patrol 行动后轻量刷新（正文零重绘），与 explore/hear/train/quest 对齐",
     "history": [
       {
         "date": "2026-09-09",
@@ -1279,6 +1279,13 @@
         "chunked_bytes": 6552117,
         "nodes": 5017,
         "reason": "W 事件扩充 校准2（隐约词修复后基线）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9386402,
+        "chunked_bytes": 6630742,
+        "nodes": 5017,
+        "reason": "ACT-2 收尾：mechMine/Forge/Patrol 行动后轻量刷新（正文零重绘），与 explore/hear/train/quest 对齐"
       }
     ]
   },

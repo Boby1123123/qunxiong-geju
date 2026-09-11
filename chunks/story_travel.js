@@ -149,7 +149,8 @@ N["arrive_north_tiebi"] = {tag:"main",
 
     {t:"先落脚，接点军需活计",go:"board_north"}
 
-  ]
+  ,
+{t:"（先不急着办事——在这座城里走走，看看铁色下的烟火气）",go:"tie_life2_01"}]
 
 };
 

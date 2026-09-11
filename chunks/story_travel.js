@@ -462,6 +462,8 @@ N["arrive_south_gangkou"] = {tag:"main",
 
     {t:"找艘去往他处的船，搭个顺风",go:"gangkou_berth"},
 
+    {t:"（在港口城的码头、船坞与商路之间走走，探一探这座南方门户的心跳）",go:"south_deep_01"},
+
     {t:"先落脚",go:"board_south"}
 
   ]

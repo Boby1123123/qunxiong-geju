@@ -60,6 +60,8 @@ function applyDefaults(s){
   if(s.settings.echoLine===undefined) s.settings.echoLine=true;
   /* /s1inj:defaults/ S-1 人格声音开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.voiceLine===undefined) s.settings.voiceLine=true;
+  /* /t1inj:defaults/ T-1 心念殿状态兜底（旧档兼容；独立键空对象） */
+  if(!s.thoughts) s.thoughts={};
   /* /f3inj:defaults/ F-3 蒙羞指数兜底（旧档兼容；独立键默认 0；由 f_failpath_* flag 驱动展示，引擎零结算） */
   if(s.failRep===undefined) s.failRep=0;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
@@ -5049,6 +5051,10 @@ function writeNext(_v46f){
     try{ var _cf = window.v93s1_conflictLine ? window.v93s1_conflictLine() : null; if(_cf&&_cf.length){ _txt=_txt.concat(_cf); } }catch(e){}
     /* /s1inj:voice/ S-1 人格声音注入（只读钩子；14 声音按情境插话；开关 S.settings.voiceLine；同节点会话内一次） */
     try{ var _vo = window.v93s1_voiceLine ? window.v93s1_voiceLine(node,_txt) : null; if(_vo&&_vo.length){ _txt=_txt.concat(_vo); } }catch(e){}
+    /* /t1inj:thought/ T-1 心念殿进度推进（只读 tick；internalizing 概念每日 +1，满 cost 结算 buff/debuff） */
+    try{ window.v93t_thoughtTick(); }catch(e){}
+    /* /t2inj:thoughtline/ T-2 心念殿专属正文注入（只读；已内化概念按 place 关键词注入 1 句） */
+    try{ var _tl = window.v93t_thoughtLine ? window.v93t_thoughtLine(node) : null; if(_tl&&_tl.length){ _txt=_txt.concat(_tl); } }catch(e){}
     try{ var _ec = window.v93e2_echoLine(node); if(_ec&&_ec.length){ _txt=_txt.concat(_ec); } }catch(e){}
     /* ===== /e2inj:fn/ E-2 多年回响引擎（只读；数据源 window.ECHO_TRACKS；不写任何状态） ===== */
     window.v93e2_echoLine = function(node){

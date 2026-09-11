@@ -9089,6 +9089,7 @@ function v34_renderSettings(){
   html += '<button class="btn" id="v63-btn-cfg" onclick="v63_configure()" style="flex:1 1 100px">⚙ 配置云端</button>';
   html += '</div>';
   html += '<div id="v63-cloud-msg" style="font-size:11px;color:var(--dim);margin:4px 0"></div>';
+  html += window.v93t_renderThoughts ? window.v93t_renderThoughts() : '';
   html += '<h4 style="color:#5a4a10;margin:16px 0 8px">数据与调试</h4>';
   html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">';
   html += '<button class="btn" onclick="v34_openSavePanel()" style="flex:1 1 120px">📦 存档管理</button>';

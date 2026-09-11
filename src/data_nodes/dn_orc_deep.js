@@ -90,7 +90,8 @@ N["orc_deep_wolf"] = {tags:["main:orc"],
       crit:["他压低声音，告诉你一件怪事：「上个月，灰鬃在草原深处巡夜，撞见一队『顾问』的马车——车辙很深，压过的地方，草都枯了。」他盯着你，「黑石的人不信这个。灰鬃信。所以他最近很烦。」"]
     },effects:{xp:15},go:"orc_w_enter"},
     {t:"（退出狼骑兵营，去宴火那边）",go:"orc_deep_feast"}
-  ]
+  ,
+    {t:"（先不急着走——在草原上走走，听听风里的狼嚎）",go:"orc_life2_01"}]
 };
 N["orc_deep_feast"] = {tags:["main:orc"],
   place:"兽人草原 · 黑石部族营地 · 宴火", where:"入夜",

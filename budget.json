@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9646919,
+    "game_html_bytes_max": 9727553,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5111,
+    "node_total_min": 5151,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9596919,
-    "chunked_html_bytes": 6780696,
-    "node_total": 5161,
+    "game_html_bytes": 9677553,
+    "chunked_html_bytes": 6849129,
+    "node_total": 5201,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-5 四地域深写40节点+事件+25（承天/绿洲/圣辉/北境，七锚秤线织网）",
+    "reason": "CP-6 三族生活深写40节点+事件+20（精灵林邦/矮人山国/兽人草原，七锚秤线种族侧织网）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1321,6 +1321,13 @@
         "chunked_bytes": 6780696,
         "nodes": 5161,
         "reason": "CP-5 四地域深写40节点+事件+25（承天/绿洲/圣辉/北境，七锚秤线织网）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9677553,
+        "chunked_bytes": 6849129,
+        "nodes": 5201,
+        "reason": "CP-6 三族生活深写40节点+事件+20（精灵林邦/矮人山国/兽人草原，七锚秤线种族侧织网）"
       }
     ]
   },

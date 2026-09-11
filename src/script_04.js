@@ -399,91 +399,91 @@ function mechTrade(){
   openModal(box);
 }
 function buySupplies(){
-  if(S.silver>=5){ S.silver-=5; writePar("你买了十日的干粮与水，装进背囊。","res"); }
-  else if(S.gold>=1){ S.gold-=1; S.silver+=15; writePar("你兑出一枚金龙，买齐了粮水，剩下的银月也收进钱袋。","res"); }
-  else { writePar("钱袋见底。摊主摇摇头，把干粮收了回去。","risky"); }
-  writeNext();
+  if(S.silver>=5){ S.silver-=5; window.v93_actLog("你买了十日的干粮与水，装进背囊。","res"); }
+  else if(S.gold>=1){ S.gold-=1; S.silver+=15; window.v93_actLog("你兑出一枚金龙，买齐了粮水，剩下的银月也收进钱袋。","res"); }
+  else { window.v93_actLog("钱袋见底。摊主摇摇头，把干粮收了回去。","risky"); }
+  window.v93_refreshAfterAct();
 }
 function buyMedicine(){
-  if(S.gold>=1){ S.gold-=1; if(S.wound>0) S.wound--; S.disease=false; writePar("疗伤药灌下去，一股暖流化开。伤处发痒，是血肉在重新生长。","res"); }
-  else { writePar("你付不起这药钱。药铺伙计的眉眼，冷得像深秋的河。","risky"); }
-  writeNext();
+  if(S.gold>=1){ S.gold-=1; if(S.wound>0) S.wound--; S.disease=false; window.v93_actLog("疗伤药灌下去，一股暖流化开。伤处发痒，是血肉在重新生长。","res"); }
+  else { window.v93_actLog("你付不起这药钱。药铺伙计的眉眼，冷得像深秋的河。","risky"); }
+  window.v93_refreshAfterAct();
 }
 function sellJunk(){
   const got = Math.max(1, Math.floor(S.gold*0.05) + (S.items.length>0?8:0));
   const junk = S.items.splice(0, Math.min(2,S.items.length));
   S.gold+=got;
-  writePar(junk.length?("你把"+junk.join("、")+"连同几件用不上的旧物，一起送进了当铺。"):"你把路上捡的旧物、多余的绑带，一起送进了当铺。");
-  writePar("换得 "+money(got)+" 枚金币。","res");
-  writeNext();
+  window.v93_actLog(junk.length?("你把"+junk.join("、")+"连同几件用不上的旧物，一起送进了当铺。"):"你把路上捡的旧物、多余的绑带，一起送进了当铺。");
+  window.v93_actLog("换得 "+money(got)+" 枚金币。","res");
+  window.v93_refreshAfterAct();
 }
 function tradeGamble(){
   const t = effTarget({check:{a:"CHA",sk:"bargain",label:"商道"}});
-  writePar("你蹲在市场边上，听了一上午的行情，押了一注。");
+  window.v93_actLog("你蹲在市场边上，听了一上午的行情，押了一注。");
   const roll = rollD100(); const lvl = tierOf(roll,t);
   S.dice.push({node:"trade",opt:"押注行情",roll,target:t,lvl});
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   if(lvl==="crit"||lvl==="extreme"||lvl==="hard"||lvl==="normal"){
     const g = 8 + (lvl==="crit"?30:(lvl==="extreme"?20:(lvl==="hard"?12:0)));
-    writePar("你赌对了。粮价午后回落，你低买高卖，净赚一笔。");
-    const r=applyEffects({gold:g},null); if(r) writePar(r,"res"); sfxOk();
+    window.v93_actLog("你赌对了。粮价午后回落，你低买高卖，净赚一笔。");
+    const r=applyEffects({gold:g},null); if(r) window.v93_actLog(r,"res"); sfxOk();
   } else {
-    writePar("行情跟你开了个玩笑。货砸在手里，亏了一笔。");
-    const r=applyEffects({gold:-6},null); if(r) writePar(r,"res"); sfxFail();
-    if(lvl==="critfail"){ writePar("大失败：你押注的货主连夜跑了，本钱血本无归。","risky"); applyEffects({gold:-12},null); }
+    window.v93_actLog("行情跟你开了个玩笑。货砸在手里，亏了一笔。");
+    const r=applyEffects({gold:-6},null); if(r) window.v93_actLog(r,"res"); sfxFail();
+    if(lvl==="critfail"){ window.v93_actLog("大失败：你押注的货主连夜跑了，本钱血本无归。","risky"); applyEffects({gold:-12},null); }
   }
-  writeNext();
+  window.v93_refreshAfterAct();
 }
 /* 拜访势力：好感里程碑 */
 function mechVisit(){
   const R = REGIONS[S.region];
   const cur = S.infl[S.region]||0;
-  writePar("你递上名帖，求见"+R.cn+"的管事人。门房接过帖子，看了一眼你的衣着，又看了一眼你的手——手上有没有茧，指甲干不干净，他都看在眼里。","noind");
+  window.v93_actLog("你递上名帖，求见"+R.cn+"的管事人。门房接过帖子，看了一眼你的衣着，又看了一眼你的手——手上有没有茧，指甲干不干净，他都看在眼里。","noind");
   const t = effTarget({check:{a:"CHA",sk:"persu",label:"拜会"}});
   const roll = rollD100(); const lvl = tierOf(roll,t);
   S.dice.push({node:"visit",opt:"拜访"+R.cn,roll,target:t,lvl});
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   if(lvl==="crit"){
-    writePar("名帖递进去不到一炷香，管事人亲自迎了出来。");
-    writePar("他打量你片刻，忽然笑了：『原来是你。请，里面请。』","noind");
-    writePar("一席话说完，他让人给你上了一盏好茶——不是待客的那种，是他自己喝的那种。","noind");
+    window.v93_actLog("名帖递进去不到一炷香，管事人亲自迎了出来。");
+    window.v93_actLog("他打量你片刻，忽然笑了：『原来是你。请，里面请。』","noind");
+    window.v93_actLog("一席话说完，他让人给你上了一盏好茶——不是待客的那种，是他自己喝的那种。","noind");
     S.infl[S.region]=Math.min(100,cur+8);
-    const r=applyEffects({rep:2},null); if(r) writePar(r,"res");
-    writePar("（"+R.cn+"好感 +8，当前 "+S.infl[S.region]+"。被引为上宾。）","res");
+    const r=applyEffects({rep:2},null); if(r) window.v93_actLog(r,"res");
+    window.v93_actLog("（"+R.cn+"好感 +8，当前 "+S.infl[S.region]+"。被引为上宾。）","res");
     sfxOk();
   } else if(lvl==="extreme"){
-    writePar("管事人亲自出来见了你。他收了名帖，与你说了几句不咸不淡的体面话——但每一句都在掂量你的分量。");
-    writePar("末了，他让人给你上了一盏热茶。","noind");
+    window.v93_actLog("管事人亲自出来见了你。他收了名帖，与你说了几句不咸不淡的体面话——但每一句都在掂量你的分量。");
+    window.v93_actLog("末了，他让人给你上了一盏热茶。","noind");
     S.infl[S.region]=Math.min(100,cur+5);
-    const r=applyEffects({rep:1},null); if(r) writePar(r,"res");
-    writePar("（"+R.cn+"好感 +5，当前 "+S.infl[S.region]+"）","res");
+    const r=applyEffects({rep:1},null); if(r) window.v93_actLog(r,"res");
+    window.v93_actLog("（"+R.cn+"好感 +5，当前 "+S.infl[S.region]+"）","res");
     sfxOk();
   } else if(lvl==="hard"){
-    writePar("等了小半个时辰，管事人才出来。他收了名帖，说了几句场面话，话里话外都在试探你的来路。");
-    writePar("你应对得还算得体。他点了点头，让人上了茶——是待客的那种。","noind");
+    window.v93_actLog("等了小半个时辰，管事人才出来。他收了名帖，说了几句场面话，话里话外都在试探你的来路。");
+    window.v93_actLog("你应对得还算得体。他点了点头，让人上了茶——是待客的那种。","noind");
     S.infl[S.region]=Math.min(100,cur+3);
-    const r=applyEffects({rep:1},null); if(r) writePar(r,"res");
-    writePar("（"+R.cn+"好感 +3，当前 "+S.infl[S.region]+"）","res");
+    const r=applyEffects({rep:1},null); if(r) window.v93_actLog(r,"res");
+    window.v93_actLog("（"+R.cn+"好感 +3，当前 "+S.infl[S.region]+"）","res");
     sfxOk();
   } else if(lvl==="normal"){
-    writePar("管事人没出来。一个副手收了名帖，与你说了几句不咸不淡的话，末了让人上了盏温茶。");
+    window.v93_actLog("管事人没出来。一个副手收了名帖，与你说了几句不咸不淡的话，末了让人上了盏温茶。");
     S.infl[S.region]=Math.min(100,cur+1);
-    writePar("（"+R.cn+"好感 +1，当前 "+S.infl[S.region]+"。混了个脸熟。）","res");
+    window.v93_actLog("（"+R.cn+"好感 +1，当前 "+S.infl[S.region]+"。混了个脸熟。）","res");
   } else if(lvl==="fail"){
-    writePar("门房挡了驾。『管事人今日不见客。』他说这话时，眼睛看着你的鞋。");
-    writePar("你没有硬闯。有些门，硬闯进去了，也坐不稳。","noind");
-    writePar("（补救：换身行头再来，或者找个引荐人，或者——先在城里做出点名声，让他们主动来请你。）","hint");
+    window.v93_actLog("门房挡了驾。『管事人今日不见客。』他说这话时，眼睛看着你的鞋。");
+    window.v93_actLog("你没有硬闯。有些门，硬闯进去了，也坐不稳。","noind");
+    window.v93_actLog("（补救：换身行头再来，或者找个引荐人，或者——先在城里做出点名声，让他们主动来请你。）","hint");
     sfxFail();
   } else if(lvl==="critfail") {
-    writePar("你递名帖时，门房的脸色变了。");
-    writePar("『原来是你。』他把名帖退了回来，『管事人说了，不见。』","risky");
-    writePar("你不知道自己哪里得罪了人——但你知道，在这座城里，"+R.cn+"的门，暂时对你关上了。","noind");
+    window.v93_actLog("你递名帖时，门房的脸色变了。");
+    window.v93_actLog("『原来是你。』他把名帖退了回来，『管事人说了，不见。』","risky");
+    window.v93_actLog("你不知道自己哪里得罪了人——但你知道，在这座城里，"+R.cn+"的门，暂时对你关上了。","noind");
     S.infl[S.region]=Math.max(0,cur-5);
     applyEffects({rep:-2},null);
-    writePar("大失败：补救——①花重金送礼赔罪；②找一位与"+R.cn+"有交情的人居中斡旋；③暂时离开，等风头过去再回来。门关上了，但没有锁死。","hint");
+    window.v93_actLog("大失败：补救——①花重金送礼赔罪；②找一位与"+R.cn+"有交情的人居中斡旋；③暂时离开，等风头过去再回来。门关上了，但没有锁死。","hint");
     sfxFail();
   }
-  writeNext();
+  window.v93_refreshAfterAct();
 }
 
 /* 打探秘密：地标/传闻，与暗蚀会五部门渗透衔接 */
@@ -493,47 +493,47 @@ function mechSecret(){
   const spots = (CITY_SPOTS[S.loc]||[]);
   const sec = SECRETS[(secretIndex % SECRETS.length)];
   secretIndex++;
-  writePar("你在"+R.cn+"的街巷间穿行，专挑那些没人愿意久留的角落走。墙皮剥落的巷尾、半掩的后门、废弃的地窖口——秘密喜欢藏在这些地方。","noind");
+  window.v93_actLog("你在"+R.cn+"的街巷间穿行，专挑那些没人愿意久留的角落走。墙皮剥落的巷尾、半掩的后门、废弃的地窖口——秘密喜欢藏在这些地方。","noind");
   const t = effTarget({check:{a:"INT",sk:"detect",label:"探秘"}});
   const roll = rollD100(); const lvl = tierOf(roll,t);
   S.dice.push({node:"secret",opt:sec.cn,roll,target:t,lvl});
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   if(lvl==="crit"){
-    writePar(sec.ok);
-    writePar("你甚至看出了这秘密背后的影子——有人在操纵这一切，而那个人，你似乎在哪里见过。","hint");
-    const r=applyEffects({xp:25},null); if(r) writePar(r,"res");
-    if(sec.flag){ S.flags[sec.flag]=true; writePar("（线索："+sec.flag+"）","res"); }
+    window.v93_actLog(sec.ok);
+    window.v93_actLog("你甚至看出了这秘密背后的影子——有人在操纵这一切，而那个人，你似乎在哪里见过。","hint");
+    const r=applyEffects({xp:25},null); if(r) window.v93_actLog(r,"res");
+    if(sec.flag){ S.flags[sec.flag]=true; window.v93_actLog("（线索："+sec.flag+"）","res"); }
     abyssWhisper();
     sfxOk();
   } else if(lvl==="extreme"){
-    writePar(sec.ok);
-    const r=applyEffects({xp:18},null); if(r) writePar(r,"res");
-    if(sec.flag){ S.flags[sec.flag]=true; writePar("（线索："+sec.flag+"）","res"); }
+    window.v93_actLog(sec.ok);
+    const r=applyEffects({xp:18},null); if(r) window.v93_actLog(r,"res");
+    if(sec.flag){ S.flags[sec.flag]=true; window.v93_actLog("（线索："+sec.flag+"）","res"); }
     abyssWhisper();
     sfxOk();
   } else if(lvl==="hard"){
-    writePar(sec.ok);
-    writePar("你摸到了一些边，但全貌还藏在雾里。","noind");
-    const r=applyEffects({xp:12},null); if(r) writePar(r,"res");
-    if(sec.flag){ S.flags[sec.flag]=true; writePar("（线索："+sec.flag+"）","res"); }
+    window.v93_actLog(sec.ok);
+    window.v93_actLog("你摸到了一些边，但全貌还藏在雾里。","noind");
+    const r=applyEffects({xp:12},null); if(r) window.v93_actLog(r,"res");
+    if(sec.flag){ S.flags[sec.flag]=true; window.v93_actLog("（线索："+sec.flag+"）","res"); }
     sfxOk();
   } else if(lvl==="normal"){
-    writePar("你找到了一些不对劲的地方，但说不上来哪里不对。像拼图少了几块，你只能看见轮廓。");
-    const r=applyEffects({xp:6},null); if(r) writePar(r,"res");
+    window.v93_actLog("你找到了一些不对劲的地方，但说不上来哪里不对。像拼图少了几块，你只能看见轮廓。");
+    const r=applyEffects({xp:6},null); if(r) window.v93_actLog(r,"res");
   } else if(lvl==="fail"){
-    writePar("你转了半天，什么也没发现。那些角落比你想象的更干净——干净得像是有人刚清理过。");
-    writePar("（补救：换个时辰再来，或者——等这座城发生点什么，秘密自己会浮出来。）","hint");
+    window.v93_actLog("你转了半天，什么也没发现。那些角落比你想象的更干净——干净得像是有人刚清理过。");
+    window.v93_actLog("（补救：换个时辰再来，或者——等这座城发生点什么，秘密自己会浮出来。）","hint");
     sfxFail();
   } else if(lvl==="critfail") {
-    writePar("你发现了秘密——但秘密也发现了你。");
-    writePar("一道视线从暗处投过来，不重，却让你脊背发凉。你没有回头，径直走出了巷子。","risky");
-    writePar("大失败：你被秘密的主人盯上了。补救——①立刻离开这座城；②花些钱让某些人闭嘴；③装作什么都没发现，继续过你的日子——但要小心。","hint");
+    window.v93_actLog("你发现了秘密——但秘密也发现了你。");
+    window.v93_actLog("一道视线从暗处投过来，不重，却让你脊背发凉。你没有回头，径直走出了巷子。","risky");
+    window.v93_actLog("大失败：你被秘密的主人盯上了。补救——①立刻离开这座城；②花些钱让某些人闭嘴；③装作什么都没发现，继续过你的日子——但要小心。","hint");
     S.san=Math.max(0,(S.san||0)-5);
     applyEffects({rep:-1},null);
     S.flags.watched = true;
     sfxFail();
   }
-  writeNext();
+  window.v93_refreshAfterAct();
 }
 
 /* 暗蚀会五部门渗透（43号：金库/黑铁/密眼/教仪/禁书——按信息控制规则逐步披露） */
@@ -8341,6 +8341,19 @@ function v74_openJournal(tab){
       for(var k=0;k<(d.entries||[]).length;k++){
         html += '<p style="margin:4px 0;font-size:14px">'+String(d.entries[k]).replace(/</g,'&lt;')+'</p>';
       }
+      /* /x2inj:actlog-link/ 手记联动：当日行动流水（独立键，非存档） */
+      try{
+        var _al=[]; try{ _al=JSON.parse(localStorage.getItem('elda-actlog-v2')||'[]')||[]; }catch(e){ _al=[]; }
+        var _dayN=parseInt(dn,10), _dayActs=[];
+        for(var ai2=0;ai2<_al.length;ai2++){ if(_al[ai2] && _al[ai2].day===_dayN) _dayActs.push(_al[ai2]); }
+        if(_dayActs.length){
+          html += '<div style="margin:6px 0 2px;font-size:12px;color:var(--text-muted)">⚒ 当日行动 '+_dayActs.length+' 条</div>';
+          for(var ai=_dayActs.length-1; ai>=0; ai--){
+            var _ae=_dayActs[ai];
+            html += '<div style="margin:2px 0;font-size:12px;color:var(--text-muted)">'+String(_ae.html).replace(/</g,'&lt;')+'</div>';
+          }
+        }
+      }catch(e){}
     }
     html += '</div>';
     /* /upg17inj:jtabs/ UPG-17 编年史分页：手记 / 编年史 */
@@ -11123,7 +11136,19 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
 /* ============ /v93act/ ACT-1 行动日志 + ACT-2 刷新函数拆分（行动结果独立流，正文零污染） ============ */
 (function(){
   var MAX = 50;
+  var STORE_KEY = 'elda-actlog-v2';
   window.__v93ActLog = [];
+  function loadStore(){ try{ var s=localStorage.getItem(STORE_KEY); if(!s) return []; var a=JSON.parse(s); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+  var __persist = loadStore();
+  if(__persist.length) window.__v93ActLog = __persist.slice(-MAX);
+  function saveStore(){ try{ var a=__persist.slice(-300); localStorage.setItem(STORE_KEY, JSON.stringify(a)); __persist=a; }catch(e){ try{ __persist=__persist.slice(-150); localStorage.setItem(STORE_KEY, JSON.stringify(__persist)); }catch(_){} } }
+  /* /x3inj:afterfeel/ 行动后后果感知模板：V66 白描，只读结算对比，不碰治理词 */
+  window.__v93AfterFeel = {
+    hurt:function(d){ var p=["伤口还在渗血，你按了按绷带，没吭声。","肋下钝痛阵阵，你数着步子走回住处，每一步都比上一步沉。","你低头看了一眼，血已经把里衣洇出一片暗色。"]; return p[Math.abs(d)%3]; },
+    poor:function(d){ var p=["钱袋轻了不少，走路时铜子碰出的声响都稀疏了。","你摸了摸怀里，剩下的钱只够再撑几日。","花出去的银月比预想的多，你在心里过了一遍账，没算明白就作罢了。"]; return p[Math.abs(d)%3]; },
+    rich:function(d){ var p=["钱袋沉甸甸的，压得腰带往下一坠。","你掂了掂钱袋，铜子的声响厚实了不少。","进账比预想的好，你在心里留了个数——够添一件趁手的家伙了。"]; return p[Math.abs(d)%3]; },
+    san:function(d){ var p=["你揉了揉眉心，脑子里的那根弦绷得发紧。","夜里躺下时，白天的事一桩桩在眼前过，睡意迟迟不来。","你比平时多喝了一碗酒，才把那些念头压下去。"]; return p[Math.abs(d)%3]; }
+  };
   function esc5(x){ try{ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }catch(e){ return ''; } }
   function renderLog(){
     var body=document.getElementById('v93-actlog-body'); if(!body) return;
@@ -11136,6 +11161,7 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       groups[key].push(e);
     }
     var html='';
+    html+='<div style="text-align:right;margin-bottom:4px"><a href="javascript:void(0)" onclick="window.v93_clearActLog()" style="font-size:11px;color:var(--text-muted)">清空日志</a></div>';
     for(var g=0;g<order.length;g++){
       html+='<div class="act-grp">'+esc5(order[g])+'</div>';
       var es=groups[order[g]];
@@ -11152,8 +11178,10 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
     if(!text) return text;
     var day=null;
     try{ var Sd=(typeof S!=='undefined'&&S)?S:null; day=(Sd&&typeof Sd.day==='number')?Sd.day:null; }catch(e){}
-    window.__v93ActLog.push({day:day, html:String(text), cls:cls||''});
+    var _entry={day:day, html:String(text), cls:cls||''};
+    window.__v93ActLog.push(_entry);
     if(window.__v93ActLog.length>MAX) window.__v93ActLog.shift();
+    __persist.push(_entry); saveStore();
     try{ renderLog(); }catch(e){}
     try{
       var o=document.getElementById('act-out');
@@ -11171,7 +11199,24 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
     var html='<span class="act-dice"><b>'+rollName+'</b> <span style="font-weight:normal;opacity:.8">（d100='+roll+' / 目标 '+target+'）</span></span>';
     return pushLog(html,'dice');
   };
+  window.v93_clearActLog = function(){ try{ __persist=[]; window.__v93ActLog=[]; saveStore(); renderLog(); }catch(e){} };
   window.v93_refreshAfterAct = function(){
+    /* /x3inj:afterfeel/ 后果感知：与上次行动结算对比，追加一句 V66 白描（只读，不入正文） */
+    try{
+      var _sn=(typeof S!=='undefined'&&S)?S:null;
+      if(_sn && window.__v93AfterFeel){
+        var _h=_sn.hp||0, _g=_sn.gold||0, _sa=_sn.san||0;
+        if(window.__v93LastActEnd){
+          var _dh=_h-window.__v93LastActEnd.hp, _dg=_g-window.__v93LastActEnd.gold, _ds=_sa-window.__v93LastActEnd.san, _feel=null;
+          if(_dh<=-3) _feel=window.__v93AfterFeel.hurt(_dh);
+          else if(_dg<=-2) _feel=window.__v93AfterFeel.poor(_dg);
+          else if(_dg>=3) _feel=window.__v93AfterFeel.rich(_dg);
+          else if(_ds<=-5) _feel=window.__v93AfterFeel.san(_ds);
+          if(_feel) pushLog(_feel,'feel');
+        }
+        window.__v93LastActEnd={hp:_h,gold:_g,san:_sa};
+      }
+    }catch(e){}
     try{ if(typeof renderTop==='function') renderTop(); }catch(e){}
     try{ if(typeof renderStats==='function') renderStats(); }catch(e){}
     try{ if(typeof v92_scanHooks==='function') v92_scanHooks(); }catch(e){}

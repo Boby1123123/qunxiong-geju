@@ -20,7 +20,8 @@ N["arrive_west_huangyuan"] = {
     {t:"往西北，去游侠学院",go:"west_academy_gate"},
     {t:"往南，去西境行省会拜会",go:"west_governor"},
     {t:"（原路返回，离开西境）",go:"west_leave"}
-  ]
+  ,
+    {t:"（先不急着赶路——在荒原上走走，听听风的声音）",go:"west_life2_01"}]
 };
 N["west_market"] = {
   tag:"branch",

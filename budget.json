@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9727553,
+    "game_html_bytes_max": 9791663,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5151,
+    "node_total_min": 5187,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9677553,
-    "chunked_html_bytes": 6849129,
-    "node_total": 5201,
+    "game_html_bytes": 9741663,
+    "chunked_html_bytes": 6912437,
+    "node_total": 5237,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-6 三族生活深写40节点+事件+20（精灵林邦/矮人山国/兽人草原，七锚秤线种族侧织网）",
+    "reason": "CP-7 西境深写36节点+事件20（元素荒原/游侠学院/守井人支线，西境秤线织网）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1328,6 +1328,13 @@
         "chunked_bytes": 6849129,
         "nodes": 5201,
         "reason": "CP-6 三族生活深写40节点+事件+20（精灵林邦/矮人山国/兽人草原，七锚秤线种族侧织网）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9741663,
+        "chunked_bytes": 6912437,
+        "nodes": 5237,
+        "reason": "CP-7 西境深写36节点+事件20（元素荒原/游侠学院/守井人支线，西境秤线织网）"
       }
     ]
   },

@@ -967,6 +967,20 @@ body.v68-theme #main .v93-guide{ display:block; }
 
 body.v68-theme #topbar .v93-statrow{ order:1; display:flex; gap:14px; justify-content:center; align-items:center; margin-top:2px; flex-wrap:wrap; }
 body.v68-theme #topbar .stat, body.v68-theme #topbar .sep{ order:auto; }
+/* ===== /v93act/ ACT-1 行动日志（正文底部，行动结果独立流） ===== */
+#v93-actlog{ max-width:76em; width:94%; margin:6px auto 0; background:rgba(240,226,196,.42); border:1px solid #c8a868; border-radius:10px; font-size:13px; color:#4a3520; box-sizing:border-box; }
+#v93-actlog .act-head{ display:flex; justify-content:space-between; align-items:center; padding:6px 12px; border-bottom:1px dashed #b89a5e; cursor:pointer; font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; font-weight:700; letter-spacing:1px; user-select:none; }
+#v93-actlog .act-head .act-count{ font-size:11px; color:#9a8a6a; font-weight:400; margin-left:6px; }
+#v93-actlog #v93-actlog-body{ padding:6px 12px 10px; }
+#v93-actlog .act-grp{ font-size:12px; color:#7a5a1a; font-weight:700; margin:6px 0 2px; border-left:3px solid #b89a5e; padding-left:6px; }
+#v93-actlog .act-entry{ padding:3px 0; line-height:1.6; border-bottom:1px dashed rgba(184,154,94,.22); }
+#v93-actlog .act-entry .ad{ color:#9a8a6a; font-size:11px; }
+#v93-actlog .act-entry.act-warn{ color:#a03028; }
+#v93-actlog .act-entry.act-hint{ color:#5a7a3a; font-style:italic; }
+#v93-actlog .act-entry.act-dice{ border-bottom:none; }
+#v93-actlog .act-dice b{ color:#7a5a1a; }
+#v93-actlog.collapsed #v93-actlog-body{ display:none; }
+
 /* ===== /v93v5/ 方案一·羊皮卷宗 概念图还原：中央大标题 / 右上沉浸+更多 / 纪闻分版块 / 选项卡片 / 底部资源栏 ===== */
 body.v68-theme #topbar{ flex-direction:column; gap:3px; padding-top:10px; padding-bottom:8px; }
 body.v68-theme #topbar .title{ order:0; width:100%; text-align:center; font-size:30px; font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; letter-spacing:8px; font-weight:700; margin-top:8px; text-shadow:0 1px 0 rgba(255,255,255,.5); }
@@ -1072,6 +1086,11 @@ body.v68-theme #options .opt:hover{ background:#f2e0b8; border-color:#a08040; tr
         <div class="v92-w-meta">d100 六档判定 · 序章依出身/种族/理想而变 · 存档保存于本机</div>
       </div></div>
       <div id="options"></div>
+      <div id="v93-actlog" role="log" aria-label="行动日志">
+        <div class="act-head" id="v93-actlog-head"><span>✦ 行动日志<span id="v93-actlog-count" class="act-count"></span></span><span id="v93-actlog-toggle" title="折叠/展开">▾</span></div>
+        <div id="v93-actlog-body"></div>
+      </div>
+
       <div id="v68-status"></div>
       <div id="ending"></div>
     </div>

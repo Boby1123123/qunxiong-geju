@@ -4802,6 +4802,20 @@ body.v68-theme #main .v93-guide{ display:block; }
 
 body.v68-theme #topbar .v93-statrow{ order:1; display:flex; gap:14px; justify-content:center; align-items:center; margin-top:2px; flex-wrap:wrap; }
 body.v68-theme #topbar .stat, body.v68-theme #topbar .sep{ order:auto; }
+/* ===== /v93act/ ACT-1 行动日志（正文底部，行动结果独立流） ===== */
+#v93-actlog{ max-width:76em; width:94%; margin:6px auto 0; background:rgba(240,226,196,.42); border:1px solid #c8a868; border-radius:10px; font-size:13px; color:#4a3520; box-sizing:border-box; }
+#v93-actlog .act-head{ display:flex; justify-content:space-between; align-items:center; padding:6px 12px; border-bottom:1px dashed #b89a5e; cursor:pointer; font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; font-weight:700; letter-spacing:1px; user-select:none; }
+#v93-actlog .act-head .act-count{ font-size:11px; color:#9a8a6a; font-weight:400; margin-left:6px; }
+#v93-actlog #v93-actlog-body{ padding:6px 12px 10px; }
+#v93-actlog .act-grp{ font-size:12px; color:#7a5a1a; font-weight:700; margin:6px 0 2px; border-left:3px solid #b89a5e; padding-left:6px; }
+#v93-actlog .act-entry{ padding:3px 0; line-height:1.6; border-bottom:1px dashed rgba(184,154,94,.22); }
+#v93-actlog .act-entry .ad{ color:#9a8a6a; font-size:11px; }
+#v93-actlog .act-entry.act-warn{ color:#a03028; }
+#v93-actlog .act-entry.act-hint{ color:#5a7a3a; font-style:italic; }
+#v93-actlog .act-entry.act-dice{ border-bottom:none; }
+#v93-actlog .act-dice b{ color:#7a5a1a; }
+#v93-actlog.collapsed #v93-actlog-body{ display:none; }
+
 /* ===== /v93v5/ 方案一·羊皮卷宗 概念图还原：中央大标题 / 右上沉浸+更多 / 纪闻分版块 / 选项卡片 / 底部资源栏 ===== */
 body.v68-theme #topbar{ flex-direction:column; gap:3px; padding-top:10px; padding-bottom:8px; }
 body.v68-theme #topbar .title{ order:0; width:100%; text-align:center; font-size:30px; font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; letter-spacing:8px; font-weight:700; margin-top:8px; text-shadow:0 1px 0 rgba(255,255,255,.5); }
@@ -4907,6 +4921,11 @@ body.v68-theme #options .opt:hover{ background:#f2e0b8; border-color:#a08040; tr
         <div class="v92-w-meta">d100 六档判定 · 序章依出身/种族/理想而变 · 存档保存于本机</div>
       </div></div>
       <div id="options"></div>
+      <div id="v93-actlog" role="log" aria-label="行动日志">
+        <div class="act-head" id="v93-actlog-head"><span>✦ 行动日志<span id="v93-actlog-count" class="act-count"></span></span><span id="v93-actlog-toggle" title="折叠/展开">▾</span></div>
+        <div id="v93-actlog-body"></div>
+      </div>
+
       <div id="v68-status"></div>
       <div id="ending"></div>
     </div>
@@ -36918,57 +36937,57 @@ function mechQuest(){
   seen[q.cn] = (seen[q.cn]||0)+1;
   const isAttr = ["STR","AGI","INT","CHA","CON","SPR"].indexOf(q.need)>=0;
   const t = effTarget(isAttr?{check:{a:q.need,label:"本领"}}:{check:{a:JOBS[S.job]&&JOBS[S.job].attr||"STR",sk:q.need,label:q.need==="STR"?"力量":q.need}});
-  writePar("你走向告示板。层层告示压在一起，墨迹新旧交叠，最上面一张的边角被风掀起。","noind");
-  writePar("你揭下它："+q.cn+"。","noind");
-  writePar("（酬金 "+q.pay+" 金，需 "+q.days+" 日。考验"+(isAttr?q.need:skillCn(q.need))+"）","noind");
+  window.v93_actLog("你走向告示板。层层告示压在一起，墨迹新旧交叠，最上面一张的边角被风掀起。","noind");
+  window.v93_actLog("你揭下它："+q.cn+"。","noind");
+  window.v93_actLog("（酬金 "+q.pay+" 金，需 "+q.days+" 日。考验"+(isAttr?q.need:skillCn(q.need))+"）","noind");
   const roll = rollD100(); const lvl = tierOf(roll,t);
   S.dice.push({node:"quest",opt:q.cn,roll,target:t,lvl});
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   if(lvl==="crit"){
-    writePar("你接了这单活。");
-    writePar("办得比预想的顺利。你甚至在过程中多看了一步——雇主没说的那一步，你替他想到了。","noind");
-    writePar("雇主验了货，数出酬金，又额外看了你一眼。那一眼里有意外，也有掂量。","noind");
+    window.v93_actLog("你接了这单活。");
+    window.v93_actLog("办得比预想的顺利。你甚至在过程中多看了一步——雇主没说的那一步，你替他想到了。","noind");
+    window.v93_actLog("雇主验了货，数出酬金，又额外看了你一眼。那一眼里有意外，也有掂量。","noind");
     advanceDays(Math.max(1,Math.floor(q.days*0.7)));
-    const res = applyEffects({gold:q.pay+Math.floor(q.pay*0.3),xp:q.xp+10,rep:q.rep+1},null); if(res) writePar(res,"res");
+    const res = applyEffects({gold:q.pay+Math.floor(q.pay*0.3),xp:q.xp+10,rep:q.rep+1},null); if(res) window.v93_actLog(res,"res");
     if(S.infl[q.faction]!==undefined) S.infl[q.faction]=Math.min(100,S.infl[q.faction]+3);
-    writePar("（超额完成。雇主记住了你。）","hint");
+    window.v93_actLog("（超额完成。雇主记住了你。）","hint");
     sfxOk();
   } else if(lvl==="extreme"){
-    writePar("你接了这单活。风餐露宿，刀口舔蜜。");
-    writePar("办得干净利落。雇主验了货，数出酬金，又额外赞了你一句。","noind");
+    window.v93_actLog("你接了这单活。风餐露宿，刀口舔蜜。");
+    window.v93_actLog("办得干净利落。雇主验了货，数出酬金，又额外赞了你一句。","noind");
     advanceDays(q.days);
-    const res = applyEffects({gold:q.pay,xp:q.xp,rep:q.rep},null); if(res) writePar(res,"res");
+    const res = applyEffects({gold:q.pay,xp:q.xp,rep:q.rep},null); if(res) window.v93_actLog(res,"res");
     if(S.infl[q.faction]!==undefined) S.infl[q.faction]=Math.min(100,S.infl[q.faction]+2);
     sfxOk();
   } else if(lvl==="hard"){
-    writePar("你接了这单活。过程比预想的曲折，有几次险些失手。");
-    writePar("最终还是办成了。雇主皱着眉验了货，没多说什么，酬金照付。","noind");
+    window.v93_actLog("你接了这单活。过程比预想的曲折，有几次险些失手。");
+    window.v93_actLog("最终还是办成了。雇主皱着眉验了货，没多说什么，酬金照付。","noind");
     advanceDays(q.days+1);
-    const res = applyEffects({gold:q.pay,xp:Math.floor(q.xp*0.7),rep:q.rep},null); if(res) writePar(res,"res");
+    const res = applyEffects({gold:q.pay,xp:Math.floor(q.xp*0.7),rep:q.rep},null); if(res) window.v93_actLog(res,"res");
     if(S.infl[q.faction]!==undefined) S.infl[q.faction]=Math.min(100,S.infl[q.faction]+1);
     sfxOk();
   } else if(lvl==="normal"){
-    writePar("你接了这单活。中规中矩地办完了。");
-    writePar("雇主点了点头，把酬金推过来。没有多的话，也没有少的钱。","noind");
+    window.v93_actLog("你接了这单活。中规中矩地办完了。");
+    window.v93_actLog("雇主点了点头，把酬金推过来。没有多的话，也没有少的钱。","noind");
     advanceDays(q.days);
-    const res = applyEffects({gold:q.pay,xp:Math.floor(q.xp*0.5)},null); if(res) writePar(res,"res");
+    const res = applyEffects({gold:q.pay,xp:Math.floor(q.xp*0.5)},null); if(res) window.v93_actLog(res,"res");
   } else if(lvl==="fail"){
-    writePar(q.fail);
-    writePar("任务没办好。雇主的脸色很难看，但还没到翻脸的地步。","noind");
-    const r2=applyEffects({xp:6,rep:-1},null); if(r2) writePar(r2,"res");
+    window.v93_actLog(q.fail);
+    window.v93_actLog("任务没办好。雇主的脸色很难看，但还没到翻脸的地步。","noind");
+    const r2=applyEffects({xp:6,rep:-1},null); if(r2) window.v93_actLog(r2,"res");
     advanceDays(q.days);
-    writePar("（补救：可以再接一单将功补过，或者花些钱赔礼——名声这东西，掉得快，补得慢。）","hint");
+    window.v93_actLog("（补救：可以再接一单将功补过，或者花些钱赔礼——名声这东西，掉得快，补得慢。）","hint");
     sfxFail();
   } else if(lvl==="critfail") {
-    writePar(q.fail);
-    writePar("大失败：事情搞砸了，而且砸得很难看。雇主放了话——在这座城里，你以后接活怕是要难了。","risky");
-    const r2=applyEffects({xp:3,rep:-4,gold:-Math.floor(q.pay*0.5)},null); if(r2) writePar(r2,"res");
+    window.v93_actLog(q.fail);
+    window.v93_actLog("大失败：事情搞砸了，而且砸得很难看。雇主放了话——在这座城里，你以后接活怕是要难了。","risky");
+    const r2=applyEffects({xp:3,rep:-4,gold:-Math.floor(q.pay*0.5)},null); if(r2) window.v93_actLog(r2,"res");
     advanceDays(q.days+2);
     if(S.infl[q.faction]!==undefined) S.infl[q.faction]=Math.max(0,S.infl[q.faction]-5);
-    writePar("补救：①花双倍酬金赔礼；②离开这座城，去别处发展；③接一桩更难的活，用实力翻盘。路没有断。","hint");
+    window.v93_actLog("补救：①花双倍酬金赔礼；②离开这座城，去别处发展；③接一桩更难的活，用实力翻盘。路没有断。","hint");
     sfxFail();
   }
-  writeNext();
+  window.v93_refreshAfterAct();
 }
 
 /* 交易：按货币体系采买补给/卖物 */
@@ -37147,7 +37166,7 @@ function abyssWhisper(){
 function mechExplore(costed){
   /* V67 探索成本 */
   var _ec = v67_costExplore(costed);
-  if(!_ec.ok){ try{ writePar(_ec.msg,"hint"); }catch(e){} return; }
+  if(!_ec.ok){ try{ window.v93_actLog(_ec.msg,"hint"); }catch(e){} return; }
   if(!S.world) return;
   const R = REGIONS[S.region];
   const seen = S.world.patrolSeen || [];
@@ -37158,28 +37177,28 @@ function mechExplore(costed){
   seen.push(ev.cn); if(seen.length>6) seen.shift();
   const t = effTarget({check:{a:"SPR",sk:"survive",label:"行路"}});
   const roll = rollD100(); const lvl = tierOf(roll,t);
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   S.dice.push({node:"explore",opt:ev.cn,roll,target:t,lvl});
   if(lvl==="crit"||lvl==="extreme"||lvl==="hard"||lvl==="normal"){
-    writePar("你在"+R.cn+"的街巷里漫无目的地走。墙根的苔、檐下的风铃、拐角处半掩的门——这座城把它的秘密藏在这些不起眼的地方。");
-    writePar("然后你撞见了："+ (ev.ok||""));
-    if(ev.effOk){ const r2=applyEffects(ev.effOk,null); if(r2) writePar(r2,"res"); }
-    if(lvl==="crit"){ writePar("你甚至多看了一眼，看出了旁人看不出的门道。","hint"); applyEffects({xp:10},null); }
+    window.v93_actLog("你在"+R.cn+"的街巷里漫无目的地走。墙根的苔、檐下的风铃、拐角处半掩的门——这座城把它的秘密藏在这些不起眼的地方。");
+    window.v93_actLog("然后你撞见了："+ (ev.ok||""));
+    if(ev.effOk){ const r2=applyEffects(ev.effOk,null); if(r2) window.v93_actLog(r2,"res"); }
+    if(lvl==="crit"){ window.v93_actLog("你甚至多看了一眼，看出了旁人看不出的门道。","hint"); applyEffects({xp:10},null); }
     sfxOk();
   } else if(lvl==="fail"){
-    writePar("今天不宜出门。"+ (ev.fail||""));
-    if(ev.effFail){ const r2=applyEffects(ev.effFail,null); if(r2) writePar(r2,"res"); }
-    writePar("你回到住处，把今天的路在脑子里又走了一遍——有些地方，明天换个时辰再去。","hint");
+    window.v93_actLog("今天不宜出门。"+ (ev.fail||""));
+    if(ev.effFail){ const r2=applyEffects(ev.effFail,null); if(r2) window.v93_actLog(r2,"res"); }
+    window.v93_actLog("你回到住处，把今天的路在脑子里又走了一遍——有些地方，明天换个时辰再去。","hint");
     sfxFail();
   } else if(lvl==="critfail") {
-    writePar("你撞见了麻烦。"+ (ev.fail||""));
-    if(ev.effFail){ const r2=applyEffects(ev.effFail,null); if(r2) writePar(r2,"res"); }
-    writePar("大失败：你在错误的时间出现在了错误的地方。有人看见了你，或者，有什么东西记住了你。","risky");
-    writePar("补救：花些钱打点，或者换身行头，或者——离开这座城几天，等风头过去。","hint");
+    window.v93_actLog("你撞见了麻烦。"+ (ev.fail||""));
+    if(ev.effFail){ const r2=applyEffects(ev.effFail,null); if(r2) window.v93_actLog(r2,"res"); }
+    window.v93_actLog("大失败：你在错误的时间出现在了错误的地方。有人看见了你，或者，有什么东西记住了你。","risky");
+    window.v93_actLog("补救：花些钱打点，或者换身行头，或者——离开这座城几天，等风头过去。","hint");
     S.san=Math.max(0,(S.san||0)-4);
     sfxFail();
   }
-  writeNext();
+  window.v93_refreshAfterAct();
 }
 
 /* 打听消息：判定得线索 */
@@ -37187,7 +37206,7 @@ function mechHear(){
   const R = REGIONS[S.region];
   const t = effTarget({check:{a:"CHA",sk:"persu",label:"打听"}});
   const roll = rollD100(); const lvl = tierOf(roll,t);
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   S.dice.push({node:"hear",opt:"打探"+R.cn,roll,target:t,lvl});
   // 情报池：每条只含一个信息点，通过具体人物/场景带出，不罗列
   const tips = [
@@ -37200,98 +37219,98 @@ function mechHear(){
   ];
   const tip = tips[rnd(tips.length)];
   if(lvl==="crit"){
-    writePar("你没有急着问。你先给对方添了盏茶，听他说了三句废话，才在第四句上顺势一搭。");
-    writePar(tip.who+"看了你一眼，忽然把声音压得更低："+tip.what);
-    writePar("他说完就起身走了，茶钱都没要。你坐在原处，指尖还留着茶杯的余温。","noind");
-    const r=applyEffects({rep:2,xp:15},null); if(r) writePar(r,"res");
-    writePar("（线索已记下。日后到了相关地界，或许用得上。）","hint");
+    window.v93_actLog("你没有急着问。你先给对方添了盏茶，听他说了三句废话，才在第四句上顺势一搭。");
+    window.v93_actLog(tip.who+"看了你一眼，忽然把声音压得更低："+tip.what);
+    window.v93_actLog("他说完就起身走了，茶钱都没要。你坐在原处，指尖还留着茶杯的余温。","noind");
+    const r=applyEffects({rep:2,xp:15},null); if(r) window.v93_actLog(r,"res");
+    window.v93_actLog("（线索已记下。日后到了相关地界，或许用得上。）","hint");
     sfxOk();
   } else if(lvl==="extreme"){
-    writePar("你挑了个不惹人注意的角落坐下，要了壶最便宜的茶，听了半个时辰。");
-    writePar(tip.who+"说漏了嘴："+tip.what);
-    const r=applyEffects({rep:1,xp:10},null); if(r) writePar(r,"res");
+    window.v93_actLog("你挑了个不惹人注意的角落坐下，要了壶最便宜的茶，听了半个时辰。");
+    window.v93_actLog(tip.who+"说漏了嘴："+tip.what);
+    const r=applyEffects({rep:1,xp:10},null); if(r) window.v93_actLog(r,"res");
     sfxOk();
   } else if(lvl==="hard"){
-    writePar("你旁敲侧击了几句。对方起初含糊，被你绕了两圈，终于漏了半句。");
-    writePar(tip.who+"含糊道："+tip.what+"——话说到一半，他自己先闭了嘴。");
-    const r=applyEffects({xp:6},null); if(r) writePar(r,"res");
+    window.v93_actLog("你旁敲侧击了几句。对方起初含糊，被你绕了两圈，终于漏了半句。");
+    window.v93_actLog(tip.who+"含糊道："+tip.what+"——话说到一半，他自己先闭了嘴。");
+    const r=applyEffects({xp:6},null); if(r) window.v93_actLog(r,"res");
     sfxOk();
   } else if(lvl==="normal"){
-    writePar("你问了几句，得到的都是些坊间传闻。真假掺半，听个热闹。");
-    writePar(tip.who+"说了些道听途说的话，你记下了，也没全信。");
-    const r=applyEffects({xp:3},null); if(r) writePar(r,"res");
+    window.v93_actLog("你问了几句，得到的都是些坊间传闻。真假掺半，听个热闹。");
+    window.v93_actLog(tip.who+"说了些道听途说的话，你记下了，也没全信。");
+    const r=applyEffects({xp:3},null); if(r) window.v93_actLog(r,"res");
   } else if(lvl==="fail"){
-    writePar("人们看见你凑过来，都把话头收了。茶棚里忽然安静了一瞬，又恢复了嘈杂——但你知道，刚才那阵安静是冲你来的。");
-    writePar("你没有再追问。有些地方，问得太急，反而什么都问不到。","noind");
+    window.v93_actLog("人们看见你凑过来，都把话头收了。茶棚里忽然安静了一瞬，又恢复了嘈杂——但你知道，刚才那阵安静是冲你来的。");
+    window.v93_actLog("你没有再追问。有些地方，问得太急，反而什么都问不到。","noind");
     sfxFail();
   } else if(lvl==="critfail") {
-    writePar("你问到了不该问的人。");
-    writePar(tip.who+"冷冷地看了你一眼，没有回答，转身走进巷子。你后颈发凉——那一眼里没有好奇，只有确认。","risky");
-    writePar("你被人记住了。在这座城里，接下来的几天，最好少露面，或者——花点钱，让某些人忘记你的脸。","hint");
+    window.v93_actLog("你问到了不该问的人。");
+    window.v93_actLog(tip.who+"冷冷地看了你一眼，没有回答，转身走进巷子。你后颈发凉——那一眼里没有好奇，只有确认。","risky");
+    window.v93_actLog("你被人记住了。在这座城里，接下来的几天，最好少露面，或者——花点钱，让某些人忘记你的脸。","hint");
     applyEffects({rep:-2},null);
     S.flags.watched = true;
     sfxFail();
   }
-  writeNext();
+  window.v93_refreshAfterAct();
 }
 
 /* 修炼：xp + 破境检查 */
 function mechTrain(costed){
   /* V67 成本与条件 */
   var _c = v67_costTrain(costed);
-  if(!_c.ok){ try{ writePar(_c.msg,"hint"); }catch(e){} writeNext(); return; }
+  if(!_c.ok){ try{ window.v93_actLog(_c.msg,"hint"); }catch(e){} window.v93_refreshAfterAct(); return; }
   var _xpM = _c.mult, _interrupt = _c.interrupt, _envDesc = _c.envDesc;
-  if(_envDesc && _xpM < 1){ try{ writePar("（"+_envDesc+"）","hint"); }catch(e){} }
+  if(_envDesc && _xpM < 1){ try{ window.v93_actLog("（"+_envDesc+"）","hint"); }catch(e){} }
   const job = S.job?JOBS[S.job]:null;
   const jobName = job?job.cn:"修士";
   const t = effTarget({check:{a:"INT",sk:"lore",label:"冥想"}});
   const roll = rollD100(); const lvl = tierOf(roll,t);
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   S.dice.push({node:"train",opt:"修炼",roll,target:t,lvl});
   /* V67 打断：地点不宁，修炼被打断 */
   if(_interrupt && Math.random() < _interrupt){
-    writePar("你刚入定，远处一声闷响——风砸在檐上，又或是别的什么。你惊醒了，气息散了大半。","risky");
-    writePar("（这次修炼无所得。地点不宁，心也难宁。）","hint");
+    window.v93_actLog("你刚入定，远处一声闷响——风砸在檐上，又或是别的什么。你惊醒了，气息散了大半。","risky");
+    window.v93_actLog("（这次修炼无所得。地点不宁，心也难宁。）","hint");
     S.trainStreak = (S.trainStreak||0) + 1;
-    sfxFail(); writeNext(); return;
+    sfxFail(); window.v93_refreshAfterAct(); return;
   }
   if(lvl==="crit"){
-    writePar("你盘膝而坐，烛火在眼前跳了一下，然后定住了。");
-    writePar("气机沉入丹田，像一滴水落进深井。你听见了井底的回声——那是你自己的呼吸，又不完全是。","noind");
-    writePar("这一坐，抵得上平日数日之功。你睁开眼时，烛火已经烧到了根，而你浑然不觉。","noind");
-    const r=applyEffects({xp:Math.round(40*_xpM)},null); if(r) writePar(r,"res");
-    writePar("（顿悟：对"+jobName+"之道的理解又深了一层。）","hint");
+    window.v93_actLog("你盘膝而坐，烛火在眼前跳了一下，然后定住了。");
+    window.v93_actLog("气机沉入丹田，像一滴水落进深井。你听见了井底的回声——那是你自己的呼吸，又不完全是。","noind");
+    window.v93_actLog("这一坐，抵得上平日数日之功。你睁开眼时，烛火已经烧到了根，而你浑然不觉。","noind");
+    const r=applyEffects({xp:Math.round(40*_xpM)},null); if(r) window.v93_actLog(r,"res");
+    window.v93_actLog("（顿悟：对"+jobName+"之道的理解又深了一层。）","hint");
     sfxOk(); tryAdvance();
   } else if(lvl==="extreme"){
-    writePar("你收摄心神，气息渐渐绵长。杂念像水底的沙，沉了下去。");
-    writePar("气机在经脉里走了一个完整的周天，没有滞涩。你收功时，指尖发麻——那是真气充盈的征兆。","noind");
-    const r=applyEffects({xp:Math.round(30*_xpM)},null); if(r) writePar(r,"res");
+    window.v93_actLog("你收摄心神，气息渐渐绵长。杂念像水底的沙，沉了下去。");
+    window.v93_actLog("气机在经脉里走了一个完整的周天，没有滞涩。你收功时，指尖发麻——那是真气充盈的征兆。","noind");
+    const r=applyEffects({xp:Math.round(30*_xpM)},null); if(r) window.v93_actLog(r,"res");
     sfxOk(); tryAdvance();
   } else if(lvl==="hard"){
-    writePar("你静坐了一个时辰。起初心浮，后来慢慢沉了下去。");
-    writePar("有所得，但不多。像在暗室里摸到了墙的轮廓，还没找到门。","noind");
-    const r=applyEffects({xp:Math.round(22*_xpM)},null); if(r) writePar(r,"res");
+    window.v93_actLog("你静坐了一个时辰。起初心浮，后来慢慢沉了下去。");
+    window.v93_actLog("有所得，但不多。像在暗室里摸到了墙的轮廓，还没找到门。","noind");
+    const r=applyEffects({xp:Math.round(22*_xpM)},null); if(r) window.v93_actLog(r,"res");
     sfxOk(); tryAdvance();
   } else if(lvl==="normal"){
-    writePar("你盘膝吐纳，气机平稳。没有突破，也没有走火。");
-    writePar("修行大多是这样的日子——平平无奇，却一日不可少。","noind");
-    const r=applyEffects({xp:Math.round(15*_xpM)},null); if(r) writePar(r,"res");
+    window.v93_actLog("你盘膝吐纳，气机平稳。没有突破，也没有走火。");
+    window.v93_actLog("修行大多是这样的日子——平平无奇，却一日不可少。","noind");
+    const r=applyEffects({xp:Math.round(15*_xpM)},null); if(r) window.v93_actLog(r,"res");
     tryAdvance();
   } else if(lvl==="fail"){
-    writePar("心浮气躁。杂念像水底的泥沙，一搅就浑。");
-    writePar("你试着收束，越收越乱。最后长叹一声，睁开了眼——窗外的天，已经暗了。","noind");
-    writePar("（今日无所得。或许该先处理些俗务，心静了再练。）","hint");
+    window.v93_actLog("心浮气躁。杂念像水底的泥沙，一搅就浑。");
+    window.v93_actLog("你试着收束，越收越乱。最后长叹一声，睁开了眼——窗外的天，已经暗了。","noind");
+    window.v93_actLog("（今日无所得。或许该先处理些俗务，心静了再练。）","hint");
     sfxFail();
   } else if(lvl==="critfail") {
-    writePar("入定未深，耳边骤然响起一声冷笑。");
-    writePar("不是外面的声音。是你自己心里的——那个你一直不愿面对的部分。","risky");
-    writePar("你惊得气血翻涌，喉头一甜，险些岔气。连忙收功，额上全是冷汗。","noind");
+    window.v93_actLog("入定未深，耳边骤然响起一声冷笑。");
+    window.v93_actLog("不是外面的声音。是你自己心里的——那个你一直不愿面对的部分。","risky");
+    window.v93_actLog("你惊得气血翻涌，喉头一甜，险些岔气。连忙收功，额上全是冷汗。","noind");
     applyEffects({hp:-6},null); S.san=Math.max(0,(S.san||0)-3);
-    writePar("大失败：心魔窥隙。补救：休息几日，或找一处清净之地，或服一颗安神的药——不要在这种状态下继续修炼。","hint");
+    window.v93_actLog("大失败：心魔窥隙。补救：休息几日，或找一处清净之地，或服一颗安神的药——不要在这种状态下继续修炼。","hint");
     sfxFail();
   }
   S.trainStreak = (S.trainStreak||0) + 1;
-  writeNext();
+  window.v93_refreshAfterAct();
 }
 
 /* 采矿 */
@@ -37300,16 +37319,16 @@ function mechMine(){
   if(!spot){ actOut("此地无矿脉可采。"); return; }
   const t = effTarget({check:{a:"STR",sk:"athletic",label:"挖掘"}});
   const roll = rollD100(); const lvl = tierOf(roll,t);
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   if(lvl==="crit"||lvl==="extreme"||lvl==="hard"||lvl==="normal"){
     const ore = spot.ore[rnd(spot.ore.length)];
-    writePar("你钻进"+spot.cn+"。镐头起落，石屑飞溅。你从岩缝里抠出一块东西——"+ore+"。");
-    const r=applyEffects({mat:ore},null); if(r) writePar(r,"res");
+    window.v93_actLog("你钻进"+spot.cn+"。镐头起落，石屑飞溅。你从岩缝里抠出一块东西——"+ore+"。");
+    const r=applyEffects({mat:ore},null); if(r) window.v93_actLog(r,"res");
     collectGallery(ore);
     sfxOk();
   } else {
-    writePar("矿道又深又闷。你敲了半天，只敲下一地碎石，磨出一手血泡。");
-    if(lvl==="critfail"){ writePar("大失败：矿道顶部的碎石簌簌落下，你险险避开，却被塌方埋了半截身子。你挣扎出来，灰头土脸，镐头折了。","risky"); applyEffects({hp:-10},null); }
+    window.v93_actLog("矿道又深又闷。你敲了半天，只敲下一地碎石，磨出一手血泡。");
+    if(lvl==="critfail"){ window.v93_actLog("大失败：矿道顶部的碎石簌簌落下，你险险避开，却被塌方埋了半截身子。你挣扎出来，灰头土脸，镐头折了。","risky"); applyEffects({hp:-10},null); }
     sfxFail();
   }
 }
@@ -37325,7 +37344,7 @@ function mechForge(){
   const rc = mats[0];
   const t = effTarget({check:{a:"INT",sk:"alchemy",label:"锻造"}});
   const roll = rollD100(); const lvl = tierOf(roll,t);
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   if(lvl==="crit"||lvl==="extreme"||lvl==="hard"||lvl==="normal"){
     // 消耗材料
     for(const m in rc.mats){ S.mats[m]=Math.max(0,(S.mats[m]||0)-rc.mats[m]); }
@@ -37337,13 +37356,13 @@ function mechForge(){
     S.equipAffix[rc.slot] = affixId;
     S.affixRolls[affixId]=(S.affixRolls[affixId]||0)+1;
     const a=AFFIX[affixId];
-    writePar("炉火腾起。你把"+rc.cn+"放进锻炉，捶打、淬火、铭刻——"+(lvl==="crit"?"收锤时，炉火骤然一亮，仿佛有灵。":"收锤时，铁器发出一声悠长的嗡鸣。"));
-    writePar("你为它铭上词缀：**"+a.cn+"**（"+a.fam+"系）· "+a.desc, "res");
-    if(a.risk) writePar("那词缀在暗处泛着微光。你总觉得它……在低语。","risky");
+    window.v93_actLog("炉火腾起。你把"+rc.cn+"放进锻炉，捶打、淬火、铭刻——"+(lvl==="crit"?"收锤时，炉火骤然一亮，仿佛有灵。":"收锤时，铁器发出一声悠长的嗡鸣。"));
+    window.v93_actLog("你为它铭上词缀：**"+a.cn+"**（"+a.fam+"系）· "+a.desc, "res");
+    if(a.risk) window.v93_actLog("那词缀在暗处泛着微光。你总觉得它……在低语。","risky");
     sfxOk();
   } else {
-    writePar("火候不对。铁胚在炉里变了形，你只得作罢——好在材料还能再用。");
-    if(lvl==="critfail"){ writePar("大失败：你失手把材料掉进了炉膛深处，只捞出一团焦黑的铁渣。","risky"); S.gold=Math.max(0,S.gold-8); }
+    window.v93_actLog("火候不对。铁胚在炉里变了形，你只得作罢——好在材料还能再用。");
+    if(lvl==="critfail"){ window.v93_actLog("大失败：你失手把材料掉进了炉膛深处，只捞出一团焦黑的铁渣。","risky"); S.gold=Math.max(0,S.gold-8); }
     sfxFail();
   }
 }
@@ -37356,17 +37375,17 @@ function mechPatrol(){
   seen.push(ev.cn); if(seen.length>5) seen.shift();
   const t = effTarget({check:ev.chk});
   const roll = rollD100(); const lvl = tierOf(roll,t);
-  writeDice(roll,t,lvl);
+  window.v93_actDice(roll,t,lvl);
   if(lvl==="crit"||lvl==="extreme"||lvl==="hard"||lvl==="normal"){
-    writePar("夜色里，"+ev.cn+"。"+ev.ok.txt);
-    const r=applyEffects(ev.ok.eff||{},null); if(r) writePar(r,"res");
+    window.v93_actLog("夜色里，"+ev.cn+"。"+ev.ok.txt);
+    const r=applyEffects(ev.ok.eff||{},null); if(r) window.v93_actLog(r,"res");
     sfxOk();
   } else if(lvl==="fail"){
-    writePar("夜色里，"+ev.cn+"。"+ev.fail.txt);
-    const r=applyEffects(ev.fail.eff||{},null); if(r) writePar(r,"res");
+    window.v93_actLog("夜色里，"+ev.cn+"。"+ev.fail.txt);
+    const r=applyEffects(ev.fail.eff||{},null); if(r) window.v93_actLog(r,"res");
     sfxFail();
   } else {
-    writePar("夜色里，"+ev.cn+"。"+PATROL_FAIL_BONUS.txt,"risky");
+    window.v93_actLog("夜色里，"+ev.cn+"。"+PATROL_FAIL_BONUS.txt,"risky");
     applyEffects({san:-2},null);
     if(ev.fail&&ev.fail.eff) applyEffects(ev.fail.eff,null);
     sfxFail();
@@ -47608,6 +47627,93 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
     setInterval(t0,5000);
   }
   init();
+})();
+
+/* ============ /v93act/ ACT-1 行动日志 + ACT-2 刷新函数拆分（行动结果独立流，正文零污染） ============ */
+(function(){
+  var MAX = 50;
+  window.__v93ActLog = [];
+  function esc5(x){ try{ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }catch(e){ return ''; } }
+  function renderLog(){
+    var body=document.getElementById('v93-actlog-body'); if(!body) return;
+    var arr=window.__v93ActLog||[];
+    var groups={}, order=[];
+    for(var i=0;i<arr.length;i++){
+      var e=arr[i];
+      var key=(e.day==null)?'· 未记日 ·':('第 '+e.day+' 日');
+      if(!groups[key]){ groups[key]=[]; order.push(key); }
+      groups[key].push(e);
+    }
+    var html='';
+    for(var g=0;g<order.length;g++){
+      html+='<div class="act-grp">'+esc5(order[g])+'</div>';
+      var es=groups[order[g]];
+      for(var j=es.length-1;j>=0;j--){
+        var en=es[j];
+        html+='<div class="act-entry'+(en.cls?(' act-'+en.cls):'')+'">'+en.html+'</div>';
+      }
+    }
+    body.innerHTML = html || '<div style="color:#9a8a6a;font-style:italic">尚无行动记录。行动结果将收进此处，正文只承载剧情。</div>';
+    var c=document.getElementById('v93-actlog-count');
+    if(c) c.textContent='· '+arr.length+' 条';
+  }
+  function pushLog(text, cls){
+    if(!text) return text;
+    var day=null;
+    try{ var Sd=(typeof S!=='undefined'&&S)?S:null; day=(Sd&&typeof Sd.day==='number')?Sd.day:null; }catch(e){}
+    window.__v93ActLog.push({day:day, html:String(text), cls:cls||''});
+    if(window.__v93ActLog.length>MAX) window.__v93ActLog.shift();
+    try{ renderLog(); }catch(e){}
+    try{
+      var o=document.getElementById('act-out');
+      if(o){ var last=window.__v93ActLog[window.__v93ActLog.length-1]; if(last) o.innerHTML=last.html; }
+    }catch(e){}
+    return text;
+  }
+  window.v93_actLog = pushLog;
+  window.v93_actDice = function(roll,target,tierLabel){
+    var rollName='成功', cls='ok';
+    if(tierLabel==='crit'){ rollName='大成功！'; cls='crit'; }
+    else if(tierLabel==='extreme'||tierLabel==='hard'||tierLabel==='normal'){ rollName='成功'; cls='ok'; }
+    else if(tierLabel==='fail'){ rollName='失败'; cls='fail'; }
+    else if(tierLabel==='critfail'){ rollName='大失败！'; cls='critfail'; }
+    var html='<span class="act-dice"><b>'+rollName+'</b> <span style="font-weight:normal;opacity:.8">（d100='+roll+' / 目标 '+target+'）</span></span>';
+    return pushLog(html,'dice');
+  };
+  window.v93_refreshAfterAct = function(){
+    try{ if(typeof renderTop==='function') renderTop(); }catch(e){}
+    try{ if(typeof renderStats==='function') renderStats(); }catch(e){}
+    try{ if(typeof v92_scanHooks==='function') v92_scanHooks(); }catch(e){}
+    try{ if(typeof v92_scanLedgerReminder==='function') v92_scanLedgerReminder(); }catch(e){}
+    try{ if(typeof curNode!=='undefined'&&curNode&&String(curNode).indexOf('arrive_')===0&&typeof renderCityActs==='function') renderCityActs(); }catch(e){}
+    /* 不重调 showOptions：其 v22 覆写会渲染感官/心声段污染正文；行动不改变节点选项集，
+       行动点/状态由 renderTop+renderStats 刷新，arrive_* 行动按钮由 renderCityActs 重建。 */
+    try{ if(typeof v34_animateOptions==='function') setTimeout(function(){ v34_animateOptions(); },50); }catch(e){}
+    try{ if(typeof v93_renderAside==='function') v93_renderAside(); }catch(e){}
+    /* 世界事件提示：不展开正文，仅日志提示（事件节点仍按既有 travelTo 落地机制触发） */
+    try{
+      var _w=(typeof S!=='undefined'&&S&&S.world)?S.world:null;
+      if(_w && S.worldQueue && S.worldQueue.length && typeof WORLD_EVENTS!=='undefined'){
+        var names=[], keys5=['purge','silver','seal','academy','orc'];
+        for(var i=0;i<keys5.length;i++){
+          if(_w[keys5[i]] && S.worldQueue.indexOf(keys5[i])>=0 && WORLD_EVENTS[keys5[i]]) names.push(WORLD_EVENTS[keys5[i]].cn||keys5[i]);
+        }
+        if(names.length) pushLog('── 世界事件已至：『'+names.join('』『')+'』，旅途或相应区域可循迹触发。','warn');
+      }
+    }catch(e){}
+  };
+  function bindLog(){
+    var h=document.getElementById('v93-actlog-head'); if(!h||h.__v93act) return;
+    h.__v93act=1;
+    h.addEventListener('click',function(){
+      var b=document.getElementById('v93-actlog'); if(!b) return;
+      b.classList.toggle('collapsed');
+      var t=document.getElementById('v93-actlog-toggle');
+      if(t) t.textContent = b.classList.contains('collapsed') ? '▸' : '▾';
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindLog); else bindLog();
+  try{ renderLog(); }catch(e){}
 })();
 
 </script>

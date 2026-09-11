@@ -4257,9 +4257,12 @@ N["arrive_church_shengcheng"] = function(){
 
         crit:["你在城墙根发现一条排水暗渠，直通城内。你钻进去，摸黑走了半个时辰，从一口枯井里爬出来——正好落在城东的旧书店后巷。","你抬头，看见巷口挂着一块旧招牌：'烛台书店'。"]
 
-      },onCrit:{flag:"candle_backdoor"},go:"church_candle"}
+      },onCrit:{flag:"candle_backdoor"},go:"church_candle"},
 
+      {t:"（在圣辉城四处走走——看看这座白城的里子）",go:"church_deep_01"}
     ]
+
+
 
   };
 

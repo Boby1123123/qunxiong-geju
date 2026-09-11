@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9801977,
+    "game_html_bytes_max": 9853163,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5267,
+    "node_total_min": 5307,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9751977,
-    "chunked_html_bytes": 7023080,
-    "node_total": 5317,
+    "game_html_bytes": 9803163,
+    "chunked_html_bytes": 7073650,
+    "node_total": 5357,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-9 蓝图位置修正（east 40条移至nodeIndex末尾）+1B",
+    "reason": "CP-10 治理词修正后重建",
     "history": [
       {
         "date": "2026-09-09",
@@ -1363,6 +1363,20 @@
         "chunked_bytes": 7023080,
         "nodes": 5317,
         "reason": "CP-9 蓝图位置修正（east 40条移至nodeIndex末尾）+1B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9803160,
+        "chunked_bytes": 7073647,
+        "nodes": 5357,
+        "reason": "CP-10 圣辉城教会深写 40节点+20事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9803163,
+        "chunked_bytes": 7073650,
+        "nodes": 5357,
+        "reason": "CP-10 治理词修正后重建"
       }
     ]
   },

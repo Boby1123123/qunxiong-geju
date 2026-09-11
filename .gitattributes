@@ -1,0 +1,15 @@
+# 群雄割据 · 行尾统一（2026-09-11 地基修复）
+# 背景：core.autocrlf=true 且此前无本文件 → git 检出把发布文件转 CRLF，
+#       体积虚增（game.html +115,917B）→ 本地 elda ci 预算门误报 FAIL。
+# 规则：所有文本文件强制 LF 入库与检出（本地/CI 一致），杜绝换行漂移。
+* text=auto
+*.html text eol=lf
+*.js text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf

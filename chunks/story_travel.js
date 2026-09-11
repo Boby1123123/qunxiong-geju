@@ -963,7 +963,8 @@ N["arrive_free_huigang"] = {tag:"main",
 
     {t:"在码头边走走，看船来船往",go:"act_rest"},
 
-    {t:"去交汇城办正事",run:function(){ travelTo("free_jiaohui"); }}
+    {t:"去交汇城办正事",run:function(){ travelTo("free_jiaohui"); }},
+    {t:"（在灰港的码头与街巷里走走，听一听这座港的心跳）",go:"gangkou_deep_01"}
 
   ]
 

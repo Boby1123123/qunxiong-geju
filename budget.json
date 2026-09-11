@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9928396,
+    "game_html_bytes_max": 9980771,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5368,
+    "node_total_min": 5408,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9878396,
-    "chunked_html_bytes": 7148252,
-    "node_total": 5418,
+    "game_html_bytes": 9930771,
+    "chunked_html_bytes": 7199571,
+    "node_total": 5458,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-11 北境王都深写: +61节点 +20事件",
+    "reason": "CP-12 灰港深写: +40节点 +20事件",
     "history": [
       {
         "date": "2026-09-09",
@@ -1384,6 +1384,13 @@
         "chunked_bytes": 7148252,
         "nodes": 5418,
         "reason": "CP-11 北境王都深写: +61节点 +20事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9930771,
+        "chunked_bytes": 7199571,
+        "nodes": 5458,
+        "reason": "CP-12 灰港深写: +40节点 +20事件"
       }
     ]
   },

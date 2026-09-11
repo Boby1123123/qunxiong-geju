@@ -62,6 +62,7 @@ function applyDefaults(s){
   if(s.settings.voiceLine===undefined) s.settings.voiceLine=true;
   /* /t1inj:defaults/ T-1 心念殿状态兜底（旧档兼容；独立键空对象） */
   if(!s.thoughts) s.thoughts={};
+  s.trust=0;
   /* /f3inj:defaults/ F-3 蒙羞指数兜底（旧档兼容；独立键默认 0；由 f_failpath_* flag 驱动展示，引擎零结算） */
   if(s.failRep===undefined) s.failRep=0;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
@@ -5057,6 +5058,8 @@ function writeNext(_v46f){
     try{ var _tl = window.v93t_thoughtLine ? window.v93t_thoughtLine(node) : null; if(_tl&&_tl.length){ _txt=_txt.concat(_tl); } }catch(e){}
     /* /l1inj:npcclue/ L-2 线索进度 NPC 回应（只读；关键人物场景按线索命中数注入 1 句） */
     try{ var _lc = window.v93l_npcClue ? window.v93l_npcClue(node) : null; if(_lc&&_lc.length){ _txt=_txt.concat(_lc); } }catch(e){}
+    /* /p1inj:judge/ P-1 情感搭档·无声评判（只读；战斗/第三哨场景按 tie 好感注入神态+记忆） */
+    try{ var _pj = window.v93p_judge ? window.v93p_judge(node) : null; if(_pj&&_pj.length){ _txt=_txt.concat(_pj); } }catch(e){}
     try{ var _ec = window.v93e2_echoLine(node); if(_ec&&_ec.length){ _txt=_txt.concat(_ec); } }catch(e){}
     /* ===== /e2inj:fn/ E-2 多年回响引擎（只读；数据源 window.ECHO_TRACKS；不写任何状态） ===== */
     window.v93e2_echoLine = function(node){

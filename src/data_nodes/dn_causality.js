@@ -5325,8 +5325,29 @@ window.CAUSALITY_WORDS = [
     "importance": 2,
     "keywords": ["聚合枢纽", "hub_review_1"],
     "irreversible": false
+  },
+  {
+    "id": "led_p1_tie",
+    "desc": "老铁与主角的搭档信任线（情感搭档）",
+    "plant": "frontier_pt_01",
+    "reap": "flag:p_tie_complete",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 3,
+    "keywords": ["老铁", "搭档", "frontier_pt_01"],
+    "irreversible": false
+  },
+  {
+    "id": "led_p1_son",
+    "desc": "铁生矿难真相（替班/炸药/结义兄弟）",
+    "plant": "frontier_pt_04",
+    "reap": "frontier_pt_18",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 3,
+    "keywords": ["铁生", "矿难", "矿洞"],
+    "irreversible": false
   }
-
 ];
 
 /* ===== /v91inj:ledgerwords:end/ ===== */

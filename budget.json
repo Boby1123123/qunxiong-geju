@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9361563,
-    "chunked_html_bytes_max": 6588794,
-    "node_total_min": 4947,
+    "game_html_bytes_max": 9379064,
+    "chunked_html_bytes_max": 6666989,
+    "node_total_min": 4967,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9311563,
-    "chunked_html_bytes": 6488794,
-    "node_total": 4997,
+    "game_html_bytes": 9329064,
+    "chunked_html_bytes": 6511342,
+    "node_total": 5017,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "L 线索拼合：CLUE_TRACKS 12->30 probes + 3 拼合枢纽 + l1inj 钩子 + 3 接线（合法内容增长）",
+    "reason": "P 情感搭档 二次校准（改名后基线）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1244,6 +1244,27 @@
         "chunked_bytes": 6488794,
         "nodes": 4997,
         "reason": "L 线索拼合：CLUE_TRACKS 12->30 probes + 3 拼合枢纽 + l1inj 钩子 + 3 接线（合法内容增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9322649,
+        "chunked_bytes": 6566989,
+        "nodes": 4997,
+        "reason": "P 情感搭档：dn_partner.js 20互动节点 + v93p_judge 四态无声评判 + S.trust + p1inj 钩子 + 账本2项（合法内容增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9328639,
+        "chunked_bytes": 6510917,
+        "nodes": 5017,
+        "reason": "P 情感搭档 build 后基线（frontier_pt_ 20节点 + 引擎）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9329064,
+        "chunked_bytes": 6511342,
+        "nodes": 5017,
+        "reason": "P 情感搭档 二次校准（改名后基线）"
       }
     ]
   },

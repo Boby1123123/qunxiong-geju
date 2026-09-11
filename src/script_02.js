@@ -1009,7 +1009,8 @@ N["arrive_north_aierda"] = {tag:"main",
 
     {t:"先找地方落脚，听听城里的风声",go:"north_tavern"},
 
-    {t:"去冒险者公会分会接点活",go:"board_north"}
+    {t:"去冒险者公会分会接点活",go:"board_north"},
+    {t:"（在王都长街走走，看看这座城的风骨）",go:"north_aierda_deep_01"}
 
   ]
 

@@ -97,7 +97,7 @@ N["goal_wealth_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",tex
 "你在账本上写下第一笔像样的数目时，手是稳的。可夜里躺下，你听见自己的心跳得很重——那种重，是第一次亲手抓住命运的缰绳时才有的。",
 "你知道，这还只是第一步。可你更知道，无数人一辈子，连这一步都没迈出去。",
 "你把账本合上，在封底写了四个字：来日方长。富甲天下的路，从这一页开始，正正经经地写下去了。", "交汇城在雾里模糊了轮廓。你紧了紧衣领，迈步上路。"],options:[
-{t:"收好账本（理想里程碑·完成）",effect:{flag:"ideal_goal_wealth_done"},go:"fc_tavern"}
+{t:"收好账本（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_wealth_done"},go:"goal_wealth_trip_1"}
 ]};
 N["goal_might_1"]={tag:"branch",place:"自由城邦 · 交汇城",pace:"normal",text:[
 "你在城西找了块僻静的荒地，开始练拳。",
@@ -125,7 +125,7 @@ N["goal_might_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",text
 "你站在原地，胸口起伏着。手上有一道口子，血顺着指缝滴在土里。不重，但疼——疼让你清醒。",
 "那天夜里，老佣兵给你上药时说：“今天这一架，够你在这一带被人叫三天名字了。可你记住，这才刚起步。”",
 "你点头。威震四海的路，是从这一架、这一道口子开始的。你把它记下了，一个字都不忘。", "你最后回望一眼交汇城，转身穿过街口，往下一程赶路。"],options:[
-{t:"向老佣兵道谢（理想里程碑·完成）",effect:{flag:"ideal_goal_might_done"},go:"fc_tavern"}
+{t:"向老佣兵道谢（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_might_done"},go:"goal_might_trip_1"}
 ]};
 N["goal_guard_1"]={tag:"branch",place:"自由城邦 · 交汇城",pace:"normal",text:[
 "你在交汇城住了下来，开始做一些不起眼的事。",
@@ -153,7 +153,7 @@ N["goal_guard_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",text
 "天快亮时火灭了。七户人家，一个不少。二狗蹲在你旁边，眼泪糊了一脸，把一块半凉的饼塞进你手里。",
 "你靠着墙坐下，浑身疼得厉害，可心里那个念头反而更清楚了——你护住的这七户人，就是你的苍生。一个镇子一个镇子护过去，总能护出一个安稳觉来。",
 "手背的伤会结痂。可有些东西，烧不掉。", "你收拾停当，离开交汇城，沿着来路踏上行程。"],options:[
-{t:"接过那块饼（理想里程碑·完成）",effect:{flag:"ideal_goal_guard_done"},go:"fc_tavern"}
+{t:"接过那块饼（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_guard_done"},go:"goal_guard_trip_1"}
 ]};
 N["goal_truth_1"]={tag:"branch",place:"自由城邦 · 交汇城",pace:"normal",text:[
 "你在交汇城的旧书摊里淘到一本残卷，讲的是三百年前一次失败的封印。",

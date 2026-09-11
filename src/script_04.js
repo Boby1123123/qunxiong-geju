@@ -2170,6 +2170,10 @@ function v35_showDamagePopup(target, amount, type) {
   }
 }
 
+// GR-2: 在战斗模块注册前完成核心初始化（core/ui/save），消除 load('battle') 依赖竞态
+v35_arch_init();
+
+
 // 注册战斗模块
 V35_ModuleManager.register('battle', {
   name: '战斗系统',

@@ -23,7 +23,7 @@ def C(code, s):
 
 def load_checks():
     sys.path.insert(0, HERE)
-    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements, c_observe, c_stats, c_persist, c_map, c_style, c_hooks, c_chronicle, c_fantasy, c_regions, c_clue
+    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements, c_observe, c_stats, c_persist, c_map, c_style, c_hooks, c_chronicle, c_fantasy, c_regions, c_clue, c_crlf, c_nodecover
     return {
         'quick': [
             ('语法检查', c_syntax.run),
@@ -73,6 +73,8 @@ def load_checks():
             ('编年史系统', c_chronicle.run),
             ('西幻体系深化', c_fantasy.run),
             ('节点物理分区', c_regions.run),
+            ('CRLF行尾门', c_crlf.run),
+            ('节点覆盖门', c_nodecover.run),
         ],
     }
 
@@ -113,6 +115,17 @@ def _cache_put(key, sig, result):
 def read_game(path=GAME):
     with io.open(path, encoding='utf-8') as f:
         return f.read()
+
+
+def read_game_checks(path=GAME):
+    """读 game.html 并剥离单文件版内嵌的 chunks-root 段（GR-1）。
+
+    分片节点在 chunks/*.js 有权威源；检查器扫描 game.html 产物时跳过 CH 段副本，
+    避免 V66 风格锁/节点分区/性能计时因重复统计全量节点而误报。
+    """
+    html = read_game(path)
+    _ch = re.compile(r'/\* /u1inj:chunks-root/ \*/.*?/\* /u1inj:chunks-root-end/ \*/', re.S)
+    return _ch.sub('', html)
 
 
 def snapshot(html):
@@ -180,7 +193,7 @@ def main():
         return
 
     t0 = time.time()
-    html = read_game(GAME)
+    html = read_game_checks(GAME)
     print(C('1', '═' * 60))
     print(C('1', '  eldacheck — 群雄割据一键体检  (%s 字节, %s)' % (len(html), time.strftime('%H:%M:%S'))))
     print(C('1', '═' * 60))

@@ -270,8 +270,6 @@ window.v61_lzstring = v61_lzstring;
 })();
 /* /v61inj:perf-core-end/ */
 
-
-
 // ============================================================
 // v38 框架更新：命名空间统一 + 错误处理增强 + 性能优化
 // ============================================================
@@ -586,7 +584,6 @@ if (document.readyState === 'complete') {
 }
 console.log('[ELDA v38] 节点总数:', Object.keys(ELDA.nodes).length);
 console.log('[ELDA v38] 按F12开启调试面板');
-
 
 // ========== 事件总线 ==========
 const V35_EventBus = {
@@ -1058,48 +1055,3 @@ const V35_SaveMigration = {
   }
 };
 
-// ========== 初始化 ==========
-function v35_arch_init() {
-  // 注册核心模块
-  V35_ModuleManager.register('core', {
-    name: '核心引擎',
-    version: '1.0',
-    onLoad() { V35_EventBus.emit('core:loaded'); },
-    onInit() { V35_EventBus.emit('core:initialized'); }
-  });
-  
-  V35_ModuleManager.register('ui', {
-    name: 'UI系统',
-    version: '2.0',
-    dependencies: ['core'],
-    onLoad() { V35_EventBus.emit('ui:loaded'); }
-  });
-  
-  V35_ModuleManager.register('save', {
-    name: '存档系统',
-    version: '1.0',
-    dependencies: ['core'],
-    onLoad() { V35_EventBus.emit('save:loaded'); }
-  });
-  
-  // 加载核心模块
-  V35_ModuleManager.load('core');
-  V35_ModuleManager.load('ui');
-  V35_ModuleManager.load('save');
-  V35_ModuleManager.init('core');
-  
-  // 初始化开发者控制台
-  if(window.v67Debug) V35_DevConsole.init();
-  
-  // 事件日志（开发模式）
-  V35_EventBus.on('*', (data) => {
-    // 可以在这里记录所有事件
-  });
-  
-  console.log('[V35] 技术架构基础已加载');
-  if (typeof v35_initMagic === 'function') v35_initMagic();
-  if (typeof v35_initFaction === 'function') v35_initFaction();
-
-
-
-}

@@ -54,11 +54,24 @@ def _extract_chunk_nodes(text):
     return out
 
 
+_CH_MARK = r'/\* /u1inj:chunks-root/ \*/'
+_CH_END = r'/\* /u1inj:chunks-root-end/ \*/'
+
+def _strip_chunks_root(html):
+    """GR-1：剥离单文件版 game.html 内嵌的 chunks-root 段（分片构建只应处理
+    game.html 主体 + v62 注入，避免 chunked 体积膨胀与节点重复）。"""
+    m = re.search(_CH_MARK + r'.*?' + _CH_END, html, re.S)
+    if m:
+        return html[:m.start()] + html[m.end():]
+    return html
+
+
 def merge_v62(proj):
     """game.html + chunks/v62_*.js 片节点 → game_v62_full.html（临时）。"""
     os.chdir(proj)
     full = os.path.join(proj, 'game_v62_full.html')
     html = _read(os.path.join(proj, 'game.html'))
+    html = _strip_chunks_root(html)  # GR-1 剥离单文件版 chunks-root 段
     chunk_ids = []
     d = os.path.join(proj, 'chunks')
     if os.path.isdir(d):
@@ -152,6 +165,7 @@ def build_chunks(proj, src_path=None):
     os.chdir(proj)
     src = src_path or os.environ.get('V42_SRC', 'game.html')
     html = _read(os.path.join(proj, src) if not os.path.isabs(src) else src)
+    html = _strip_chunks_root(html)  # GR-1 剥离单文件版 chunks-root 段
     opens = [m.start() for m in re.finditer(r'<script>', html)]
     if len(opens) < 3:
         print('[FAIL] script 块不足')
@@ -197,6 +211,10 @@ def build_chunks(proj, src_path=None):
 
     # 引用全部 8 个 story_* 分片（story_core 最先，其余按名排序，保证分片版节点完整）
     ordered = ['story_core.js'] + sorted(c + '.js' for c in chunks if c != 'story_core')
+    # GR-3：追加 v62_origin.js（历史 IIFE 序章分片，含 story_* 未覆盖的 origin_* 全量节点；
+    # 不补则分片版缺 96 个序章节点，线上建号链不完整）
+    if os.path.exists(os.path.join(d, 'v62_origin.js')):
+        ordered = ordered + ['v62_origin.js']
     src_refs = ''.join('<script src="chunks/%s"></script>\n' % f for f in ordered)
     # N 必须先于分片定义：把 non_node_text 里的 N 定义段拆出提前
     n_head = ''

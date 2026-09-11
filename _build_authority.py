@@ -83,6 +83,29 @@ def _collect_data_nodes():
     return '\n'.join(seg) + '\n'
 
 
+
+def _collect_root_chunks():
+    """GR-1 单文件全量化：读根目录 chunks/*.js（排除 NODE_MAP.js 映射表）-> chunks-root 段。
+    与 data-nodes 段同法注入最后 script 块；目录缺失/为空时返回空串（幂等）。
+    extract 侧：本段位于 DN_END 之后，_split_data_nodes 会将其作为 tail 剥离，
+    build 再从 chunks 权威源重建 -> 幂等环保持。"""
+    if not os.path.isdir(os.path.join(HERE, 'chunks')):
+        return ''
+    fps = sorted(glob.glob(os.path.join(HERE, 'chunks', '*.js')))
+    fps = [f for f in fps if os.path.basename(f) != 'NODE_MAP.js']
+    if not fps:
+        return ''
+    seg = ['/* /u1inj:chunks-root/ */']
+    for f in fps:
+        name = os.path.basename(f)
+        content = _read(f).rstrip('\n') + '\n'
+        seg.append('/* /u1inj:chunks-root:%s/ */' % name)
+        seg.append(content)
+    seg.append('/* /u1inj:chunks-root-end/ */')
+    return '\n'.join(seg) + '\n'
+
+
+
 def extract():
     """game.html -> src\\，按 <script> 边界切分；含 v76mod 的块拆回主文件+变体。"""
     h = _read(GAME)
@@ -153,8 +176,9 @@ def build():
         i += 1
     # U1 外置化：data-nodes 段注入最后 script 块（保持幂等：无文件则不注入）
     dn = _collect_data_nodes()
-    if dn and last_script_idx is not None:
-        parts[last_script_idx] = parts[last_script_idx][:-len('</script>')] + dn + '</script>'
+    ck = _collect_root_chunks()
+    if (dn or ck) and last_script_idx is not None:
+        parts[last_script_idx] = parts[last_script_idx][:-len('</script>')] + dn + ck + '</script>'
     html = ''.join(parts)
     _write(BUILT, html)
     print('build OK: %d script 块（含 %d 组变体）-> game_built.html (%d 字符)' % (

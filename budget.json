@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9752884,
+    "game_html_bytes_max": 9801977,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5227,
+    "node_total_min": 5267,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9702884,
-    "chunked_html_bytes": 6975193,
-    "node_total": 5277,
+    "game_html_bytes": 9751977,
+    "chunked_html_bytes": 7023080,
+    "node_total": 5317,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-8 死链修复后重建",
+    "reason": "CP-9 蓝图位置修正（east 40条移至nodeIndex末尾）+1B",
     "history": [
       {
         "date": "2026-09-09",
@@ -1349,6 +1349,20 @@
         "chunked_bytes": 6975193,
         "nodes": 5277,
         "reason": "CP-8 死链修复后重建"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9751976,
+        "chunked_bytes": 7023079,
+        "nodes": 5317,
+        "reason": "CP-9 东境承天城深写 40节点+20事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9751977,
+        "chunked_bytes": 7023080,
+        "nodes": 5317,
+        "reason": "CP-9 蓝图位置修正（east 40条移至nodeIndex末尾）+1B"
       }
     ]
   },

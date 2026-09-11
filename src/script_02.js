@@ -3878,6 +3878,10 @@ N["arrive_east_chengtian"] = function(){
 
       {t:"先不去承天城，去铁门关方向看看",run:function(){ travelTo("east_tiemen"); }}
 
+    ,
+
+      {t:"（先进城——顺着东市的晨钟，听听承天城的声音）",go:"east_deep_01"}
+
     ]
 
   };
@@ -4120,6 +4124,10 @@ N["arrive_east_tiemen"] = {tag:"main",
       crit:["你观察得更细：入夜后，有一小队人马从关城的侧门出发，往南，消失在夜色里。他们押着车，车上盖着黑布——车辙很深。","'往南。'你想起商栈城地头蛇的话：'整船整船的人，往南送。'"]
 
     },effects:{xp:20},onCrit:{flag:"tiemen_south"},go:"east_tiemen_after"}
+
+  ,
+
+    {t:"（在铁门关一带再走一走，听关里关外的消息）",go:"east_deep_31"}
 
   ]
 

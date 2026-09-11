@@ -2703,6 +2703,30 @@ const V35_FACTIONS = {
     allies:["eclipse_society","orc_horde"],
     description:"崇拜深渊力量的邪教，认为世界应该被深渊吞噬，成员多有变异。",
     color:"#ff3a3a"
+  },
+  north: {
+    id:"north", name:"北境联军", type:"nation", capital:"铁门关",
+    leader:"北境统帅", ideology:"秩序/守护",
+    initialRep:0,
+    joinRequirement:{military:20},
+    ranks:["民兵","边军","精锐","百夫长","千夫长","将军","统帅"],
+    skills:["warrior_heavy","warrior_guard"],
+    enemies:["orc_horde"],
+    allies:["light_church","free_cities"],
+    description:"以铁门关为根基的北境守军，常年与雪原兽潮和兽人斥候周旋，纪律严明。",
+    color:"#6ab8ff"
+  },
+  desert: {
+    id:"desert", name:"沙漠诸部", type:"nation", capital:"绿洲集市",
+    leader:"沙之长者", ideology:"生存/利益",
+    initialRep:0,
+    joinRequirement:{gold:50},
+    ranks:["外乡客","驼队伙计","部民","勇士","长老顾问","沙之长者"],
+    skills:["wind_step","survival"],
+    enemies:["abyss_cult"],
+    allies:["free_cities"],
+    description:"死亡沙漠中的部落联盟，以绿洲为命脉，商队是他们的血脉，信奉沙漠古老契约。",
+    color:"#d8a860"
   }
 };
 
@@ -2742,6 +2766,18 @@ const V35_FACTION_QUESTS = {
     {id:"wt_3", name:"暗蚀会追踪", rankReq:2, type:"stealth", reward:{rep:20, gold:60}, desc:"追踪暗蚀会的行动"},
     {id:"wt_4", name:"平衡维护", rankReq:3, type:"diplomacy", reward:{rep:30}, desc:"维护势力间的平衡"},
     {id:"wt_5", name:"深渊调查", rankReq:4, type:"exploration", reward:{rep:40, knowledge:20}, desc:"深入调查深渊的真相"}
+  ],
+  north: [
+    {id:"no_1", name:"雪原巡逻", rankReq:0, type:"combat", reward:{rep:15, gold:40}, desc:"随队巡逻铁门关外雪原"},
+    {id:"no_2", name:"军械清点", rankReq:1, type:"diplomacy", reward:{rep:15, gold:60}, desc:"清点北境军械库并造册"},
+    {id:"no_3", name:"兽潮预警", rankReq:2, type:"exploration", reward:{rep:25, gold:80}, desc:"深入雪原探查兽潮动向"},
+    {id:"no_4", name:"新兵教习", rankReq:3, type:"training", reward:{rep:30, gold:100}, desc:"训练新编入营的民兵"}
+  ],
+  desert: [
+    {id:"de_1", name:"商路护卫", rankReq:0, type:"travel", reward:{rep:15, gold:50}, desc:"护送一支驼队穿越沙暴区"},
+    {id:"de_2", name:"水源测绘", rankReq:1, type:"exploration", reward:{rep:20, gold:60}, desc:"绘制绿洲之间的隐蔽水源图"},
+    {id:"de_3", name:"部族调停", rankReq:2, type:"diplomacy", reward:{rep:25, gold:80}, desc:"调解两个部族的水井争端"},
+    {id:"de_4", name:"沙暴先知", rankReq:3, type:"ritual", reward:{rep:30, item:"sand_charm"}, desc:"随长者观测沙暴，记录征兆"}
   ]
 };
 
@@ -2817,6 +2853,34 @@ window.v35_doJoin = function(fid){
     }
     return true;
   } catch (e) { return false; }
+};
+window.V35_JOIN_PATHS = {
+  light_church: {joinPath:"信徒考核 · 参加礼拜 → 信仰检定 → 圣痕司引荐受洗", knownFlag:"fs_known_church", pathStart:"fs_church_01"},
+  eclipse_society: {joinPath:"秘密接头 · 黑市暗号 → 观察期 → 投名状", knownFlag:"fs_known_eclipse", pathStart:"fs_eclipse_01"},
+  watchers: {joinPath:"被邀请制 · 你无法主动申请——若被认可，自会有人寻你", knownFlag:"fs_known_watchers", pathStart:"fs_watchers_01"},
+  empire: {joinPath:"军功考核 · 承天应征 → 训练 → 战功授衔（或科举特科）", knownFlag:"fs_known_empire", pathStart:"fs_empire_01"},
+  free_cities: {joinPath:"公开招聘 · 码头告示 → 李管事面试（或商会成员引荐）", knownFlag:"fs_known_free", pathStart:"fs_free_01"},
+  elf_kingdom: {joinPath:"自然亲和 · 古老仪式（精灵引荐，伤自然者永拒）", knownFlag:"fs_known_elf", pathStart:"fs_elf_01"},
+  dwarf_kingdom: {joinPath:"工艺考核 · 献上亲手打造的兵刃", knownFlag:"fs_known_dwarf", pathStart:"fs_dwarf_01"},
+  orc_horde: {joinPath:"力量试炼 · 草原决斗 / 猎狼献礼（阿岩引荐可免一难）", knownFlag:"fs_known_orc", pathStart:"fs_orc_01"},
+  abyss_cult: {joinPath:"深渊接触 · 裂隙异象 → 教派观察 → 效忠", knownFlag:"fs_known_abyss", pathStart:"fs_abyss_01"},
+  north: {joinPath:"军功考核 · 铁门关应征 → 北境训练 → 战功授衔", knownFlag:"fs_known_north", pathStart:"fs_north_01"},
+  desert: {joinPath:"商路利益 · 替驼队解围 / 献水源情报", knownFlag:"fs_known_desert", pathStart:"fs_desert_01"}
+};
+window.v35_startJoinPath = function(fid){
+  try{
+    var f = V35_FACTIONS[fid];
+    if (!f) return;
+    if (V35_FACTION_STATE.joined) {
+      try { flashMsg('你已身在' + ((V35_FACTIONS[V35_FACTION_STATE.joined]&&V35_FACTIONS[V35_FACTION_STATE.joined].name)||'某方') + '，无暇他顾。'); } catch(e) {}
+      return;
+    }
+    var jp = (window.V35_JOIN_PATHS && V35_JOIN_PATHS[fid]) || null;
+    if (jp && jp.knownFlag && S.flags && !S.flags[jp.knownFlag]) S.flags[jp.knownFlag] = 1;
+    closeModal();
+    if (jp && jp.pathStart && window.N && N[jp.pathStart] && window.writeNext) { curNode = jp.pathStart; writeNext(); return; }
+    v35_joinFaction(fid);
+  }catch(e){}
 };
 
 function v35_getRep(factionId) {
@@ -3104,6 +3168,7 @@ function v35_renderFactionTab(tab) {
             <div><span style="color:#8a9bb0;">已完成任务:</span> <span style="color:#7fd68f;">${V35_FACTION_STATE.completedQuests.length}</span></div>
           </div>
           <button class="battle-btn" onclick="if(v35_promoteRank()){v35_renderFactionPanel('overview')}">晋升职位</button>
+          <button class="battle-btn" style="margin-left:10px;background:#5a3a3a;border-color:#8a5a5a;" onclick="if(confirm('离开当前势力？声望与职务将一并清空，且短期内难以回头。')){v35_leaveFaction();v35_renderFactionPanel('overview')}">退出势力</button>
         ` : `
           <div style="color:#b8c5d6;font-size:16px;margin-bottom:20px;">你尚未加入任何势力</div>
           <div style="color:#8a9bb0;font-size:13px;">在"势力列表"中查看并加入势力</div>
@@ -3137,7 +3202,8 @@ function v35_renderFactionTab(tab) {
                 敌对: ${f.enemies.map(e=>V35_FACTIONS[e]?.name||e).join(', ') || '无'}
               </div>
               ${!isJoined && !V35_FACTION_STATE.joined ? `
-                <button class="battle-btn" style="margin-top:8px;padding:6px 16px;font-size:13px;" onclick="if(v35_joinFaction('${f.id}')){v35_renderFactionPanel('factions')}">加入势力</button>
+                <div style="margin-top:8px;padding:8px 10px;background:rgba(240,214,138,.08);border:1px solid rgba(240,214,138,.25);border-radius:6px;font-size:12px;color:#f0d68a;line-height:1.6;">✦ 加入路径：${(window.V35_JOIN_PATHS&&V35_JOIN_PATHS[f.id]&&V35_JOIN_PATHS[f.id].joinPath)||'前往该地打听消息'}</div>
+                <button class="battle-btn" style="margin-top:8px;padding:6px 16px;font-size:13px;" onclick="v35_startJoinPath('${f.id}')">${(window.V35_JOIN_PATHS&&V35_JOIN_PATHS[f.id]&&S.flags&&S.flags[V35_JOIN_PATHS[f.id].knownFlag])?'申请加入':'前往打听'}</button>
               ` : ''}
             </div>
           `;

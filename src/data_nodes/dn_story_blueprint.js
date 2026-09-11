@@ -2865,7 +2865,93 @@ window.STORY_BLUEPRINT = {
 
 "world_orc_m3": {tag:"main", vol:"vol_race", arc:"arc_orc", pace:"normal"},
 
-"world_f1_after_orc": {tag:"event", vol:"vol_race", arc:"arc_orc", pace:"normal"}
+"world_f1_after_orc": {tag:"event", vol:"vol_race", arc:"arc_orc", pace:"normal"},
+
+"fs_free_01": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_02": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_03": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_03b": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_04": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_empire_01": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_02": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_02b": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_03": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_04": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_church_01": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_02": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_02b": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_03": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_04": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_orc_01": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_02": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_02b": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_03": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_04": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_dwarf_01": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_dwarf_02": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_dwarf_03": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_dwarf_04": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_01": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_02": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_03": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_04": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_desert_01": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+
+"fs_desert_02": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+
+"fs_desert_03": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+
+"fs_eclipse_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_eclipse_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_eclipse_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_eclipse_04": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_abyss_01": {tag:"branch", vol:"vol_abyss", arc:null, pace:"normal"},
+
+"fs_abyss_02": {tag:"branch", vol:"vol_abyss", arc:null, pace:"normal"},
+
+"fs_abyss_03": {tag:"branch", vol:"vol_abyss", arc:null, pace:"normal"},
+
+"fs_watchers_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_north_01": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"},
+
+"fs_north_02": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"},
+
+"fs_north_03": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"},
+
+"fs_north_04": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"}
 
 
 

@@ -39471,6 +39471,30 @@ const V35_FACTIONS = {
     allies:["eclipse_society","orc_horde"],
     description:"崇拜深渊力量的邪教，认为世界应该被深渊吞噬，成员多有变异。",
     color:"#ff3a3a"
+  },
+  north: {
+    id:"north", name:"北境联军", type:"nation", capital:"铁门关",
+    leader:"北境统帅", ideology:"秩序/守护",
+    initialRep:0,
+    joinRequirement:{military:20},
+    ranks:["民兵","边军","精锐","百夫长","千夫长","将军","统帅"],
+    skills:["warrior_heavy","warrior_guard"],
+    enemies:["orc_horde"],
+    allies:["light_church","free_cities"],
+    description:"以铁门关为根基的北境守军，常年与雪原兽潮和兽人斥候周旋，纪律严明。",
+    color:"#6ab8ff"
+  },
+  desert: {
+    id:"desert", name:"沙漠诸部", type:"nation", capital:"绿洲集市",
+    leader:"沙之长者", ideology:"生存/利益",
+    initialRep:0,
+    joinRequirement:{gold:50},
+    ranks:["外乡客","驼队伙计","部民","勇士","长老顾问","沙之长者"],
+    skills:["wind_step","survival"],
+    enemies:["abyss_cult"],
+    allies:["free_cities"],
+    description:"死亡沙漠中的部落联盟，以绿洲为命脉，商队是他们的血脉，信奉沙漠古老契约。",
+    color:"#d8a860"
   }
 };
 
@@ -39510,6 +39534,18 @@ const V35_FACTION_QUESTS = {
     {id:"wt_3", name:"暗蚀会追踪", rankReq:2, type:"stealth", reward:{rep:20, gold:60}, desc:"追踪暗蚀会的行动"},
     {id:"wt_4", name:"平衡维护", rankReq:3, type:"diplomacy", reward:{rep:30}, desc:"维护势力间的平衡"},
     {id:"wt_5", name:"深渊调查", rankReq:4, type:"exploration", reward:{rep:40, knowledge:20}, desc:"深入调查深渊的真相"}
+  ],
+  north: [
+    {id:"no_1", name:"雪原巡逻", rankReq:0, type:"combat", reward:{rep:15, gold:40}, desc:"随队巡逻铁门关外雪原"},
+    {id:"no_2", name:"军械清点", rankReq:1, type:"diplomacy", reward:{rep:15, gold:60}, desc:"清点北境军械库并造册"},
+    {id:"no_3", name:"兽潮预警", rankReq:2, type:"exploration", reward:{rep:25, gold:80}, desc:"深入雪原探查兽潮动向"},
+    {id:"no_4", name:"新兵教习", rankReq:3, type:"training", reward:{rep:30, gold:100}, desc:"训练新编入营的民兵"}
+  ],
+  desert: [
+    {id:"de_1", name:"商路护卫", rankReq:0, type:"travel", reward:{rep:15, gold:50}, desc:"护送一支驼队穿越沙暴区"},
+    {id:"de_2", name:"水源测绘", rankReq:1, type:"exploration", reward:{rep:20, gold:60}, desc:"绘制绿洲之间的隐蔽水源图"},
+    {id:"de_3", name:"部族调停", rankReq:2, type:"diplomacy", reward:{rep:25, gold:80}, desc:"调解两个部族的水井争端"},
+    {id:"de_4", name:"沙暴先知", rankReq:3, type:"ritual", reward:{rep:30, item:"sand_charm"}, desc:"随长者观测沙暴，记录征兆"}
   ]
 };
 
@@ -39585,6 +39621,34 @@ window.v35_doJoin = function(fid){
     }
     return true;
   } catch (e) { return false; }
+};
+window.V35_JOIN_PATHS = {
+  light_church: {joinPath:"信徒考核 · 参加礼拜 → 信仰检定 → 圣痕司引荐受洗", knownFlag:"fs_known_church", pathStart:"fs_church_01"},
+  eclipse_society: {joinPath:"秘密接头 · 黑市暗号 → 观察期 → 投名状", knownFlag:"fs_known_eclipse", pathStart:"fs_eclipse_01"},
+  watchers: {joinPath:"被邀请制 · 你无法主动申请——若被认可，自会有人寻你", knownFlag:"fs_known_watchers", pathStart:"fs_watchers_01"},
+  empire: {joinPath:"军功考核 · 承天应征 → 训练 → 战功授衔（或科举特科）", knownFlag:"fs_known_empire", pathStart:"fs_empire_01"},
+  free_cities: {joinPath:"公开招聘 · 码头告示 → 李管事面试（或商会成员引荐）", knownFlag:"fs_known_free", pathStart:"fs_free_01"},
+  elf_kingdom: {joinPath:"自然亲和 · 古老仪式（精灵引荐，伤自然者永拒）", knownFlag:"fs_known_elf", pathStart:"fs_elf_01"},
+  dwarf_kingdom: {joinPath:"工艺考核 · 献上亲手打造的兵刃", knownFlag:"fs_known_dwarf", pathStart:"fs_dwarf_01"},
+  orc_horde: {joinPath:"力量试炼 · 草原决斗 / 猎狼献礼（阿岩引荐可免一难）", knownFlag:"fs_known_orc", pathStart:"fs_orc_01"},
+  abyss_cult: {joinPath:"深渊接触 · 裂隙异象 → 教派观察 → 效忠", knownFlag:"fs_known_abyss", pathStart:"fs_abyss_01"},
+  north: {joinPath:"军功考核 · 铁门关应征 → 北境训练 → 战功授衔", knownFlag:"fs_known_north", pathStart:"fs_north_01"},
+  desert: {joinPath:"商路利益 · 替驼队解围 / 献水源情报", knownFlag:"fs_known_desert", pathStart:"fs_desert_01"}
+};
+window.v35_startJoinPath = function(fid){
+  try{
+    var f = V35_FACTIONS[fid];
+    if (!f) return;
+    if (V35_FACTION_STATE.joined) {
+      try { flashMsg('你已身在' + ((V35_FACTIONS[V35_FACTION_STATE.joined]&&V35_FACTIONS[V35_FACTION_STATE.joined].name)||'某方') + '，无暇他顾。'); } catch(e) {}
+      return;
+    }
+    var jp = (window.V35_JOIN_PATHS && V35_JOIN_PATHS[fid]) || null;
+    if (jp && jp.knownFlag && S.flags && !S.flags[jp.knownFlag]) S.flags[jp.knownFlag] = 1;
+    closeModal();
+    if (jp && jp.pathStart && window.N && N[jp.pathStart] && window.writeNext) { curNode = jp.pathStart; writeNext(); return; }
+    v35_joinFaction(fid);
+  }catch(e){}
 };
 
 function v35_getRep(factionId) {
@@ -39872,6 +39936,7 @@ function v35_renderFactionTab(tab) {
             <div><span style="color:#8a9bb0;">已完成任务:</span> <span style="color:#7fd68f;">${V35_FACTION_STATE.completedQuests.length}</span></div>
           </div>
           <button class="battle-btn" onclick="if(v35_promoteRank()){v35_renderFactionPanel('overview')}">晋升职位</button>
+          <button class="battle-btn" style="margin-left:10px;background:#5a3a3a;border-color:#8a5a5a;" onclick="if(confirm('离开当前势力？声望与职务将一并清空，且短期内难以回头。')){v35_leaveFaction();v35_renderFactionPanel('overview')}">退出势力</button>
         ` : `
           <div style="color:#b8c5d6;font-size:16px;margin-bottom:20px;">你尚未加入任何势力</div>
           <div style="color:#8a9bb0;font-size:13px;">在"势力列表"中查看并加入势力</div>
@@ -39905,7 +39970,8 @@ function v35_renderFactionTab(tab) {
                 敌对: ${f.enemies.map(e=>V35_FACTIONS[e]?.name||e).join(', ') || '无'}
               </div>
               ${!isJoined && !V35_FACTION_STATE.joined ? `
-                <button class="battle-btn" style="margin-top:8px;padding:6px 16px;font-size:13px;" onclick="if(v35_joinFaction('${f.id}')){v35_renderFactionPanel('factions')}">加入势力</button>
+                <div style="margin-top:8px;padding:8px 10px;background:rgba(240,214,138,.08);border:1px solid rgba(240,214,138,.25);border-radius:6px;font-size:12px;color:#f0d68a;line-height:1.6;">✦ 加入路径：${(window.V35_JOIN_PATHS&&V35_JOIN_PATHS[f.id]&&V35_JOIN_PATHS[f.id].joinPath)||'前往该地打听消息'}</div>
+                <button class="battle-btn" style="margin-top:8px;padding:6px 16px;font-size:13px;" onclick="v35_startJoinPath('${f.id}')">${(window.V35_JOIN_PATHS&&V35_JOIN_PATHS[f.id]&&S.flags&&S.flags[V35_JOIN_PATHS[f.id].knownFlag])?'申请加入':'前往打听'}</button>
               ` : ''}
             </div>
           `;
@@ -64425,6 +64491,596 @@ N["frontier_leave"]={tag:"main",place:"北境 · 第三哨 · 城门",where:"白
 
 })();
 
+/* /u1inj:data-nodes:dn_fs_join.js/ */
+/* FS-3 入伙前置链：11 势力独特加入路径（链首由 FS-2 v35_startJoinPath 进入，链尾 v35_doJoin 统一入伙）
+   文风：V66 白描 · 短句 · 五感 · 三拍 · 30 治理词约束 · 中文引号成对 */
+(function () {
+  var N = (typeof window !== 'undefined' && window.N) || (typeof N !== 'undefined' ? N : {});
+  function reg(id, node) { N[id] = node; }
+
+  /* ============ 自由城商会 · 公开招聘（李管事面试 / 成员引荐） ============ */
+  N["fs_free_01"] = {
+    tag: "branch", place: "自由城邦 · 东码头", where: "任意", pace: "normal",
+    text: [
+      "东码头的告示栏钉着一张新告示，边角被海风掀得哗哗响。纸上是商会李管事的笔迹，墨色还新：招伙计，会算账、能跑腿，管饭，工钱面议。告示栏下围了三个闲汉，看了两眼又散了——商会最近在收拢人手，这是人人都知道的事。",
+      "你站了一会儿。海风裹着咸腥味扑上来，告示右下角那枚烫金的商会印，在灰扑扑的木板上格外扎眼。"
+    ],
+    options: [
+      { t: "（揭下告示，去商会找李管事）", go: "fs_free_02" },
+      { t: "（先打听商会的底细再决定）", check: { a: "INT", sk: "lore", label: "打听" }, tier: {
+        ok: ["码头卖鱼的老周说，商会这两年手伸得长，西境、北境的商路都趟过，东家是个只露背影不见脸的老人。你心里有了数。", "你心里有了数，还是决定去见李管事一面。"],
+        fail: ["码头的人各说各话，你听了一耳朵，什么有用的都没捞着。算了，直接去见李管事。"],
+        crit: ["卖鱼老周压着嗓门告诉你一桩旧事：商会上个月替一支被劫的驼队垫了全款，却没声张。你把这消息记下了。"]
+      }, go: "fs_free_02" }
+    ]
+  };
+
+  N["fs_free_02"] = {
+    tag: "branch", place: "自由城邦 · 商会账房", where: "任意", pace: "normal",
+    text: [
+      "账房里算盘声噼啪不停。李管事四十出头，两鬓见白，眼睛却亮，上下打量你一遍，把告示推回桌角：“商会要的是能办事的人，不是来混饭的。你都会些什么？”",
+      "窗外传来货船靠岸的号子声。他手指在桌面上敲了两下，等你答话。"
+    ],
+    options: [
+      { t: "（摆出自己会算账跑腿的本事）", check: { a: "CHA", sk: "bargain", label: "自荐" }, tier: {
+        ok: ["你报了几笔旧账目，又说了码头货栈的门道，李管事听着听着，指头不敲了，拿起茶盏喝了一口：“明早来上工，先跟着账房走三天。”", "你这一关算是过了。"],
+        fail: ["你话说到一半，他自己低头拨起算盘，半晌才抬头：“知道了，先回去等信吧。”你出了门，心里明白这多半是没戏。"],
+        crit: ["你把商路行情说得头头是道，李管事脸上难得露了笑纹：“好，账房缺个能扛事的，就是你了。”连引荐费都给你免了。"]
+      }, go: "fs_free_03" },
+      { t: "（请商会老伙计引荐）", check: { a: "CHA", sk: "persu", label: "引荐" }, tier: {
+        ok: ["你托码头相熟的货栈管事递了句话，李管事问过你上次替货栈清点货物的事，点了点头：“熟人举荐，算你一个。”", "引荐这条路，算是走通了。"],
+        fail: ["那位管事替你说了两句好话，李管事只嗯了一声，没接话。你明白，交情还差些火候。"],
+        crit: ["货栈管事把你夸成账房的一把好手，李管事当场拍板：“明天来，先跟着我走趟西境的货。”"]
+      }, go: "fs_free_03" }
+    ]
+  };
+
+  N["fs_free_03"] = {
+    tag: "branch", place: "自由城邦 · 商会账房", where: "任意", pace: "normal",
+    text: [
+      "李管事从抽屉里取出一本薄册子推到你面前：“入会要交五十金龙作押，或者替商会跑一趟西境的镖，回来便算你的。”他顿了顿，“商会的规矩是先立契，后说话。”",
+      "册子扉页印着商会徽记，油墨味还没散。窗外货船又鸣了一声号。"
+    ],
+    options: [
+      { t: "（缴五十金龙作押金）", effects: { gold: -50, flag: "fs_free_paid" }, go: "fs_free_04" },
+      { t: "（接下西境送镖的差事）", go: "fs_free_03b" }
+    ]
+  };
+
+  N["fs_free_03b"] = {
+    tag: "branch", place: "自由城邦 → 西境 · 官道", where: "任意", pace: "normal",
+    text: [
+      "镖车不重，一箱盐铁，押的是往西境驻点的货款。你跟着老镖师走了五天，路上他教你怎么听车轴声辨路况，怎么在野地里生不冒烟的火。",
+      "第六天黄昏，车到西境边镇，货交到商会驻点管事手里。管事验了封条，给了你一张盖印的回执：“回去交差，你就算商会的人了。”",
+      "回程的夜路，老镖师在前头哼着不成调的歌，你摸了摸怀里那张回执，忽然觉得这纸比银子沉。"
+    ],
+    options: [
+      { t: "（带着回执回去交差）", effects: { gold: 30, xp: 30 }, go: "fs_free_04" }
+    ]
+  };
+
+  N["fs_free_04"] = {
+    tag: "branch", place: "自由城邦 · 商会正堂", where: "任意", pace: "normal",
+    text: [
+      "正堂里挂着商会老东家的画像，画像前点了三炷香。李管事领你到画像前，让你给老东家上炷香，又当众念了一遍契书，最后在你名下按了手印。",
+      "“从今往后，商会的买卖就是你的买卖。”他把契书收进匣子，拍了拍你的肩，“出去做事，别给商会丢脸。”",
+      "堂外的阳光打进来，你手上的朱砂印还鲜红。自由城邦的屋檐下，你从此多了一重身份。"
+    ],
+    options: [
+      { t: "（正式成为商会一员）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("free_cities"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("free"); } }, go: "faction_free_1" }
+    ]
+  };
+
+  /* ============ 帝国 · 军功考核（承天应征 / 科举特科，秦·长风引荐） ============ */
+  N["fs_empire_01"] = {
+    tag: "branch", place: "东境 · 承天城 · 应征处", where: "任意", pace: "normal",
+    text: [
+      "承天城的应征处设在兵部外廊，一张长桌，两摞册子，桌后坐了个穿青袍的文书，正慢条斯理地往册子上写字。廊下排着七八个汉子，有的搓手，有的低头看地。",
+      "墙上的告示写着：一为从军，二为特科。边角盖着兵部的大印，朱红得像刚滴上去的血。"
+    ],
+    options: [
+      { t: "（报名从军）", go: "fs_empire_02" },
+      { t: "（询问科举特科的事）", go: "fs_empire_02b" }
+    ]
+  };
+
+  N["fs_empire_02"] = {
+    tag: "branch", place: "东境 · 承天城 · 应征处", where: "任意", pace: "normal",
+    text: [
+      "文书头也不抬，把一张表推到桌上：“姓名，籍贯，会什么。”你一一答了，他蘸墨记下，末了扔过一根竹签：“明日卯时，校场点卯。误了时辰，军法伺候。”",
+      "竹签上烙着一个“征”字，边角还带着烧过的焦痕。"
+    ],
+    options: [
+      { t: "（明日卯时去校场点卯）", go: "fs_empire_03" }
+    ]
+  };
+
+  N["fs_empire_02b"] = {
+    tag: "branch", place: "东境 · 承天城 · 应征处", where: "任意", pace: "normal",
+    text: [
+      "文书抬起眼看了你一下，少见地多说了两句：“特科是朝廷新开的恩科，考经义策论，考中了直接授职。你若是读书人，可以去礼部廊下领号。”他又低下头，“这几年特科取的人不多，你想清楚了。”",
+      "廊外有书生模样的年轻人走过，怀里抱着一摞书，步子很快。"
+    ],
+    options: [
+      { t: "（去礼部领特科考号）", check: { a: "INT", sk: "lore", label: "应考" }, tier: {
+        ok: ["你在礼部廊下填了表，领了考号。三日后入场，经义题你答得还算顺畅，策论写到边境屯田时，你想起北境那些荒废的军田，笔下的字忽然有了分量。", "放榜那日，你的名字挂在中间偏上的位置。"],
+        fail: ["考场上你盯着策论题，脑子里空空荡荡，胡乱写满交了上去。放榜那日，你的名字果然不在其中。", "你叹了半口气，收拾心情，还是回了应征处。"],
+        crit: ["策论你引了北境军务的旧例，又补了一段屯田实策，主考官在卷上画了三个圈。放榜那日，你的名字挂在头榜。", "文书见了你，难得站起来说话。"]
+      }, go: "fs_empire_04" }
+    ]
+  };
+
+  N["fs_empire_03"] = {
+    tag: "branch", place: "东境 · 承天城 · 校场", where: "任意", pace: "normal",
+    text: [
+      "卯时的校场还蒙着霜气。队正是个黑脸汉子，嗓门大得能把人震醒。他先让你跑圈，又拉弓，再对练，一圈下来，几个新丁已经趴在地上喘。",
+      "你咬牙撑住了。黑脸队正走过来，用刀鞘在你肩上点了两下：“还行，编入第三营。”他顿了顿，“营里看军功，不看嘴皮子，记住了。”"
+    ],
+    options: [
+      { t: "（领了军籍牌，入第三营）", effects: { xp: 30 }, go: "fs_empire_04" }
+    ]
+  };
+
+  N["fs_empire_04"] = {
+    tag: "branch", place: "东境 · 承天城 · 兵部", where: "任意", pace: "normal",
+    text: [
+      "兵部主事亲自给你签了军籍文书，又当堂念了一遍军规。你按了手印，领到一块黄铜军牌，牌上刻着你的名字和营号。",
+      "“从今日起，你是帝国的兵。”主事把军牌递到你手里，视线落在你脸上，“刀口向敌，不许转向。”",
+      "铜牌在掌心硌得发凉。承天城的宫墙在远处投下长长的影子。"
+    ],
+    options: [
+      { t: "（接过军牌，正式入编）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("empire"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("empire"); } }, go: "faction_east_1" }
+    ]
+  };
+
+  /* ============ 光明教会 · 信徒考核（礼拜 → 信仰检定 → 圣痕司引荐受洗） ============ */
+  N["fs_church_01"] = {
+    tag: "branch", place: "圣城 · 大教堂", where: "白昼", pace: "normal",
+    text: [
+      "圣城大教堂的穹顶高得让人仰得脖子发酸，彩窗把阳光切成一块块暖色，落在石板地上。唱诗班的童声正从侧廊飘出来，清清亮亮，盖过了外头市集的喧闹。",
+      "你在长椅边站了一会儿。一个穿灰袍的执事过来，递给你一本薄册子：“来听道，还是来入教？”"
+    ],
+    options: [
+      { t: "（说来听道，先看看）", go: "fs_church_02" },
+      { t: "（说来入教，求圣痕司引荐）", go: "fs_church_02b" }
+    ]
+  };
+
+  N["fs_church_02"] = {
+    tag: "branch", place: "圣城 · 大教堂 · 礼拜堂", where: "白昼", pace: "normal",
+    text: [
+      "礼拜堂里坐满了人，主教在主坛上念着经文，声音不疾不徐，像水淌过石头。你混在人群里坐了一下午，听着听着，心里那些杂乱的念头被磨平了些。",
+      "散场时，灰袍执事在门口叫住你：“听道三日，心诚者方可受洗。明日还来？”他的眼神温和，却像能把人看穿。"
+    ],
+    options: [
+      { t: "（连来三日听道）", effects: { xp: 20 }, go: "fs_church_03" }
+    ]
+  };
+
+  N["fs_church_02b"] = {
+    tag: "branch", place: "圣城 · 大教堂 · 圣痕司", where: "白昼", pace: "normal",
+    text: [
+      "圣痕司在教堂偏院，门口挂着一盏长明灯。执事引你进去，桌后坐着一位戴银十字的司祭，他翻看着一卷册子，问你过往的来历。",
+      "他问得很细，连你小时候害过什么病都问了。末了他合上册子：“引荐可以，但受洗前要过一道信仰检定。你若对圣光无诚，引荐了也白搭。”"
+    ],
+    options: [
+      { t: "（接受信仰检定）", go: "fs_church_03" }
+    ]
+  };
+
+  N["fs_church_03"] = {
+    tag: "branch", place: "圣城 · 大教堂 · 圣痕司内室", where: "白昼", pace: "normal",
+    text: [
+      "内室点着两排白烛，司祭让你跪在圣坛前，把手放在一本烫金的经文上。“圣光会照出你心里的东西。”他压着嗓门说，“不必害怕。”",
+      "烛火在你手背上投下影子。你感到掌心下的书页发起热来，像有什么东西隔着皮肉在应你。"
+    ],
+    options: [
+      { t: "（闭眼，任圣光检验）", check: { a: "SPR", sk: "will", label: "信仰检定" }, tier: {
+        ok: ["你感到一股暖意从掌心沿着手臂漫上来，像冬日里晒到午后的太阳。司祭睁眼，点了点头：“心诚，可以受洗。”", "他取出一本新的受洗名册。"],
+        fail: ["烛火忽然晃了一下，掌心下的书页只是冰凉。司祭看了你半晌，叹了口气：“你的心还系着太多尘世的东西，再修一段日子吧。”", "你只好退了出来——入教的事，还得等。"],
+        crit: ["暖意从掌心涌进心口，你几乎以为自己看见了一片白光。司祭郑重起身，向你行了半礼：“圣光认了你。今日便受洗。”"]
+      }, go: "fs_church_04" }
+    ]
+  };
+
+  N["fs_church_04"] = {
+    tag: "branch", place: "圣城 · 大教堂 · 受洗池", where: "白昼", pace: "normal",
+    text: [
+      "受洗池的水很凉，司祭扶着你退进池心，念了一段祷文，然后把水从你头顶浇下来。水珠顺着额发滴落，你忽然觉得肩头轻了些，像卸了什么担子。",
+      "“从此你与圣光同路。”司祭把一枚银质的小十字挂在你颈上，“教会的门，为你开着。”",
+      "走出教堂时，正午的阳光照得人睁不开眼。你摸了摸胸口的银十字，还有些发凉。"
+    ],
+    options: [
+      { t: "（受洗，成为教会一员）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("light_church"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("church"); } }, go: "faction_church_1" }
+    ]
+  };
+
+  /* ============ 兽人王庭 · 力量试炼（草原决斗 / 猎狼献礼，阿岩引荐） ============ */
+  N["fs_orc_01"] = {
+    tag: "branch", place: "兽人草原 · 王庭营地", where: "任意", pace: "normal",
+    text: [
+      "王庭营地的篝火整夜不熄，烤肉的油脂滴进火里，滋啦作响。几个兽人战士围在火边，用短刀剔着骨头，看见你走近，都停下动作，直直地看你。",
+      "一个腰挂狼牙的老人从大帐里出来，打量你一遍，声音粗得像砂石：“人族，草原不养闲人。想入王庭，先让草原认你的拳头。”"
+    ],
+    options: [
+      { t: "（接受草原决斗的试炼）", go: "fs_orc_02" },
+      { t: "（提出去猎一头狼献礼）", go: "fs_orc_02b" }
+    ]
+  };
+
+  N["fs_orc_02"] = {
+    tag: "branch", place: "兽人草原 · 决斗场", where: "任意", pace: "normal",
+    text: [
+      "决斗场是一圈踩实的黄土，四周围着看热闹的兽人。对面站着一个比你高半头的年轻兽人，赤着上身，胳膊上的伤疤叠着伤疤。他朝你呲了呲牙，“来。”",
+      "人群里有人敲起了鼓，一下一下，像擂在心口上。"
+    ],
+    options: [
+      { t: "（迎上去，全力一战）", check: { a: "STR", sk: "martial", label: "决斗" }, tier: {
+        ok: ["你和他互换了几轮拳脚，他力气大，你胜在灵便，最后一记锁喉把他按在黄土里。他拍着地认输，爬起来反而朝你咧嘴一笑：“够劲！”", "围观的兽人轰然叫好，老人点了点头。"],
+        fail: ["你挨了他两记重拳，胸口闷得发不出声，膝盖一软跪了下去。他收住手，没有补刀，只哼了一声：“还差得远。”", "老人看了你一眼：“回去练练，草原不记仇，记本事。”"],
+        crit: ["你避过他三记重拳，趁他旧力已尽新力未生，一记肩撞把他撞出三步开外。他愣了一瞬，随即哈哈大笑，一把拉起你：“好样的！”", "这一战，你打出了名声。"]
+      }, go: "fs_orc_03" }
+    ]
+  };
+
+  N["fs_orc_02b"] = {
+    tag: "branch", place: "兽人草原 · 猎场", where: "黑夜", pace: "normal",
+    text: [
+      "草原的夜风冷得割脸。你伏在矮坡后面，盯着狼群活动的方向——三只灰狼，头狼的肩胛骨比旁的都宽。你攥紧了手里的短矛，呼吸放轻。",
+      "一只狼动了，它的影子贴着草尖移动，快得像一阵风。"
+    ],
+    options: [
+      { t: "（伏击头狼，献上狼牙）", check: { a: "AGI", sk: "survival", label: "猎狼" }, tier: {
+        ok: ["你等它经过坡下，短矛借着下坡的势扎进它后腿，又补了一记。头狼倒下时，其余两匹散了。你把狼牙剔下来，用草绳串好。", "回到营地，老人接过狼牙看了看，丢回给你：“留着自己戴，草原认这个。”"],
+        fail: ["你出手早了一瞬，短矛扎进土里，狼群四散。你追了半宿，只带回一绺狼毛。", "老人没笑话你：“草原上没空手回来的人，明晚再去。”"],
+        crit: ["你单枪匹马放倒了头狼，还顺手牵回一匹幼狼——不是猎的，是狼群散后它跟上了你。营地的人看见你带着狼崽回来，好几个人站了起来。", "“狼跟着的人，草原不会亏待。”老人说。"]
+      }, go: "fs_orc_03" }
+    ]
+  };
+
+  N["fs_orc_03"] = {
+    tag: "branch", place: "兽人草原 · 王庭大帐", where: "任意", pace: "normal",
+    text: {
+      default: [
+        "大帐里，老人请你在火边坐下，给你倒了一碗马奶酒：“你过了草原的试炼。”他顿了顿，“按规矩，还要有人替你说话——你认得王庭的人么？”",
+        "你想了想，报了几个名字。老人听着，摇了摇头。"
+      ],
+      ifRelation: {
+        npc: "a_yan", op: ">=", val: 40,
+        yes: ["大帐里，老人请你在火边坐下，给你倒了一碗马奶酒：“你过了草原的试炼。”他顿了顿，“阿岩那小子替你说了话——说你救过草原的人。”", "你想起阿岩咧嘴笑的样子，忽然觉得这碗酒暖了许多。"],
+        no: ["大帐里，老人请你在火边坐下，给你倒了一碗马奶酒：“你过了草原的试炼。”他顿了顿，“按规矩，还要有人替你说话——你认得王庭的人么？”"]
+      }
+    },
+    options: [
+      { t: "（饮下马奶酒，等老人定夺）", go: "fs_orc_04" }
+    ]
+  };
+
+  N["fs_orc_04"] = {
+    tag: "branch", place: "兽人草原 · 王庭大帐", where: "任意", pace: "normal",
+    text: [
+      "老人从怀里摸出一枚狼牙牌，牌上用烧红的铁烙着王庭的纹记。他把狼牙牌按进你手心：“草原的规矩，认牌不认人。从今日起，你与王庭共进退。”",
+      "帐外的篝火噼啪响了一声，火光照得狼牙牌上的纹记像活过来一样。",
+      "你攥紧了那枚温热的狼牙牌，听见自己说：“好。”"
+    ],
+    options: [
+      { t: "（收下狼牙牌，入王庭）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("orc_horde"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("orc"); } }, go: "faction_orc_1" }
+    ]
+  };
+
+  /* ============ 矮人王国 · 工艺考核（献上亲手打造的兵刃） ============ */
+  N["fs_dwarf_01"] = {
+    tag: "branch", place: "矮人山国 · 铁峰堡", where: "任意", pace: "normal",
+    text: [
+      "铁峰堡的城墙是整块山岩凿出来的，城门上方嵌着一柄巨大的石锤。你走近时，城门边的矮人卫兵正拿短柄斧剔着指甲，抬起眼皮看你：“人族，铁峰堡不收闲人。”",
+      "他身后传来连绵的锤打声，叮叮当当，像山的心脏在跳。"
+    ],
+    options: [
+      { t: "（说明来意：想入堡学艺）", go: "fs_dwarf_02" }
+    ]
+  };
+
+  N["fs_dwarf_02"] = {
+    tag: "branch", place: "矮人山国 · 铁峰堡 · 大熔炉", where: "任意", pace: "normal",
+    text: [
+      "大熔炉的热浪隔着门就扑到脸上。堡主是个胡子编成辫子的老矮人，正抡着锤子打一块通红的铁坯，火星四溅。他听见你说话，也不停手：“想入堡？规矩简单——拿你亲手打的家伙来换。”",
+      "“铁的、铜的、钢的，都行。”他瞥了你一眼，“别拿买来的糊弄我，矮人闻得出来。”"
+    ],
+    options: [
+      { t: "（借堡里的炉子，打一件铁器）", check: { a: "STR", sk: "athletic", label: "打铁" }, tier: {
+        ok: ["你抡了一下午锤，打出一柄勉强成形的短刀。老矮人接过去翻来覆去看了两遍，又用手指弹了弹刀身：“糙是糙了点，但火候对了，是个肯下力的。”", "“收你了。”他说。"],
+        fail: ["你打出的铁坯歪七扭八，淬火时还崩了一道裂口。老矮人看了直摇头：“这块料糟蹋了。”他顿了顿，“但你还肯站在炉边，比那些光会看的强。明日再来，我教你抡锤。”", "这算半个机会。"],
+        crit: ["你打出的短刀淬火后泛着青光，刃口吹毛可断。老矮人拿着刀翻来覆去，忽然大笑起来，拍着你的肩膀：“好手艺！铁峰堡要的就是你这种人！”", "他当场把刀挂在了堡主席上。"]
+      }, go: "fs_dwarf_03" }
+    ]
+  };
+
+  N["fs_dwarf_03"] = {
+    tag: "branch", place: "矮人山国 · 铁峰堡 · 堡主厅", where: "任意", pace: "normal",
+    text: [
+      "堡主厅的石壁上挂满了历代名匠的兵器，烛火在刃口上跳跃。老矮人把你的铁器摆上案台，又取出一册羊皮名录，翻到空页：“报上名字。”",
+      "他蘸了墨，笔悬在半空等你。厅里安静得只剩烛芯偶尔的哔剥声。"
+    ],
+    options: [
+      { t: "（报上名字，让他记入名录）", go: "fs_dwarf_04" }
+    ]
+  };
+
+  N["fs_dwarf_04"] = {
+    tag: "branch", place: "矮人山国 · 铁峰堡 · 堡主厅", where: "任意", pace: "normal",
+    text: [
+      "老矮人在名录上写下你的名字，又在你名字旁画了一个小锤子的记号：“铁峰堡认匠不认人。你的手艺进了册，你就是堡里的人。”",
+      "他领你到一扇铁门前，推开门，里面是热气腾腾的工坊，几个矮人正围着砧台干活，见你进来，都抬头打了个招呼。",
+      "你跨过门槛，身后那扇铁门吱呀合上——外面是山，里面是家。"
+    ],
+    options: [
+      { t: "（踏入工坊，正式入堡）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("dwarf_kingdom"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("dwarf"); } }, go: "faction_dwarf_1" }
+    ]
+  };
+
+  /* ============ 精灵王国 · 自然亲和（古老仪式，伤自然者永拒） ============ */
+  N["fs_elf_01"] = {
+    tag: "branch", place: "精灵林邦 · 银叶城边境", where: "任意", pace: "normal",
+    text: [
+      "银叶城的树墙高过三十尺，枝叶间漏下的光斑在地面晃动。城门口站着一个精灵守卫，长发束在脑后，弓背在肩上，他没有拔箭，只是看着你。",
+      "“人族，林邦不轻易放外人进去。”他的声音像林间的风，“你来做什么？”"
+    ],
+    options: [
+      { t: "（说来寻求林邦接纳，愿过自然亲和）", go: "fs_elf_02" }
+    ]
+  };
+
+  N["fs_elf_02"] = {
+    tag: "branch", place: "精灵林邦 · 银叶城 · 树庭", where: "任意", pace: "normal",
+    text: {
+      default: [
+        "守卫把你带进树庭——一片绕着古树根须铺开的空地，树根间生着苔藓和细小的白花。一位白发精灵长老坐在树根上，正在喂一只停在指尖的蓝雀。",
+        "她看了你一会儿，问：“你手上沾过多少血？不是人的血，是树、是鹿、是这片林子的血。”"
+      ],
+      ifFlag: {
+        "flag_hunt_blood": ["守卫把你带进树庭。长老看着你，眼神冷了几分：“你手上沾着猎物的血，浓得我隔着十步都能闻到。林邦不接纳猎手。”", "你试图辩解，她抬手止住：“不必说了。走出这片林子，别回头。”"],
+        "fs_elf_kind": ["守卫把你带进树庭。长老看了你半晌，忽然笑了一下：“你救过林中的生灵，树都知道。”她伸出手，指尖停着的蓝雀飞到你肩上，啄了啄你的衣领。", "“这算先替你答了。”"]
+      }
+    },
+    options: [
+      { t: "（如实回答，接受自然亲和的检验）", go: "fs_elf_03" }
+    ]
+  };
+
+  N["fs_elf_03"] = {
+    tag: "branch", place: "精灵林邦 · 银叶城 · 古树下", where: "任意", pace: "normal",
+    text: [
+      "长老领你到城中最古的那棵银叶树下，树冠遮天蔽日，树皮上爬满发光的纹路。“把手放在树干上。”她说，“树会告诉我，你的心是清是浊。”",
+      "你把手贴上树皮。树皮微凉，带着潮气，像某种活物的呼吸。"
+    ],
+    options: [
+      { t: "（闭眼，任树检验）", check: { a: "SPR", sk: "will", label: "自然亲和" }, tier: {
+        ok: ["你感到树皮下的纹理在掌心跳动了一下，像应答。头顶的枝叶沙沙响了一阵，长老点点头：“树认了你。你可以留下。”", "她取下一片银叶，放在你掌心。"],
+        fail: ["树皮在你掌下只是冰凉，纹路一动不动。长老叹了口气：“你的心还没静下来，树听不见你。”她收回手，“不急，人族的寿命虽短，心性却可以修。”", "这一次，你没得到许可。"],
+        crit: ["你贴上的那一刻，整棵银叶树的枝叶忽然齐声颤动，像风穿过整片树林。长老愣住了，随即向你行了一个大礼：“树已经很久没有这样应过一个人了。”", "她亲自为你系上银叶坠，“林邦从此有你。”"]
+      }, go: "fs_elf_04" }
+    ]
+  };
+
+  N["fs_elf_04"] = {
+    tag: "branch", place: "精灵林邦 · 银叶城 · 誓约台", where: "任意", pace: "normal",
+    text: [
+      "誓约台是一块被树根托起的白石，台上刻着古老的精灵纹。长老让你把掌心按在纹路上，她则把手覆在你手背上，念了一段你听不懂的精灵语。",
+      "石纹亮了一阵，又暗下去。“誓言已成。”长老说，“从此林邦的树、林邦的箭、林邦的人，与你同命。”",
+      "风穿过银叶，发出细碎的声响，像整片林子都在应和这句话。"
+    ],
+    options: [
+      { t: "（立誓，成为林邦一员）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("elf_kingdom"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("elf"); } }, go: "faction_elf_1" }
+    ]
+  };
+
+  /* ============ 沙漠诸部 · 商路利益（解围 / 水源情报，驼队首领引荐） ============ */
+  N["fs_desert_01"] = {
+    tag: "branch", place: "死亡沙漠 · 绿洲集市", where: "任意", pace: "normal",
+    text: [
+      "绿洲集市的水渠边坐满了歇脚的商人，驼铃响成一片。你注意到一队驼队被围在集市东角——几个部族的汉子堵着他们，吵着什么，为首的驼队首领脸色很难看。",
+      "他看见你，忽然扬声喊：“外乡人！你若是走得动，帮我去西渠递个口信，我记你一份人情！”"
+    ],
+    options: [
+      { t: "（上前问明缘由，替他解围）", check: { a: "CHA", sk: "persu", label: "解围" }, tier: {
+        ok: ["你弄明白了——是过路钱的事，部族嫌驼队交的少了。你两边说和，又替驼队补了差价，汉子们骂骂咧咧地散了。驼队首领拉住你的手，“这份人情，我记下了。”", "他邀你去他的帐篷喝茶。"],
+        fail: ["你上去说了几句，两边都不买账，差点连你一起卷进去。驼队首领苦笑：“算了，外乡人，别掺和了。”他塞给你一袋干粮，“心意我领了。”", "你虽然没帮上忙，他也记了这份心。"],
+        crit: ["你几句话点破了过路钱的来历，又用商路上的人情说和，部族汉子不但散了，还请驼队喝了顿茶。首领当场拍板：“从今往后，你走这条商路，我驼队护卫你。”", "“我引荐你见沙之长者。”他说。"]
+      }, go: "fs_desert_02" },
+      { t: "（告诉他西边水泉的位置，换个人情）", check: { a: "INT", sk: "survival", label: "献情报" }, tier: {
+        ok: ["你把来路上摸到的一处隐蔽水泉告诉了他。首领眼睛一亮：“这是实打实的恩情。沙漠里，水比金子金贵。”", "他邀你去他的帐篷喝茶。"],
+        fail: ["你报的水泉位置，他带着人去看，回来时一脸苦笑：“那边已经干了。”你有些讪讪，他却摆摆手，“心是好的，算你一份。”", "他给了你一袋水，让你跟着驼队走两天。"],
+        crit: ["你不仅报了水泉，还画了条避开沙暴的路线。首领看你的眼神都变了：“你这是救了整支驼队。”他郑重地说，“我引荐你见沙之长者。”"]
+      }, go: "fs_desert_02" }
+    ]
+  };
+
+  N["fs_desert_02"] = {
+    tag: "branch", place: "死亡沙漠 · 绿洲集市 · 帐篷", where: "任意", pace: "normal",
+    text: [
+      "驼队首领的帐篷里挂着旧毯子，毯子上绣着沙漠的地图。他给你倒了一碗微咸的茶，“沙之长者不轻易见外人，但商路上帮过驼队的人，部落不会忘。”",
+      "他蘸着茶水，在桌面上画了一个符号：“明日黄昏，你带着这个符号去西边那顶最大的帐篷。”"
+    ],
+    options: [
+      { t: "（记下符号，明日黄昏去大帐）", go: "fs_desert_03" }
+    ]
+  };
+
+  N["fs_desert_03"] = {
+    tag: "branch", place: "死亡沙漠 · 沙之长者大帐", where: "黑夜", pace: "normal",
+    text: [
+      "黄昏后的大帐点着牛油灯，沙之长者是个满脸沟壑的老人，他听首领说完你的来路，又看了一遍你画的符号，点了点头。",
+      "“沙漠的规矩，谁帮了部落，部落就收谁。”他从怀里取出一枚刻着水纹的骨牌，放进你手里，“从今日起，你是诸部的客人，也是诸部的人。”",
+      "帐外，沙漠的夜风卷着细沙，打在帐篷上，像谁拿指节敲门。"
+    ],
+    options: [
+      { t: "（收下骨牌，成为诸部一员）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("desert"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("desert"); } }, go: "faction_desert_1" }
+    ]
+  };
+
+  /* ============ 暗蚀会 · 秘密接头（黑市暗号 → 观察期 → 投名状） ============ */
+  N["fs_eclipse_01"] = {
+    tag: "branch", place: "自由城邦 · 黑市酒馆", where: "黑夜", pace: "normal",
+    text: [
+      "黑市酒馆在码头下层的暗巷里，门口挂着一盏只亮一半的灯笼。你按道上人教的口诀，进门先要了杯最便宜的酒，再把杯子在桌上转了半圈。",
+      "酒保看了你一眼，放下擦杯子的布，朝后门努了努嘴：“有人要见你。”"
+    ],
+    options: [
+      { t: "（推门进后间）", go: "fs_eclipse_02" }
+    ]
+  };
+
+  N["fs_eclipse_02"] = {
+    tag: "branch", place: "自由城邦 · 黑市酒馆后间", where: "黑夜", pace: "normal",
+    text: [
+      "后间只点一盏油灯，桌后坐着一个戴兜帽的人，脸上罩着半张黑色面具，只露出下颌。他没有问你名字，只说了三句话：“口音，来路，手上的活。”",
+      "你报了一个假名字。他点了点头，也不知道信没信。“暗蚀会不要没本事的人。”他推过一张纸条，“明晚子时，码头第三根缆桩，有个东西要挪个地方。办成了，再来见我。”"
+    ],
+    options: [
+      { t: "（应下这桩差事）", check: { a: "AGI", sk: "stealth", label: "办事" }, tier: {
+        ok: ["你趁着夜色把那口箱子从第三根缆桩挪到了废弃仓房，全程没惊动巡夜的人。第二天酒馆里，兜帽人把一袋银币推给你：“手还稳。”", "“从今晚起，你跟着我。”"],
+        fail: ["你搬箱子时碰倒了缆桩边的铁桶，惊动了半个码头。你硬是趁乱把箱子藏进了水沟，第二天兜帽人看着你，声音听不出喜怒：“惊了人，但东西没丢。”", "“将功折罪，再办一件。”"],
+        crit: ["你不仅挪了箱子，还顺手在箱底留了一张记着巡夜路线的字条。兜帽人看完，沉默了一会儿：“这个，够格了。”他取出一枚黑铁面具递给你。"]
+      }, go: "fs_eclipse_03" }
+    ]
+  };
+
+  N["fs_eclipse_03"] = {
+    tag: "branch", place: "自由城邦 · 暗巷", where: "黑夜", pace: "normal",
+    text: [
+      "兜帽人领你走了一夜暗巷，最后停在一扇没有门牌的铁门前。他推开门，里面是一间摆满旧卷宗的屋子，桌上摊着一张自由城邦的地图，几处被朱笔圈着。",
+      "“暗蚀会不靠嘴巴混饭吃。”他点着地图上的一处，“这家的账本，明晚要出现在我桌上。”他抬眼，“这是你的投名状。”"
+    ],
+    options: [
+      { t: "（接下投名状，夜探取账本）", check: { a: "INT", sk: "stealth", label: "夜探" }, tier: {
+        ok: ["你摸进那户商行的账房，账本到手，还顺手记住了三道暗门的位置。天亮前，账本放在兜帽人桌上，他翻了两页，点了点头。", "“成了。”他说，“从今往后，你是暗蚀会的人。”"],
+        fail: ["你差一点被商行的护院逮住，账本只撕下半本。兜帽人看了半天：“半本也够了。”他顿了顿，“但下回，别再失手。”", "他仍收了你。"],
+        crit: ["你不仅拿到了账本，还摸清了商行与码头官署勾结的账路，另写了一张条子附上。兜帽人看完条子，好一会儿没说话，最后把面具推到你面前：“这个，配你。”"]
+      }, go: "fs_eclipse_04" }
+    ]
+  };
+
+  N["fs_eclipse_04"] = {
+    tag: "branch", place: "自由城邦 · 暗蚀会堂", where: "黑夜", pace: "normal",
+    text: [
+      "会堂在城底的地窖里，四壁点着黑烛。兜帽人——此刻你才知道他叫“鸦”——领你站在烛火中央，把一枚黑铁面具覆在你脸上。",
+      "“戴上面具，过往就留在门外了。”他按着你的肩，“暗蚀会不问你从前是谁，只问你往后替谁办事。”",
+      "铁面具贴着脸颊，凉丝丝的。你听见自己说：“替暗蚀会。”"
+    ],
+    options: [
+      { t: "（戴上面具，正式入会）", run: function () { if (!(window.V35_FACTION_STATE && V35_FACTION_STATE.joined) && window.v35_doJoin) { v35_doJoin("eclipse_society"); } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("eclipse_society"); } }, go: "faction_free_1" }
+    ]
+  };
+
+  /* ============ 深渊教派 · 深渊接触（裂隙异象 → 教派观察 → 效忠） ============ */
+  N["fs_abyss_01"] = {
+    tag: "branch", place: "深渊裂隙 · 边缘营地", where: "任意", pace: "normal",
+    text: [
+      "深渊裂隙在死亡沙漠北缘，一条黑黢黢的地缝横贯大地，风从缝里灌上来，带着一股说不清的气息，像烧过的铁又混着腐土。",
+      "裂隙边缘搭着几顶黑帐篷，帐篷里有人影走动。一个披黑袍的人朝你招了招手：“外乡人，你盯着裂隙看了很久了。你也听见了？”"
+    ],
+    options: [
+      { t: "（走近，问他听见了什么）", go: "fs_abyss_02" }
+    ]
+  };
+
+  N["fs_abyss_02"] = {
+    tag: "branch", place: "深渊裂隙 · 黑帐篷", where: "任意", pace: "normal",
+    text: [
+      "黑袍人给你倒了一碗黑色的茶，茶面上浮着一层细碎的光点。“裂隙下面有声音。”他说，“不是风声，是有人在下头说话，说给愿意听的人。”",
+      "他盯着你的眼睛：“你愿意听吗？听完了，再决定走不走。”帐外的风又灌了一声，像什么东西在应和他的话。"
+    ],
+    options: [
+      { t: "（喝下那碗茶，听他说下去）", check: { a: "SPR", sk: "will", label: "倾听" }, tier: {
+        ok: ["你闭上眼，裂隙的声响在你耳边渐渐清晰——不是话语，更像某种节律，一起一伏，像大地在呼吸。黑袍人笑了：“听见了。”", "“深渊不挑人，挑的是肯听的人。”"],
+        fail: ["你听得头皮发麻，那些声响在你耳朵里混成一片乱哄哄的杂音。你睁开眼，额上见了汗。黑袍人看着你，语气平淡：“还不到时候。”", "他又给你倒了一碗茶，“多听几次。”"],
+        crit: ["你不仅听见了，还辨出了那节律里的一个词——一个古老得不像人间语言的名字。黑袍人脸色变了，随即向你深深一礼：“裂隙认了你。”", "“你比我们走得更深。”他说，“请随我来。”"]
+      }, go: "fs_abyss_03" }
+    ]
+  };
+
+  N["fs_abyss_03"] = {
+    tag: "branch", place: "深渊裂隙 · 祭坛", where: "黑夜", pace: "normal",
+    text: [
+      "祭坛在裂隙最窄处，一块黑石，石上刻满盘绕的纹路。黑袍人点燃了石周一圈黑烛，示意你跪在石前。",
+      "“效忠不是效忠我们。”他压低嗓门说，“是效忠裂隙下的那一位。你愿意么？”烛火在他脸上跳动，影子的形状有些不对。",
+      "裂隙深处又传来那阵节律，这一次，你听出它停了一下——像在等你回答。"
+    ],
+    options: [
+      { t: "（按他的引导，向深渊立誓）", run: function(){ if (window.v35_doJoin) { v35_doJoin("abyss_cult"); } }, go: "faction_desert_1" }
+    ]
+  };
+
+  /* ============ 守望者 · 被邀请制（你寻不到他们的门） ============ */
+  N["fs_watchers_01"] = {
+    tag: "branch", place: "传闻之中 · 无定所", where: "任意", pace: "normal",
+    text: [
+      "你打听了一路守望者的消息——酒馆的老兵说他们穿灰袍，书商说他们管着旧书库，商队说他们夜里在城墙上站岗。可你按着这些线索一个个找过去，不是扑空，就是被人反问：“守望者？没听说过。”",
+      "天黑了。你站在城门口，手里的线索只剩一张写着“旧钟楼”的纸。钟楼的守门人是个打瞌睡的老头，他抬头看了你一眼，又低下头去：“年轻人，有些门，不是用来敲的。”",
+      "他补了一句，声音像梦话：“若是他们想见你，自会有人来找你。”"
+    ],
+    options: [
+      { t: "（暂且作罢——守望者不收主动上门的人）", go: "fc_tavern" }
+    ]
+  };
+
+  /* ============ 北境联军 · 军功考核（铁门关应征） ============ */
+  N["fs_north_01"] = {
+    tag: "branch", place: "北境 · 铁门关 · 应征处", where: "任意", pace: "normal",
+    text: [
+      "铁门关的应征处设在城门洞侧的一间石屋里，门口排着十几个年轻人，个个缩着脖子往手里哈气。屋里的军曹是个刀疤脸，把名册翻得哗哗响，头也不抬地报数：会使枪的左边，会使刀的右边，什么都不会的，出门右转，粮仓缺个搬米的。",
+      "排到你时，他抬眼扫了你一下，视线在你腰间的旧刀鞘上停了一瞬：“练过？”"
+    ],
+    options: [
+      { t: "（报上名，说自己在北境赶过狼、也押过商队）", go: "fs_north_02" },
+      { t: "（只说会写字，想从军书干起）", check: { a: "INT", sk: "lore", label: "文书" }, tier: {
+        ok: ["军曹哼了一声，把一支秃笔推到你面前：“会写字就好，先记三个时辰的军械账，错一笔，卷铺盖走人。”你坐下，笔尖落纸，倒也不慌。"],
+        fail: ["你提起笔，写了半行就手抖。军曹看了两眼，把纸抽走：“算了，还是去校场试试力气吧。”"]
+      }, go: "fs_north_02" }
+    ]
+  };
+
+  N["fs_north_02"] = {
+    tag: "branch", place: "北境 · 铁门关 · 校场", where: "任意", pace: "normal",
+    text: [
+      "校场上冻土踩得梆硬，北风卷着雪沫往领口里钻。考核只有两项：先扛起两石石锁走上二十步，再与一名老兵对练三合。你前头那个高个汉子走到一半，石锁脱手，砸在脚面上，抱着脚跳着退了下去，引来一阵哄笑。",
+      "轮到你时，老兵没急着出招，把木刀在手里转了半圈：“北境军不要花架子。你这一刀劈下来，是奔着杀人去的，还是奔着活命去的？”"
+    ],
+    options: [
+      { t: "（稳稳扛起石锁，走满二十步；再与老兵认真对练）", check: { a: "STR", sk: "martial", label: "军考" }, tier: {
+        ok: ["石锁上肩，你的步子没有乱。对练三合，老兵最后一刀被你架住，他笑骂一声：“有点意思。”军曹在名册上勾了一笔：“收了。”"],
+        fail: ["石锁压得你肩膀发麻，步子踉跄了两步，到底走完了。对练时你被老兵一记横扫拍在肋上，退了三步。军曹皱了下眉，还是勾了名：“先编入辎重队，日后再说。”"],
+        crit: ["石锁你走完二十步脸不红气不喘，对练时反倒压着老兵打了三合。校场边几个老兵起了哄，军曹亲自走过来，把一块铁牌拍进你手里：“是个苗子。”"]
+      }, go: "fs_north_03" },
+      { t: "（坦白说自己没正经上过阵，想先学规矩）", go: "fs_north_03" }
+    ]
+  };
+
+  N["fs_north_03"] = {
+    tag: "branch", place: "北境 · 铁门关 · 新兵营", where: "任意", pace: "normal",
+    text: [
+      "新兵营的炕上睡十二个人，半夜总有人翻身说梦话，喊的不是娘，是“哨楼”。头三天，你跟着老兵学扎营、学巡哨、学在雪地里藏脚印。带你的老卒姓柳，五十来岁，一条腿是瘸的，话不多，只在你把枪尖插进雪里的时候说了一句：“北境的仗，多半不是打出来的，是冻出来的、饿出来的。”",
+      "夜里轮到你和另一个新兵上哨。雪停了，月亮底下，远处的雪原泛着青光。你忽然听见极远的地方，有一声狼嚎，跟着，第二声，第三声——那声音不像兽群，倒像什么在应和。"
+    ],
+    options: [
+      { t: "（把所见所闻记下，第二天报给什长）", effects: { flag: { "fs_north_wolf": 1 } }, go: "fs_north_04" },
+      { t: "（只当没听见，守完这班哨就回营）", go: "fs_north_04" }
+    ]
+  };
+
+  N["fs_north_04"] = {
+    tag: "branch", place: "北境 · 铁门关 · 军帐", where: "任意", pace: "normal",
+    text: [
+      "第七天，军曹把你叫进军帐，案上摆着一块新铸的军牌，牌面上刻着北境联军的狼首纹。他看了你半晌：“从今日起，你是北境的兵。刀口向敌，不许转向——这是铁门关的老规矩。”",
+      "你把军牌掂在手里，沉甸甸的，还带着铸炉的余温。帐外，换防的号声正顺着雪原传出去，一声长，一声短。"
+    ],
+    options: [
+      { t: "（接过军牌，正式加入北境联军）", effects: { flag: { "fs_north_joined": 1 } }, run: function(){ if (window.v35_doJoin) { v35_doJoin("north"); } }, go: "faction_north_1" }
+    ]
+  };
+
+})();
+
 /* /u1inj:data-nodes:dn_goldscale.js/ */
 /* ============================================================
  * dn_goldscale.js — 卷 C 金秤真相章（M6 批）
@@ -67619,7 +68275,7 @@ const NODE_REGISTRY = {
     files: []
   },
   system: {
-    name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
+    name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "fs", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
     desc: "建号/序章/职业分支/好感/结局/事件池/系统检查前缀；v65* 为历史版本遗留前缀（WARN 豁免）",
     files: []
   }
@@ -71193,7 +71849,93 @@ window.STORY_BLUEPRINT = {
 
 "world_orc_m3": {tag:"main", vol:"vol_race", arc:"arc_orc", pace:"normal"},
 
-"world_f1_after_orc": {tag:"event", vol:"vol_race", arc:"arc_orc", pace:"normal"}
+"world_f1_after_orc": {tag:"event", vol:"vol_race", arc:"arc_orc", pace:"normal"},
+
+"fs_free_01": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_02": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_03": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_03b": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_free_04": {tag:"branch", vol:"vol_free", arc:"arc_fac_free", pace:"normal"},
+
+"fs_empire_01": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_02": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_02b": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_03": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_empire_04": {tag:"branch", vol:"vol_east", arc:null, pace:"normal"},
+
+"fs_church_01": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_02": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_02b": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_03": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_church_04": {tag:"branch", vol:"vol_church", arc:null, pace:"normal"},
+
+"fs_orc_01": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_02": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_02b": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_03": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_orc_04": {tag:"branch", vol:"vol_race", arc:"arc_fac_orc", pace:"normal"},
+
+"fs_dwarf_01": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_dwarf_02": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_dwarf_03": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_dwarf_04": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_01": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_02": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_03": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_elf_04": {tag:"branch", vol:"vol_race", arc:null, pace:"normal"},
+
+"fs_desert_01": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+
+"fs_desert_02": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+
+"fs_desert_03": {tag:"branch", vol:"vol_desert", arc:null, pace:"normal"},
+
+"fs_eclipse_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_eclipse_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_eclipse_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_eclipse_04": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_abyss_01": {tag:"branch", vol:"vol_abyss", arc:null, pace:"normal"},
+
+"fs_abyss_02": {tag:"branch", vol:"vol_abyss", arc:null, pace:"normal"},
+
+"fs_abyss_03": {tag:"branch", vol:"vol_abyss", arc:null, pace:"normal"},
+
+"fs_watchers_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+
+"fs_north_01": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"},
+
+"fs_north_02": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"},
+
+"fs_north_03": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"},
+
+"fs_north_04": {tag:"branch", vol:"vol_north", arc:"arc_fac_north", pace:"normal"}
 
 
 

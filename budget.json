@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9272225,
-    "chunked_html_bytes_max": 6491080,
-    "node_total_min": 4929,
+    "game_html_bytes_max": 9292862,
+    "chunked_html_bytes_max": 6514971,
+    "node_total_min": 4926,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9222225,
-    "chunked_html_bytes": 6391080,
-    "node_total": 4979,
+    "game_html_bytes": 9242862,
+    "chunked_html_bytes": 6414971,
+    "node_total": 4976,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "F-2 failpath2 修复死链回接+蓝图尾逗号修复后重建体积",
+    "reason": "E-2 钩子修复：echoLine 用 curNode 兜底（+103B）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1209,6 +1209,20 @@
         "chunked_bytes": 6391080,
         "nodes": 4979,
         "reason": "F-2 failpath2 修复死链回接+蓝图尾逗号修复后重建体积"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9242759,
+        "chunked_bytes": 6414868,
+        "nodes": 4976,
+        "reason": "E-2 多年回响：+27 回响节点 + 注入钩子 + 蓝图登记"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9242862,
+        "chunked_bytes": 6414971,
+        "nodes": 4976,
+        "reason": "E-2 钩子修复：echoLine 用 curNode 兜底（+103B）"
       }
     ]
   },

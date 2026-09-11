@@ -1,147 +1,112 @@
-/* ============================================================
- * dn_echo.js —— CON-2 决策回响节点（30 个重大 flag 回响）
- * 实现：ifFlag 变体（v91_resolveText 三形态，零引擎改动）
- * 挂载：F 节点 go → echo_xxx → 原目标 Y；无 flag 显示轻过渡，有 flag 显示回响
- * 铁律：不触碰判定公式 / writeNext / choose / 存档结构；saveVersion=48 不变
- * 全部节点带 pace；中文引号成对；无 30 治理词
- * ============================================================ */
-(function () {
-  var N = window.N || (window.N = {});
-  /* 铁门关外 · 北坡烽火台（bandit_leader_killed / eclipse_infiltrator 共用链） */
-  N["echo_bandit_leader_killed"] = { tag: "main", place: "东部王国 · 铁门关外 · 北坡烽火台", where: "白昼", pace: "normal",
-    text: { default: ["烽火台下，风把旗角的响声送来，断断续续。"],
-      ifFlag: { "bandit_leader_killed": ["你翻过北坡乱石堆时，一个赶骡子的老卒在路边歇脚，认出你来，往你怀里塞了半块干饼：“你就是剁了匪首头的那位？前些日子官道上还有人立了块木牌，写着你的名字，说是给路上遭劫的人壮胆。”", "你捏着那块干饼，没说话。杀名这种东西，传到第三个人嘴里，就不像你当初动手时那样简单了。老卒见你不接话，也不多问，挥了挥鞭子赶骡子走了。"] } },
-    options: [{ t: "（把干饼收进怀里，继续走）", go: "echo_eclipse_infiltrator" }] };
-  N["echo_eclipse_infiltrator"] = { tag: "main", place: "东部王国 · 铁门关外 · 北坡烽火台", where: "白昼", pace: "normal",
-    text: { default: ["烽火台下的阴影里，碎石堆成一道矮墙，像被什么反复翻过。"],
-      ifFlag: { "eclipse_infiltrator": ["你混进暗蚀会那几个月的事，铁门关这边没人知道。只有烽火台下的老鸦认得你——你曾蹲在这片阴影里，把一枚刻着鸦羽的铜牌埋进碎石底下。", "后来铜牌被谁挖走了，地上留了个浅坑。你蹲下去看了看，又用靴底把土抹平。有些事做过就做过了，埋好，就当没发生过。"] } },
-    options: [{ t: "（起身，走向铁门关外的废墟）", go: "tm_ruins" }] };
-  /* 铁门关外 · 军情驿站（let_mercury_go） */
-  N["echo_let_mercury_go"] = { tag: "main", place: "东部王国 · 铁门关外 · 军情驿站", where: "白昼", pace: "normal",
-    text: { default: ["驿站门口，驿卒正往马背上挂水囊，缰绳系得松松的。"],
-      ifFlag: { "let_mercury_go": ["你在这驿站歇脚时，驿卒给你倒了一碗茶，顺嘴说：“前阵子有个戴兜帽的怪人，在我们这儿换过一匹马，往南边去了。他说若是遇见一个不肯收他信物的人，替他带句话——那笔账，他记着。”", "你端着茶碗，想起那夜你放走信使时他看你的眼神。记着就记着吧。你喝完茶，把碗放回桌上。"] } },
-    options: [{ t: "（整了整行装，继续赶路）", go: "tm_courier" }] };
-  /* 铁门关外 · 关南难民营（gave_all_to_refugees / medici_blackmailed 共用链） */
-  N["echo_gave_all_to_refugees"] = { tag: "main", place: "东部王国 · 铁门关外 · 关南难民营", where: "白昼", pace: "normal",
-    text: { default: ["难民营的栅栏边，几个孩子蹲在地上分一张饼。"],
-      ifFlag: { "gave_all_to_refugees": ["你进营门时，一个瘸腿的老妇迎面拦住你，把一只补了又补的布包往你手里塞：“恩人，你那年把整袋银币分给我们，老婆子没处还，这几年攒了些干粮，你带着路上吃。”", "布包沉甸甸的，装的是炒面。你推回去，她又塞回来，眼眶发红，转身就钻进棚子里去了。炒面还温着。"] } },
-    options: [{ t: "（把布包系在行囊上，走进营中）", go: "echo_medici_blackmailed" }] };
-  N["echo_medici_blackmailed"] = { tag: "main", place: "东部王国 · 铁门关外 · 关南难民营", where: "白昼", pace: "normal",
-    text: { default: ["难民营西角搭着几顶破帐篷，炊烟细得几乎看不见。"],
-      ifFlag: { "medici_blackmailed": ["你勒索美第奇家那件事，在难民营里传成了另一个版本——说有个外乡人攥住了自由城邦最有钱家族的把柄，却只换了几车粮食，全运到了关南。", "棚子里的老人给你递了碗稀粥，压低嗓子说：“外乡人，这年头拿刀的多，拿把柄的少。你办的这事，粥棚里的人记着。”粥很稀，话很重。"] } },
-    options: [{ t: "（喝下那碗粥，起身离开）", go: "tm_refugee" }] };
-  /* 铁门关外 · 北坡烽火台（father_truth_denied） */
-  N["echo_father_truth_denied"] = { tag: "main", place: "东部王国 · 铁门关外 · 北坡烽火台", where: "白昼", pace: "normal",
-    text: { default: ["烽火台高处的望台上，两个兵卒正换着班，铁盔碰得叮当响。"],
-      ifFlag: { "father_truth_denied": ["你登上望台时，正赶上北风。当年父亲托人捎来的那封信，你到最后也没拆开看。此刻站在这里，风把衣襟吹得翻飞，你忽然想：那封信里写的，会不会就是这铁门关外的风。", "你把信的事又按回心底。不看有不看的道理，走有走的路。"] } },
-    options: [{ t: "（扶着垛口，望向关外）", go: "tm_watchtower" }] };
-  /* 铁门关外 · 两军之间的空场（aquan_liberated / beijing_saved 共用链） */
-  N["echo_aquan_liberated"] = { tag: "main", place: "东部王国 · 铁门关外 · 两军之间的空场", where: "白昼", pace: "normal",
-    text: { default: ["空场上，两军的旗帜各据一头，中间的土路被踩得结结实实。"],
-      ifFlag: { "aquan_liberated": ["你踏上这片空场时，有个东军的老兵远远看了你半天，忽然行了个军礼。后来他身边的士兵告诉你：水岸被围那年，就是他老家。你带人打通水路那天，他在阵前把刀往地上一插，喊了一嗓子，说这辈子欠你一条命。", "那个军礼，他没有解释。你也没有问。"] } },
-    options: [{ t: "（回了一礼，走向和谈的帐篷）", go: "echo_beijing_saved" }] };
-  N["echo_beijing_saved"] = { tag: "main", place: "东部王国 · 铁门关外 · 两军之间的空场", where: "白昼", pace: "normal",
-    text: { default: ["空场北头搭着一顶灰色帐篷，帐帘在风里一掀一落。"],
-      ifFlag: { "beijing_saved": ["和谈帐篷外，一个操着北地口音的传令兵认出了你，私下拽了拽你的袖子：“北境那几镇的人，到现在还念叨你。去年雪灾，要不是你把那批粮硬送到城下，怕是要冻死一镇子人。”", "他声音压得低，说完就松开手，恢复了那副冷面孔。你走进帐篷前，回头看了他一眼——他已经回到队伍里，站得笔直，像什么都没说过。"] } },
-    options: [{ t: "（挑开帐帘，走进和谈场）", go: "tm_negotiate" }] };
-  /* 东部王国 · 铁门关（东侧）（council_* / dragon_companion / purge_intensified 共用链） */
-  N["echo_council_support_purification"] = { tag: "main", place: "东部王国 · 铁门关（东侧）", where: "白昼", pace: "normal",
-    text: { default: ["铁门关东侧的城门前，进出的人流排成长队，守卒挨个查验文牒。"],
-      ifFlag: { "council_support_purification": ["你支持净化令那天的表决，后来在铁门关的茶摊上被人反复提起。有人赞你果断，也有人在你背后啐了一口，说你手里的圣光沾了血。", "城门下，一个抱着孩子的妇人排在你前头。她的包袱角露出半卷盖着教会火漆的文牒。你看了一眼，没有多话。"] } },
-    options: [{ t: "（移开视线，排队入城）", go: "echo_purge_intensified" }] };
-  N["echo_purge_intensified"] = {tags:["main:purge"], tag: "main", place: "东部王国 · 铁门关（东侧）", where: "白昼", pace: "normal",
-    text: { default: ["铁门关城头上，旗子换了一面新的，颜色比旧的更深。"],
-      ifFlag: { "purge_intensified": ["净化令加码之后，铁门关的宵禁提前了一个时辰。你入城那夜，正撞上一队白袍押着人往南去，锁链拖在石板路上，响得刺耳。", "客栈掌柜给你留的房间里，窗纸糊了三层。他压着嗓子说：“外乡人，这几日城里风声紧，灯别点太亮。”你吹熄油灯，在黑暗里坐了很久。"] } },
-    options: [{ t: "（和衣躺下，明日再探消息）", go: "echo_dragon_companion" }] };
-  N["echo_dragon_companion"] = { tag: "main", place: "东部王国 · 铁门关（东侧）", where: "白昼", pace: "normal",
-    text: { default: ["铁门关内城墙上，钉着一排铁钩，挂着几面褪色的军旗。"],
-      ifFlag: { "dragon_companion": ["那头与你同行的幼龙，铁门关的人私下都传开了。有个守城的老卒偷偷问你：“那东西……真不咬人？”你还没答，幼龙从你斗篷底下探出半颗脑袋，打了个哈欠。老卒吓得退了两步，又忍不住凑回来，伸手想摸又不敢。", "后来你进城，幼龙蜷在你怀里睡了一路。城门兵盘查时，它闭着眼，尾巴尖轻轻晃了一下，像在打呼。"] } },
-    options: [{ t: "（替它拢了拢斗篷，继续赶路）", go: "tm_frontline" }] };
-  N["echo_council_oppose_purification"] = { tag: "main", place: "东部王国 · 铁门关（东侧）", where: "白昼", pace: "normal",
-    text: { default: ["铁门关外的官道边，几株老槐树落尽了叶子，枝桠伸向天空。"],
-      ifFlag: { "council_oppose_purification": ["你在表决台上反对净化令那天的话，被铁门关的脚夫们编成了顺口溜，在茶棚里传唱。有人为这话拍过桌子，也有人因此再没给你好脸色。", "槐树下，一个卖饼的老头认出你，多给你夹了一勺酱，说：“那句话，说得像个活人说的。”你没解释那场表决里你担过什么，接过饼，咬了一口。"] } },
-    options: [{ t: "（道过谢，沿官道继续走）", go: "tm_frontline" }] };
-  N["echo_council_compromise_purification"] = { tag: "main", place: "东部王国 · 铁门关（东侧）", where: "白昼", pace: "normal",
-    text: { default: ["铁门关的集市上，卖布的伙计正把一匹靛蓝的布展开，往架子上晾。"],
-      ifFlag: { "council_compromise_purification": ["你那次在表决台上提出折中方案，两边都没落好。教会嫌你留了余地，反对方嫌你不够决绝。可铁门关的商人却记你的好——那场净化令，到底没把城里的铺子全查个底朝天。", "布摊的老板给你让了个座，说：“外乡人，这城里的买卖人，谢你那句‘先查账、后抓人’。”你接过他递来的热茶，没说那折中方案其实是你半夜改了三遍才定下的。"] } },
-    options: [{ t: "（喝完茶，起身入城）", go: "tm_frontline" }] };
-  /* 铁门关外 · 废墟（bandit 链已用 tm_watchtower；此处直达） */
-  /* 精灵王国 · 银月祭坛（betrayed_classmate / seal3_queen_freed 共用链） */
-  N["echo_betrayed_classmate"] = { tag: "main", place: "精灵王国 · 银月祭坛", where: "白昼", pace: "normal",
-    text: { default: ["祭坛周围的月桂树在风里沙沙响，银色的树皮泛着柔光。"],
-      ifFlag: { "betrayed_classmate": ["你背叛同窗那件事，在精灵长老会的案卷里记了一笔。可你走到祭坛边时，一个守卫却拦住了你，压着嗓子说：“那边那个整理书卷的精灵，替你说过话。”", "你顺着他指的方向看去——是当年与你同窗的精灵，正低头誊抄书卷，听见脚步声也没抬头。你站了一会儿，没有上前。有些话，说出口不如不说。"] } },
-    options: [{ t: "（绕过书案，走向祭坛深处）", go: "elf_deep_council" }] };
-  N["echo_seal3_queen_freed"] = { tag: "main", place: "精灵王国 · 银月祭坛", where: "白昼", pace: "normal",
-    text: { default: ["祭坛中央的月池映着天光，水面平得像一面镜子。"],
-      ifFlag: { "seal3_queen_freed": ["女王艾萨拉获得自由的事，精灵们嘴上不说，眉眼却松快了许多。祭坛边，一个年轻的精灵祭司在池边放下三枚银币，说是替一位远行的人求的平安。", "你没问那银币为谁而放。月池的水波荡了荡，又平了。"] } },
-    options: [{ t: "（在池边站了一会儿，转身离开）", go: "elf_deep_council" }] };
-  /* 矮人王国 · 王都（spared_robber / giant_helper 共用链） */
-  N["echo_spared_robber"] = { tag: "main", place: "矮人王国 · 王都", where: "白昼", pace: "normal",
-    text: { default: ["矮人王都的城门洞又高又深，铁闸门上的铆钉比拳头还大。"],
-      ifFlag: { "spared_robber": ["城门洞下，一个卖炭的老汉忽然抬头冲你笑，露出一口黄牙：“恩公，可算又见着你了。”", "你愣了愣，才认出这是当年山道上那个劫匪。他如今推着炭车，脸上没了当年的凶相，只有风霜。“那夜你放我走，我在矮人王都讨了三年生活，攒下两间炭铺。”他弯下腰，给你磕了个头。"] } },
-    options: [{ t: "（受下这一礼，扶他起来）", go: "dwarf_deep_bard" }] };
-  N["echo_giant_helper"] = { tag: "main", place: "矮人王国 · 王都 · 铁砧议会厅", where: "白昼", pace: "normal",
-    text: { default: ["铁砧议会厅的门楣上刻着锤与砧的纹章，经年的烟火把石头熏成了深色。"],
-      ifFlag: { "giant_helper": ["你帮过那个巨人的事，在矮人王都传成了段子：说有个外乡人跟山岭巨人在矿道上称兄道弟，还替他扛过一整车的矿石。", "铁砧议会厅门口，一个矮人铁匠冲你比了个拇指，瓮声瓮气地说：“那大家伙现在逢人就说你讲义气，连铁匠行会想请他搬料，都得先提你的名字。”你没忍住笑了一声。"] } },
-    options: [{ t: "（谢过铁匠，走进议会厅）", go: "dwarf_deep_hall" }] };
-  /* 东部王国 · 承天城（east_wanted） */
-  N["echo_east_wanted"] = { tag: "main", place: "东部王国 · 承天城 · 街市", where: "白昼", pace: "normal",
-    text: { default: ["承天城的街市上，卖糖人的摊子前围着一圈孩子，糖锅里冒起甜丝丝的热气。"],
-      ifFlag: { "east_wanted": ["你在东境被通缉的事，承天城的衙门口贴过你的画像。可画像画得不像，街市上的贩夫走卒看你几眼，又移开目光，照常卖他们的货。", "有个卖馄饨的老头在你碗里多搁了一勺虾皮，用下巴朝衙门口的方向抬了抬，什么也没说。你吃完馄饨，把铜板压在碗下，走了。"] } },
-    options: [{ t: "（低头拢了拢领口，拐进巷子）", go: "east_gov" }] };
-  /* 东部王国 · 银穗河 · 码头（gold_scale_blacklisted） */
-  N["echo_gold_scale_blacklisted"] = { tag: "main", place: "东部王国 · 银穗河 · 码头", where: "白昼", pace: "normal",
-    text: { default: ["银穗河码头上，船工们正往船上扛货，跳板压得咯吱响。"],
-      ifFlag: { "gold_scale_blacklisted": ["你被金秤家族列进黑名单的事，在银穗河码头上只有一个人知道。那是当年给你递过消息的老账房，他如今在码头边上摆了个修秤的小摊。", "你路过时，他抬头看了你一眼，把手里那杆秤的秤砣正了正，声音压得很低：“金秤那头的事，我一个字没往外说。秤还在，人也在，就还有得称。”你点点头，走了。"] } },
-    options: [{ t: "（沿码头往东，走向故都方向）", go: "east_chengtian_old" }] };
-  /* 交汇城（mercury_ally / mercury_disappointed / floating_tower_* 共用链） */
-  N["echo_mercury_disappointed"] = { tag: "main", place: "自由城邦 · 交汇城", where: "白昼", pace: "normal",
-    text: { default: ["交汇城的钟楼在午时敲过一轮，余音在街巷里滚了又滚。"],
-      ifFlag: { "mercury_disappointed": ["你回到交汇城那日，先去了一趟墨丘利常待的药剂铺。铺子换了伙计，说那位戴单片眼镜的先生三个月前搬走了，走时留下一个空瓶子，瓶底压着一张字条：“账，我记下了。”", "你拿起那只空瓶，对着光看了看。瓶子里什么也没有，可你总觉得，有什么东西确实被带走了一部分。"] } },
-    options: [{ t: "（把空瓶放回柜台，转身离开）", go: "echo_mercury_ally" }] };
-  N["echo_mercury_ally"] = { tag: "main", place: "自由城邦 · 交汇城", where: "白昼", pace: "normal",
-    text: { default: ["交汇城的钟楼下，一个卖地图的摊子刚开张，摊主正往木板上钉图钉。"],
-      ifFlag: { "mercury_ally": ["你进交汇城时，钟楼下有人朝你吹了声口哨。回头一看，墨丘利靠在墙边，手里转着一枚银币：“听说你回来了。南边的事办得利索，行会那边欠我个人情，正好还你。”", "他把那枚银币弹给你，银币在空中翻了两个跟头，落在你掌心，还带着体温。“拿着，将来要撬锁、要查账、要找什么人，报我的名字。”他说完，转身没入人群，衣摆上沾着药剂的味道。"] } },
-    options: [{ t: "（收好银币，走进交汇城）", go: "echo_floating_tower_banished" }] };
-  N["echo_floating_tower_banished"] = { tag: "main", place: "自由城邦 · 交汇城", where: "白昼", pace: "normal",
-    text: { default: ["交汇城北头立着半截石塔基座，野藤爬满了残墙。"],
-      ifFlag: { "floating_tower_banished": ["你放逐浮空塔那件事，交汇城的老人们至今还会在茶摊上提起。塔飘走那天，全城的人站在屋顶上看，看那座塔越飞越高，最后缩成天边一个黑点。", "石塔基座上，有人用刀尖刻了一行小字：“塔走了，地还在。”你蹲下去摸了摸那行字，刀口已经磨得发亮，像是被许多人摸过。"] } },
-    options: [{ t: "（直起身，往酒馆方向走）", go: "fc_tavern" }] };
-  N["echo_floating_tower_blessed"] = { tag: "main", place: "自由城邦 · 交汇城", where: "白昼", pace: "normal",
-    text: { default: ["交汇城的酒馆门口，风灯在檐下晃着，光晕一圈一圈。"],
-      ifFlag: { "floating_tower_blessed": ["你从浮空塔上讨来的那道祝福，交汇城的占卜师们各有说法。有人说那是塔灵认了主，有人说不过是塔上法师的客套话。", "可你夜里进城时，路过那座半截塔基，塔基上落着一只灰鸽子，见你走近也不飞，歪头看了你半晌，才扑棱棱飞走。酒馆掌柜后来打趣：“那鸽子是塔上送信的吧？可惜不会说人话。”你没接话，只觉得袖口里那道祝福的印子，隔着衣料透出些暖意。"] } },
-    options: [{ t: "（推开酒馆的门，走了进去）", go: "fc_tavern" }] };
-  /* 交汇城 · 街道（watchmen_invited） */
-  N["echo_watchmen_invited"] = { tag: "main", place: "交汇城 · 街道", where: "黑夜", pace: "normal",
-    text: { default: ["入夜后的交汇城街道，更夫的梆子声从远处传来，一下，又一下。"],
-      ifFlag: { "watchmen_invited": ["守夜人邀你入伙那夜之后，你在交汇城的巷子里再没见过那些戴面具的人。可你总觉得有双眼睛在暗处跟着你——不是恶意，更像是在替你看着什么。", "有一回你深夜归城，城门口的值夜兵多看了你两眼，什么都没说就放行了。你摸到腰间那枚守夜人的铜哨，还留着。哨子没吹响过，但你知道，吹响的时候，会有人来。"] } },
-    options: [{ t: "（把铜哨贴着掌心收好，继续走）", go: "fc_streets" }] };
-  /* 交汇城 · 贫民窟（thieves_guild_member） */
-  N["echo_thieves_guild_member"] = { tag: "main", place: "交汇城 · 贫民窟", where: "白昼", pace: "normal",
-    text: { default: ["贫民窟的巷子又窄又深，晾衣绳横七竖八地搭在头顶，水滴答滴答。"],
-      ifFlag: { "thieves_guild_member": ["你入盗贼公会那阵子的事，贫民窟的老住户们看在眼里。有人见了你绕道走，也有人冲你点头——点头的，多半也是从这行当里挣过饭吃的。", "巷口补鞋的哑巴老头忽然拦你，在你靴底抹了道灰印，又指了指巷子深处。你顺着看过去，墙根下画着个极淡的记号，只有行里人才认得。你冲他抱了抱拳，他没理你，低头继续补他的鞋。"] } },
-    options: [{ t: "（记下记号的位置，离开贫民窟）", go: "fc_slums_generic" }] };
-  /* 学院山门（seraphine_substitute_promise / skip_academy 共用链） */
-  N["echo_seraphine_substitute_promise"] = { tag: "main", place: "艾尔达魔法学院 · 山门", where: "白昼", pace: "normal",
-    text: { default: ["学院的石门在雪后泛着青光，门楣上的星徽被擦得锃亮。"],
-      ifFlag: { "seraphine_substitute_promise": ["你替塞拉芬应下那个替身承诺之后，学院里的流言传了几轮。有人说你疯了，也有人把你当成某种殉道者。只有你清楚，那承诺的重量压在心里，像一块没焐热的铁。", "山门前，扫雪的杂役看见你，停下来行了个礼。他没问你在外头遇见了什么，只说：“先生，雪天路滑，进门时小心些。”你点点头，跨过门槛，雪在靴底咯吱作响。"] } },
-    options: [{ t: "（踏着雪，走进学院大门）", go: "north_academy_gate" }] };
-  N["echo_skip_academy"] = { tag: "main", place: "艾尔达魔法学院 · 山门", where: "白昼", pace: "normal",
-    text: { default: ["学院山门外的石阶上，积雪被人扫出一条窄道，露出下面的青石板。"],
-      ifFlag: { "skip_academy": ["你当年绕过学院、直接踏上大陆那件事，如今回头走回学院门口，竟有些恍惚。门房换了人，不认识你，照例问你找谁。", "你站在门口，没报当年的名字，只说路过。门房点点头，又缩回炉子边烤火去了。你在山门外站了一会儿，风从北面吹来，带着雪的味道。到底还是来了。"] } },
-    options: [{ t: "（迈进学院，权当补上一课）", go: "north_academy_gate" }] };
-  /* 兽人草原（prophecy_defied / khan_aware / oracle_fake 共用链） */
-  N["echo_prophecy_defied"] = { tag: "main", place: "兽人草原 · 圣山脚下 · 猎人小道", where: "白昼", pace: "normal",
-    text: { default: ["圣山脚下的猎人小道，兽蹄印和靴印混在一起，深深浅浅地延伸向山顶。"],
-      ifFlag: { "prophecy_defied": ["你违抗预言那件事，在草原上传得比风还快。有人骂你触怒祖灵，也有人偷偷在自家帐篷门口挂了一块辟邪的骨片，说是照你的法子求的。", "小道边的石头上，不知谁用炭笔画了只歪歪扭扭的白狼。你蹲下去看了看，画痕很新，炭灰还没被风吹散。"] } },
-    options: [{ t: "（沿着小道，往图腾林走）", go: "orc_deep_totem" }] };
-  N["echo_khan_aware"] = { tag: "main", place: "兽人草原 · 圣山 · 图腾林", where: "白昼", pace: "normal",
-    text: { default: ["图腾林里，彩绘的木柱一排排立着，风穿过柱间，发出呜呜的响声。"],
-      ifFlag: { "khan_aware": ["大汗知道你来草原的事之后，图腾林边多了几双眼睛——不是敌意，是打量。你走到哪，总有牧人的孩子远远跟着，看你像看一件从南边运来的稀罕物。", "一个老牧人拦住你，用生硬的通用语问你：“外乡人，你替我们跟大汗说了那话，图什么？”你没答，他反倒笑了，往你马鞍上挂了一袋奶干。"] } },
-    options: [{ t: "（谢过老牧人，走向黑石部族营地）", go: "orc_deep_gate" }] };
-  N["echo_oracle_fake"] = { tag: "main", place: "兽人草原 · 黑石部族营地 · 兽人集市", where: "白昼", pace: "normal",
-    text: { default: ["兽人集市上，皮货、盐巴和铁器摆了一地，讨价还价的声音此起彼伏。"],
-      ifFlag: { "oracle_fake": ["你揭穿假神谕那件事，在集市上传成了好几版。有人信你，说巫医帐里的骨头确实做过手脚；也有人骂你，说外乡人凭什么碰草原的神。", "卖盐的老萨满摊前，一个半大兽人孩子趁大人不注意，偷偷问你：“那神谕……真的是假的？”你还没答，孩子就被他娘拎着耳朵拽走了。老萨满往你手里塞了包盐，说：“盐是真的，话是不是真的，你自己尝。”"] } },
-    options: [{ t: "（把盐收好，走向巫医帐）", go: "orc_deep_witch" }] };
-  /* 大陆 · 多方战线（war_after 等场景的 purge 链已在 tm_frontline） */
-}());
+/* =========================================================================
+ * dn_echo.js — E-1/E-2 多年回响登记（超大型剧情八工程 · 工程 E）
+ * 数据：微小选择 → 多年后在场景节点带出回响句（CoG「离别礼物数年后出现」）
+ * 机制：v93e2_echoLine(node) 只读注入（见 script_03.js /e2inj:echohook/）
+ *       命中 = node.id ∈ echoAt 且 S.flags[flag] 已置 → 注入 tpl 段
+ * 铁律：只读 S.flags；不改变节点语义/选项/判定；开关 S.settings.echoLine（默认 true）
+ * 文风：V66 白描；禁 30 治理词；中文引号成对
+ * ========================================================================= */
+window.ECHO_TRACKS = [
+/* ---- 组 A · 自由城/故地回响（商人线、信物、旧选择） ---- */
+{id:"echo_merchant_saved",   flag:"merchant_saved",   echoAt:["fc_tavern","grad_roam_1","anchor_finale_1"], tpl:["那个被你从刀口下救出的皮货商人，后来逢人就说自由城有个好管闲事的年轻人。他铺子门口挂了你没要的那只鹿皮钱袋，风一吹就晃。"]},
+{id:"echo_merchant_reported",flag:"merchant_reported",echoAt:["fc_tavern","grad_roam_1"], tpl:["告发那晚的事，你早忘了细节。可自由城码头的行商们没忘——从那以后，他们看你的眼神总带着三分防备。"]},
+{id:"echo_gamble_lost",      flag:"gamble_lost",      echoAt:["fc_tavern","grad_free"], tpl:["当年赌场输掉的那把，多年后竟在某个醉汉嘴里听成了一段传奇。你没纠正。有些输，比赢更值得留着。"]},
+{id:"echo_gambler",          flag:"gambler",          echoAt:["fc_tavern","warphase_9"], tpl:["赌桌上养出来的直觉救过你几回。这世上大多数事，押注之前先看庄家脸色——那是自由城教会你的第一课。"]},
+{id:"echo_letter_taken",     flag:"letter_taken",     echoAt:["fc_tavern","grad_home_1"], tpl:["那封没送出去的信还在你行囊最底层，纸角磨得起毛。收信人是谁，你已经记不真切，只记得那天风很大。"]},
+{id:"echo_home_fc",          flag:"home_fc",          echoAt:["grad_home_1","anchor_finale_5"], tpl:["自由城邦的钟楼是你认路的标记。走得再远，夜里听见那种钟声，你还是会下意识放慢脚步。"]},
+{id:"echo_oldwolf_met",      flag:"oldwolf_met",      echoAt:["grad_roam_1","fc_tavern"], tpl:["老狼头说过，狼老了会离开狼群自己走。你后来在北境的雪地里见过一次孤狼，想起他，想起他说这话时的眼神。"]},
+{id:"echo_senlin_legend",    flag:"senlin_legend",    echoAt:["grad_roam_1","alumni_ata_1"], tpl:["森林里那段传说，你在篝火边给不下十个人讲过。每讲一次，细节就多一分。讲到最后，连你自己都分不清哪些是真的。"]},
+{id:"echo_ivy_meet",         flag:"ivy_meet",         echoAt:["grad_home_1","alumni_alice_1"], tpl:["常春藤那姑娘后来去了哪，没人知道。只记得她临别时说你欠她一杯酒。这账，你一直记着。"]},
+{id:"echo_forge_helped",     flag:"forge_helped",     echoAt:["alumni_mori_1","warphase_11"], tpl:["铁匠铺里帮过的那把火，后来烧出了几柄好刀。锻刀的人记得你，刀上的钢纹也记得——那是你亲手拉的风箱。"]},
+/* ---- 组 B · 学院/校友回响（墨丘利、塞拉芬、同学、入学） ---- */
+{id:"echo_mercury_protege",  flag:"mercury_research_assistant", echoAt:["grad_ceremony","alumni_elena_1"], tpl:["墨丘利教授的研究笔记里，有一页专门记着你的名字。他从不夸人，只在你离开后，把那页折了角。"]},
+{id:"echo_mercury_rejected", flag:"mercury_note_rejected", echoAt:["grad_ceremony","alumni_alice_1"], tpl:["那封退回的纸条，墨丘利收在讲台抽屉里。多年后整理旧物的人发现，纸上的字迹已经淡得几乎看不见。"]},
+{id:"echo_mercury_hurt",     flag:"mercury_hurt_deeply", echoAt:["grad_ceremony"], tpl:["你伤过墨丘利一次。他说重话时脸是平静的，可手一直在抖。那之后他再没让你进过他的私人书房。"]},
+{id:"echo_seraphine_name",   flag:"seraphine_name_volunteered", echoAt:["grad_ceremony","alumni_cecy_1"], tpl:["塞拉芬的名字是你取的。她后来在信里说，这是她这辈子收到的头一件像样的礼物。信末落款处画了只歪歪扭扭的鸟。"]},
+{id:"echo_admission_done",   flag:"admission_done",   echoAt:["grad_ceremony","north_academy_gate"], tpl:["入学那天的雪很大。你站在学院山门前，雪落在肩头，把新发的校徽盖了一层白。如今徽章上的珐琅已经磨掉了漆。"]},
+{id:"echo_feel_note_done",   flag:"feel_note_done",   echoAt:["grad_choice","alumni_alice_1"], tpl:["那首写在纸背上的小诗，你在毕业前夜塞进了图书馆某本书里。不知后来谁翻到了它，只听说书页间夹着的那页，折痕特别深。"]},
+{id:"echo_classmate_cecilia",flag:"classmate_cecilia_alive", echoAt:["alumni_cecy_1","grad_farewell"], tpl:["塞西莉娅还活着。这个消息在你心里搁了许多年，每次想起，都像按住一道旧伤——不疼，但你知道它在。"]},
+{id:"echo_classmate_alex",   flag:"classmate_alex_alive", echoAt:["alumni_rock_1","grad_farewell"], tpl:["亚历克斯后来在信里说，那天要是没有你，他可能走不出那条巷子。信纸上有水渍，他说是下雨。"]},
+{id:"echo_classmate_mary",   flag:"classmate_mary_alive", echoAt:["alumni_ata_1","grad_farewell"], tpl:["玛丽学会用左手写字了。她说右手再也拿不起笔的时候，想起了你当年教她的那句话——路不止一条。"]},
+{id:"echo_awakening_done",   flag:"awakening_done",   echoAt:["grad_ceremony","north_library"], tpl:["觉醒那夜的光，你记了很多年。图书馆的灯火、指尖的灼热、还有窗外那棵老树投下的影子——它们都还在原地。"]},
+{id:"echo_origin_profile",   flag:"origin_profile_done", echoAt:["grad_home_1","anchor_finale_6"], tpl:["你出发那天，村里人送你的干粮袋早就空了。可袋子上那根系口绳，你还留着，磨得发亮。"]},
+{id:"echo_darkcult_evidence",flag:"darkcult_evidence", echoAt:["grad_army_3","warphase_6"], tpl:["暗教那份名单，你抄过一份藏在身上。多年后它成了某些人谋生的凭据，而你始终没说这东西打哪儿来。"]},
+{id:"echo_darkcult_slain",   flag:"darkcult_captain_slain", echoAt:["warphase_6","warphase_14"], tpl:["暗教船长死在你手里的那晚，甲板上的火光照得海面通红。那场火后来被编进歌谣，唱到第三段就把你写成了英雄。"]},
+{id:"echo_soul_exposed",     flag:"soul_exposed",     echoAt:["grad_ceremony","alumni_elena_1"], tpl:["灵魂暴露的事，知情者寥寥。但每次有人盯着你多看两眼，你都会想起那面照出底细的镜子。"]},
+{id:"echo_church_wanted",    flag:"church_wanted",    echoAt:["grad_holy","warphase_3"], tpl:["教会通缉你的告示贴过半个圣城。后来风头过去，告示被人揭走，据说拿去垫了锅。你倒希望那是真的。"]},
+{id:"track_east_wanted",     flag:"east_wanted",      echoAt:["grad_home_3","warphase_4"], tpl:["东境的通缉文书你见过一眼，画像画得不像。可悬赏数字你记得——那大概是东境人给过你的最高评价。"]},
+/* ---- 组 C · 战争回响（北境、银穗、兽人、铁门关） ---- */
+{id:"echo_north_intel",      flag:"north_intel_done", echoAt:["warphase_3","warphase_10"], tpl:["北境那份情报，是你用一匹马换来的。后来战局几次翻转，都绕着那页纸上的地名打转。"]},
+{id:"echo_silver_invite",    flag:"silver_invite",    echoAt:["warphase_5","grad_army_2"], tpl:["银穗商路那次邀请，你最终没赴约。可对方记了你的好，每逢开战，总有人替你传一句口信——银穗欠你一次。"]},
+{id:"echo_beijing_saved",    flag:"beijing_saved",    echoAt:["warphase_7","grad_home_4"], tpl:["你救下的那座边城，城墙上如今刻着守城将士的名字。第一个名字是别人的，但城中老人说，该刻的另有其人。"]},
+{id:"echo_helped_fugitive",  flag:"helped_fugitive",  echoAt:["warphase_8","grad_army_4"], tpl:["那个你藏过的逃兵，后来成了铁门关有名的排长。他每逢酒醉就讲当年有个陌生人救了他，讲得眉飞色舞。"]},
+{id:"echo_mysterious_elder", flag:"mysterious_elder", echoAt:["warphase_10","anchor_oracle_1"], tpl:["神秘老者说过的话，你在战场上应验过三次。每次都应验在他预言的位置——可你再也没见过他。"]},
+{id:"echo_seal2_khan_dead",  flag:"seal2_khan_dead",  echoAt:["warphase_12","alumni_ata_1"], tpl:["可汗死后的那几年，草原乱了又平。你见过新可汗点兵，阵势齐整，可再也没有当年那种让大地发抖的脚步声。"]},
+{id:"echo_seal2_khan_alive", flag:"seal2_khan_alive", echoAt:["warphase_12","alumni_ata_1"], tpl:["老可汗还活着。他托人带过一句话给你——草原记得你的名字。带话的人说，可汗说这话时，手里握着那柄旧弯刀。"]},
+{id:"echo_seal3_queen",      flag:"seal3_queen_freed",echoAt:["warphase_13","alumni_elena_1"], tpl:["精灵女王重获自由那日，林海下了整夜细雨。雨停后，精灵们把她的名字刻回古树上，字迹新得像刚发芽。"]},
+{id:"echo_east_blacksmoke",  flag:"east_blacksmoke",  echoAt:["warphase_4","grad_home_4"], tpl:["东境的黑烟，你在梦里又见过一次。醒来后你记不清是哪座城，只记得烟里混着铁锈和焦木的气味。"]},
+{id:"echo_eclipse_infiltrator", flag:"eclipse_infiltrator", echoAt:["warphase_14","anchor_finale_4"], tpl:["蚀组织把你当自己人用了好几年。你离开那天，他们给的名册上，你的代号后面画了个问号。"]},
+{id:"echo_eclipse_kill",     flag:"eclipse_kill_success", echoAt:["warphase_14","anchor_finale_5"], tpl:["那次刺杀之后，你的名字进了某些人的黑账。你从不提那晚，可每次听见刀出鞘的声音，手指都会先于意识绷紧。"]},
+/* ---- 组 D · 终局/七锚/神谕回响 ---- */
+{id:"echo_god_favor",        flag:"god_favor",        echoAt:["anchor_finale_1","anchor_oracle_1"], tpl:["神明眷顾过你一次。那之后你总在午夜醒来，觉得窗外的风里站着谁，站了很久，又走了。"]},
+{id:"echo_rexa_vow",         flag:"rexa_vow",         echoAt:["anchor_finale_4","anchor_chen_1"], tpl:["雷克萨的誓言，你在城墙上听他立过。多年后他成了守城人，而誓言像一道旧疤，长进了这座城的砖缝里。"]},
+{id:"echo_cecilia_secret",   flag:"cecilia_secret",   echoAt:["anchor_finale_4","anchor_chen_4"], tpl:["塞西莉娅的秘密，你替她守了半生。晨天故都的地砖下压着的东西，你只在那夜见过一次，之后连方向都没再辨过。"]},
+{id:"echo_elara_ally",       flag:"elara_ally",       echoAt:["anchor_finale_2","alumni_elena_1"], tpl:["伊莱拉成了你在这片大陆上最稳的一条线。她传信从不用暗语，因为她知道你看得懂她的字迹。"]},
+{id:"echo_thorin_ally",      flag:"thorin_ally",      echoAt:["anchor_finale_2","alumni_mori_1"], tpl:["索林那锤子，你帮忙抡过一回。后来他打的兵器上都留了个不起眼的记号，说是给你的回礼。"]},
+{id:"echo_luna_accepted",    flag:"luna_accepted",    echoAt:["anchor_finale_3","alumni_ata_1"], tpl:["露娜接纳你那天，月下的湖面很静。她没说话，只把一枚狼牙放在你掌心——那是草原上最重的信物。"]},
+{id:"echo_kai_accepted",     flag:"kai_accepted",     echoAt:["anchor_finale_3","alumni_rock_1"], tpl:["凯的拥抱撞得你肋骨发疼。他说从今天起，你就是他的兄弟。后来他在信里叫了你七年哥。"]},
+{id:"echo_sophia_awakened",  flag:"sophia_awakened",  echoAt:["anchor_finale_3","alumni_alice_1"], tpl:["索菲娅觉醒那夜，学院塔楼的窗全亮了。她隔窗冲你喊了一句什么，被风卷走了，你没听清，但一直记得那个轮廓。"]},
+{id:"echo_felix_ally",       flag:"felix_ally",       echoAt:["anchor_finale_2","grad_army_1"], tpl:["费利克斯欠你一次救命之恩。他把这事记在佩剑的剑鞘内衬上，说剑在，债在。"]},
+{id:"echo_aria_fear",        flag:"aria_fear",        echoAt:["anchor_finale_3","alumni_elena_1"], tpl:["阿丽亚怕过你。那点怕意后来被时间磨平，可她见你时眼里的光，总比见别人时收着三分。"]},
+{id:"echo_dragon_bonded",    flag:"dragon_bonded",    echoAt:["anchor_finale_4","anchor_finale_6"], tpl:["龙选择你那年，你才明白什么叫'被记住'。它记得你的气味、你的心跳，还有你第一次摸它鳞片时手抖的样子。"]},
+{id:"echo_dragon_trust",     flag:"dragon_trust",     echoAt:["anchor_finale_4"], tpl:["龙的信任像山，给出去就收不回。它在高空盘旋等你的时候，影子落在地上，比任何旗帜都醒目。"]},
+{id:"echo_giant_friend",     flag:"giant_friend",     echoAt:["anchor_finale_4","warphase_13"], tpl:["巨人把你举到肩上看过日落。从那以后，你对'高处的风'有了不同的理解——那是巨人眼里的世界。"]},
+{id:"echo_seal1_repaired",   flag:"seal1_repaired",   echoAt:["anchor_finale_4","anchor_mine_1"], tpl:["第一道封印是你亲手修好的。石料合拢那刻，地脉的震颤停了一瞬，像大地在应答。"]},
+{id:"echo_seal5_fixed",      flag:"seal5_fixed",      echoAt:["anchor_finale_4"], tpl:["第五道封印补上的时候，你听见极深极远的地方传来一声叹息。没人信你，可那声音在你耳朵里住了很多年。"]},
+{id:"echo_seal6_sacrifice",  flag:"seal6_sacrifice",  echoAt:["anchor_finale_4","anchor_chen_5"], tpl:["第六道封印是用代价换的。你从来没对人说过代价是什么，只是每次经过那座祭坛，都会绕路。"]},
+{id:"echo_v50_merchant_scale", flag:"v50_商人_金秤学徒", echoAt:["anchor_finale_5","anchor_finale_6"], tpl:["金秤学徒的名号，你担了半生。商人们敬你，也怕你——因为你心里那杆秤，从不为谁倾斜。"]},
+{id:"echo_v50_priest_crown", flag:"v50_牧师_加冕",    echoAt:["anchor_finale_5"], tpl:["加冕那天的钟声，圣城响了九十九下。你戴冠时手很稳，可后来你总梦见那顶冠掉在雪地里。"]},
+{id:"echo_v50_knight_oath",  flag:"v50_骑士_旧誓",    echoAt:["anchor_finale_5","warphase_14"], tpl:["旧日誓言你还背得出来。每次战前念它，都像在念自己的名字——时间久了，誓言和人就分不开了。"]},
+{id:"echo_v50_mage_truth",   flag:"v50_法师_神陨真相", echoAt:["anchor_finale_5","north_library"], tpl:["神陨的真相你查到了，可那真相像一块烧红的铁，握不住也放不下。你把它写进书里，又在最后一页犹豫了整夜。"]},
+{id:"echo_v50_warrior_flag", flag:"v50_战士_战旗七战", echoAt:["anchor_finale_5","warphase_14"], tpl:["那面战旗跟了你七场硬仗。第七场之后，你把它卷起来收进箱底——旗上的弹孔比星星还密。"]},
+{id:"echo_v50_ranger_forest",flag:"v50_游侠_与林同在", echoAt:["anchor_finale_5","alumni_elena_1"], tpl:["你答应过森林的事，一件都没忘。林间的路认得你的脚印，风替你记着那些没说出口的诺言。"]},
+{id:"echo_v50_rogue_light",  flag:"v50_盗贼_影入光",  echoAt:["anchor_finale_5","grad_free"], tpl:["从影子里走到光下的那天，你花了很多年。如今你走在大街上，影子还是比你慢半步——它在等你回头。"]},
+{id:"echo_v50_sorc_seed",    flag:"v50_术士_留下火种", echoAt:["anchor_finale_5","north_library"], tpl:["你留下的火种，后来在学院的旧壁炉里烧了好几个冬天。接过火的人不认识你，但记得你留的话。"]},
+{id:"echo_v50_soul_legis",   flag:"v50_灵法_灵界立法", echoAt:["anchor_finale_5","anchor_chen_6"], tpl:["灵界的律法是你立的头几条。立完那夜，亡灵们排队从你门前过，没有一只开口——那是它们能给的最高敬意。"]},
+/* ---- 组 E · 七锚/晨天/帝国回响 ---- */
+{id:"echo_medici_heir",      flag:"medici_heir",      echoAt:["anchor_chen_1","alumni_cecy_1"], tpl:["梅迪奇家的继承人身份，你揣了很久。晨天故都的老人们提起梅迪奇，眼神里有敬畏，也有别的东西——你没细问。"]},
+{id:"echo_ivy_seen",         flag:"ivy_seen",         echoAt:["anchor_chen_2","alumni_cecy_1"], tpl:["晨天的城墙上爬满常春藤。你每次看见它，都会想起那个也叫常春藤的人，想起她说过的一句没头没尾的话。"]},
+{id:"echo_watched",          flag:"watched",          echoAt:["anchor_chen_3","anchor_finale_1"], tpl:["你知道有人在看你。那种被注视的感觉像一根细线，牵着你的后颈，从晨天一直跟到雪原。"]},
+{id:"echo_mercury_crack",    flag:"mercury_crack_seen_deep", echoAt:["anchor_finale_4","north_library"], tpl:["墨丘利看到的裂隙，你也看到了。那裂缝比所有人以为的都深——深到能听见另一头有东西在呼吸。"]},
+{id:"echo_eclipse_contacted",flag:"eclipse_contacted", echoAt:["anchor_finale_4","warphase_14"], tpl:["蚀组织接触你的那次会面，在第七码头一间仓库里。桌上只有一盏灯和一张地图，地图上画着七个点。"]},
+{id:"echo_owns_airship",     flag:"owns_airship",     echoAt:["anchor_finale_2","warphase_8"], tpl:["那艘飞空艇，你给它取的名字至今没人念对过。它老得叮当响，可每次升空，你还是会站到船头去。"]},
+{id:"echo_dragon_found",     flag:"dragon_found",     echoAt:["anchor_finale_2","alumni_rock_1"], tpl:["找到龙的那天，山里的雾散得特别快。龙从雾里走出来，像一堵移动的墙，而你居然没躲。"]},
+{id:"echo_giant_found",      flag:"giant_found",      echoAt:["anchor_finale_2","warphase_13"], tpl:["巨人坐在山谷里等了你三天。它说有人告诉它，会有一个背旧剑的人来。那个人是你。"]},
+{id:"echo_seal1_visited",    flag:"seal1_visited",    echoAt:["anchor_mine_1","anchor_finale_4"], tpl:["第一道封印旧址，你回去看过一次。石头上你当年刻的记号还在，被风磨浅了，但还认得出。"]},
+{id:"echo_desert_visited",   flag:"desert_visited",   echoAt:["anchor_mine_1","grad_roam_2"], tpl:["沙漠你去过一次，沙子就记住了你的脚印。后来有人在那片沙里捡到过一枚刻着你名字的铜牌，问遍商队没人认领。"]},
+{id:"echo_merchant_pressed", flag:"mercury_pressed_too_hard", echoAt:["grad_ceremony"], tpl:["你把墨丘利逼得太紧的那回，他说了句'够了'。那两个字后来在你耳边响过很多次，每次都比上一次响。"]},
+/* ---- 组 F · 学院专精/日常回响（v51 分支 + 情感） ---- */
+{id:"echo_mage_elemental",   flag:"v51_魔法师_elemental_1", echoAt:["grad_ceremony","north_library"], tpl:["元素课第一节，导师让你把火苗捧在掌心。你练到指尖起泡才学会。如今你随手就能点起一堆篝火，可总记得第一次的烫。"]},
+{id:"echo_mage_arcane",      flag:"v51_魔法师_arcane_1", echoAt:["grad_ceremony","north_library"], tpl:["奥术的纹路在你眼里已经成了第二语言。你读魔法书不用逐字看，扫一眼就知道这页有没有陷阱。"]},
+{id:"echo_soul_medium",      flag:"v51_灵魂法师_medium_1", echoAt:["grad_ceremony","anchor_chen_6"], tpl:["通灵人这行当，你入行是因为好奇。后来你发现，听见亡者说话不难，难的是替他们保守秘密。"]},
+{id:"echo_soul_soulbinder",  flag:"v51_灵魂法师_soulbinder_1", echoAt:["grad_ceremony","anchor_finale_5"], tpl:["缚魂术教你明白了一件事：灵魂的重量比羽毛轻，比山重。你给不少人系过最后一根线，也剪断过。"]},
+{id:"echo_sorc_alchemist",   flag:"v51_术士_alchemist_1", echoAt:["grad_ceremony","alumni_mori_1"], tpl:["炼金炉的火焰你看了十年。这行当教会你耐心——有的东西要烧够时辰，早了晚了都不成。"]},
+{id:"echo_sorc_selfproof",   flag:"v50_术士_自证",    echoAt:["anchor_finale_5","grad_ceremony"], tpl:["自证那场试炼，你赢得并不漂亮，但很彻底。从那以后没人再拿你的出身说事——他们改说你的手段。"]},
+{id:"echo_soul_formal",      flag:"v50_灵法_要正式",  echoAt:["anchor_finale_5","grad_ceremony"], tpl:["你坚持要个正式名分那回，灵界的长老们沉默了很久。最后他们给了，却没说这决定重不重要。"]},
+{id:"echo_mage_freescholar", flag:"v50_法师_自由学者", echoAt:["anchor_finale_5","north_library"], tpl:["自由学者的日子清苦，但你从不后悔。没人管你的书单，也没人管你的研究方向——那比什么都值钱。"]},
+{id:"echo_priest_noct",      flag:"v50_牧师_光照无祷", echoAt:["anchor_finale_5","grad_holy"], tpl:["不祷告也能引来光，这件事你自己琢磨了很久。后来你明白了：光本来就不挑人。"]},
+{id:"echo_knight_humanlock", flag:"v50_骑士_人即锁",  echoAt:["anchor_finale_5","warphase_14"], tpl:["你把誓言系在人身上，而不是教条上。这让你在骑士团里显得格格不入，也让你在战场上从没丢过一个人。"]},
+{id:"echo_warrior_flagonly", flag:"v50_战士_旗不孤",  echoAt:["anchor_finale_5","warphase_14"], tpl:["战旗不孤——这是你后来才懂的话。旗在人在，旗倒人散。你保住了那面旗，也保住了跟着旗走的人。"]},
+{id:"echo_ranger_path",      flag:"v50_游侠_林是路",  echoAt:["anchor_finale_5","alumni_elena_1"], tpl:["林是路，不是墙。你年轻时总想穿过它，后来学会沿着它走，再后来，你成了路的一部分。"]},
+{id:"echo_rogue_shadow",     flag:"v50_盗贼_影同行",  echoAt:["anchor_finale_5","grad_free"], tpl:["影子陪了你很多年。你学会不讨厌它、不甩掉它，后来还学会了让影子替你办事。"]},
+{id:"echo_merchant_fair",    flag:"v50_商人_先守后分", echoAt:["anchor_finale_5","anchor_finale_6"], tpl:["先守住，再分——这是金秤教你的第一课。你守着守着，发现'分'比'守'难得多。"]},
+/* ---- 组 G · 中立状态回响（线索/盟约类，触发条件宽松） ---- */
+{id:"echo_cooperated",       flag:"cooperated",       echoAt:["warphase_8","grad_army_4"], tpl:["你配合过的那次行动，事后没人提过你的名字。但领队的人在战后给你的信里写了句：记你一功。"]},
+{id:"echo_watcher_invited",  flag:"watcher_invited",  echoAt:["anchor_chen_3","anchor_finale_4"], tpl:["守望者邀请过你。你没答应，也没拒绝——只是把那个徽章收进了贴身的袋子里。"]},
+{id:"track_giant_helper",    flag:"giant_helper",     echoAt:["anchor_finale_2","warphase_13"], tpl:["你帮过巨人一次。巨人的记性比传说中好得多——它记得你的声音，隔老远就能认出来。"]},
+{id:"echo_dragon_near",      flag:"dragon_near",      echoAt:["anchor_finale_2"], tpl:["龙在附近的时候，空气里有股硫磺和松脂混在一起的气味。你隔着山头就能闻到，然后心跳会快半拍。"]},
+{id:"echo_medici_eclipse_suspect", flag:"medici_eclipse_suspect", echoAt:["anchor_chen_2","anchor_finale_4"], tpl:["梅迪奇和蚀组织之间那点牵连，你查过一阵就停了。有些线，扯到头会扯出一整匹布来。"]},
+{id:"echo_mercury_impressed",flag:"mercury_impressed_by_intellect", echoAt:["grad_ceremony","north_library"], tpl:["墨丘利当众说过一次你聪明。就那一次，他后来不承认，可你记得他说话时点了一下头。"]},
+{id:"track_mercury_disappointed", flag:"mercury_disappointed", echoAt:["grad_ceremony"], tpl:["墨丘利失望的时候不说话，只把眼镜摘下来擦。你见过两次，每次都觉得比挨骂还难受。"]},
+{id:"echo_sector_lord",      flag:"sector_lord_encounter", echoAt:["warphase_7","grad_home_3"], tpl:["那个区块领主，你见过他一面。他看人的眼神像在称斤两——你当时就觉得，这人迟早会栽在秤上。"]}
+];

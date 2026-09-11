@@ -56,6 +56,8 @@ function applyDefaults(s){
     if(!s.settings.npcWeave) s.settings.npcWeave=true; /* W-N3 NPC 状态回指（默认开，旧档兜底） */
   /* /v92inj:defaults/ TQ-1 天气句开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.weatherLine===undefined) s.settings.weatherLine=true;
+  /* /e2inj:defaults/ E-2 多年回响开关兜底（旧档兼容；独立键默认 true） */
+  if(s.settings.echoLine===undefined) s.settings.echoLine=true;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.originProfile===undefined) s.settings.originProfile=true;
   /* /upg01inj:defaults/ UPG-01 世界书开关兜底（旧档兼容；独立键默认 true） */
@@ -5038,6 +5040,31 @@ function writeNext(_v46f){
     try{ var _ws = window.v93_worldEcho(node); if(_ws&&_ws.length){ _txt=_txt.concat(_ws); } }catch(e){}
     /* /v93npc:hook/ NM-6 NPC 记忆回指（只读注入；开关 S.settings.npcMemory） */
     try{ var _npc = window.v93_npcMemoryHook(node); if(_npc&&_npc.length){ _txt=_txt.concat(_npc); } }catch(e){}
+    /* /e2inj:echohook/ E-2 多年回响注入（只读钩子；echoAt 命中+flag 置位→带出回响句；开关 S.settings.echoLine；同节点同 flag 会话内一次） */
+    try{ var _ec = window.v93e2_echoLine(node); if(_ec&&_ec.length){ _txt=_txt.concat(_ec); } }catch(e){}
+    /* ===== /e2inj:fn/ E-2 多年回响引擎（只读；数据源 window.ECHO_TRACKS；不写任何状态） ===== */
+    window.v93e2_echoLine = function(node){
+      try{
+        if(!S || !S.settings || S.settings.echoLine===false) return null;
+        var nid = (node && node.id) ? String(node.id) : (typeof curNode!=="undefined" && curNode ? String(curNode) : null);
+        if(!nid) return null;
+        var E = window.ECHO_TRACKS || [];
+        if(!E || !E.length) return null;
+        if(!window.__e2done) window.__e2done = {};
+        var out = [];
+        for(var i=0;i<E.length;i++){
+          var e = E[i];
+          if(!e || !e.flag || !e.echoAt || e.echoAt.indexOf(nid)<0) continue;
+          if(!S.flags || !S.flags[e.flag]) continue;
+          var k = nid + "::" + e.flag;
+          if(window.__e2done[k]) continue;
+          window.__e2done[k] = 1;
+          if(e.tpl && e.tpl.length){ out.push(e.tpl[(S.day||0) % e.tpl.length]); }
+          if(out.length>=2) break;
+        }
+        return out;
+      }catch(err){ return null; }
+    };
     if(window.v45_shouldPaginate(node)){
       try{ window.v67_busyClear(); }catch(e){} /* 分页节点无选项，立即解锁防死锁 */
       window.__v45ctx={node:node,txt:_txt,page:0};

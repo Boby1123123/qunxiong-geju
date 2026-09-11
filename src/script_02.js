@@ -1076,7 +1076,8 @@ N["arrive_north_beijing"] = {tag:"main",
 
     {t:"先落脚，接点活计",go:"board_north"}
 
-  ]
+  ,
+    {t:"（先不急着动身——在北境城里走走，听听雪原上的风声）",go:"beijing_life2_01"}]
 
 };
 

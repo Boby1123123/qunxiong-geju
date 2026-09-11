@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9581087,
+    "game_html_bytes_max": 9646919,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5071,
+    "node_total_min": 5111,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9531087,
-    "chunked_html_bytes": 6714863,
-    "node_total": 5121,
+    "game_html_bytes": 9596919,
+    "chunked_html_bytes": 6780696,
+    "node_total": 5161,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-4 自由城市井12+李管事支线8+铁门关市井10+事件+20",
+    "reason": "CP-5 四地域深写40节点+事件+25（承天/绿洲/圣辉/北境，七锚秤线织网）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1314,6 +1314,13 @@
         "chunked_bytes": 6714863,
         "nodes": 5121,
         "reason": "CP-4 自由城市井12+李管事支线8+铁门关市井10+事件+20"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9596919,
+        "chunked_bytes": 6780696,
+        "nodes": 5161,
+        "reason": "CP-5 四地域深写40节点+事件+25（承天/绿洲/圣辉/北境，七锚秤线织网）"
       }
     ]
   },

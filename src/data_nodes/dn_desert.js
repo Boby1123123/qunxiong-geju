@@ -21,7 +21,8 @@ N["arrive_desert_lvzhou"] = {
       crit:["你打听到更深处：那口井不是枯了，是『见了底下的东西』——打水的工人说，第三天夜里，井底露出半块石板，石板上刻着花纹，像某种古老的封印。「工人吓得不敢再打。可第二天，井水就回来了——只回来一半。」","「封印。」你想起黑沙区那条石路。这座城，底下也压着什么。"]
     },effects:{xp:25,infl:{desert:3}},go:"desert_lvzhou_market"},
     {t:"不逗留，去驼队驿站休整",go:"desert_tuoduo_inn"}
-  ]
+  ,
+    {t:"（先不急着赶路——在绿洲城里走走，听听沙海里的消息）",go:"desert_life2_01"}]
 };
 N["desert_lvzhou_market"] = {
   tag:"branch",

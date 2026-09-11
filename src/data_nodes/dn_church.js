@@ -20,7 +20,8 @@ N["arrive_church_tribunal"] = {
       fail:["执事没有放行：「净化令期间，非召不见。」你碰了钉子，退出来，另寻出路。"],
       crit:["你不仅见到大审判长，还从他对面那叠卷宗里，瞥见一个名字：『银月商会』。「你在看这个？」大审判长不动声色地把卷宗翻过去，「净化令查的是异端，不是商会。」他顿了顿，「至少，现在不是。」"]
     },effects:{xp:30,infl:{church:5}},fail:"failpath_tribunal_1",go:"church_resist"}
-  ]
+  ,
+    {t:"（先不急着应对——在圣辉城里走走，看看这座白城的深浅）",go:"church_life2_01"}]
 };
 N["church_hide"] = {
   tag:"branch",

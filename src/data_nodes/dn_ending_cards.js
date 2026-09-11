@@ -1,0 +1,42 @@
+/* N-4 结局卡牌册（图鉴"结局"tab 增强数据层）
+ * 纯数据 + 只读渲染，不参与任何判定；卡 id 与 ENDINGS / ending_anchor_* 键对应。
+ * conds 仅用于图鉴显示解锁线索（属性/flag/立场/关系组合），非判定公式。
+ */
+window.ENDING_CARDS = [
+  {id:"seal", cn:"封门人", ic:"🚪", hint:"在深渊神殿前，亲手把门重新关上。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"goldscale_final"}]},
+  {id:"hero", cn:"群山回响", ic:"🏔", hint:"带着线索与铁牌回到文明世界，让各方的视线落在封印上。",
+   conds:[{type:"flag",key:"silver_route"},{type:"flag",key:"led_anchor_03"}]},
+  {id:"legend", cn:"传奇之路", ic:"⭐", hint:"走到传奇境界，让吟游诗人开始传唱你的名字。",
+   conds:[{type:"attr",k:"realm",min:8},{type:"stance",axis:"honor",min:6}]},
+  {id:"myth", cn:"神话之姿", ic:"🌌", hint:"超脱凡俗，以不可测之身俯瞰人间。",
+   conds:[{type:"attr",k:"realm",min:10},{type:"stance",axis:"god",min:8}]},
+  {id:"merchant", cn:"商海沉浮", ic:"⚖", hint:"以契约丈量人心，用黄金撬动国运。",
+   conds:[{type:"attr",k:"gold",min:3000},{type:"stance",axis:"altru",max:-4}]},
+  {id:"fell", cn:"堕落之途", ic:"🜋", hint:"在深渊的低语面前，交出自己。",
+   conds:[{type:"flag",key:"abyss_touched"},{type:"stance",axis:"faith",max:-8}]},
+  {id:"madness", cn:"疯狂真相", ic:"🌀", hint:"把世界的秘密一页一页翻出来，直到自己成为秘密的一部分。",
+   conds:[{type:"flag",key:"truth_revealed"},{type:"stance",axis:"trad",max:-6}]},
+  {id:"purge", cn:"净化令下", ic:"🕯", hint:"站在教会的一边，或成为净化令余波的一部分。",
+   conds:[{type:"flag",key:"purge_done"},{type:"stance",axis:"faith",min:6}]},
+  {id:"pact", cn:"誓约之重", ic:"🤝", hint:"与某个人立下无法背弃的誓约，并真的守到底。",
+   conds:[{type:"rel",npc:"ferman",min:80},{type:"flag",key:"oath_made"}]},
+  {id:"east", cn:"东境之书", ic:"🏯", hint:"把东境的答案带回应许之地，或把东境的秘密带进土里。",
+   conds:[{type:"flag",key:"chen_route"},{type:"rel",npc:"cecy",min:60}]},
+  {id:"godfavor", cn:"神眷之人", ic:"✨", hint:"让圣光真正看见你——或让某个更古老的存在看见你。",
+   conds:[{type:"stance",axis:"faith",min:10},{type:"flag",key:"god_touched"}]},
+  {id:"returned", cn:"归来者", ic:"🏠", hint:"走出很远之后，仍然回到出发的地方。",
+   conds:[{type:"flag",key:"returned_home"},{type:"rel",npc:"millian",min:40}]},
+  {id:"wanderer", cn:"行者无疆", ic:"🧭", hint:"不属于任何一方，只属于脚下的路。",
+   conds:[{type:"stance",axis:"order",max:-6},{type:"stance",axis:"trad",max:-4}]},
+  {id:"ending_anchor_seal", cn:"守门人", ic:"🗝", hint:"七锚齐鸣，你选择把门守住。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"anchor_choice_seal"}]},
+  {id:"ending_anchor_open", cn:"混沌纪元", ic:"🌋", hint:"七锚齐鸣，你选择打开那扇门。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"anchor_choice_open"}]},
+  {id:"ending_anchor_transcend", cn:"超脱归位", ic:"☄", hint:"七锚齐鸣，你选择越过门本身。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"anchor_choice_transcend"}]},
+  {id:"ending_anchor_war", cn:"战争终局", ic:"⚔", hint:"在战争的终章，让锚与剑一起落下。",
+   conds:[{type:"flag",key:"war_over"},{type:"flag",key:"led_anchor_07"}]},
+  {id:"ending_anchor_goldscale", cn:"金秤传承", ic:"🏛", hint:"让金秤的名字，从守望者变成传灯人。",
+   conds:[{type:"flag",key:"goldscale_final"},{type:"flag",key:"goldscale_heir"}]}
+];

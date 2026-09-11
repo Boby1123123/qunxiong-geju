@@ -30188,6 +30188,14 @@ function applyDefaults(s){
   /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
   if(s.settings.worldEcho===undefined) s.settings.worldEcho=true;
   if(!s.worldState) s.worldState={};
+  /* /n1inj:defaults/ N-1 立场系统兜底（旧档兼容；独立键空对象） */
+  if(!s.stance) s.stance={};
+  /* /n5inj:defaults/ N-5 五维关系兜底（旧档兼容；独立键空对象） */
+  if(!s.rel5) s.rel5={};
+  /* /n7inj:defaults/ N-7 天赋连锁兜底（旧档兼容；独立键空对象） */
+  if(!s.comboFlags) s.comboFlags={};
+  /* /n8inj:defaults/ N-8 情绪连续性兜底（旧档兼容；独立键空对象） */
+  if(!s.mood) s.mood={trauma:0,relief:0,obsession:0};
   /* /g1inj:defaults/ G-1 伤口系统兜底（旧档兼容；独立键空数组） */
   if(!s.wounds) s.wounds=[];
   /* /g2inj:defaults/ G-2 技能熟练度兜底（旧档兼容；独立键空对象） */
@@ -30354,6 +30362,8 @@ function applyEffects(eff,label){
   if(typeof eff.book==="function") eff.book = eff.book() || null;
   const add = (v,unit,pos) => { if(v!==0) lines.push((v>0?"+":"")+v+unit); };
   if(eff.gold){S.gold+=eff.gold; add(eff.gold,"金币",eff.gold>0);}
+  /* /n1inj:eff/ N-1 立场结算（只加结算，不动判定） */
+  if(eff.stance && eff.stance.axis){ if(!S.stance) S.stance={}; S.stance[eff.stance.axis]=(S.stance[eff.stance.axis]||0)+(eff.stance.v||0); }
   if(eff.prog && eff.prog.sk){ if(!S.skillProg) S.skillProg={}; var _p=S.skillProg[eff.prog.sk]||{lvl:1,xp:0}; _p.xp=(_p.xp||0)+(eff.prog.v||1); while(_p.xp>=_p.lvl*10){_p.xp-=_p.lvl*10;_p.lvl++;} S.skillProg[eff.prog.sk]=_p; }
   if(eff.xp){S.xp=Math.max(0,S.xp+eff.xp); add(eff.xp,"修为");}
   if(eff.hp){S.hp=Math.max(0,Math.min(maxHp(),S.hp+eff.hp)); add(eff.hp,"生命",eff.hp>0);}
@@ -33638,6 +33648,7 @@ window.v45_unlockReading=unlockReading;
         if(!R[id]){ try{ v44_pushToast&&v44_pushToast('藏书阁','此卷尚未收录','warn','⚠️'); }catch(e){} return; }
         var r=R[id];
         var txt=Array.isArray(r.text)?r.text:[r.text];
+        if(r.page && window.v93n6_readBook){ window.v93n6_readBook(id); return; }
         var body='<div class="panel-wrap" style="max-width:640px;max-height:80vh;display:flex;flex-direction:column">'
           +'<div class="panel-header"><span class="panel-title">📜 '+R_TYPE_CN[r.type]+' · '+String(r.title).replace(/</g,'&lt;')+'</span><button class="panel-close" onclick="closePanel()">✕</button></div>'
           +'<div class="panel-body" id="v45-read-body" style="flex:1;overflow-y:auto;line-height:1.9;font-size:var(--fs-body)">';
@@ -35107,6 +35118,22 @@ function writeNext(_v46f){
     }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
+    /* /n1inj:stance/ N-1 立场感知句注入（只读；无立场时不注入） */
+    try{ var _st = window.v93n1_stanceLine ? window.v93n1_stanceLine() : null; if(_st){ _txt.push(_st); } }catch(e){}
+    /* /n2inj:dialmem/ N-2 对话级记忆注入（只读；同日节流一次） */
+    try{ var _dm = window.v93n2_dialogueLine ? window.v93n2_dialogueLine() : null; if(_dm && (!S || S._lastDmDay!==S.day)){ if(S) S._lastDmDay=S.day; _txt.push(_dm); } }catch(e){}
+    /* /n3inj:echo/ N-3 结局回响注入（仅 ending 节点；只读） */
+    try{ if(node && node.tag==="ending"){ var _ee = window.v93n3_endingEcho ? window.v93n3_endingEcho() : null; if(_ee){ _txt.push(_ee); } } }catch(e){}
+    /* /n5inj:npclife/ N-5 NPC 独立近况注入（只读；同日节流一次，不抢记忆/立场位） */
+    try{ var _nl = window.v93n5_npcLifeLine ? window.v93n5_npcLifeLine() : null; if(_nl && (!S || S._lastNlDay!==S.day)){ if(S) S._lastNlDay=S.day; _txt.push(_nl); } }catch(e){}
+    /* /n7inj:conflict/ N-7 冲突事件层注入（独立池；每事件触发一次，可结算轻量 effects） */
+    try{ var _cf = window.v93n12_conflictLine ? window.v93n12_conflictLine() : null; if(_cf){ _txt.push(_cf); } }catch(e){}
+    /* /n8inj:scene/ N-8 名场面追加（按节点前缀命中，只追加不改原文） */
+    try{ var _sc = window.v93n8_sceneLine ? window.v93n8_sceneLine(node) : null; if(_sc){ _txt.push(_sc); } }catch(e){}
+    /* /n8inj:allusion/ N-8 典故注入（按 place 匹配；同日节流） */
+    try{ var _al = window.v93n15_allusionLine ? window.v93n15_allusionLine(node) : null; if(_al){ _txt.push(_al); } }catch(e){}
+    /* /n8inj:mood/ N-8 情绪色调注入（mood 高分时；同日节流） */
+    try{ var _md = window.v93n16_moodLine ? window.v93n16_moodLine() : null; if(_md){ _txt.push(_md); } }catch(e){}
     /* /g1inj:render/ G-1 伤口状态行注入（只读；S.wounds 非空时显示；空时零注入） */
     try{ var _wnd = window.v93g1_woundLine(node); if(_wnd&&_wnd.length){ _txt=_wnd.concat(_txt); } }catch(e){}
     /* /g3inj:render/ G-3 城市作息句注入（只读；arrive_* 节点按城返回；空时零注入） */
@@ -46395,8 +46422,9 @@ function v34_renderStatsPanel(){
     + '<div style="font-size:18px;font-weight:700">' + (S.name || '无名者') + '</div>'
     + '<div style="font-size:12px;color:var(--dim,#888);margin-top:4px">' + ((S.subrace||'')+' · '+(S.job||'')+' · '+(S.ideal||'')) + '</div>'
     + '<div style="font-size:12px;color:var(--dim,#888)">天赋：' + (S.talent||'-') + '　境界：' + (R ? R.cn : (S.realm||'-')) + '</div>'
-    + '</div>'
-    + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">' + attrsHtml + '</div>'
+    + row('立场', (window.v93n1_stanceLabel ? window.v93n1_stanceLabel(S) : '—'))
++ '</div>'
++ '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">' + attrsHtml + '</div>'
     + '</div>'
     + '<div style="flex:1 1 210px;min-width:0">'
     + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px;margin-bottom:10px">'
@@ -48611,6 +48639,422 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
     }catch(e){ return '<div style="color:var(--dim);font-size:13px">抉择回顾暂不可用。</div>'; }
   };
 })();
+/* ===== /v93n1:stance/ N-1 立场系统（五轴；只读注入；S.stance 独立键） ===== */
+(function(){
+  window.v93n1_stanceInit = function(S){
+    try{
+      if(!S) return null;
+      if(!S.stance || typeof S.stance!=="object") S.stance={};
+      var map=(window.IDEAL_STANCE)?window.IDEAL_STANCE:{};
+      var m=map[S.ideal];
+      if(m && !S.stance._init){ for(var k in m){ S.stance[k]=(S.stance[k]||0)+m[k]; } S.stance._init=true; }
+    }catch(e){}
+    return S&&S.stance?S.stance:null;
+  };
+  window.v93n1_stanceLine = function(){
+    try{
+      if(!window.STANCE_AXES||!S) return null;
+      if(!S.stance||!S.stance._init) window.v93n1_stanceInit(S);
+      var st=S.stance||{}; var best=null,bv=0;
+      for(var k in window.STANCE_AXES){ var ax=window.STANCE_AXES[k]; if(!ax||!ax.cn) continue;
+        var v=st[k]||0; if(Math.abs(v)>Math.abs(bv)){ bv=v; best=k; } }
+      if(!best||Math.abs(bv)<8) return null;
+      var ax=window.STANCE_AXES[best]; var pool=bv>0?ax.pos:ax.neg; if(!pool||!pool.length) return null;
+      var r=((S.day||0)*7+(S.choices?S.choices.length:0))%pool.length;
+      return pool[r];
+    }catch(e){ return null; }
+  };
+  window.v93n1_stanceLabel = function(S){
+    try{
+      if(!window.STANCE_AXES||!S) return "—";
+      if(!S.stance||!S.stance._init) window.v93n1_stanceInit(S);
+      var st=S.stance||{}; var arr=[];
+      for(var k in window.STANCE_AXES){ var ax=window.STANCE_AXES[k]; if(!ax||!ax.cn) continue;
+        var v=st[k]||0; if(v!==0) arr.push(ax.cn+((v>0)?"+"+v:""+v)); }
+      return arr.length?arr.slice(0,3).join(" · "):"—";
+    }catch(e){ return "—"; }
+  };
+  window.v93n1_stanceShift = function(axis,v){
+    try{ if(!S||!axis) return false; if(!S.stance||typeof S.stance!=="object") S.stance={}; S.stance[axis]=(S.stance[axis]||0)+(v||0); return true; }
+    catch(e){ return false; }
+  };
+})();
+
+/* ===== /v93n2:dialmem/ N-2 对话级记忆（独立键 S.dialogueMem；只读注入；节流同日一次） ===== */
+(function(){
+  window.v93n2_remember = function(npc,line){
+    try{
+      if(!S) return; if(!S.dialogueMem) S.dialogueMem=[];
+      S.dialogueMem.push({npc:npc,line:line,day:S.day||0});
+      if(S.dialogueMem.length>8) S.dialogueMem.shift();
+    }catch(e){}
+  };
+  window.v93n2_dialogueLine = function(){
+    try{
+      if(!S||!S.dialogueMem||!S.dialogueMem.length) return null;
+      var m=S.dialogueMem[S.dialogueMem.length-1];
+      if(!m||!m.line) return null;
+      var ago=(S.day||0)-(m.day||0); if(ago<0) ago=0;
+      var when = ago<=1 ? "昨天" : (""+ago+"天前");
+      var name=m.npc;
+      var rel=(S.npcRelations&&S.npcRelations[name])?S.npcRelations[name]:0;
+      var pre = rel>=60 ? "（"+name+"与你相熟，把这话记在了心上）" : (rel<=-20 ? "（"+name+"当时没接话，可你看出他记下了）" : "");
+      return "你想起"+when+"对"+name+"说过的话："+m.line+"。"+pre;
+    }catch(e){ return null; }
+  };
+})();
+
+/* ===== /v93n3:clue/ N-3 贯穿线索 + 结局回响（图鉴线索页 + ending 注入；只读） ===== */
+(function(){
+  window.v93n3_cluesBody = function(){
+    try{
+      var ts = window.CLUE_TRACKS||[]; if(!ts.length) return '<div style="color:var(--dim,#888);font-size:13px">暂无线索记录。</div>';
+      var h='';
+      for(var i=0;i<ts.length;i++){
+        var t=ts[i]; var ps=t.probes||[]; var hit=0;
+        for(var j=0;j<ps.length;j++){ if(S.flags && S.flags[ps[j].flag]) hit++; }
+        h+='<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px;margin-bottom:10px">'
+          +'<div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700"><span>'+t.icon+' '+t.name+'</span><span style="color:'+(hit>=ps.length&&ps.length?'#2e7d32':(hit>=2?'#b26a00':'#888'))+'">'+hit+'/'+ps.length+'</span></div>'
+          +'<div style="font-size:13px;color:#555;line-height:1.6;margin:6px 0">'+t.desc+'</div>';
+        for(var k=0;k<ps.length;k++){
+          var got = S.flags && S.flags[ps[k].flag];
+          h+='<div style="font-size:13px;padding:2px 0;'+(got?'':'opacity:.45')+'">'+(got?'✓ ':'○ ')+ps[k].txt+'</div>';
+        }
+        h+='</div>';
+      }
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">线索暂不可用。</div>'; }
+  };
+  window.v93n3_endingEcho = function(){
+    try{
+      if(!S || !S.choices || !S.choices.length) return null;
+      var es = window.ENDING_ECHO||[]; if(!es.length) return null;
+      var tail = S.choices.slice(-12);
+      for(var i=tail.length-1;i>=0;i--){
+        for(var j=0;j<es.length;j++){
+          if(tail[i].indexOf(es[j].pre)===0) return es[j].txt;
+        }
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+})();
+/* ===== /v93n4:cards+timeline/ N-4 结局卡牌册 + 因果时间线（图鉴两 tab 增强；只读） ===== */
+(function(){
+  function _condHit(cond){
+    try{
+      if(cond.type==='flag'){ return !!(S.flags && S.flags[cond.key]); }
+      if(cond.type==='stance'){
+        var v=(S.stance&&S.stance[cond.axis])||0;
+        if(cond.min!==undefined && v>=cond.min) return true;
+        if(cond.max!==undefined && v<=cond.max) return true;
+        return false;
+      }
+      if(cond.type==='rel'){ return (S.npcRelations&&S.npcRelations[cond.npc]||0) >= (cond.min||0); }
+      if(cond.type==='attr'){
+        var v2 = (cond.k==='gold')?(S.gold||0) : (S.realm||0);
+        if(cond.min!==undefined && v2>=cond.min) return true;
+        return false;
+      }
+      return false;
+    }catch(e){ return false; }
+  }
+  function _endHist(){
+    var h={};
+    try{ var lg=JSON.parse(localStorage.getItem("elda-legacy-v2")||"{}"); if(lg&&lg.endings) h=lg.endings; }catch(e){}
+    if(S&&S.ending) h[S.ending]=1;
+    return h;
+  }
+  window.v93n4_endCardsBody = function(){
+    try{
+      var cards=window.ENDING_CARDS||[];
+      var hist=_endHist();
+      var h="<div style='color:var(--gold2,#c8a55a);margin-bottom:6px'><b>结局卡牌</b> · "+Object.keys(hist).length+"/"+cards.length+" 已入册</div>";
+      h+="<div class='v44-end-grid'>";
+      for(var i=0;i<cards.length;i++){
+        var c=cards[i];
+        var got=!!hist[c.id];
+        var hits=0, conds=c.conds||[];
+        for(var k=0;k<conds.length;k++){ if(_condHit(conds[k])) hits++; }
+        var st = got ? "已达成" : (conds.length && hits===conds.length ? "线索已齐 · 只差抉择" : "条件未明");
+        var cls = got ? "got" : (conds.length && hits===conds.length ? "ready" : "");
+        h+="<div class='v44-end-card "+cls+"' title='"+esc(c.hint)+"'>";
+        h+="<div class='ec'>"+c.ic+" "+esc(c.cn||c.id)+"</div>";
+        h+="<div class='ed'>"+st+"</div>";
+        if(conds.length && !got){
+          h+="<div style='font-size:11px;color:var(--dim,#8899aa);margin-top:3px'>"+esc(c.hint)+"</div>";
+          h+="<div style='font-size:11px;color:"+(hits===conds.length?"var(--ok,#6fbf73)":"var(--dim,#8899aa)")+"'>线索 "+hits+"/"+conds.length+"</div>";
+        }
+        h+="</div>";
+      }
+      h+="</div>";
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">结局卡暂不可用。</div>'; }
+  };
+  window.v93n4_choicesTimeline = function(){
+    try{
+      var h="<div style='color:var(--gold2,#c8a55a);margin-bottom:6px'><b>因果时间线</b> · 此生每一次抉择，都拖着一串后果</div>";
+      var arr=(S&&S.choices)||[];
+      if(!arr.length) return h+"<div style='color:var(--dim,#888);font-size:13px'>尚未走到任何重大岔路。</div>";
+      var shown=0;
+      for(var i=Math.max(0,arr.length-40);i<arr.length;i++){
+        var cid=arr[i]; if(!cid) continue;
+        var cm=null;
+        if(window.CHOICE_MAP){ for(var pk in CHOICE_MAP){ if(String(cid).indexOf(pk)===0){ cm=CHOICE_MAP[pk]; break; } } }
+        var echo="";
+        if(window.ENDING_ECHO){ for(var e2=0;e2<ENDING_ECHO.length;e2++){ if(String(cid).indexOf(ENDING_ECHO[e2].pre)===0){ echo=ENDING_ECHO[e2].txt; break; } } }
+        h+="<div style='border-bottom:1px solid #333;padding:6px 0'>";
+        h+="<div style='color:var(--ok,#6fbf73);font-size:12px'>◆ 第"+(shown+1)+"个岔路 · "+esc(cm?cm.t:cid)+"</div>";
+        if(cm&&cm.d) h+="<div style='font-size:12px;color:var(--dim,#8899aa);margin-top:2px'>后果："+esc(cm.d)+"</div>";
+        if(echo) h+="<div style='font-size:12px;color:var(--gold2,#c8a55a);margin-top:2px'>回响："+esc(echo)+"</div>";
+        h+="</div>";
+        shown++;
+      }
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">因果时间线暂不可用。</div>'; }
+  };
+})();
+
+/* ===== /v93n5:npclife+rel5/ N-5 NPC 独立近况 + 五维关系（只读注入 + changeRelation 旁路） ===== */
+(function(){
+  function _stage(day){ return day>=281?281:(day>=151?151:(day>=61?61:0)); }
+  window.v93n5_npcLifeLine = function(){
+    try{
+      var lives=window.NPC_LIVES||{}; if(!S||!S.npcRelations) return null;
+      var cands=[];
+      for(var k in S.npcRelations){ if((S.npcRelations[k]||0)>=30 && lives[k]) cands.push(k); }
+      if(!cands.length) return null;
+      var pick=cands[(S.day+cands.length*7)%cands.length];
+      var stage=_stage(S.day);
+      var lines=lives[pick];
+      if(!lines||!lines[stage]) return null;
+      var cn=((window.NPC_NET&&NPC_NET[pick])?NPC_NET[pick].cn:(pick||pick));
+      return "【近况 · "+cn+"】"+lines[stage];
+    }catch(e){ return null; }
+  };
+  window.v93n8_rel5Shift = function(npcId, delta){
+    try{
+      if(!S||!npcId) return;
+      if(!S.rel5) S.rel5={};
+      if(!S.rel5[npcId]) S.rel5[npcId]={grace:0,trust:0,debt:0,doubt:0,love:0};
+      var r5=S.rel5[npcId];
+      if(delta>=0){
+        r5.trust=Math.min(100,r5.trust+Math.round(delta*2.5));
+        if(delta>=10) r5.love=Math.min(100,r5.love+Math.round(delta*0.6));
+      }else{
+        r5.doubt=Math.min(100,r5.doubt+Math.round(-delta*2.5));
+      }
+    }catch(e){}
+  };
+  var _origCR = (typeof window.changeRelation==="function")?window.changeRelation:((typeof changeRelation==="function")?changeRelation:null);
+  if(_origCR){
+    window.changeRelation = function(npcId, delta, reason){
+      var r = _origCR(npcId, delta, reason);
+      try{ window.v93n8_rel5Shift(npcId, delta); }catch(e){}
+      return r;
+    };
+  }
+  window.v93n5_rel5Hint = function(npcId){
+    try{
+      if(!S||!S.rel5||!S.rel5[npcId]) return "";
+      var r5=S.rel5[npcId];
+      var parts=[];
+      if(r5.trust>=15) parts.push("信任"+r5.trust);
+      if(r5.love>=15) parts.push("爱慕"+r5.love);
+      if(r5.debt>=15) parts.push("亏欠"+r5.debt);
+      if(r5.doubt>=15) parts.push("猜疑"+r5.doubt);
+      if(r5.grace>=15) parts.push("恩义"+r5.grace);
+      return parts.length?('<div style="font-size:11px;color:#8a7fb0;margin-top:2px">'+parts.join(" · ")+'</div>'):"";
+    }catch(e){ return ""; }
+  };
+})();
+
+/* ===== /v93n6:library+history/ N-6 世界图书馆全书 + 大陆大历史（只读；合并进藏书阁/编年史） ===== */
+(function(){
+  function _merge(){
+    try{
+      var L=window.LIBRARY_V93||{};
+      if(!L) return;
+      if(window.READINGS_V45) window.READINGS_V45=Object.assign(window.READINGS_V45||{}, L);
+      else window.READINGS_V45=L;
+      if(typeof S!=='undefined'&&S){
+        if(!S.readings) S.readings={};
+        if(!S.readings.unlocked) S.readings.unlocked={};
+        for(var k in L){ S.readings.unlocked[k]=true; }
+      }
+    }catch(e){}
+  }
+  window.v93n6_mergeBooks=_merge;
+  window.v93n6_readBook = function(id){
+    try{
+      var R=window.READINGS_V45||{};
+      var r=R[id]; if(!r) return;
+      var txt=Array.isArray(r.text)?r.text:[r.text];
+      var page=(window.__v93n6pg&&window.__v93n6pg.id===id)?window.__v93n6pg.p:0;
+      var size=2, pages=Math.max(1,Math.ceil(txt.length/size));
+      if(page>=pages) page=pages-1;
+      window.__v93n6pg={id:id,p:page};
+      var body='<div class="panel-wrap" style="max-width:640px;max-height:80vh;display:flex;flex-direction:column">'
+        +'<div class="panel-header"><span class="panel-title">📜 '+String(r.title).replace(/</g,'&lt;')+'</span><button class="panel-close" onclick="closePanel()">✕</button></div>'
+        +'<div class="panel-body" id="v45-read-body" style="flex:1;overflow-y:auto;line-height:1.9;font-size:var(--fs-body)">';
+      for(var i=page*size;i<Math.min((page+1)*size,txt.length);i++){
+        var p=txt[i];
+        if(typeof p==='function'){ try{p=p();}catch(e){p='';} }
+        if(p) body+='<p style="margin-bottom:12px">'+String(p).replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</p>';
+      }
+      body+='<div style="text-align:right;font-size:12px;color:var(--text-muted);margin-top:8px">'+((r.source)||'')+'</div>'
+        +'</div><div class="panel-footer" style="display:flex;align-items:center;gap:10px;justify-content:space-between">'
+        +'<button class="btn" onclick="window.v93n6_flip(-1)" '+(page<=0?'disabled':'')+'>‹ 上一页</button>'
+        +'<span style="font-size:12px;color:var(--text-muted)">第 '+(page+1)+' / '+pages+' 页</span>'
+        +'<button class="btn btn-gold" onclick="window.v93n6_flip(1)" '+(page>=pages-1?'disabled':'')+'>下一页 ›</button>'
+        +'<button class="btn" onclick="closePanel()">合上此卷</button></div></div>';
+      openModal(elFromHtml(body));
+      try{ if(S.readings&&S.readings.read&&typeof S.readings.read[id]==='undefined'){ S.readings.read[id]=true; } }catch(e){}
+    }catch(e){}
+  };
+  window.v93n6_flip = function(d){
+    try{
+      var st=window.__v93n6pg; if(!st) return;
+      var R=window.READINGS_V45||{}; var r=R[st.id]; if(!r) return;
+      var txt=Array.isArray(r.text)?r.text:[r.text];
+      var size=2, pages=Math.max(1,Math.ceil(txt.length/size));
+      st.p=Math.max(0,Math.min(pages-1,(st.p||0)+d));
+      window.v93n6_readBook(st.id);
+    }catch(e){}
+  };
+  window.v93n6_historyBody = function(){
+    try{
+      var H=window.HISTORY_EPOCHS||[];
+      var h="<div style='color:var(--gold2,#c8a55a);margin-bottom:6px'><b>大陆大历史</b> · "+H.length+" 段纪年</div>";
+      h+="<div class='v44-tl'>";
+      for(var i=0;i<H.length;i++){
+        var e=H[i];
+        h+="<div class='v44-tl-item'><span class='v44-tl-day' style='min-width:110px'>"+esc(e.era)+"</span> <span class='v44-tl-text'>"+esc(e.text)+"</span></div>";
+      }
+      h+="</div>";
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">大历史暂不可用。</div>'; }
+  };
+  _merge();
+})();
+
+/* ===== /v93n7:combo+conflict/ N-7 天赋连锁置位 + 冲突事件层（惰性置位；冲突独立池） ===== */
+(function(){
+  window.v93n7_comboCheck = function(){
+    try{
+      if(!S) return;
+      if(!S.comboFlags) S.comboFlags={};
+      if(S.comboFlags._done) return;
+      var C=window.COMBO_TRAITS||[];
+      for(var i=0;i<C.length;i++){
+        var c=C[i], hits=0;
+        if(c.combo.job && S.job===c.combo.job) hits++;
+        if(c.combo.ideal && S.ideal===c.combo.ideal) hits++;
+        if(c.combo.hobby && S.hobby===c.combo.hobby) hits++;
+        if(c.combo.talent && S.talent===c.combo.talent) hits++;
+        if(c.combo.subrace && S.subrace===c.combo.subrace) hits++;
+        if(hits>=3) S.comboFlags[c.id]=true;
+      }
+      S.comboFlags._done=true;
+    }catch(e){}
+  };
+  window.v93n12_conflictLine = function(){
+    try{
+      if(!S) return null;
+      window.v93n7_comboCheck();
+      var P=window.CONFLICT_POOL||[];
+      for(var i=0;i<P.length;i++){
+        var ev=P[i];
+        if(S.flags && S.flags[ev.id]) continue;
+        if(S.day<ev.dayFrom || S.day>ev.dayTo) continue;
+        if(ev.cond && ev.cond.flag && !(S.flags&&S.flags[ev.cond.flag])) continue;
+        if(!S.flags) S.flags={};
+        S.flags[ev.id]=true;
+        if(ev.effects){
+          if(ev.effects.gold) S.gold=Math.max(0,(S.gold||0)+ev.effects.gold);
+          if(ev.effects.hp) S.hp=Math.max(1,(S.hp||0)+ev.effects.hp);
+          if(ev.effects.flag) S.flags[ev.effects.flag]=true;
+        }
+        return "【冲突】"+ev.text;
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+})();
+
+/* ===== /v93n8:scenes+allusion+mood/ N-8 名场面 + 典故注入 + 情绪连续性（只读注入） ===== */
+(function(){
+  function _dayKey(){ return S?(S.day||0):0; }
+  window.v93n8_sceneLine = function(node){
+    try{
+      if(!node||!node.id) return null;
+      var SC=window.SCENES_V93||[];
+      for(var i=0;i<SC.length;i++){
+        var s=SC[i], at=s.at||[];
+        for(var j=0;j<at.length;j++){
+          var a=at[j];
+          if(String(node.id)===a || String(node.id).indexOf(a)===0){
+            var pick=s.add[(S.day+i)%s.add.length];
+            return pick;
+          }
+        }
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  window.v93n15_allusionLine = function(node){
+    try{
+      if(!node||!S) return null;
+      if(S._lastAllDay===S.day) return null;
+      var p=node.place||"";
+      var A=window.ALLUSIONS_V93||{};
+      var keys=Object.keys(A);
+      for(var i=0;i<keys.length;i++){
+        if(p.indexOf(keys[i])>=0 || (S.curCity||"").indexOf(keys[i])>=0){
+          var pool=A[keys[i]];
+          S._lastAllDay=S.day;
+          return pool[(S.day+i*3)%pool.length];
+        }
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  window.v93n16_moodShift = function(type, v){
+    try{
+      if(!S) return;
+      if(!S.mood) S.mood={trauma:0,relief:0,obsession:0};
+      if(type==='trauma') S.mood.trauma=Math.min(100,(S.mood.trauma||0)+v);
+      else if(type==='relief') S.mood.relief=Math.min(100,(S.mood.relief||0)+v);
+      else if(type==='obsession') S.mood.obsession=Math.min(100,(S.mood.obsession||0)+v);
+    }catch(e){}
+  };
+  window.v93n16_moodLine = function(){
+    try{
+      if(!S) return null;
+      if(S._lastMoodDay===S.day) return null;
+      var m=S.mood||{trauma:0,relief:0,obsession:0};
+      var best='calm', bv=0;
+      if((m.trauma||0)>bv){ best='trauma'; bv=m.trauma; }
+      if((m.relief||0)>bv){ best='relief'; bv=m.relief; }
+      if((m.obsession||0)>bv){ best='obsession'; bv=m.obsession; }
+      if(best==='calm') return null;
+      var pool=window.MOOD_LINES?MOOD_LINES[best]:null;
+      if(!pool) return null;
+      if(bv<25) return null;
+      S._lastMoodDay=S.day;
+      return pool[(S.day+pool.length)%pool.length];
+    }catch(e){ return null; }
+  };
+  /* 冲突事件掉血 → trauma 累积（联动 v93n12） */
+  var _cf = window.v93n12_conflictLine;
+  if(_cf){
+    window.v93n12_conflictLine = function(){
+      var r = _cf();
+      try{ if(r && typeof S!=='undefined' && S && r.indexOf("【冲突】")===0 && (r.indexOf("伤")>=0||r.indexOf("血")>=0)) window.v93n16_moodShift('trauma', 8); }catch(e){}
+      return r;
+    };
+  }
+})();
 </script>
 <script>
 /* ============ v44 表现层引擎（IIFE 封装，不污染 S） ============ */
@@ -49002,7 +49446,7 @@ try{
     V44.atlasTab=t;
     var b=document.getElementById('v44-atlas-body');
     if(b){
-      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='readings'?v45_readingsBody():(t==='strong'?v53_strongBody():(t==='choices'?(window.v93_choicesBody?v93_choicesBody():v44_endingBody()):v44_endingBody())))));
+      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='chronicle'?((window.v93n6_historyBody?window.v93n6_historyBody():'')+v47_chronicleBody()):(t==='readings'?((window.v93n6_mergeBooks?(v93n6_mergeBooks(),1):0),v45_readingsBody()):(t==='strong'?v53_strongBody():(t==='clues'?(window.v93n3_cluesBody?window.v93n3_cluesBody():(window.v93n4_endCardsBody?window.v93n4_endCardsBody():v44_endingBody())):(t==='choices'?(window.v93n4_choicesTimeline?window.v93n4_choicesTimeline():(window.v93_choicesBody?v93_choicesBody():v44_endingBody())):v44_endingBody())))))));
     }
   }
   function galleryBody(){
@@ -49084,6 +49528,7 @@ try{
       var h='<b>'+esc(cn)+'</b>'+(role?' · <span style="color:var(--text-secondary)">'+esc(role)+'</span>':'');
       h+='<div style="margin-top:4px">关系：<b style="color:'+(rel>=30?'#2a7a2a':(rel<=-30?'#a03028':'var(--text-secondary)'))+'">'+relTxt+'（'+rel+'）</b></div>';
       if(desc) h+='<div style="margin-top:3px;color:var(--text-muted);font-size:12px">'+esc(desc)+'</div>';
+      try{ h+=(window.v93n5_rel5Hint?window.v93n5_rel5Hint(id):""); }catch(e){}
       box.innerHTML=h;
     }catch(e){}
   }
@@ -49139,7 +49584,7 @@ try{
     }catch(e){ return '<div style="color:var(--text-muted);font-size:13px">结局图谱暂不可用。</div>'; }
   }
   function renderAtlas(){
-    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱'],['choices','抉择']];
+    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱'],['clues','线索'],['choices','抉择']];
     var h='<div style="padding:4px 2px">';
     h+='<div class="v44-atlas-tabs">';
     for(var i=0;i<tabs.length;i++){
@@ -49150,9 +49595,10 @@ try{
     else if(V44.atlasTab==='relation') h+=relationBody();
     else if(V44.atlasTab==='timeline') h+=timelineBody();
     else if(V44.atlasTab==='chronicle') h+=v47_chronicleBody();
-    else if(V44.atlasTab==='readings') h+=v45_readingsBody();
+    else if(V44.atlasTab==='readings'){ try{ if(window.v93n6_mergeBooks) v93n6_mergeBooks(); }catch(e){} h+=v45_readingsBody(); }
     else if(V44.atlasTab==='strong') h+=v53_strongBody();
-    else if(V44.atlasTab==='choices') h+=(window.v93_choicesBody?v93_choicesBody():endingBody());
+    else if(V44.atlasTab==='clues') h+=(window.v93n3_cluesBody?window.v93n3_cluesBody():(window.v93n4_endCardsBody?window.v93n4_endCardsBody():endingBody()));
+    else if(V44.atlasTab==='choices') h+=(window.v93n4_choicesTimeline?window.v93n4_choicesTimeline():(window.v93_choicesBody?v93_choicesBody():endingBody()));
     else h+=endingBody();
     h+='</div></div>';
     return h;
@@ -51002,7 +51448,7 @@ N["acad_life_y1_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 },effects:{xp:10},onOk:{item:"《火系基础·入门》"},go:"acad_life_y1_friend"},
 {t:"和凯恩过几招，练练身手",check:{a:"STR",sk:"fight",label:"切磋"},tier:{
  ok:["凯恩的剑又快又稳，你接了二十招，胳膊酸得像灌了铅。他收剑，难得笑了一下：“不错。比昨天强。”","他给你指了食堂后厨的“加餐”门路——练武的人，吃不够是不行的。"],
- fail:["你被他的剑背拍在肩头，差点栽倒。他扶住你：“底盘要稳。明天继续。”","虽然输了，但你记住了他收力的分寸——这个人心不坏。"],
+ fail:["你被他的剑背拍在肩头，差点栽倒。他扶住你：“底盘要稳。明天继续。”","虽然输了，但你记住了他收力的分寸——这个人心不坏。","你连输三合。凯恩收剑，没嘲笑你，只说了句：“步伐太沉，下盘是空的。”他示范一遍，你照做，大腿酸得像灌了铅，可那一下你听懂了什么叫借力。"],
  crit:["你和他打了三十招，竟逼他退了半步。凯恩愣了一瞬，随即大笑：“好！学院里能让我退步的人，不多。”","你们约定，每周三清晨在此过招。"],
  critfail:["他一时没收住力，你结结实实挨了一下，肩膀肿了三天。凯恩愧疚地给你送了药油：“……我下手没轻重。”","这一下让你记住了：学院里的人，个个藏着手。"]
 },effects:{xp:12},onOk:{skillUp:"剑术"},go:"acad_life_y1_friend"},
@@ -51014,7 +51460,7 @@ N["acad_life_y1_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 "他话匣子一开就收不住：哪个教授上课会睡着、哪条走廊半夜有脚步声、图书馆塔顶的灯“到底是不是活的”……", "食堂的灯火远了。夜风凉，你把心思收回来，专心赶路。"],options:[
 {t:"问他：塔顶的灯到底是怎么回事",check:{a:"CHA",sk:"persu",label:"打听"},tier:{
  ok:["洛卡压低声音：“我上一届有个学长，说他在塔顶值班那夜，看见灯自己灭了又亮——灭了三次，亮了三次。第二天，档案室就少了一份卷宗。”他缩了缩脖子，“后来没人再提这事。”","你把这个说法，和凯恩那句“灯会数人”连在一起，后背有点凉。"],
- fail:["洛卡摆摆手：“哎，传说的东西，听听就行。”他专心啃起面包，不再接话。"],
+ fail:["洛卡摆摆手：“哎，传说的东西，听听就行。”他专心啃起面包，不再接话。","你绕到塔下抬头看了半天，只看见那盏灯在风里晃。守塔的老修士推开门问你找谁，你支吾两句走了——灯的事，一个字没问出来。"],
  crit:["洛卡四下看看，凑近你：“我偷偷记过——那灯亮灭的次数，和学院‘少人’的日子，对得上。”他从口袋里摸出一张皱巴巴的纸，“你看，我记了半年。”","纸上是一串日期和数字。你心头一跳：有些日子，正是你听说有人退学、离职的日子。"],
  critfail:["你问得太直白，洛卡警觉地看了你一眼，把话头岔开了。他之后几天都躲着你。"]
 },effects:{},onCrit:{flag:"acad_tower_log"},go:"acad_life_y1_mid"},
@@ -51027,7 +51473,7 @@ N["acad_life_y1_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "你愣了一会儿，写下你的答案。交卷时，监考的老执事看了你一眼，又低头把你的卷子单独抽了出来。", "离开期中考核时天光正好，靴子踏上路面的声音很稳。一路向前。"],options:[
 {t:"按所学，认真作答（守序）",check:{a:"INT",sk:"lore",label:"作答"},tier:{
  ok:["你按学院教的标准答法写了。交卷后无事发生。几天后成绩下来，中规中矩。"],
- fail:["你写到一半卡住了，那题实在超出所学。你胡写了几句，交卷时心里发虚。成绩中下，但没人找你麻烦。"],
+ fail:["你写到一半卡住了，那题实在超出所学。你胡写了几句，交卷时心里发虚。成绩中下，但没人找你麻烦。","你答得工整，笔迹也端正。卷子发回来，红批只有一句：“背书背得不错。”你把那句看了很久，不知该算夸奖还是别的。"],
  crit:["你在那道题下面多写了一段自己的看法：守夜人第一步不是封门，而是“清点还活着的人”。","成绩下来那天，老执事把你叫住，递回卷子——那道题旁边批了一行字：“留盏灯。下学期来我的守夜课。”"]
 },effects:{xp:20},onCrit:{flag:"acad_watch_invite"},go:"acad_life_y1_final"},
 {t:"在卷子上画个圈，只答会的",effects:{xp:8},tier:{ok:["你把会的都答了，不会的留白。老执事没说什么。成绩中等偏上。"]},go:"acad_life_y1_final"}
@@ -51065,7 +51511,7 @@ N["acad_life_y2_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "阿塔用带着口音的通用语说：“我父亲说，学院里学的，比草原上活得更久。”他把一张狼皮铺在窗台上：“北境的冷，跟我们草原的冷不一样。这个，给你垫着。”", "你离了西三舍，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"和阿塔切磋（他的力气真大）",check:{a:"STR",sk:"fight",label:"切磋"},tier:{
  ok:["阿塔的拳风像闷雷。你接下他的冲拳，胳膊震得发麻，但撑住了。他露出白牙笑：“你不错。草原上，能接我一拳的人不多。”"],
- fail:["你被他一拳震得后退三步，一屁股坐进雪堆。阿塔赶紧来拉你，满脸歉意。","你揉着胳膊，心里服气。"],
+ fail:["你被他一拳震得后退三步，一屁股坐进雪堆。阿塔赶紧来拉你，满脸歉意。","你揉着胳膊，心里服气。","阿塔让着你，还是把你摔进了草垛。他咧嘴笑，伸手拉你：“力气不够，下次摔你之前先喊停。”你拍掉身上的草，记住了他出手的节奏。"],
  crit:["你借他的冲劲侧身一让，反手把他带进了雪堆。阿塔在雪里愣了愣，随即大笑出声——那是你第一次听见他笑。"]
 },effects:{xp:12},go:"acad_life_y2_friend"},
 {t:"问他草原上的事",effects:{xp:8},tier:{ok:["阿塔讲起草原：狼旗、黑石部族、每年秋天的部族会盟。他说到“暗蚀会”三个字时，声音明显低了下去：“他们在草原上挖东西，挖了很久了。”","他顿了顿：“我父亲说，别让那东西挖到。所以把我送来了学院。”"]},go:"acad_life_y2_friend"},
@@ -51077,13 +51523,13 @@ N["acad_life_y2_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 "管理员罗先生在你耳边嘀咕：“这两个人，借书的路数越来越像了。上次我整理书架，发现一本《深渊谱系》被借走又还回来，书页里夹着一根头发——不是人的头发。”", "图书馆在雾里模糊了轮廓。你紧了紧衣领，迈步上路。"],options:[
 {t:"留意费尔曼教授的行踪",check:{a:"AGI",sk:"stealth",label:"留意"},tier:{
  ok:["你远远跟了费尔曼两次。他每周三深夜都会去图书馆，但从不借书——只是站在禁书区的门前，站一会儿，又离开。","他站的位置，正对着那扇新换的锁。"],
- fail:["费尔曼太警觉。你刚跟到回廊拐角，他就回头看了一眼——你赶紧低头装作看书。","之后他看你的眼神，多了一丝说不清的意味。"],
+ fail:["费尔曼太警觉。你刚跟到回廊拐角，他就回头看了一眼——你赶紧低头装作看书。","之后他看你的眼神，多了一丝说不清的意味。","你跟到回廊拐角，一抬眼他不见了。只有风把走廊尽头的门吹得晃了一下。你站在原地，忽然不确定自己看见的到底是不是他。"],
  crit:["你发现费尔曼每次离开图书馆前，都会在门口的登记簿上写点什么。趁他转身，你扫了一眼——那页上写的不是名字，是一串数字：7-3-7-1。","你抄了下来，没敢多留。"],
  critfail:["你靠得太近，费尔曼忽然停步转身，差点撞上你。他微笑着扶住你：“小心些。图书馆地滑。”","他的笑容没有温度。你后背发凉。"]
 },effects:{},onCrit:{flag:"acad_ferman_digits"},go:"acad_life_y2_mid"},
 {t:"把这件事告诉墨丘利教授",check:{a:"CHA",sk:"persu",label:"告知"},tier:{
  ok:["墨丘利听完，沉默了很久。他说：“费尔曼……我有印象。他是院长特聘的，背景干净得查不出任何问题。”他摘下眼镜擦了擦，“干净到这种程度，本身就是问题。”","他给你留了一句话：“别在夜里去禁书区。如果他约你去，说你在忙。”"],
- fail:["墨丘利不置可否：“学院里教授之间的往来，轮不到学生操心。”他给你倒了杯茶，岔开了话题。"],
+ fail:["墨丘利不置可否：“学院里教授之间的往来，轮不到学生操心。”他给你倒了杯茶，岔开了话题。","墨丘利听完，摘下眼镜擦了擦，没接你的话，反而问起你昨天的课业。你明白他在岔开话题，可你也明白，话递出去就收不回了。"],
  crit:["墨丘利听完，脸色微变。他走到门口，确认走廊没人，才压低声音：“费尔曼到任那天，档案室丢过一份卷宗——关于七节点的。”他顿了顿：“丢得无声无息。第二天，管档案的老执事就‘退休’了。”","你和他对视一眼，谁都没再说话。"]
 },effects:{},onCrit:{flag:"acad_ferman_mercury"},go:"acad_life_y2_mid"}
 ]};
@@ -51094,7 +51540,7 @@ N["acad_life_y2_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"把纸条收好，装作什么都不知道",effects:{xp:8},tier:{ok:["你把纸条叠好收进书里。洛卡之后几天都躲着人，但至少人还在。","你没有去那扇门。有些门，知道它开着，就够了。"]},go:"acad_life_y2_final"},
 {t:"周三晚上，去那扇门看看",check:{a:"AGI",sk:"stealth",label:"夜探"},tier:{
  ok:["周三夜，你摸到禁书区门前。门果然虚掩着。你闪进去，看见书架最深处的地板上，有一道新刻的痕迹——像某种仪式图的一角。","你记下形状，原路退回。心跳了一整夜。"],
- fail:["你摸到门前，门是锁着的。你在阴影里等了半个时辰，一无所获，只得退回。","第二天，你发现锁换成了新的。洛卡再没给你递过纸条。"],
+ fail:["你摸到门前，门是锁着的。你在阴影里等了半个时辰，一无所获，只得退回。","第二天，你发现锁换成了新的。洛卡再没给你递过纸条。","门锁是新的。你握着锁柄试了试，纹丝不动，指尖却沾上一片凉——像是刚从冰水里捞出来。你退回去，那凉意半天没散。"],
  crit:["你不但进去了，还在那道刻痕旁发现一张折角的纸——纸上画着一个圈，圈里一只竖瞳。和你在自由城邦见过的那枚图案，一模一样。","你把它收好。胸口像压了一块冰。"],
  critfail:["你推门的瞬间，走廊尽头的灯忽然亮了。一个灰袍执事站在阴影里，看着你。","你编了个“走错路”的借口，他盯着你看了很久，才侧身放行。","那之后，你总觉得有人在看你。"]
 },effects:{},onOk:{flag:"acad_forbidden_mark"},onCrit:{flag:"acad_eye_mark"},go:"acad_life_y2_final"}
@@ -51108,7 +51554,7 @@ N["acad_life_y2_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
 {t:"假期去艾尔达城逛逛，打听外面的消息",effects:{xp:8},tier:{ok:["城里的消息比学院鲜活：铁门关又打了一仗；东境承天城换了城主；自由城邦的商路上，有商队“整队消失”。","你把这些消息带回学院，在脑子里拼图。"]},go:"acad_life_y2_holiday"},
 {t:"留在图书馆，把费尔曼那串数字查一查",check:{a:"INT",sk:"detect",label:"查索"},tier:{
  ok:["你翻遍图书馆的地图册，终于在一本旧《大陆封印纪要》的附录里，找到类似的数字：7-3-7-1——七节点编号，三号封印，七号看守，一号预案。","“预案”旁边，画着一个圈，圈里一只竖瞳。"],
- fail:["你查了一冬，一无所获。那串数字像一串无解的谜。"],
+ fail:["你查了一冬，一无所获。那串数字像一串无解的谜。","那串数字你翻遍了三本登记册，对不上任何一页。你合上册子时，管理员罗先生正看着你，很平静，你只好装作在找别的书。"],
  crit:["你不但查到了含义，还在附录的夹页里发现半张地图——标着七节点的位置，其中第七节点被红笔圈了三圈，旁边写着：“已失守。静候。”","你抄下地图，原样放回。"]
 },effects:{xp:22},onCrit:{flag:"acad_seven_map"},go:"acad_life_y2_holiday"}
 ,
@@ -51123,7 +51569,7 @@ N["acad_life_y3_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "食堂里，学生们压着声音传一句话：“学院里出了内鬼。有人在替圣痕司数人头。”这话传到你耳朵里时，你正端着餐盘从人群里挤出来，看见费尔曼独自坐在窗边，面前一碗汤，凉了也没动。"
 ],options:[
 {t:"【学年小事】去花园看那株枯了三年的树（春日回暖）",req:function(){return !S.flags["acad_event_y3_done"];},effects:{flag:"acad_event_y3_done"},go:"acad_event_y3"},
-{t:"【职业·任意】选《古代封印史》（费尔曼亲授）——听听他到底讲什么",req:function(){return true;},effects:{flag:"acad_life_y3_course",xp:15},go:"acad_life_y3_dorm"},
+{t:"【职业·任意】选《古代封印史》（费尔曼亲授）——听听他到底讲什么",req:function(){return true;},effects:{flag:"acad_life_y3_course",xp:15,stance:{axis:"faith",v:-1}},go:"acad_life_y3_dorm"},
 {t:"【职业·任意】选《梦境与灵魂》（奥利弗亲授）——看看他的课有什么不同",req:function(){return true;},effects:{flag:"acad_life_y3_course",xp:15},go:"acad_life_y3_dorm"}
 ]};
 N["acad_life_y3_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 课堂",pace:"normal",text:[
@@ -51131,11 +51577,11 @@ N["acad_life_y3_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "他的课讲得确实好——条理清晰，旁征博引，把古代封印术的脉络梳理得一清二楚。但越听，你越觉得不对：他讲“封印”时，眼里有一种……期待。",
 "下课后，他叫住你：“你听得最认真。来，看看这个。”他展开一张羊皮纸，上面画着一个复杂的仪式阵图：“这是第七节点当年的封印阵。可惜，失守了。”",
 "他抬眼，笑容温和：“如果有一天，需要有人重新把‘那东西’封回去——你会来吗？”", "你离了课堂，脚步声在空旷处格外清晰。赶路要紧。"],options:[
-{t:"郑重回答：会",effects:{xp:10,flag:"acad_ferman_pact"},tier:{ok:["费尔曼笑了，笑得很满意：“好。记住这句话。”他把那张羊皮纸递给你：“拿着。将来，你用得着。”","你接过图纸，心里却打鼓——他说的是“封回去”，还是别的什么？"]},go:"acad_life_y3_friend"},
-{t:"含糊其辞：看情况吧",effects:{xp:5},tier:{ok:["费尔曼的笑意淡了些：“看情况？也好。谨慎是好事。”他收回图纸，没再说什么。","你总觉得，他的目光在你身上多停了一息。"]},go:"acad_life_y3_friend"},
+{t:"郑重回答：会",run:function(){window.v93n2_remember("费尔曼","你答应过他，那张图纸将来用得着");},effects:{xp:10,flag:"acad_ferman_pact"},tier:{ok:["费尔曼笑了，笑得很满意：“好。记住这句话。”他把那张羊皮纸递给你：“拿着。将来，你用得着。”","你接过图纸，心里却打鼓——他说的是“封回去”，还是别的什么？"]},go:"acad_life_y3_friend"},
+{t:"含糊其辞：看情况吧",effects:{xp:5,stance:{axis:"honor",v:-1}},tier:{ok:["费尔曼的笑意淡了些：“看情况？也好。谨慎是好事。”他收回图纸，没再说什么。","你总觉得，他的目光在你身上多停了一息。"]},go:"acad_life_y3_friend"},
 {t:"反问他：您说的‘那东西’，到底是什么",check:{a:"CHA",sk:"persu",label:"反问"},tier:{
  ok:["费尔曼沉默了一瞬，笑容不变：“你很好奇。这是好品质。”他压低声音：“‘那东西’，是深渊留在人间的一只眼睛。第七节点，是它的眼皮。”","他顿了顿：“现在，眼皮掀开了。”","你后背一凉。他笑着拍了拍你的肩：“别怕。知道的人越多，能封住它的人，就越多。”"],
- fail:["费尔曼笑着摇头：“年轻人，好奇可以，但有些问题，知道答案是要付代价的。”他转身走了。"],
+ fail:["费尔曼笑着摇头：“年轻人，好奇可以，但有些问题，知道答案是要付代价的。”他转身走了。","费尔曼看着你，半晌没说话，最后只笑了笑：“问得好。”可他没有回答。他转回身继续写他的东西，你站在原地，觉得自己问了不该问的。"],
  crit:["费尔曼深深看了你一眼，笑意收敛：“你这个问题，问到了点子上。”他凑近，声音低得几乎听不见：“‘那东西’在等第七个。七印齐聚，它就能睁眼。”","他直起身，又是那副温和的笑容：“好好上课。”"]
 },effects:{},onCrit:{flag:"acad_seventh_secret"},go:"acad_life_y3_friend"}
 ]};
@@ -51146,7 +51592,7 @@ N["acad_life_y3_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 "“我认得出圣痕司的袍子。那件不一样，袖口没有银叶。”", "同窗已被抛在身后。路在脚下延伸，你不回头，行至前方。"],options:[
 {t:"问艾莉丝：你怎么会看到这些",check:{a:"CHA",sk:"persu",label:"追问"},tier:{
  ok:["艾莉丝脸一红：“我……我那天练习火系法术，把自己炸到屋顶上去了。下来的时候正好路过那扇窗。”她补充：“窗是开着的。我发誓我不是故意的！”","你哭笑不得，但记住了这个情报。"],
- fail:["艾莉丝不肯细说：“你别管我怎么看到的！反正，那个人袖口没有银叶——圣痕司的执事，袖口都有银叶，我认得。”"],
+ fail:["艾莉丝不肯细说：“你别管我怎么看到的！反正，那个人袖口没有银叶——圣痕司的执事，袖口都有银叶，我认得。”","艾莉丝愣了一下，随即笑开：“你怎么会看到这些？”她反问你。你发现自己没法回答——你也不知道自己看到了什么。"],
  crit:["艾莉丝压低声音：“而且——那人说话，带着你们北境的乡音。像铁门关那边的口音。”","你心头一震。铁门关……和你出发的地方，隔着一道关墙。"],
  critfail:["你问得太急，艾莉丝警觉起来：“你该不会是圣痕司的人吧？……算了，就当我没说。”她扭头跑了，之后几天都不搭理你。"]
 },effects:{},onCrit:{flag:"acad_ally_clue"},go:"acad_life_y3_mid"},
@@ -51160,7 +51606,7 @@ N["acad_life_y3_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "当天晚上，你发现图书馆塔顶的灯，亮了三下。", "离开期中时天光正好，靴子踏上路面的声音很稳。一路向前。"],options:[
 {t:"连夜去图书馆，查罗先生留下的东西",check:{a:"AGI",sk:"stealth",label:"夜探"},tier:{
  ok:["你摸进图书馆，在罗先生常坐的登记台下，摸到一个暗格。里面有一本旧册子——记录着半年来禁书区的每一笔借阅。","翻到最后一页，你看见一行新字：“周三深夜，费尔曼借《深渊谱系》。未还。”"],
- fail:["图书馆被圣痕司贴了封条。你摸到门口，看见两个灰袍执事守着，只得退回。"],
+ fail:["图书馆被圣痕司贴了封条。你摸到门口，看见两个灰袍执事守着，只得退回。","图书馆夜里锁门。你翻窗进去，却找不到罗先生说的那本册子——架子上空了一块，像被人刚抽走。你摸了把灰，指尖是新的。"],
  crit:["你不但拿到了借阅册，还在册子夹页里发现一枚旧钥匙——黄铜的，上面刻着一个圈，圈里一只竖瞳。","你把它贴身收好。罗先生留下的，不止两句话。"],
  critfail:["你撬登记台时，碰响了桌上的墨水瓶。灯光亮起，一个守夜人探进头来——你谎称找东西，他狐疑地看你半天，才让你走。"]
 },effects:{},onOk:{flag:"acad_ledger_found"},onCrit:{flag:"acad_brass_key"},go:"acad_life_y3_final"},
@@ -51174,7 +51620,7 @@ N["acad_life_y3_final"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
 "他没回答，只是看着窗外的塔灯：“等塔灯不再自己亮灭的那天——就是他们要动手的日子。”", "期末在雾里模糊了轮廓。你紧了紧衣领，迈步上路。"],options:[
 {t:"问墨丘利：他们是谁",check:{a:"CHA",sk:"persu",label:"追问"},tier:{
  ok:["墨丘利沉默了很久：“圣痕司要的是‘净化’；费尔曼要的是‘封印’；还有第三拨人——他们要的是‘眼’。”他苦笑：“三拨人，都在这座学院里。你猜，谁最危险？”","你猜不到。他说：“最危险的是——知道得太少，又知道得太多的人。比如你。”"],
- fail:["墨丘利摇摇头：“知道名字没有用。知道他们在做什么，才有用。”他不再多说。"],
+ fail:["墨丘利摇摇头：“知道名字没有用。知道他们在做什么，才有用。”他不再多说。","墨丘利抬头看你，眼里的光暗了暗：“你问得太多了。”他低头继续批卷子，留你站在门口，门里门外两样温度。"],
  crit:["墨丘利压低声音：“第三拨人，袖口没有银叶。他们自称‘看守者’，说自己在替大陆‘守眼’——但我查过，七节点早就失守了四个。他们在守的，是什么眼？”","“别信任何一边。信你自己看见的。”"]
 },effects:{},onCrit:{flag:"acad_mercury_warning"},go:"acad_life_y3_holiday"},
 {t:"谢过墨丘利，假期照旧",effects:{xp:8},tier:{ok:["你谢过他，走出办公室。塔顶的灯，静静地亮着。"]},go:"acad_life_y3_holiday"}
@@ -51198,7 +51644,7 @@ N["acad_life_y4_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "“这篇论文，”他说，“可能救很多人的命。也可能，让写它的人万劫不复。你自己选。”",
 "他把一支羽毛笔推到你面前。笔尖是新削的，泛着冷光。", "出了西三舍，风迎面扑来。你认了认方向，启程。"],options:[
 {t:"接过笔，写下去",effects:{flag:"acad_thesis_accepted",xp:15},tier:{ok:["你接过笔。费尔曼笑了：“好。每周三深夜，禁书区，我单独辅导你。”","你点头。心里清楚，这条路的每一步，都在往深水里走。"]},go:"acad_life_y4_friend"},
-{t:"推回笔：我想换个题目",effects:{xp:5},tier:{ok:["费尔曼看着被推回的笔，笑意不减：“谨慎，是学者最好的品质。”他收回提纲，“那就写《古代封印术的伦理沿革》吧。同样是好题目。”","你松了口气。但你知道，他记住了你的拒绝。"]},go:"acad_life_y4_friend"}
+{t:"推回笔：我想换个题目",run:function(){window.v93n2_remember("费尔曼","你拒绝过他定下的论文题目");},effects:{xp:5},tier:{ok:["费尔曼看着被推回的笔，笑意不减：“谨慎，是学者最好的品质。”他收回提纲，“那就写《古代封印术的伦理沿革》吧。同样是好题目。”","你松了口气。但你知道，他记住了你的拒绝。"]},go:"acad_life_y4_friend"}
 ]};
 N["acad_life_y4_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 禁书区（周三夜）",pace:"normal",text:[
 "每周三深夜，你跟着费尔曼进禁书区。",
@@ -51208,10 +51654,10 @@ N["acad_life_y4_friend"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 "“所以，真正能守住那东西的，不是封印——是有人记得它还在。”", "出了禁书区（周三夜），风迎面扑来。你认了认方向，启程。"],options:[
 {t:"问他：您是要我记住它吗",check:{a:"CHA",sk:"persu",label:"追问"},tier:{
  ok:["费尔曼笑了，笑得很轻：“不。我是要你记住——你今晚听到的每一个字，都别对任何人说。”他顿了顿，“包括墨丘利。”","你看着他，忽然明白了什么。他不是要教你封印。他是在找一个“会闭嘴的人”。"],
- fail:["费尔曼摇头：“记住不是目的。理解才是。”他没再多说，收拾好书卷离开了。"],
+ fail:["费尔曼摇头：“记住不是目的。理解才是。”他没再多说，收拾好书卷离开了。","费尔曼没答。他合上手里的书，站起来给你倒了杯茶，端茶的姿势稳得像在做仪式。茶凉了，你也没等到答案。"],
  crit:["费尔曼深深看着你，良久，说：“你和我年轻时，很像。”他第一次，露出一个不带笑意的表情——疲惫的，像走了很远的路。“我年轻时也以为，自己是在守护。”","“后来我才知道，我被用了一辈子。”","“别走我的老路。”"]
 },effects:{},onCrit:{flag:"acad_ferman_confession"},go:"acad_life_y4_mid"},
-{t:"沉默地点头，不再追问",effects:{xp:8},tier:{ok:["你点头。费尔曼也没再说话。","那一夜，禁书区的灯，一直亮到天明。"]},go:"acad_life_y4_mid"}
+{t:"沉默地点头，不再追问",effects:{xp:8,stance:{axis:"faith",v:-1}},tier:{ok:["你点头。费尔曼也没再说话。","那一夜，禁书区的灯，一直亮到天明。"]},go:"acad_life_y4_mid"}
 ]};
 N["acad_life_y4_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 期中",pace:"normal",text:[
 "期中前几天，艾莉丝急匆匆来找你：“费尔曼教授，上周没去图书馆。”",
@@ -51221,7 +51667,7 @@ N["acad_life_y4_mid"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "你手里的笔，停住了。", "离开期中时天光正好，靴子踏上路面的声音很稳。一路向前。"],options:[
 {t:"立刻去找墨丘利",check:{a:"CHA",sk:"persu",label:"告知"},tier:{
  ok:["墨丘利听完“看守者·席恩”五个字，脸色第一次变了。他沉默了很久，才说：“席恩……是我年轻时的一个学生。他失踪了二十三年。”","“他当年说过一句话：封印这东西，与其守着，不如毁掉重来。”墨丘利的声音干涩，“他失踪前，去了第七节点。”"],
- fail:["墨丘利听完，只是皱了皱眉：“艾莉丝那丫头，看错了吧。”但他的手指，在桌面上轻轻敲了三下——那是他不安时的习惯。"],
+ fail:["墨丘利听完，只是皱了皱眉：“艾莉丝那丫头，看错了吧。”但他的手指，在桌面上轻轻敲了三下——那是他不安时的习惯。","墨丘利正忙着给新生分宿舍，头也没抬：“晚些时候再说。”你等了半个时辰，他始终没抬头。你知道，这扇门今天关上了。"],
  crit:["墨丘利关上门，压着声音说：“如果真是席恩——学院里那三拨人，就要合流了。”他顿了顿：“净化、封印、睁眼。三拨人盯上的是同一扇门。”","“而那扇门的钥匙……”他看向你，“可能已经在你手里了。”","你想起那枚黄铜钥匙，胸口一紧。"]
 },effects:{},onCrit:{flag:"acad_sein_alias"},go:"acad_life_y4_final"},
 {t:"不动声色，继续观察",effects:{xp:8},tier:{ok:["你把“席恩”两个字记在心里，像记一根刺。","你继续每周三深夜去禁书区，装作什么都不知道。"]},go:"acad_life_y4_final"}
@@ -51258,7 +51704,7 @@ N["acad_life_y5_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"回答他：我站在自己看见的那一边",effects:{xp:12,flag:"acad_life_y5_stand"},tier:{ok:["墨丘利看着你，很久。然后他笑了，笑得很轻：“好。记住你今天的话。”","他从抽屉里取出一样东西递给你——一枚旧徽章，刻着银叶：“这是学院守夜人首席的信物。三十年，我只送出去过三枚。”","“第四枚，是你的。”"]},go:"acad_life_y5_friend"},
 {t:"反问他：您站在哪一边",check:{a:"CHA",sk:"persu",label:"反问"},tier:{
  ok:["墨丘利沉默了很久：“我站在学生这一边。”他顿了顿，“也站在真相这一边——虽然这两边，常常不是同一个方向。”","他苦笑：“所以我才教了三十年书，而没当上院长。”"],
- fail:["墨丘利摇头：“我哪边都不站。我教书。”","但你注意到，他说这话时，握着茶杯的手，轻轻抖了一下。"],
+ fail:["墨丘利摇头：“我哪边都不站。我教书。”","但你注意到，他说这话时，握着茶杯的手，轻轻抖了一下。","费尔曼的笑意淡了。他走到窗边，背对着你站了很久：“我没有立场。”他说得很平静，可你听出，这句话本身就是立场。"],
  crit:["墨丘利站起身，走到窗前：“我年轻时，也收到过一枚这样的徽章。送徽章的人，后来去了第七节点，再没回来。”","“他叫席恩。费尔曼……是他。”"]
 },effects:{},onCrit:{flag:"acad_mercury_sein"},go:"acad_life_y5_friend"}
 ]};
@@ -51312,7 +51758,7 @@ N["acad_deep_y1_class"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
 "老教习点了点头：“记住这堂课。法术的根，是你们身上本来就有的东西。学院教的是怎么把它放出来，不是怎么把它变出来。”他顿了顿，“你们之中，有人一辈子都在等一盏别人点的灯。”", "离开第一学年课堂时天光正好，靴子踏上路面的声音很稳。一路向前。"],options:[
 {t:"课后找他请教火系基础",check:{a:"INT",sk:"lore",label:"请教"},tier:{
  ok:["老教习把灯芯拨短：“火性烈，养在灯里才听话。你学法术也一样——先学会把火关小，再学怎么放它出来。”他塞给你一卷发黄的讲义。","这卷讲义上的批注，比正文还密。"],
- fail:["你问得太大，老教习摆摆手：“先把今晚的灯学会了再说。”他转向下一个学生，你没再插上话。"],
+ fail:["你问得太大，老教习摆摆手：“先把今晚的灯学会了再说。”他转向下一个学生，你没再插上话。","你凑过去请教，对方讲了一半就停下，把法杖往地上一拄：“你连基础回路都没通，讲了也白讲。”你谢过他，把那句“没通”记在了心里。"],
  crit:["你问的是灯芯为什么拨短火就小。老教习看了你很久：“十年来，你是第一个问这个的。”他给你留了地址——学院地下炼炉，周三晚可以去找他。"],
  critfail:["你追着问了三个问题，老教习皱起眉头：“贪多嚼不烂。”他转身走了，你站在原地，脸上发热。"]
 },effects:{xp:15},onCrit:{flag:"acad_furnace_key"},go:"acad_deep_y1_practice"},
@@ -51325,7 +51771,7 @@ N["acad_deep_y1_practice"]={tags:["region:north"],tag:"main",place:"艾尔达魔
 "你的剑刚递出去，他的剑背已经贴在你小臂上——不快，但稳得像钉在木头上。你手腕一麻，剑差点脱手。戈拉收了剑：“不错，没丢。头一回不丢剑的，十个里有一个。”", "从演武场出来，路上行人渐稀。你脚步不停，一路向前。"],options:[
 {t:"请他指点剑势",check:{a:"STR",sk:"fight",label:"学剑"},tier:{
  ok:["戈拉用剑尖在地上画了个圈：“你的劲使在手上，没使在腰上。剑是腰的延伸，不是手的。”他示范了一式，“回去对着水缸练，练到水不晃。”"],
- fail:["戈拉只说了句“再练”，就去指点别人了。你站在原地，把他的话又嚼了一遍。"],
+ fail:["戈拉只说了句“再练”，就去指点别人了。你站在原地，把他的话又嚼了一遍。","他看了你的起手式，没说话，只把剑谱推回给你。你接过时碰到他指尖——凉的。他没再指点，你也没再问。"],
  crit:["你把他画的圈记住了，又问了句：“那断臂之后，您怎么练？”戈拉沉默了一会儿：“左手断了，就用右手。右手学会了，就明白以前左手错了什么。”","他破例多教了你一式收剑。"],
  critfail:["你急着想赢，动作变形，被他一眼看穿：“心浮了。今天就到这。”他转身离开，你攥着剑柄，指节发白。"]
 },effects:{xp:15},onCrit:{flag:"acad_sword_insight"},go:"acad_deep_y1_library"},
@@ -51356,7 +51802,7 @@ N["acad_deep_y1_town"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "镇上有家铁匠铺，炉火整日不熄。你路过时，看见一个戴金边眼镜的中年人正在挑一把匕首——不是学院配发的那种，是军用短刃。他付钱时用的是银月币，出手很阔。你认出那是新来的费尔曼教授。", "出了山门外小镇，风迎面扑来。你认了认方向，启程。"],options:[
 {t:"跟上去看看费尔曼去做什么",check:{a:"AGI",sk:"stealth",label:"跟踪"},tier:{
  ok:["费尔曼买完匕首，又去了镇尾的旧货铺，买了一只黄铜罗盘，然后顺着河沿走回学院，一路没回头。你远远缀着，没被他发现。","那把匕首和罗盘，都掖进了他袍子里。"],
- fail:["你跟了几步，被集市上的人流挤散了。等再看见他，他已经走远了，只留给你一个背影。"],
+ fail:["你跟了几步，被集市上的人流挤散了。等再看见他，他已经走远了，只留给你一个背影。","你跟着他穿过两进院子，一转弯撞上了巡夜的灯。你低头假装系鞋带，再抬头，他已经不见了。只有雪地上两行脚印，往北去。"],
  crit:["你隔着半条街，看见他在河边停下，从怀里摸出那把匕首，在月光下翻看了一会儿，又收回去。他抬头望了一眼学院灰楼的方向，那一眼很冷。","你记住了这个动作。"],
  critfail:["你贴得太近，踩断了一根冻枝。费尔曼回过头，目光扫过来，你赶紧蹲进货摊后面。他看了几息，转回身走了，但你知道他看见了。"]
 },effects:{xp:12},onCrit:{flag:"acad_ferman_knife"},go:"acad_deep_y1_market"},
@@ -51370,7 +51816,7 @@ N["acad_deep_y1_market"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 {t:"花三个铜星买一枚普通狼牙护符",effects:{gold:-3,xp:5},tier:{ok:["老妇人把狼牙用红绳穿好，挂在你脖子上：“狼牙认主，护的是认得路的人。”她顿了顿，“学院里的路，不比野外的路好走。”"]},go:"acad_deep_y1_night"},
 {t:"追问第七节点的事",check:{a:"CHA",sk:"persu",label:"追问"},tier:{
  ok:["老妇人四下看了看：“第七节点，是老话里的东西。学院底下，有七根柱子，撑着什么。第六根好好的，第七根——”她摇摇头，“我没见过，我是听我阿婆说的。”"],
- fail:["老妇人摆摆手：“不知道，不知道。你走吧。”她转过去收拾摊子，不再理你。"],
+ fail:["老妇人摆摆手：“不知道，不知道。你走吧。”她转过去收拾摊子，不再理你。","费尔曼放下羽毛笔，看你很久：“你听见了什么？”你答不上来。他缓了缓，那口气里的疲惫比警告多。"],
  crit:["老妇人压着嗓子：“阿婆说过，第七根柱子裂了。裂缝里出来的东西，会借人的名字走路。”她盯着你，“你要是哪天在学院里，遇见一个认识你、你却从没见过的人——别应他。”","她没收你的钱，把那个铜铃塞给你：“带着。能挡一次。”"],
  critfail:["你问得太紧，老妇人慌了，抱着摊布快步走了。铜铃的事，你什么都没问出来。"]
 },effects:{xp:15},onCrit:{flag:"acad_seventh_node_warn",item:"铜铃"},go:"acad_deep_y1_night"},
@@ -51404,7 +51850,7 @@ N["acad_deep_y2_practice"]={tags:["region:north"],tag:"main",place:"艾尔达魔
 "他今天教的是一套守势。剑不出鞘，只挡不攻：“先学会不输。赢的事，以后再说。”他示范了三遍，每一遍都慢，让你能看清他的腰、他的脚、他那只独臂的重心。", "你离了演武场，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"认真练这套守势",check:{a:"STR",sk:"fight",label:"苦练"},tier:{
  ok:["你练到胳膊发酸，终于把那套守势磨顺了。戈拉难得点头：“挡得住，才谈得上别的。”他破例多留你一刻钟，教你一个反手架剑的巧劲。"],
- fail:["守势看着简单，做起来处处别扭。你练得满头汗，剑还是抖。戈拉说：“心不静，手就飘。明天再来。”"],
+ fail:["守势看着简单，做起来处处别扭。你练得满头汗，剑还是抖。戈拉说：“心不静，手就飘。明天再来。”","守势练到第七遍，你终于撑不住跪了下去。膝盖磕在石板上的声音很响，你喘着气抬头，看见教官点头：“起来，再来一遍。”你爬起来，真的又练了一遍。"],
  crit:["你不仅学会了，还发现守势里藏着三个反击的空档。你演示给戈拉看，他沉默半晌：“……这是我断臂之后，花了三年才想明白的东西。你一个月就看出来了。”","他看你的眼神，开始不一样了。"],
  critfail:["你练得太猛，虎口裂了一道口子。戈拉给你扔了卷绷带：“欲速则不达。先养伤。”"]
 },effects:{xp:18},onCrit:{flag:"acad_guard_insight"},go:"acad_deep_y2_library"},
@@ -51424,7 +51870,7 @@ N["acad_deep_y2_library"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 {t:"索性当着他们的面读《封印考》",effects:{xp:10,flag:"acad_defiant_read"},tier:{ok:["你索性把《封印考》摊在桌上，光明正大地读。灰袍执事看了你一会儿，竟然没上前。","罗先生事后说：“他们怕的是太聪明的人，和太蠢的人。你这种‘不怕’的，他们反倒拿不准。”"]},go:"acad_deep_y2_town"},
 {t:"请教罗先生：圣痕司到底在找什么",check:{a:"CHA",sk:"persu",label:"套话"},tier:{
  ok:["罗先生压低嗓门：“圣痕司在找一份名单。名单上的人，都跟‘第七节点’有关。”他顿了顿，“你别问我是怎么知道的。你只要知道，你最近读的这些书，够把你写进名单了。”"],
- fail:["罗先生摇摇头：“这个，我帮不了你。有些事，知道得越少，睡得越安稳。”"],
+ fail:["罗先生摇摇头：“这个，我帮不了你。有些事，知道得越少，睡得越安稳。”","罗先生擦着眼镜，半天才开口：“圣痕司在找什么，问的人多，答的人少。”他停下手里的活，看着你，“你最好别是问得最勤的那个。”"],
  crit:["罗先生沉默了很久，从柜台底下拿出一张泛黄的纸条：“这是我十年前的笔记。上面记着七个名字——都是灰楼‘记录’里的人。现在，只剩三个还活着。”","他把纸条推给你，又收回去了：“看完了，忘掉。”"],
  critfail:["你套话的意图太明显，罗先生警觉地看了你一眼：“你在试探我？”他冷下脸，“回去吧。以后借书，先填申请表。”"]
 },effects:{xp:15},onCrit:{flag:"acad_roster_hint"},go:"acad_deep_y2_town"}
@@ -51435,7 +51881,7 @@ N["acad_deep_y2_town"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "你买羊杂汤时，他多给你添了半勺：“学生郎，你们在学院里学的，跟我儿子在城墙上守的，是一样的东西——都是拿命换太平。别学那些只会念书的，学点能守住的。”", "离开白桦镇时天光正好，靴子踏上路面的声音很稳。一路向前。"],options:[
 {t:"打听铁门关的具体战况",check:{a:"CHA",sk:"persu",label:"打听"},tier:{
  ok:["老屠户把声音压到极低：“上个月，铁门关丢了外城。东军三万人，一夜过了关，关城上的烽火台一个都没点着。”他摆摆手，“镇上的消息，传得慢，也不知道准不准。”"],
- fail:["老屠户摇摇头：“这种事，镇上的人不敢乱说。你问我也没用。”他埋头剁肉，不再接话。"],
+ fail:["老屠户摇摇头：“这种事，镇上的人不敢乱说。你问我也没用。”他埋头剁肉，不再接话。","传令兵瞥你一眼：“你是哪营的？”你答不上来，他摆摆手走了。你站在原地，只从门缝里瞥见半张地图，上面画满了红色的圈。"],
  crit:["老屠户看了你一眼，从柜台底下摸出一封信：“这是我儿子托驿站捎回来的，前天到的。你识字，帮我念一念。”","信上只有几行字：“爹，城墙又修好了。别担心。守完这个冬天，我就回家。”老屠户听完，把信仔细折好，塞回怀里，半晌没说话。"],
  critfail:["你问得太细，老屠户警惕起来：“你问这个做什么？学院的人，不该关心战事。”他不再说话。"]
 },effects:{xp:15},onCrit:{flag:"acad_war_letter_town"},go:"acad_deep_y2_market"},
@@ -51449,7 +51895,7 @@ N["acad_deep_y2_market"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 {t:"不理会，走开",effects:{xp:5},tier:{ok:["你摇摇头走了。倒卖学院的东西，听着像条财路，更像条绞索。","你走出几步，回头看了一眼——那独眼汉子还在招揽别人。"]},go:"acad_deep_y2_night"},
 {t:"问他是什么来路",check:{a:"CHA",sk:"persu",label:"盘问"},tier:{
  ok:["独眼汉子嘿嘿一笑：“北边跑商的。战争年景，什么赚钱跑什么。”他见你追问得紧，收起笑脸，“小兄弟，有些货，问了就别退。你不做，别人也做。”"],
- fail:["他打个哈哈：“跑商的呗。还能是什么。”你没问出什么实质的，但记住了他的长相。"],
+ fail:["他打个哈哈：“跑商的呗。还能是什么。”你没问出什么实质的，但记住了他的长相。","那人端详你半晌，忽然笑了：“打哪来？”他把问题抛回给你。你意识到，你连他的口音都还没听出来。"],
  crit:["你假装不懂行情，套出了他的交货点：学院后山的旧马厩，每逢单日戌时。他还说了句：“上头有人罩着，货走学院的地道。”","你记下了这条线。"],
  critfail:["你问得太直白，独眼汉子的笑脸一下冷了：“你是学院的探子？”他盯了你几息，“奉劝一句，别多管闲事。”他收摊走了。"]
 },effects:{xp:12},onCrit:{flag:"acad_smuggler_hint"},go:"acad_deep_y2_night"},
@@ -51475,7 +51921,7 @@ N["acad_deep_y3_class"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
 "没人举手。老军官点了点头：“那你们记住今天的课。等你们哪天站到那堵墙底下，再回来跟我讲，你们懂了什么。”他拄着拐杖走了，木腿敲在地板上，笃、笃、笃。", "第三学年课堂的灯火远了。夜风凉，你把心思收回来，专心赶路。"],options:[
 {t:"课后找他单独请教守城的事",check:{a:"CHA",sk:"persu",label:"请教"},tier:{
  ok:["老军官看了你一会儿：“你问守城？守城就是守人。墙是死的，人是活的。”他顿了顿，“铁门关丢的那晚，烽火台一个都没点着——你品品，是来不及点，还是有人不让点？”","他这句话，让你想了很久。"],
- fail:["老军官摆摆手：“课上都讲了。回去自己琢磨。”他拄着拐走了，没多说什么。"],
+ fail:["老军官摆摆手：“课上都讲了。回去自己琢磨。”他拄着拐走了，没多说什么。","戈拉把沙盘上的小旗推倒两支，看着你：“你连城墙垛口有几处都不知道，问什么守城。”他没赶你走，只让你把城墙数一遍。你数了三遍。"],
  crit:["老军官给你看了他随身带的半块铁牌：“铁门关守军的令牌。我退伍时留下的。”他摩挲着铁牌上的刻痕，“那天晚上，关城上有黑烟。我认得那种烟——不是火烧的，是法术烧的。”","他让你摸了一下铁牌。入手冰凉。"],
  critfail:["你问得太多，老军官皱起眉头：“年轻人，打听这些对你没好处。”他转身走了，木腿声越来越远。"]
 },effects:{xp:15},onCrit:{flag:"acad_iron_token_hint"},go:"acad_deep_y3_practice"},
@@ -51485,7 +51931,7 @@ N["acad_deep_y3_class"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
 N["acad_deep_y3_practice"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 演武场",pace:"normal",text:{default:["这学年的演武场多了几具假人，穿着破旧的皮甲，摆成守城的样子。戈拉让高年级学生带着低年级的练“巷战”——在两排假人之间快速穿插，挡格、反击、再挡格。","你轮到跟凯恩一组。他比去年高了半头，剑也更沉了：“家里来信，我爹调去铁门关了。他说城墙修好了，让我别担心。”他说得轻描淡写，但你注意到他这几天练剑练得特别狠。","你们对练时，戈拉在旁边看着，忽然说了一句：“打仗的时候，同伴比剑重要。你们俩，是一个阵的。”","你收拾停当，离开演武场，沿着来路踏上行程。"],ifRelation:{npc:"kain",op:">=",val:80,yes:["他挨了你一记，退了两步，咧嘴笑：“不错啊，快赶上了。”趁你愣神，他一个扫腿把你放倒，又伸手拉你起来，“逗你的。”"],no:{ifRelation:{npc:"kain",op:">=",val:60,yes:["演武场上，凯恩把木剑抛给你：“来，老规矩，三回合。”——他从来只对信得过的人说“老规矩”。"],no:{ifRelation:{npc:"kain",op:"<=",val:-60,yes:["他别过脸去，把木剑往兵器架上一插：“不打了。你练你的，我练我的。”"],no:null}}}}}},options:[
 {t:"跟凯恩认真对练，不留手",check:{a:"STR",sk:"fight",label:"对练"},tier:{
  ok:["你们打了五十回合，谁也没占到便宜。收剑时，两人都喘着气。凯恩抹了把汗：“痛快。好久没这么打过了。”他拍拍你肩膀，“走，食堂我请。”"],
- fail:["凯恩今天格外凶，剑剑带风。你挡得吃力，被他逼退了几步。他收了剑：“……抱歉，心里有事。”他走到场边，坐下，半天没说话。"],
+ fail:["凯恩今天格外凶，剑剑带风。你挡得吃力，被他逼退了几步。他收了剑：“……抱歉，心里有事。”他走到场边，坐下，半天没说话。","你全力出剑，他还是退得比你快。收剑时他额上见汗，却先替你掸了掸肩上的雪：“有长进。”你握剑的手在抖，但你知道，那不只是累的。"],
  crit:["你在他一剑劈空时抓住了机会，反手压住他的剑。凯恩愣了一瞬，大笑：“好！这才够劲！”他喘着气，“你小子，什么时候练得这么刁了？”","你们打完之后，在场边坐了很久。他难得说了不少他爹的事。"],
  critfail:["你们对练到一半，凯恩突然停了，剑尖拄地：“不打了。”他转身走了。你看见他肩膀在抖。","第二天，他又恢复了往常的样子，像什么都没发生过。"]
 },effects:{xp:15,relation:{npc:"acad_kain",v:8}},go:"acad_deep_y3_library"},
@@ -51508,7 +51954,7 @@ N["acad_deep_y3_library"]={tags:["region:north"],tag:"main",place:"艾尔达魔�
 },effects:{xp:15},onCrit:{flag:"acad_old_news"},go:"acad_deep_y3_town"},
 {t:"冒险再借一本《深渊谱系》",check:{a:"AGI",sk:"stealth",label:"偷借"},tier:{
  ok:["你趁灰袍执事转身时，把《深渊谱系》从书架抽出来，夹在外套里带走了。回到宿舍才敢翻——书页很旧，有几页被撕掉了，剩下的字迹密密麻麻。","有一页的页脚，有人用铅笔写了个日期，正是三年前。"],
- fail:["你伸手时，灰袍执事正好回头。你赶紧缩手，假装在找别的书。他看了你一会儿，没说话，但记下了你的位置。"],
+ fail:["你伸手时，灰袍执事正好回头。你赶紧缩手，假装在找别的书。他看了你一会儿，没说话，但记下了你的位置。","你递上借书单，罗先生盯着那行字看了很久，最后把单子折起来收进袖口：“这本书不在架上。”他没说没有，他说不在架上。你记住了这个说法。"],
  crit:["你不仅偷借出来，还发现书脊夹层里塞着一张纸——是一份手抄的名单，七个名字，前三个被墨涂掉了。","你认得其中两个名字的姓氏。"]
 },effects:{xp:18},onCrit:{flag:"acad_abyss_list"},go:"acad_deep_y3_town"},
 {t:"听罗先生的劝，这学期不碰禁书",effects:{xp:8},tier:{ok:["你把那排书脊看了又看，还是转身走了。罗先生在你身后轻轻叹了口气：“识时务。这年头，识时务的人能活得久。”","你走到门口，他又补了一句：“等你毕业了，想读什么读什么。学院管不着你。”"]},go:"acad_deep_y3_town"}
@@ -51551,14 +51997,14 @@ N["acad_deep_y4_class"]={tags:["region:north"],tag:"main",place:"艾尔达魔法
 "讲到一半，他忽然停下来，看着窗外：“你们之中，有人去过灰楼吗？”没人回答。他笑了笑：“没有就好。灰楼里的东西，不是书本上能讲清的。等你们毕业了——如果你们还记得今天这堂课——可以去看看。”", "你与第四学年课堂作别，踏上旅途。尘土扑上靴面，像旧识。"],options:[
 {t:"课后单独找费尔曼，把三年前的问题再问一遍",check:{a:"CHA",sk:"persu",label:"询问"},tier:{
  ok:["费尔曼看了你很久，像在辨认什么：“你问过第七根锚。”他点了点头，“四年到了。你记得，我也记得。”他从怀里摸出一把黄铜钥匙，“灰楼三层，第七扇门。钥匙只有一把，给你。”","他顿了顿，“看完，把钥匙还我。”"],
- fail:["费尔曼摇了摇头：“你还没准备好。”他温和地补了一句，“不是每个人都需要知道答案。有些答案，知道了就要扛。”"],
+ fail:["费尔曼摇了摇头：“你还没准备好。”他温和地补了一句，“不是每个人都需要知道答案。有些答案，知道了就要扛。”","费尔曼听完，沉默了很久，久到你以为他不会回答了。他最后只说了句：“你记性很好。”然后他把灯调暗了一格——那意思，今晚到此为止。"],
  crit:["费尔曼沉默了很久，把钥匙放在桌上：“我等你问这个问题，等了四年。”他顿了顿，“灰楼三层第七扇门后面，不是你想象的东西。但你有资格看。”","他把钥匙推向你。你的手伸过去时，他补了一句：“别带任何人去。”"],
  critfail:["你问完，费尔曼的脸色变了：“你问得太急了。”他把讲义收起来，“这节课就到这里。”他快步走了，留你站在原地。"]
 },effects:{xp:20},onCrit:{flag:"acad_gray_key"},go:"acad_deep_y4_practice"},
 {t:"先不急着要答案，专心听课",effects:{xp:12},tier:{ok:["你决定先把课听透。这堂课讲的“封印的呼吸”，是你三年来听到的最接近核心的东西。","你把它记在笔记里，标了三个星。"]},go:"acad_deep_y4_practice"},
 {t:"下课后去灰楼外面转一圈",check:{a:"AGI",sk:"stealth",label:"探看"},tier:{
  ok:["灰楼三层，第七扇窗，窗帘紧闭。你站在楼下看了很久，没看见任何灯光。但你能感觉到，有什么东西在那一层——像一只没合上的眼睛。"],
- fail:["你刚走近灰楼，就看见圣痕司的灰袍执事在门口巡逻。你只好装作路过，绕开了。"],
+ fail:["你刚走近灰楼，就看见圣痕司的灰袍执事在门口巡逻。你只好装作路过，绕开了。","你在灰楼外绕了两圈，窗户都拉着帘。只有一扇二楼的小窗透着光，人影晃了一下，又没了。你站了会儿，风把一片焦黑的纸吹到你脚边。"],
  crit:["你趁巡逻的空档，绕到灰楼侧面。第七扇窗的窗台上，放着一盏小油灯，灯是灭的，但灯芯是湿的——刚被人吹熄不久。","你伸手摸了一下灯身，还是温的。"]
 },effects:{xp:15},onCrit:{flag:"acad_gray_lamp"},go:"acad_deep_y4_practice"}
 ]};
@@ -53539,6 +53985,29 @@ N["acad_story_tutor"]={tags:["region:north"],tag:"main",place:"学院 · 深夜�
 "你在他旁边坐下，看着那幅地图。窗外北风呼啸，屋里油灯摇曳。两个年轻人，各自揣着各自的约定，在深夜的自习室里，忽然都觉得前路又远又亮。", "出了深夜自习室，风迎面扑来。你认了认方向，启程。"],options:[
 {t:"（给他出主意：先回乡帮阿爸，再北上汇合）",check:{a:"CHA",sk:"persu",label:"出主意"},tier:{ok:["阿塔听完，眼睛一亮：“对啊！草原和北边又不隔一条河。我先回去稳住家里，入秋再北上，正好赶上铁门关的秋防。”他用力拍了拍你的肩，“到时候，咱们第三哨见！”你笑着说好。这个约定，后来在你心里存了很久。"],fail:["阿塔挠挠头：“你说得倒轻巧……”他叹了口气，“算了，船到桥头自然直。”他收起地图，吹了灯。回去的路上，你俩谁也没说话，但步子都走得很稳。"]},effects:{xp:8,flag:"acad_story_tutor_done"},go:"acad_story_end"}
 ]};
+
+/* /u1inj:data-nodes:dn_allusions.js/ */
+/* N-8 典故库（按 place 注入 1 句典故句；v93n15_allusionLine）+ 情绪连续性模板（v93n16_moodLine）
+ * 纯数据只读；典故句 V66 文风，禁 30 治理词。
+ */
+window.ALLUSIONS_V93 = {
+  free:   ["交汇城的老人们常说：自由城的墙是商路砌的，谁断了商路，谁就拆了自己的墙。","酒馆老板劝过你：在自由城，通行证比良心值钱，可良心比通行证耐用。","老账房数过：自由城一天里被买卖的东西，比承天故都一年还多——连自由本身也算一份。"],
+  north:  ["铁门关的石墙上刻着守军的老话：刀在人在，城在命在。你后来才知道，后面还有半句没刻上去——人在，故人在。","北境的牧民教你认雪：新雪脆，旧雪闷。战前的雪，往往格外闷。","铁匠铺的锤声停了半晌，老铁匠说：北境的铁，都是人用血淬出来的。"],
+  east:   ["承天的老人说：公道在史册，史册在官署，官署在地窖。等哪天地窖开了，公道也就出来了。","东境书肆里有一句被翻烂的话：王朝可以塌，规矩不能散。","你在承天街头听人念过一句旧谚：银穗商路养活了半座帝京，也养肥了它的影子。"],
+  desert: ["沙漠的向导教过你：水可以分，路不可以让。让了路，就不是让一次，是让一辈子。","绿洲的老驼夫说：沙漠里最贵的不是水，是别人的承诺。","废墟边上的石碑只剩半句：先人埋井，后人饮。——后半句被风沙啃掉了。"],
+  church: ["圣城的修士念经时喜欢插一句闲话：教典是死的，罪是活的，别把活的交给死的管。","光明大教堂的壁画下面有一行小字：光既照你，也照你的罪。","你听审判庭外的人说过：在圣城，忏悔比辩解便宜。"],
+  elf:    ["精灵巡林者送你出林时说：树不死，人不散。你问要是树死了呢？她没回答，只是摸了摸树干。","迷雾森林的路标不是箭头，是树的伤口。精灵说，树记得每个走过的人。","银叶城的歌谣里唱：别在森林里说谎，树听见了会告诉风。"],
+  dwarf:  ["矮人请你喝酒时说：铁要趁热打，话要趁凉说。你一直记得这句。","矮人工坊的墙上挂着一排锤子，每一把都敲碎过一个谎言。","山国的老人说：矮人不写史，我们把历史打进铁里——刀是家谱，盾是族谱。"],
+  orc:    ["草原的狼旗在风里翻卷，老萨满说：狼旗指的方向，不是战争，是答案。","你听兽人说过草原的规矩：强者食肉，弱者饮水，但不断人水源。","阿塔教你认狼骨时说：骨头会说话，只是人听不懂。"],
+  plains: ["交汇城的草市上，有人用一支口琴换走你的旧靴子。他吹了一首不知名的曲子，你站在那听完了才走。"],
+  academy:["学院的石墙上有人刻了一行字：魔法不看血统，看脑子。下面有人用更小的字补了一句：也看胆子。","老院长在开学典礼上说：这里不问出身，只问你想成为什么。","图书馆的守门人说：禁书区的钥匙在每个人自己手里。"]
+};
+window.MOOD_LINES = {
+  trauma:["你的旧伤又在夜里作痛，像在提醒你：有些账，还没结清。","你梦见那场血，醒来时手心全是汗。你把它擦在衣摆上，假装什么都没发生。"],
+  relief:["今天难得松快。你数了数口袋里的余钱，忽然觉得，活着也没那么难。","风一吹，你觉得自己轻了几斤。有些担子，放下之后才知道有多重。"],
+  obsession:["你又在想那件事了。翻来覆去，像一块含在嘴里的石头，吐不出，咽不下。","你把它写下来，又划掉。有些念头，写出来只会更亮。"],
+  calm:["日子不紧不慢地过。你习惯了这种平静，也习惯了在平静里提着一口气。","今天没什么大事。你站在路口看了一会儿行人，忽然觉得，太平就是这样的。"]
+};
 
 /* /u1inj:data-nodes:dn_alumni.js/ */
 /* ============================================================
@@ -59958,7 +60427,7 @@ N["church_testify"] = {
     },effects:{xp:30,infl:{church:5},flag:"church_cleared"},go:"church_tribunal_end"},
     {t:"（拒绝作证：沉默是唯一的回答）",check:{a:"AGI",sk:"stealth",label:"沉默"},tier:{
       ok:["你一言不发。执事们问了半个时辰，问不出什么，最终挥手放行：「没有实证，圣痕司不扣人。」","你走出陈情厅时，主审执事的声音从背后传来：「沉默，也是一种回答。我们记下了。」"],
-      fail:["你的沉默被解读为心虚。执事们扣下你的文牒：「留档三日，查清了再还你。」你在圣城失去了凭证，只能绕道行动。"],
+      fail:["你的沉默被解读为心虚。执事们扣下你的文牒：「留档三日，查清了再还你。」你在圣城失去了凭证，只能绕道行动。","你闭紧嘴。审讯官等了你一盏茶的功夫，把记录翻过来扣在桌上：“带下去。”牢门在你身后合上，锁舌咬合的声音很响。可你心里知道，有些话，开了口就收不回。"],
       crit:["你不仅保持沉默，还注意到主审执事桌角压着一封信，信封上画着一枚极淡的竖瞳。「他在看暗蚀会的信。」你把这一幕记在心里，走出陈情厅时，脊背发凉。"]
     },effects:{xp:20,infl:{church:3},flag:"church_silent"},go:"church_tribunal_end"}
   ]
@@ -60017,7 +60486,7 @@ N["church_relic"] = {
     },effects:{xp:30,infl:{church:5},flag:"church_relic_trail"},go:"church_relic_trail"},
     {t:"（问司务：最近谁来过圣物司）",check:{a:"CHA",sk:"persu",label:"询问"},tier:{
       ok:["司务想了想：「上个月，圣痕司来『盘点』过一次。带队的是个灰袍执事，很年轻，话不多。他看过圣临之枝的柜子。」","「还有……」司务压着嗓门，「前天，大审判长的亲随，也来过一趟。说是『例行查看』。」"],
-      fail:["司务急得语无伦次，什么有用信息也没给出来。"],
+      fail:["司务急得语无伦次，什么有用信息也没给出来。","司务官抬起眼皮看了你很久，慢慢把账册合上：“来的人多，记的人少。”他不再看你，只补了一句，“你最好别是那些不记名的人。”"],
       crit:["司务想起一个细节：「那年轻执事盘点时，手边一直放着个皮囊——像是装沙的。」他比划着，「我当时还纳闷，圣痕司的人，带沙子干什么。」"]
     },effects:{xp:25,infl:{church:3}},go:"church_relic_trail"}
   ]
@@ -60142,6 +60611,272 @@ N["church_leave2"] = {
     {t:"返回自由城邦休整",run:function(){ travelTo("free_jiaohui"); }}
   ]
 };
+
+/* /u1inj:data-nodes:dn_clue.js/ */
+/* ===== /v93n3:clue/ N-3 贯穿线索账（纯数据；图鉴"线索"页 + 结局回响共用） =====
+ * CLUE_TRACKS：三条贯穿大陆的线索；probes 为关键 flag（命中越多线索进度越高）
+ * ENDING_ECHO：结局节点渲染时，按玩家最近抉择回引 1-2 句（只读注入）
+ */
+window.CLUE_TRACKS = [
+  {
+    id:"clue_book", name:"旧书的下落", icon:"书",
+    desc:"有人在找一本旧书，出的价够买一条街。从自由城的酒馆到学院的禁书区，这本书的影子一直贴着你的后背走。",
+    probes:[
+      {flag:"acad_life_y3_course", txt:"你选修过费尔曼的《古代封印史》"},
+      {flag:"acad_ferman_pact", txt:"你答应过费尔曼，那张图纸将来用得着"},
+      {flag:"acad_thesis_accepted", txt:"你接过笔，写下了那篇论文"},
+      {flag:"acad_life_y4_course", txt:"你选了毕业论文的封印专题"}
+    ]
+  },
+  {
+    id:"clue_eye", name:"深渊之眼", icon:"眼",
+    desc:"第七节点是深渊留在这片大陆上的一只眼睛，眼皮已经掀开。谁想封住它，谁想唤醒它，还有谁想把它挖出来——学院里的每一扇门后都站着一种答案。",
+    probes:[
+      {flag:"acad_ferman_pact", txt:"你成了那个“会闭嘴的人”"},
+      {flag:"acad_life_y4_mid", txt:"那一夜，禁书区的灯亮到天明"},
+      {flag:"led_anchor_01", txt:"你拿起了第一枚锚"},
+      {flag:"led_anchor_07", txt:"七锚在你掌心汇齐"}
+    ]
+  },
+  {
+    id:"clue_goldscale", name:"金秤与晨天", icon:"秤",
+    desc:"守门人世家、故都地下的档案、墓园里三代人的守望。金秤这两个字，从老人的口中传到你的耳朵里，越来越重。",
+    probes:[
+      {flag:"goldscale_know", txt:"你知道了金秤的来历"},
+      {flag:"goldscale_final", txt:"你站在了使命的抉择前"},
+      {flag:"led_b5_07", txt:"你赴了秦策之约"},
+      {flag:"led_anchor_03", txt:"你在无字碑前停过脚"}
+    ]
+  }
+];
+
+/* 结局回响映射：S.choices 尾部命中前缀则注入回顾句 */
+window.ENDING_ECHO = [
+  {pre:"acad_", txt:"你想起学院里那几年：走廊尽头的门、禁书区的灯、费尔曼在窗边写字的背影。如今灯都熄了，路是你自己走完的。"},
+  {pre:"frontier_", txt:"你想起第三哨的雪，老铁失踪那夜留在地上的脚印，还有铜钟在风里震出来的嗡鸣。"},
+  {pre:"anchor_", txt:"你想起七枚锚先后在掌心发烫的温度。最后那一枚落定的时候，整片大陆的地脉跟着颤了一下。"},
+  {pre:"grad_", txt:"你想起毕业那天，四面的路在脚下摊开。你选了现在这条，走了这么远，回头还能看见当初那个站在路口的人。"},
+  {pre:"faction_", txt:"你想起自己站进那面旗帜下的那一天。旗子换了颜色，可你扛过的每一仗，都还压在这双肩上。"},
+  {pre:"warphase_", txt:"你想起战争从摩擦到围城、从围城到终战的每一步。地图上的红圈越来越多，最后盖住了整块大陆。"},
+  {pre:"fc_", txt:"你想起自由城那间酒馆的麦酒味，蜜尔娜擦杯子的姿势，还有你在那张桌子前做过的最初的决定。"},
+  {pre:"origin_", txt:"你想起离开故乡那天的天气。那时的你还不知道，这条路会把你带到今天这个位置。"}
+];
+
+/* /u1inj:data-nodes:dn_combo.js/ */
+/* N-7 天赋连锁隐藏线（五维组合 → 隐藏 flag；纯置位，不参与判定）
+ * v93n7_comboCheck 建号后遍历匹配，命中置 S.comboFlags[id]=true（applyDefaults 兜底）。
+ * combo 键：job / ideal / hobby / talent / subrace（≥3 键命中即触发）。
+ */
+window.COMBO_TRAITS = [
+  {id:"c_merchant_hunter", title:"猎商双修", combo:{job:"merchant",hobby:"hunt",talent:"good"},
+   desc:"既是账房里的算盘，又是林间的猎弓。两种身份在你身上打架，也让你比谁都明白：猎物和货款一样，都讲究时机。"},
+  {id:"c_guard_healer", title:"守护士", combo:{ideal:"guard",hobby:"herb",talent:"good"},
+   desc:"你救人，也守人。药篓和盾牌放在一起，从不觉得矛盾。"},
+  {id:"c_revenge_forge", title:"复仇铁匠", combo:{ideal:"revenge",hobby:"forge",subrace:"nordic"},
+   desc:"北境的铁匠铺里挂着你的仇人名单。你把仇恨打进了刀里，刀越磨越亮，名字越记越深。"},
+  {id:"c_truth_wanderer", title:"求真的浪人", combo:{ideal:"truth",hobby:"read",subrace:"midland"},
+   desc:"中境的读书人，总想知道墙后面是什么。你带着书上路，也带着问题。"},
+  {id:"c_god_choir", title:"神眷歌者", combo:{ideal:"god",hobby:"music",talent:"gen"},
+   desc:"你的歌声里有圣光。教会的修士说，这是天赋；你更愿意相信，是某位存在先听见了你。"},
+  {id:"c_fame_gambler", title:"赌徒的桂冠", combo:{ideal:"fame",hobby:"gamble",subrace:"southland"},
+   desc:"南境人信命，更信运气。你把每一次冒险都当作下注，赢了，就离名满天下近一步。"},
+  {id:"c_free_climber", title:"自由的攀岩者", combo:{ideal:"free",hobby:"climb",subrace:"plateau"},
+   desc:"高原的风把你吹大，你从不往下看。自由对你来说，就是永远有更高处可以爬。"},
+  {id:"c_might_fisher", title:"沉默的力士", combo:{ideal:"might",hobby:"fish",talent:"prod"},
+   desc:"你力气大，话少。钓鱼教会你耐心，也教会你：真正的力量，从不急着显摆。"},
+  {id:"c_wealth_chess", title:"算尽人心", combo:{ideal:"wealth",hobby:"chess",subrace:"eastland"},
+   desc:"东境的棋盘上有九条路，你每一步都算到三步之后。富甲天下，不过是把棋盘下得再大些。"},
+  {id:"c_elf_herb_muse", title:"林语药者", combo:{subrace:"islander",hobby:"herb",talent:"gen"},
+   desc:"岛上的草药在你手里会说话。你知道哪片叶子治伤，哪片叶子伤人，也知道哪片叶子，能让人说真话。"}
+];
+
+/* /u1inj:data-nodes:dn_combo_lines.js/ */
+/* N-7 天赋连锁 · 迷你隐藏线（每条 ≥3 节点；由 combo flag 解锁入口，进蓝图 nodeIndex）
+ * 三线：猎商双修 / 守护士 / 复仇铁匠。入口挂既有城市选项，go 必须指向已存在节点。
+ */
+/* ---- 线一：猎商双修（c_merchant_hunter）· 自由城商会 ---- */
+N["combo_hunt_01"] = {
+  tag:"branch", place:"自由城邦 · 交汇城 · 商会后院", pace:"normal",
+  text:[
+    "商会后院堆着今年的货：成捆的狼皮、两箱盐、一匣子从北境收来的旧铁。你蹲下来翻看狼皮，手指摸过毛根，立刻停住——这是母狼皮，皮上还带着幼崽的抓痕。",
+    "账房先生探出头：“怎么了？”你说了。他叹口气：“草原今年的狼皮都是这个成色，猎人穷疯了，见窝就端。”",
+    "你想起草原的规矩：不断人水源，也不端狼窝。这货不能收——但商会等着这批皮子走南线，你这一句“不收”，要顶住的是李管事明天的脸色。"
+  ],
+  options:[
+    {t:"拒收这批狼皮，宁可得罪李管事", go:"combo_hunt_02"},
+    {t:"收下，但把价钱压到最低，让猎人少动几窝", go:"combo_hunt_03"},
+    {t:"（转身离开，装作没看见）", go:"combo_hunt_04"}
+  ]
+};
+N["combo_hunt_02"] = {
+  tag:"branch", place:"自由城邦 · 交汇城 · 商会后院", pace:"normal",
+  text:[
+    "李管事听你说完，半天没说话。他拨了两下算盘，把账本合上：“母狼皮退回去，猎人的钱照付一半。就说商会今年不收皮，改收草药。”",
+    "你没想到他答应得这么干脆。“为什么？”他看你一眼：“我在草原贩过十年货，断人水源的买卖，做不长。”",
+    "狼皮退回的那天，草原那边来了个猎人，在商会门口放了一捆最好的药草，没留名字。你知道那是谁。"
+  ],
+  options:[
+    {t:"（把这事记在心里）", go:"combo_hunt_end"}
+  ]
+};
+N["combo_hunt_03"] = {
+  tag:"branch", place:"自由城邦 · 交汇城 · 商会后院", pace:"normal",
+  text:[
+    "你压低了价钱，猎人的信使在门口站了一炷香，还是接了。走的时候，他回头看了你一眼，那一眼不是谢意，是打量。",
+    "三个月后，你路过草原，一个老猎人叫住你，递给你一袋盐：“你收皮那天压了价，可你也让少端了几窝。草原人记仇，也记这个。”",
+    "你把盐收下。商会的账本上多了一笔没写来源的进项——这袋盐，比货值钱。"
+  ],
+  options:[
+    {t:"（收下这份情）", go:"combo_hunt_end"}
+  ]
+};
+N["combo_hunt_04"] = {
+  tag:"branch", place:"自由城邦 · 交汇城 · 商会后院", pace:"light",
+  text:[
+    "你转身走了。商会的账，商会的货，商会的良心——都轮不到一个刚进城的人操心。",
+    "那天夜里你睡得不太安稳。梦里全是母狼的眼睛。"
+  ],
+  options:[
+    {t:"（把这事翻篇）", go:"combo_hunt_end"}
+  ]
+};
+N["combo_hunt_end"] = {
+  tag:"branch", place:"自由城邦 · 交汇城", pace:"light",
+  text:[
+    "后来你偶尔还会想起那批狼皮。有些选择当时看着小，等回头看，才发现路是从那儿分岔的。"
+  ],
+  options:[
+    {t:"（回到市集）", go:"fc_tavern"}
+  ]
+};
+
+/* ---- 线二：守护士（c_guard_healer）· 学院医务室 ---- */
+N["combo_guard_01"] = {
+  tag:"branch", place:"北境 · 艾尔达学院 · 医务室", pace:"normal",
+  text:[
+    "医务室的木桌上摆着一碗没喝完的药，汤色发黑，气味冲鼻。你端起来闻了闻——龙胆草放多了，苦味压住了药性，这么喝下去，伤没好，胃口先倒。",
+    "你重新配了一副。艾琳娜站在门口看了一会儿，没说话，等你把药熬好，她才开口：“你以前学过医？”",
+    "“没正式学过。家里有个药篓，我从小跟着认草。”你答。她把那碗药端走，分给隔壁床的伤员，回来时带了一本翻旧了的《药典》。"
+  ],
+  options:[
+    {t:"（接过药典，认真翻看）", go:"combo_guard_02"},
+    {t:"谢绝好意：我救人靠拳头，不靠书", go:"combo_guard_03"}
+  ]
+};
+N["combo_guard_02"] = {
+  tag:"branch", place:"北境 · 艾尔达学院 · 医务室", pace:"normal",
+  text:[
+    "那本《药典》你在床头放了半年，翻烂了三处书角。艾琳娜偶尔来借走两页，还回来时总会夹一片干叶子。",
+    "后来医务室的伤员都说，你俩一个治伤，一个记名，比院里的医师还像一对搭档。",
+    "你不知道的是，艾琳娜把这件事写进了给林邦的信里。信很短：“学院来了个会认草的人，可能是自己人。”"
+  ],
+  options:[
+    {t:"（继续学你的药）", go:"combo_guard_end"}
+  ]
+};
+N["combo_guard_03"] = {
+  tag:"branch", place:"北境 · 艾尔达学院 · 医务室", pace:"normal",
+  text:[
+    "艾琳娜看了你一眼，没劝，把药典收回袖子里。“那行，”她说，“以后你负责把人扛进来，我负责把人救回来。”",
+    "你笑了笑，没接话。但你记住了她的名字。后来好几次你浑身是伤被人抬进医务室，都是她一边骂一边治。",
+    "她说你的伤口像地图，每一道都能讲一段故事。你没告诉她，那些故事里，有一半她都救过。"
+  ],
+  options:[
+    {t:"（记住这份默契）", go:"combo_guard_end"}
+  ]
+};
+N["combo_guard_end"] = {
+  tag:"branch", place:"北境 · 艾尔达学院", pace:"light",
+  text:[
+    "医务室的药味，后来成了你在大陆上最熟悉的味道之一。闻见它，你就知道：这地方还有人愿意治伤，还有人愿意认药。"
+  ],
+  options:[
+    {t:"（回到学院生活）", go:"academy_library"}
+  ]
+};
+
+/* ---- 线三：复仇铁匠（c_revenge_forge）· 北境铁匠铺 ---- */
+N["combo_forge_01"] = {
+  tag:"branch", place:"北境 · 铁门关 · 铁匠铺", pace:"normal",
+  text:[
+    "铁匠铺的火炉烧得正旺。你坐在炉边，把一块旧铁烧红，抡起锤子。锤声一下一下，铺子里的人都习惯了——这个外乡人一来就打铁，打了三天，没说过自己是谁。",
+    "第四天，老铁匠终于开口：“你这锤法，是北境戍边的路子。谁教你的？”",
+    "你没抬头：“我爹。”老铁匠没再问。有些事，问到这里就够了。"
+  ],
+  options:[
+    {t:"（继续打铁，把仇恨打进刃口）", go:"combo_forge_02"},
+    {t:"（放下锤子，说出口）", go:"combo_forge_03"}
+  ]
+};
+N["combo_forge_02"] = {
+  tag:"branch", place:"北境 · 铁门关 · 铁匠铺", pace:"normal",
+  text:[
+    "你把那块铁打成了一柄短刀。刃口青黑，敲一敲，声音又长又闷，像北境的夜风。",
+    "老铁匠看了看刀，摇摇头：“刀是好刀。可你要用它去杀的那个人，如果已经死了呢？”",
+    "你握着刀柄没说话。半晌，你问：“那这把刀，还能打什么？”他说：“打一块墓碑。”",
+    "你把刀收了，没再打第二柄。那天夜里，你第一次梦见仇人之外的东西——一块无字的碑。"
+  ],
+  options:[
+    {t:"（收起刀，也收起一些别的）", go:"combo_forge_end"}
+  ]
+};
+N["combo_forge_03"] = {
+  tag:"branch", place:"北境 · 铁门关 · 铁匠铺", pace:"normal",
+  text:[
+    "你放下锤子，把那个名字说了出来。火炉噼啪响着，铺子里静得能听见炭灰落地的声音。",
+    "老铁匠听完，往炉里添了一铲煤。“这个人，”他说，“十年前就该死了。他没死，说明有人替他挡着。”",
+    "“谁？”老铁匠没答，只是看着火：“你爹替你挡的那一刀，不是让你把命还给他。是让你替他看看，这世道后来怎么样了。”",
+    "你站在原地，手里的锤子怎么也举不起来。"
+  ],
+  options:[
+    {t:"（把锤子挂回墙上）", go:"combo_forge_end"}
+  ]
+};
+N["combo_forge_end"] = {
+  tag:"branch", place:"北境 · 铁门关", pace:"light",
+  text:[
+    "铁匠铺的锤声还在响，但你知道，有些东西已经不一样了。仇要报，路要赶，可这两件事，未必是同一条路。"
+  ],
+  options:[
+    {t:"（离开铁门关）", go:"frontier_city"}
+  ]
+};
+
+/* /u1inj:data-nodes:dn_conflict.js/ */
+/* N-7 冲突事件层（v93n12_conflictPool：独立注入层，不碰 EVENT_POOL_EXT）
+ * 事件按 day 区间 + 可选条件触发一次（S.flags[id] 防重），结算轻量 effects 后返回文本。
+ * {id, dayFrom, dayTo, cond:{flag}, effects:{gold|hp|flag}, text}
+ */
+window.CONFLICT_POOL = [
+  {id:"cf_brawl_1", dayFrom:20, dayTo:60, effects:{gold:-15,hp:-8},
+   text:"夜里你在酒馆被一伙醉汉堵住。起因不重要——你打翻的那杯酒是某个佣兵团的信物。你挨了两拳，也还了两拳，最后双方都带着伤、各赔了半个银月的酒钱散了。"},
+  {id:"cf_brawl_2", dayFrom:80, dayTo:120, effects:{gold:-30,hp:-12},
+   text:"商路上有人设了套：说是护镖，实则是让你引开巡逻队。你发现时刀已经架在脖子上。你交了钱袋，留下了两颗牙——教训比钱贵。"},
+  {id:"cf_fire_1", dayFrom:130, dayTo:170, cond:{flag:"academy_y2"}, effects:{gold:-20},
+   text:"学院旧仓库半夜起火。你帮忙搬书到天亮，指尖全是烫伤。第二天院长宣布，救出一册禁书的，免一年学费——你救的是账册，火光照得人分不清。"},
+  {id:"cf_plague_1", dayFrom:180, dayTo:220, cond:{flag:"academy_y3"}, effects:{gold:-25,hp:-5},
+   text:"北境入冬后闹了一场寒症。药价翻了三倍，你把自己的药分给了隔壁床，自己靠硬扛过了七天。第七天夜里你烧得看见天花板在转。"},
+  {id:"cf_sand_1", dayFrom:210, dayTo:250, cond:{flag:"desert_visited"}, effects:{gold:-40},
+   text:"沙漠里那场沙暴来得没有预兆。驼队丢了半数的水囊，你把自己的那份让给了一个孩子。夜里渴得睡不着，听见风声里有人念经。"},
+  {id:"cf_purge_1", dayFrom:55, dayTo:75, effects:{gold:-50},
+   text:"净化令的风声传到自由城，教会的人进城查异端。你因为夜里在广场看星星，被盘问了半个时辰。出来时，巡逻队看你的眼神都带着钩子。"},
+  {id:"cf_army_1", dayFrom:140, dayTo:180, cond:{flag:"frontier_visited"}, effects:{gold:-35,hp:-15},
+   text:"第三哨的雪夜，哨兵失踪的传闻让军营人心浮动。你跟着巡逻队搜了一夜山，回来时靴子冻成了冰坨。队长塞给你半壶酒：“压压惊，也压压嘴。”"},
+  {id:"cf_grave_1", dayFrom:160, dayTo:200, cond:{flag:"goldscale_touched"}, effects:{gold:-10},
+   text:"墓园无字碑前有人夜祭。你撞见了，对方没说话，放下一枚铜子就走了。你低头看，铜子压在碑缝里，正面刻着一杆秤。你把铜子捡起来，又放了回去。"},
+  {id:"cf_market_1", dayFrom:100, dayTo:130, effects:{gold:25},
+   text:"银穗商路断货，南边的盐价翻番。你手里恰好有一批存货，转手赚了一笔。赚完你数了两遍——这钱烫手，可烫手也挡不住人用。"},
+  {id:"cf_dwarf_1", dayFrom:190, dayTo:230, cond:{flag:"dwarf_visited"}, effects:{gold:-20},
+   text:"矮人山国的集市上，有人拿假银月骗了你的钱。你追了两条街，把那人堵在巷子里。他赔了钱，还赔了一句实话：这假货，出自北境一个造币炉。"},
+  {id:"cf_elf_1", dayFrom:170, dayTo:210, cond:{flag:"elf_visited"}, effects:{gold:-15,hp:-6},
+   text:"迷雾森林的雾比传闻中更不讲理。你在林子里迷了两天，靠啃树皮出来。精灵巡林者在出口等你，递给你一块干饼：“雾认生，下次带个向导。”"},
+  {id:"cf_orc_1", dayFrom:260, dayTo:300, cond:{flag:"orc_visited"}, effects:{gold:-30,hp:-18},
+   text:"草原的狼旗南移那天，你在集市上撞见兽人斥候。双方都按着刀，最后谁也没动。你退了一步，他也退了一步——草原的规矩，不断人水源，也不先动手。"},
+  {id:"cf_temple_1", dayFrom:230, dayTo:270, cond:{flag:"church_visited"}, effects:{gold:-40},
+   text:"圣城的审判庭开庭那天，你被挤在人堆里看了一场异端审判。被审的是个老修士，罪名是藏了本旧历书。他在台上没辩白，只说自己年纪大了，记性好。"},
+  {id:"cf_winter_1", dayFrom:280, dayTo:320, effects:{gold:-20,hp:-10},
+   text:"这一年的冬天格外长。柴火、口粮、药品，样样都在涨价。你在客栈灶台边睡了一夜，第二天早上，老板娘往你碗里多舀了一勺粥，什么也没说。"}
+];
 
 /* /u1inj:data-nodes:dn_demo.js/ */
 // U1 内容外置化 · 数据节点文件 dn_demo.js
@@ -61077,6 +61812,50 @@ N["dwarf_deep_mine2"] = {
   ]
 ,
   ifFlag: {"bandit_leader_killed": ["矿灯的光晃过岩壁，你的手在剑柄上停了一下。铁门关外的血，在这地底七百层的安静里忽然翻上来——你不再是从前那个只听过传说的人了。"]}};
+
+/* /u1inj:data-nodes:dn_ending_cards.js/ */
+/* N-4 结局卡牌册（图鉴"结局"tab 增强数据层）
+ * 纯数据 + 只读渲染，不参与任何判定；卡 id 与 ENDINGS / ending_anchor_* 键对应。
+ * conds 仅用于图鉴显示解锁线索（属性/flag/立场/关系组合），非判定公式。
+ */
+window.ENDING_CARDS = [
+  {id:"seal", cn:"封门人", ic:"🚪", hint:"在深渊神殿前，亲手把门重新关上。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"goldscale_final"}]},
+  {id:"hero", cn:"群山回响", ic:"🏔", hint:"带着线索与铁牌回到文明世界，让各方的视线落在封印上。",
+   conds:[{type:"flag",key:"silver_route"},{type:"flag",key:"led_anchor_03"}]},
+  {id:"legend", cn:"传奇之路", ic:"⭐", hint:"走到传奇境界，让吟游诗人开始传唱你的名字。",
+   conds:[{type:"attr",k:"realm",min:8},{type:"stance",axis:"honor",min:6}]},
+  {id:"myth", cn:"神话之姿", ic:"🌌", hint:"超脱凡俗，以不可测之身俯瞰人间。",
+   conds:[{type:"attr",k:"realm",min:10},{type:"stance",axis:"god",min:8}]},
+  {id:"merchant", cn:"商海沉浮", ic:"⚖", hint:"以契约丈量人心，用黄金撬动国运。",
+   conds:[{type:"attr",k:"gold",min:3000},{type:"stance",axis:"altru",max:-4}]},
+  {id:"fell", cn:"堕落之途", ic:"🜋", hint:"在深渊的低语面前，交出自己。",
+   conds:[{type:"flag",key:"abyss_touched"},{type:"stance",axis:"faith",max:-8}]},
+  {id:"madness", cn:"疯狂真相", ic:"🌀", hint:"把世界的秘密一页一页翻出来，直到自己成为秘密的一部分。",
+   conds:[{type:"flag",key:"truth_revealed"},{type:"stance",axis:"trad",max:-6}]},
+  {id:"purge", cn:"净化令下", ic:"🕯", hint:"站在教会的一边，或成为净化令余波的一部分。",
+   conds:[{type:"flag",key:"purge_done"},{type:"stance",axis:"faith",min:6}]},
+  {id:"pact", cn:"誓约之重", ic:"🤝", hint:"与某个人立下无法背弃的誓约，并真的守到底。",
+   conds:[{type:"rel",npc:"ferman",min:80},{type:"flag",key:"oath_made"}]},
+  {id:"east", cn:"东境之书", ic:"🏯", hint:"把东境的答案带回应许之地，或把东境的秘密带进土里。",
+   conds:[{type:"flag",key:"chen_route"},{type:"rel",npc:"cecy",min:60}]},
+  {id:"godfavor", cn:"神眷之人", ic:"✨", hint:"让圣光真正看见你——或让某个更古老的存在看见你。",
+   conds:[{type:"stance",axis:"faith",min:10},{type:"flag",key:"god_touched"}]},
+  {id:"returned", cn:"归来者", ic:"🏠", hint:"走出很远之后，仍然回到出发的地方。",
+   conds:[{type:"flag",key:"returned_home"},{type:"rel",npc:"millian",min:40}]},
+  {id:"wanderer", cn:"行者无疆", ic:"🧭", hint:"不属于任何一方，只属于脚下的路。",
+   conds:[{type:"stance",axis:"order",max:-6},{type:"stance",axis:"trad",max:-4}]},
+  {id:"ending_anchor_seal", cn:"守门人", ic:"🗝", hint:"七锚齐鸣，你选择把门守住。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"anchor_choice_seal"}]},
+  {id:"ending_anchor_open", cn:"混沌纪元", ic:"🌋", hint:"七锚齐鸣，你选择打开那扇门。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"anchor_choice_open"}]},
+  {id:"ending_anchor_transcend", cn:"超脱归位", ic:"☄", hint:"七锚齐鸣，你选择越过门本身。",
+   conds:[{type:"flag",key:"led_anchor_07"},{type:"flag",key:"anchor_choice_transcend"}]},
+  {id:"ending_anchor_war", cn:"战争终局", ic:"⚔", hint:"在战争的终章，让锚与剑一起落下。",
+   conds:[{type:"flag",key:"war_over"},{type:"flag",key:"led_anchor_07"}]},
+  {id:"ending_anchor_goldscale", cn:"金秤传承", ic:"🏛", hint:"让金秤的名字，从守望者变成传灯人。",
+   conds:[{type:"flag",key:"goldscale_final"},{type:"flag",key:"goldscale_heir"}]}
+];
 
 /* /u1inj:data-nodes:dn_endings.js/ */
 // 七锚之约 · 卷 C 新结局（M7）
@@ -63352,7 +64131,7 @@ N["fc_morning"]={tag:"branch",place:"自由城邦 · 交汇城 · 跛脚酒桶",
 "她没再往下说。你也不打算问。有些事，知道得越多，夜里越睡不踏实。"
 ,"店堂里已经坐了三五个赶早的客人，都是码头工打扮，埋头吃面，谁也不说话。蜜尔娜在柜台后往杯子里倒麦酒，倒到一半，抬头看了你一眼。","你咬着硬面包，把昨夜的事在肚子里翻了个面。蜜尔娜不肯说透，老赵劝你别管——这座城的水深得很，你才刚把脚伸进去，还够不着底。", "你离了交汇城，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"吃早饭，开始今天的活计",go:"fc_job"},
-{t:"先去找蜜尔娜深谈几句",go:"fc_innkeep"}
+{t:"先去找蜜尔娜深谈几句",run:function(){window.v93n2_remember("蜜尔娜","你想跟她深谈，问问这座城的底细");},go:"fc_innkeep"}
 ]};
 N["fc_innkeep"]={tag:"main",place:"自由城邦 · 交汇城 · 跛脚酒桶柜台",pace:"normal",text:[
 "早饭时酒馆没什么人。蜜尔娜难得清闲，坐在柜台后缝一件旧围裙。你端着硬面包凑过去，她也不赶你，只抬了抬那只亮眼睛。",
@@ -63378,7 +64157,7 @@ N["fc_innkeep"]={tag:"main",place:"自由城邦 · 交汇城 · 跛脚酒桶柜�
 {t:"回城东小院",req:function(){return S.flags["home_fc"];},go:"wdr3_home"},
 {t:"（城楼上贴了停战告示——去看看）",req:function(){return (S.worldWar||0)>=13&&!S.flags["ap1_done"];},go:"ap1_aftermath"},
 {t:"（茶馆里都在说深渊裂隙的事）",req:function(){return (S.day||0)>=200&&!S.flags["ap2_done"];},go:"ap2_gate"},
-{t:"（阿岩说想带你去草原一个地方）",req:function(){return (S.npcRelations["ayan"]||0)>=50&&!S.flags["ap3_done"];},go:"ap3_oracle"},
+{t:"（阿岩说想带你去草原一个地方）",req:function(){return (S.npcRelations["ayan"]||0)>=50&&!S.flags["ap3_done"];},run:function(){window.v93n2_remember("阿岩","你说过愿意跟他去草原看看");},go:"ap3_oracle"},
 {t:"（城门口，你捡起一片旧叶——似曾相识）",req:function(){return !S.flags["ng1_echo_done"]&&(function(){try{var h=JSON.parse(localStorage.getItem("elda-ngplus-v2")||"{}");return (h.history||[]).length>=2;}catch(e){return false;}})();},go:"ng1_echo"},
 {t:"（老槐树下，你认出一道旧疤）",req:function(){return !S.flags["ng1_memory_done"]&&(function(){try{var h=JSON.parse(localStorage.getItem("elda-ngplus-v2")||"{}");return (h.history||[]).length>=3;}catch(e){return false;}})();},go:"ng1_memory"},
 {t:"（城门口，你站了一会儿，选了一条路）",req:function(){return !S.flags["ng1_path_done"]&&(function(){try{var h=JSON.parse(localStorage.getItem("elda-ngplus-v2")||"{}");return (h.history||[]).length>=2;}catch(e){return false;}})();},go:"ng1_path"},
@@ -63878,7 +64657,7 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 ],options:[
 {t:"去钟楼看看那口铜钟",go:"frontier_tower_gate"},
 {t:"去矿洞口看看（守卫拦着）",go:"frontier_mine_gate"},
-{t:"打听老兵老铁的下落（他昨夜失踪了）",go:"frontier_tie_1"},
+{t:"打听老兵老铁的下落（他昨夜失踪了）",run:function(){window.v93n2_remember("老铁","你打听过老铁的下落");},go:"frontier_tie_1"},
 
 {t:"去军械库转转",go:"frontier_armory"},
 {t:"去伤兵营看看",go:"frontier_infirmary"},
@@ -63887,7 +64666,8 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 {t:"去战报栏看看最新的消息",go:"frontier_herald"},
 {t:"（应征：北境联军正在边境集结，随军北上）",go:"warphase_1"},
 {t:"（离城，回铁门关方向）",go:"frontier_leave"}
-]};
+,
+    {t:"（铁匠铺的锤声——你想再去打一柄）",go:"combo_forge_01"}]};
 
 N["frontier_tower_gate"]={tag:"main",place:"北境 · 第三哨 · 钟楼脚下",where:"白昼",pace:"light",arc:"arc_frontier",vol:"vol_north",text:[
 "钟楼是第三哨最高的石头建筑，塔身被风雪打磨得圆润，砖缝里塞着干枯的苔藓。楼门虚掩着，门环上拴着一根红布条，被风吹得猎猎响。",
@@ -65991,6 +66771,44 @@ N["grad_home_8"]={tags:["region:north"],tag:"main",place:"故乡 · 村口",wher
 {t:"（顺路去驿站，看看有没有信）",effects:{xp:5},go:"alumni_hub"}
 ]};
 
+/* /u1inj:data-nodes:dn_history.js/ */
+/* N-6 历史年表（编年史 tab · 大陆大历史 ≥30 条）
+ * HISTORY_EPOCHS：[{day:相对时代标记(yyyy前/纪年), era:"时代名", text:"事件"}]
+ * 纯数据只读，v93n6_historyBody 渲染到编年史 tab 顶部。
+ */
+window.HISTORY_EPOCHS = [
+  {era:"神战之前", text:"诸神行走大地，龙裔与诸神争天，太阳神以天火击落龙族九城。"},
+  {era:"神战之后", text:"诸神退回天上，权柄留给教会与凡人；守门人于七处地脉埋下铁牌。"},
+  {era:"承天立国", text:"承天王朝立都东境，以科举取士，开银穗商路，筑铁门关。"},
+  {era:"承天盛世", text:"三百年治世，九域臣服，史官署修成《大陆编年史》首卷。"},
+  {era:"王朝末路", text:"天灾兵祸并至，北境七公国自立，自由城邦据商路而兴。"},
+  {era:"晨天陷落", text:"承天王朝末帝在晨天故都降旗；史馆档案一夜失窃近半。"},
+  {era:"九域并立", text:"兽人诸部立狼旗，精灵据迷雾森林，矮人退守山国，沙漠诸部各自为政。"},
+  {era:"教会扩张", text:"光明教会收拢圣城周边领地，圣痕司成立，审判庭与救济院同墙而立。"},
+  {era:"自由城崛起", text:"交汇城以商立城，大陆第一座不设城墙的都会，通行证即货币。"},
+  {era:"学院初创", text:"北境戍边学塾改建为艾尔达学院，收留战争孤儿，不分门第。"},
+  {era:"学院第45年", text:"禁书区设立，藏书教授费尔曼上任；借阅登记制确立。"},
+  {era:"学院第70年", text:"学院拒绝交出《深渊谱系》，与圣痕司产生嫌隙，教会派驻观察员。"},
+  {era:"学院第89年", text:"灰楼夜火，禁书区档案损毁；费尔曼一夜未眠。"},
+  {era:"学院第96年", text:"首次招收兽人与精灵学生；老院长逐一点名欢迎。"},
+  {era:"战争阴云", text:"北境与兽人草原边境摩擦不断，铁门关三次闭门警戒。"},
+  {era:"银穗商路危机", text:"东境银穗商路出现劫案，商会与王朝互相指责，南方城邦趁机抬价。"},
+  {era:"深渊异动", text:"死亡沙漠封印处地脉发烫，深渊教派残部在废墟中活动。"},
+  {era:"净化令颁布", text:"光明教会发布净化令，圣痕司在九域甄别异端，圣城周边风声鹤唳。"},
+  {era:"草原狼旗南移", text:"兽人诸部狼旗南移，铁门关守军全线戒备。"},
+  {era:"艾尔达历4037年春", text:"你在自由城邦的客栈醒来。大陆的太平，又薄了一层。"},
+  {era:"交汇城旧案", text:"商会账房查出一笔二十年前的旧账，牵出承天旧档失窃案。"},
+  {era:"第三哨异响", text:"北境第三哨铜钟夜响，哨兵接连失踪，铁牌刻痕出现。"},
+  {era:"矿洞坍塌", text:"第三哨矿洞二次坍塌，刘矿头死于井下，钥匙其一现世。"},
+  {era:"学院金库失窃", text:"学院旧金库失窃，铁牌失踪，现场留有鸦羽。"},
+  {era:"无字碑开裂", text:"墓园无字碑出现裂纹，金秤旧事被重新提起。"},
+  {era:"故都回响", text:"晨天故都地下档案被翻动，守档人闭口不谈。"},
+  {era:"神谕降临", text:"兽人神谕之地异象频现，狼骨持有人阿塔应召前往。"},
+  {era:"七锚齐鸣", text:"七枚铁牌同现之日，地脉震动，封印之门的选择摆在所有人面前。"},
+  {era:"终战与余烬", text:"无论门开与否，大陆的账，都记在了史官署的新卷首行。"},
+  {era:"史官批注", text:"史官署卷末批注：每一次太平都是灾难未远，每一次灾难都是太平欠债。"}
+];
+
 /* /u1inj:data-nodes:dn_hooks.js/ */
 /* /u1inj:data-nodes:dn_hooks.js/ UPG-14 事件池全局钩子（Evennia Scripts 模式）
  * 纯数据层：GLOBAL_HOOKS = 全局条件触发器表（不绑定具体节点，挂在游戏主循环）。
@@ -66423,6 +67241,123 @@ const JOB_EVENTS = [
   { id: "je_merch_blockade", job: "商人", day: 162, cls: "天灾", text: "商路被军阀切断，货物积压在驿站。商会紧急开会，商量绕道西境的路线。" }
 ];
 if (typeof window !== 'undefined') { window.JOB_EVENTS = JOB_EVENTS; }
+
+/* /u1inj:data-nodes:dn_library.js/ */
+/* N-6 世界图书馆（藏书 tab 全书：8 本 × ≥600 字，page:true 触发分页阅读）
+ * 数据与 READINGS_V45 同构（{id,title,type,author,source,text[],page}），openReading 按 r.page 分页。
+ * 纯数据，不参与判定。
+ */
+window.LIBRARY_V93 = {
+  lib_chronicle: {
+    id:"lib_chronicle", title:"《大陆编年史·通卷》", type:"tome", author:"承天史官署", source:"东境 · 承天城 · 史馆正厅",
+    page:true,
+    text:[
+      "第一卷开篇，只有一句话：艾尔达没有元年，只有灾难与重建的间隔。",
+      "旧王朝之前，诸神尚在行走。太阳神与众神把龙裔从大地上抹去，那场战争烧穿了天空，也烧断了神与人之间的桥。战后诸神退回天上，把权柄留给了教会与凡人。",
+      "旧王朝承天，史称承天王朝。它在东境立都，以科举取士，以铁门关镇北，以银穗商路养国。三百年的治世，像一匹织得太密的锦，看着光鲜，一扯就露出里面的线头。",
+      "王朝末代，天灾与兵祸并至。北境七公国趁乱自立，自由城邦据商路而兴，教会趁乱收拢圣城周边的领地。承天王朝的旗帜在晨天故都降下那天，东境的老人们说，史官署的档案一夜之间少了一半。",
+      "此后三百年，九域并立。草原的兽人诸部、迷雾森林的精灵林邦、山腹的矮人山国、沙漠的诸部——各自立旗，各自过活。战争从未真正停止，只是换了个名字，叫贸易、叫联姻、叫教令。",
+      "史官署在卷末留下批注：大陆的每一次太平，都是上一场灾难还没被忘记。每一次灾难，都是上一场太平埋下的债。",
+      "本卷由承天史官署历代续写，至艾尔达历 4037 年春，仍在等待下一个篇章。"
+    ]
+  },
+  lib_doctrine: {
+    id:"lib_doctrine", title:"《圣光教典·节选》", type:"tome", author:"光明教会 · 圣城抄经院", source:"圣城 · 光明大教堂 · 讲经台",
+    page:true,
+    text:[
+      "圣光教典第一卷：光从何来。",
+      "神说，光要照见人，先要照见人的影子。教会的第一条诫命不是爱，是诚实——对自己诚实的人，才看得见别人的苦。",
+      "第二卷：圣痕。圣痕不是恩赐，是代价。被圣光灼过的人，皮肤上会留下印记，那印记提醒他：光既照你，也照你的罪。圣痕司以此为凭，甄别异端，也甄别自己人。",
+      "第三卷：净化。教典记载，凡被深渊侵染之物，应予以净化。何为侵染，何为异端，历任教皇说法不一。克莱门特枢机主张从严，奥黛拉枢机主张从宽，教典本身没有给出答案——它只留下一句话：净化之前，先问自己，是否已把对方当作人。",
+      "第四卷：守夜。神不在的地方，由人来守夜。教会的修士、圣城的钟、边地的传道者——都是守夜人。守夜人没有酬劳，只有下一个夜晚。",
+      "抄经院的修士在卷末用小字补了一句：读教典的人多，照教典活的人少。这一句，历任教皇都不许删。"
+    ]
+  },
+  lib_geo: {
+    id:"lib_geo", title:"《艾尔达地理志·九域篇》", type:"tome", author:"游历学士 · 佚名", source:"自由城邦 · 交汇城 · 书院藏架",
+    page:true,
+    text:[
+      "九域，艾尔达大陆的九块拼图。",
+      "自由城邦居中，无险可守，也无主可依。它的城墙是商路，货币是通行证。交汇城是它的心脏，每一条街都通向一个方向。",
+      "北境七公国联盟，铁与雪之地。铁门关卡在唯一通路上，三千年来，没有哪支军队能正面攻破它。北境人话少，因为话在风里站不住。",
+      "南方商业城邦联盟，五个城邦的金钱联邦。账房比议会更热闹，汇率比天气变得快。",
+      "光明教会辖区，圣城为中枢。城里的钟声按时响起，钟声之下，审判庭与救济院共用一面墙。",
+      "精灵林邦，迷雾森林的主人。树比人老，路比人少。精灵不建城，树冠就是屋顶。",
+      "矮人山国，山腹与熔炉。矮人不写史，他们把历史刻在铁器上，一把好刀，就是一部家谱。",
+      "兽人草原，狼旗与马蹄。兽人的法律写在狼牙上：强者食肉，弱者饮水，但不得断人水源。",
+      "东部王国王朝，承天的余晖。帝京的墙还在，王朝的印还在，只是印上的朱砂，一年比一年淡。",
+      "死亡沙漠诸部，沙海中的绿洲与废墟。沙漠教会人两件事：水的分量，和活人的不可信。"
+    ]
+  },
+  lib_persons: {
+    id:"lib_persons", title:"《人物志·乱世名册》", type:"tome", author:"佚名", source:"自由城邦 · 交汇城 · 旧书摊",
+    page:true,
+    text:[
+      "此册收录乱世中值得一提的人，未必都是好人，但都值得记住。",
+      "费尔曼，学院的藏书教授。此人一生只做一件事：整理。整理旧书，整理禁书，整理那些不该被记住又不敢被忘记的东西。有人说他记得太多，他说，正是记得太多，才不轻易开口。",
+      "李管事，商会账房的一把好手。他的算盘声比教堂的钟还准时。没人知道他替商会做过多少笔见不得光的账，也没人知道他把哪些账悄悄抹平了。",
+      "老铁，铁门关的老兵。他的刀比他的年龄大，他的沉默比他的刀老。铁门关的士兵换了一茬又一茬，只有他还站在城头。",
+      "塞西莉娅，东境贵族之女。她的笔记里写满了问号，她把东境贵族不敢问的问题，一个个记下来，等一个敢回答的人。",
+      "阿塔，兽人草原的孤儿。他手里那枚狼骨比他的命还硬。草原上的老人说，狼骨认主，它选了他，就说明神谕还欠他一个交代。",
+      "罗克，草原上来的同学。他性子直，拳头比话快，但草原上教会他的第一课是：对朋友，永远先递水。",
+      "金秤家的守望者，无字碑前的一家人。名册在此处留白——不是没有可写，是写出来的每一个字，都可能被不该看到的人看到。"
+    ]
+  },
+  lib_mottos: {
+    id:"lib_mottos", title:"《九域家族箴言录》", type:"tome", author:"行商采集 · 佚名", source:"自由城邦 · 交汇城 · 商会书匣",
+    page:true,
+    text:[
+      "每一家都有自己压箱底的一句话，平时不说，出事了才拿出来。",
+      "自由城邦商会：账本比誓言可靠。商人信誓约，但更信白纸黑字。",
+      "北境铁门关守军：刀在人在，城在命在。铁门关的兵不喊口号，他们只是从不后撤。",
+      "南方城邦：钱不压舱，船不过海。南方人把家底看得比命重，因为他们知道，命可以再挣，本钱没了就没了。",
+      "光明教会：净化之前，先问自己。这句话写在审判庭的门槛上，踩过去的人多，低头看的人少。",
+      "精灵林邦：树不死，人不散。精灵从不砍自己的母树，他们把誓言种在根里。",
+      "矮人山国：铁要趁热打。矮人不存心事，有事当场敲碎，敲不碎就打成器具。",
+      "兽人草原：不断人水源。这是草原上唯一不能违背的规矩，违背者，全族共弃。",
+      "东境承天：公道在史册。承天人信史官胜过信刀兵，所以他们把胜负都记下来，等后人评说。",
+      "金秤家族：守门的人，不入史册。这句话从无字碑传下来，一代传一代，没有例外。"
+    ]
+  },
+  lib_anchor: {
+    id:"lib_anchor", title:"《七锚秘录·残本》", type:"tome", author:"无名", source:"学院 · 禁书区 · 铁皮匣",
+    page:true,
+    text:[
+      "七锚，七枚铁牌，七处地脉节点。传说这是神战之后，守门人埋下的楔子，用来钉住大陆地脉里的那道裂缝。",
+      "第一锚在第三哨的钟楼下，第二锚在矿洞深处，第三锚在墓园的无字碑下，第四锚在学院的旧金库里，第五锚在晨天故都的地下，第六锚在教会的圣物库，第七锚在兽人的神谕之地。",
+      "秘录没有写七枚铁牌的用途，只写了三句警告：不可集齐，不可妄动，不可让它们离开守门人的视线。",
+      "但秘录的边角，有人用不同的笔迹添了一行小字：若封印已松，七锚齐鸣之日，便是抉择之时——封，则守门人永生；开，则混沌归来；还有第三条路，秘录没写完。",
+      "残本缺了最后几页。缺掉的部分，有人说被费尔曼烧了，有人说被金秤家藏进了无字碑，还有人说，那几页根本没有写过。"
+    ]
+  },
+  lib_goldscale: {
+    id:"lib_goldscale", title:"《金秤家书·末代》", type:"letter", author:"金秤家 · 末代守望者", source:"墓园 · 无字碑 · 石缝",
+    page:true,
+    text:[
+      "吾儿：",
+      "你读到这封信时，我已不在。不是死了——是去守更远的地方了。金秤家世代守这块碑，守到第七代，碑下的地脉开始发烫。",
+      "我们的祖先不是贵族，不是英雄，只是一个替神看门的老卒。神走了，门还在，他便留下来。这一留，就是几百年。",
+      "家里的规矩你都知道：不入仕，不从商，不扬名。外人问起，只说我们是守墓的。这规矩不是怕丢人，是怕麻烦——知道门在哪的人越多，门就越危险。",
+      "我不求你守一辈子。神谕说，第七代之后，门会自己选择守门人。它若选你，你就守着；它若选了别人，你就把这块碑照顾好，别让野草把它埋了。",
+      "家里的账、地契、那把旧钥匙，都在老莫里茨那里。他信得过，就像我信得过他一样。",
+      "最后一件事：别恨这个世界。门要开了，不是门的错，是守门的人一代比一代少。你若有机会，去找找那七枚铁牌——不是让你去集齐它们，是让你在它们被人集齐之前，先知道它们在哪。",
+      "父字。"
+    ]
+  },
+  lib_academy: {
+    id:"lib_academy", title:"《艾尔达学院年鉴·近百年》", type:"tome", author:"学院文书处", source:"学院 · 档案馆 · 正厅",
+    page:true,
+    text:[
+      "艾尔达学院建于 3937 年，前身是北境的一座戍边学塾。百年来，它从收留战争孤儿的几间石屋，长成了北境最大的学府。",
+      "学院不设门第之见。牧羊人的儿子与公爵的女儿坐同一间教室，这是建校时就定下的规矩——第一任院长说，魔法不看血统，看脑子。",
+      "第 45 年，学院增设禁书区，由藏书教授费尔曼掌管。禁书区不禁止查阅，只登记借阅。院长说，堵不如疏，让学生自己决定要不要翻开。",
+      "第 70 年，学院与光明教会产生嫌隙。教会要求学院交出《深渊谱系》全本，学院以'学术自由'为由拒绝。那一年，圣痕司第一次派人常驻学院。",
+      "第 89 年，灰楼夜火。禁书区东侧的灰楼在深夜起火，烧毁了一批档案。费尔曼教授在火场里待了一夜，出来后沉默了很久。",
+      "第 96 年，学院开始招收兽人与精灵学生。草原与森林的孩子们走进教室那天，老院长站在门口，一个一个叫他们的名字。",
+      "年鉴在最新一页只有一行字：今年北境征兵，学院有 17 名学生退学从军。名单附后。"
+    ]
+  }
+};
 
 /* /u1inj:data-nodes:dn_lorebook.js/ */
 /* ===== UPG-01 世界书 Lorebook（关键词触发式设定注入） =====
@@ -66878,6 +67813,62 @@ N["ng3_note"]={tag:"branch",place:"自由城邦 · 交汇城 · 城东小院",pa
 ],options:[
 {t:"（把册子收进床底木箱，睡觉）",effects:{flag:"ng3_note_done",xp:10},go:"fc_innkeep"}
 ]};
+
+/* /u1inj:data-nodes:dn_npc_lives.js/ */
+/* N-5 NPC 独立近况（世界人物：NPC 不在场时世界也在转）
+ * 键=阶段起点 day（0/61/151/281），v93n5_npcLifeLine 按 S.day 取阶段，注入近况句。
+ * 纯数据只读，不参与判定。
+ */
+window.NPC_LIVES = {
+  rock:{0:"罗克在草原上放羊的间隙，把新磨的箭头一支支摆开，数到第三遍才肯睡。",
+    61:"听说罗克在学院门口站了三天，把攒的兽皮都换成了书钱。",
+    151:"草原来信说，罗克学会了写自己的名字，一笔一划，比刻石头还认真。",
+    281:"罗克回了草原，狼旗南移那天，他站在坡上看了很久。"},
+  kain:{0:"凯恩在铁门关的雪地里练刀，刀鞘冻在手上，他懒得取下来。",
+    61:"凯恩被调去了第三哨，信里只说雪大，没说别的。",
+    151:"凯恩升了军职，提拔文书上的印，盖得比谁都用力。",
+    281:"铁门关的战报里，凯恩的名字出现得越来越频繁。"},
+  alice:{0:"艾丽丝在火系塔的灰烬堆里翻找，说是要找一件烧不坏的东西。",
+    61:"艾丽丝把图书馆的禁书区摸了个遍，出来时袖口带着焦痕。",
+    151:"灰楼夜火的事之后，艾丽丝说话少了一半，火焰准头高了一倍。",
+    281:"火系塔的新学徒说，艾丽丝师姐总在深夜盯着窗外，等什么人来。"},
+  ata:{0:"阿塔在兽人营地外圈转悠，手里攥着一块狼骨，谁也不让碰。",
+    61:"阿塔进了学院，课堂上一言不发，考卷上画满了狼的图腾。",
+    151:"阿塔的狼骨在夜里会发烫，他把它埋进后山，又挖了出来。",
+    281:"神谕之地的方向传来消息时，阿塔第一个收拾了行囊。"},
+  loka:{0:"洛卡在药剂行会熬夜配药，配方单烧了一页又一页。",
+    61:"洛卡的研究卡住了，他把自己关在药房，三天没出门。",
+    151:"瘟疫的消息传开时，洛卡的行会门口排起了长队。",
+    281:"洛卡把一张药方贴在行会门口，下方写着一行小字：免钱。"},
+  cecy:{0:"塞西莉娅在东境的马车里读账本，读到一半，把账本摔在了座位上。",
+    61:"塞西莉娅在学院里旁听，笔记写得比谁都工整，字缝里全是问号。",
+    151:"东境来信催她回家，她把信压在书页里，没有回。",
+    281:"晨天故都的旧档被人翻动过，守档人说，是个穿东境袍子的姑娘。"},
+  mori:{0:"莫里在矮人工坊打铁，锤子敲到深夜，火星溅满了围裙。",
+    61:"莫里在学院工坊搭了个炉子，旁人嫌吵，他搬到了地窖。",
+    151:"矿洞的传闻传到学院，莫里连夜画了一张地图。",
+    281:"莫里带着图纸回了山国，说要把矿洞的钥匙打出来。"},
+  elena:{0:"艾琳娜在精灵林邦采药，篮子满了又空，空了又满。",
+    61:"艾琳娜在学院医务室帮忙，伤员的名单她记得比谁都清楚。",
+    151:"圣痕司的人来过学院，艾琳娜躲在药房，直到人走。",
+    281:"艾琳娜的治愈术在伤兵营出了名，她本人却越来越沉默。"},
+  tie:{0:"老铁在铁门关城头擦刀，刀是旧刀，人比刀更旧。",
+    61:"老铁失踪的消息传开时，第三哨的雪正下得密。",
+    151:"有人看见老铁在雪原上往北走，拄着一根捡来的木棍。",
+    281:"老铁回来了，左臂的伤疤添了一道，话比从前更少。"},
+  ferman:{0:"费尔曼在藏书塔顶层整理旧书，灰尘呛得他直咳嗽。",
+    61:"费尔曼的《古代封印史》讲义换了一版，页码多出十几页。",
+    151:"禁书区少了一本书，费尔曼把钥匙换了，谁也没给。",
+    281:"费尔曼提交了辞呈，纸片压在桌角，落了一层灰。"},
+  li:{0:"李管事在商会账房拨算盘，拨到深夜，账本合上又翻开。",
+    61:"商会最近在查一笔旧账，李管事的眉头没松开过。",
+    151:"银穗商路的风声紧，李管事的货单改了又改。",
+    281:"李管事把那只木盒找出来擦了又擦，放回了原处。"},
+  tavern_owner:{0:"客栈老板娘擦着同一只杯子，从黄昏擦到灯起。",
+    61:"客栈最近多了些生面孔，老板娘的酒账记得比话多。",
+    151:"老板娘在柜台下压了一把匕首，说是防身，没人信。",
+    281:"客栈挂起了打烊的牌子，三天后又开了，老板娘瘦了一圈。"}
+};
 
 /* /u1inj:data-nodes:dn_npc_memory.js/ */
 /* /v93npc:data/ NM-6 NPC 记忆档案（纯数据；16 位登记 NPC，供回指钩子与记忆面板用） */
@@ -69191,6 +70182,25 @@ N["rel_world_elin"]={tag:"branch",place:"北境 · 艾尔达学院 · 旧书摊"
 {t:"认真看完，把册子还她：写得真好",effects:{flag:"rel_world_elin_done",relation:{npc:"elin",v:3}},go:"acad_life_y1_open"}
 ]};
 
+/* /u1inj:data-nodes:dn_scenes.js/ */
+/* N-8 名场面（挂既有场景节点追加段落；v93n8_sceneLine 按节点前缀命中追加）
+ * {at:[节点id或前缀], add:[段落]}；只追加不替换，不改原文本与选项。
+ */
+window.SCENES_V93 = [
+  {at:["fc_tavern"], add:["你后来每次路过酒馆，都会先看一眼柜台下的那把旧匕首。老板娘说那是压账用的，可你见过她拿它的姿势——那是拿过刀的手。"]},
+  {at:["frontier_bell_1","frontier_bell_2","frontier_bell_3"], add:["铜钟安静下来之后，你才发觉自己的耳朵还在响。那声音不是钟，是地底深处什么东西翻了个身。"]},
+  {at:["frontier_gate"], add:["雪落在你肩上，积了一层又化掉。铁门关的城门像一只半闭的眼，打量每个进来的人——它不看你是善是恶，只看你带没带够过冬的命。"]},
+  {at:["academy_gate","north_academy_gate"], add:["你站在学院门口，忽然想起家乡那句老话：山门开，人便不再是从前的那个。你回头看了一眼来路，雪地上只有你自己的脚印。"]},
+  {at:["academy_library"], add:["图书馆的灰尘在光柱里浮着，像无数个没来得及说出口的问题。你伸手去接，什么都没接住，指缝里漏下的全是旧日的沉默。"]},
+  {at:["academy_graduation","grad_y5_end"], add:["毕业那天，雪停了。院长说，从这里走出去的人，一半成为传说，一半成为传说的注脚。你没有问他你是哪一种——你自己也不知道。"]},
+  {at:["anchor_mine_1","anchor_mine_2","frontier_mine_1"], add:["矿洞里那股铁锈味，你后来在梦里闻见过很多次。它不是血，是大地裂开时，埋在最深处的旧伤。"]},
+  {at:["anchor_grave_1","anchor_grave_2","anchor_grave_3"], add:["无字碑前，你把那枚铜子放了又收，收了又放。最后你什么都没做，只是站了一会儿。有些问题，碑不回答，就是回答。"]},
+  {at:["goldscale_1","goldscale_2","goldscale_3"], add:["你合上那本旧家书，纸张的边角已经脆了。窗外起了风，烛火晃了一下——你忽然明白，守望者不是一个人，是一整条没有名字的河流。"]},
+  {at:["ending_anchor_seal","ending_anchor_open","ending_anchor_transcend"], add:["七锚齐鸣的声音停下来时，大地安静得像从没震动过。可你知道，那扇门不会忘记今天，就像你不会忘记自己站在这里的原因。"]},
+  {at:["warphase_7","warphase_14"], add:["战后的原野上，旗帜横七竖八地躺着。风把它们翻过来又翻过去，像在翻一本没人读完的历史。你站在旗杆的影子里，忽然觉得，每一面旗下都埋着一个人想问的话。"]},
+  {at:["faction_church_1","faction_church_2"], add:["圣城的钟声又一次响起。你数着钟声，想起教典里那句话：净化之前，先问自己。你问了，答案让你在台阶上坐了很久。"]}
+];
+
 /* /u1inj:data-nodes:dn_sp8_ranger.js/ */
 /* /sp8inj:nodes/ SP-8 示范章 · 西境游侠学院（arc_west_ranger 支线，30 节点闭环）
    流水线全流程示范：纯数据对象式节点 + pace 元数据 + flag/好感 + 蓝图弧归属
@@ -69421,6 +70431,82 @@ const MAGIC_SPELLS = [
   { id: "sp_anchorbind", school: "秘术", name: "锚定", manaCost: 14, comps: ["铁牌残片", "蓝绳"], chant: "以锚为凭，锁住此身。", effect: "将目标固定在原地，难以移动。" }
 ];
 if (typeof window !== 'undefined') { window.MAGIC_SPELLS = MAGIC_SPELLS; }
+
+/* /u1inj:data-nodes:dn_stance.js/ */
+/* ===== /v93n1:stance/ N-1 立场系统（纯数据；v66 文风；治理词合规） =====
+ * 五轴：order 秩序-自由 / altru 利他-利己 / faith 信仰-怀疑 / trad 传统-变革 / honor 荣誉-生存
+ * 档位：pos（≥8）与 neg（≤-8）各 2 句；平衡档不注入（返回 null）
+ * IDEAL_STANCE：8 理想 → 建号初始立场映射（v93n1_stanceInit 只置一次）
+ */
+window.STANCE_AXES = {
+  order: {
+    cn:"秩序", neg:"自由", desc:"律法、城邦与规矩，还是漂泊、随性与来去自如。",
+    pos:[
+      "你习惯先看规矩再办事。街上的告示、门上的铜牌、老人嘴里的旧例，都比刀剑靠得住。",
+      "队伍排得再长也有个头。你站进队里，数着前面的人，心里踏实——这世道，乱是从不排队的人先开始的。"
+    ],
+    neg:[
+      "规矩是给人设的，不是给人守的。你走过三道城门，三道都没拦住你。",
+      "城里的钟敲得再响，也管不住城外的人。你天生不往钟声底下站。"
+    ]
+  },
+  altru: {
+    cn:"利他", neg:"利己", desc:"先顾旁人，还是先顾自己。",
+    pos:[
+      "钱袋里的钱不是你的。你只是替它找个去处——给该得的人，办该办的事。",
+      "帮人一把不亏。你见过太多人把善心攒着，攒到最后连自己都舍不得花。"
+    ],
+    neg:[
+      "各人自扫门前雪。你扫自己的，别人的雪爱下不下。",
+      "施舍是富人的消遣。你还没富到那份上，先把自己的日子过瓷实。"
+    ]
+  },
+  faith: {
+    cn:"信仰", neg:"怀疑", desc:"圣光与诸神，还是把答案握在自己手里。",
+    pos:[
+      "圣光照得到的地方，人心就还热着。你信的不是神，是那束光底下肯伸手的人。",
+      "祈祷词你背不全，可每次路过教堂，你都会停下听一会儿钟——那声音让糟心事小一半。"
+    ],
+    neg:[
+      "神若真有灵，这世道不该是这副模样。你更信自己掌心里的茧。",
+      "教堂的穹顶画得再高，底下坐着的还是人。你见过的神迹，没有一桩不用钱买。"
+    ]
+  },
+  trad: {
+    cn:"传统", neg:"变革", desc:"祖训与旧例，还是另起炉灶。",
+    pos:[
+      "老一辈传下来的东西，总有它的道理。你不急着推翻，先弄明白它挡过什么风。",
+      "族谱上写着的名字是绳，把散开的人拴在一起。你顺着绳走，走得稳当。"
+    ],
+    neg:[
+      "旧例是旧人定的，旧人没见过今天的光景。该改的，趁早改。",
+      "祖上的坟头再高，也照不亮你眼前的路。你要走自己的道。"
+    ]
+  },
+  honor: {
+    cn:"荣誉", neg:"生存", desc:"名节与承诺，还是先保住这条命。",
+    pos:[
+      "答应过的事，刀架在脖子上也算数。你这样的人，坟头草都会比别人高三分。",
+      "人可以穷，脸不能丢。你把名字看得很重，重到不敢轻易许诺。"
+    ],
+    neg:[
+      "命只有一条，脸面可以再挣。你弯腰的时候，心里从不觉得低人一头。",
+      "活人才能讲信用。你先活下来，别的账以后慢慢算。"
+    ]
+  }
+};
+
+/* 8 理想 → 初始立场（建号时置一次；叠加进 S.stance） */
+window.IDEAL_STANCE = {
+  wealth:  { altru:-6 },
+  might:   { altru:-4, honor:4 },
+  guard:   { altru:8 },
+  truth:   { faith:-4, trad:-4 },
+  free:    { order:-8 },
+  god:     { faith:6, honor:4 },
+  fame:    { honor:6, altru:2 },
+  revenge: { altru:-6, faith:-2 }
+};
 
 /* /u1inj:data-nodes:dn_story_blueprint.js/ */
 /* ============================================================
@@ -72406,7 +73492,20 @@ window.STORY_BLUEPRINT = {
   "fs_watchers_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "fs_watchers_02b": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "fs_watchers_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
-  "fs_watchers_join": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"}};
+  "fs_watchers_join": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_04": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"}};
 
 /* /u1inj:data-nodes:dn_threads.js/ */
 /* /pn1inj:threads:dn_threads.js/ P-N1 并行叙事线程注册表（纯数据；引擎只读 window.THREADS）

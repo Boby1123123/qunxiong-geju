@@ -9605,8 +9605,9 @@ function v34_renderStatsPanel(){
     + '<div style="font-size:18px;font-weight:700">' + (S.name || '无名者') + '</div>'
     + '<div style="font-size:12px;color:var(--dim,#888);margin-top:4px">' + ((S.subrace||'')+' · '+(S.job||'')+' · '+(S.ideal||'')) + '</div>'
     + '<div style="font-size:12px;color:var(--dim,#888)">天赋：' + (S.talent||'-') + '　境界：' + (R ? R.cn : (S.realm||'-')) + '</div>'
-    + '</div>'
-    + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">' + attrsHtml + '</div>'
+    + row('立场', (window.v93n1_stanceLabel ? window.v93n1_stanceLabel(S) : '—'))
++ '</div>'
++ '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px">' + attrsHtml + '</div>'
     + '</div>'
     + '<div style="flex:1 1 210px;min-width:0">'
     + '<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px;margin-bottom:10px">'
@@ -11820,4 +11821,420 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       return h;
     }catch(e){ return '<div style="color:var(--dim);font-size:13px">抉择回顾暂不可用。</div>'; }
   };
+})();
+/* ===== /v93n1:stance/ N-1 立场系统（五轴；只读注入；S.stance 独立键） ===== */
+(function(){
+  window.v93n1_stanceInit = function(S){
+    try{
+      if(!S) return null;
+      if(!S.stance || typeof S.stance!=="object") S.stance={};
+      var map=(window.IDEAL_STANCE)?window.IDEAL_STANCE:{};
+      var m=map[S.ideal];
+      if(m && !S.stance._init){ for(var k in m){ S.stance[k]=(S.stance[k]||0)+m[k]; } S.stance._init=true; }
+    }catch(e){}
+    return S&&S.stance?S.stance:null;
+  };
+  window.v93n1_stanceLine = function(){
+    try{
+      if(!window.STANCE_AXES||!S) return null;
+      if(!S.stance||!S.stance._init) window.v93n1_stanceInit(S);
+      var st=S.stance||{}; var best=null,bv=0;
+      for(var k in window.STANCE_AXES){ var ax=window.STANCE_AXES[k]; if(!ax||!ax.cn) continue;
+        var v=st[k]||0; if(Math.abs(v)>Math.abs(bv)){ bv=v; best=k; } }
+      if(!best||Math.abs(bv)<8) return null;
+      var ax=window.STANCE_AXES[best]; var pool=bv>0?ax.pos:ax.neg; if(!pool||!pool.length) return null;
+      var r=((S.day||0)*7+(S.choices?S.choices.length:0))%pool.length;
+      return pool[r];
+    }catch(e){ return null; }
+  };
+  window.v93n1_stanceLabel = function(S){
+    try{
+      if(!window.STANCE_AXES||!S) return "—";
+      if(!S.stance||!S.stance._init) window.v93n1_stanceInit(S);
+      var st=S.stance||{}; var arr=[];
+      for(var k in window.STANCE_AXES){ var ax=window.STANCE_AXES[k]; if(!ax||!ax.cn) continue;
+        var v=st[k]||0; if(v!==0) arr.push(ax.cn+((v>0)?"+"+v:""+v)); }
+      return arr.length?arr.slice(0,3).join(" · "):"—";
+    }catch(e){ return "—"; }
+  };
+  window.v93n1_stanceShift = function(axis,v){
+    try{ if(!S||!axis) return false; if(!S.stance||typeof S.stance!=="object") S.stance={}; S.stance[axis]=(S.stance[axis]||0)+(v||0); return true; }
+    catch(e){ return false; }
+  };
+})();
+
+/* ===== /v93n2:dialmem/ N-2 对话级记忆（独立键 S.dialogueMem；只读注入；节流同日一次） ===== */
+(function(){
+  window.v93n2_remember = function(npc,line){
+    try{
+      if(!S) return; if(!S.dialogueMem) S.dialogueMem=[];
+      S.dialogueMem.push({npc:npc,line:line,day:S.day||0});
+      if(S.dialogueMem.length>8) S.dialogueMem.shift();
+    }catch(e){}
+  };
+  window.v93n2_dialogueLine = function(){
+    try{
+      if(!S||!S.dialogueMem||!S.dialogueMem.length) return null;
+      var m=S.dialogueMem[S.dialogueMem.length-1];
+      if(!m||!m.line) return null;
+      var ago=(S.day||0)-(m.day||0); if(ago<0) ago=0;
+      var when = ago<=1 ? "昨天" : (""+ago+"天前");
+      var name=m.npc;
+      var rel=(S.npcRelations&&S.npcRelations[name])?S.npcRelations[name]:0;
+      var pre = rel>=60 ? "（"+name+"与你相熟，把这话记在了心上）" : (rel<=-20 ? "（"+name+"当时没接话，可你看出他记下了）" : "");
+      return "你想起"+when+"对"+name+"说过的话："+m.line+"。"+pre;
+    }catch(e){ return null; }
+  };
+})();
+
+/* ===== /v93n3:clue/ N-3 贯穿线索 + 结局回响（图鉴线索页 + ending 注入；只读） ===== */
+(function(){
+  window.v93n3_cluesBody = function(){
+    try{
+      var ts = window.CLUE_TRACKS||[]; if(!ts.length) return '<div style="color:var(--dim,#888);font-size:13px">暂无线索记录。</div>';
+      var h='';
+      for(var i=0;i<ts.length;i++){
+        var t=ts[i]; var ps=t.probes||[]; var hit=0;
+        for(var j=0;j<ps.length;j++){ if(S.flags && S.flags[ps[j].flag]) hit++; }
+        h+='<div style="border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px;margin-bottom:10px">'
+          +'<div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700"><span>'+t.icon+' '+t.name+'</span><span style="color:'+(hit>=ps.length&&ps.length?'#2e7d32':(hit>=2?'#b26a00':'#888'))+'">'+hit+'/'+ps.length+'</span></div>'
+          +'<div style="font-size:13px;color:#555;line-height:1.6;margin:6px 0">'+t.desc+'</div>';
+        for(var k=0;k<ps.length;k++){
+          var got = S.flags && S.flags[ps[k].flag];
+          h+='<div style="font-size:13px;padding:2px 0;'+(got?'':'opacity:.45')+'">'+(got?'✓ ':'○ ')+ps[k].txt+'</div>';
+        }
+        h+='</div>';
+      }
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">线索暂不可用。</div>'; }
+  };
+  window.v93n3_endingEcho = function(){
+    try{
+      if(!S || !S.choices || !S.choices.length) return null;
+      var es = window.ENDING_ECHO||[]; if(!es.length) return null;
+      var tail = S.choices.slice(-12);
+      for(var i=tail.length-1;i>=0;i--){
+        for(var j=0;j<es.length;j++){
+          if(tail[i].indexOf(es[j].pre)===0) return es[j].txt;
+        }
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+})();
+/* ===== /v93n4:cards+timeline/ N-4 结局卡牌册 + 因果时间线（图鉴两 tab 增强；只读） ===== */
+(function(){
+  function _condHit(cond){
+    try{
+      if(cond.type==='flag'){ return !!(S.flags && S.flags[cond.key]); }
+      if(cond.type==='stance'){
+        var v=(S.stance&&S.stance[cond.axis])||0;
+        if(cond.min!==undefined && v>=cond.min) return true;
+        if(cond.max!==undefined && v<=cond.max) return true;
+        return false;
+      }
+      if(cond.type==='rel'){ return (S.npcRelations&&S.npcRelations[cond.npc]||0) >= (cond.min||0); }
+      if(cond.type==='attr'){
+        var v2 = (cond.k==='gold')?(S.gold||0) : (S.realm||0);
+        if(cond.min!==undefined && v2>=cond.min) return true;
+        return false;
+      }
+      return false;
+    }catch(e){ return false; }
+  }
+  function _endHist(){
+    var h={};
+    try{ var lg=JSON.parse(localStorage.getItem("elda-legacy-v2")||"{}"); if(lg&&lg.endings) h=lg.endings; }catch(e){}
+    if(S&&S.ending) h[S.ending]=1;
+    return h;
+  }
+  window.v93n4_endCardsBody = function(){
+    try{
+      var cards=window.ENDING_CARDS||[];
+      var hist=_endHist();
+      var h="<div style='color:var(--gold2,#c8a55a);margin-bottom:6px'><b>结局卡牌</b> · "+Object.keys(hist).length+"/"+cards.length+" 已入册</div>";
+      h+="<div class='v44-end-grid'>";
+      for(var i=0;i<cards.length;i++){
+        var c=cards[i];
+        var got=!!hist[c.id];
+        var hits=0, conds=c.conds||[];
+        for(var k=0;k<conds.length;k++){ if(_condHit(conds[k])) hits++; }
+        var st = got ? "已达成" : (conds.length && hits===conds.length ? "线索已齐 · 只差抉择" : "条件未明");
+        var cls = got ? "got" : (conds.length && hits===conds.length ? "ready" : "");
+        h+="<div class='v44-end-card "+cls+"' title='"+esc(c.hint)+"'>";
+        h+="<div class='ec'>"+c.ic+" "+esc(c.cn||c.id)+"</div>";
+        h+="<div class='ed'>"+st+"</div>";
+        if(conds.length && !got){
+          h+="<div style='font-size:11px;color:var(--dim,#8899aa);margin-top:3px'>"+esc(c.hint)+"</div>";
+          h+="<div style='font-size:11px;color:"+(hits===conds.length?"var(--ok,#6fbf73)":"var(--dim,#8899aa)")+"'>线索 "+hits+"/"+conds.length+"</div>";
+        }
+        h+="</div>";
+      }
+      h+="</div>";
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">结局卡暂不可用。</div>'; }
+  };
+  window.v93n4_choicesTimeline = function(){
+    try{
+      var h="<div style='color:var(--gold2,#c8a55a);margin-bottom:6px'><b>因果时间线</b> · 此生每一次抉择，都拖着一串后果</div>";
+      var arr=(S&&S.choices)||[];
+      if(!arr.length) return h+"<div style='color:var(--dim,#888);font-size:13px'>尚未走到任何重大岔路。</div>";
+      var shown=0;
+      for(var i=Math.max(0,arr.length-40);i<arr.length;i++){
+        var cid=arr[i]; if(!cid) continue;
+        var cm=null;
+        if(window.CHOICE_MAP){ for(var pk in CHOICE_MAP){ if(String(cid).indexOf(pk)===0){ cm=CHOICE_MAP[pk]; break; } } }
+        var echo="";
+        if(window.ENDING_ECHO){ for(var e2=0;e2<ENDING_ECHO.length;e2++){ if(String(cid).indexOf(ENDING_ECHO[e2].pre)===0){ echo=ENDING_ECHO[e2].txt; break; } } }
+        h+="<div style='border-bottom:1px solid #333;padding:6px 0'>";
+        h+="<div style='color:var(--ok,#6fbf73);font-size:12px'>◆ 第"+(shown+1)+"个岔路 · "+esc(cm?cm.t:cid)+"</div>";
+        if(cm&&cm.d) h+="<div style='font-size:12px;color:var(--dim,#8899aa);margin-top:2px'>后果："+esc(cm.d)+"</div>";
+        if(echo) h+="<div style='font-size:12px;color:var(--gold2,#c8a55a);margin-top:2px'>回响："+esc(echo)+"</div>";
+        h+="</div>";
+        shown++;
+      }
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">因果时间线暂不可用。</div>'; }
+  };
+})();
+
+/* ===== /v93n5:npclife+rel5/ N-5 NPC 独立近况 + 五维关系（只读注入 + changeRelation 旁路） ===== */
+(function(){
+  function _stage(day){ return day>=281?281:(day>=151?151:(day>=61?61:0)); }
+  window.v93n5_npcLifeLine = function(){
+    try{
+      var lives=window.NPC_LIVES||{}; if(!S||!S.npcRelations) return null;
+      var cands=[];
+      for(var k in S.npcRelations){ if((S.npcRelations[k]||0)>=30 && lives[k]) cands.push(k); }
+      if(!cands.length) return null;
+      var pick=cands[(S.day+cands.length*7)%cands.length];
+      var stage=_stage(S.day);
+      var lines=lives[pick];
+      if(!lines||!lines[stage]) return null;
+      var cn=((window.NPC_NET&&NPC_NET[pick])?NPC_NET[pick].cn:(pick||pick));
+      return "【近况 · "+cn+"】"+lines[stage];
+    }catch(e){ return null; }
+  };
+  window.v93n8_rel5Shift = function(npcId, delta){
+    try{
+      if(!S||!npcId) return;
+      if(!S.rel5) S.rel5={};
+      if(!S.rel5[npcId]) S.rel5[npcId]={grace:0,trust:0,debt:0,doubt:0,love:0};
+      var r5=S.rel5[npcId];
+      if(delta>=0){
+        r5.trust=Math.min(100,r5.trust+Math.round(delta*2.5));
+        if(delta>=10) r5.love=Math.min(100,r5.love+Math.round(delta*0.6));
+      }else{
+        r5.doubt=Math.min(100,r5.doubt+Math.round(-delta*2.5));
+      }
+    }catch(e){}
+  };
+  var _origCR = (typeof window.changeRelation==="function")?window.changeRelation:((typeof changeRelation==="function")?changeRelation:null);
+  if(_origCR){
+    window.changeRelation = function(npcId, delta, reason){
+      var r = _origCR(npcId, delta, reason);
+      try{ window.v93n8_rel5Shift(npcId, delta); }catch(e){}
+      return r;
+    };
+  }
+  window.v93n5_rel5Hint = function(npcId){
+    try{
+      if(!S||!S.rel5||!S.rel5[npcId]) return "";
+      var r5=S.rel5[npcId];
+      var parts=[];
+      if(r5.trust>=15) parts.push("信任"+r5.trust);
+      if(r5.love>=15) parts.push("爱慕"+r5.love);
+      if(r5.debt>=15) parts.push("亏欠"+r5.debt);
+      if(r5.doubt>=15) parts.push("猜疑"+r5.doubt);
+      if(r5.grace>=15) parts.push("恩义"+r5.grace);
+      return parts.length?('<div style="font-size:11px;color:#8a7fb0;margin-top:2px">'+parts.join(" · ")+'</div>'):"";
+    }catch(e){ return ""; }
+  };
+})();
+
+/* ===== /v93n6:library+history/ N-6 世界图书馆全书 + 大陆大历史（只读；合并进藏书阁/编年史） ===== */
+(function(){
+  function _merge(){
+    try{
+      var L=window.LIBRARY_V93||{};
+      if(!L) return;
+      if(window.READINGS_V45) window.READINGS_V45=Object.assign(window.READINGS_V45||{}, L);
+      else window.READINGS_V45=L;
+      if(typeof S!=='undefined'&&S){
+        if(!S.readings) S.readings={};
+        if(!S.readings.unlocked) S.readings.unlocked={};
+        for(var k in L){ S.readings.unlocked[k]=true; }
+      }
+    }catch(e){}
+  }
+  window.v93n6_mergeBooks=_merge;
+  window.v93n6_readBook = function(id){
+    try{
+      var R=window.READINGS_V45||{};
+      var r=R[id]; if(!r) return;
+      var txt=Array.isArray(r.text)?r.text:[r.text];
+      var page=(window.__v93n6pg&&window.__v93n6pg.id===id)?window.__v93n6pg.p:0;
+      var size=2, pages=Math.max(1,Math.ceil(txt.length/size));
+      if(page>=pages) page=pages-1;
+      window.__v93n6pg={id:id,p:page};
+      var body='<div class="panel-wrap" style="max-width:640px;max-height:80vh;display:flex;flex-direction:column">'
+        +'<div class="panel-header"><span class="panel-title">📜 '+String(r.title).replace(/</g,'&lt;')+'</span><button class="panel-close" onclick="closePanel()">✕</button></div>'
+        +'<div class="panel-body" id="v45-read-body" style="flex:1;overflow-y:auto;line-height:1.9;font-size:var(--fs-body)">';
+      for(var i=page*size;i<Math.min((page+1)*size,txt.length);i++){
+        var p=txt[i];
+        if(typeof p==='function'){ try{p=p();}catch(e){p='';} }
+        if(p) body+='<p style="margin-bottom:12px">'+String(p).replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</p>';
+      }
+      body+='<div style="text-align:right;font-size:12px;color:var(--text-muted);margin-top:8px">'+((r.source)||'')+'</div>'
+        +'</div><div class="panel-footer" style="display:flex;align-items:center;gap:10px;justify-content:space-between">'
+        +'<button class="btn" onclick="window.v93n6_flip(-1)" '+(page<=0?'disabled':'')+'>‹ 上一页</button>'
+        +'<span style="font-size:12px;color:var(--text-muted)">第 '+(page+1)+' / '+pages+' 页</span>'
+        +'<button class="btn btn-gold" onclick="window.v93n6_flip(1)" '+(page>=pages-1?'disabled':'')+'>下一页 ›</button>'
+        +'<button class="btn" onclick="closePanel()">合上此卷</button></div></div>';
+      openModal(elFromHtml(body));
+      try{ if(S.readings&&S.readings.read&&typeof S.readings.read[id]==='undefined'){ S.readings.read[id]=true; } }catch(e){}
+    }catch(e){}
+  };
+  window.v93n6_flip = function(d){
+    try{
+      var st=window.__v93n6pg; if(!st) return;
+      var R=window.READINGS_V45||{}; var r=R[st.id]; if(!r) return;
+      var txt=Array.isArray(r.text)?r.text:[r.text];
+      var size=2, pages=Math.max(1,Math.ceil(txt.length/size));
+      st.p=Math.max(0,Math.min(pages-1,(st.p||0)+d));
+      window.v93n6_readBook(st.id);
+    }catch(e){}
+  };
+  window.v93n6_historyBody = function(){
+    try{
+      var H=window.HISTORY_EPOCHS||[];
+      var h="<div style='color:var(--gold2,#c8a55a);margin-bottom:6px'><b>大陆大历史</b> · "+H.length+" 段纪年</div>";
+      h+="<div class='v44-tl'>";
+      for(var i=0;i<H.length;i++){
+        var e=H[i];
+        h+="<div class='v44-tl-item'><span class='v44-tl-day' style='min-width:110px'>"+esc(e.era)+"</span> <span class='v44-tl-text'>"+esc(e.text)+"</span></div>";
+      }
+      h+="</div>";
+      return h;
+    }catch(e){ return '<div style="color:var(--dim,#888);font-size:13px">大历史暂不可用。</div>'; }
+  };
+  _merge();
+})();
+
+/* ===== /v93n7:combo+conflict/ N-7 天赋连锁置位 + 冲突事件层（惰性置位；冲突独立池） ===== */
+(function(){
+  window.v93n7_comboCheck = function(){
+    try{
+      if(!S) return;
+      if(!S.comboFlags) S.comboFlags={};
+      if(S.comboFlags._done) return;
+      var C=window.COMBO_TRAITS||[];
+      for(var i=0;i<C.length;i++){
+        var c=C[i], hits=0;
+        if(c.combo.job && S.job===c.combo.job) hits++;
+        if(c.combo.ideal && S.ideal===c.combo.ideal) hits++;
+        if(c.combo.hobby && S.hobby===c.combo.hobby) hits++;
+        if(c.combo.talent && S.talent===c.combo.talent) hits++;
+        if(c.combo.subrace && S.subrace===c.combo.subrace) hits++;
+        if(hits>=3) S.comboFlags[c.id]=true;
+      }
+      S.comboFlags._done=true;
+    }catch(e){}
+  };
+  window.v93n12_conflictLine = function(){
+    try{
+      if(!S) return null;
+      window.v93n7_comboCheck();
+      var P=window.CONFLICT_POOL||[];
+      for(var i=0;i<P.length;i++){
+        var ev=P[i];
+        if(S.flags && S.flags[ev.id]) continue;
+        if(S.day<ev.dayFrom || S.day>ev.dayTo) continue;
+        if(ev.cond && ev.cond.flag && !(S.flags&&S.flags[ev.cond.flag])) continue;
+        if(!S.flags) S.flags={};
+        S.flags[ev.id]=true;
+        if(ev.effects){
+          if(ev.effects.gold) S.gold=Math.max(0,(S.gold||0)+ev.effects.gold);
+          if(ev.effects.hp) S.hp=Math.max(1,(S.hp||0)+ev.effects.hp);
+          if(ev.effects.flag) S.flags[ev.effects.flag]=true;
+        }
+        return "【冲突】"+ev.text;
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+})();
+
+/* ===== /v93n8:scenes+allusion+mood/ N-8 名场面 + 典故注入 + 情绪连续性（只读注入） ===== */
+(function(){
+  function _dayKey(){ return S?(S.day||0):0; }
+  window.v93n8_sceneLine = function(node){
+    try{
+      if(!node||!node.id) return null;
+      var SC=window.SCENES_V93||[];
+      for(var i=0;i<SC.length;i++){
+        var s=SC[i], at=s.at||[];
+        for(var j=0;j<at.length;j++){
+          var a=at[j];
+          if(String(node.id)===a || String(node.id).indexOf(a)===0){
+            var pick=s.add[(S.day+i)%s.add.length];
+            return pick;
+          }
+        }
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  window.v93n15_allusionLine = function(node){
+    try{
+      if(!node||!S) return null;
+      if(S._lastAllDay===S.day) return null;
+      var p=node.place||"";
+      var A=window.ALLUSIONS_V93||{};
+      var keys=Object.keys(A);
+      for(var i=0;i<keys.length;i++){
+        if(p.indexOf(keys[i])>=0 || (S.curCity||"").indexOf(keys[i])>=0){
+          var pool=A[keys[i]];
+          S._lastAllDay=S.day;
+          return pool[(S.day+i*3)%pool.length];
+        }
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  window.v93n16_moodShift = function(type, v){
+    try{
+      if(!S) return;
+      if(!S.mood) S.mood={trauma:0,relief:0,obsession:0};
+      if(type==='trauma') S.mood.trauma=Math.min(100,(S.mood.trauma||0)+v);
+      else if(type==='relief') S.mood.relief=Math.min(100,(S.mood.relief||0)+v);
+      else if(type==='obsession') S.mood.obsession=Math.min(100,(S.mood.obsession||0)+v);
+    }catch(e){}
+  };
+  window.v93n16_moodLine = function(){
+    try{
+      if(!S) return null;
+      if(S._lastMoodDay===S.day) return null;
+      var m=S.mood||{trauma:0,relief:0,obsession:0};
+      var best='calm', bv=0;
+      if((m.trauma||0)>bv){ best='trauma'; bv=m.trauma; }
+      if((m.relief||0)>bv){ best='relief'; bv=m.relief; }
+      if((m.obsession||0)>bv){ best='obsession'; bv=m.obsession; }
+      if(best==='calm') return null;
+      var pool=window.MOOD_LINES?MOOD_LINES[best]:null;
+      if(!pool) return null;
+      if(bv<25) return null;
+      S._lastMoodDay=S.day;
+      return pool[(S.day+pool.length)%pool.length];
+    }catch(e){ return null; }
+  };
+  /* 冲突事件掉血 → trauma 累积（联动 v93n12） */
+  var _cf = window.v93n12_conflictLine;
+  if(_cf){
+    window.v93n12_conflictLine = function(){
+      var r = _cf();
+      try{ if(r && typeof S!=='undefined' && S && r.indexOf("【冲突】")===0 && (r.indexOf("伤")>=0||r.indexOf("血")>=0)) window.v93n16_moodShift('trauma', 8); }catch(e){}
+      return r;
+    };
+  }
 })();

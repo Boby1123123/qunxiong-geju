@@ -2981,4 +2981,17 @@ window.STORY_BLUEPRINT = {
   "fs_watchers_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "fs_watchers_02b": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "fs_watchers_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
-  "fs_watchers_join": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"}};
+  "fs_watchers_join": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_04": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_hunt_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_guard_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_01": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_02": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_03": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
+  "combo_forge_end": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"}};

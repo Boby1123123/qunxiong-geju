@@ -73,6 +73,14 @@ function applyDefaults(s){
   /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
   if(s.settings.worldEcho===undefined) s.settings.worldEcho=true;
   if(!s.worldState) s.worldState={};
+  /* /n1inj:defaults/ N-1 立场系统兜底（旧档兼容；独立键空对象） */
+  if(!s.stance) s.stance={};
+  /* /n5inj:defaults/ N-5 五维关系兜底（旧档兼容；独立键空对象） */
+  if(!s.rel5) s.rel5={};
+  /* /n7inj:defaults/ N-7 天赋连锁兜底（旧档兼容；独立键空对象） */
+  if(!s.comboFlags) s.comboFlags={};
+  /* /n8inj:defaults/ N-8 情绪连续性兜底（旧档兼容；独立键空对象） */
+  if(!s.mood) s.mood={trauma:0,relief:0,obsession:0};
   /* /g1inj:defaults/ G-1 伤口系统兜底（旧档兼容；独立键空数组） */
   if(!s.wounds) s.wounds=[];
   /* /g2inj:defaults/ G-2 技能熟练度兜底（旧档兼容；独立键空对象） */
@@ -239,6 +247,8 @@ function applyEffects(eff,label){
   if(typeof eff.book==="function") eff.book = eff.book() || null;
   const add = (v,unit,pos) => { if(v!==0) lines.push((v>0?"+":"")+v+unit); };
   if(eff.gold){S.gold+=eff.gold; add(eff.gold,"金币",eff.gold>0);}
+  /* /n1inj:eff/ N-1 立场结算（只加结算，不动判定） */
+  if(eff.stance && eff.stance.axis){ if(!S.stance) S.stance={}; S.stance[eff.stance.axis]=(S.stance[eff.stance.axis]||0)+(eff.stance.v||0); }
   if(eff.prog && eff.prog.sk){ if(!S.skillProg) S.skillProg={}; var _p=S.skillProg[eff.prog.sk]||{lvl:1,xp:0}; _p.xp=(_p.xp||0)+(eff.prog.v||1); while(_p.xp>=_p.lvl*10){_p.xp-=_p.lvl*10;_p.lvl++;} S.skillProg[eff.prog.sk]=_p; }
   if(eff.xp){S.xp=Math.max(0,S.xp+eff.xp); add(eff.xp,"修为");}
   if(eff.hp){S.hp=Math.max(0,Math.min(maxHp(),S.hp+eff.hp)); add(eff.hp,"生命",eff.hp>0);}
@@ -3523,6 +3533,7 @@ window.v45_unlockReading=unlockReading;
         if(!R[id]){ try{ v44_pushToast&&v44_pushToast('藏书阁','此卷尚未收录','warn','⚠️'); }catch(e){} return; }
         var r=R[id];
         var txt=Array.isArray(r.text)?r.text:[r.text];
+        if(r.page && window.v93n6_readBook){ window.v93n6_readBook(id); return; }
         var body='<div class="panel-wrap" style="max-width:640px;max-height:80vh;display:flex;flex-direction:column">'
           +'<div class="panel-header"><span class="panel-title">📜 '+R_TYPE_CN[r.type]+' · '+String(r.title).replace(/</g,'&lt;')+'</span><button class="panel-close" onclick="closePanel()">✕</button></div>'
           +'<div class="panel-body" id="v45-read-body" style="flex:1;overflow-y:auto;line-height:1.9;font-size:var(--fs-body)">';
@@ -4992,6 +5003,22 @@ function writeNext(_v46f){
     }catch(e){}
     /* /v91inj:memhook/ CM-1 记忆注入（只读钩子；分页与非分页共用此 _txt；关闭开关时原样透传） */
     try{ var _mem = window.v91_memoryInjection(node,_txt); if(_mem&&_mem.length){ _txt=_mem.concat(_txt); } }catch(e){}
+    /* /n1inj:stance/ N-1 立场感知句注入（只读；无立场时不注入） */
+    try{ var _st = window.v93n1_stanceLine ? window.v93n1_stanceLine() : null; if(_st){ _txt.push(_st); } }catch(e){}
+    /* /n2inj:dialmem/ N-2 对话级记忆注入（只读；同日节流一次） */
+    try{ var _dm = window.v93n2_dialogueLine ? window.v93n2_dialogueLine() : null; if(_dm && (!S || S._lastDmDay!==S.day)){ if(S) S._lastDmDay=S.day; _txt.push(_dm); } }catch(e){}
+    /* /n3inj:echo/ N-3 结局回响注入（仅 ending 节点；只读） */
+    try{ if(node && node.tag==="ending"){ var _ee = window.v93n3_endingEcho ? window.v93n3_endingEcho() : null; if(_ee){ _txt.push(_ee); } } }catch(e){}
+    /* /n5inj:npclife/ N-5 NPC 独立近况注入（只读；同日节流一次，不抢记忆/立场位） */
+    try{ var _nl = window.v93n5_npcLifeLine ? window.v93n5_npcLifeLine() : null; if(_nl && (!S || S._lastNlDay!==S.day)){ if(S) S._lastNlDay=S.day; _txt.push(_nl); } }catch(e){}
+    /* /n7inj:conflict/ N-7 冲突事件层注入（独立池；每事件触发一次，可结算轻量 effects） */
+    try{ var _cf = window.v93n12_conflictLine ? window.v93n12_conflictLine() : null; if(_cf){ _txt.push(_cf); } }catch(e){}
+    /* /n8inj:scene/ N-8 名场面追加（按节点前缀命中，只追加不改原文） */
+    try{ var _sc = window.v93n8_sceneLine ? window.v93n8_sceneLine(node) : null; if(_sc){ _txt.push(_sc); } }catch(e){}
+    /* /n8inj:allusion/ N-8 典故注入（按 place 匹配；同日节流） */
+    try{ var _al = window.v93n15_allusionLine ? window.v93n15_allusionLine(node) : null; if(_al){ _txt.push(_al); } }catch(e){}
+    /* /n8inj:mood/ N-8 情绪色调注入（mood 高分时；同日节流） */
+    try{ var _md = window.v93n16_moodLine ? window.v93n16_moodLine() : null; if(_md){ _txt.push(_md); } }catch(e){}
     /* /g1inj:render/ G-1 伤口状态行注入（只读；S.wounds 非空时显示；空时零注入） */
     try{ var _wnd = window.v93g1_woundLine(node); if(_wnd&&_wnd.length){ _txt=_wnd.concat(_txt); } }catch(e){}
     /* /g3inj:render/ G-3 城市作息句注入（只读；arrive_* 节点按城返回；空时零注入） */

@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9022353,
-    "chunked_html_bytes_max": 6291742,
-    "node_total_min": 4806,
+    "game_html_bytes_max": 9079702,
+    "chunked_html_bytes_max": 6374172,
+    "node_total_min": 4819,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8972353,
-    "chunked_html_bytes": 6191742,
-    "node_total": 4856,
+    "game_html_bytes": 9029702,
+    "chunked_html_bytes": 6274172,
+    "node_total": 4869,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "G-1~G-7 大型增量：伤口系统/技能熟练度/城市作息/渐进教学/事件连锁/关系网回指/抉择回顾 新增数据与引擎钩子",
+    "reason": "N-8 flip 分页修复（+243B）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1153,6 +1153,27 @@
         "chunked_bytes": 6191742,
         "nodes": 4856,
         "reason": "G-1~G-7 大型增量：伤口系统/技能熟练度/城市作息/渐进教学/事件连锁/关系网回指/抉择回顾 新增数据与引擎钩子"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9029356,
+        "chunked_bytes": 6273830,
+        "nodes": 4869,
+        "reason": "N4-8 叙事人格革命：结局卡牌/大历史/全书/冲突池/名场面/典故/情绪注入"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9029459,
+        "chunked_bytes": 6273933,
+        "nodes": 4869,
+        "reason": "N-8 收尾：藏书惰性合并修复（+103B）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9029702,
+        "chunked_bytes": 6274172,
+        "nodes": 4869,
+        "reason": "N-8 flip 分页修复（+243B）"
       }
     ]
   },

@@ -31,7 +31,7 @@ N["fc_morning"]={tag:"branch",place:"自由城邦 · 交汇城 · 跛脚酒桶",
 "她没再往下说。你也不打算问。有些事，知道得越多，夜里越睡不踏实。"
 ,"店堂里已经坐了三五个赶早的客人，都是码头工打扮，埋头吃面，谁也不说话。蜜尔娜在柜台后往杯子里倒麦酒，倒到一半，抬头看了你一眼。","你咬着硬面包，把昨夜的事在肚子里翻了个面。蜜尔娜不肯说透，老赵劝你别管——这座城的水深得很，你才刚把脚伸进去，还够不着底。", "你离了交汇城，脚步声在空旷处格外清晰。赶路要紧。"],options:[
 {t:"吃早饭，开始今天的活计",go:"fc_job"},
-{t:"先去找蜜尔娜深谈几句",go:"fc_innkeep"}
+{t:"先去找蜜尔娜深谈几句",run:function(){window.v93n2_remember("蜜尔娜","你想跟她深谈，问问这座城的底细");},go:"fc_innkeep"}
 ]};
 N["fc_innkeep"]={tag:"main",place:"自由城邦 · 交汇城 · 跛脚酒桶柜台",pace:"normal",text:[
 "早饭时酒馆没什么人。蜜尔娜难得清闲，坐在柜台后缝一件旧围裙。你端着硬面包凑过去，她也不赶你，只抬了抬那只亮眼睛。",
@@ -57,7 +57,7 @@ N["fc_innkeep"]={tag:"main",place:"自由城邦 · 交汇城 · 跛脚酒桶柜�
 {t:"回城东小院",req:function(){return S.flags["home_fc"];},go:"wdr3_home"},
 {t:"（城楼上贴了停战告示——去看看）",req:function(){return (S.worldWar||0)>=13&&!S.flags["ap1_done"];},go:"ap1_aftermath"},
 {t:"（茶馆里都在说深渊裂隙的事）",req:function(){return (S.day||0)>=200&&!S.flags["ap2_done"];},go:"ap2_gate"},
-{t:"（阿岩说想带你去草原一个地方）",req:function(){return (S.npcRelations["ayan"]||0)>=50&&!S.flags["ap3_done"];},go:"ap3_oracle"},
+{t:"（阿岩说想带你去草原一个地方）",req:function(){return (S.npcRelations["ayan"]||0)>=50&&!S.flags["ap3_done"];},run:function(){window.v93n2_remember("阿岩","你说过愿意跟他去草原看看");},go:"ap3_oracle"},
 {t:"（城门口，你捡起一片旧叶——似曾相识）",req:function(){return !S.flags["ng1_echo_done"]&&(function(){try{var h=JSON.parse(localStorage.getItem("elda-ngplus-v2")||"{}");return (h.history||[]).length>=2;}catch(e){return false;}})();},go:"ng1_echo"},
 {t:"（老槐树下，你认出一道旧疤）",req:function(){return !S.flags["ng1_memory_done"]&&(function(){try{var h=JSON.parse(localStorage.getItem("elda-ngplus-v2")||"{}");return (h.history||[]).length>=3;}catch(e){return false;}})();},go:"ng1_memory"},
 {t:"（城门口，你站了一会儿，选了一条路）",req:function(){return !S.flags["ng1_path_done"]&&(function(){try{var h=JSON.parse(localStorage.getItem("elda-ngplus-v2")||"{}");return (h.history||[]).length>=2;}catch(e){return false;}})();},go:"ng1_path"},

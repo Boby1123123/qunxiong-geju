@@ -21,13 +21,13 @@ N["fc_jiaohui_entry"] = {tag:"main",
 
   options:[
 
-    {t:"先去跛脚酒桶，找蜜尔娜打听消息",go:"echo_floating_tower_blessed"},
+    {t:"先去跛脚酒桶，找蜜尔娜打听消息",effects:{stance:{axis:"order",v:-1}},go:"echo_floating_tower_blessed"},
 
-    {t:"去联合冒险者公会，看看有什么活计",go:"fc_guild"},
+    {t:"去联合冒险者公会，看看有什么活计",effects:{stance:{axis:"honor",v:1}},go:"fc_guild"},
 
-    {t:"去码头转转，看看那位记账的姑娘",go:"world_f3_lu_1"},
+    {t:"去码头转转，看看那位记账的姑娘",effects:{stance:{axis:"altru",v:1}},go:"world_f3_lu_1"},
 
-    {t:"去旧货街碰碰运气",go:"world_f4_blood_1"},
+    {t:"去旧货街碰碰运气",effects:{stance:{axis:"altru",v:-1}},go:"world_f4_blood_1"},
 
     {t:"（在交汇城再待两日）看看这座城的活法",go:"world_f5_city_1"},
 
@@ -82,9 +82,10 @@ N["fc_tavern"] = {tag:"main",
 
   options:[
 
-    {t:"【爱好·博弈】加入角落那桌赌局，试试手气",req:function(){ return S.hobby==="gamble" && !S.flags.silver_invite && !S.flags.gamble_lost; },check:{a:"CHA",sk:"persu",label:"赌术",mods:{手气:5}},tier:{
+    {t:"【爱好·博弈】加入角落那桌赌局，试试手气",req:function(){ return S.hobby==="gamble" && !S.flags.silver_invite && !S.flags.gamble_lost; },effects:{stance:{axis:"altru",v:-1}},check:{a:"CHA",sk:"persu",label:"赌术",mods:{手气:5}},tier:{
 
-      ok:["你坐进赌局，三把下来，赢多输少。桌边的人看你的眼神变了——不是看你运气好，是看你'稳'。","散场时，一个输光了的老兵拉住你，压轻声音：'兄弟，看你是个明白人。铁门关那边，最近有批'怪货'在卖——听说能让死人站起来。你要是胆子大，往北边打听打听。'","你赢了些钱，还赢了一条消息。"],
+      ok:["你坐进赌局，三把下来，赢多输少。桌边的人看你的眼神变了——不是看你运气好，是看你'稳'。","散场时，一个输光了的老兵拉住你，压轻声音：'兄弟，看你是个明白人。铁门关那边，最近有批'怪货'在卖——听说能让死人站起来。你要是胆子大，往北边打听打听。'","你赢了些钱，还赢了一条消息。",
+    {t:"（想起一桩旧账——母狼皮的事）",go:"combo_hunt_01"}],
 
       fail:["你三把全输，兜里的钱少了一截。桌边的人笑起来，有人好心劝你：'新人，手气不好就收手。'"],
 
@@ -94,7 +95,7 @@ N["fc_tavern"] = {tag:"main",
 
     },effects:{},onOk:{flag:"gamble_lost",gold:8},onFail:{flag:"gamble_lost",gold:-8},onCrit:{flag:"silver_invite",gold:20},onCritFail:{flag:"gamble_lost",gold:-20},go:"fc_tavern"},
 
-    {t:"要一杯麦酒，跟蜜尔娜套话",check:{a:"CHA",sk:"persu",label:"套话",mods:{酒水:5}},tier:{
+    {t:"要一杯麦酒，跟蜜尔娜套话",run:function(){window.v93n2_remember("蜜尔娜","你问过她城里圣痕司和那本旧书的事");},check:{a:"CHA",sk:"persu",label:"套话",mods:{酒水:5}},tier:{
 
       ok:["蜜尔娜收了你的酒钱，话匣子就开了一半。她告诉你：城西那家酒馆死的人，是银月商会的常客，死前最后一晚，有人看见他进了下水道；最近城里查得紧，圣痕司的探子比老鼠还多；还有，北边逃来的难民里，混着不该混的东西，'有人在找一本旧书，出的价，够买一条街。'" ],
 

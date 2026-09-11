@@ -72,7 +72,7 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 ],options:[
 {t:"去钟楼看看那口铜钟",go:"frontier_tower_gate"},
 {t:"去矿洞口看看（守卫拦着）",go:"frontier_mine_gate"},
-{t:"打听老兵老铁的下落（他昨夜失踪了）",go:"frontier_tie_1"},
+{t:"打听老兵老铁的下落（他昨夜失踪了）",run:function(){window.v93n2_remember("老铁","你打听过老铁的下落");},go:"frontier_tie_1"},
 
 {t:"去军械库转转",go:"frontier_armory"},
 {t:"去伤兵营看看",go:"frontier_infirmary"},
@@ -81,7 +81,8 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 {t:"去战报栏看看最新的消息",go:"frontier_herald"},
 {t:"（应征：北境联军正在边境集结，随军北上）",go:"warphase_1"},
 {t:"（离城，回铁门关方向）",go:"frontier_leave"}
-]};
+,
+    {t:"（铁匠铺的锤声——你想再去打一柄）",go:"combo_forge_01"}]};
 
 N["frontier_tower_gate"]={tag:"main",place:"北境 · 第三哨 · 钟楼脚下",where:"白昼",pace:"light",arc:"arc_frontier",vol:"vol_north",text:[
 "钟楼是第三哨最高的石头建筑，塔身被风雪打磨得圆润，砖缝里塞着干枯的苔藓。楼门虚掩着，门环上拴着一根红布条，被风吹得猎猎响。",

@@ -388,7 +388,7 @@ try{
     V44.atlasTab=t;
     var b=document.getElementById('v44-atlas-body');
     if(b){
-      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='readings'?v45_readingsBody():(t==='strong'?v53_strongBody():(t==='choices'?(window.v93_choicesBody?v93_choicesBody():v44_endingBody()):v44_endingBody())))));
+      b.innerHTML = t==='gallery'?v44_galleryBody():(t==='relation'?v44_relationBody():(t==='timeline'?v44_timelineBody():(t==='chronicle'?((window.v93n6_historyBody?window.v93n6_historyBody():'')+v47_chronicleBody()):(t==='readings'?((window.v93n6_mergeBooks?(v93n6_mergeBooks(),1):0),v45_readingsBody()):(t==='strong'?v53_strongBody():(t==='clues'?(window.v93n3_cluesBody?window.v93n3_cluesBody():(window.v93n4_endCardsBody?window.v93n4_endCardsBody():v44_endingBody())):(t==='choices'?(window.v93n4_choicesTimeline?window.v93n4_choicesTimeline():(window.v93_choicesBody?v93_choicesBody():v44_endingBody())):v44_endingBody())))))));
     }
   }
   function galleryBody(){
@@ -470,6 +470,7 @@ try{
       var h='<b>'+esc(cn)+'</b>'+(role?' · <span style="color:var(--text-secondary)">'+esc(role)+'</span>':'');
       h+='<div style="margin-top:4px">关系：<b style="color:'+(rel>=30?'#2a7a2a':(rel<=-30?'#a03028':'var(--text-secondary)'))+'">'+relTxt+'（'+rel+'）</b></div>';
       if(desc) h+='<div style="margin-top:3px;color:var(--text-muted);font-size:12px">'+esc(desc)+'</div>';
+      try{ h+=(window.v93n5_rel5Hint?window.v93n5_rel5Hint(id):""); }catch(e){}
       box.innerHTML=h;
     }catch(e){}
   }
@@ -525,7 +526,7 @@ try{
     }catch(e){ return '<div style="color:var(--text-muted);font-size:13px">结局图谱暂不可用。</div>'; }
   }
   function renderAtlas(){
-    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱'],['choices','抉择']];
+    var tabs=[['gallery','图鉴'],['relation','关系网'],['timeline','编年史'],['ending','结局'],['chronicle','大陆纪事'],['readings','藏书'],['strong','强者谱'],['clues','线索'],['choices','抉择']];
     var h='<div style="padding:4px 2px">';
     h+='<div class="v44-atlas-tabs">';
     for(var i=0;i<tabs.length;i++){
@@ -536,9 +537,10 @@ try{
     else if(V44.atlasTab==='relation') h+=relationBody();
     else if(V44.atlasTab==='timeline') h+=timelineBody();
     else if(V44.atlasTab==='chronicle') h+=v47_chronicleBody();
-    else if(V44.atlasTab==='readings') h+=v45_readingsBody();
+    else if(V44.atlasTab==='readings'){ try{ if(window.v93n6_mergeBooks) v93n6_mergeBooks(); }catch(e){} h+=v45_readingsBody(); }
     else if(V44.atlasTab==='strong') h+=v53_strongBody();
-    else if(V44.atlasTab==='choices') h+=(window.v93_choicesBody?v93_choicesBody():endingBody());
+    else if(V44.atlasTab==='clues') h+=(window.v93n3_cluesBody?window.v93n3_cluesBody():(window.v93n4_endCardsBody?window.v93n4_endCardsBody():endingBody()));
+    else if(V44.atlasTab==='choices') h+=(window.v93n4_choicesTimeline?window.v93n4_choicesTimeline():(window.v93_choicesBody?v93_choicesBody():endingBody()));
     else h+=endingBody();
     h+='</div></div>';
     return h;

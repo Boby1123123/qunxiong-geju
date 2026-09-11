@@ -5347,6 +5347,50 @@ window.CAUSALITY_WORDS = [
     "importance": 3,
     "keywords": ["铁生", "矿难", "矿洞"],
     "irreversible": false
+  },
+  {
+    "id": "led_w1_goldstamp",
+    "desc": "承天城金库失窃（金库失窃官银，守夜人投井——金库线索呼应）",
+    "plant": "event:w1_goldstamp",
+    "reap": "flag:anchor_4",
+    "status": "open",
+    "world": "vol_east",
+    "importance": 2,
+    "keywords": ["金库", "承天城", "失窃"],
+    "irreversible": false
+  },
+  {
+    "id": "led_w2_bell2",
+    "desc": "第三哨铁牌再现（铜钟被敲三下，钟下留铁牌）",
+    "plant": "event:w2_g_bell2",
+    "reap": "flag:anchor_1",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 2,
+    "keywords": ["铁牌", "第三哨", "铜钟"],
+    "irreversible": false
+  },
+  {
+    "id": "led_w2_finaliron",
+    "desc": "老铁战后打造七枚铁牌（终局伏笔）",
+    "plant": "event:w2_final_iron",
+    "reap": "flag:anchor_7",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 2,
+    "keywords": ["老铁", "铁牌", "终局"],
+    "irreversible": false
+  },
+  {
+    "id": "led_w1_sealwax",
+    "desc": "圣辉城封蜡印七枚铁牌纹样（教会与七锚暗连）",
+    "plant": "event:w1_sealwax",
+    "reap": "flag:anchor_6",
+    "status": "open",
+    "world": "vol_church",
+    "importance": 2,
+    "keywords": ["圣辉城", "封蜡", "铁牌"],
+    "irreversible": false
   }
 ];
 

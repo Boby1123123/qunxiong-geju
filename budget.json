@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9379064,
-    "chunked_html_bytes_max": 6666989,
+    "game_html_bytes_max": 9426580,
+    "chunked_html_bytes_max": 6689794,
     "node_total_min": 4967,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9329064,
-    "chunked_html_bytes": 6511342,
+    "game_html_bytes": 9376580,
+    "chunked_html_bytes": 6552117,
     "node_total": 5017,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "P 情感搭档 二次校准（改名后基线）",
+    "reason": "W 事件扩充 校准2（隐约词修复后基线）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1265,6 +1265,20 @@
         "chunked_bytes": 6511342,
         "nodes": 5017,
         "reason": "P 情感搭档 二次校准（改名后基线）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9345454,
+        "chunked_bytes": 6589794,
+        "nodes": 5017,
+        "reason": "W 事件扩充：W-1 65则（四类均衡）+ W-2 67则（阶段专属30+通用37）+ 账本4项（合法内容增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9376580,
+        "chunked_bytes": 6552117,
+        "nodes": 5017,
+        "reason": "W 事件扩充 校准2（隐约词修复后基线）"
       }
     ]
   },

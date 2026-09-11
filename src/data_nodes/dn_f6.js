@@ -2,7 +2,7 @@
  * 入口：blood_5 北上选项；tag:combat 四段式；ending 标签收束 */
 window.N = window.N || {};
 (function(){
-N["world_f6_battle"] = {tag:"combat", tags:["combat"], place:"北境 · 官道 · 石门隘口", where:"白昼", pace:"deep",
+N["world_f6_battle"] = {battle:true,enemy:{name:"疤脸头目",hp:34,atk:7,def:2,agi:6,wp:"刀"},tag:"combat", tags:["combat"], place:"北境 · 官道 · 石门隘口", where:"白昼", pace:"deep",
   text:[
     "地图上的石门，在北境官道拐进山坳的地方。你赶到时，天色已暗，山坳里蹲着一伙东军散兵——七八个人，围着火堆烤一只羊。火堆边上，立着一扇半截埋进土里的石门，门框上爬满霜纹，像有人用指头在石头上刻了一辈子。",
     "你没想打，是火堆边那个疤脸先看见了你。他站起身，手里刀横在胸前：“过路的，放下包袱，滚。”他的同伴们也站起来，脚步声踩碎了雪。你扫了一眼：七个，都有刀，有两个还披着教会的旧甲——那是从死人身上扒的。",

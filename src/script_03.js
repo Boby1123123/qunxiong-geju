@@ -70,6 +70,18 @@ function applyDefaults(s){
   if(!s.faction) s.faction="";
   /* /pn1inj:defaults/ P-N1 并行叙事线程状态兜底（旧档兼容；独立键空对象） */
   if(!s.threads) s.threads={};
+  /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
+  if(s.settings.worldEcho===undefined) s.settings.worldEcho=true;
+  if(!s.worldState) s.worldState={};
+  /* /v93mkt:defaults/ EC-3 经济闭环独立键（旧档兼容） */
+  if(!s.market) s.market={lastDiv:0,divTotal:0};
+  /* /v93news:defaults/ WD-4 世界日报独立键（旧档兼容） */
+  if(!s.news) s.news={list:[],count:0,done:{}};
+  /* /v93npc:defaults/ NM-6 NPC 记忆独立键（旧档兼容） */
+  if(!s.npcMemory) s.npcMemory={};
+  if(s.settings.npcMemory===undefined) s.settings.npcMemory=true;
+  /* /v93fest:defaults/ FT-7 节日独立键（旧档兼容） */
+  if(!s.festival) s.festival={done:{}};
   return s;
 }
 function loadGame(){
@@ -4975,6 +4987,10 @@ function writeNext(_v46f){
     try{ window.v91_arcAdvance(node); }catch(e){} /* /sp3inj:archook/ SP-3 弧线推进（只读注入点） */
     /* /pn1inj:threadhook/ P-N1 线程状态机登记（只读钩子：记录当前节点所属叙事线程的进度/日/次数） */
     try{ window.v92_threadTick(node); }catch(e){}
+    /* /ws1inj:echohook/ WS-1 世界状态回响（只读钩子；主线枢纽节点渲染收尾注入 1 句；开关 S.settings.worldEcho；关闭时零注入） */
+    try{ var _ws = window.v93_worldEcho(node); if(_ws&&_ws.length){ _txt=_txt.concat(_ws); } }catch(e){}
+    /* /v93npc:hook/ NM-6 NPC 记忆回指（只读注入；开关 S.settings.npcMemory） */
+    try{ var _npc = window.v93_npcMemoryHook(node); if(_npc&&_npc.length){ _txt=_txt.concat(_npc); } }catch(e){}
     if(window.v45_shouldPaginate(node)){
       try{ window.v67_busyClear(); }catch(e){} /* 分页节点无选项，立即解锁防死锁 */
       window.__v45ctx={node:node,txt:_txt,page:0};
@@ -4987,6 +5003,7 @@ function writeNext(_v46f){
     RenderBatch.flush();
     try{ window.v92_hlInit(); window.v92_ambCSS(); }catch(e){}
     try{ window.v92_applyAmbience(); }catch(e){}
+    try{ window.v93_ambienceSync(); }catch(e){}
     try{ if(window.ambScene){ var _ap=(typeof curNode!=="undefined"&&curNode&&N[curNode]&&N[curNode].place)?String(N[curNode].place):""; window.ambScene(_ap); } }catch(e){}
     try{ v44_afterRender(); }catch(e){}
     try{ v45_afterNode(node); }catch(e){}
@@ -4999,10 +5016,14 @@ function writeNext(_v46f){
       return;
     }
     try{ window.v92_achTick(node); }catch(e){}
+    var _btlGo = false;
+    try{ if(node && node.battle===true && window.v93_battle && typeof window.v93_battle.start==='function'){ _btlGo = window.v93_battle.start(node); } }catch(e){}
+    if(!_btlGo){
     showOptions(node);
 
     if(curNode && curNode.indexOf("arrive_")===0 && S && S.loc) renderCityActs();
     setTimeout(function(){ if(typeof v34_animateOptions === 'function') v34_animateOptions(); }, 50);
+    }
     renderPerf.record(Date.now()-_wnT0);
   });
 }
@@ -5124,6 +5145,9 @@ function advanceDays(n){
   if(S.wound>0 && n>=2) S.wound=0;
   if(S.disease && n>=4) S.disease=false;
   checkWorldEvents();
+  try{ if(window.v93_marketTick) window.v93_marketTick(n); }catch(e){}
+  try{ if(window.v93_newsTick) window.v93_newsTick(); }catch(e){}
+  try{ if(window.v93_festivalTick) window.v93_festivalTick(); }catch(e){}
 }
 function checkWorldEvents(){
   const w = S.world;
@@ -5161,6 +5185,7 @@ function checkWorldEvents(){
       }
     }
   }catch(_e){}
+  try{ if(window.v93_newsTick) window.v93_newsTick(); }catch(_e){}
 }
 
 /* ============ 日志 ============ */
@@ -6510,3 +6535,118 @@ function endCombat(victory){
 
 window.addEventListener("load",init);
 
+
+/* ============================================================
+   /ws1inj:hooks/ WS-1 行为-世界状态回路
+   五维世界状态：war/church/guild/orc/seal（各 0-100，连续值）。
+   v93_worldState()：只读映射——扫 S.flags 白名单 + S.worldWar/
+   S.anchors/S.faction/S.trade 等既有键，计算世界状态；不写任何状态。
+   v93_worldEcho(node)：命中主线枢纽节点前缀时，按档位取回响句，
+   返回数组或 null（开关关闭/未命中时零注入）。
+   铁律：不触碰判定公式 / writeNext 核心语义 / choose / 存档结构语义。 ===== */
+window.v93_worldState = function(){
+  const W = {war:33, church:33, guild:33, orc:33, seal:100};
+  try{
+    if(!S) return W;
+    const F = S.flags||{};
+    /* war 战争烈度 */
+    if(F.war_intensified) W.war = Math.max(W.war, 66);
+    if(F.warStage && Number(F.warStage)>=2) W.war = Math.max(W.war, 66);
+    if(typeof S.worldWar==='number'){
+      if(S.worldWar>=6) W.war = 100;
+      else if(S.worldWar>=3) W.war = 80;
+      else if(S.worldWar>=1) W.war = 50;
+    }
+    if(F.council_compromise_purification) W.war = Math.max(20, W.war-20);
+    if(F.watcher_inherit) W.war = Math.max(20, W.war-25);
+    /* church 教廷主导 */
+    if(S.faction==='church') W.church = Math.max(W.church, 66);
+    if(F.council_support_purification) W.church = Math.max(W.church, 75);
+    if(F.purge_intensified) W.church = Math.max(W.church, 90);
+    if(F.council_oppose_purification) W.church = Math.min(W.church, 25);
+    if(F.crisis_done) W.church = Math.min(W.church, 50);
+    /* guild 商会掌控 */
+    if(S.faction==='free') W.guild = Math.max(W.guild, 60);
+    if(S.trade && typeof S.trade.total==='number'){
+      if(S.trade.total>=500) W.guild = 85;
+      else if(S.trade.total>=100) W.guild = 66;
+    }
+    if(F.trade_crisis) W.guild = Math.min(W.guild, 20);
+    if(F.merchant_saved) W.guild = Math.max(W.guild, 60);
+    /* orc 兽人关系 */
+    if(F.grom_mediated) W.orc = Math.max(W.orc, 55);
+    if(F.grom_helped) W.orc = Math.max(W.orc, 66);
+    if(F.grom_protected) W.orc = Math.max(W.orc, 80);
+    if(F.grom_professor_called) W.orc = Math.max(W.orc, 90);
+    if(S.faction==='orc') W.orc = Math.max(W.orc, 66);
+    /* seal 封印完整 */
+    if(F.seal1_visited) W.seal = Math.min(W.seal, 90);
+    if(F.seal5_fixed) W.seal = Math.max(W.seal, 70);
+    if(F.seal6_sacrifice) W.seal = Math.max(W.seal, 60);
+    if(F.abyss_spread) W.seal = Math.min(W.seal, 50);
+    if(typeof S.anchors==='number'){
+      if(S.anchors>=7) W.seal = 100;
+      else if(S.anchors>=3) W.seal = Math.max(W.seal, 66);
+    }
+    /* 收敛到 0-100 */
+    for(const k in W){ W[k]=Math.max(0, Math.min(100, Math.round(W[k]))); }
+    try{ S.worldState = {war:W.war, church:W.church, guild:W.guild, orc:W.orc, seal:W.seal}; }catch(e){}
+    return W;
+  }catch(e){ try{ console.log("[ws1:err]", e); }catch(_){} return W; }
+};
+window.v93_worldEcho = function(node){
+  try{
+    if(!S || !S.settings || S.settings.worldEcho===false) return null;
+    if(!node || !node.id) return null;
+    const id = String(node.id);
+    /* 主线枢纽前缀：purge/silver/seal/academy/orc */
+    if(id.indexOf("purge_")!==0 && id.indexOf("silver_")!==0 && id.indexOf("seal_")!==0 &&
+       id.indexOf("academy_")!==0 && id.indexOf("orc_")!==0) return null;
+    const TPL = window.V93_WORLD_TPL; if(!TPL) return null;
+    const W = window.v93_worldState();
+    const keys = ["war","church","guild","orc"];
+    /* seal 维度仅玩家接触过封印线（主线已触发/到过封印地/持有锚）才参与回响，防剧透 */
+    let _sealOk = false;
+    try{ _sealOk = !!(S.world && S.world.seal) || !!(S.flags && S.flags.seal1_visited) || (typeof S.anchors==='number' && S.anchors>0); }catch(e){}
+    if(_sealOk) keys.push("seal");
+    for(let i=0;i<keys.length;i++){
+      const k = keys[i], v = W[k];
+      const arr = TPL[k]; if(!arr || !arr.length) continue;
+      let line = null;
+      for(let j=0;j<arr.length;j++){
+        if(v < arr[j].hi){ line = arr[j].lines[0]; break; }
+      }
+      if(!line) line = arr[arr.length-1].lines[0];
+      /* 只注入与当前主线相关的维度（最多 1-2 维） */
+      if((k==="war" && (id.indexOf("silver_")===0 || id.indexOf("orc_")===0)) ||
+         (k==="church" && id.indexOf("purge_")===0) ||
+         (k==="seal" && id.indexOf("seal_")===0) ||
+         (k==="academy" && false)){
+        try{ console.log("[ws1inj:echo]", k, v); }catch(e){}
+        return [line];
+      }
+      if(k==="guild" && id.indexOf("silver_")===0){
+        try{ console.log("[ws1inj:echo]", k, v); }catch(e){}
+        return [line];
+      }
+    }
+    /* 未命中专门维度时，取全局最显著状态（与基线差最大）做泛回响 */
+    let pick=null, diff=0;
+    for(let i=0;i<keys.length;i++){
+      const k=keys[i], v=W[k];
+      const base = (k==="seal")?100:33;
+      const d = Math.abs(v-base);
+      if(d>diff && d>25){ diff=d; pick=k; }
+    }
+    if(pick){
+      const arr = TPL[pick]; if(arr){
+        let line = null;
+        for(let j=0;j<arr.length;j++){ if(W[pick] < arr[j].hi){ line=arr[j].lines[0]; break; } }
+        if(!line) line = arr[arr.length-1].lines[0];
+        try{ console.log("[ws1inj:echo]", pick, W[pick]); }catch(e){}
+        return [line];
+      }
+    }
+    return null;
+  }catch(e){ try{ console.log("[ws1:err]", e); }catch(_){} return null; }
+};

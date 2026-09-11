@@ -1085,6 +1085,24 @@ body.v68-theme #options .opt:hover{ background:#f2e0b8; border-color:#a08040; tr
         <div class="v92-w-anchors"><span class="v92-w-anchor">M 地图</span><span class="v92-w-anchor">B 行囊</span><span class="v92-w-anchor">T 修炼</span><span class="v92-w-anchor">L 日志</span><span class="v92-w-anchor">F 势力</span><span class="v92-w-anchor">S 存档</span></div>
         <div class="v92-w-meta">d100 六档判定 · 序章依出身/种族/理想而变 · 存档保存于本机</div>
       </div></div>
+      <style>
+      /* /v93btl:ui/ CB-2 指令环战斗面板 */
+      #v93-battle{ margin:10px 0; }
+      .v93b-wrap{ background:linear-gradient(180deg,#2b2118,#241a13); border:1px solid #7a5a35; border-radius:8px; padding:10px 12px; color:#e8dcc0; }
+      .v93b-hd{ font-weight:700; font-size:15px; color:#f0c98a; }
+      .v93b-hp{ float:right; font-size:13px; color:#d98a6a; }
+      .v93b-bar{ height:8px; background:#1a130d; border-radius:4px; margin:6px 0; overflow:hidden; }
+      .v93b-bar i{ display:block; height:100%; background:linear-gradient(90deg,#a43b2a,#d9805a); border-radius:4px; }
+      .v93b-sub{ font-size:12px; color:#b7a487; margin:4px 0; }
+      .v93b-cmds{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+      .v93b-cmds .btn{ flex:1 1 auto; min-width:70px; padding:7px 10px; }
+      .v93b-box{ max-height:180px; overflow-y:auto; margin-top:8px; border-top:1px dashed #6b5336; padding-top:6px; font-size:13px; color:#d9c9a8; }
+      .v93b-line{ padding:2px 0; }
+      body.theme-night #v93-battle .v93b-wrap{ background:linear-gradient(180deg,#1b2334,#141b29); border-color:#2d3a56; color:#c9d4e8; }
+      body.theme-night #v93-battle .v93b-hd{ color:#a8c8f0; }
+      body.theme-night #v93-battle .v93b-sub{ color:#8fa0bd; }
+      </style>
+      <div id="v93-battle" role="region" aria-label="战斗" style="display:none"></div>
       <div id="options"></div>
       <div id="v93-actlog" role="log" aria-label="行动日志">
         <div class="act-head" id="v93-actlog-head"><span>✦ 行动日志<span id="v93-actlog-count" class="act-count"></span></span><span id="v93-actlog-toggle" title="折叠/展开">▾</span></div>

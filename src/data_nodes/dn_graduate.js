@@ -276,7 +276,7 @@ N["grad_army_3"]={tags:["region:north"],tag:"main",place:"铁门关 · 校场",w
 {t:"（收下臂甲，记住这句话）",effects:{xp:15},go:"grad_army_4"}
 ]};
 
-N["grad_army_4"]={tags:["combat","region:north"],tag:"combat",place:"铁门关 · 北墙外",where:"夜",pace:"deep",text:[
+N["grad_army_4"]={battle:true,enemy:{name:"流寇头子",hp:38,atk:8,def:2,agi:7,wp:"长柄数刀"},tags:["combat","region:north"],tag:"combat",place:"铁门关 · 北墙外",where:"夜",pace:"deep",text:[
 "入秋，北墙外来了一股流匪，说是从雪原那边绕过来的，抢了两支商队，还伤了几个巡边的弟兄。",
 "你跟着什队出城设伏。流匪头子是个又高又瘦的汉子，手里一把长柄镰刀，专削马腿。夜色里，他先发现了你们——镰刀抡起来，带着一股腥风。",
 "你提刀去架，那一下力道远超预料，震得你虎口发麻。他趁你脚下不稳，刀柄回抽，杆头重重捣在你右肋。骨头闷响一声，你眼前发黑，喘不上气——肋下那一下，让你半身使不上力，呼吸带起一阵钝痛。",

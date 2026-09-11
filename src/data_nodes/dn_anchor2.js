@@ -42,7 +42,7 @@ N["anchor_chen_4"]={tags:["anchor"],tag:"main",place:"晨天故都 · 宫城前"
 {t:"（质问：为什么从学院金库偷铁牌）",effects:{xp:15,flag:"anchor_chen_accuse"},go:"anchor_chen_5"}
 ]};
 
-N["anchor_chen_5"]={tags:["combat","anchor"],tag:"combat",place:"晨天故都 · 宫门",where:"夜",pace:"epic",sceneTitle:"宫门之约",text:[
+N["anchor_chen_5"]={battle:true,enemy:{name:"陆昭",hp:52,atk:10,def:3,agi:9,wp:"短刃"},tags:["combat","anchor"],tag:"combat",place:"晨天故都 · 宫门",where:"夜",pace:"epic",sceneTitle:"宫门之约",text:[
 "陆昭没有正面回答你。他忽然一抬手，黑鸦腾空而起，翼尖带起一阵劲风，直扑你面门。你侧身躲过，鸦爪擦着你耳根划过，割断了几根头发。",
 "“先让我看看，你有几分本事，敢来开这扇门。”陆昭话音未落，人已欺到近前，掌中翻出一柄短刃，刀光在火光里一闪，直取你咽喉。你横刀格挡，两刃相撞，迸出一串火星。他变招极快，刀锋一转，沿着你刀身滑下，在你右小臂上划开一道口子——伤口不深，却正切在握刀的筋上，血顺着指缝淌下来，握刀的手一阵发麻，虎口几乎捏不住刀柄。",
 "你退后半步，刀交左手。陆昭又攻上来，这一刀又快又狠，直奔你心口。你不再退，在他刀尖堪堪触及衣襟的瞬间，侧身让过，右肘顺势撞在他肋下。他闷哼一声，踉跄后退，黑鸦在空中一个盘旋，落在两人之间，嘎嘎地叫了两声，像在劝架。",

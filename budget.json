@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8765314,
-    "chunked_html_bytes_max": 6045553,
+    "game_html_bytes_max": 8809930,
+    "chunked_html_bytes_max": 6089362,
     "node_total_min": 4649,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8715314,
-    "chunked_html_bytes": 5945553,
+    "game_html_bytes": 8759930,
+    "chunked_html_bytes": 5989362,
     "node_total": 4699,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "ACT1+ACT2 行动日志与刷新函数拆分：+113B（#v93-actlog 容器与 v93_refreshAfterAct IIFE）",
+    "reason": "NM-6 IIFE补注后重建",
     "history": [
       {
         "date": "2026-09-09",
@@ -950,6 +950,48 @@
         "chunked_bytes": 5945553,
         "nodes": 4699,
         "reason": "ACT1+ACT2 行动日志与刷新函数拆分：+113B（#v93-actlog 容器与 v93_refreshAfterAct IIFE）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8723717,
+        "chunked_bytes": 5953840,
+        "nodes": 4699,
+        "reason": "WS-1 世界状态回路：v93_worldState/v93_worldEcho + dn_worldstate_tpl.js 注入"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8724045,
+        "chunked_bytes": 5954164,
+        "nodes": 4699,
+        "reason": "WS-1 seal维度防剧透门槛(+328B)"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8733967,
+        "chunked_bytes": 5963826,
+        "nodes": 4699,
+        "reason": "CB-2 指令环战斗v2(战斗面板+状态机+6战斗节点)"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8737495,
+        "chunked_bytes": 5967301,
+        "nodes": 4699,
+        "reason": "EC-3 经济闭环(S.market+商路面板+商会分红)"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8755559,
+        "chunked_bytes": 5985073,
+        "nodes": 4699,
+        "reason": "EC-3经济闭环+WD-4日报+AU-5环境音+NM-6记忆+FT-7节日+SM-8冒烟v2 八批注入完成"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8759930,
+        "chunked_bytes": 5989362,
+        "nodes": 4699,
+        "reason": "NM-6 IIFE补注后重建"
       }
     ]
   },

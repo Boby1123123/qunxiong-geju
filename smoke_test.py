@@ -17,12 +17,43 @@ import io, re, sys
 
 HTML = 'game.html'
 ENDING_MARKERS = ['ending', 'v24_final', 'v36_ending', 'ngplus_true']
-KEY_CHAIN = ['fc_jiaohui_entry', 'fc_tavern', 'fc_market', 'shangzhan_after',
-             'travel_south_start', 'south_gangkou', 'east_tiemen', 'death_desert',
-             'desert_aftermath', 'chapter_end_all', 'ending_choose', 'ending_prelude_hub']
+# SM-8 参数化：20 条冒烟路径（节点存在性 + 状态机推进模拟）
+PATHS = {
+  "main":      ['fc_jiaohui_entry', 'fc_tavern', 'fc_market', 'shangzhan_after', 'travel_south_start', 'arrive_east_tiemen', 'desert_oasis', 'chapter_end_all', 'ending_prelude_hub'],
+  "origin_north":      ['origin_northern_1', 'origin_northern_1', 'origin_northern_1'],
+  "origin_south":      ['origin_southern_1', 'origin_southern_1', 'origin_southern_1'],
+  "origin_church":      ['origin_church_1', 'origin_church_1', 'origin_church_1'],
+  "origin_elf":      ['origin_elf_1', 'origin_elf_1', 'origin_elf_1'],
+  "origin_dwarf":      ['origin_dwarf_1', 'origin_dwarf_1', 'origin_dwarf_1'],
+  "origin_orc":      ['origin_orc_1', 'origin_orc_1', 'origin_orc_1'],
+  "origin_east":      ['origin_eastern_1', 'origin_eastern_1', 'origin_eastern_1'],
+  "academy":      ['branch_academy_join', 'academy_admission', 'acad_life_y1_dorm', 'academy_graduation', 'grad_y5_end_1'],
+  "grad_stay":      ['grad_stay_1', 'grad_stay_2', 'grad_stay_4', 'goldscale_1'],
+  "grad_army":      ['grad_army_1', 'grad_army_4', 'frontier_city'],
+  "grad_roam":      ['grad_roam_1', 'grad_roam_3', 'sp8_ranger_00'],
+  "grad_home":      ['grad_home_1', 'grad_home_3', 'desert_oasis'],
+  "frontier":      ['frontier_entry', 'frontier_gate', 'frontier_city', 'frontier_bell_1', 'frontier_mine_1', 'frontier_seal_1'],
+  "west":      ['west_storm_observatory', 'west_academy_gate', 'sp8_ranger_00', 'sp8_ranger_09'],
+  "desert":      ['desert_oasis', 'desert_approach', 'anchor_chen_1'],
+  "anchor":      ['anchor_tower_1', 'anchor_mine_1', 'anchor_grave_1', 'anchor_vault_1', 'anchor_finale_1', 'anchor_finale_5'],
+  "goldscale":      ['goldscale_1', 'goldscale_5', 'goldscale_10'],
+  "faction":      ['warphase_1', 'warphase_7', 'faction_free_1', 'faction_north_1'],
+  "events":      ['fc_tavern', 'world_f6_battle'],
+}
+KEY_CHAIN = PATHS["main"] = PATHS["main"]
 
 def read(p):
-    return io.open(p, encoding='utf-8', errors='replace').read()
+    t = io.open(p, encoding='utf-8', errors='replace').read()
+    # SM-8：合并 chunks 分片，分片独有节点（EXTRA 96）同样可校验
+    try:
+        import glob
+        for f in sorted(glob.glob('chunks/*.js')):
+            if 'NODE_MAP' in f:
+                continue
+            t += "\n" + io.open(f, encoding='utf-8', errors='replace').read()
+    except Exception:
+        pass
+    return t
 
 def extract_edges(text):
     edges = {}
@@ -87,12 +118,14 @@ def extract_options(text, nid):
                      'check': 'check' in seg, 'cond': 'cond' in seg or 'if' in seg})
     return opts
 
-def simulate_keychain(text):
+def simulate_keychain(text, chain=None):
+    if chain is None:
+        chain = KEY_CHAIN
     """状态机推进路径模拟：沿 KEY_CHAIN 逐个节点模拟"选第一个可推进选项"，
     检测 check 自循环（go 回自身需 cond 出口）与死链。"""
     report = []
     ok = True
-    for i, nid in enumerate(KEY_CHAIN):
+    for i, nid in enumerate(chain):
         opts = extract_options(text, nid)
         if not opts:
             report.append('    %-22s 无选项（终端/纯文本）' % nid)
@@ -130,6 +163,9 @@ def runtime_evidence():
         return None
 
 def main():
+    import sys as _sys
+    _paths = [a[7:] for a in _sys.argv[1:] if a.startswith("--path=")]
+    _only = _paths[0] if _paths else "all"
     text = read(HTML)
     edges = extract_edges(text)
     ends = [k for k in edges if any(m in k for m in ENDING_MARKERS)]
@@ -148,14 +184,28 @@ def main():
     print('  结局总入边      : %d' % total_in)
     # 关键主线链出边
     print('  主线关键节点出边:')
-    for k in KEY_CHAIN:
+    _sel = list(PATHS.keys()) if _only == "all" else ([_only] if _only in PATHS else [])
+    if not _sel:
+        print('  未知路径: %s（可选：%s）' % (_only, ','.join(PATHS.keys())))
+        _sys.exit(2)
+    for k in _sel:
         outs = sorted(edges.get(k, set()))
         print('    %-22s %2d: %s' % (k, len(outs), outs[:6]))
     # U5 状态机推进路径模拟
     print('  状态机推进路径  :')
-    sim_ok, sim_rep = simulate_keychain(text)
-    for line in sim_rep:
-        print(line)
+    sim_ok = True
+    for k in _sel:
+        missing = [n for n in PATHS[k] if n not in edges]
+        if missing:
+            print('    [%s] 缺失节点: %s' % (k, missing[:6]))
+            sim_ok = False
+            continue
+        pk, rep = simulate_keychain(text, PATHS[k])
+        print('    [%s]' % k)
+        for line in rep:
+            print('      ' + line.strip())
+        if not pk:
+            sim_ok = False
     # 运行时证据（bu 平面回归产物）
     rt = runtime_evidence()
     # 验证

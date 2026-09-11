@@ -32,7 +32,7 @@ N["anchor_tower_3"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · �
 {t:"（把铁牌与铜叶贴身收好）",effects:{xp:20,flag:"anchor_tower_found"},go:"anchor_tower_4"}
 ]};
 
-N["anchor_tower_4"]={tags:["combat","anchor"],tag:"combat",place:"北境 · 第三哨 · 钟楼",where:"夜",pace:"epic",sceneTitle:"钟楼夜战",text:[
+N["anchor_tower_4"]={battle:true,enemy:{name:"无面异影",hp:40,atk:8,def:3,agi:8,wp:"利爪"},tags:["combat","anchor"],tag:"combat",place:"北境 · 第三哨 · 钟楼",where:"夜",pace:"epic",sceneTitle:"钟楼夜战",text:[
 "当夜，你宿在铁匠棚。子时刚过，钟楼上忽然“嗡”的一声——那口三十年没响过的铜钟，自己响了。",
 "你抓起刀冲上钟楼。月光从裂口灌进来，照见一个佝偻的身影正趴在钟身上，伸手往裂口里掏——它在找铁盒。你一声断喝，那身影猛地回头，一张脸上没有五官，只有一团不断翻涌的暗红雾气，雾里浮着一枚锚形印记。",
 "异影扑过来，快得不像是人。你侧身让过，刀背磕在它肩头，却像砍进一团浓烟，毫无实处。它反手一挥，指尖带起的风扫过你左臂，袖口“嗤”地裂开一道口子，皮肉翻卷，血顺着胳膊滴在钟楼的青砖上。你退后半步，感到左臂从指尖到肩胛一阵发麻——力气正在从那条胳膊里抽走，像是被什么吸住了。",
@@ -87,7 +87,7 @@ N["anchor_mine_3"]={tags:["anchor"],tag:"main",place:"北境 · 矿洞 · 刘矿
 {t:"（收好图纸与铁链）",effects:{xp:22,flag:"anchor_mine_found"},go:"anchor_mine_4"}
 ]};
 
-N["anchor_mine_4"]={tags:["combat","anchor"],tag:"combat",place:"北境 · 矿洞 · 铁门前",where:"夜",pace:"epic",sceneTitle:"矿洞惊变",text:[
+N["anchor_mine_4"]={battle:true,enemy:{name:"铁灰鳞怪物",hp:46,atk:9,def:4,agi:6,wp:"尾刺"},tags:["combat","anchor"],tag:"combat",place:"北境 · 矿洞 · 铁门前",where:"夜",pace:"epic",sceneTitle:"矿洞惊变",text:[
 "当夜你宿在矿洞口。睡到后半夜，矿洞深处忽然传来一阵闷雷般的轰鸣，紧接着，整条巷道都在抖。你抓起火把冲进去，跑到铁门前——门开着一条缝。",
 "门缝里涌出一股腐臭的湿气。你举着火把探进去，火光尽头，一双青灰色的眼睛正贴着门缝看你。你后退半步，门缝里探出一只爪子，覆着铁灰色鳞片，指尖比你的小臂还长，一把扣住门沿，将铁门又撑开半尺。",
 "怪物挤出来时，你才看清它的全貌：一身铁灰鳞片，脊背拱起，尾尖拖着一条带倒刺的长尾，嘴裂到耳根，獠牙上挂着黏涎。它朝你扑来，你横刀格挡，刀锋砍在它肩鳞上，迸出一串火星，却只留下一道白印。它甩尾扫过，尾刺擦着你右肋划过去，皮甲被撕开一道口子，肋骨处火辣辣地疼，你抬手一摸，满掌的血——那一下划得极深，右臂抬起来都发颤，力气从伤口往外漏。",

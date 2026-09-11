@@ -261,6 +261,8 @@ function elFromHtml(html){
 }
 function actOut(html){ const o=document.getElementById("act-out"); if(o) o.innerHTML=html; }
 function mechAct(a){
+  try{ if(window.v93_battle && window.v93_battle.active){ window.flashMsg("⚔ 战斗中，先分出胜负。"); return; } }catch(e){}
+
   const acts = actsLeft();
   if(a==="rest"){
     closeModal();
@@ -391,6 +393,7 @@ function mechTrade(){
   h += "<button class='opt' onclick='closeModal(); buyMedicine()'><span class='od'>⚗️</span> 买疗伤药（1金龙，可治轻伤）</button>";
   h += "<button class='opt' onclick='closeModal(); sellJunk()'><span class='od'>💰</span> 变卖杂物（换些路费）</button>";
   h += "<button class='opt' onclick='closeModal(); tradeGamble()'><span class='od'>🎲</span> 赌一把行情（靠交易本事）</button>";
+  h += "<button class='opt' onclick='closeModal(); window.v93_openMarketPanel()'><span class='od'>🛒</span> 商路与行情</button>";
   h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 离开</button>";
   const box=document.createElement("div"); box.className="box"; box.innerHTML=h;
   openModal(box);
@@ -10437,7 +10440,11 @@ function v34_renderSettings(){
   html += '<button class="btn" onclick="v92_openThreadPanel()">☰ 叙事线</button>';
   html += '<button class="btn" onclick="v92_openWorldPanel()">🌍 局势</button>';
   html += '<button class="btn" onclick="v92_openTierPanel()">⚔ 实力</button>';
-  html += '<button class="btn" onclick="v92_openTradePanel()">🛒 商路</button>';
+  html += '<button class="btn" onclick="v93_openMarketPanel()">🛒 商路</button>'
+  html += '<button class="btn" onclick="v93_openNewsPanel()">🗞 日报</button>';
+  html += '<button class="btn" onclick="v93_ambienceToggle()">🔊 环境音</button>';
+  html += '<button class="btn" onclick="v93_openMemoryPanel()">🧠 记忆</button>';
+  html += '<button class="btn" onclick="v93_openFestivalPanel()">🎪 节日</button>';
   html += '<button class="btn" onclick="v34_openAchievements()">⚑ 成就</button>';
   html += '<button class="btn" onclick="if(window.v74_openJournal)v74_openJournal()">📔 手记</button>';
   html += '<button class="btn" onclick="if(window.v92_rollback)v92_rollback()">↩ 回退</button>';
@@ -11108,3 +11115,443 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
   try{ renderLog(); }catch(e){}
 })();
 
+/* ============================================================
+   /v93btl:hooks/ CB-2 指令环战斗 v2
+   节点声明：N[id] 增加 battle:true + enemy:{name,hp,atk,def,agi,wp,desc}
+   writeNext 渲染战斗节点时自动启动指令环（蓄势/抢攻/防御/施法/撤退）；
+   战斗结束后恢复原选项（原 check 判定/选项/go 零改动）。
+   结算为独立新系统（可复算）；战斗内存态，不入存档结构；
+   读档回到节点时战斗 UI 消失、原选项仍在（文档记录边界）。
+   ===== */
+(function(){
+  if(window.__v93btlLoaded) return; window.__v93btlLoaded = true;
+  var _btl = { active:false, nodeId:"", round:0, charged:false, defensing:false,
+    player:{hp:1,maxHp:1,atk:0,def:0,agi:0,int:0},
+    enemy:{name:"",hp:1,maxHp:1,atk:0,def:0,agi:0,wp:"",desc:""} };
+  window.v93_battle = _btl;
+  var PART=["左臂","右肋","肩胛","小腿","腰侧"];
+  var DEG=["划开一道口子","皮开肉绽","骨节发响","血浸透半边衣衫"];
+  var MISS=["对方侧身让过，你的兵器只擦着衣角。","你抢得太急，脚下打了个趔趄。","对方用兵器格开，火星迸溅。"];
+  var HIT=["这一下结结实实，血珠溅在石地上。","兵刃入肉的声音沉闷，对方闷哼一声。","你顺势一送，对方踉跄后退两步。"];
+  var CHARGE=["你握紧兵器，{en}绕着圈子，脚下的沙砾被靴子碾出细响。","风从缺口灌进来，{en}的呼吸又沉又稳，像一头锁定了猎物的老兽。"];
+  function rand(n){ return Math.floor(Math.random()*n); }
+  function pick(a){ return a[rand(a.length)]; }
+  function tpl(s,m){ return s.replace(/\{en\}/g,m.enemy.name).replace(/\{wp\}/g,(m.enemy.wp||"兵器")); }
+  _btl.render = function(){
+    var o=document.getElementById("v93-battle"); if(!o) return;
+    var p=_btl.player, e=_btl.enemy;
+    var h="<div class='v93b-wrap'>";
+    h+="<div class='v93b-hd'>⚔ "+e.name+"　<span class='v93b-hp'>"+e.hp+"/"+e.maxHp+"</span></div>";
+    h+="<div class='v93b-bar'><i style='width:"+Math.max(0,Math.round(e.hp/e.maxHp*100))+"%'></i></div>";
+    h+="<div class='v93b-sub'>第 "+_btl.round+" 轮 · 你 "+p.hp+"/"+p.maxHp+"　攻"+p.atk+" 守"+p.def+" 敏"+p.agi+"</div>";
+    h+="<div class='v93b-cmds'>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('charge')\\\">蓄势</button>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('attack')\\\">抢攻</button>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('defend')\\\">防御</button>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('cast')\\\">施法</button>";
+    h+="<button class='btn ghost' onclick=\\\"window.v93_battle.cmd('retreat')\\\">撤退</button>";
+    h+="</div></div>";
+    o.innerHTML=h;
+  };
+  _btl.emit = function(txt){
+    try{ if(window.v93_actLog) window.v93_actLog("⚔ "+txt); }catch(e){}
+    try{
+      var box=document.getElementById("v93-battle-box");
+      if(box){ var p=document.createElement("div"); p.className="v93b-line"; p.textContent=txt; box.appendChild(p); box.scrollTop=box.scrollHeight; }
+    }catch(e){}
+  };
+  _btl.start = function(node){
+    if(_btl.active) return true;
+    try{
+      var en=node.enemy||{name:"无名敌手",hp:30,atk:6,def:2,agi:5,wp:"兵器",desc:""};
+      var A=(typeof S!=="undefined"&&S&&S.attrs)?S.attrs:{};
+      var mhp=(typeof S!=="undefined"&&S&&S.maxHp)?S.maxHp:(40+Math.floor((A.CON||0)*2));
+      _btl.player={hp:mhp,maxHp:mhp,atk:6+Math.floor((A.STR||0)*0.6),
+        def:2+Math.floor((A.CON||0)*0.3), agi:5+Math.floor((A.AGI||0)*0.3), int:(A.INT||0)};
+      _btl.enemy={name:en.name,hp:en.hp,maxHp:en.hp,atk:en.atk,def:en.def,agi:en.agi,wp:en.wp||"兵器",desc:en.desc||""};
+      _btl.nodeId=node.id; _btl.round=0; _btl.charged=false; _btl.defensing=false; _btl.active=true;
+      var opts=document.getElementById("options"); if(opts) opts.style.display="none";
+      var o=document.getElementById("v93-battle"); if(o){
+        o.style.display="";
+        var box=document.createElement("div"); box.id="v93-battle-box"; box.className="v93b-box";
+        o.appendChild(box);
+      }
+      _btl.emit(tpl(pick(CHARGE),_btl));
+      _btl.emit("回合开始。");
+      _btl.render();
+      return true;
+    }catch(e){ try{ console.log("[v93btl:err]",e); }catch(_){} return false; }
+  };
+  _btl.end = function(win){
+    _btl.active=false;
+    var opts=document.getElementById("options"); if(opts) opts.style.display="";
+    try{
+      if(win){ _btl.emit("你赢了这一仗。"); }
+      else { _btl.emit("你退了半步，这一仗没有分出胜负。"); }
+      if(typeof S!=="undefined"&&S){ S.hp=Math.max(1,_btl.player.hp); }
+      if(window.renderStats) renderStats();
+      if(window.renderTop) renderTop();
+      if(window.v34_animateOptions) setTimeout(function(){ try{v34_animateOptions();}catch(e){} },60);
+    }catch(e){}
+    var o=document.getElementById("v93-battle"); if(o){ o.style.display="none"; var b=document.getElementById("v93-battle-box"); if(b&&b.parentNode) b.parentNode.removeChild(b); }
+  };
+  _btl.cmd = function(c){
+    if(!_btl.active) return;
+    _btl.round++;
+    var p=_btl.player, e=_btl.enemy, dmg=0;
+    if(c==="retreat"){ _btl.emit("你且战且退，脱离了战圈。"); _btl.end(false); return; }
+    if(c==="charge"){ _btl.charged=true; _btl.emit("你沉下重心，把气力蓄在刀口上，只等一个机会。"); }
+    else if(c==="attack"){
+      var hit=55+(p.agi-e.agi)*2; hit=Math.max(25,Math.min(95,hit));
+      if(Math.random()*100<hit){
+        dmg=p.atk-Math.floor(e.def/2)+rand(6)+1;
+        if(_btl.charged){ dmg*=2; _btl.charged=false; }
+        e.hp=Math.max(0,e.hp-dmg);
+        _btl.emit("你抢上一步——"+pick(HIT)+"（造成 "+dmg+" 点伤害）");
+        if(e.hp<=0){ _btl.emit("最后一下，"+e.name+"的兵器脱了手。"); _btl.end(true); return; }
+      } else { _btl.emit(pick(MISS)); }
+    }
+    else if(c==="defend"){ _btl.defensing=true; _btl.emit("你架起守势，把重心压稳，任它风浪来。"); }
+    else if(c==="cast"){
+      var cost=5, sanOk=(typeof S!=="undefined"&&S&&S.san>=cost);
+      if(sanOk){
+        S.san-=cost;
+        dmg=10+Math.floor(p.int*0.7)+rand(4);
+        e.hp=Math.max(0,e.hp-dmg);
+        _btl.emit("咒文出口，元素应声而聚——"+e.name+"被轰了个正着（造成 "+dmg+" 点伤害，心神 -5）");
+        if(e.hp<=0){ _btl.emit(e.name+"轰然倒地，战斗结束。"); _btl.end(true); return; }
+      } else {
+        dmg=6; e.hp=Math.max(0,e.hp-dmg); p.hp=Math.max(1,p.hp-8);
+        _btl.emit("你强行引动魔力，眉心一痛，血从鼻尖滴落（造成 "+dmg+" 点伤害，自身受损）");
+        if(e.hp<=0){ _btl.emit(e.name+"倒下，你险胜。"); _btl.end(true); return; }
+      }
+    }
+    if(e.hp>0){
+      var ehit=55+(e.agi-p.agi)*2; ehit=Math.max(25,Math.min(95,ehit));
+      if(Math.random()*100<ehit){
+        var ed=e.atk-Math.floor(p.def/2);
+        if(_btl.defensing){ ed=Math.max(1,Math.floor(ed/2)); _btl.defensing=false; }
+        ed=Math.max(1,ed);
+        p.hp-=ed;
+        _btl.emit(e.name+"的"+e.wp+"扫过来，"+pick(PART)+"被"+pick(DEG)+"。（你受到 "+ed+" 点伤害）");
+        if(p.hp<=0){ p.hp=1; _btl.emit("你眼前发黑，单膝跪地。"+e.name+"没有追击。"); _btl.end(false); return; }
+      } else { _btl.emit(e.name+"的攻势落空，扬起一片尘土。"); }
+    }
+    _btl.render();
+    try{ if(window.renderStats) renderStats(); }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93mkt:hooks/ EC-3 经济闭环
+   - 商会分红：每 7 天一次（guild 势力或 merchant_saved flag 时）
+   - 商路行情面板：包裹 v92 贸易面板 + 3 商路 + 分红信息
+   结算独立、只读 S 现有字段 + S.market 独立键；不动判定/存档结构。
+   ===== */
+(function(){
+  if(window.__v93mktLoaded) return; window.__v93mktLoaded = true;
+  window.v93_marketTick = function(n){
+    try{
+      if(!S || !S.market) return;
+      var m = S.market;
+      if(!m.lastDiv) m.lastDiv = S.day;
+      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      if(member && (S.day - m.lastDiv) >= (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)){
+        var div = (window.MARKET_DIV_V93 && MARKET_DIV_V93.base || 3) + Math.floor((S.day - m.lastDiv) / (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)) * (window.MARKET_DIV_V93 && MARKET_DIV_V93.grow || 1);
+        S.gold += div;
+        m.divTotal = (m.divTotal||0) + div;
+        m.lastDiv = S.day;
+        try{ if(window.v93_actLog) window.v93_actLog("商会按例分红，账上多了 "+div+" 枚金龙"); }catch(e){}
+        try{ if(window.logMsg) logMsg("商会的账房先生寻上门来，按例分了红利——"+div+" 枚金龙，说是一季度一结，从不拖欠。"); }catch(e){}
+      }
+    }catch(e){}
+  };
+  window.v93_openMarketPanel = function(){
+    try{
+      var d = (window.v92_openTradePanel) ? window.v92_openTradePanel() : null;
+      if(!d) return;
+      var routes = window.MARKET_ROUTES_V93 || [];
+      var rh = routes.map(function(r){ return "🛤 "+r.name+"："+r.desc; }).join("<br>");
+      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      var divInfo = member
+        ? ("在册商会成员 · 每 " + ((window.MARKET_DIV_V93&&MARKET_DIV_V93.period)||7) + " 日分红 · 累计已领 " + ((S.market&&S.market.divTotal)||0) + " 枚金龙")
+        : ("尚未加入商会（加入 guild 势力或营救过商队管事可享分红）");
+      var info = document.createElement('div');
+      info.style.cssText = 'margin-bottom:10px;padding:10px 12px;background:#f4ead2;border:1px solid #d9c07a;border-radius:8px;font-size:13px;line-height:1.9;color:#3c2f14;';
+      info.innerHTML = '<b>商路</b><br>'+rh+'<br><b>商会分红</b><br>'+divInfo;
+      d.insertBefore(info, d.firstChild);
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93news:hooks/ WD-4 世界日报 + 事件链
+   - 世界事件（worldQueue / EVENT_POOL_EXT / 五主线）收录为新闻条目
+   - 10 条事件链按 day 播报
+   - 30 天滚动窗口；S.news 独立键，存档零结构改动
+   ===== */
+(function(){
+  if(window.__v93newsLoaded) return; window.__v93newsLoaded = true;
+  window.v93_newsAdd = function(tag, txt){
+    try{
+      if(!S || !S.news) return;
+      S.news.list = S.news.list || [];
+      S.news.list.push({day:S.day, tag:tag||"world", text:String(txt||"").slice(0,80)});
+      S.news.count = (S.news.count||0) + 1;
+      var cutoff = S.day - 30;
+      S.news.list = S.news.list.filter(function(n){ return n.day >= cutoff; });
+      if(S.news.list.length > 60) S.news.list = S.news.list.slice(-60);
+    }catch(e){}
+  };
+  window.v93_newsTick = function(){
+    try{
+      if(!S || !S.news) return;
+      S.news.done = S.news.done || {};
+      /* 世界事件队列新条目 → 新闻 */
+      var q = S.worldQueue || [];
+      for(var i=0;i<q.length;i++){
+        var k = "wq_"+q[i];
+        if(!S.news.done[k]){ S.news.done[k]=true; window.v93_newsAdd("world", "世界动荡："+q[i]); }
+      }
+      /* 事件链 */
+      var chains = window.NEWS_CHAINS_V93 || [];
+      for(var c=0;c<chains.length;c++){
+        var ch = chains[c], key = "ch_"+ch.id;
+        for(var s=0;s<ch.days.length;s++){
+          var dk = key+"_"+s;
+          if(!S.news.done[dk] && S.day >= ch.days[s]){
+            S.news.done[dk]=true;
+            window.v93_newsAdd("chain", ch.texts[s]);
+          }
+        }
+      }
+    }catch(e){}
+  };
+  window.v93_openNewsPanel = function(){
+    try{
+      var box = document.createElement('div'); box.className = 'box';
+      var h = '<h3>🗞 世界日报</h3><div class="mini">最近 30 日 · 滚动收录 · 纯播报不干预判定</div>';
+      var list = (S.news && S.news.list) ? S.news.list.slice().reverse() : [];
+      if(!list.length){ h += '<div class="mini" style="margin-top:8px">尚无新闻。世界仍在运转，只是你还没听见。</div>'; }
+      for(var i=0;i<list.length;i++){
+        var n = list[i];
+        h += '<div style="padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.12);font-size:14px;line-height:1.7;">'
+          + '<span style="color:#8a6d2f;font-weight:600">第 '+n.day+' 日</span> · ' + esc(n.text)
+          + (n.tag==="chain" ? '<span style="color:#a8842a;font-size:11px;margin-left:6px">【事件链】</span>' : '')
+          + '</div>';
+      }
+      h += '<div style="text-align:center;margin-top:14px"><button class="btn" onclick="closeModal()">返回游戏</button></div>';
+      box.innerHTML = h;
+      openModal(box);
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93audio:hooks/ AU-5 Web Audio 程序化环境音
+   - 懒初始化 AudioContext（首次渲染时）；音量极低（master 0.04）
+   - 音景：wind(北境/风雪) / wind2(沙漠/西境) / tavern(酒馆) / rumble(矿洞地下) / rain(雨) / fire(默认)
+   - 开关复用 S.settings.ambience；纯音效层，不改判定/存档
+   ===== */
+(function(){
+  if(window.__v93audioLoaded) return; window.__v93audioLoaded = true;
+  window.v93_audioInit = function(){
+    try{
+      if(window.__v93ac) return window.__v93ac;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      var ctx = new AC();
+      var master = ctx.createGain();
+      master.gain.value = 0.04;
+      master.connect(ctx.destination);
+      var noiseBuf = ctx.createBuffer(1, ctx.sampleRate*2, ctx.sampleRate);
+      var d = noiseBuf.getChannelData(0);
+      for(var i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+      window.__v93ac = {ctx:ctx, master:master, noiseBuf:noiseBuf, src:null, filter:null, gain:null, lfo:null, lg:null, type:""};
+      return window.__v93ac;
+    }catch(e){ return null; }
+  };
+  window.v93_ambienceStop = function(){
+    try{
+      var ac = window.__v93ac; if(!ac) return;
+      if(ac.src){ try{ ac.src.stop(); }catch(e){} ac.src=null; }
+      if(ac.lfo){ try{ ac.lfo.stop(); }catch(e){} ac.lfo=null; }
+      if(ac.filter){ try{ ac.filter.disconnect(); }catch(e){} ac.filter=null; }
+      if(ac.gain){ try{ ac.gain.disconnect(); }catch(e){} ac.gain=null; }
+      if(ac.lg){ try{ ac.lg.disconnect(); }catch(e){} ac.lg=null; }
+      ac.type="";
+    }catch(e){}
+  };
+  window.v93_ambienceSync = function(){
+    try{
+      if(!S || !S.settings || S.settings.ambience===false){ window.v93_ambienceStop(); return; }
+      var ac = window.v93_audioInit(); if(!ac) return;
+      if(ac.ctx.state==="suspended"){ try{ ac.ctx.resume(); }catch(e){} }
+      var loc = String(S.curCity||"") + " " + String(S.region||"");
+      var type = "fire";
+      if(/north|雪|frontier|北境|哨/.test(loc)) type = "wind";
+      else if(/desert|沙漠|荒原|西境|element/.test(loc)) type = "wind2";
+      else if(/tavern|酒馆|客栈/.test(loc)) type = "tavern";
+      else if(/mine|矿洞|地窖|地下|牢/.test(loc)) type = "rumble";
+      if(/雨/.test(loc)) type = "rain";
+      if(ac.type===type) return;
+      window.v93_ambienceStop();
+      var f = ac.ctx.createBiquadFilter(); f.type="lowpass";
+      var g = ac.ctx.createGain();
+      var lfo = ac.ctx.createOscillator(); var lg = ac.ctx.createGain();
+      var src = ac.ctx.createBufferSource(); src.buffer = ac.noiseBuf; src.loop = true;
+      var freq, q, amp, lfof, lfoamp;
+      if(type==="wind"){ freq=520; q=0.8; amp=0.8; lfof=0.13; lfoamp=0.35; }
+      else if(type==="wind2"){ freq=820; q=1.2; amp=0.55; lfof=0.21; lfoamp=0.28; }
+      else if(type==="tavern"){ freq=420; q=0.4; amp=0.5; lfof=0.09; lfoamp=0.22; }
+      else if(type==="rumble"){ freq=150; q=2.2; amp=0.9; lfof=0.05; lfoamp=0.4; }
+      else if(type==="rain"){ freq=2400; q=0.3; amp=0.6; lfof=0.3; lfoamp=0.2; }
+      else { freq=680; q=0.6; amp=0.6; lfof=0.11; lfoamp=0.3; }
+      f.frequency.value = freq; f.Q.value = q;
+      g.gain.value = amp;
+      lfo.frequency.value = lfof; lg.gain.value = lfoamp;
+      src.connect(f); f.connect(g); g.connect(ac.master);
+      lfo.connect(lg); lg.connect(g.gain);
+      lfo.start(); src.start();
+      ac.type=type; ac.src=src; ac.filter=f; ac.gain=g; ac.lfo=lfo; ac.lg=lg;
+    }catch(e){}
+  };
+  window.v93_ambienceToggle = function(){
+    try{
+      if(!S || !S.settings) return;
+      S.settings.ambience = !S.settings.ambience;
+      if(S.settings.ambience) window.v93_ambienceSync(); else window.v93_ambienceStop();
+      try{ if(window.flashMsg) flashMsg(S.settings.ambience?"环境音已开启":"环境音已关闭"); }catch(e){}
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93fest:hooks/ FT-7 季节节日
+   - 节日当天播报（advanceDays 触发）；在城市则有小彩头（gold/xp 只读结算）
+   - 面板可查看全年节日历；S.festival 独立键
+   ===== */
+(function(){
+  if(window.__v93festLoaded) return; window.__v93festLoaded = true;
+  window.v93_festivalTick = function(){
+    try{
+      if(!S || !S.festival) return;
+      S.festival.done = S.festival.done || {};
+      var f = window.FESTIVAL_V93 || [];
+      for(var i=0;i<f.length;i++){
+        var ev = f[i], key = "f_"+ev.day;
+        if(S.festival.done[key] || S.day !== ev.day) continue;
+        S.festival.done[key] = true;
+        try{ if(window.logMsg) logMsg("今日节日："+ev.name+"——"+ev.desc); }catch(e){}
+        try{ if(window.v93_actLog) window.v93_actLog("节日 · "+ev.name); }catch(e){}
+        try{ if(window.v93_newsAdd) window.v93_newsAdd("fest", ev.name+"："+ev.desc); }catch(e){}
+        if(S.curCity){
+          var r = Math.random();
+          if(r < 0.5){ S.gold = (S.gold||0) + 2; try{ if(window.writePar) writePar("（"+ev.reward+" 得 2 枚金龙。）","res"); }catch(e){} }
+          else { S.xp = (S.xp||0) + 8; try{ if(window.writePar) writePar("（"+ev.reward+" 得 8 点阅历。）","res"); }catch(e){} }
+          try{ if(window.renderTop) renderTop(); }catch(e){}
+          try{ if(window.renderStats) renderStats(); }catch(e){}
+        }
+      }
+    }catch(e){}
+  };
+  window.v93_openFestivalPanel = function(){
+    try{
+      var box = document.createElement('div'); box.className = 'box';
+      var h = '<h3>🎪 节日</h3><div class="mini">一年十二个月 · 三十日一月 · 固定节日</div>';
+      var f = window.FESTIVAL_V93 || [];
+      for(var i=0;i<f.length;i++){
+        var ev = f[i];
+        var m = Math.floor((ev.day-1)/30)+1, d = (ev.day-1)%30+1;
+        var done = S.festival && S.festival.done && S.festival.done["f_"+ev.day];
+        h += '<div style="padding:7px 0;border-bottom:1px dashed rgba(0,0,0,.12);font-size:14px;line-height:1.7;">'
+          + '<div style="display:flex;justify-content:space-between;"><b>'+ev.name+'</b><span style="color:#8a6d2f;">第 '+ev.day+' 日'+(done?' · 已过':'')+'</span></div>'
+          + '<div style="font-size:13px;color:#555;">'+ev.desc+'</div></div>';
+      }
+      h += '<div style="text-align:center;margin-top:14px"><button class="btn" onclick="closeModal()">返回游戏</button></div>';
+      box.innerHTML = h;
+      openModal(box);
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93npc:hooks/ NM-6 NPC 记忆 v2
+   - 记忆写入：changeRelation 变化时记入 S.npcMemory[npc].slot（最多 4 槽）
+   - 回指钩子：节点文本提及已登记 NPC 且有记忆时注入 1 句（好感档语气）
+   - 记忆面板：按 NPC 展示关系档位 + 记忆槽
+   ===== */
+(function(){
+  if(window.__v93npcLoaded) return; window.__v93npcLoaded = true;
+  window.v93_npcRemember = function(npcId, delta, reason){
+    try{
+      if(!S) return;
+      S.npcMemory = S.npcMemory || {};
+      var m = S.npcMemory[npcId] || {slot:[]};
+      m.slot = m.slot || [];
+      m.slot.push({day:S.day, v:(S.npcRelations&&S.npcRelations[npcId])||0, note:String(reason||"").slice(0,24)});
+      if(m.slot.length > 4) m.slot = m.slot.slice(-4);
+      S.npcMemory[npcId] = m;
+    }catch(e){}
+  };
+  window.v93_npcMemoryHook = function(node){
+    try{
+      if(!S || !S.settings || S.settings.npcMemory===false) return null;
+      if(!S.npcMemory) return null;
+      var arch = window.NPC_MEMORY_V93 || [];
+      var texts = [];
+      if(typeof node.text === "string") texts.push(node.text);
+      else if(Array.isArray(node.text)) texts = texts.concat(node.text);
+      else if(node.text && typeof node.text === "object"){
+        if(Array.isArray(node.text.default)) texts = texts.concat(node.text.default);
+        var fv = node.text.ifFlag; for(var k in (fv||{})){ if(Array.isArray(fv[k])) texts = texts.concat(fv[k]); }
+        var rv = node.text.ifRelation; if(rv){ if(Array.isArray(rv.yes)) texts=texts.concat(rv.yes); if(Array.isArray(rv.no)) texts=texts.concat(rv.no); }
+      }
+      var joined = texts.join("");
+      var rel = S.npcRelations || {};
+      for(var i=0;i<arch.length;i++){
+        var np = arch[i];
+        if(!S.npcMemory[np.id] || !S.npcMemory[np.id].slot || !S.npcMemory[np.id].slot.length) continue;
+        if(joined.indexOf(np.name) < 0) continue;
+        var v = rel[np.id] || 0;
+        var last = S.npcMemory[np.id].slot[S.npcMemory[np.id].slot.length-1];
+        var line;
+        if(v>=80) line = "你想起"+np.name+"上回待你的那份情分——那双眼里的东西，不是装出来的。";
+        else if(v>=60) line = "你想起"+np.name+"——上回分别时他说过的话，你还记得。";
+        else if(v<=-60) line = "你想起"+np.name+"。胸口那口气还在，路还长。";
+        else if(v>0) line = "你想起"+np.name+"，点头之交，也算故人。";
+        else line = null;
+        if(line) return [line];
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  window.v93_openMemoryPanel = function(){
+    try{
+      var box = document.createElement('div'); box.className = 'box';
+      var h = '<h3>🧠 记忆</h3><div class="mini">相遇、共事与恩怨——都记在这里。</div>';
+      var arch = window.NPC_MEMORY_V93 || [];
+      var rel = S.npcRelations || {}; var mem = S.npcMemory || {};
+      var found = 0;
+      for(var i=0;i<arch.length;i++){
+        var np = arch[i];
+        if(!rel[np.id] && (!mem[np.id] || !mem[np.id].slot || !mem[np.id].slot.length)) continue;
+        found++;
+        var v = rel[np.id]||0;
+        var lvl = v>=80?"恋人":(v>=60?"挚友":(v<=-60?"死敌":(v>0?"相识":"素未谋面")));
+        h += '<div style="padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.12);">'
+          + '<div style="display:flex;justify-content:space-between;font-size:14px;line-height:1.6;"><b>'+np.name+'</b><span style="color:#8a6d2f;">'+lvl+' · '+v+'</span></div>'
+          + '<div style="font-size:12px;color:#8a7a55;">'+np.role+'</div>';
+        var slots = (mem[np.id]&&mem[np.id].slot)||[];
+        for(var s=0;s<slots.length;s++){
+          h += '<div style="font-size:12px;color:#555;line-height:1.7;padding-left:8px;">第 '+slots[s].day+' 日 · 关系 '+slots[s].v + (slots[s].note?' · '+esc(slots[s].note):'') + '</div>';
+        }
+        h += '</div>';
+      }
+      if(!found) h += '<div class="mini" style="margin-top:8px">尚未与任何人建立值得一提的关系。</div>';
+      h += '<div style="text-align:center;margin-top:14px"><button class="btn" onclick="closeModal()">返回游戏</button></div>';
+      box.innerHTML = h;
+      openModal(box);
+    }catch(e){}
+  };
+})();

@@ -4920,6 +4920,24 @@ body.v68-theme #options .opt:hover{ background:#f2e0b8; border-color:#a08040; tr
         <div class="v92-w-anchors"><span class="v92-w-anchor">M 地图</span><span class="v92-w-anchor">B 行囊</span><span class="v92-w-anchor">T 修炼</span><span class="v92-w-anchor">L 日志</span><span class="v92-w-anchor">F 势力</span><span class="v92-w-anchor">S 存档</span></div>
         <div class="v92-w-meta">d100 六档判定 · 序章依出身/种族/理想而变 · 存档保存于本机</div>
       </div></div>
+      <style>
+      /* /v93btl:ui/ CB-2 指令环战斗面板 */
+      #v93-battle{ margin:10px 0; }
+      .v93b-wrap{ background:linear-gradient(180deg,#2b2118,#241a13); border:1px solid #7a5a35; border-radius:8px; padding:10px 12px; color:#e8dcc0; }
+      .v93b-hd{ font-weight:700; font-size:15px; color:#f0c98a; }
+      .v93b-hp{ float:right; font-size:13px; color:#d98a6a; }
+      .v93b-bar{ height:8px; background:#1a130d; border-radius:4px; margin:6px 0; overflow:hidden; }
+      .v93b-bar i{ display:block; height:100%; background:linear-gradient(90deg,#a43b2a,#d9805a); border-radius:4px; }
+      .v93b-sub{ font-size:12px; color:#b7a487; margin:4px 0; }
+      .v93b-cmds{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+      .v93b-cmds .btn{ flex:1 1 auto; min-width:70px; padding:7px 10px; }
+      .v93b-box{ max-height:180px; overflow-y:auto; margin-top:8px; border-top:1px dashed #6b5336; padding-top:6px; font-size:13px; color:#d9c9a8; }
+      .v93b-line{ padding:2px 0; }
+      body.theme-night #v93-battle .v93b-wrap{ background:linear-gradient(180deg,#1b2334,#141b29); border-color:#2d3a56; color:#c9d4e8; }
+      body.theme-night #v93-battle .v93b-hd{ color:#a8c8f0; }
+      body.theme-night #v93-battle .v93b-sub{ color:#8fa0bd; }
+      </style>
+      <div id="v93-battle" role="region" aria-label="战斗" style="display:none"></div>
       <div id="options"></div>
       <div id="v93-actlog" role="log" aria-label="行动日志">
         <div class="act-head" id="v93-actlog-head"><span>✦ 行动日志<span id="v93-actlog-count" class="act-count"></span></span><span id="v93-actlog-toggle" title="折叠/展开">▾</span></div>
@@ -25526,6 +25544,8 @@ function changeRelation(npcId,delta,reason){
   if(old>-60&&S.npcRelations[npcId]<=-60){ triggerRelationEvent(npcId,"enemy"); }
   /* /upg07inj:relnotify/ UPG-07 关系变更广播（只读 UI 通知） */
   try{ window.ELDA && window.ELDA.notify && window.ELDA.notify({relation:{npc:npcId}}); }catch(e){}
+  /* /v93npc:relhook/ NM-6 NPC 记忆写入（只读 S 既有字段 + S.npcMemory 独立键） */
+  try{ if(window.v93_npcRemember) window.v93_npcRemember(npcId,delta,reason||""); }catch(e){}
 }
 
 function triggerRelationEvent(npcId,type){
@@ -52875,6 +52895,18 @@ function applyDefaults(s){
   if(!s.faction) s.faction="";
   /* /pn1inj:defaults/ P-N1 并行叙事线程状态兜底（旧档兼容；独立键空对象） */
   if(!s.threads) s.threads={};
+  /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
+  if(s.settings.worldEcho===undefined) s.settings.worldEcho=true;
+  if(!s.worldState) s.worldState={};
+  /* /v93mkt:defaults/ EC-3 经济闭环独立键（旧档兼容） */
+  if(!s.market) s.market={lastDiv:0,divTotal:0};
+  /* /v93news:defaults/ WD-4 世界日报独立键（旧档兼容） */
+  if(!s.news) s.news={list:[],count:0,done:{}};
+  /* /v93npc:defaults/ NM-6 NPC 记忆独立键（旧档兼容） */
+  if(!s.npcMemory) s.npcMemory={};
+  if(s.settings.npcMemory===undefined) s.settings.npcMemory=true;
+  /* /v93fest:defaults/ FT-7 节日独立键（旧档兼容） */
+  if(!s.festival) s.festival={done:{}};
   return s;
 }
 function loadGame(){
@@ -57780,6 +57812,10 @@ function writeNext(_v46f){
     try{ window.v91_arcAdvance(node); }catch(e){} /* /sp3inj:archook/ SP-3 弧线推进（只读注入点） */
     /* /pn1inj:threadhook/ P-N1 线程状态机登记（只读钩子：记录当前节点所属叙事线程的进度/日/次数） */
     try{ window.v92_threadTick(node); }catch(e){}
+    /* /ws1inj:echohook/ WS-1 世界状态回响（只读钩子；主线枢纽节点渲染收尾注入 1 句；开关 S.settings.worldEcho；关闭时零注入） */
+    try{ var _ws = window.v93_worldEcho(node); if(_ws&&_ws.length){ _txt=_txt.concat(_ws); } }catch(e){}
+    /* /v93npc:hook/ NM-6 NPC 记忆回指（只读注入；开关 S.settings.npcMemory） */
+    try{ var _npc = window.v93_npcMemoryHook(node); if(_npc&&_npc.length){ _txt=_txt.concat(_npc); } }catch(e){}
     if(window.v45_shouldPaginate(node)){
       try{ window.v67_busyClear(); }catch(e){} /* 分页节点无选项，立即解锁防死锁 */
       window.__v45ctx={node:node,txt:_txt,page:0};
@@ -57792,6 +57828,7 @@ function writeNext(_v46f){
     RenderBatch.flush();
     try{ window.v92_hlInit(); window.v92_ambCSS(); }catch(e){}
     try{ window.v92_applyAmbience(); }catch(e){}
+    try{ window.v93_ambienceSync(); }catch(e){}
     try{ if(window.ambScene){ var _ap=(typeof curNode!=="undefined"&&curNode&&N[curNode]&&N[curNode].place)?String(N[curNode].place):""; window.ambScene(_ap); } }catch(e){}
     try{ v44_afterRender(); }catch(e){}
     try{ v45_afterNode(node); }catch(e){}
@@ -57804,10 +57841,14 @@ function writeNext(_v46f){
       return;
     }
     try{ window.v92_achTick(node); }catch(e){}
+    var _btlGo = false;
+    try{ if(node && node.battle===true && window.v93_battle && typeof window.v93_battle.start==='function'){ _btlGo = window.v93_battle.start(node); } }catch(e){}
+    if(!_btlGo){
     showOptions(node);
 
     if(curNode && curNode.indexOf("arrive_")===0 && S && S.loc) renderCityActs();
     setTimeout(function(){ if(typeof v34_animateOptions === 'function') v34_animateOptions(); }, 50);
+    }
     renderPerf.record(Date.now()-_wnT0);
   });
 }
@@ -57929,6 +57970,9 @@ function advanceDays(n){
   if(S.wound>0 && n>=2) S.wound=0;
   if(S.disease && n>=4) S.disease=false;
   checkWorldEvents();
+  try{ if(window.v93_marketTick) window.v93_marketTick(n); }catch(e){}
+  try{ if(window.v93_newsTick) window.v93_newsTick(); }catch(e){}
+  try{ if(window.v93_festivalTick) window.v93_festivalTick(); }catch(e){}
 }
 function checkWorldEvents(){
   const w = S.world;
@@ -57966,6 +58010,7 @@ function checkWorldEvents(){
       }
     }
   }catch(_e){}
+  try{ if(window.v93_newsTick) window.v93_newsTick(); }catch(_e){}
 }
 
 /* ============ 日志 ============ */
@@ -59315,6 +59360,121 @@ function endCombat(victory){
 
 window.addEventListener("load",init);
 
+
+/* ============================================================
+   /ws1inj:hooks/ WS-1 行为-世界状态回路
+   五维世界状态：war/church/guild/orc/seal（各 0-100，连续值）。
+   v93_worldState()：只读映射——扫 S.flags 白名单 + S.worldWar/
+   S.anchors/S.faction/S.trade 等既有键，计算世界状态；不写任何状态。
+   v93_worldEcho(node)：命中主线枢纽节点前缀时，按档位取回响句，
+   返回数组或 null（开关关闭/未命中时零注入）。
+   铁律：不触碰判定公式 / writeNext 核心语义 / choose / 存档结构语义。 ===== */
+window.v93_worldState = function(){
+  const W = {war:33, church:33, guild:33, orc:33, seal:100};
+  try{
+    if(!S) return W;
+    const F = S.flags||{};
+    /* war 战争烈度 */
+    if(F.war_intensified) W.war = Math.max(W.war, 66);
+    if(F.warStage && Number(F.warStage)>=2) W.war = Math.max(W.war, 66);
+    if(typeof S.worldWar==='number'){
+      if(S.worldWar>=6) W.war = 100;
+      else if(S.worldWar>=3) W.war = 80;
+      else if(S.worldWar>=1) W.war = 50;
+    }
+    if(F.council_compromise_purification) W.war = Math.max(20, W.war-20);
+    if(F.watcher_inherit) W.war = Math.max(20, W.war-25);
+    /* church 教廷主导 */
+    if(S.faction==='church') W.church = Math.max(W.church, 66);
+    if(F.council_support_purification) W.church = Math.max(W.church, 75);
+    if(F.purge_intensified) W.church = Math.max(W.church, 90);
+    if(F.council_oppose_purification) W.church = Math.min(W.church, 25);
+    if(F.crisis_done) W.church = Math.min(W.church, 50);
+    /* guild 商会掌控 */
+    if(S.faction==='free') W.guild = Math.max(W.guild, 60);
+    if(S.trade && typeof S.trade.total==='number'){
+      if(S.trade.total>=500) W.guild = 85;
+      else if(S.trade.total>=100) W.guild = 66;
+    }
+    if(F.trade_crisis) W.guild = Math.min(W.guild, 20);
+    if(F.merchant_saved) W.guild = Math.max(W.guild, 60);
+    /* orc 兽人关系 */
+    if(F.grom_mediated) W.orc = Math.max(W.orc, 55);
+    if(F.grom_helped) W.orc = Math.max(W.orc, 66);
+    if(F.grom_protected) W.orc = Math.max(W.orc, 80);
+    if(F.grom_professor_called) W.orc = Math.max(W.orc, 90);
+    if(S.faction==='orc') W.orc = Math.max(W.orc, 66);
+    /* seal 封印完整 */
+    if(F.seal1_visited) W.seal = Math.min(W.seal, 90);
+    if(F.seal5_fixed) W.seal = Math.max(W.seal, 70);
+    if(F.seal6_sacrifice) W.seal = Math.max(W.seal, 60);
+    if(F.abyss_spread) W.seal = Math.min(W.seal, 50);
+    if(typeof S.anchors==='number'){
+      if(S.anchors>=7) W.seal = 100;
+      else if(S.anchors>=3) W.seal = Math.max(W.seal, 66);
+    }
+    /* 收敛到 0-100 */
+    for(const k in W){ W[k]=Math.max(0, Math.min(100, Math.round(W[k]))); }
+    try{ S.worldState = {war:W.war, church:W.church, guild:W.guild, orc:W.orc, seal:W.seal}; }catch(e){}
+    return W;
+  }catch(e){ try{ console.log("[ws1:err]", e); }catch(_){} return W; }
+};
+window.v93_worldEcho = function(node){
+  try{
+    if(!S || !S.settings || S.settings.worldEcho===false) return null;
+    if(!node || !node.id) return null;
+    const id = String(node.id);
+    /* 主线枢纽前缀：purge/silver/seal/academy/orc */
+    if(id.indexOf("purge_")!==0 && id.indexOf("silver_")!==0 && id.indexOf("seal_")!==0 &&
+       id.indexOf("academy_")!==0 && id.indexOf("orc_")!==0) return null;
+    const TPL = window.V93_WORLD_TPL; if(!TPL) return null;
+    const W = window.v93_worldState();
+    const keys = ["war","church","guild","orc"];
+    /* seal 维度仅玩家接触过封印线（主线已触发/到过封印地/持有锚）才参与回响，防剧透 */
+    let _sealOk = false;
+    try{ _sealOk = !!(S.world && S.world.seal) || !!(S.flags && S.flags.seal1_visited) || (typeof S.anchors==='number' && S.anchors>0); }catch(e){}
+    if(_sealOk) keys.push("seal");
+    for(let i=0;i<keys.length;i++){
+      const k = keys[i], v = W[k];
+      const arr = TPL[k]; if(!arr || !arr.length) continue;
+      let line = null;
+      for(let j=0;j<arr.length;j++){
+        if(v < arr[j].hi){ line = arr[j].lines[0]; break; }
+      }
+      if(!line) line = arr[arr.length-1].lines[0];
+      /* 只注入与当前主线相关的维度（最多 1-2 维） */
+      if((k==="war" && (id.indexOf("silver_")===0 || id.indexOf("orc_")===0)) ||
+         (k==="church" && id.indexOf("purge_")===0) ||
+         (k==="seal" && id.indexOf("seal_")===0) ||
+         (k==="academy" && false)){
+        try{ console.log("[ws1inj:echo]", k, v); }catch(e){}
+        return [line];
+      }
+      if(k==="guild" && id.indexOf("silver_")===0){
+        try{ console.log("[ws1inj:echo]", k, v); }catch(e){}
+        return [line];
+      }
+    }
+    /* 未命中专门维度时，取全局最显著状态（与基线差最大）做泛回响 */
+    let pick=null, diff=0;
+    for(let i=0;i<keys.length;i++){
+      const k=keys[i], v=W[k];
+      const base = (k==="seal")?100:33;
+      const d = Math.abs(v-base);
+      if(d>diff && d>25){ diff=d; pick=k; }
+    }
+    if(pick){
+      const arr = TPL[pick]; if(arr){
+        let line = null;
+        for(let j=0;j<arr.length;j++){ if(W[pick] < arr[j].hi){ line=arr[j].lines[0]; break; } }
+        if(!line) line = arr[arr.length-1].lines[0];
+        try{ console.log("[ws1inj:echo]", pick, W[pick]); }catch(e){}
+        return [line];
+      }
+    }
+    return null;
+  }catch(e){ try{ console.log("[ws1:err]", e); }catch(_){} return null; }
+};
 </script>
 <script>
 /* ================================================================
@@ -59579,6 +59739,8 @@ function elFromHtml(html){
 }
 function actOut(html){ const o=document.getElementById("act-out"); if(o) o.innerHTML=html; }
 function mechAct(a){
+  try{ if(window.v93_battle && window.v93_battle.active){ window.flashMsg("⚔ 战斗中，先分出胜负。"); return; } }catch(e){}
+
   const acts = actsLeft();
   if(a==="rest"){
     closeModal();
@@ -59709,6 +59871,7 @@ function mechTrade(){
   h += "<button class='opt' onclick='closeModal(); buyMedicine()'><span class='od'>⚗️</span> 买疗伤药（1金龙，可治轻伤）</button>";
   h += "<button class='opt' onclick='closeModal(); sellJunk()'><span class='od'>💰</span> 变卖杂物（换些路费）</button>";
   h += "<button class='opt' onclick='closeModal(); tradeGamble()'><span class='od'>🎲</span> 赌一把行情（靠交易本事）</button>";
+  h += "<button class='opt' onclick='closeModal(); window.v93_openMarketPanel()'><span class='od'>🛒</span> 商路与行情</button>";
   h += "<button class='opt' onclick='closeModal()'><span class='od'>✕</span> 离开</button>";
   const box=document.createElement("div"); box.className="box"; box.innerHTML=h;
   openModal(box);
@@ -69755,7 +69918,11 @@ function v34_renderSettings(){
   html += '<button class="btn" onclick="v92_openThreadPanel()">☰ 叙事线</button>';
   html += '<button class="btn" onclick="v92_openWorldPanel()">🌍 局势</button>';
   html += '<button class="btn" onclick="v92_openTierPanel()">⚔ 实力</button>';
-  html += '<button class="btn" onclick="v92_openTradePanel()">🛒 商路</button>';
+  html += '<button class="btn" onclick="v93_openMarketPanel()">🛒 商路</button>'
+  html += '<button class="btn" onclick="v93_openNewsPanel()">🗞 日报</button>';
+  html += '<button class="btn" onclick="v93_ambienceToggle()">🔊 环境音</button>';
+  html += '<button class="btn" onclick="v93_openMemoryPanel()">🧠 记忆</button>';
+  html += '<button class="btn" onclick="v93_openFestivalPanel()">🎪 节日</button>';
   html += '<button class="btn" onclick="v34_openAchievements()">⚑ 成就</button>';
   html += '<button class="btn" onclick="if(window.v74_openJournal)v74_openJournal()">📔 手记</button>';
   html += '<button class="btn" onclick="if(window.v92_rollback)v92_rollback()">↩ 回退</button>';
@@ -70426,6 +70593,446 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
   try{ renderLog(); }catch(e){}
 })();
 
+/* ============================================================
+   /v93btl:hooks/ CB-2 指令环战斗 v2
+   节点声明：N[id] 增加 battle:true + enemy:{name,hp,atk,def,agi,wp,desc}
+   writeNext 渲染战斗节点时自动启动指令环（蓄势/抢攻/防御/施法/撤退）；
+   战斗结束后恢复原选项（原 check 判定/选项/go 零改动）。
+   结算为独立新系统（可复算）；战斗内存态，不入存档结构；
+   读档回到节点时战斗 UI 消失、原选项仍在（文档记录边界）。
+   ===== */
+(function(){
+  if(window.__v93btlLoaded) return; window.__v93btlLoaded = true;
+  var _btl = { active:false, nodeId:"", round:0, charged:false, defensing:false,
+    player:{hp:1,maxHp:1,atk:0,def:0,agi:0,int:0},
+    enemy:{name:"",hp:1,maxHp:1,atk:0,def:0,agi:0,wp:"",desc:""} };
+  window.v93_battle = _btl;
+  var PART=["左臂","右肋","肩胛","小腿","腰侧"];
+  var DEG=["划开一道口子","皮开肉绽","骨节发响","血浸透半边衣衫"];
+  var MISS=["对方侧身让过，你的兵器只擦着衣角。","你抢得太急，脚下打了个趔趄。","对方用兵器格开，火星迸溅。"];
+  var HIT=["这一下结结实实，血珠溅在石地上。","兵刃入肉的声音沉闷，对方闷哼一声。","你顺势一送，对方踉跄后退两步。"];
+  var CHARGE=["你握紧兵器，{en}绕着圈子，脚下的沙砾被靴子碾出细响。","风从缺口灌进来，{en}的呼吸又沉又稳，像一头锁定了猎物的老兽。"];
+  function rand(n){ return Math.floor(Math.random()*n); }
+  function pick(a){ return a[rand(a.length)]; }
+  function tpl(s,m){ return s.replace(/\{en\}/g,m.enemy.name).replace(/\{wp\}/g,(m.enemy.wp||"兵器")); }
+  _btl.render = function(){
+    var o=document.getElementById("v93-battle"); if(!o) return;
+    var p=_btl.player, e=_btl.enemy;
+    var h="<div class='v93b-wrap'>";
+    h+="<div class='v93b-hd'>⚔ "+e.name+"　<span class='v93b-hp'>"+e.hp+"/"+e.maxHp+"</span></div>";
+    h+="<div class='v93b-bar'><i style='width:"+Math.max(0,Math.round(e.hp/e.maxHp*100))+"%'></i></div>";
+    h+="<div class='v93b-sub'>第 "+_btl.round+" 轮 · 你 "+p.hp+"/"+p.maxHp+"　攻"+p.atk+" 守"+p.def+" 敏"+p.agi+"</div>";
+    h+="<div class='v93b-cmds'>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('charge')\\\">蓄势</button>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('attack')\\\">抢攻</button>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('defend')\\\">防御</button>";
+    h+="<button class='btn' onclick=\\\"window.v93_battle.cmd('cast')\\\">施法</button>";
+    h+="<button class='btn ghost' onclick=\\\"window.v93_battle.cmd('retreat')\\\">撤退</button>";
+    h+="</div></div>";
+    o.innerHTML=h;
+  };
+  _btl.emit = function(txt){
+    try{ if(window.v93_actLog) window.v93_actLog("⚔ "+txt); }catch(e){}
+    try{
+      var box=document.getElementById("v93-battle-box");
+      if(box){ var p=document.createElement("div"); p.className="v93b-line"; p.textContent=txt; box.appendChild(p); box.scrollTop=box.scrollHeight; }
+    }catch(e){}
+  };
+  _btl.start = function(node){
+    if(_btl.active) return true;
+    try{
+      var en=node.enemy||{name:"无名敌手",hp:30,atk:6,def:2,agi:5,wp:"兵器",desc:""};
+      var A=(typeof S!=="undefined"&&S&&S.attrs)?S.attrs:{};
+      var mhp=(typeof S!=="undefined"&&S&&S.maxHp)?S.maxHp:(40+Math.floor((A.CON||0)*2));
+      _btl.player={hp:mhp,maxHp:mhp,atk:6+Math.floor((A.STR||0)*0.6),
+        def:2+Math.floor((A.CON||0)*0.3), agi:5+Math.floor((A.AGI||0)*0.3), int:(A.INT||0)};
+      _btl.enemy={name:en.name,hp:en.hp,maxHp:en.hp,atk:en.atk,def:en.def,agi:en.agi,wp:en.wp||"兵器",desc:en.desc||""};
+      _btl.nodeId=node.id; _btl.round=0; _btl.charged=false; _btl.defensing=false; _btl.active=true;
+      var opts=document.getElementById("options"); if(opts) opts.style.display="none";
+      var o=document.getElementById("v93-battle"); if(o){
+        o.style.display="";
+        var box=document.createElement("div"); box.id="v93-battle-box"; box.className="v93b-box";
+        o.appendChild(box);
+      }
+      _btl.emit(tpl(pick(CHARGE),_btl));
+      _btl.emit("回合开始。");
+      _btl.render();
+      return true;
+    }catch(e){ try{ console.log("[v93btl:err]",e); }catch(_){} return false; }
+  };
+  _btl.end = function(win){
+    _btl.active=false;
+    var opts=document.getElementById("options"); if(opts) opts.style.display="";
+    try{
+      if(win){ _btl.emit("你赢了这一仗。"); }
+      else { _btl.emit("你退了半步，这一仗没有分出胜负。"); }
+      if(typeof S!=="undefined"&&S){ S.hp=Math.max(1,_btl.player.hp); }
+      if(window.renderStats) renderStats();
+      if(window.renderTop) renderTop();
+      if(window.v34_animateOptions) setTimeout(function(){ try{v34_animateOptions();}catch(e){} },60);
+    }catch(e){}
+    var o=document.getElementById("v93-battle"); if(o){ o.style.display="none"; var b=document.getElementById("v93-battle-box"); if(b&&b.parentNode) b.parentNode.removeChild(b); }
+  };
+  _btl.cmd = function(c){
+    if(!_btl.active) return;
+    _btl.round++;
+    var p=_btl.player, e=_btl.enemy, dmg=0;
+    if(c==="retreat"){ _btl.emit("你且战且退，脱离了战圈。"); _btl.end(false); return; }
+    if(c==="charge"){ _btl.charged=true; _btl.emit("你沉下重心，把气力蓄在刀口上，只等一个机会。"); }
+    else if(c==="attack"){
+      var hit=55+(p.agi-e.agi)*2; hit=Math.max(25,Math.min(95,hit));
+      if(Math.random()*100<hit){
+        dmg=p.atk-Math.floor(e.def/2)+rand(6)+1;
+        if(_btl.charged){ dmg*=2; _btl.charged=false; }
+        e.hp=Math.max(0,e.hp-dmg);
+        _btl.emit("你抢上一步——"+pick(HIT)+"（造成 "+dmg+" 点伤害）");
+        if(e.hp<=0){ _btl.emit("最后一下，"+e.name+"的兵器脱了手。"); _btl.end(true); return; }
+      } else { _btl.emit(pick(MISS)); }
+    }
+    else if(c==="defend"){ _btl.defensing=true; _btl.emit("你架起守势，把重心压稳，任它风浪来。"); }
+    else if(c==="cast"){
+      var cost=5, sanOk=(typeof S!=="undefined"&&S&&S.san>=cost);
+      if(sanOk){
+        S.san-=cost;
+        dmg=10+Math.floor(p.int*0.7)+rand(4);
+        e.hp=Math.max(0,e.hp-dmg);
+        _btl.emit("咒文出口，元素应声而聚——"+e.name+"被轰了个正着（造成 "+dmg+" 点伤害，心神 -5）");
+        if(e.hp<=0){ _btl.emit(e.name+"轰然倒地，战斗结束。"); _btl.end(true); return; }
+      } else {
+        dmg=6; e.hp=Math.max(0,e.hp-dmg); p.hp=Math.max(1,p.hp-8);
+        _btl.emit("你强行引动魔力，眉心一痛，血从鼻尖滴落（造成 "+dmg+" 点伤害，自身受损）");
+        if(e.hp<=0){ _btl.emit(e.name+"倒下，你险胜。"); _btl.end(true); return; }
+      }
+    }
+    if(e.hp>0){
+      var ehit=55+(e.agi-p.agi)*2; ehit=Math.max(25,Math.min(95,ehit));
+      if(Math.random()*100<ehit){
+        var ed=e.atk-Math.floor(p.def/2);
+        if(_btl.defensing){ ed=Math.max(1,Math.floor(ed/2)); _btl.defensing=false; }
+        ed=Math.max(1,ed);
+        p.hp-=ed;
+        _btl.emit(e.name+"的"+e.wp+"扫过来，"+pick(PART)+"被"+pick(DEG)+"。（你受到 "+ed+" 点伤害）");
+        if(p.hp<=0){ p.hp=1; _btl.emit("你眼前发黑，单膝跪地。"+e.name+"没有追击。"); _btl.end(false); return; }
+      } else { _btl.emit(e.name+"的攻势落空，扬起一片尘土。"); }
+    }
+    _btl.render();
+    try{ if(window.renderStats) renderStats(); }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93mkt:hooks/ EC-3 经济闭环
+   - 商会分红：每 7 天一次（guild 势力或 merchant_saved flag 时）
+   - 商路行情面板：包裹 v92 贸易面板 + 3 商路 + 分红信息
+   结算独立、只读 S 现有字段 + S.market 独立键；不动判定/存档结构。
+   ===== */
+(function(){
+  if(window.__v93mktLoaded) return; window.__v93mktLoaded = true;
+  window.v93_marketTick = function(n){
+    try{
+      if(!S || !S.market) return;
+      var m = S.market;
+      if(!m.lastDiv) m.lastDiv = S.day;
+      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      if(member && (S.day - m.lastDiv) >= (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)){
+        var div = (window.MARKET_DIV_V93 && MARKET_DIV_V93.base || 3) + Math.floor((S.day - m.lastDiv) / (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)) * (window.MARKET_DIV_V93 && MARKET_DIV_V93.grow || 1);
+        S.gold += div;
+        m.divTotal = (m.divTotal||0) + div;
+        m.lastDiv = S.day;
+        try{ if(window.v93_actLog) window.v93_actLog("商会按例分红，账上多了 "+div+" 枚金龙"); }catch(e){}
+        try{ if(window.logMsg) logMsg("商会的账房先生寻上门来，按例分了红利——"+div+" 枚金龙，说是一季度一结，从不拖欠。"); }catch(e){}
+      }
+    }catch(e){}
+  };
+  window.v93_openMarketPanel = function(){
+    try{
+      var d = (window.v92_openTradePanel) ? window.v92_openTradePanel() : null;
+      if(!d) return;
+      var routes = window.MARKET_ROUTES_V93 || [];
+      var rh = routes.map(function(r){ return "🛤 "+r.name+"："+r.desc; }).join("<br>");
+      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      var divInfo = member
+        ? ("在册商会成员 · 每 " + ((window.MARKET_DIV_V93&&MARKET_DIV_V93.period)||7) + " 日分红 · 累计已领 " + ((S.market&&S.market.divTotal)||0) + " 枚金龙")
+        : ("尚未加入商会（加入 guild 势力或营救过商队管事可享分红）");
+      var info = document.createElement('div');
+      info.style.cssText = 'margin-bottom:10px;padding:10px 12px;background:#f4ead2;border:1px solid #d9c07a;border-radius:8px;font-size:13px;line-height:1.9;color:#3c2f14;';
+      info.innerHTML = '<b>商路</b><br>'+rh+'<br><b>商会分红</b><br>'+divInfo;
+      d.insertBefore(info, d.firstChild);
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93news:hooks/ WD-4 世界日报 + 事件链
+   - 世界事件（worldQueue / EVENT_POOL_EXT / 五主线）收录为新闻条目
+   - 10 条事件链按 day 播报
+   - 30 天滚动窗口；S.news 独立键，存档零结构改动
+   ===== */
+(function(){
+  if(window.__v93newsLoaded) return; window.__v93newsLoaded = true;
+  window.v93_newsAdd = function(tag, txt){
+    try{
+      if(!S || !S.news) return;
+      S.news.list = S.news.list || [];
+      S.news.list.push({day:S.day, tag:tag||"world", text:String(txt||"").slice(0,80)});
+      S.news.count = (S.news.count||0) + 1;
+      var cutoff = S.day - 30;
+      S.news.list = S.news.list.filter(function(n){ return n.day >= cutoff; });
+      if(S.news.list.length > 60) S.news.list = S.news.list.slice(-60);
+    }catch(e){}
+  };
+  window.v93_newsTick = function(){
+    try{
+      if(!S || !S.news) return;
+      S.news.done = S.news.done || {};
+      /* 世界事件队列新条目 → 新闻 */
+      var q = S.worldQueue || [];
+      for(var i=0;i<q.length;i++){
+        var k = "wq_"+q[i];
+        if(!S.news.done[k]){ S.news.done[k]=true; window.v93_newsAdd("world", "世界动荡："+q[i]); }
+      }
+      /* 事件链 */
+      var chains = window.NEWS_CHAINS_V93 || [];
+      for(var c=0;c<chains.length;c++){
+        var ch = chains[c], key = "ch_"+ch.id;
+        for(var s=0;s<ch.days.length;s++){
+          var dk = key+"_"+s;
+          if(!S.news.done[dk] && S.day >= ch.days[s]){
+            S.news.done[dk]=true;
+            window.v93_newsAdd("chain", ch.texts[s]);
+          }
+        }
+      }
+    }catch(e){}
+  };
+  window.v93_openNewsPanel = function(){
+    try{
+      var box = document.createElement('div'); box.className = 'box';
+      var h = '<h3>🗞 世界日报</h3><div class="mini">最近 30 日 · 滚动收录 · 纯播报不干预判定</div>';
+      var list = (S.news && S.news.list) ? S.news.list.slice().reverse() : [];
+      if(!list.length){ h += '<div class="mini" style="margin-top:8px">尚无新闻。世界仍在运转，只是你还没听见。</div>'; }
+      for(var i=0;i<list.length;i++){
+        var n = list[i];
+        h += '<div style="padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.12);font-size:14px;line-height:1.7;">'
+          + '<span style="color:#8a6d2f;font-weight:600">第 '+n.day+' 日</span> · ' + esc(n.text)
+          + (n.tag==="chain" ? '<span style="color:#a8842a;font-size:11px;margin-left:6px">【事件链】</span>' : '')
+          + '</div>';
+      }
+      h += '<div style="text-align:center;margin-top:14px"><button class="btn" onclick="closeModal()">返回游戏</button></div>';
+      box.innerHTML = h;
+      openModal(box);
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93audio:hooks/ AU-5 Web Audio 程序化环境音
+   - 懒初始化 AudioContext（首次渲染时）；音量极低（master 0.04）
+   - 音景：wind(北境/风雪) / wind2(沙漠/西境) / tavern(酒馆) / rumble(矿洞地下) / rain(雨) / fire(默认)
+   - 开关复用 S.settings.ambience；纯音效层，不改判定/存档
+   ===== */
+(function(){
+  if(window.__v93audioLoaded) return; window.__v93audioLoaded = true;
+  window.v93_audioInit = function(){
+    try{
+      if(window.__v93ac) return window.__v93ac;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      var ctx = new AC();
+      var master = ctx.createGain();
+      master.gain.value = 0.04;
+      master.connect(ctx.destination);
+      var noiseBuf = ctx.createBuffer(1, ctx.sampleRate*2, ctx.sampleRate);
+      var d = noiseBuf.getChannelData(0);
+      for(var i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+      window.__v93ac = {ctx:ctx, master:master, noiseBuf:noiseBuf, src:null, filter:null, gain:null, lfo:null, lg:null, type:""};
+      return window.__v93ac;
+    }catch(e){ return null; }
+  };
+  window.v93_ambienceStop = function(){
+    try{
+      var ac = window.__v93ac; if(!ac) return;
+      if(ac.src){ try{ ac.src.stop(); }catch(e){} ac.src=null; }
+      if(ac.lfo){ try{ ac.lfo.stop(); }catch(e){} ac.lfo=null; }
+      if(ac.filter){ try{ ac.filter.disconnect(); }catch(e){} ac.filter=null; }
+      if(ac.gain){ try{ ac.gain.disconnect(); }catch(e){} ac.gain=null; }
+      if(ac.lg){ try{ ac.lg.disconnect(); }catch(e){} ac.lg=null; }
+      ac.type="";
+    }catch(e){}
+  };
+  window.v93_ambienceSync = function(){
+    try{
+      if(!S || !S.settings || S.settings.ambience===false){ window.v93_ambienceStop(); return; }
+      var ac = window.v93_audioInit(); if(!ac) return;
+      if(ac.ctx.state==="suspended"){ try{ ac.ctx.resume(); }catch(e){} }
+      var loc = String(S.curCity||"") + " " + String(S.region||"");
+      var type = "fire";
+      if(/north|雪|frontier|北境|哨/.test(loc)) type = "wind";
+      else if(/desert|沙漠|荒原|西境|element/.test(loc)) type = "wind2";
+      else if(/tavern|酒馆|客栈/.test(loc)) type = "tavern";
+      else if(/mine|矿洞|地窖|地下|牢/.test(loc)) type = "rumble";
+      if(/雨/.test(loc)) type = "rain";
+      if(ac.type===type) return;
+      window.v93_ambienceStop();
+      var f = ac.ctx.createBiquadFilter(); f.type="lowpass";
+      var g = ac.ctx.createGain();
+      var lfo = ac.ctx.createOscillator(); var lg = ac.ctx.createGain();
+      var src = ac.ctx.createBufferSource(); src.buffer = ac.noiseBuf; src.loop = true;
+      var freq, q, amp, lfof, lfoamp;
+      if(type==="wind"){ freq=520; q=0.8; amp=0.8; lfof=0.13; lfoamp=0.35; }
+      else if(type==="wind2"){ freq=820; q=1.2; amp=0.55; lfof=0.21; lfoamp=0.28; }
+      else if(type==="tavern"){ freq=420; q=0.4; amp=0.5; lfof=0.09; lfoamp=0.22; }
+      else if(type==="rumble"){ freq=150; q=2.2; amp=0.9; lfof=0.05; lfoamp=0.4; }
+      else if(type==="rain"){ freq=2400; q=0.3; amp=0.6; lfof=0.3; lfoamp=0.2; }
+      else { freq=680; q=0.6; amp=0.6; lfof=0.11; lfoamp=0.3; }
+      f.frequency.value = freq; f.Q.value = q;
+      g.gain.value = amp;
+      lfo.frequency.value = lfof; lg.gain.value = lfoamp;
+      src.connect(f); f.connect(g); g.connect(ac.master);
+      lfo.connect(lg); lg.connect(g.gain);
+      lfo.start(); src.start();
+      ac.type=type; ac.src=src; ac.filter=f; ac.gain=g; ac.lfo=lfo; ac.lg=lg;
+    }catch(e){}
+  };
+  window.v93_ambienceToggle = function(){
+    try{
+      if(!S || !S.settings) return;
+      S.settings.ambience = !S.settings.ambience;
+      if(S.settings.ambience) window.v93_ambienceSync(); else window.v93_ambienceStop();
+      try{ if(window.flashMsg) flashMsg(S.settings.ambience?"环境音已开启":"环境音已关闭"); }catch(e){}
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93fest:hooks/ FT-7 季节节日
+   - 节日当天播报（advanceDays 触发）；在城市则有小彩头（gold/xp 只读结算）
+   - 面板可查看全年节日历；S.festival 独立键
+   ===== */
+(function(){
+  if(window.__v93festLoaded) return; window.__v93festLoaded = true;
+  window.v93_festivalTick = function(){
+    try{
+      if(!S || !S.festival) return;
+      S.festival.done = S.festival.done || {};
+      var f = window.FESTIVAL_V93 || [];
+      for(var i=0;i<f.length;i++){
+        var ev = f[i], key = "f_"+ev.day;
+        if(S.festival.done[key] || S.day !== ev.day) continue;
+        S.festival.done[key] = true;
+        try{ if(window.logMsg) logMsg("今日节日："+ev.name+"——"+ev.desc); }catch(e){}
+        try{ if(window.v93_actLog) window.v93_actLog("节日 · "+ev.name); }catch(e){}
+        try{ if(window.v93_newsAdd) window.v93_newsAdd("fest", ev.name+"："+ev.desc); }catch(e){}
+        if(S.curCity){
+          var r = Math.random();
+          if(r < 0.5){ S.gold = (S.gold||0) + 2; try{ if(window.writePar) writePar("（"+ev.reward+" 得 2 枚金龙。）","res"); }catch(e){} }
+          else { S.xp = (S.xp||0) + 8; try{ if(window.writePar) writePar("（"+ev.reward+" 得 8 点阅历。）","res"); }catch(e){} }
+          try{ if(window.renderTop) renderTop(); }catch(e){}
+          try{ if(window.renderStats) renderStats(); }catch(e){}
+        }
+      }
+    }catch(e){}
+  };
+  window.v93_openFestivalPanel = function(){
+    try{
+      var box = document.createElement('div'); box.className = 'box';
+      var h = '<h3>🎪 节日</h3><div class="mini">一年十二个月 · 三十日一月 · 固定节日</div>';
+      var f = window.FESTIVAL_V93 || [];
+      for(var i=0;i<f.length;i++){
+        var ev = f[i];
+        var m = Math.floor((ev.day-1)/30)+1, d = (ev.day-1)%30+1;
+        var done = S.festival && S.festival.done && S.festival.done["f_"+ev.day];
+        h += '<div style="padding:7px 0;border-bottom:1px dashed rgba(0,0,0,.12);font-size:14px;line-height:1.7;">'
+          + '<div style="display:flex;justify-content:space-between;"><b>'+ev.name+'</b><span style="color:#8a6d2f;">第 '+ev.day+' 日'+(done?' · 已过':'')+'</span></div>'
+          + '<div style="font-size:13px;color:#555;">'+ev.desc+'</div></div>';
+      }
+      h += '<div style="text-align:center;margin-top:14px"><button class="btn" onclick="closeModal()">返回游戏</button></div>';
+      box.innerHTML = h;
+      openModal(box);
+    }catch(e){}
+  };
+})();
+
+/* ============================================================
+   /v93npc:hooks/ NM-6 NPC 记忆 v2
+   - 记忆写入：changeRelation 变化时记入 S.npcMemory[npc].slot（最多 4 槽）
+   - 回指钩子：节点文本提及已登记 NPC 且有记忆时注入 1 句（好感档语气）
+   - 记忆面板：按 NPC 展示关系档位 + 记忆槽
+   ===== */
+(function(){
+  if(window.__v93npcLoaded) return; window.__v93npcLoaded = true;
+  window.v93_npcRemember = function(npcId, delta, reason){
+    try{
+      if(!S) return;
+      S.npcMemory = S.npcMemory || {};
+      var m = S.npcMemory[npcId] || {slot:[]};
+      m.slot = m.slot || [];
+      m.slot.push({day:S.day, v:(S.npcRelations&&S.npcRelations[npcId])||0, note:String(reason||"").slice(0,24)});
+      if(m.slot.length > 4) m.slot = m.slot.slice(-4);
+      S.npcMemory[npcId] = m;
+    }catch(e){}
+  };
+  window.v93_npcMemoryHook = function(node){
+    try{
+      if(!S || !S.settings || S.settings.npcMemory===false) return null;
+      if(!S.npcMemory) return null;
+      var arch = window.NPC_MEMORY_V93 || [];
+      var texts = [];
+      if(typeof node.text === "string") texts.push(node.text);
+      else if(Array.isArray(node.text)) texts = texts.concat(node.text);
+      else if(node.text && typeof node.text === "object"){
+        if(Array.isArray(node.text.default)) texts = texts.concat(node.text.default);
+        var fv = node.text.ifFlag; for(var k in (fv||{})){ if(Array.isArray(fv[k])) texts = texts.concat(fv[k]); }
+        var rv = node.text.ifRelation; if(rv){ if(Array.isArray(rv.yes)) texts=texts.concat(rv.yes); if(Array.isArray(rv.no)) texts=texts.concat(rv.no); }
+      }
+      var joined = texts.join("");
+      var rel = S.npcRelations || {};
+      for(var i=0;i<arch.length;i++){
+        var np = arch[i];
+        if(!S.npcMemory[np.id] || !S.npcMemory[np.id].slot || !S.npcMemory[np.id].slot.length) continue;
+        if(joined.indexOf(np.name) < 0) continue;
+        var v = rel[np.id] || 0;
+        var last = S.npcMemory[np.id].slot[S.npcMemory[np.id].slot.length-1];
+        var line;
+        if(v>=80) line = "你想起"+np.name+"上回待你的那份情分——那双眼里的东西，不是装出来的。";
+        else if(v>=60) line = "你想起"+np.name+"——上回分别时他说过的话，你还记得。";
+        else if(v<=-60) line = "你想起"+np.name+"。胸口那口气还在，路还长。";
+        else if(v>0) line = "你想起"+np.name+"，点头之交，也算故人。";
+        else line = null;
+        if(line) return [line];
+      }
+      return null;
+    }catch(e){ return null; }
+  };
+  window.v93_openMemoryPanel = function(){
+    try{
+      var box = document.createElement('div'); box.className = 'box';
+      var h = '<h3>🧠 记忆</h3><div class="mini">相遇、共事与恩怨——都记在这里。</div>';
+      var arch = window.NPC_MEMORY_V93 || [];
+      var rel = S.npcRelations || {}; var mem = S.npcMemory || {};
+      var found = 0;
+      for(var i=0;i<arch.length;i++){
+        var np = arch[i];
+        if(!rel[np.id] && (!mem[np.id] || !mem[np.id].slot || !mem[np.id].slot.length)) continue;
+        found++;
+        var v = rel[np.id]||0;
+        var lvl = v>=80?"恋人":(v>=60?"挚友":(v<=-60?"死敌":(v>0?"相识":"素未谋面")));
+        h += '<div style="padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.12);">'
+          + '<div style="display:flex;justify-content:space-between;font-size:14px;line-height:1.6;"><b>'+np.name+'</b><span style="color:#8a6d2f;">'+lvl+' · '+v+'</span></div>'
+          + '<div style="font-size:12px;color:#8a7a55;">'+np.role+'</div>';
+        var slots = (mem[np.id]&&mem[np.id].slot)||[];
+        for(var s=0;s<slots.length;s++){
+          h += '<div style="font-size:12px;color:#555;line-height:1.7;padding-left:8px;">第 '+slots[s].day+' 日 · 关系 '+slots[s].v + (slots[s].note?' · '+esc(slots[s].note):'') + '</div>';
+        }
+        h += '</div>';
+      }
+      if(!found) h += '<div class="mini" style="margin-top:8px">尚未与任何人建立值得一提的关系。</div>';
+      h += '<div style="text-align:center;margin-top:14px"><button class="btn" onclick="closeModal()">返回游戏</button></div>';
+      box.innerHTML = h;
+      openModal(box);
+    }catch(e){}
+  };
+})();
 </script>
 <script>
 /* ============ v44 表现层引擎（IIFE 封装，不污染 S） ============ */
@@ -75911,7 +76518,7 @@ N["anchor_tower_3"]={tags:["anchor"],tag:"main",place:"北境 · 第三哨 · �
 {t:"（把铁牌与铜叶贴身收好）",effects:{xp:20,flag:"anchor_tower_found"},go:"anchor_tower_4"}
 ]};
 
-N["anchor_tower_4"]={tags:["combat","anchor"],tag:"combat",place:"北境 · 第三哨 · 钟楼",where:"夜",pace:"epic",sceneTitle:"钟楼夜战",text:[
+N["anchor_tower_4"]={battle:true,enemy:{name:"无面异影",hp:40,atk:8,def:3,agi:8,wp:"利爪"},tags:["combat","anchor"],tag:"combat",place:"北境 · 第三哨 · 钟楼",where:"夜",pace:"epic",sceneTitle:"钟楼夜战",text:[
 "当夜，你宿在铁匠棚。子时刚过，钟楼上忽然“嗡”的一声——那口三十年没响过的铜钟，自己响了。",
 "你抓起刀冲上钟楼。月光从裂口灌进来，照见一个佝偻的身影正趴在钟身上，伸手往裂口里掏——它在找铁盒。你一声断喝，那身影猛地回头，一张脸上没有五官，只有一团不断翻涌的暗红雾气，雾里浮着一枚锚形印记。",
 "异影扑过来，快得不像是人。你侧身让过，刀背磕在它肩头，却像砍进一团浓烟，毫无实处。它反手一挥，指尖带起的风扫过你左臂，袖口“嗤”地裂开一道口子，皮肉翻卷，血顺着胳膊滴在钟楼的青砖上。你退后半步，感到左臂从指尖到肩胛一阵发麻——力气正在从那条胳膊里抽走，像是被什么吸住了。",
@@ -75966,7 +76573,7 @@ N["anchor_mine_3"]={tags:["anchor"],tag:"main",place:"北境 · 矿洞 · 刘矿
 {t:"（收好图纸与铁链）",effects:{xp:22,flag:"anchor_mine_found"},go:"anchor_mine_4"}
 ]};
 
-N["anchor_mine_4"]={tags:["combat","anchor"],tag:"combat",place:"北境 · 矿洞 · 铁门前",where:"夜",pace:"epic",sceneTitle:"矿洞惊变",text:[
+N["anchor_mine_4"]={battle:true,enemy:{name:"铁灰鳞怪物",hp:46,atk:9,def:4,agi:6,wp:"尾刺"},tags:["combat","anchor"],tag:"combat",place:"北境 · 矿洞 · 铁门前",where:"夜",pace:"epic",sceneTitle:"矿洞惊变",text:[
 "当夜你宿在矿洞口。睡到后半夜，矿洞深处忽然传来一阵闷雷般的轰鸣，紧接着，整条巷道都在抖。你抓起火把冲进去，跑到铁门前——门开着一条缝。",
 "门缝里涌出一股腐臭的湿气。你举着火把探进去，火光尽头，一双青灰色的眼睛正贴着门缝看你。你后退半步，门缝里探出一只爪子，覆着铁灰色鳞片，指尖比你的小臂还长，一把扣住门沿，将铁门又撑开半尺。",
 "怪物挤出来时，你才看清它的全貌：一身铁灰鳞片，脊背拱起，尾尖拖着一条带倒刺的长尾，嘴裂到耳根，獠牙上挂着黏涎。它朝你扑来，你横刀格挡，刀锋砍在它肩鳞上，迸出一串火星，却只留下一道白印。它甩尾扫过，尾刺擦着你右肋划过去，皮甲被撕开一道口子，肋骨处火辣辣地疼，你抬手一摸，满掌的血——那一下划得极深，右臂抬起来都发颤，力气从伤口往外漏。",
@@ -76154,7 +76761,7 @@ N["anchor_chen_4"]={tags:["anchor"],tag:"main",place:"晨天故都 · 宫城前"
 {t:"（质问：为什么从学院金库偷铁牌）",effects:{xp:15,flag:"anchor_chen_accuse"},go:"anchor_chen_5"}
 ]};
 
-N["anchor_chen_5"]={tags:["combat","anchor"],tag:"combat",place:"晨天故都 · 宫门",where:"夜",pace:"epic",sceneTitle:"宫门之约",text:[
+N["anchor_chen_5"]={battle:true,enemy:{name:"陆昭",hp:52,atk:10,def:3,agi:9,wp:"短刃"},tags:["combat","anchor"],tag:"combat",place:"晨天故都 · 宫门",where:"夜",pace:"epic",sceneTitle:"宫门之约",text:[
 "陆昭没有正面回答你。他忽然一抬手，黑鸦腾空而起，翼尖带起一阵劲风，直扑你面门。你侧身躲过，鸦爪擦着你耳根划过，割断了几根头发。",
 "“先让我看看，你有几分本事，敢来开这扇门。”陆昭话音未落，人已欺到近前，掌中翻出一柄短刃，刀光在火光里一闪，直取你咽喉。你横刀格挡，两刃相撞，迸出一串火星。他变招极快，刀锋一转，沿着你刀身滑下，在你右小臂上划开一道口子——伤口不深，却正切在握刀的筋上，血顺着指缝淌下来，握刀的手一阵发麻，虎口几乎捏不住刀柄。",
 "你退后半步，刀交左手。陆昭又攻上来，这一刀又快又狠，直奔你心口。你不再退，在他刀尖堪堪触及衣襟的瞬间，侧身让过，右肘顺势撞在他肋下。他闷哼一声，踉跄后退，黑鸦在空中一个盘旋，落在两人之间，嘎嘎地叫了两声，像在劝架。",
@@ -82965,7 +83572,7 @@ N["ending_anchor_goldscale_3"]={tags:["ending:anchor"],tag:"ending",place:"自�
  * 入口：blood_5 北上选项；tag:combat 四段式；ending 标签收束 */
 window.N = window.N || {};
 (function(){
-N["world_f6_battle"] = {tag:"combat", tags:["combat"], place:"北境 · 官道 · 石门隘口", where:"白昼", pace:"deep",
+N["world_f6_battle"] = {battle:true,enemy:{name:"疤脸头目",hp:34,atk:7,def:2,agi:6,wp:"刀"},tag:"combat", tags:["combat"], place:"北境 · 官道 · 石门隘口", where:"白昼", pace:"deep",
   text:[
     "地图上的石门，在北境官道拐进山坳的地方。你赶到时，天色已暗，山坳里蹲着一伙东军散兵——七八个人，围着火堆烤一只羊。火堆边上，立着一扇半截埋进土里的石门，门框上爬满霜纹，像有人用指头在石头上刻了一辈子。",
     "你没想打，是火堆边那个疤脸先看见了你。他站起身，手里刀横在胸前：“过路的，放下包袱，滚。”他的同伴们也站起来，脚步声踩碎了雪。你扫了一眼：七个，都有刀，有两个还披着教会的旧甲——那是从死人身上扒的。",
@@ -85135,6 +85742,19 @@ N["fc_road_east_road"]={tag:"main",place:"东行商道 · 官道",pace:"normal",
 {t:"天亮后进城，去承天城看看",go:"east_gov"}
 ]};
 
+/* /u1inj:data-nodes:dn_festival.js/ */
+/* /v93fest:data/ FT-7 季节节日（纯数据；day 固定日；只读播报 + 彩头，不改变判定） */
+window.FESTIVAL_V93 = [
+  {day:5,   name:"春醒祭",   desc:"积雪化尽的第一场市集。家家门口挂新柳，铁匠铺打折三天。", reward:"在市集里逛了一圈，白捡一份开春的彩头。"},
+  {day:38,  name:"净水节",   desc:"河神享祭，全城取新水。传闻净水洗过的东西，一年不生锈。", reward:"舀了一瓢净水，顺手捞起一枚旧钱。"},
+  {day:75,  name:"种穗节",   desc:"东境的田垄上插满青幡。农人们往土里埋麦种，也埋来年的盼头。", reward:"帮人扶了一天的犁，主人硬塞给你几个铜子。"},
+  {day:105, name:"仲夏火把节", desc:"入夜后满城火把，照得比白昼还亮。年轻人在火堆上跳来跳去，比谁的胆子大。", reward:"从火堆边捡到一块烤过的石头——据说是好运石。"},
+  {day:140, name:"金穗祭",   desc:"一年中最富的市集。粮商开仓，铁器、布匹、香料都压低了价。", reward:"趁着行情好，小赚了一笔。"},
+  {day:200, name:"秋猎节",   desc:"北境的领主开围场，放出三百头鹿。猎到鹿角者，可换一副好鞍。", reward:"没猎到鹿，却在回程路上拾了一袋干粮。"},
+  {day:260, name:"铸炉节",   desc:"矮人山国的炉火通宵不灭。铁匠们把废铁熔了重铸，说是敬炉神。", reward:"在矮人铺子帮忙拉了一天风箱，得了几枚铁币。"},
+  {day:300, name:"长夜祭",   desc:"一年中最长的夜。家家点灯到天明，说是灯火不灭，来年便有指望。", reward:"守夜时替人看了一会儿炉火，得了半壶热酒。"}
+];
+
 /* /u1inj:data-nodes:dn_finale.js/ */
 // 七锚之约 · 卷 C 终局章（M7）
 // anchor_finale_1~8：七锚齐鸣 → 封印之门三择 → 战争汇合
@@ -86573,7 +87193,7 @@ N["grad_army_3"]={tags:["region:north"],tag:"main",place:"铁门关 · 校场",w
 {t:"（收下臂甲，记住这句话）",effects:{xp:15},go:"grad_army_4"}
 ]};
 
-N["grad_army_4"]={tags:["combat","region:north"],tag:"combat",place:"铁门关 · 北墙外",where:"夜",pace:"deep",text:[
+N["grad_army_4"]={battle:true,enemy:{name:"流寇头子",hp:38,atk:8,def:2,agi:7,wp:"长柄数刀"},tags:["combat","region:north"],tag:"combat",place:"铁门关 · 北墙外",where:"夜",pace:"deep",text:[
 "入秋，北墙外来了一股流匪，说是从雪原那边绕过来的，抢了两支商队，还伤了几个巡边的弟兄。",
 "你跟着什队出城设伏。流匪头子是个又高又瘦的汉子，手里一把长柄镰刀，专削马腿。夜色里，他先发现了你们——镰刀抡起来，带着一股腥风。",
 "你提刀去架，那一下力道远超预料，震得你虎口发麻。他趁你脚下不稳，刀柄回抽，杆头重重捣在你右肋。骨头闷响一声，你眼前发黑，喘不上气——肋下那一下，让你半身使不上力，呼吸带起一阵钝痛。",
@@ -87213,6 +87833,15 @@ window.LOREBOOK = [
 ];
 /* ===== /v92inj:lorebook:end/ ===== */
 
+/* /u1inj:data-nodes:dn_market.js/ */
+/* /v93mkt:data/ EC-3 经济闭环：3 商路 + 商会分红档位（纯数据，只被 v93_marketTick / v93_openMarketPanel 读取） */
+window.MARKET_ROUTES_V93 = [
+  {id:"r1", name:"自由城 ⇄ 北境", desc:"皮毛与铁器北运，北地的矿石换南方的粮。", goods:["iron","fur"], fee:2},
+  {id:"r2", name:"自由城 ⇄ 沙漠", desc:"草药与香料经驼队进出，风沙里总藏着行情。", goods:["herb","spice"], fee:3},
+  {id:"r3", name:"自由城 ⇄ 西境", desc:"元素结晶在荒原边缘流转，利润与风险同样高。", goods:["crystal","herb"], fee:4}
+];
+window.MARKET_DIV_V93 = { period:7, base:3, grow:1 };
+
 /* /u1inj:data-nodes:dn_memory_tpl.js/ */
 /* ===== /v91inj:memtpl/ CM-1 记忆注入模板库（纯数据；v66 文风；治理词合规） =====
  * 占位符：{n}=天数，{name}=NPC 名
@@ -87384,6 +88013,82 @@ window.MEMORY_TPL = {
   ]
 };
 /* /v91inj:memtpl:end/ */
+
+/* /u1inj:data-nodes:dn_news.js/ */
+/* /v93news:data/ WD-4 世界日报事件链（纯数据；每链 3 段，days 为相对第 1 日的触发日；只读播报，不改变任何判定） */
+window.NEWS_CHAINS_V93 = [
+  {id:"nc_1", name:"北境暴雪", days:[30,33,38], texts:[
+    "北境入冬第一场暴雪封了山路，两个商队困在半途，铁门关守军开仓放粮。",
+    "雪停了又下。传闻有旅人在雪原深处看见巨大的脚印，比熊掌还宽三指。",
+    "北境官道通了。第一队马帮进城时，驮着的是雪原深处挖出的旧铁器。"
+  ]},
+  {id:"nc_2", name:"沙漠驼队失踪", days:[45,48,52], texts:[
+    "沙漠边缘的绿洲集市里，有人贩一队十二峰的驼队，连人带货消失了两天。",
+    "驼队找到了。空驼、空货、空鞍，像被什么东西连人带物一起抹掉了。",
+    "绿洲的井水一夜变浑。长老们闭门商议，只出来说了句：往西的商路，暂且不走。"
+  ]},
+  {id:"nc_3", name:"圣城异端审判", days:[70,73,76], texts:[
+    "圣城广场搭起审判台，一个老书商被指控私藏禁书，围观的人比赶集还多。",
+    "书商在台上认了罪，供出三个名字。当夜，城东的旧书铺子全关了门。",
+    "审判落幕。老书商被流放北境，临走时朝人群喊了一句谁也没听懂的话。"
+  ]},
+  {id:"nc_4", name:"西境元素风暴", days:[85,88,92], texts:[
+    "元素荒原起了风暴，雷电在沙丘上劈出火线，游侠学院连夜召回在外弟子。",
+    "风暴中心的元素结晶价格翻了一倍，有人趁乱囤货，也有人趁乱出货。",
+    "风暴停了。荒原深处多了一片焦土，形状像一只摊开的手掌。"
+  ]},
+  {id:"nc_5", name:"东境漕运阻塞", days:[100,103,107], texts:[
+    "东境漕河上游浮桥坍塌，三船粮货搁浅，承天城粮价一天涨了两成。",
+    "工部派了人来修桥，却被堤上的流民拦住，要工钱，先付一半。",
+    "桥修好了。粮价没降回去，管粮仓的官员换了一个，旧的那个说是告老还乡。"
+  ]},
+  {id:"nc_6", name:"学院禁书传闻", days:[130,134,139], texts:[
+    "艾尔达学院图书馆的地下室，深夜传出翻书声。守夜的学徒说，那里明明上了锁。",
+    "传闻院长秘密调了一批旧档案进地下室，费尔曼教授连着三天没有出馆。",
+    "地下室的门换了新锁。没人再提翻书声，但图书馆的灯，夜里亮得更久了。"
+  ]},
+  {id:"nc_7", name:"兽人部族会议", days:[150,154,160], texts:[
+    "草原上的兽人部族头领陆续南下，在祖石之地开会，牛皮帐篷支了整整一圈。",
+    "会议开了三天。出来时，灰鬃部与雷蹄部的头领并肩而行，牧人传说他们吵过一架。",
+    "会议散后，草原南缘的牧场多了几处新营火。商人说，今年的狼皮价格要跌了。"
+  ]},
+  {id:"nc_8", name:"矮人矿脉坍塌", days:[175,178,183], texts:[
+    "矮人山国东矿塌了半边，压住两个矿队。锤声停了三天，铁价应声而涨。",
+    "塌方处挖出半截旧碑，上面刻着矮人古文字。老工匠看了半晌，说是上一个纪元的矿脉图。",
+    "新矿道通了。铁价回落，但矮人议会多了一条新规矩：东矿深部，非长老令不得入内。"
+  ]},
+  {id:"nc_9", name:"精灵古树异动", days:[205,209,215], texts:[
+    "精灵林邦最老的古树，一夜之间落叶三成。守林人绕着树根走了一圈，脸色发白。",
+    "林邦派出了三队巡林者，往树根延伸的方向查探。传闻地底传来过沉闷的震动。",
+    "古树发了新芽。巡林者回来时少了一队人，精灵长老只说了一句：林子的边界，往内收一里。"
+  ]},
+  {id:"nc_10", name:"金秤信使现踪", days:[240,245,250], texts:[
+    "晨天故都的旧街上，有人看见一个戴金秤徽记的旅人，只住了一夜便离开。",
+    "那旅人往北去了。沿路打听过七座城、三口井、一处无字碑。",
+    "信使最后出现在学院山门外。此后无人再见过他，只留下一个话：时候到了。"
+  ]}
+];
+
+/* /u1inj:data-nodes:dn_npc_memory.js/ */
+/* /v93npc:data/ NM-6 NPC 记忆档案（纯数据；16 位登记 NPC，供回指钩子与记忆面板用） */
+window.NPC_MEMORY_V93 = [
+  {id:"li_guan", name:"李管事", role:"自由城商会管事"},
+  {id:"tavern_owner", name:"旅店老板娘", role:"自由城客栈掌柜"},
+  {id:"old_mercenary", name:"老佣兵", role:"自由城退役佣兵"},
+  {id:"ayan", name:"阿岩", role:"草原兽人向导"},
+  {id:"laotie", name:"老铁", role:"铁门关老铁匠"},
+  {id:"fellman", name:"费尔曼教授", role:"艾尔达学院图书馆馆长"},
+  {id:"gold_old", name:"金老人", role:"墓园守碑人"},
+  {id:"loka", name:"洛卡", role:"矮人药剂师"},
+  {id:"ailin", name:"艾琳", role:"火系法师塔学徒"},
+  {id:"cecilia", name:"塞西莉娅", role:"东境贵族小姐"},
+  {id:"ata", name:"阿塔", role:"狼骨部落萨满"},
+  {id:"huizong", name:"灰鬃", role:"兽人灰鬃部头领"},
+  {id:"luzhao", name:"陆昭", role:"承天城捕头"},
+  {id:"qin", name:"秦·长风", role:"东境边关将军"},
+  {id:"maurice", name:"莫里茨", role:"学院老教授"},
+  {id:"elena", name:"艾琳娜", role:"精灵治愈师"}
+];
 
 /* /u1inj:data-nodes:dn_npc_state.js/ */
 /* /wn2inj:npcstate/ W-N2 NPC 独立状态机（活的世界·人物动态）
@@ -89281,7 +89986,7 @@ N["sp8_ranger_08"]={tag:"main",place:"西境 · 游侠学院训练场",pace:"nor
 {t:"（调整呼吸，用读风练出的预判再战）",go:"sp8_ranger_09"},
 {t:"（认输，请他指点弱点）",go:"sp8_ranger_09b"}
 ]};
-N["sp8_ranger_09"]={tags:["combat"],tag:"combat",place:"西境 · 游侠学院对练场",pace:"normal",text:[
+N["sp8_ranger_09"]={battle:true,enemy:{name:"草蛇",hp:22,atk:5,def:1,agi:9,wp:"箭"},tags:["combat"],tag:"combat",place:"西境 · 游侠学院对练场",pace:"normal",text:[
 "第二回对练，你不再盯他的箭，而是盯他的肩——肩先动，箭后到。",
 "草蛇的箭来的瞬间，你侧身让开，同时搭箭还击。两支箭在半空交错，你的箭钉在草蛇脚前的沙地上，他的箭贴着你的发丝飞过。",
 "收箭时你才觉出疼——右手虎口被弓弦磨破了一道口子，渗出血珠，把弓臂染上一小片暗红。右小臂外侧也有一道浅浅的擦痕，是方才草蛇那支箭的箭尾扫的，皮破了一层，火辣辣地疼。你试着又握了握弓，指节发僵，这一下，明天怕是拉不满弦了。老谢吹哨叫停：“平局。”他看你的眼神多了点东西，“一个半月练到平手，行。”",
@@ -92055,6 +92760,43 @@ window.WORLD_PHASE = function(day){
     if(d < 200) return "mid";
     return "late";
   }catch(e){ return "early"; }
+};
+
+/* /u1inj:data-nodes:dn_worldstate_tpl.js/ */
+/* ============================================================
+   /ws1inj:tpl/ WS-1 行为-世界状态回路 · 状态回响模板库（纯数据）
+   五维世界状态：war战争烈度 / church教廷主导 / guild商会掌控 /
+                 orc兽人关系 / seal封印完整（各 0-100）
+   每维三档（low<34 / mid 34-66 / high>66），每档 1 句回响。
+   渲染时按当前档位取句，注入主线枢纽节点正文之后（收尾回响）。
+   铁律：不触碰判定公式 / writeNext 核心语义 / choose / 存档结构。
+   ============================================================ */
+window.V93_WORLD_TPL = {
+  war: [
+    { hi: 34, lines: ["边境的烽火台已经三天没冒烟了。商队又开始走老路，驮铃在晨雾里叮当响。"] },
+    { hi: 67, lines: ["铁匠铺昼夜不歇，锤声砸得人心慌。城门口盘查的卫兵，换了一茬又一茬。"] },
+    { hi: 101, lines: ["夜里能听见远处的号角。城墙上火把通明，老兵们说，这架势跟上回开战前一模一样。"] }
+  ],
+  church: [
+    { hi: 34, lines: ["圣城的钟声照旧敲，只是听的人少了。巷子口的神像，落了一层灰。"] },
+    { hi: 67, lines: ["街上巡游的圣职者多了起来，胸口的神徽擦得锃亮。有人迎面走来，先看你的手——有没有圣痕。"] },
+    { hi: 101, lines: ["净化令贴满了街口。告示下站着的，多是脸色发白的人。夜里的钟声，敲得比白天急。"] }
+  ],
+  guild: [
+    { hi: 34, lines: ["商会的大账房关了半扇门，伙计们在院子里晒发霉的货。银月越来越不经花。"] },
+    { hi: 67, lines: ["码头上船来船往，账房先生的算盘从早响到晚。有好货，就有好价。"] },
+    { hi: 101, lines: ["商队的旗帜在城头并排插了一溜。行会的车马夜里也敢走山路——沿路都有人接应。"] }
+  ],
+  orc: [
+    { hi: 34, lines: ["草原方向的风里带着腥味。牧人把帐篷往南挪了又挪。"] },
+    { hi: 67, lines: ["草原使者的马队进了城，带着皮货和盐。他们不再一进城就握刀把了。"] },
+    { hi: 101, lines: ["兽人老祭师亲手给你系上骨铃。草原上见着这串铃铛，再凶的部族也会让路。"] }
+  ],
+  seal: [
+    { hi: 34, lines: ["北地的地脉偶尔会自己发烫。井水比往年浑，老人说那是地底的东西在翻身。"] },
+    { hi: 67, lines: ["封印的锁链又锈断了一环。守墓人把消息压了下来，可压不住夜里从地缝漏出的寒气。"] },
+    { hi: 101, lines: ["七锚归位，地脉平稳。北地井水重新变清，麦子抽穗的声音，都比往年壮实。"] }
+  ]
 };
 
 /* /u1inj:data-nodes-end/ */

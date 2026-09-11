@@ -435,6 +435,8 @@ function changeRelation(npcId,delta,reason){
   if(old>-60&&S.npcRelations[npcId]<=-60){ triggerRelationEvent(npcId,"enemy"); }
   /* /upg07inj:relnotify/ UPG-07 关系变更广播（只读 UI 通知） */
   try{ window.ELDA && window.ELDA.notify && window.ELDA.notify({relation:{npc:npcId}}); }catch(e){}
+  /* /v93npc:relhook/ NM-6 NPC 记忆写入（只读 S 既有字段 + S.npcMemory 独立键） */
+  try{ if(window.v93_npcRemember) window.v93_npcRemember(npcId,delta,reason||""); }catch(e){}
 }
 
 function triggerRelationEvent(npcId,type){

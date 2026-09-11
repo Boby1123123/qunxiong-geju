@@ -38,7 +38,8 @@ N["acad_life_y1_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"【学年小事·加深】去生活区深处走走（人际/见闻）",go:"acad_social_hub"},
 {t:"【学年小事·加深】去修行区摸摸门道（冥想/元素池）",go:"acad_magic_hub"}
 ,
- {t:"【学年小事·加深】在学院里四处走走，认识这个地方（四季纪事）",go:"acad_deep_01"}]};
+ {t:"【学年小事·加深】在学院里四处走走，认识这个地方（四季纪事）",go:"acad_deep_01"},
+{t:"（课间去听费尔曼教授的第一堂魔法课——关于“魔法有价”）",go:"acad_extra_y1_1"}]};
 N["acad_life_y1_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "宿舍的日子像一锅慢慢熬的粥。凯恩每天天不亮就起来练剑，剑风从窗口灌进来，带着铁锈味；隔壁的艾莉丝隔三差五烧糊一锅汤，然后拉着全走廊的人尝“新配方”。",
 "你的室友换了一茬——第一个住了三天就退学，说是“受不了北境的冷”；第二个是个沉默的东境人，每晚在灯下抄书，抄到后半夜。",
@@ -107,7 +108,8 @@ N["acad_life_y2_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"【职业·战士/骑士】选《战阵与军团》（戈拉亲授）",req:function(){return S.job==="warrior"||S.job==="knight";},effects:{flag:"acad_life_y2_course",xp:15},go:"acad_life_y2_dorm"},
 {t:"【职业·魔法师/术士】选《高阶元素与共鸣》",req:function(){return S.job==="mage"||S.job==="warlock";},effects:{flag:"acad_life_y2_course",xp:15},go:"acad_life_y2_dorm"},
 {t:"【职业·其他】选一门辅修（洛卡推荐：药剂学基础）",req:function(){return true;},effects:{flag:"acad_life_y2_course",xp:12},go:"acad_life_y2_dorm"}
-]};
+,
+{t:"（夜里图书馆禁书区传来的动静——去查查）",go:"acad_extra_y2_1"}]};
 N["acad_life_y2_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "这年冬天格外冷。宿舍的窗缝结满了霜，凯恩的剑练得越来越早，天不亮就能听见院里的破风声。",
 "你的东境室友走了——留了一封信：“家中有事，归期未定。”他的铺位空了三天，来了个新室友：兽人少年，叫阿塔，话少，力气大，第一晚就把床板压塌了。",
@@ -174,7 +176,8 @@ N["acad_life_y3_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"【学年小事】去花园看那株枯了三年的树（春日回暖）",req:function(){return !S.flags["acad_event_y3_done"];},effects:{flag:"acad_event_y3_done"},go:"acad_event_y3"},
 {t:"【职业·任意】选《古代封印史》（费尔曼亲授）——听听他到底讲什么",req:function(){return true;},effects:{flag:"acad_life_y3_course",xp:15,stance:{axis:"faith",v:-1}},go:"acad_life_y3_dorm"},
 {t:"【职业·任意】选《梦境与灵魂》（奥利弗亲授）——看看他的课有什么不同",req:function(){return true;},effects:{flag:"acad_life_y3_course",xp:15},go:"acad_life_y3_dorm"}
-]};
+,
+{t:"（实战课的两两对抗，跟矮人姑娘对练）",go:"acad_extra_y3_1"}]};
 N["acad_life_y3_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 课堂",pace:"normal",text:[
 "你选了费尔曼的课。",
 "他的课讲得确实好——条理清晰，旁征博引，把古代封印术的脉络梳理得一清二楚。但越听，你越觉得不对：他讲“封印”时，眼里有一种……期待。",
@@ -240,7 +243,8 @@ N["acad_life_y4_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"【学年小事】参加夏季观星课（塔顶平台夜课）",req:function(){return !S.flags["acad_event_y4_done"];},effects:{flag:"acad_event_y4_done"},go:"acad_event_y4"},
 {t:"【职业·任意】这年你选修《毕业试炼预备》（实战）",req:function(){return true;},effects:{flag:"acad_life_y4_course",xp:15},go:"acad_life_y4_dorm"},
 {t:"【职业·任意】这年你选修《毕业论文·古代封印专题》（费尔曼指导）",req:function(){return true;},effects:{flag:"acad_life_y4_course",xp:15},go:"acad_life_y4_dorm"}
-]};
+,
+{t:"（毕业课题的题目单——古代封印结构研究）",go:"acad_extra_y4_1"}]};
 N["acad_life_y4_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "你选了费尔曼指导的论文专题。",
 "他给你的题目是：《第七节点封印术的失守与重建》。他给了你一份长长的参考文献，全是禁书区的书目。",
@@ -299,7 +303,8 @@ N["acad_life_y5_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"【学年小事】在回廊看新生入学（毕业年秋）",req:function(){return !S.flags["acad_event_y5_done"];},effects:{flag:"acad_event_y5_done"},go:"acad_event_y5"},
 {t:"【职业·任意】参加毕业试炼（实战）",req:function(){return true;},effects:{flag:"acad_life_y5_course",xp:15},go:"acad_life_y5_dorm"},
 {t:"【职业·任意】先去找墨丘利，问清楚净化令的事",req:function(){return true;},effects:{flag:"acad_life_y5_course",xp:15},go:"acad_life_y5_dorm"}
-]};
+,
+{t:"（毕业试炼——雪原上的信号符）",go:"acad_extra_y5_1"}]};
 N["acad_life_y5_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 墨丘利办公室",pace:"normal",text:[
 "墨丘利坐在办公室里，桌上堆着没拆的信。他见你进来，苦笑：“你来晚了——他们刚走。”",
 "“净化令的事，是真的。圣痕司给学院下了最后通牒：交出名册，或者学院‘配合调查’。”",

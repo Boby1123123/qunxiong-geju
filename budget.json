@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9513201,
+    "game_html_bytes_max": 9545137,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5021,
+    "node_total_min": 5041,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9463201,
-    "chunked_html_bytes": 6636154,
-    "node_total": 5071,
+    "game_html_bytes": 9495137,
+    "chunked_html_bytes": 6663752,
+    "node_total": 5091,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-2 战争线深写 20 节点 + 事件池 +30 则",
+    "reason": "CP-3 学院生活加密 20 节点（五学年×4）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1300,6 +1300,13 @@
         "chunked_bytes": 6636154,
         "nodes": 5071,
         "reason": "CP-2 战争线深写 20 节点 + 事件池 +30 则"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9495137,
+        "chunked_bytes": 6663752,
+        "nodes": 5091,
+        "reason": "CP-3 学院生活加密 20 节点（五学年×4）"
       }
     ]
   },

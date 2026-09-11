@@ -116,7 +116,8 @@ N["frontier_bell_3"]={tag:"main",place:"北境 · 第三哨 · 钟楼下",where:
 "你摇头。军需官把铁牌收进怀里：“不认得，就别认。第三哨的规矩，有些事情，知道的人越少，活的人越多。”他转身走了两步，又停住，“你昨夜听见钟响没有？”"
 ],options:[
 {t:"“听见了，响了一记，像是被捂住又松开。”",go:"frontier_bell_4"},
-{t:"“没听见，我睡得太沉。”",go:"frontier_bell_4"}
+{t:"“没听见，我睡得太沉。”",go:"frontier_bell_4"},
+  {t:"（攀上铜钟楼，把这一路的线索在风雪里摊开）",go:"clue_assembly_eye"}
 ]};
 
 N["frontier_bell_4"]={tag:"main",place:"北境 · 第三哨 · 钟楼顶",where:"白昼",pace:"deep",sceneTitle:"铜钟铭文",arc:"arc_frontier",vol:"vol_north",text:[

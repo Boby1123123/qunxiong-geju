@@ -600,7 +600,10 @@ window.STORY_BLUEPRINT = {
   "echo_skip_academy":{arc:"arc_academy",vol:"vol_academy",act:null,ch:null,type:"branch"},
   "echo_spared_robber":{arc:"arc_fac_dwarf",vol:"vol_dwarf",act:null,ch:null,type:"branch"},
   "echo_thieves_guild_member":{arc:"arc_eclipse",vol:"vol_abyss",act:null,ch:null,type:"branch"},
-  "echo_watchmen_invited":{arc:"arc_watchmen",vol:"vol_war",act:null,ch:null,type:"branch"}},
+  "echo_watchmen_invited":{arc:"arc_watchmen",vol:"vol_war",act:null,ch:null,type:"branch"},
+  "clue_assembly_book":{arc:null,vol:"vol_north",act:null,ch:null,type:"main"},
+  "clue_assembly_eye":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"main"},
+  "clue_assembly_goldscale":{arc:null,vol:"vol_east",act:null,ch:null,type:"main"}},
 
 
   "acad_road_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},

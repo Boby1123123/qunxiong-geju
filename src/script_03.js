@@ -5055,6 +5055,8 @@ function writeNext(_v46f){
     try{ window.v93t_thoughtTick(); }catch(e){}
     /* /t2inj:thoughtline/ T-2 心念殿专属正文注入（只读；已内化概念按 place 关键词注入 1 句） */
     try{ var _tl = window.v93t_thoughtLine ? window.v93t_thoughtLine(node) : null; if(_tl&&_tl.length){ _txt=_txt.concat(_tl); } }catch(e){}
+    /* /l1inj:npcclue/ L-2 线索进度 NPC 回应（只读；关键人物场景按线索命中数注入 1 句） */
+    try{ var _lc = window.v93l_npcClue ? window.v93l_npcClue(node) : null; if(_lc&&_lc.length){ _txt=_txt.concat(_lc); } }catch(e){}
     try{ var _ec = window.v93e2_echoLine(node); if(_ec&&_ec.length){ _txt=_txt.concat(_ec); } }catch(e){}
     /* ===== /e2inj:fn/ E-2 多年回响引擎（只读；数据源 window.ECHO_TRACKS；不写任何状态） ===== */
     window.v93e2_echoLine = function(node){

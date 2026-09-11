@@ -23,7 +23,7 @@ N["fc_jiaohui_entry"] = {tag:"main",
 
     {t:"先去跛脚酒桶，找蜜尔娜打听消息",effects:{stance:{axis:"order",v:-1}},go:"echo_floating_tower_blessed"},
 
-    {t:"去联合冒险者公会，看看有什么活计",effects:{stance:{axis:"honor",v:1}},go:"fc_guild"},
+    {t:"去联合冒险者公会，看看有什么活计",effects:{stance:{axis:"honor",v:1}},go:"hub_fc_revisit_1"},
 
     {t:"去码头转转，看看那位记账的姑娘",effects:{stance:{axis:"altru",v:1}},go:"world_f3_lu_1"},
 

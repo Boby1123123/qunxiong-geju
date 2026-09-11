@@ -5314,6 +5314,18 @@ window.CAUSALITY_WORDS = [
   {word:"青叶", world:"精灵线", file:"dn_elf_dwarf.js"},
 
   {word:"净化令", world:"净化令线", file:"script_02g.js"}
+,
+  {
+    "id": "led_c2_hub",
+    "desc": "C-2 主线聚合枢纽：多入单出路径变体正文，主线判定零改动",
+    "plant": "flag:anchor_1",
+    "reap": "flag:anchor_7",
+    "status": "open",
+    "world": "vol_all",
+    "importance": 2,
+    "keywords": ["聚合枢纽", "hub_review_1"],
+    "irreversible": false
+  }
 
 ];
 

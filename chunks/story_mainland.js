@@ -5002,7 +5002,7 @@ N["north_tavern2"] = {tag:"branch",
 
   options:[
 
-    {t:"去艾尔达魔法学院看看",go:"north_academy_gate"},
+    {t:"去艾尔达魔法学院看看",go:"hub_academy_arrive_1"},
 
     {t:"去冒险者公会分会接点活",go:"board_north"}
 

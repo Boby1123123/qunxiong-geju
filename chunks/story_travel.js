@@ -764,7 +764,7 @@ N["arrive_church_shengcheng"] = function(){
 
         critfail:["银徽章在你额前亮起一道刺眼的白光。执事们的神色骤然冷下来：'这位朝圣者，请随我们走一趟。'你被带进值房盘问了两个时辰，最终因'证据不足'被放行，但你的名字，落在了圣痕司的册子上。"]
 
-      },onCritFail:{flag:"church_wanted"},go:"church_city"},
+      },onCritFail:{flag:"church_wanted"},go:"hub_church_1"},
 
       {t:"绕开正门，从侧门/暗道进城",check:{a:"AGI",sk:"stealth",label:"潜入"},tier:{
 

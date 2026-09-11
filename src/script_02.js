@@ -94,7 +94,7 @@ N["fc_jiaohui_entry"] = {tag:"main",
 
     {t:"先去跛脚酒桶，找蜜尔娜打听消息",effects:{stance:{axis:"order",v:-1}},go:"echo_floating_tower_blessed"},
 
-    {t:"去联合冒险者公会，看看有什么活计",effects:{stance:{axis:"honor",v:1}},go:"fc_guild"},
+    {t:"去联合冒险者公会，看看有什么活计",effects:{stance:{axis:"honor",v:1}},go:"hub_fc_revisit_1"},
 
     {t:"去码头转转，看看那位记账的姑娘",effects:{stance:{axis:"altru",v:1}},go:"world_f3_lu_1"},
 
@@ -4236,7 +4236,7 @@ N["arrive_church_shengcheng"] = function(){
 
         critfail:["银徽章在你额前亮起一道刺眼的白光。执事们的神色骤然冷下来：'这位朝圣者，请随我们走一趟。'你被带进值房盘问了两个时辰，最终因'证据不足'被放行，但你的名字，落在了圣痕司的册子上。"]
 
-      },onCritFail:{flag:"church_wanted"},go:"church_city"},
+      },onCritFail:{flag:"church_wanted"},go:"hub_church_1"},
 
       {t:"绕开正门，从侧门/暗道进城",check:{a:"AGI",sk:"stealth",label:"潜入"},tier:{
 
@@ -5514,7 +5514,7 @@ N["north_tavern2"] = {tag:"branch",
 
   options:[
 
-    {t:"去艾尔达魔法学院看看",go:"north_academy_gate"},
+    {t:"去艾尔达魔法学院看看",go:"hub_academy_arrive_1"},
 
     {t:"去冒险者公会分会接点活",go:"board_north"}
 

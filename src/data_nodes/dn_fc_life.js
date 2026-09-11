@@ -224,7 +224,7 @@ N["fc_road_west_road"]={tag:"main",place:"西行土路 · 荒原",pace:"normal",
 "他指了指高墙的方向：“你要么搭我们的商队，明天一起进城；要么——你身上带了什么家伙没有？”",
 "你摸了摸行囊里的武器。风又起了，沙粒打在脸上，火辣辣的。"
 ],options:[
-{t:"搭商队进城",go:"arrive_west_huangyuan"},
+{t:"搭商队进城",go:"hub_west_1"},
 {t:"自己走，不搭队",go:"arrive_west_huangyuan"}
 ]};
 
@@ -235,7 +235,7 @@ N["fc_road_desert_road"]={tag:"main",place:"南下沙路 · 沙漠边缘",pace:"
 "你谢过他，朝着城门走去。风从沙漠深处吹来，带着热气和一股说不清道不明的腥味——像是有什么东西，在沙底下翻身。",
 "你回头看了一眼来路。来时的脚印，已经被风抹平了。"
 ],options:[
-{t:"进城，找地方歇脚",go:"arrive_desert_lvzhou"}
+{t:"进城，找地方歇脚",go:"hub_desert_1"}
 ]};
 
 N["fc_road_east_road"]={tag:"main",place:"东行商道 · 官道",pace:"normal",sceneTitle:"过渡章 · 东行",text:[

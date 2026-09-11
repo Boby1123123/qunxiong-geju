@@ -3139,4 +3139,13 @@ window.STORY_BLUEPRINT = {
   "failrep_cove_1": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
   "failrep_cove_2": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
   "failrep_cove_3": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
-  "failrep_cove_4": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"}};
+  "hub_review_1": {tag:"main", vol:"vol_c", arc:"arc_finale", pace:"deep"},
+  "hub_war_open_1": {tag:"main", vol:"vol_d", arc:"arc_war", pace:"deep"},
+  "hub_academy_arrive_1": {tag:"main", vol:"vol_b", arc:"arc_academy", pace:"deep"},
+  "hub_grad_1": {tag:"main", vol:"vol_b", arc:"arc_academy", pace:"deep"},
+  "hub_fc_revisit_1": {tag:"main", vol:"vol_free", arc:null, pace:"deep"},
+  "hub_west_1": {tag:"main", vol:"vol_west", arc:null, pace:"deep"},
+  "hub_desert_1": {tag:"main", vol:"vol_desert", arc:null, pace:"deep"},
+  "hub_church_1": {tag:"main", vol:"vol_church", arc:null, pace:"deep"},
+  "hub_east_1": {tag:"main", vol:"vol_east", arc:null, pace:"deep"},
+  "hub_orc_1": {tag:"main", vol:"vol_orc", arc:null, pace:"deep"}};

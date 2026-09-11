@@ -11,7 +11,7 @@ const GLOBAL_HOOKS = [
     condition: "(typeof S!=='undefined'&&S&&typeof S.rep==='number'&&S.rep<=-30)",
     eventId: "h_bounty",
     cooldown: 30, maxTriggers: 3,
-    text: "城门口新贴出一张告示，画着你的脸，写着“悬赏缉拿”。衙役们见了你，目光在你身上多停了片刻——城里的风头，开始不对了。"
+    text: "城门口新贴出一张告示，画着你的脸，写着“悬赏缉拿”。衙役们见了你，视线在你身上多停了片刻——城里的风头，开始不对了。"
   },
   {
     id: "hook_border",

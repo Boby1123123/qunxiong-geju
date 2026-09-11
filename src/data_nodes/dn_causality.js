@@ -5242,6 +5242,28 @@ window.CAUSALITY_LEDGER = [
     "importance": 3,
     "keywords": ["老郭的黑箱货单：“金秤旧"],
     "irreversible": false
+  },
+  {
+    "id": "led_f3_cell",
+    "desc": "F-3 蒙羞支线甲·狱中故人：何账房的锉刀与老赵铁匠铺的人情（铁门关）",
+    "plant": "flag:f_failrep_he_errand",
+    "reap": "flag:f_failrep_cell_done",
+    "status": "open",
+    "world": "vol_war",
+    "importance": 2,
+    "keywords": ["何账房", "老赵铁匠铺"],
+    "irreversible": false
+  },
+  {
+    "id": "led_f3_cove",
+    "desc": "F-3 蒙羞支线乙·蒙羞者集会：夜莺的信使与雪原散人结盟（北境）",
+    "plant": "flag:f_failrep_cove_letter",
+    "reap": "flag:f_failrep_cove_done",
+    "status": "open",
+    "world": "vol_war",
+    "importance": 2,
+    "keywords": ["夜莺", "青桐驿", "雪原信使"],
+    "irreversible": false
   }
 ];
 

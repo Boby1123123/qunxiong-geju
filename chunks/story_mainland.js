@@ -3855,6 +3855,7 @@ N["north_academy_inside"] = {tags:["main:academy"],tag:"branch",
 N["north_library"] = {tag:"branch",
 
   place:"艾尔达魔法学院 · 图书馆", where:"白昼",
+  ifFlag:{"f_failpath_intel_zhao":["你走进书库时，管理书目那位老执事正好抬头。他看了你一眼，又低下头去，声音不大不小：“墨丘利教授说，有个学生欠他一页纸的注脚。他等着。”"],"f_failpath_forbid_diary":["书架深处，你上次留下的那道痕迹还在。老管理员在你身后扫着地，语气平淡：“那页书，有人抄走了。你抄的那份，最好收好。”"]},
 
   text:[
 

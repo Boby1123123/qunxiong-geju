@@ -3131,4 +3131,12 @@ window.STORY_BLUEPRINT = {
   "failpath_vault_3": {tag:"branch", vol:"vol_academy", arc:null, pace:"normal"},
   "failpath_westranger_1": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
   "failpath_westranger_2": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
-  "failpath_westranger_3": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"}};
+  "failpath_westranger_3": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cell_1": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cell_2": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cell_3": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cell_4": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cove_1": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cove_2": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cove_3": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"},
+  "failrep_cove_4": {tag:"branch", vol:"vol_war", arc:null, pace:"normal"}};

@@ -58,6 +58,8 @@ function applyDefaults(s){
   if(s.settings.weatherLine===undefined) s.settings.weatherLine=true;
   /* /e2inj:defaults/ E-2 多年回响开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.echoLine===undefined) s.settings.echoLine=true;
+  /* /f3inj:defaults/ F-3 蒙羞指数兜底（旧档兼容；独立键默认 0；由 f_failpath_* flag 驱动展示，引擎零结算） */
+  if(s.failRep===undefined) s.failRep=0;
   /* /A1inj:defaults/ A-1 个性化开局注入开关兜底（旧档兼容；独立键默认 true） */
   if(s.settings.originProfile===undefined) s.settings.originProfile=true;
   /* /upg01inj:defaults/ UPG-01 世界书开关兜底（旧档兼容；独立键默认 true） */

@@ -472,7 +472,7 @@ effects:{xp:12},onCrit:{flag:"acad_apothecary_bluefire"},go:"acad_social_hub"}
 /* ---------- 演武对战（4） ---------- */
 N["acad_spar_1"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 演武场",pace:"normal",text:[
 "戈拉教官今天在演武场摆了个擂台：“期末演武考核，两两对战。赢了，本学期实战分满分；输了，加练一个月晨跑。”",
-"他扫了一眼在场的学生，目光落在你身上：“你，上来。”",
+"他扫了一眼在场的学生，视线落在你身上：“你，上来。”",
 "你上台，对面站着一个高年级学生——比他矮半个头，但腰身粗壮，拳头像铁锤。他冲你咧嘴一笑：“学弟，手下留情啊。”台下哄笑一片。"
 ],options:[
 {t:"硬碰硬，正面应战",check:{a:"STR",sk:"martial",label:"对战"},tier:{

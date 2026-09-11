@@ -679,6 +679,7 @@ N["arrive_east_chengtian"] = function(){
 N["arrive_east_tiemen"] = {tag:"main",
 
   place:"东部王国 · 铁门关（东侧）", where:"途中",
+  ifFlag:{"f_failpath_action_tunnel":["城门处查得严。守门的什长看了你的路引，又看你一眼：“地道口那桩案子，前些日子结了。你这样的生面孔，少往城墙根底下走。”"],"f_failrep_he_errand":["你递上路引时，守门什长翻了两遍，忽然压低声音：“东墙下城的老赵，托人带过话——铁门关来的姓何的朋友，进城不必排长队。”"]},
 
   text:[
 

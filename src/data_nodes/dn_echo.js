@@ -109,4 +109,11 @@ window.ECHO_TRACKS = [
 {id:"echo_mercury_impressed",flag:"mercury_impressed_by_intellect", echoAt:["grad_ceremony","north_library"], tpl:["墨丘利当众说过一次你聪明。就那一次，他后来不承认，可你记得他说话时点了一下头。"]},
 {id:"track_mercury_disappointed", flag:"mercury_disappointed", echoAt:["grad_ceremony"], tpl:["墨丘利失望的时候不说话，只把眼镜摘下来擦。你见过两次，每次都觉得比挨骂还难受。"]},
 {id:"echo_sector_lord",      flag:"sector_lord_encounter", echoAt:["warphase_7","grad_home_3"], tpl:["那个区块领主，你见过他一面。他看人的眼神像在称斤两——你当时就觉得，这人迟早会栽在秤上。"]}
+,
+/* ---- 组 F · 失败回响（F-3：失败不是终点，多年后还有人记得） ---- */
+{id:"echo_fail_warwall",      flag:"f_failpath_warwall_liu",   echoAt:["fc_tavern","grad_army_1"], tpl:["铁门关军法官的名册后来换过三任。可你那个名字，总有人记得——不是记你的罪，是记你蹲过那间牢，还能走出去。"]},
+{id:"echo_fail_raid",         flag:"f_failpath_raid_iron",     echoAt:["failrep_cove_3","warphase_5"], tpl:["雪原上的人认路子不认脸。你从冰裂隙活着回来的事，比你自己以为的传得更远——后来有商队愿意让你押头车，就因为这个。"]},
+{id:"echo_fail_intel",        flag:"f_failpath_intel_zhao",    echoAt:["north_library","grad_ceremony"], tpl:["墨丘利那页注脚，你始终没还。多年后整理旧物的人在一本书里找到它，纸边磨得发白，像被人反复翻过。"]},
+{id:"echo_fail_cell",         flag:"f_failrep_cell_done",      echoAt:["arrive_east_tiemen","anchor_finale_4"], tpl:["东墙下城的老赵后来逢人就说，铁门关有个年轻人替他把一句旧话带到了。他说的那句，你自己都快忘了。"]},
+{id:"echo_fail_cove",         flag:"f_failrep_cove_done",      echoAt:["grad_roam_1","warphase_9"], tpl:["夜莺的信使后来散进各路。偶尔有人在篝火边说起那条商道上的信，就会有人补一句：那会儿有个从冰裂隙出来的人，也替他们跑过腿。"]}
 ];

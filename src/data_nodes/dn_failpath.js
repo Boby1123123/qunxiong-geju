@@ -42,7 +42,8 @@ N["failpath_warwall_4"]={tag:"branch",place:"铁门关·城墙根",pace:"normal"
 "伤兵营里铁手说得对：“打完了仗，活着的人还要过日子。过日子，靠的不全是刀。”",
 "你沿着城墙根往回走，夜风里夹着雪粒和酒气。远处，退兵号又响了一遍。"
 ],options:[
-{t:"（回营休整，等下一场战事）",effects:{xp:10},go:"i_war_battle_result"}
+{t:"（回营休整，等下一场战事）",effects:{xp:10},go:"i_war_battle_result"},
+{t:"（心里记着铁手那番话，去东墙下城转转）",go:"failrep_cell_1"}
 ]};
 N["failpath_raid_1"]={tag:"branch",place:"北方雪原·冰裂隙",pace:"normal",text:[
 "你从兽人营地逃出来的时候，身后追兵的火把连成一线。雪深及膝，你跑不快。",
@@ -80,7 +81,8 @@ N["failpath_raid_4"]={tag:"branch",place:"北方雪原·冰裂隙口",pace:"norm
 "跛脚汉的声音还在耳边：“活着回去的人，才记得住路。”",
 "你拍拍身上的雪，往铁门关的方向走。右踝还疼，但你记住了那条裂隙，也记住了那句话：缺粮的军队，不会运铁。"
 ],options:[
-{t:"（回铁门关复命，把雪原见闻一并禀报）",effects:{xp:15},go:"i_war_raid_success"}
+{t:"（回铁门关复命，把雪原见闻一并禀报）",effects:{xp:15},go:"i_war_raid_success"},
+{t:"（夜里的火堆边，跟那个裹兽皮的人聊聊）",go:"failrep_cove_1"}
 ]};
 N["failpath_intel_1"]={tag:"branch",place:"艾尔达魔法学院·墨丘利办公室门口",pace:"normal",text:[
 "你的伪装在第三天就露了馅。",

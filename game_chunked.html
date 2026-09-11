@@ -30182,7 +30182,7 @@ function applyDefaults(s){
   /* /m8inj:defaults/ M8 卷D战争/阵营状态兜底（旧档兼容；独立键） */
   if(s.worldWar===undefined) s.worldWar=0;
   if(s.anchors===undefined) s.anchors=0;
-  if(!s.faction) s.faction="";
+  if(!s.faction || typeof s.faction==="string"){var __oldF=(typeof s.faction==="string"&&s.faction)?((window.V35_FID_MAP&&V35_FID_MAP[s.faction])||s.faction):null;s.faction={joined:__oldF,rank:0,reputation:{},quests:[],completedQuests:[],territoryOwned:[],politicalCapital:0,wars:[],alliances:[],enemies:[]};if(__oldF&&window.V35_FACTIONS&&V35_FACTIONS[__oldF]&&window.V35_FACTION_STATE){V35_FACTION_STATE.joined=__oldF;V35_FACTION_STATE.rank=0;}}
   /* /pn1inj:defaults/ P-N1 并行叙事线程状态兜底（旧档兼容；独立键空对象） */
   if(!s.threads) s.threads={};
   /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
@@ -36675,13 +36675,13 @@ window.v93_worldState = function(){
     if(F.council_compromise_purification) W.war = Math.max(20, W.war-20);
     if(F.watcher_inherit) W.war = Math.max(20, W.war-25);
     /* church 教廷主导 */
-    if(S.faction==='church') W.church = Math.max(W.church, 66);
+    if(S.faction&&S.faction.joined==='light_church') W.church = Math.max(W.church, 66);
     if(F.council_support_purification) W.church = Math.max(W.church, 75);
     if(F.purge_intensified) W.church = Math.max(W.church, 90);
     if(F.council_oppose_purification) W.church = Math.min(W.church, 25);
     if(F.crisis_done) W.church = Math.min(W.church, 50);
     /* guild 商会掌控 */
-    if(S.faction==='free') W.guild = Math.max(W.guild, 60);
+    if(S.faction&&S.faction.joined==='free_cities') W.guild = Math.max(W.guild, 60);
     if(S.trade && typeof S.trade.total==='number'){
       if(S.trade.total>=500) W.guild = 85;
       else if(S.trade.total>=100) W.guild = 66;
@@ -36693,7 +36693,7 @@ window.v93_worldState = function(){
     if(F.grom_helped) W.orc = Math.max(W.orc, 66);
     if(F.grom_protected) W.orc = Math.max(W.orc, 80);
     if(F.grom_professor_called) W.orc = Math.max(W.orc, 90);
-    if(S.faction==='orc') W.orc = Math.max(W.orc, 66);
+    if(S.faction&&S.faction.joined==='orc_horde') W.orc = Math.max(W.orc, 66);
     /* seal 封印完整 */
     if(F.seal1_visited) W.seal = Math.min(W.seal, 90);
     if(F.seal5_fixed) W.seal = Math.max(W.seal, 70);
@@ -39547,11 +39547,13 @@ let V35_FACTION_STATE = {
 };
 
 // ========== 势力核心函数 ==========
+window.V35_FID_MAP = {free:"free_cities",north:"north",church:"light_church",desert:"desert",east:"empire",orc:"orc_horde",dwarf:"dwarf_kingdom",elf:"elf_kingdom"};
 function v35_initFaction() {
   if (typeof S === 'undefined' || S === null) return;
-  if (!S.faction) {
+  if (!S.faction || typeof S.faction === 'string') {
+    var __oldF = (typeof S.faction === 'string' && S.faction) ? ((window.V35_FID_MAP && V35_FID_MAP[S.faction]) || S.faction) : null;
     S.faction = {
-      joined: null,
+      joined: __oldF,
       rank: 0,
       reputation: {},
       quests: [],
@@ -39566,10 +39568,24 @@ function v35_initFaction() {
     for (const fid in V35_FACTIONS) {
       S.faction.reputation[fid] = V35_FACTIONS[fid].initialRep;
     }
+    if (__oldF && V35_FACTIONS[__oldF]) { V35_FACTION_STATE.joined = __oldF; V35_FACTION_STATE.rank = 0; }
   }
   V35_FACTION_STATE = { ...V35_FACTION_STATE, ...S.faction };
   console.log('[V35] 势力系统已初始化');
 }
+window.v35_doJoin = function(fid){
+  try{
+    var vid = (window.V35_FID_MAP && V35_FID_MAP[fid]) || fid;
+    if (!S.faction || typeof S.faction === 'string') v35_initFaction();
+    S.faction.joined = vid; S.faction.rank = 0;
+    if (V35_FACTIONS[vid]) {
+      V35_FACTION_STATE.joined = vid; V35_FACTION_STATE.rank = 0;
+      v35_changeRep(vid, 20);
+      try { V35_EventBus.emit('faction:join', { factionId: vid }); } catch (e) {}
+    }
+    return true;
+  } catch (e) { return false; }
+};
 
 function v35_getRep(factionId) {
   return V35_FACTION_STATE.reputation[factionId] || 0;
@@ -48023,7 +48039,7 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       if(!S || !S.market) return;
       var m = S.market;
       if(!m.lastDiv) m.lastDiv = S.day;
-      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      var member = (S.faction&&S.faction.joined==="free_cities") || !!(S.flags && S.flags.merchant_saved);
       if(member && (S.day - m.lastDiv) >= (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)){
         var div = (window.MARKET_DIV_V93 && MARKET_DIV_V93.base || 3) + Math.floor((S.day - m.lastDiv) / (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)) * (window.MARKET_DIV_V93 && MARKET_DIV_V93.grow || 1);
         S.gold += div;
@@ -48040,7 +48056,7 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       if(!d) return;
       var routes = window.MARKET_ROUTES_V93 || [];
       var rh = routes.map(function(r){ return "🛤 "+r.name+"："+r.desc; }).join("<br>");
-      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      var member = (S.faction&&S.faction.joined==="free_cities") || !!(S.flags && S.flags.merchant_saved);
       var divInfo = member
         ? ("在册商会成员 · 每 " + ((window.MARKET_DIV_V93&&MARKET_DIV_V93.period)||7) + " 日分红 · 累计已领 " + ((S.market&&S.market.divTotal)||0) + " 枚金龙")
         : ("尚未加入商会（加入 guild 势力或营救过商队管事可享分红）");
@@ -61918,7 +61934,7 @@ N["faction_free_1"]={tags:["faction:war"],tag:"main",place:"自由城邦 · 商�
 "战火燎到北境的时候，自由城的商会反而成了最安稳的地方。李管事坐在大堂主位上，手里转着两个核桃，眼睛扫过在座的每一个商人。",
 "他最后把目光落定在你身上：“你跑过驮队，懂行情，人也靠得住。商会缺你这样一个人。”他推过来一张帖子，“入会，交五十金龙，或者替商会跑成一件大事。你自己挑。”",
 "窗外，码头上的船帆在风里扯得笔直。战乱里的钱，只有攥在自己人手里才踏实——这是商会的第一条规矩。", "商会大堂的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],options:[
-{t:"（缴五十金龙，正式入会）",effects:{gold:-50,xp:20,flag:"faction_join_free"},run:function(){if(S.faction&&S.faction!=="free"){if(S.infl){S.infl.church=(S.infl.church||0)-10;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-8;}}S.faction="free";},go:"faction_free_2"},
+{t:"（缴五十金龙，正式入会）",effects:{gold:-50,xp:20,flag:"faction_join_free"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="free_cities"){if(S.infl){S.infl.church=(S.infl.church||0)-10;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-8;}}if(window.v35_doJoin){v35_doJoin("free");}else{S.faction.joined="free_cities";}},go:"faction_free_2"},
 {t:"（先替商会跑成一件大事，再谈入会）",effects:{xp:12},go:"faction_free_2"},
 {t:"（再看看，乱世里不急着站队）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -62003,7 +62019,7 @@ N["faction_north_1"]={tags:["faction:war"],tag:"main",place:"北境 · 第三哨
 "联军的都尉是个老将，脸上横着一道旧刀疤。他绕着新兵队走了一圈，走到你面前停下来：“你在冻河滩挨过一枪？伤好了？”",
 "你应了一声。都尉点点头：“伤好了就留下。北境联军的规矩，一不要逃兵，二不要孬种。你能挨枪不跑，够格。”",
 "他扔给你一副甲：“穿上。从今天起，你是联军的人了。”", "你离了第三哨，脚步声在空旷处格外清晰。赶路要紧。"],options:[
-{t:"（披上联军甲，正式入伍）",effects:{xp:20,flag:"faction_join_north"},run:function(){if(S.faction&&S.faction!=="north"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}S.faction="north";},go:"faction_north_2"},
+{t:"（披上联军甲，正式入伍）",effects:{xp:20,flag:"faction_join_north"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="north"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}if(window.v35_doJoin){v35_doJoin("north");}else{S.faction.joined="north";}},go:"faction_north_2"},
 {t:"（先在校场上露两手，再谈入伍）",effects:{xp:12},go:"faction_north_2"},
 {t:"（看看再说，联军未必是唯一的靠山）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -62087,7 +62103,7 @@ N["faction_church_1"]={tags:["faction:war"],tag:"main",place:"圣城 · 大教�
 "战争打起来以后，圣城的教堂反而比平时更挤。",
 "逃难的人把教堂的条凳坐满，教士们端着粥桶在人群中穿梭。你帮忙抬了两天伤员，一个穿灰袍的老执事拦住了你：“你的手很稳。留下来，教会需要这样的人。”",
 "他领你走进大教堂的回廊，壁画上的圣光洒下来，落在地上像一层水。老执事回头看了你一眼：“教会不问出身，只问心。你可愿侍奉光明？”", "大教堂的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],options:[
-{t:"（受洗入教，成为教会的人）",effects:{xp:20,flag:"faction_join_church"},run:function(){if(S.faction&&S.faction!=="church"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}S.faction="church";},go:"faction_church_2"},
+{t:"（受洗入教，成为教会的人）",effects:{xp:20,flag:"faction_join_church"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="light_church"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}if(window.v35_doJoin){v35_doJoin("church");}else{S.faction.joined="light_church";}},go:"faction_church_2"},
 {t:"（先帮教堂做几件事，再看看）",effects:{xp:12},go:"faction_church_2"},
 {t:"（道不同，谢过老执事的好意）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -62169,7 +62185,7 @@ N["faction_desert_1"]={tags:["faction:war"],tag:"main",place:"死亡沙漠 · �
 "绿洲集市城的驼队头领扎克，是个满脸风霜的汉子。他在沙地上盘腿坐着，面前摆着一壶茶：“北边打起来了，沙漠也要站队。诸部的大帐里吵了三天，谁也不想先低头。”",
 "他抬眼打量你：“你走过沙漠，懂沙子的脾气。诸部缺一个能从沙子里看出路的人。”",
 "他把一碗茶推到你面前：“喝了这碗茶，你就是诸部的兄弟。”", "别过绿洲集市城，你沿官道走出里许，回头已看不清来处。"],options:[
-{t:"（喝下那碗茶，加入沙漠诸部）",effects:{xp:20,flag:"faction_join_desert"},run:function(){if(S.faction&&S.faction!=="desert"){if(S.infl){S.infl.free=(S.infl.free||0)-6;S.infl.north=(S.infl.north||0)-6;S.infl.church=(S.infl.church||0)-8;}}S.faction="desert";},go:"faction_desert_2"},
+{t:"（喝下那碗茶，加入沙漠诸部）",effects:{xp:20,flag:"faction_join_desert"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="desert"){if(S.infl){S.infl.free=(S.infl.free||0)-6;S.infl.north=(S.infl.north||0)-6;S.infl.church=(S.infl.church||0)-8;}}if(window.v35_doJoin){v35_doJoin("desert");}else{S.faction.joined="desert";}},go:"faction_desert_2"},
 {t:"（先随驼队走一趟，看看诸部的底细）",effects:{xp:12},go:"faction_desert_2"},
 {t:"（沙漠的水太浑，不急着蹚）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -62301,7 +62317,7 @@ N["faction_east_1"]={tags:["faction:war"],tag:"main",place:"东境 · 承天城 
 "他见你点头，把名册往你手里一塞：“承天缺的不是刀，是能算账、能写字的人。你先把这叠名册誊清，誊得好，就留在官署当差。”",
 "你低头看那叠名册——每一页，都是一个从北边逃来的名字。"
 ],options:[
-{t:"（应下差事，留在承天官署）",effects:{xp:20,flag:"faction_join_east"},run:function(){if(S.faction&&S.faction!=="east"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}S.faction="east";},go:"faction_east_2"},
+{t:"（应下差事，留在承天官署）",effects:{xp:20,flag:"faction_join_east"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="empire"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}if(window.v35_doJoin){v35_doJoin("east");}else{S.faction.joined="empire";}},go:"faction_east_2"},
 {t:"（先四处看看，再决定留不留）",effects:{xp:12},go:"faction_east_2"},
 {t:"（东境的水太深，不蹚）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -62419,7 +62435,7 @@ N["faction_orc_1"]={tags:["faction:war","main:orc"],tag:"main",place:"兽人草�
 "北境的战鼓传到草原，比风还快。",
 "诸部的大帐里，头领们围坐成一圈，中间的火堆烧得很旺。一个叫阿岩的年轻猎手站起来，指着地图：“北边要打仗，草原也要选边。跟着联军打，还是各过各的？”",
 "他看见你走进来，上下打量：“你在雪原上跟狼群照过面？敢来的，都是不怕死的。”他拍了拍身边的皮褥子，“坐。草原的规矩，坐下就是兄弟。”", "你最后回望一眼诸部大帐，转身穿过街口，往下一程赶路。"],options:[
-{t:"（坐下，加入兽人诸部）",effects:{xp:20,flag:"faction_join_orc"},run:function(){if(S.faction&&S.faction!=="orc"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.east=(S.infl.east||0)-6;}}S.faction="orc";},go:"faction_orc_2"},
+{t:"（坐下，加入兽人诸部）",effects:{xp:20,flag:"faction_join_orc"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="orc_horde"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.east=(S.infl.east||0)-6;}}if(window.v35_doJoin){v35_doJoin("orc");}else{S.faction.joined="orc_horde";}},go:"faction_orc_2"},
 {t:"（先随猎手出去走一趟，看看草原）",effects:{xp:12},go:"faction_orc_2"},
 {t:"（草原的风太野，不急着站队）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -62541,7 +62557,7 @@ N["faction_dwarf_1"]={tags:["faction:war"],tag:"main",place:"矮人山国 · 山
 "北境的战争传进山里，矮人们还在打铁。",
 "山门外的熔炉彻夜不熄，铁水映红了大半面山壁。一个胡子编成辫子的矮人老铁匠抬头看你：“北边要刀？要刀可以，拿铁来换，拿矿来换，拿酒来换。”",
 "他敲了敲手里的锤子：“山里的规矩简单——能扛动锤子的，就是兄弟。”他把一柄铁锤扔到你面前，“试试？”", "你离了山门，脚步声在空旷处格外清晰。赶路要紧。"],options:[
-{t:"（抄起铁锤，加入矮人山国）",effects:{xp:20,flag:"faction_join_dwarf"},run:function(){if(S.faction&&S.faction!=="dwarf"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.orc=(S.infl.orc||0)-6;}}S.faction="dwarf";},go:"faction_dwarf_2"},
+{t:"（抄起铁锤，加入矮人山国）",effects:{xp:20,flag:"faction_join_dwarf"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="dwarf_kingdom"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.orc=(S.infl.orc||0)-6;}}if(window.v35_doJoin){v35_doJoin("dwarf");}else{S.faction.joined="dwarf_kingdom";}},go:"faction_dwarf_2"},
 {t:"（先在锻造坊里看几天，学学手艺）",effects:{xp:12},go:"faction_dwarf_2"},
 {t:"（山里的烟太呛，不急着入伙）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -62658,7 +62674,7 @@ N["faction_elf_1"]={tags:["faction:war"],tag:"main",place:"精灵林邦 · 林�
 "北境的战鼓传进林海，比风慢，却比风沉。",
 "林缘的哨台上，一个精灵巡林长放下长弓，看着你：“你身上带着学院的气息。学院的人，林子一向放行。”他顿了顿，“可现在是战时。林邦不问来路，只问一件事——你是来砍树的，还是来护树的？”",
 "他把一支哨箭递到你面前：“吹响它，林邦就认你是自己人。”", "林缘的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],options:[
-{t:"（接过哨箭，加入精灵林邦）",effects:{xp:20,flag:"faction_join_elf"},run:function(){if(S.faction&&S.faction!=="elf"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-6;S.infl.dwarf=(S.infl.dwarf||0)-6;}}S.faction="elf";},go:"faction_elf_2"},
+{t:"（接过哨箭，加入精灵林邦）",effects:{xp:20,flag:"faction_join_elf"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="elf_kingdom"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-6;S.infl.dwarf=(S.infl.dwarf||0)-6;}}if(window.v35_doJoin){v35_doJoin("elf");}else{S.faction.joined="elf_kingdom";}},go:"faction_elf_2"},
 {t:"（先随巡林长走一趟林海，看看再说）",effects:{xp:12},go:"faction_elf_2"},
 {t:"（林子的路太静，不急着入伙）",effects:{xp:5},go:"warphase_14"}
 ]};

@@ -67,7 +67,7 @@ function applyDefaults(s){
   /* /m8inj:defaults/ M8 卷D战争/阵营状态兜底（旧档兼容；独立键） */
   if(s.worldWar===undefined) s.worldWar=0;
   if(s.anchors===undefined) s.anchors=0;
-  if(!s.faction) s.faction="";
+  if(!s.faction || typeof s.faction==="string"){var __oldF=(typeof s.faction==="string"&&s.faction)?((window.V35_FID_MAP&&V35_FID_MAP[s.faction])||s.faction):null;s.faction={joined:__oldF,rank:0,reputation:{},quests:[],completedQuests:[],territoryOwned:[],politicalCapital:0,wars:[],alliances:[],enemies:[]};if(__oldF&&window.V35_FACTIONS&&V35_FACTIONS[__oldF]&&window.V35_FACTION_STATE){V35_FACTION_STATE.joined=__oldF;V35_FACTION_STATE.rank=0;}}
   /* /pn1inj:defaults/ P-N1 并行叙事线程状态兜底（旧档兼容；独立键空对象） */
   if(!s.threads) s.threads={};
   /* /ws1inj:defaults/ WS-1 世界状态回路兜底（旧档兼容；独立键/独立开关） */
@@ -6560,13 +6560,13 @@ window.v93_worldState = function(){
     if(F.council_compromise_purification) W.war = Math.max(20, W.war-20);
     if(F.watcher_inherit) W.war = Math.max(20, W.war-25);
     /* church 教廷主导 */
-    if(S.faction==='church') W.church = Math.max(W.church, 66);
+    if(S.faction&&S.faction.joined==='light_church') W.church = Math.max(W.church, 66);
     if(F.council_support_purification) W.church = Math.max(W.church, 75);
     if(F.purge_intensified) W.church = Math.max(W.church, 90);
     if(F.council_oppose_purification) W.church = Math.min(W.church, 25);
     if(F.crisis_done) W.church = Math.min(W.church, 50);
     /* guild 商会掌控 */
-    if(S.faction==='free') W.guild = Math.max(W.guild, 60);
+    if(S.faction&&S.faction.joined==='free_cities') W.guild = Math.max(W.guild, 60);
     if(S.trade && typeof S.trade.total==='number'){
       if(S.trade.total>=500) W.guild = 85;
       else if(S.trade.total>=100) W.guild = 66;
@@ -6578,7 +6578,7 @@ window.v93_worldState = function(){
     if(F.grom_helped) W.orc = Math.max(W.orc, 66);
     if(F.grom_protected) W.orc = Math.max(W.orc, 80);
     if(F.grom_professor_called) W.orc = Math.max(W.orc, 90);
-    if(S.faction==='orc') W.orc = Math.max(W.orc, 66);
+    if(S.faction&&S.faction.joined==='orc_horde') W.orc = Math.max(W.orc, 66);
     /* seal 封印完整 */
     if(F.seal1_visited) W.seal = Math.min(W.seal, 90);
     if(F.seal5_fixed) W.seal = Math.max(W.seal, 70);

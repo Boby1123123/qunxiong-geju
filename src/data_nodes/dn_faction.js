@@ -13,7 +13,7 @@ N["faction_free_1"]={tags:["faction:war"],tag:"main",place:"自由城邦 · 商�
 "战火燎到北境的时候，自由城的商会反而成了最安稳的地方。李管事坐在大堂主位上，手里转着两个核桃，眼睛扫过在座的每一个商人。",
 "他最后把目光落定在你身上：“你跑过驮队，懂行情，人也靠得住。商会缺你这样一个人。”他推过来一张帖子，“入会，交五十金龙，或者替商会跑成一件大事。你自己挑。”",
 "窗外，码头上的船帆在风里扯得笔直。战乱里的钱，只有攥在自己人手里才踏实——这是商会的第一条规矩。", "商会大堂的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],options:[
-{t:"（缴五十金龙，正式入会）",effects:{gold:-50,xp:20,flag:"faction_join_free"},run:function(){if(S.faction&&S.faction!=="free"){if(S.infl){S.infl.church=(S.infl.church||0)-10;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-8;}}S.faction="free";},go:"faction_free_2"},
+{t:"（缴五十金龙，正式入会）",effects:{gold:-50,xp:20,flag:"faction_join_free"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="free_cities"){if(S.infl){S.infl.church=(S.infl.church||0)-10;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-8;}}if(window.v35_doJoin){v35_doJoin("free");}else{S.faction.joined="free_cities";}},go:"faction_free_2"},
 {t:"（先替商会跑成一件大事，再谈入会）",effects:{xp:12},go:"faction_free_2"},
 {t:"（再看看，乱世里不急着站队）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -98,7 +98,7 @@ N["faction_north_1"]={tags:["faction:war"],tag:"main",place:"北境 · 第三哨
 "联军的都尉是个老将，脸上横着一道旧刀疤。他绕着新兵队走了一圈，走到你面前停下来：“你在冻河滩挨过一枪？伤好了？”",
 "你应了一声。都尉点点头：“伤好了就留下。北境联军的规矩，一不要逃兵，二不要孬种。你能挨枪不跑，够格。”",
 "他扔给你一副甲：“穿上。从今天起，你是联军的人了。”", "你离了第三哨，脚步声在空旷处格外清晰。赶路要紧。"],options:[
-{t:"（披上联军甲，正式入伍）",effects:{xp:20,flag:"faction_join_north"},run:function(){if(S.faction&&S.faction!=="north"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}S.faction="north";},go:"faction_north_2"},
+{t:"（披上联军甲，正式入伍）",effects:{xp:20,flag:"faction_join_north"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="north"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}if(window.v35_doJoin){v35_doJoin("north");}else{S.faction.joined="north";}},go:"faction_north_2"},
 {t:"（先在校场上露两手，再谈入伍）",effects:{xp:12},go:"faction_north_2"},
 {t:"（看看再说，联军未必是唯一的靠山）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -182,7 +182,7 @@ N["faction_church_1"]={tags:["faction:war"],tag:"main",place:"圣城 · 大教�
 "战争打起来以后，圣城的教堂反而比平时更挤。",
 "逃难的人把教堂的条凳坐满，教士们端着粥桶在人群中穿梭。你帮忙抬了两天伤员，一个穿灰袍的老执事拦住了你：“你的手很稳。留下来，教会需要这样的人。”",
 "他领你走进大教堂的回廊，壁画上的圣光洒下来，落在地上像一层水。老执事回头看了你一眼：“教会不问出身，只问心。你可愿侍奉光明？”", "大教堂的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],options:[
-{t:"（受洗入教，成为教会的人）",effects:{xp:20,flag:"faction_join_church"},run:function(){if(S.faction&&S.faction!=="church"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}S.faction="church";},go:"faction_church_2"},
+{t:"（受洗入教，成为教会的人）",effects:{xp:20,flag:"faction_join_church"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="light_church"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}if(window.v35_doJoin){v35_doJoin("church");}else{S.faction.joined="light_church";}},go:"faction_church_2"},
 {t:"（先帮教堂做几件事，再看看）",effects:{xp:12},go:"faction_church_2"},
 {t:"（道不同，谢过老执事的好意）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -264,7 +264,7 @@ N["faction_desert_1"]={tags:["faction:war"],tag:"main",place:"死亡沙漠 · �
 "绿洲集市城的驼队头领扎克，是个满脸风霜的汉子。他在沙地上盘腿坐着，面前摆着一壶茶：“北边打起来了，沙漠也要站队。诸部的大帐里吵了三天，谁也不想先低头。”",
 "他抬眼打量你：“你走过沙漠，懂沙子的脾气。诸部缺一个能从沙子里看出路的人。”",
 "他把一碗茶推到你面前：“喝了这碗茶，你就是诸部的兄弟。”", "别过绿洲集市城，你沿官道走出里许，回头已看不清来处。"],options:[
-{t:"（喝下那碗茶，加入沙漠诸部）",effects:{xp:20,flag:"faction_join_desert"},run:function(){if(S.faction&&S.faction!=="desert"){if(S.infl){S.infl.free=(S.infl.free||0)-6;S.infl.north=(S.infl.north||0)-6;S.infl.church=(S.infl.church||0)-8;}}S.faction="desert";},go:"faction_desert_2"},
+{t:"（喝下那碗茶，加入沙漠诸部）",effects:{xp:20,flag:"faction_join_desert"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="desert"){if(S.infl){S.infl.free=(S.infl.free||0)-6;S.infl.north=(S.infl.north||0)-6;S.infl.church=(S.infl.church||0)-8;}}if(window.v35_doJoin){v35_doJoin("desert");}else{S.faction.joined="desert";}},go:"faction_desert_2"},
 {t:"（先随驼队走一趟，看看诸部的底细）",effects:{xp:12},go:"faction_desert_2"},
 {t:"（沙漠的水太浑，不急着蹚）",effects:{xp:5},go:"warphase_14"}
 ]};

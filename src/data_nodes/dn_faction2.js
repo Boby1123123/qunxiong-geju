@@ -11,7 +11,7 @@ N["faction_east_1"]={tags:["faction:war"],tag:"main",place:"东境 · 承天城 
 "他见你点头，把名册往你手里一塞：“承天缺的不是刀，是能算账、能写字的人。你先把这叠名册誊清，誊得好，就留在官署当差。”",
 "你低头看那叠名册——每一页，都是一个从北边逃来的名字。"
 ],options:[
-{t:"（应下差事，留在承天官署）",effects:{xp:20,flag:"faction_join_east"},run:function(){if(S.faction&&S.faction!=="east"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}S.faction="east";},go:"faction_east_2"},
+{t:"（应下差事，留在承天官署）",effects:{xp:20,flag:"faction_join_east"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="empire"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.desert=(S.infl.desert||0)-6;}}if(window.v35_doJoin){v35_doJoin("east");}else{S.faction.joined="empire";}},go:"faction_east_2"},
 {t:"（先四处看看，再决定留不留）",effects:{xp:12},go:"faction_east_2"},
 {t:"（东境的水太深，不蹚）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -129,7 +129,7 @@ N["faction_orc_1"]={tags:["faction:war","main:orc"],tag:"main",place:"兽人草�
 "北境的战鼓传到草原，比风还快。",
 "诸部的大帐里，头领们围坐成一圈，中间的火堆烧得很旺。一个叫阿岩的年轻猎手站起来，指着地图：“北边要打仗，草原也要选边。跟着联军打，还是各过各的？”",
 "他看见你走进来，上下打量：“你在雪原上跟狼群照过面？敢来的，都是不怕死的。”他拍了拍身边的皮褥子，“坐。草原的规矩，坐下就是兄弟。”", "你最后回望一眼诸部大帐，转身穿过街口，往下一程赶路。"],options:[
-{t:"（坐下，加入兽人诸部）",effects:{xp:20,flag:"faction_join_orc"},run:function(){if(S.faction&&S.faction!=="orc"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.east=(S.infl.east||0)-6;}}S.faction="orc";},go:"faction_orc_2"},
+{t:"（坐下，加入兽人诸部）",effects:{xp:20,flag:"faction_join_orc"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="orc_horde"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.east=(S.infl.east||0)-6;}}if(window.v35_doJoin){v35_doJoin("orc");}else{S.faction.joined="orc_horde";}},go:"faction_orc_2"},
 {t:"（先随猎手出去走一趟，看看草原）",effects:{xp:12},go:"faction_orc_2"},
 {t:"（草原的风太野，不急着站队）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -251,7 +251,7 @@ N["faction_dwarf_1"]={tags:["faction:war"],tag:"main",place:"矮人山国 · 山
 "北境的战争传进山里，矮人们还在打铁。",
 "山门外的熔炉彻夜不熄，铁水映红了大半面山壁。一个胡子编成辫子的矮人老铁匠抬头看你：“北边要刀？要刀可以，拿铁来换，拿矿来换，拿酒来换。”",
 "他敲了敲手里的锤子：“山里的规矩简单——能扛动锤子的，就是兄弟。”他把一柄铁锤扔到你面前，“试试？”", "你离了山门，脚步声在空旷处格外清晰。赶路要紧。"],options:[
-{t:"（抄起铁锤，加入矮人山国）",effects:{xp:20,flag:"faction_join_dwarf"},run:function(){if(S.faction&&S.faction!=="dwarf"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.orc=(S.infl.orc||0)-6;}}S.faction="dwarf";},go:"faction_dwarf_2"},
+{t:"（抄起铁锤，加入矮人山国）",effects:{xp:20,flag:"faction_join_dwarf"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="dwarf_kingdom"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.north=(S.infl.north||0)-8;S.infl.orc=(S.infl.orc||0)-6;}}if(window.v35_doJoin){v35_doJoin("dwarf");}else{S.faction.joined="dwarf_kingdom";}},go:"faction_dwarf_2"},
 {t:"（先在锻造坊里看几天，学学手艺）",effects:{xp:12},go:"faction_dwarf_2"},
 {t:"（山里的烟太呛，不急着入伙）",effects:{xp:5},go:"warphase_14"}
 ]};
@@ -368,7 +368,7 @@ N["faction_elf_1"]={tags:["faction:war"],tag:"main",place:"精灵林邦 · 林�
 "北境的战鼓传进林海，比风慢，却比风沉。",
 "林缘的哨台上，一个精灵巡林长放下长弓，看着你：“你身上带着学院的气息。学院的人，林子一向放行。”他顿了顿，“可现在是战时。林邦不问来路，只问一件事——你是来砍树的，还是来护树的？”",
 "他把一支哨箭递到你面前：“吹响它，林邦就认你是自己人。”", "林缘的动静在身后淡了。你把行囊带子紧了紧，继续上路。"],options:[
-{t:"（接过哨箭，加入精灵林邦）",effects:{xp:20,flag:"faction_join_elf"},run:function(){if(S.faction&&S.faction!=="elf"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-6;S.infl.dwarf=(S.infl.dwarf||0)-6;}}S.faction="elf";},go:"faction_elf_2"},
+{t:"（接过哨箭，加入精灵林邦）",effects:{xp:20,flag:"faction_join_elf"},run:function(){if(S.faction&&S.faction.joined&&S.faction.joined!=="elf_kingdom"){if(S.infl){S.infl.free=(S.infl.free||0)-8;S.infl.church=(S.infl.church||0)-6;S.infl.dwarf=(S.infl.dwarf||0)-6;}}if(window.v35_doJoin){v35_doJoin("elf");}else{S.faction.joined="elf_kingdom";}},go:"faction_elf_2"},
 {t:"（先随巡林长走一趟林海，看看再说）",effects:{xp:12},go:"faction_elf_2"},
 {t:"（林子的路太静，不急着入伙）",effects:{xp:5},go:"warphase_14"}
 ]};

@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8921769,
-    "chunked_html_bytes_max": 6202798,
+    "game_html_bytes_max": 8909699,
+    "chunked_html_bytes_max": 6204985,
     "node_total_min": 4756,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8871769,
-    "chunked_html_bytes": 6102798,
+    "game_html_bytes": 8859699,
+    "chunked_html_bytes": 6104985,
     "node_total": 4806,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "FEEL 节奏手感：+10节点 3越级战+3前夜+3插曲",
+    "reason": "FS-1 双系统合一：S.faction 对象化迁移 + v35_doJoin 统一入口",
     "history": [
       {
         "date": "2026-09-09",
@@ -1090,6 +1090,13 @@
         "chunked_bytes": 6102798,
         "nodes": 4806,
         "reason": "FEEL 节奏手感：+10节点 3越级战+3前夜+3插曲"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8859699,
+        "chunked_bytes": 6104985,
+        "nodes": 4806,
+        "reason": "FS-1 双系统合一：S.faction 对象化迁移 + v35_doJoin 统一入口"
       }
     ]
   },

@@ -2779,11 +2779,13 @@ let V35_FACTION_STATE = {
 };
 
 // ========== 势力核心函数 ==========
+window.V35_FID_MAP = {free:"free_cities",north:"north",church:"light_church",desert:"desert",east:"empire",orc:"orc_horde",dwarf:"dwarf_kingdom",elf:"elf_kingdom"};
 function v35_initFaction() {
   if (typeof S === 'undefined' || S === null) return;
-  if (!S.faction) {
+  if (!S.faction || typeof S.faction === 'string') {
+    var __oldF = (typeof S.faction === 'string' && S.faction) ? ((window.V35_FID_MAP && V35_FID_MAP[S.faction]) || S.faction) : null;
     S.faction = {
-      joined: null,
+      joined: __oldF,
       rank: 0,
       reputation: {},
       quests: [],
@@ -2798,10 +2800,24 @@ function v35_initFaction() {
     for (const fid in V35_FACTIONS) {
       S.faction.reputation[fid] = V35_FACTIONS[fid].initialRep;
     }
+    if (__oldF && V35_FACTIONS[__oldF]) { V35_FACTION_STATE.joined = __oldF; V35_FACTION_STATE.rank = 0; }
   }
   V35_FACTION_STATE = { ...V35_FACTION_STATE, ...S.faction };
   console.log('[V35] 势力系统已初始化');
 }
+window.v35_doJoin = function(fid){
+  try{
+    var vid = (window.V35_FID_MAP && V35_FID_MAP[fid]) || fid;
+    if (!S.faction || typeof S.faction === 'string') v35_initFaction();
+    S.faction.joined = vid; S.faction.rank = 0;
+    if (V35_FACTIONS[vid]) {
+      V35_FACTION_STATE.joined = vid; V35_FACTION_STATE.rank = 0;
+      v35_changeRep(vid, 20);
+      try { V35_EventBus.emit('faction:join', { factionId: vid }); } catch (e) {}
+    }
+    return true;
+  } catch (e) { return false; }
+};
 
 function v35_getRep(factionId) {
   return V35_FACTION_STATE.reputation[factionId] || 0;
@@ -11255,7 +11271,7 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       if(!S || !S.market) return;
       var m = S.market;
       if(!m.lastDiv) m.lastDiv = S.day;
-      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      var member = (S.faction&&S.faction.joined==="free_cities") || !!(S.flags && S.flags.merchant_saved);
       if(member && (S.day - m.lastDiv) >= (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)){
         var div = (window.MARKET_DIV_V93 && MARKET_DIV_V93.base || 3) + Math.floor((S.day - m.lastDiv) / (window.MARKET_DIV_V93 && MARKET_DIV_V93.period || 7)) * (window.MARKET_DIV_V93 && MARKET_DIV_V93.grow || 1);
         S.gold += div;
@@ -11272,7 +11288,7 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       if(!d) return;
       var routes = window.MARKET_ROUTES_V93 || [];
       var rh = routes.map(function(r){ return "🛤 "+r.name+"："+r.desc; }).join("<br>");
-      var member = (S.faction==="guild") || !!(S.flags && S.flags.merchant_saved);
+      var member = (S.faction&&S.faction.joined==="free_cities") || !!(S.flags && S.flags.merchant_saved);
       var divInfo = member
         ? ("在册商会成员 · 每 " + ((window.MARKET_DIV_V93&&MARKET_DIV_V93.period)||7) + " 日分红 · 累计已领 " + ((S.market&&S.market.divTotal)||0) + " 枚金龙")
         : ("尚未加入商会（加入 guild 势力或营救过商队管事可享分红）");

@@ -5300,6 +5300,66 @@ window.CAUSALITY_LEDGER = [
         "importance": 1,
         "keywords": ["守护苍生", "圣辉城", "元素荒原", "疫村"],
         "irreversible": false
+  },
+    {
+        "id": "led_goal_truth",
+        "type": "伏笔",
+        "desc": "探寻真相践行线（北境旧图书馆→墓园无字碑→晨天故都地下档案室）：路德维希的灯、金秤徽记、『灯会灭账不会』",
+        "plant": "flag:ideal_goal_truth",
+        "reap": "flag:ideal_goal_truth_pursued",
+        "status": "open",
+        "world": "vol_free",
+        "importance": 1,
+        "keywords": ["探寻真相", "无字碑", "晨天故都", "金秤"],
+        "irreversible": false
+  },
+    {
+        "id": "led_goal_free",
+        "type": "伏笔",
+        "desc": "自由自在践行线（北境雪原→元素荒原风眼→西境海崖观星台）：雪原规矩、风眼旧城、观星台刻名、风暴夜救人",
+        "plant": "flag:ideal_goal_free",
+        "reap": "flag:ideal_goal_free_pursued",
+        "status": "open",
+        "world": "vol_free",
+        "importance": 1,
+        "keywords": ["自由自在", "元素荒原", "西境", "海崖"],
+        "irreversible": false
+  },
+    {
+        "id": "led_goal_god",
+        "type": "伏笔",
+        "desc": "登临神座践行线（矮人铁镇→古神遗迹回廊→圣山银月祭坛）：第七块石板、登神三关、第七枚符文",
+        "plant": "flag:ideal_goal_god",
+        "reap": "flag:ideal_goal_god_pursued",
+        "status": "open",
+        "world": "vol_free",
+        "importance": 1,
+        "keywords": ["登临神座", "圣山", "银月祭坛", "古神"],
+        "irreversible": false
+  },
+    {
+        "id": "led_goal_fame",
+        "type": "伏笔",
+        "desc": "名留青史践行线（南境驿站→王都诗人院→承天史官院→铁门关）：皮埃尔正传、陶史官三十年、铁门关一刀",
+        "plant": "flag:ideal_goal_fame",
+        "reap": "flag:ideal_goal_fame_pursued",
+        "status": "open",
+        "world": "vol_free",
+        "importance": 1,
+        "keywords": ["名留青史", "王都", "史官院", "铁门关"],
+        "irreversible": false
+  },
+    {
+        "id": "led_goal_revenge",
+        "type": "伏笔",
+        "desc": "以血还血践行线（东境官道→黑市→灰袍账房→密林对决）：三本账、灰袍翻账、刀鞘内侧划掉名字",
+        "plant": "flag:ideal_goal_revenge",
+        "reap": "flag:ideal_goal_revenge_pursued",
+        "status": "open",
+        "world": "vol_free",
+        "importance": 1,
+        "keywords": ["以血还血", "灰袍", "齐记木行", "旧宅"],
+        "irreversible": false
   }
 ];
 

@@ -179,7 +179,7 @@ N["goal_truth_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",text
 "你合上卷轴，指尖还留着旧纸的凉意。窗外的天已经蒙蒙亮了。",
 "你知道，从这一刻起，你心里那本被撕掉的书，开始有了第一页。真相的路很长，可你终于站在了起点上——手里有了一盏灯。",
 "你把卷轴小心收进怀里。有些秘密，值得用一辈子去翻。", "别过交汇城，你沿官道走出里许，回头已看不清来处。"],options:[
-{t:"收好《封印前史》（理想里程碑·完成）",effect:{flag:"ideal_goal_truth_done"},go:"fc_tavern"}
+{t:"收好《封印前史》（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_truth_done"},go:"goal_truth_trip_1"}
 ]};
 N["goal_free_1"]={tag:"branch",place:"自由城邦 · 交汇城",pace:"normal",text:[
 "你在交汇城待了不到一个月，就有点待不住了。",
@@ -205,7 +205,7 @@ N["goal_free_3"]={tag:"main",place:"北境 · 雪原边缘",pace:"deep",text:[
 "你拒绝了。可你在村口站了一会儿，看着他们把红纸糊上窗，忽然觉得，自由不是永远在路上——而是你愿意停的时候，心里没有亏欠。",
 "你背起包袱，继续往北走。雪还在下，可你的步子比来时更稳了。风把你带到哪里，你的故事就写到哪里——这就是你选的答案。"
 ],options:[
-{t:"继续走（理想里程碑·完成）",effect:{flag:"ideal_goal_free_done"},go:"fc_tavern"}
+{t:"继续走（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_free_done"},go:"goal_free_trip_1"}
 ]};
 N["goal_god_1"]={tag:"branch",place:"自由城邦 · 交汇城",pace:"normal",text:[
 "你开始留意这座城里那些高处的建筑。",
@@ -231,7 +231,7 @@ N["goal_god_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",text:[
 "你不想仰头。你要做那个让人仰望的存在。",
 "你把手里的光攥灭，转身下山。步子很稳，心里很清楚——神座的路，是用一步一个脚印铺出来的，你才刚踩上第一级。但第一级，也是路。",
 "你把它走扎实了。", "你收拾停当，离开交汇城，沿着来路踏上行程。"],options:[
-{t:"下山，继续走自己的路（理想里程碑·完成）",effect:{flag:"ideal_goal_god_done"},go:"fc_tavern"}
+{t:"下山，继续走自己的路（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_god_done"},go:"goal_god_trip_1"}
 ]};
 N["goal_fame_1"]={tag:"branch",place:"自由城邦 · 交汇城",pace:"normal",text:[
 "你开始有意识地记下自己做过的事。",
@@ -259,7 +259,7 @@ N["goal_fame_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",text:
 "夜里你坐在屋顶上，听着风把你的名字吹向四方。你忽然笑了：名留青史，不是要让史官记住你，而是要让活着的人，在说起你的时候，眼睛里有光。",
 "你的名字，已经长出了第一片叶子。剩下的，交给时间。"
 ],options:[
-{t:"坐在屋顶上，听风把你的名字吹远（理想里程碑·完成）",effect:{flag:"ideal_goal_fame_done"},go:"fc_tavern"}
+{t:"坐在屋顶上，听风把你的名字吹远（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_fame_done"},go:"goal_fame_trip_1"}
 ]};
 N["goal_revenge_1"]={tag:"branch",place:"自由城邦 · 交汇城",pace:"normal",text:[
 "你常常在夜里醒来。",
@@ -284,5 +284,5 @@ N["goal_revenge_3"]={tag:"main",place:"自由城邦 · 交汇城",pace:"deep",te
 "最后一天夜里，你看着刀鞘上那排名字，忽然发现自己心里那团烧了多年的火，熄了一半。不是不恨了，是你终于看清了恨的形状。",
 "你把它收好。该讨的账，你一个都不会漏；可你要用自己的方式讨——堂堂正正地，让该还的人知道自己为什么挨这一刀。",
 "那天夜里你睡得很沉，梦见了火。火里有人伸出一只手，你握住了。醒来时，天已经亮了。", "你离了交汇城，脚步声在空旷处格外清晰。赶路要紧。"],options:[
-{t:"收刀（理想里程碑·完成）",effect:{flag:"ideal_goal_revenge_done"},go:"fc_tavern"}
+{t:"收刀（理想里程碑·完成，踏上践行之路）",effect:{flag:"ideal_goal_revenge_done"},go:"goal_revenge_trip_1"}
 ]};

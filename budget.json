@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 10032293,
+    "game_html_bytes_max": 10120739,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5448,
+    "node_total_min": 5530,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9982293,
-    "chunked_html_bytes": 7250278,
-    "node_total": 5498,
+    "game_html_bytes": 10070739,
+    "chunked_html_bytes": 7337737,
+    "node_total": 5580,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP-13 南境港口城深写 重挂入口: +4B",
+    "reason": "CP14 重挂修复后重建",
     "history": [
       {
         "date": "2026-09-09",
@@ -1405,6 +1405,27 @@
         "chunked_bytes": 7250278,
         "nodes": 5498,
         "reason": "CP-13 南境港口城深写 重挂入口: +4B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 10070708,
+        "chunked_bytes": 7337710,
+        "nodes": 5580,
+        "reason": "CP14 南境三城+交汇城深写 82节点 20事件"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 10070735,
+        "chunked_bytes": 7337737,
+        "nodes": 5580,
+        "reason": "CP14 注册表补三前缀 gold/acadcity/hub"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 10070739,
+        "chunked_bytes": 7337737,
+        "nodes": 5580,
+        "reason": "CP14 重挂修复后重建"
       }
     ]
   },

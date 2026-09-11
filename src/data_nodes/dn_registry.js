@@ -11,12 +11,12 @@ const NODE_REGISTRY = {
     files: ["dn_frontier.js", "dn_graduate.js", "dn_warphase.js", "dn_anchor.js"]
   },
   free: {
-    name: "自由城邦", prefixes: ["fc", "city", "cityev", "guild", "tavern", "gangkou", "hewan", "shop", "house", "echo"],
+    name: "自由城邦", prefixes: ["fc", "city", "cityev", "guild", "tavern", "gangkou", "hewan", "shop", "house", "echo", "hub"],
     desc: "交汇城/自由城汇流段/行会/夜巷/下水道",
     files: ["dn_camp.js"]
   },
   academy: {
-    name: "学院", prefixes: ["academy", "acad", "classmate", "alumni", "orientation", "facility", "xueshu"],
+    name: "学院", prefixes: ["academy", "acad", "acadcity", "classmate", "alumni", "orientation", "facility", "xueshu"],
     desc: "艾尔达魔法学院五学年/同学/导师/禁书区/毕业四去向",
     files: ["dn_alumni.js", "dn_graduate.js"]
   },
@@ -46,7 +46,7 @@ const NODE_REGISTRY = {
     files: []
   },
   system: {
-    name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "fs", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
+    name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "fs", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "gold", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
     desc: "建号/序章/职业分支/好感/结局/事件池/系统检查前缀；v65* 为历史版本遗留前缀（WARN 豁免）",
     files: []
   },

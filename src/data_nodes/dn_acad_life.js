@@ -37,7 +37,8 @@ N["acad_life_y1_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"【职业·游侠】选《荒野生存与追踪》（教授：沉默的猎手哈芙）",req:function(){return S.job==="ranger";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
 {t:"【学年小事·加深】去生活区深处走走（人际/见闻）",go:"acad_social_hub"},
 {t:"【学年小事·加深】去修行区摸摸门道（冥想/元素池）",go:"acad_magic_hub"}
-]};
+,
+ {t:"【学年小事·加深】在学院里四处走走，认识这个地方（四季纪事）",go:"acad_deep_01"}]};
 N["acad_life_y1_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法学院 · 西三舍",pace:"normal",text:[
 "宿舍的日子像一锅慢慢熬的粥。凯恩每天天不亮就起来练剑，剑风从窗口灌进来，带着铁锈味；隔壁的艾莉丝隔三差五烧糊一锅汤，然后拉着全走廊的人尝“新配方”。",
 "你的室友换了一茬——第一个住了三天就退学，说是“受不了北境的冷”；第二个是个沉默的东境人，每晚在灯下抄书，抄到后半夜。",

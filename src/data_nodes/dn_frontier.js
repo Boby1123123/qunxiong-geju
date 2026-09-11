@@ -82,7 +82,8 @@ N["frontier_city"]={tag:"main",place:"北境 · 第三哨 · 要塞内",where:"�
 {t:"（应征：北境联军正在边境集结，随军北上）",go:"hub_war_open_1"},
 {t:"（离城，回铁门关方向）",go:"frontier_leave"}
 ,
-    {t:"（铁匠铺的锤声——你想再去打一柄）",go:"combo_forge_01"}]};
+    {t:"（铁匠铺的锤声——你想再去打一柄）",go:"combo_forge_01"},
+     {t:"（夜里睡不着，上城墙看看雪——守夜兵说，城外雪原上有一行脚印）",go:"frontier_deep_01"}]};
 
 N["frontier_tower_gate"]={tag:"main",place:"北境 · 第三哨 · 钟楼脚下",where:"白昼",pace:"light",arc:"arc_frontier",vol:"vol_north",text:[
 "钟楼是第三哨最高的石头建筑，塔身被风雪打磨得圆润，砖缝里塞着干枯的苔藓。楼门虚掩着，门环上拴着一根红布条，被风吹得猎猎响。",

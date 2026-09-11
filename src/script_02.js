@@ -5443,7 +5443,9 @@ N["arrive_desert_shendian"] = {tag:"main",
 
     {t:"踏入神殿",go:"desert_inside"},
 
-    {t:"先退到沙漠边缘整备",run:function(){ travelTo("desert_bianyuan"); }}
+    {t:"先退到沙漠边缘整备",run:function(){ travelTo("desert_bianyuan"); }},
+
+    {t:"（先在神殿外围停一停，看看围在这里的人）",go:"desert_deep_21"}
 
   ]
 

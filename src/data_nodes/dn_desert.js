@@ -22,7 +22,8 @@ N["arrive_desert_lvzhou"] = {
     },effects:{xp:25,infl:{desert:3}},go:"desert_lvzhou_market"},
     {t:"不逗留，去驼队驿站休整",go:"desert_tuoduo_inn"}
   ,
-    {t:"（先不急着赶路——在绿洲城里走走，听听沙海里的消息）",go:"desert_life2_01"}]
+    {t:"（先不急着赶路——在绿洲城里走走，听听沙海里的消息）",go:"desert_life2_01"},
+    {t:"（顺着水贩的独轮车，走进南巷的世道里）",go:"desert_deep_01"}]
 };
 N["desert_lvzhou_market"] = {
   tag:"branch",
@@ -101,7 +102,8 @@ N["arrive_desert_tuoduo"] = {
       ok:["你花三十铜星住进驿站的土房，睡了个踏实觉。第二天精神饱满地起来，水袋灌满，干粮备足，整个人像换了副筋骨。"],
       fail:["驿站的床板太硬，隔壁的驼夫打呼噜响了一夜。你醒来时头昏脑涨，只歇回了半口气。"],
       crit:["你不仅歇好了，还在半夜醒来时听见院里的动静：一队蒙面的车夫正往仓库里卸水，车板上画着一只竖瞳。「夜车的水，果然通到驿站。」你把这个发现记在心里。"]
-    },effects:{hp:10,xp:15},go:"desert_tuoduo_inn"}
+    },effects:{hp:10,xp:15},go:"desert_tuoduo_inn"},
+    {t:"（在驿站住下，听老板娘和驼夫们讲沙海的事）",go:"desert_deep_11"}
   ]
 };
 N["desert_tuoduo_inn"] = {
@@ -220,7 +222,8 @@ N["arrive_desert_yiji"] = {
       ok:["你在入口处仔细勘察，发现石阶旁有一串脚印——不是你的，是新的，靴印很深，像是有人最近来过。脚印在石阶第三级处转弯，消失在壁画的阴影里。","你顺着脚印的方向看，发现壁画角落有一块石砖松动，像被人反复摸过。"],
       fail:["入口处风沙太大，你没发现什么特别的东西，只确定门楣上的字是封印警告。"],
       crit:["你发现壁画底部有一个凹槽——不仔细看根本注意不到，凹槽的形状，正好放得下一枚铜牌。「七道杠的铜牌。」你想起怀里那枚，试着比了比，尺寸吻合。你没有放进去，先把位置记死了。"]
-    },effects:{xp:25,infl:{desert:3}},go:"desert_ruins"}
+    },effects:{xp:25,infl:{desert:3}},go:"desert_ruins"},
+    {t:"（先不进遗迹——沿着石柱群走走，看看这片废墟的全貌）",go:"desert_deep_31"}
   ]
 };
 N["desert_ruins"] = {

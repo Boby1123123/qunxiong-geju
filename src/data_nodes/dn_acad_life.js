@@ -16,6 +16,14 @@ N["acad_life_y1_open"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 "课程表发下来，密密麻麻。学院不逼你选主修——但每个人都要有一门“立足的功课”。高年级学生临走时说：“头一个月，别急着表现，先弄明白食堂几点开饭、哪个教授脾气好、哪条路晚上能走。这三样，比法术重要。”",
 "当晚你躺在宿舍的硬板床上，听见走廊里有人哼着陌生的调子。窗外的雪还没化，北境的夜风从窗缝钻进来，凉丝丝的。你在陌生的气味里翻了个身，想着明天要上的第一堂课。"
 ],options:[
+{t:"课间邀约同窗，逛逛学院（送礼/同行）",go:"rel_invite_acad"},
+{t:"（办公室抽屉里有费尔曼教授的回信）",req:function(){return S.flags["rel_letter_sent_ferman"]&&!S.flags["rel_letter_read_ferman"];},go:"rel_letter_reply_ferman"},
+{t:"（图书馆的传闻——塞西莉娅和艾琳今天都不太对劲）",req:function(){return (S.npcRelations["cecy"]||0)>=20&&!S.flags["rel_event_riv_done"];},go:"rel_event_riv_1"},
+{t:"（费尔曼教授约你到办公室——说有东西给你看）",req:function(){return (S.npcRelations["ferman"]||0)>=60&&!S.flags["rel_world_ferman_done"];},go:"rel_world_ferman"},
+{t:"（学生会长室的门开着——塞西莉娅在等你）",req:function(){return (S.npcRelations["cecy"]||0)>=60&&!S.flags["rel_world_cecy_done"];},go:"rel_world_cecy"},
+{t:"（旧书摊前，艾琳手里攥着本薄册子）",req:function(){return (S.npcRelations["elin"]||0)>=60&&!S.flags["rel_world_elin_done"];},go:"rel_world_elin"},
+{t:"（回廊尽头，塞西莉娅捏着一张纸等你）",req:function(){return S.flags["rel_event_riv_done"]&&(S.npcRelations["cecy"]||0)>=40&&!S.flags["wdr2_cecy_done"];},go:"wdr2_cecy_after"},
+{t:"（图书馆窗边，艾琳的桌上摆着那本诗册）",req:function(){return S.flags["rel_event_riv_done"]&&(S.npcRelations["elin"]||0)>=40&&!S.flags["wdr2_elin_done"];},go:"wdr2_elin_after"},
 {t:"去交朋友——学院里最不缺的就是人（人际网）",go:"acad_people_hub"},
 {t:"【学年小事】赶去参加学院的秋日排水渠劳动（秋季例行）",req:function(){return !S.flags["acad_event_y1_done"];},effects:{flag:"acad_event_y1_done"},go:"acad_event_y1"},
 {t:"【职业·魔法师】选《元素基础·火》（教授：白胡子老教习）",req:function(){return S.job==="mage";},effects:{flag:"acad_life_y1_course",xp:15},go:"acad_life_y1_dorm"},
@@ -37,7 +45,8 @@ N["acad_life_y1_dorm"]={tags:["region:north"],tag:"main",place:"艾尔达魔法�
 {t:"帮艾莉丝“尝新配方”（她保证这次不会炸）",check:{a:"CON",sk:"surv",label:"试吃"},tier:{
  ok:["汤的味道奇怪，但居然不难喝。艾莉丝眼睛发亮：“我就说嘛！”她往你手里塞了一本《火系基础·入门》，扉页写着“致第一个敢吃我汤的人”。"],
  fail:["你喝了一口，胃里翻江倒海。艾莉丝慌了，手忙脚乱地给你灌水：“对不起对不起！我这次真的按食谱来了！”","你缓过来之后，她保证下次一定按两倍水煮。"],
- crit:["那碗汤出乎意料地好——她偷换了她老师的秘方。艾莉丝压低声音：“别告诉老师！这可是我偷师学来的！”","你们就此结下了“饭友”之谊。"]
+ crit:["那碗汤出乎意料地好——她偷换了她老师的秘方。艾莉丝压低声音：“别告诉老师！这可是我偷师学来的！”","你们就此结下了“饭友”之谊。",
+{t:"（演武场上，高年级学长正与人过招——去下一封战书）",req:function(){return !S.flags["feel_battle_acad_done"];},go:"feel_battle_acad"}]
 },effects:{xp:10},onOk:{item:"《火系基础·入门》"},go:"acad_life_y1_friend"},
 {t:"和凯恩过几招，练练身手",check:{a:"STR",sk:"fight",label:"切磋"},tier:{
  ok:["凯恩的剑又快又稳，你接了二十招，胳膊酸得像灌了铅。他收剑，难得笑了一下：“不错。比昨天强。”","他给你指了食堂后厨的“加餐”门路——练武的人，吃不够是不行的。"],

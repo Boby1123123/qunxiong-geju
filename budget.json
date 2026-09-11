@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 8809930,
-    "chunked_html_bytes_max": 6089362,
-    "node_total_min": 4649,
+    "game_html_bytes_max": 8921769,
+    "chunked_html_bytes_max": 6202798,
+    "node_total_min": 4756,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 8759930,
-    "chunked_html_bytes": 5989362,
-    "node_total": 4699,
+    "game_html_bytes": 8871769,
+    "chunked_html_bytes": 6102798,
+    "node_total": 4806,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "NM-6 IIFE补注后重建",
+    "reason": "FEEL 节奏手感：+10节点 3越级战+3前夜+3插曲",
     "history": [
       {
         "date": "2026-09-09",
@@ -992,6 +992,104 @@
         "chunked_bytes": 5989362,
         "nodes": 4699,
         "reason": "NM-6 IIFE补注后重建"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8769658,
+        "chunked_bytes": 6000039,
+        "nodes": 4709,
+        "reason": "REL-1 送礼系统：+10节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8769664,
+        "chunked_bytes": 6000045,
+        "nodes": 4709,
+        "reason": "REL-1 送礼系统：治理词替换字数微调"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8776678,
+        "chunked_bytes": 6007394,
+        "nodes": 4715,
+        "reason": "REL-2 邀约同行：+6节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8784589,
+        "chunked_bytes": 6015305,
+        "nodes": 4723,
+        "reason": "REL-3 跨城书信：+8节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8802870,
+        "chunked_bytes": 6033586,
+        "nodes": 4745,
+        "reason": "REL-4 关系事件链：+22节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8809505,
+        "chunked_bytes": 6040221,
+        "nodes": 4750,
+        "reason": "REL-5 关系影响世界：+5节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8815193,
+        "chunked_bytes": 6045909,
+        "nodes": 4757,
+        "reason": "WDR-1 世界状态仪表盘：+7节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8822082,
+        "chunked_bytes": 6052798,
+        "nodes": 4761,
+        "reason": "WDR-2 决策长期后果：+4节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8829283,
+        "chunked_bytes": 6059999,
+        "nodes": 4768,
+        "reason": "WDR-3 玩家据点：+7节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8845835,
+        "chunked_bytes": 6076551,
+        "nodes": 4784,
+        "reason": "AP1-3 战后/深渊/神谕：+17节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8850336,
+        "chunked_bytes": 6081052,
+        "nodes": 4788,
+        "reason": "NG-1 多周目变奏：+4节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8860140,
+        "chunked_bytes": 6090856,
+        "nodes": 4796,
+        "reason": "NG-2 结局后日谈+NG-3 周目旧账：+8节点"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8871721,
+        "chunked_bytes": 6102750,
+        "nodes": 4806,
+        "reason": "FEEL 节奏手感：+10节点(3越级战+3前夜+3插曲+收束)"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 8871769,
+        "chunked_bytes": 6102798,
+        "nodes": 4806,
+        "reason": "FEEL 节奏手感：+10节点 3越级战+3前夜+3插曲"
       }
     ]
   },

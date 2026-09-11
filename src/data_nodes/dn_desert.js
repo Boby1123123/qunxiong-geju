@@ -163,7 +163,8 @@ N["desert_caravan2"] = {
       fail:["白驼摇摇头：「有些话，说了也没用。你不知道，反而活得久。」他拍了拍骆驼，不再接话。"],
       crit:["你追问到了关键：「那『夜车』取水，是想要封印松？」白驼没有直接回答，只说了一句：「取水的人，以为水是财。可他们不知道，每取一桶水，封印的根就薄一分。」","「薄到什么时候？」你问。他望着南方的天际：「薄到神殿里那颗星，亮得压不住的时候。」"]
     },effects:{xp:30,infl:{desert:5},flag:"desert_root_secret"},go:"desert_caravan3"}
-  ]
+  ,
+{t:"（前方沙丘人影晃动——独眼沙盗拦路）",req:function(){return !S.flags["feel_battle_desert_done"];},go:"feel_battle_desert"}]
 };
 N["desert_caravan3"] = {
   tag:"branch",

@@ -19,7 +19,8 @@ N["warphase_1"]={tags:["faction:war"],tag:"main",place:"北境 · 边境 · 雪�
 {t:"（避战：借口军务在身，留在第三哨）",effects:{xp:5,flag:"war1_flee"},run:function(){S.worldWar=1;},go:"warphase_2"},
 {t:"（斡旋：请缨去荒原部族营地递信）",effects:{xp:15,flag:"war1_broker"},run:function(){S.worldWar=1;},go:"warphase_2"},
 {t:"（投机：囤一批铁器和干粮，等行情）",effects:{gold:-30,flag:"war1_speculate"},run:function(){S.worldWar=1;},go:"warphase_2"}
-]};
+,
+{t:"（深入战场：去看看这仗到底为了什么——夜里的烽火，和铁箱子的传闻）",go:"war_deep_01"}]};
 
 N["warphase_2"]={tags:["faction:war"],tag:"main",place:"北境 · 第三哨 · 军务厅",where:"白昼",pace:"normal",text:{default:[
 "你在军务厅的册子上按了手印。管事的军需官头也不抬：“编入丙队，明日辰时校场点卯。”",

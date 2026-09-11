@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 9468482,
+    "game_html_bytes_max": 9513201,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5001,
+    "node_total_min": 5021,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 9418482,
-    "chunked_html_bytes": 6599393,
-    "node_total": 5051,
+    "game_html_bytes": 9463201,
+    "chunked_html_bytes": 6636154,
+    "node_total": 5071,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "CP1 内容补足 34 个 deep 节点（自由城深巷/第三哨雪原/学院四季）",
+    "reason": "CP-2 战争线深写 20 节点 + 事件池 +30 则",
     "history": [
       {
         "date": "2026-09-09",
@@ -1293,6 +1293,13 @@
         "chunked_bytes": 6599393,
         "nodes": 5051,
         "reason": "CP1 内容补足 34 个 deep 节点（自由城深巷/第三哨雪原/学院四季）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 9463201,
+        "chunked_bytes": 6636154,
+        "nodes": 5071,
+        "reason": "CP-2 战争线深写 20 节点 + 事件池 +30 则"
       }
     ]
   },

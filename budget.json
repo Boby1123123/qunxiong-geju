@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 18534775,
+    "game_html_bytes_max": 18549616,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 18484775,
-    "chunked_html_bytes": 7449683,
+    "game_html_bytes": 18499616,
+    "chunked_html_bytes": 7464524,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "TQ-2/3 第三批 acad_学院场景34节点扩写+3910字",
+    "reason": "TQ-2/3 第四批 grad_毕业链+goal_理想线 38节点扩写+4800字",
     "history": [
       {
         "date": "2026-09-09",
@@ -1475,6 +1475,13 @@
         "chunked_bytes": 7449683,
         "nodes": 5636,
         "reason": "TQ-2/3 第三批 acad_学院场景34节点扩写+3910字"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 18499616,
+        "chunked_bytes": 7464524,
+        "nodes": 5636,
+        "reason": "TQ-2/3 第四批 grad_毕业链+goal_理想线 38节点扩写+4800字"
       }
     ]
   },

@@ -59552,6 +59552,7 @@ function writePar(p,cls){
   if(cls) d.className=cls;
   d.innerHTML = rich(p);
   if(typeof p==="string" && window.v96_probeConv){ var _ph = window.v96_probeConv(d.innerHTML); if(_ph !== d.innerHTML){ d.innerHTML = _ph; } } /* /v96inj:probe/ B8 线索锚点（rich 后转换防 esc 转义） */
+  if(typeof p==="string" && window.v96_choiceEcho){ var _ce = window.v96_choiceEcho(d.innerHTML); if(_ce !== d.innerHTML){ d.innerHTML = _ce; } } /* /v96inj:choice/ C11 选择记忆回显（rich 后转换） */
   try{ window.v92_highlightNames && window.v92_highlightNames(d); }catch(e){}
   RenderBatch.push(d);
   return d;
@@ -60008,6 +60009,14 @@ try{
         if(!window.N || !window.N[nid]) return m;
         var lab = String(label).split('"').join('&quot;');
         return "<span class='v96-probe' data-go='"+nid+"'>"+lab+"</span>";
+      });
+    }catch(e){ return p; }
+  };
+  window.v96_choiceEcho = function(p){
+    try{
+      return String(p).replace(/\{\{choice:([\w\-]+)\|([^|]+)\|([^}]+)\}\}/g, function(m, fl, yes, no){
+        var v = (typeof S!=="undefined" && S && S.flags) ? S.flags[fl] : null;
+        return v ? yes : no;
       });
     }catch(e){ return p; }
   };

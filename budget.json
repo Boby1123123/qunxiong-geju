@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 18806162,
+    "game_html_bytes_max": 18819147,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 18756162,
-    "chunked_html_bytes": 7708200,
+    "game_html_bytes": 18769147,
+    "chunked_html_bytes": 7721185,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "TQ27 第二十七批 薄节点扩写 26 节点（学院课堂/毕业去向/五主线/理想线/同学支线/失败线等）",
+    "reason": "TQ28 第二十八批薄节点扩写",
     "history": [
       {
         "date": "2026-09-09",
@@ -1671,6 +1671,13 @@
         "chunked_bytes": 7708200,
         "nodes": 5636,
         "reason": "TQ27 第二十七批 薄节点扩写 26 节点（学院课堂/毕业去向/五主线/理想线/同学支线/失败线等）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 18769147,
+        "chunked_bytes": 7721185,
+        "nodes": 5636,
+        "reason": "TQ28 第二十八批薄节点扩写"
       }
     ]
   },

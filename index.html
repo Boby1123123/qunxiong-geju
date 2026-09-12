@@ -31241,24 +31241,37 @@ function showOptions(node){
   if(!node || !node.options){ try{ window.v67_busyClear(); }catch(e){} return; }
   var opts = typeof node.options === "function" ? node.options() : node.options;
   if(!opts){ try{ window.v67_busyClear(); }catch(e){} return; }
+  /* /v96inj:optid/ V96 节点 id 解析（A4 一次性键；不写存档结构） */
+  var _nid = null;
+  try{
+    if(typeof curNode !== "undefined" && curNode){ _nid = curNode; }
+    else if(node && node.id){ _nid = node.id; }
+    else if(node && node.key){ _nid = node.key; }
+    else { var _N = (typeof N !== "undefined") ? N : null; if(_N){ for(var _k in _N){ if(_N[_k]===node){ _nid=_k; break; } } } }
+  }catch(e){}
   for(let i=0;i<opts.length;i++){
     const o = opts[i];
     var _reqFail = false;
     if(o.req){ try{ if(!o.req()) _reqFail = true; }catch(e){ _reqFail = true; } }
+    /* /v96inj:optgate/ V96 门控：A6 隐藏不渲染；A1/A4/A5 灰锁 */
+    var _g = null;
+    try{ _g = window.v96_optGate(o, S, _nid, i); }catch(e){}
+    if(_g && _g.hide){ continue; }
+    if(_g && _g.locked && !_reqFail){ _reqFail = true; }
     const b = document.createElement("button");
     b.className="opt" + (_reqFail ? " opt-locked" : "");
     b.disabled = _reqFail;
-    if(_reqFail){ b.title = "条件不足"; }
+    if(_reqFail){ b.title = (_g && _g.reason) ? _g.reason : "条件不足"; }
     b.setAttribute("data-t", o.t || "");
     // v30: 选项类型配色
-    const txt = o.t || "";
+    const txt = (_g && _g.text) ? _g.text : (o.t || "");
     if(o.gold || /秘密|隐藏|特殊|传说|机缘|奇遇/.test(txt)){ b.className+=" opt-gold"; }
     else if(/攻击|战斗|杀|打|决斗|砍|刺|劈|挥拳|出手/.test(txt)){ b.className+=" opt-combat"; }
     else if(/说|问|谈|对话|说服|回答|回应|解释|询问|交谈/.test(txt)){ b.className+=" opt-dialog"; }
     else if(/修炼|闭关|打坐|冥想|修行|练功|突破/.test(txt)){ b.className+=" opt-cultivate"; }
     else if(/探索|查看|调查|搜索|观察|检查|察看|打量/.test(txt)){ b.className+=" opt-explore"; }
     else if(/离开|走|返回|撤退|回去|告别|告辞|离开这里/.test(txt)){ b.className+=" opt-leave"; }
-    let html = "<span class='od'>◆</span> "+rich(o.t);
+    let html = "<span class='od'>◆</span> "+rich(txt);
     if(o.check){
       const t = effTarget(o);
       html += "<span class='oh'>（"+ (o.check.label||skillCn(o.check.sk)||ATTR_CN[o.check.a]) +" · 成功率约 "+(t>=98?">98":t<=5?"<5":t)+"%"+ (o.check.note?" · "+o.check.note:"") +"）</span>";
@@ -31267,7 +31280,8 @@ function showOptions(node){
     }
     b.innerHTML = html;
     b.onclick = function(){
-      if(_reqFail){ try{ if(window.flashMsg) window.flashMsg("你还不具备这个条件。"); }catch(e){} return; }
+      if(_reqFail){ try{ if(window.flashMsg) window.flashMsg((_g&&_g.reason)||"你还不具备这个条件。"); }catch(e){} return; }
+      try{ window.v96_markOnce(S, _nid, i); }catch(e){}
       choose(o);
     };
     $("options").appendChild(b);
@@ -31276,6 +31290,80 @@ function showOptions(node){
   try{ if(window.v55_arcEntry) v55_arcEntry(); }catch(e){}
   try{ window.v67_busyClear(); }catch(e){}
 }
+
+/* =====v96-opt===== */
+/* V96 选项门控：A1 条件显隐 / A4 一次性 / A5 时间敏感 / A6 隐藏。只读渲染层，不触碰判定公式与 choose */
+(function(){
+try{
+  var _cmp = {
+    ">=": function(a,b){ return a>=b; },
+    ">":  function(a,b){ return a>b; },
+    "<=": function(a,b){ return a<=b; },
+    "<":  function(a,b){ return a<b; },
+    "==": function(a,b){ return a===b; }
+  };
+  window.v96_onceKey = function(nodeId, idx){ return "opt_"+nodeId+"_"+idx; };
+  window.v96_optGate = function(o, S, nodeId, idx){
+    var r = { hide:false, locked:false, reason:"", text:"" };
+    if(!o){ return r; }
+    S = S || {};
+    r.text = o.t || "";
+    var day = S.day||0;
+    var flags = S.flags||{};
+    /* A5 时间敏感：day 超窗口则过期锁定并换文案 */
+    if(o.expire && !r.locked){
+      var dl = o.expire.day||0;
+      if(day > dl){
+        r.locked = true;
+        r.reason = o.expire.locked || "时机已过，来不及了。";
+        if(o.expire.lockedText){ r.text = o.expire.lockedText; }
+      }
+    }
+    /* A1 条件显隐：cond 声明式门槛 */
+    if(o.cond && !r.locked){
+      var c = o.cond;
+      if(c.flag && !flags[c.flag]){ r.locked = true; }
+      if(c.flagNot && flags[c.flagNot]){ r.locked = true; }
+      if(c.skill && !r.locked){
+        var sk = (S.skills&&S.skills[c.skill.k])||0;
+        var f1 = _cmp[c.skill.op]||_cmp[">="];
+        if(!f1(sk, c.skill.v)){ r.locked = true; }
+      }
+      if(c.rel && !r.locked){
+        var rv = (S.npcRelations&&S.npcRelations[c.rel.id])||0;
+        var f2 = _cmp[c.rel.op]||_cmp[">"];
+        if(!f2(rv, c.rel.v)){ r.locked = true; }
+      }
+      if(c.job && S.job!==c.job){ r.locked = true; }
+      if(c.place && S.place!==c.place){ r.locked = true; }
+      if(c.day && !r.locked){
+        var f3 = _cmp[c.day.op]||_cmp["<="];
+        if(!f3(day, c.day.v)){ r.locked = true; }
+      }
+      if(r.locked){ r.reason = c.reason || "条件不足。"; }
+    }
+    /* A6 隐藏：默认不渲染，解锁后出现 */
+    if(o.hidden && !r.locked){
+      var show = false;
+      var u = o.unlock;
+      if(u){
+        if(u.flag && flags[u.flag]){ show = true; }
+        if(u.probe === true){ show = true; }
+      }
+      if(!show){ r.hide = true; }
+    }
+    /* A4 一次性：节点重访灰锁 */
+    if(o.once && !r.locked && nodeId!=null && idx!=null){
+      if(flags[window.v96_onceKey(nodeId, idx)]){ r.locked = true; r.reason = "你已做过这个选择。"; }
+    }
+    return r;
+  };
+  window.v96_markOnce = function(S, nodeId, idx){
+    if(!S || nodeId==null || idx==null){ return; }
+    try{ S.flags = S.flags||{}; S.flags[window.v96_onceKey(nodeId, idx)] = true; }catch(e){}
+  };
+}catch(e){}
+})();
 
 /*=====v47-eng=====*/
 (function(){

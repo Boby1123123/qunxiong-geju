@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 19077335,
+    "game_html_bytes_max": 19080800,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 19027335,
-    "chunked_html_bytes": 7959545,
+    "game_html_bytes": 19030800,
+    "chunked_html_bytes": 7963010,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "UI-FIX2_20260912 高亮单次正则修复+分页滚动兜底+世界书常驻会话去重（+1048B 合法增长）",
+    "reason": "V96-OPT-B1 选项门控模块(v96_optGate)+A1/A4/A5/A6 新增 3465B",
     "history": [
       {
         "date": "2026-09-09",
@@ -1839,6 +1839,13 @@
         "chunked_bytes": 7959545,
         "nodes": 5636,
         "reason": "UI-FIX2_20260912 高亮单次正则修复+分页滚动兜底+世界书常驻会话去重（+1048B 合法增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19030800,
+        "chunked_bytes": 7963010,
+        "nodes": 5636,
+        "reason": "V96-OPT-B1 选项门控模块(v96_optGate)+A1/A4/A5/A6 新增 3465B"
       }
     ]
   },

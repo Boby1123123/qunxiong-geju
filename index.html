@@ -31278,10 +31278,15 @@ function showOptions(node){
     } else if(o.note){
       html += "<span class='oh'>（"+o.note+"）</span>";
     }
+    /* /v96inj:preview/ A3 后果预览（只读推导） */
+    var _pv = "";
+    try{ _pv = window.v96_preview(o); }catch(e){}
+    if(_pv){ html += "<span class='oh oh-pv'>"+_pv+"</span>"; }
     b.innerHTML = html;
     b.onclick = function(){
       if(_reqFail){ try{ if(window.flashMsg) window.flashMsg((_g&&_g.reason)||"你还不具备这个条件。"); }catch(e){} return; }
       try{ window.v96_markOnce(S, _nid, i); }catch(e){}
+      if(o.dual){ try{ if(window.v96_dualResolve(o, S)) return; }catch(e){} }
       choose(o);
     };
     $("options").appendChild(b);
@@ -31361,6 +31366,55 @@ try{
   window.v96_markOnce = function(S, nodeId, idx){
     if(!S || nodeId==null || idx==null){ return; }
     try{ S.flags = S.flags||{}; S.flags[window.v96_onceKey(nodeId, idx)] = true; }catch(e){}
+  };
+  /* A2 组合判定：双属性三档，完全旁路 choose（不改判定公式，复用既有结算/推进） */
+  window.v96_dualResolve = function(opt, S){
+    var d = opt ? opt.dual : null;
+    if(!d){ return false; }
+    S = S || {};
+    var p = 0;
+    try{ var av = (S.attrs&&S.attrs[d.a.k])||0; if(av >= d.a.v){ p++; } }catch(e){}
+    try{ var bv = (S.attrs&&S.attrs[d.b.k])||0; if(bv >= d.b.v){ p++; } }catch(e){}
+    var tierOpt = (p>=2) ? (d.tier.pass||null) : ((p===1) ? (d.tier.part||null) : (d.tier.fail||null));
+    if(!tierOpt){ try{ if(window.flashMsg) window.flashMsg("你无法同时满足这两项条件。"); }catch(e){} return true; }
+    var merged = {};
+    for(var k in opt){ if(k!=="dual"){ merged[k]=opt[k]; } }
+    if(tierOpt.effects){ merged.effects = tierOpt.effects; }
+    if(tierOpt.go){ merged.go = tierOpt.go; }
+    if(tierOpt.time){ merged.time = tierOpt.time; }
+    if(tierOpt.note){ merged.note = tierOpt.note; }
+    if(tierOpt.text){ merged.tier = {ok:[tierOpt.text]}; }
+    delete merged.check;
+    delete merged.cond;
+    try{ S.dice = S.dice||[]; S.dice.push({node:(typeof curNode!=="undefined")?curNode:null, opt:(opt.t||""), roll:p, target:(d.dc||0), lvl:(p>=2?"crit":(p===1?"normal":"fail")), sk:"dual"}); }catch(e){}
+    try{ choose(merged); }catch(e){ try{ if(window.flashMsg) window.flashMsg("判定结算异常。"); }catch(e2){} }
+    return true;
+  };
+  /* A3 后果预览：从选项推导影响摘要（只读，纯渲染） */
+  window.v96_preview = function(o){
+    if(!o){ return ""; }
+    var parts = [];
+    try{
+      if(o.time){ parts.push("⏱+"+o.time+"日"); }
+      var ef = o.effects || o.effect;
+      if(ef){
+        if(ef.gold){ parts.push((ef.gold>0?"💰+":"💰")+ef.gold+"金"); }
+        if(ef.xp){ parts.push("修为"+(ef.xp>0?"+":"")+ef.xp); }
+        if(ef.hp||ef.heal){ parts.push("生命"+(ef.hp>0?"+":(ef.heal>0?"+":""))+(ef.hp||ef.heal||0)); }
+        if(ef.rep){ parts.push("声望"+(ef.rep>0?"+":"")+ef.rep); }
+        if(ef.karma){ parts.push("业力"+(ef.karma>0?"+":"")+ef.karma); }
+        if(ef.aura){ parts.push("气质"+(ef.aura>0?"+":"")+ef.aura); }
+        if(ef.relation){ parts.push("♥"+String(ef.relation.npc||"")+(ef.relation.delta>0?"+":"")+(ef.relation.delta||0)); }
+        if(ef.wound){ parts.push(ef.wound>0?"受伤":"疗伤"); }
+        if(ef.item){ parts.push("得物"); }
+        if(ef.attr){ for(var ak in ef.attr){ if(typeof ATTR_CN!=="undefined"&&ATTR_CN) parts.push((ATTR_CN[ak]||ak)+(ef.attr[ak]>0?"+":"")+ef.attr[ak]); } }
+        if(ef.flag||ef.setflag){ parts.push("⚑"); }
+        if(ef.loseGold){ parts.push("💰-"+ef.loseGold+"金"); }
+      }
+      if(o.changeRelation){ for(var ck in o.changeRelation){ parts.push("♥"+ck+(o.changeRelation[ck]>0?"+":"")+o.changeRelation[ck]); } }
+      if(o.go && typeof N!=="undefined" && N && N[o.go]){ parts.push("→"+(N[o.go].place||o.go)); }
+    }catch(e){}
+    return parts.slice(0,4).join(" · ");
   };
 }catch(e){}
 })();

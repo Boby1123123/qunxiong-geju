@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 19089528,
+    "game_html_bytes_max": 19093517,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 19039528,
-    "chunked_html_bytes": 7971738,
+    "game_html_bytes": 19043517,
+    "chunked_html_bytes": 7975727,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "V96-OPT-B3 热词卡监听残留修复(__v96cardH统一管理) 新增 296B",
+    "reason": "V96-OPT-B4 回退目标保留栈顶语义 新增 35B",
     "history": [
       {
         "date": "2026-09-09",
@@ -1867,6 +1867,34 @@
         "chunked_bytes": 7971738,
         "nodes": 5636,
         "reason": "V96-OPT-B3 热词卡监听残留修复(__v96cardH统一管理) 新增 296B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19043277,
+        "chunked_bytes": 7975487,
+        "nodes": 5636,
+        "reason": "V96-OPT-B4 B8线索锚点(v96_probeConv/委托)+C12分支回退(栈/按钮) 新增 3749B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19043361,
+        "chunked_bytes": 7975571,
+        "nodes": 5636,
+        "reason": "V96-OPT-B4 线索锚点转换移至rich后(防esc转义) 新增 84B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19043482,
+        "chunked_bytes": 7975692,
+        "nodes": 5636,
+        "reason": "V96-OPT-B4 回退栈语义修正(栈顶=当前节点,pop两次) 新增 121B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19043517,
+        "chunked_bytes": 7975727,
+        "nodes": 5636,
+        "reason": "V96-OPT-B4 回退目标保留栈顶语义 新增 35B"
       }
     ]
   },

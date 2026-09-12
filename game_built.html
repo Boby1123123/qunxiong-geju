@@ -59551,6 +59551,7 @@ function writePar(p,cls){
   const d = document.createElement("p");
   if(cls) d.className=cls;
   d.innerHTML = rich(p);
+  if(typeof p==="string" && window.v96_probeConv){ var _ph = window.v96_probeConv(d.innerHTML); if(_ph !== d.innerHTML){ d.innerHTML = _ph; } } /* /v96inj:probe/ B8 线索锚点（rich 后转换防 esc 转义） */
   try{ window.v92_highlightNames && window.v92_highlightNames(d); }catch(e){}
   RenderBatch.push(d);
   return d;
@@ -59989,18 +59990,104 @@ try{
       }, 10);
     }catch(e){}
   };
+  window.v96_b4css = function(){
+    try{
+      if(document.getElementById("v96-b4-css")) return;
+      var st = document.createElement("style");
+      st.id = "v96-b4-css";
+      st.textContent = ".v96-probe{display:inline-block;margin:2px 4px;padding:2px 10px;border:1px solid #a8842a;border-radius:4px;color:#e8c86a;background:rgba(168,132,42,.12);cursor:pointer;font-size:13px;}"+
+        ".v96-probe:hover{background:rgba(168,132,42,.28);}"+
+        ".v96-back{display:block;margin:14px 0 4px;padding:8px 14px;border:1px dashed #8b6f47;border-radius:6px;color:#b8a888;background:rgba(139,111,71,.08);cursor:pointer;font-size:13px;text-align:center;}"+
+        ".v96-back:hover{background:rgba(139,111,71,.18);color:#e8c86a;}";
+      (document.head||document.documentElement).appendChild(st);
+    }catch(e){}
+  };
+  window.v96_probeConv = function(p){
+    try{
+      return String(p).replace(/\[调查:([\w\-]+):([^\]]+)\]/g, function(m, nid, label){
+        if(!window.N || !window.N[nid]) return m;
+        var lab = String(label).split('"').join('&quot;');
+        return "<span class='v96-probe' data-go='"+nid+"'>"+lab+"</span>";
+      });
+    }catch(e){ return p; }
+  };
+  window.v96_backPush = function(nid){
+    try{
+      if(window.v96_backMark){ window.v96_backMark = false; return; }
+      if(!window.__v45prev) window.__v45prev = [];
+      var arr = window.__v45prev;
+      if(arr.length && arr[arr.length-1] === nid) return;
+      arr.push(nid);
+      if(arr.length > 60) arr.shift();
+    }catch(e){}
+  };
+  window.v96_backStep = function(){
+    try{
+      var arr = window.__v45prev;
+      if(!arr || !arr.length){ try{ flashMsg('没有更早的分支了'); }catch(e){} return; }
+      arr.pop();
+      if(!arr.length){ try{ flashMsg('没有更早的分支了'); }catch(e){} return; }
+      var prev = arr[arr.length-1];
+      while(prev && window.N && window.N[prev] && window.N[prev].auto){
+        arr.pop();
+        if(!arr.length){ try{ flashMsg('没有更早的分支了'); }catch(e){} return; }
+        prev = arr[arr.length-1];
+      }
+      if(!window.N || !window.N[prev]){ try{ flashMsg('没有更早的分支了'); }catch(e){} return; }
+      curNode = prev;
+      window.v96_backMark = true;
+      writeNext();
+    }catch(e){}
+  };
+  window.v96_backRender = function(){
+    try{
+      window.v96_b4css();
+      var old = document.getElementById("v96-back-btn");
+      if(old && old.parentNode){ old.parentNode.removeChild(old); }
+      var arr = window.__v45prev;
+      if(!arr || !arr.length) return;
+      var story = document.getElementById("story");
+      if(!story) return;
+      var d = document.createElement("div");
+      d.id = "v96-back-btn";
+      d.className = "v96-back";
+      d.innerHTML = "↩ 回退一步";
+      story.appendChild(d);
+      story.scrollTop = story.scrollHeight;
+    }catch(e){}
+  };
   /* 点击委托：v92-name span → 弹卡（capture 拦截；选项区不拦截） */
   document.addEventListener("click", function(e){
     try{
       var t = e.target;
-      if(!t || !t.classList || !t.classList.contains("v92-name")) return;
-      if(t.closest && t.closest("#options")) return;
-      var k = t.getAttribute("data-k");
-      var id = t.getAttribute("data-id");
-      if(!k || !id) return;
-      e.stopPropagation();
-      e.preventDefault();
-      window.v96_openCard(k, id);
+      if(!t || !t.classList) return;
+      if(t.classList.contains("v92-name")){
+        if(t.closest && t.closest("#options")) return;
+        var k = t.getAttribute("data-k");
+        var id = t.getAttribute("data-id");
+        if(!k || !id) return;
+        e.stopPropagation();
+        e.preventDefault();
+        window.v96_openCard(k, id);
+        return;
+      }
+      if(t.classList.contains("v96-probe")){
+        if(t.closest && t.closest("#options")) return;
+        var go = t.getAttribute("data-go");
+        if(!go || !window.N || !window.N[go]) return;
+        e.stopPropagation();
+        e.preventDefault();
+        curNode = go;
+        try{ window.v67_busyClear(); }catch(e3){}
+        writeNext();
+        return;
+      }
+      if(t.classList.contains("v96-back")){
+        e.stopPropagation();
+        e.preventDefault();
+        window.v96_backStep();
+        return;
+      }
     }catch(e2){}
   }, true);
 }catch(e){}
@@ -64375,6 +64462,7 @@ window.v91_arcAdvance = function(node){
 
 function writeNext(_v46f){
   renderTop(); renderStats();
+  try{ if(window.v96_backPush) window.v96_backPush(curNode); }catch(e){} /* /v96inj:back/ C12 分支回退入栈（栈顶=当前节点） */
   const _wnT0 = Date.now();
   ChunkLoader.ensureNodeLoaded(curNode, function(){
     const node = (typeof N[curNode]==="function") ? N[curNode]() : N[curNode];
@@ -64488,12 +64576,14 @@ function writeNext(_v46f){
       try{ window.v67_busyClear(); }catch(e){} /* 分页节点无选项，立即解锁防死锁 */
       window.__v45ctx={node:node,txt:_txt,page:0};
       v45_renderPage(window.__v45ctx);
+      try{ window.v96_backRender(); }catch(e){} /* /v96inj:backbtn/ C12 回退按钮（分页路径） */
       try{ window.v91_sessRender(node); }catch(e){}
       renderPerf.record(Date.now()-_wnT0);
       return;
     }
     for(const t of _txt) writePar(t);
     RenderBatch.flush();
+    try{ window.v96_backRender(); }catch(e){} /* /v96inj:backbtn2/ C12 回退按钮（普通路径） */
     try{ window.v92_hlInit(); window.v92_ambCSS(); }catch(e){}
     try{ window.v92_applyAmbience(); }catch(e){}
     try{ window.v93_ambienceSync(); }catch(e){}

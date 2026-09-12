@@ -62456,6 +62456,9 @@ options:[
             }catch(e){}
           }
         }
+        /* /an3inj:scrollfix/ A-N3 分页滚动兜底：新页渲染后滚到底（rAF 立即 + 延迟覆盖渐显动画/后置渲染），修复「继续阅读」后需手动下滑 */
+        try{ window.requestAnimationFrame(function(){ var _st=document.getElementById('story'); if(_st){ _st.scrollTop=_st.scrollHeight; } }); }catch(e){}
+        try{ setTimeout(function(){ var _st=document.getElementById('story'); if(_st){ _st.scrollTop=_st.scrollHeight; } }, 450); }catch(e){}
       }catch(e){ try{ console.log('v45 page:',e); }catch(_){} }
     }
 
@@ -62894,8 +62897,9 @@ window.v92_lorebook = function(node){
       if(!e||hitSet[e.id]) return;
       hitSet[e.id]=true; active.push(e);
     }
-    /* 常驻条目 */
-    for(let i=0;i<L.length;i++){ if(L[i]&&L[i].constant) pushEntry(L[i]); }
+    /* 常驻条目（会话级去重：同一条目本会话只注入一次，避免「每次选择完都重复显示九域格局/光明神系」；开关关闭时零注入；不写存档） */
+    if(!window.__loreShown) window.__loreShown = {};
+    for(let i=0;i<L.length;i++){ if(L[i]&&L[i].constant){ if(!window.__loreShown[L[i].id]){ window.__loreShown[L[i].id]=1; pushEntry(L[i]); } } }
     /* 触发命中 */
     for(let i=0;i<L.length;i++){
       const e=L[i]; if(!e||e.constant) continue;
@@ -63487,6 +63491,10 @@ window.v92_hlInit = function(){
     keys.sort(function(a,b){ return b.length-a.length; });
     window.v92_hlNames = keys;
     window.v92_hlDesc = map;
+    /* /an3inj:hlfix/ A-N3 高亮修复：构建单次联合正则（长名优先）。原顺序替换会误伤已生成 span 的 title 属性文本（属性值内含触发词），破坏 HTML 结构，正文出现乱码 */
+    try{
+      window.v92_hlRe = new RegExp(keys.map(function(nm){ return String(nm).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }).join("|"),"g");
+    }catch(e){ window.v92_hlRe = null; }
   }catch(e){}
 };
 window.v92_highlightNames = function(el){
@@ -63495,6 +63503,8 @@ window.v92_highlightNames = function(el){
     if(!el || !el.childNodes) return;
     var names = window.v92_hlNames;
     if(!names || !names.length) return;
+    var re = window.v92_hlRe;
+    if(!re) return;
     var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
     var tns = []; var tn;
     while((tn = walk.nextNode())){ tns.push(tn); }
@@ -63503,20 +63513,15 @@ window.v92_highlightNames = function(el){
       var v = t.nodeValue; if(!v) continue;
       var esc = v.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
       var out = esc; var hit = false;
-      for(var j=0;j<names.length;j++){
-        var nm = names[j];
-        if(!nm || out.indexOf(nm)<0) continue;
-        var re;
-        try{ re = new RegExp(nm.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g"); }catch(e){ continue; }
-        if(!re.test(out)) continue;
+      try{
         re.lastIndex = 0;
-        var _hl = "<span class='v92-name' title='";
-        _hl += String(window.v92_hlDesc[nm]||'');
-        _hl += "'>" + nm + "</span>";
-        out = out.replace(re, _hl);
-        hit = true;
-        try{ if(window.v92_galleryMark){ window.v92_galleryMark("npc_"+nm, window.v92_hlDesc[nm]||nm); } }catch(e){}
-      }
+        out = out.replace(re, function(m){
+          hit = true;
+          var desc = String(window.v92_hlDesc[m]||'');
+          try{ if(window.v92_galleryMark){ window.v92_galleryMark("npc_"+m, window.v92_hlDesc[m]||m); } }catch(e){}
+          return "<span class='v92-name' title='"+desc+"'>"+m+"</span>";
+        });
+      }catch(e){}
       if(hit){
         var sp = document.createElement("span");
         sp.innerHTML = out;

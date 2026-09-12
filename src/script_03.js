@@ -18,7 +18,7 @@ const emptyState = () => ({
   conds:{mat:false,kno:false,pra:false,rit:false,anc:false,work:false},
   choices:[], dice:[],
   world:{purge:false,silver:false,seal:false,academy:false,orc:false},
-  lw:{season:"春",dayPhase:"晨",echoes:[],echoLog:[],npcStates:{},factionRel:{},factionState:{},cityControl:{},worldFlags:{},journal:[],tick:0},
+  lw:{season:"春",dayPhase:"晨",echoes:[],echoLog:[],npcStates:{},factionRel:{},factionState:{},cityControl:{},worldFlags:{},journal:[],tick:0,warfronts:{},merit:{},guilt:{}},
   ending:null, dead:false, ngPlus:1,
   runHistory:[], endingsCollected:[], _endingRecorded:false
 });
@@ -119,6 +119,10 @@ function applyDefaults(s){
   if(!s.lw.worldFlags) s.lw.worldFlags={};
   if(!s.lw.journal) s.lw.journal=[];
   if(!s.lw.tick) s.lw.tick=0;
+  if(!s.lw.warfronts) s.lw.warfronts={};
+  if(!s.lw.merit) s.lw.merit={};
+  if(!s.lw.guilt) s.lw.guilt={};
+  try{ if(window.LW_warInit) window.LW_warInit(); }catch(e){}
   return s;
 }
 function loadGame(){
@@ -303,6 +307,21 @@ function applyEffects(eff,label){
     for(var _wi=0;_wi<_wd.length;_wi++){
       var _w = _wd[_wi];
       try{ var _m = worldDelta(_w.force, _w.inf||0, _w.stance); if(_m) lines.push(_m); }catch(e){}
+    }
+  }
+  /* /lwinj:fxwar/ LW-B1/B3 战争与功罪 effects：war={id,d,reason} 偏移战场；deed={id,kind,amount,reason} 记功罪 */
+  if(eff.war){
+    var _warr = Array.isArray(eff.war)?eff.war:[eff.war];
+    for(var _wa=0;_wa<_warr.length;_wa++){
+      var _w2=_warr[_wa];
+      try{ if(window.LW_warShift) LW_warShift(_w2.id, _w2.d||0, _w2.reason||""); }catch(e){}
+    }
+  }
+  if(eff.deed){
+    var _dr = Array.isArray(eff.deed)?eff.deed:[eff.deed];
+    for(var _dd=0;_dd<_dr.length;_dd++){
+      var _de=_dr[_dd];
+      try{ if(window.LW_deed) LW_deed(_de.id, _de.kind||"merit", _de.amount||1, _de.reason||""); }catch(e){}
     }
   }
   /* /v92inj:fxrec/ CON-1 触发⑥ 事件余波记录（只读钩子：记录最近一次有实质结算的摘要，供 v91_memoryInjection 生成后果句；独立 window 键，不入存档） */

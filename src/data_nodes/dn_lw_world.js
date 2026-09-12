@@ -127,5 +127,57 @@ window.LW_DATA = {
     "午":"日头正毒，集市上的吆喝声一阵高过一阵。",
     "昏":"暮色压下来，酒馆的灯一盏盏亮起。",
     "夜":"夜禁之后，街上只剩下巡夜人的梆子声。"
-  }
+  },
+  /* 战局模型（WARFRONTS）：首批 5 战场；atk/def ∈ factions；cities ∈ 城市表；
+     goods = 该战场敏感商品（易主时物价偏移，联动 TRADE_GOODS/w64 市场） */
+  warfronts: [
+    { id:"wf_tiebigate", cn:"铁门关拉锯", atk:"east", def:"north",
+      cities:["tiebi","beijing"], goods:["iron","weapon"],
+      winAt:100, loseAt:-100, weight:1.0,
+      desc:"东军与北方公国的拉锯，铁门关是咽喉。" },
+    { id:"wf_silverroad", cn:"银穗商路", atk:"east", def:"south",
+      cities:["shangzhan","gangkou"], goods:["grain","silk"],
+      winAt:100, loseAt:-100, weight:0.8,
+      desc:"东部王国提高银穗商路税收，商盟在备钱备粮。" },
+    { id:"wf_abyss", cn:"封印七节点", atk:"abyss", def:"church",
+      cities:["shengcheng","shendian","yiji"], goods:["book","potion"],
+      winAt:100, loseAt:-100, weight:0.7,
+      desc:"深渊教团在七处封印节点试探。教会圣战军枕戈待旦。" },
+    { id:"wf_orc", cn:"北境狼旗", atk:"orc", def:"north",
+      cities:["aierda","disanshao"], goods:["fur","iron"],
+      winAt:100, loseAt:-100, weight:1.0,
+      desc:"黑石大汗整合半数部族，狼旗南指。" },
+    { id:"wf_purge", cn:"净化令", atk:"church", def:"free",
+      cities:["jiaohui","jishi"], goods:["potion","book"],
+      winAt:100, loseAt:-100, weight:0.6,
+      desc:"圣痕司审判官在各城邦搜查奥术痕迹，自由城首当其冲。" }
+  ],
+  /* 战争事件模板（WAR_EVENTS）：玩家身处战区城市时按权重抽取触发；
+     warDelta 偏移 warfront.progress；infl 影响势力关系；后果可促成城市易主 */
+  warEvents: [
+    { id:"we_besiege",  cls:"人祸", front:"wf_tiebigate", weight:30,
+      text:"铁门关下，东军的营火连成一条火龙，围了三天三夜。城头的守军把滚油烧得冒烟，就等天亮那一仗。",
+      warDelta:8, infl:{east:2,north:-2} },
+    { id:"we_grain",    cls:"商机", front:"wf_silverroad", weight:25,
+      text:"银穗商路上，三支粮队被拦在税卡外。粮价闻风而动，几个大掌柜连夜改了价牌，手都在抖。",
+      warDelta:4, infl:{east:1,south:-1} },
+    { id:"we_spy",      cls:"人祸", front:"wf_purge", weight:25,
+      text:"自由城夜里抓了几个穿灰袍的探子。第二天一早，城门口贴出告示，悬赏翻了三倍。",
+      warDelta:5, infl:{church:2,free:-2} },
+    { id:"we_fire",     cls:"天灾", front:"wf_orc", weight:20,
+      text:"北境的草场起了大火，烧了三天三夜。狼旗的先锋军绕过火场，从更北的荒原压了下来。",
+      warDelta:6, infl:{orc:2,north:-2} },
+    { id:"we_rite",     cls:"奇遇", front:"wf_abyss", weight:20,
+      text:"圣辉城郊的封印节点夜里渗出了黑雾。教会的圣战军在雾外扎营，火把点了一整夜，没人敢靠近。",
+      warDelta:6, infl:{abyss:2,church:-2} },
+    { id:"we_siege_relief", cls:"人祸", front:"wf_tiebigate", weight:20,
+      text:"北方公国的援军到了。铁门关的城门开了一条缝，送进去的粮车让守军的号子都喊得响了几分。",
+      warDelta:-6, infl:{north:2,east:-2} },
+    { id:"we_truce_rumor", cls:"商机", front:"wf_silverroad", weight:15,
+      text:"商路上有人传，东部王国要放宽税则。消息没坐实，货价已经先软了两成。",
+      warDelta:-4, infl:{south:1,east:-1} },
+    { id:"we_defector", cls:"奇遇", front:"wf_purge", weight:15,
+      text:"一个灰袍审判官深夜逃出圣城，浑身是伤。他说自己看见了不该看的东西——话没说完，人就没了声息。",
+      warDelta:4, infl:{free:1,church:-1,abyss:1} }
+  ]
 };

@@ -1,28 +1,40 @@
 {
-  "version": "v95",
-  "from": "v94",
-  "released": "2026-09-12",
-  "note": "LW 活的世界模拟层（方向一超大型拓展 S1-S5 全落地）：S1 时间体系（季节/昼夜四时段/换季播报）/ S2 NPC 日程与人物志（12 名宿晨午昏动态）/ S3 世界回响（flag→延迟回响→播报+正文渲染 [echo]/{{echoCount}}/{{npcRecall}}）/ S4 势力动态（factionShift/关系面板/城市归属）/ S5 叙事门控（cond.world 选项条件 season/dayPhase/faction/city/echo/flag）+ 世界面板（世界历/抉择记录/势力局势）+ 主线预热传闻",
+  "version": "v96",
+  "from": "v95",
+  "released": "2026-09-13",
+  "note": "LW-A1B1B2B3 战争引擎与检查器全落地：LW-A1 回响检查器四件套（c_echo/c_worldstate/c_faction/c_warfront，检查器总数 45）+ LW-B1 战争引擎地基（5 战场 warfronts + LW_warInit/LW_warShift/LW_conquer/LW_warPrice/LW_deed/LW_warTick/LW_warEvent/LW_warUI）+ LW-B2 城市易主动态化（cityControl 优先覆盖静态 cityOwn，10 处城市场景 [[if:world.city]] 双版本标注）+ LW-B3 战争事件入池（8 事件，战区城市加权抽取、we_<id>_<day> 去重、战报/编年史/journal 三联）+ 功罪双轨（merit/guilt clamp[0,1000]，势力界面绿功红罪）+ 势力界面 v2（辖区城市动态并集）+ 战场总览（atk⇄def/phase/进度/历史）",
   "changes": [
     {
-      "file": "LW_活的世界模拟层_方向设计_20260912.md",
-      "title": "LW 方向一蓝图：S1-S5 五子系统设计/作者语法/五批路线图"
+      "file": "LW_下一步超大型拓展_回响检查器_战争引擎_编年史_20260913.md",
+      "title": "LW 方向二（A/B/C）设计：回响检查器规则/战争引擎 schema/编年史自动化/v96~v99 路线图"
     },
     {
       "file": "dn_lw_world.js",
-      "title": "LW 数据层：9 势力基线/12 NPC 晨午昏日程/4 回响锚点/季节时段氛围句/主线预热 omens"
+      "title": "LW 数据层：warfronts×5（schema {id,cn,atk,def,cities,goods,winAt,loseAt,weight,desc}）+ warEvents×8（cls 天灾/人祸/奇遇/商机）"
     },
     {
       "file": "script_19.js",
-      "title": "LW 引擎模块（独立 script 块）：22 个 LW API（时钟/回响/势力/NPC/门控/面板/自检）"
+      "title": "LW 战争引擎：LW_cityOwner 动态化 + 8 战争函数 + 势力界面 v2 + 世界 hub 战场入口 + cond.deed + clamp 收口 + echoes 上限"
     },
     {
       "file": "script_03.js",
-      "title": "LW 挂接：S.lw 状态兜底（applyDefaults）/ advanceDays→LW_tick / writePar→LW_render / v96_optGate→LW_cond"
+      "title": "LW 挂接：S.lw 兜底（warfronts/merit/guilt）+ applyDefaults LW_warInit + effects eff.war/eff.deed"
     },
     {
-      "file": "gap_00.html",
-      "title": "顶栏新增「🗓 世界」按钮（btn-lw）→ LW_openHub 世界面板"
+      "file": "tools/eldacheck/checks/c_echo.py",
+      "title": "新检查器：LW 回响健康（E1 锚点/E2 悬空/E3 账本 open WARN/E4 队列上限/E5 引号）"
+    },
+    {
+      "file": "tools/eldacheck/checks/c_worldstate.py",
+      "title": "新检查器：LW 世界状态（W1 白名单 14 键/W2 schema/W3 clamp 值域）"
+    },
+    {
+      "file": "tools/eldacheck/checks/c_faction.py",
+      "title": "新检查器：LW 势力矩阵（F1 基线/F2 状态机/F3 转移/F4 键集 9 家）"
+    },
+    {
+      "file": "tools/eldacheck/checks/c_warfront.py",
+      "title": "新检查器：LW 战争引擎（BF1 表合法/BF2 phase 状态机/BF3 cityControl/BF4 clamp/BF5 红线/BF6 悬空）"
     }
   ]
 }

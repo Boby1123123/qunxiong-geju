@@ -30656,7 +30656,7 @@ const emptyState = () => ({
   conds:{mat:false,kno:false,pra:false,rit:false,anc:false,work:false},
   choices:[], dice:[],
   world:{purge:false,silver:false,seal:false,academy:false,orc:false},
-  lw:{season:"春",dayPhase:"晨",echoes:[],echoLog:[],npcStates:{},factionRel:{},factionState:{},cityControl:{},worldFlags:{},journal:[],tick:0},
+  lw:{season:"春",dayPhase:"晨",echoes:[],echoLog:[],npcStates:{},factionRel:{},factionState:{},cityControl:{},worldFlags:{},journal:[],tick:0,warfronts:{},merit:{},guilt:{}},
   ending:null, dead:false, ngPlus:1,
   runHistory:[], endingsCollected:[], _endingRecorded:false
 });
@@ -30757,6 +30757,10 @@ function applyDefaults(s){
   if(!s.lw.worldFlags) s.lw.worldFlags={};
   if(!s.lw.journal) s.lw.journal=[];
   if(!s.lw.tick) s.lw.tick=0;
+  if(!s.lw.warfronts) s.lw.warfronts={};
+  if(!s.lw.merit) s.lw.merit={};
+  if(!s.lw.guilt) s.lw.guilt={};
+  try{ if(window.LW_warInit) window.LW_warInit(); }catch(e){}
   return s;
 }
 function loadGame(){
@@ -30941,6 +30945,21 @@ function applyEffects(eff,label){
     for(var _wi=0;_wi<_wd.length;_wi++){
       var _w = _wd[_wi];
       try{ var _m = worldDelta(_w.force, _w.inf||0, _w.stance); if(_m) lines.push(_m); }catch(e){}
+    }
+  }
+  /* /lwinj:fxwar/ LW-B1/B3 战争与功罪 effects：war={id,d,reason} 偏移战场；deed={id,kind,amount,reason} 记功罪 */
+  if(eff.war){
+    var _warr = Array.isArray(eff.war)?eff.war:[eff.war];
+    for(var _wa=0;_wa<_warr.length;_wa++){
+      var _w2=_warr[_wa];
+      try{ if(window.LW_warShift) LW_warShift(_w2.id, _w2.d||0, _w2.reason||""); }catch(e){}
+    }
+  }
+  if(eff.deed){
+    var _dr = Array.isArray(eff.deed)?eff.deed:[eff.deed];
+    for(var _dd=0;_dd<_dr.length;_dd++){
+      var _de=_dr[_dd];
+      try{ if(window.LW_deed) LW_deed(_de.id, _de.kind||"merit", _de.amount||1, _de.reason||""); }catch(e){}
     }
   }
   /* /v92inj:fxrec/ CON-1 触发⑥ 事件余波记录（只读钩子：记录最近一次有实质结算的摘要，供 v91_memoryInjection 生成后果句；独立 window 键，不入存档） */
@@ -53129,6 +53148,7 @@ try{
       for(var j=0;j<lw.echoes.length;j++){ if(lw.echoes[j].id===c.echoId) has = true; }
       for(var k=0;k<lw.echoLog.length;k++){ if(lw.echoLog[k]===c.echoId) logHas = true; }
       if(!has && !logHas){
+        if(lw.echoes.length >= 100) return; /* 队列上限（c_echo E4） */
         lw.echoes.push({id:c.echoId, at:c.at||null, delay:c.delay||3, dueDay:(S.day||1)+(c.delay||3), text:c.text||""});
         try{ if(window.logMsg) logMsg("【命运的线】一笔旧账，被世界记下了。"); }catch(e){}
       }
@@ -53246,6 +53266,8 @@ try{
     if(S.infl[id]===undefined) S.infl[id]=0;
     S.infl[id] += delta;
     lw.factionRel[id] = (lw.factionRel[id]||0) + delta;
+    S.infl[id] = Math.max(-100, Math.min(100, S.infl[id]));
+    lw.factionRel[id] = Math.max(-100, Math.min(100, lw.factionRel[id]));
     var D = _LWD(), fac = (D.factions&&D.factions[id]) ? D.factions[id].cn : id;
     window.LW_journalAdd("faction", "【"+fac+"】"+(delta>=0?"态度 +"+delta:"态度 "+delta)+(reason?("（"+reason+"）"):""), null);
     try{ if(window.logMsg) logMsg(delta>=0?"【"+fac+"】对你多了几分善意（+"+delta+"）。":"【"+fac+"】对你起了戒心（"+delta+"）。"); }catch(e){}
@@ -53267,6 +53289,11 @@ try{
     if(!loc) return "";
     var parts = String(loc).split("_");
     var city = parts[parts.length-1] || "";
+    /* 动态控制权优先（LW_conquer 写入）；未覆盖回退静态表 */
+    try{
+      var lw = _ld();
+      if(lw && lw.cityControl && lw.cityControl[city]) return lw.cityControl[city];
+    }catch(e){}
     var D = _LWD(), own = D.cityOwn || {};
     if(own.special && own.special[city]) return own.special[city];
     for(var r in own){
@@ -53278,23 +53305,229 @@ try{
   };
   window.LW_factionUI = function(){
     var lw = _ld(); if(!lw) return;
-    window.LW_factionTick();
+    window.LW_factionTick(); window.LW_warInit();
     var box = document.createElement("div"); box.className = "box";
     var h = "<h3>🏰 势力与局势</h3><div class='mini'>九大势力的目光，都落在你身上。</div>";
     var D = _LWD(), facs = (D && D.factions) || {};
     var infl = S.infl || {};
+    var own = D.cityOwn || {};
     for(var id in facs){
       var f = facs[id];
       var rel = infl[id]||0;
       var st = (lw.factionState && lw.factionState[id]) || "稳定";
       var tone = rel<=-60 ? "#d66" : rel>=60 ? "#6d6" : "#b8a888";
+      var cities = [];
+      if(lw.cityControl){
+        for(var cc in lw.cityControl){ if(lw.cityControl[cc]===id) cities.push(cc); }
+      }
+      for(var r in own){
+        if(r==="special") continue;
+        var arr = own[r]||[];
+        for(var i=0;i<arr.length;i++){ if(!lw.cityControl || lw.cityControl[arr[i]]===undefined){ if(r===id) cities.push(arr[i]); } }
+      }
+      var meritN = (lw.merit&&lw.merit[id])||0, guiltN = (lw.guilt&&lw.guilt[id])||0;
       h += "<div style='padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.06)'>"+
            "<b>"+f.cn+"</b> <span style='color:#9a8a68'>["+st+"]</span> "+
            "<span style='color:"+tone+"'>关系 "+rel+"</span>"+
+           (meritN?" <span style='color:#6d6;font-size:12px'>功+"+meritN+"</span>":"")+
+           (guiltN?" <span style='color:#d66;font-size:12px'>罪+"+guiltN+"</span>":"")+
+           (cities.length?" <span style='color:#8a7a5a;font-size:12px'>辖:"+cities.join("·")+"</span>":"")+
            "<div style='color:#8a7a5a;font-size:12px'>"+f.desc+"</div></div>";
     }
-    h += "<div style='text-align:center;margin-top:10px'><button class='btn' onclick='closeModal()'>返回</button></div>";
+    h += "<div style='text-align:center;margin-top:10px'>"+
+         "<button class='btn' onclick='LW_warUI()' style='margin:3px'>⚔ 战场总览</button>"+
+         "<button class='btn' onclick='closeModal()' style='margin:3px'>返回</button></div>";
     box.innerHTML = h;
+    if(window.openModal) openModal(box); else document.body.appendChild(box);
+  };
+  /* S4b 战争引擎（LW-B1/B2/B3）：warfront 战局/城市易主/功罪双轨/战争事件 */
+  window.LW_warInit = function(){
+    try{
+      var lw = _ld(); if(!lw || !S) return;
+      var D = _LWD();
+      if(!lw.warfronts) lw.warfronts = {};
+      var wf = (D && D.warfronts) || [];
+      for(var i=0;i<wf.length;i++){
+        var f = wf[i]; if(!f || !f.id) continue;
+        if(!lw.warfronts[f.id]){
+          lw.warfronts[f.id] = {phase:"僵持", progress:0, atk:f.atk, def:f.def, history:[{day:S.day||1, ev:"战局初起", d:0}]};
+        }
+      }
+      if(!lw.merit) lw.merit = {};
+      if(!lw.guilt) lw.guilt = {};
+    }catch(e){}
+  };
+  window.LW_warShift = function(frontId, delta, reason){
+    try{
+      var lw = _ld(); if(!lw || !S || !frontId) return;
+      LW_warInit();
+      var w = lw.warfronts[frontId];
+      if(!w) return;
+      var d = Math.max(-50, Math.min(50, Number(delta)||0));
+      w.progress = Math.max(-150, Math.min(150, (w.progress||0)+d));
+      w.history = w.history || [];
+      w.history.push({day:S.day||1, ev:reason||"战局变动", d:d});
+      if(w.history.length>12) w.history.shift();
+      var D=_LWD(), f=null;
+      for(var j=0;j<(D.warfronts||[]).length;j++){ if(D.warfronts[j].id===frontId) f=D.warfronts[j]; }
+      var cn = f?f.cn:frontId;
+      var atkCn = (D.factions&&D.factions[w.atk])?D.factions[w.atk].cn:w.atk;
+      var defCn = (D.factions&&D.factions[w.def])?D.factions[w.def].cn:w.def;
+      var winAt = f?f.winAt:100, loseAt = f?f.loseAt:-100;
+      if(w.phase==="僵持" || w.phase==="推进"){
+        if(w.progress>=winAt){ LW_conquer(frontId, w.atk, reason); }
+        else if(w.progress<=loseAt){ LW_conquer(frontId, w.def, reason); }
+        else if(Math.abs(w.progress)>=30){ w.phase="推进"; }
+      }
+      try{ if(window.logMsg) logMsg("【战局】"+cn+"："+atkCn+" vs "+defCn+"，"+(w.progress>=0?"攻方占优":"守方占优")+"（"+(d>=0?"+":"")+d+"）。"); }catch(e){}
+      window.LW_journalAdd("faction", "【战局】"+cn+" 偏移 "+(d>=0?"+":"")+d+(reason?("（"+reason+"）"):""), null);
+    }catch(e){}
+  };
+  window.LW_conquer = function(frontId, winner, reason){
+    try{
+      var lw = _ld(); if(!lw || !S || !frontId) return;
+      LW_warInit();
+      var w = lw.warfronts[frontId]; if(!w) return;
+      var D=_LWD(), f=null;
+      for(var i=0;i<(D.warfronts||[]).length;i++){ if(D.warfronts[i].id===frontId) f=D.warfronts[i]; }
+      if(!f || !f.cities) return;
+      var loser = (winner===w.atk)?w.def:w.atk;
+      lw.cityControl = lw.cityControl || {};
+      var changed=[];
+      for(var c=0;c<f.cities.length;c++){
+        var city=f.cities[c];
+        if(lw.cityControl[city]!==winner){ lw.cityControl[city]=winner; changed.push(city); }
+      }
+      if(changed.length){
+        w.phase="易主"; w.winner=winner;
+        var cityCn = changed.join("、");
+        var wCn = (D.factions&&D.factions[winner])?D.factions[winner].cn:winner;
+        var lCn = (D.factions&&D.factions[loser])?D.factions[loser].cn:loser;
+        try{ if(window.logMsg) logMsg("【战报】"+cityCn+" 落入"+wCn+"之手！"+lCn+"的旗帜被换了下来。"); }catch(e){}
+        window.LW_newsAdd("war", "【战报】"+cityCn+"易主："+lCn+"→"+wCn+(reason?("（"+reason+"）"):""));
+        window.LW_journalAdd("faction", "【战报】"+cityCn+"易主，"+lCn+"的旗帜被换下。", null);
+        try{ if(window.LW_factionShift){ LW_factionShift(winner, 5, "夺取"+cityCn); LW_factionShift(loser, -5, "丢失"+cityCn); } }catch(e){}
+        LW_warPrice(f, winner);
+        try{ if(window.LW_echoScan) LW_echoScan(); }catch(e){}
+      }
+    }catch(e){}
+  };
+  window.LW_warPrice = function(f, winner){
+    try{
+      var goods = (f && f.goods) || [];
+      var up = (winner === f.atk);
+      if(window.w64_ensureDefaults) w64_ensureDefaults();
+      for(var i=0;i<goods.length;i++){
+        var g = goods[i];
+        var m = (S && S.worldState && S.worldState.market && S.worldState.market[g]);
+        if(m){
+          var shift = up?1.25:0.8;
+          m.price = Math.max(1, Math.round((m.price||m.base||1)*shift));
+          try{ if(window.logMsg) logMsg("【行情】"+(up?"战事吃紧，":"易主平息，")+g+" 的市价来到 "+m.price+"。"); }catch(e){}
+        }
+      }
+    }catch(e){}
+  };
+  window.LW_deed = function(facId, kind, amount, reason){
+    try{
+      var lw = _ld(); if(!lw || !S || !facId) return;
+      LW_warInit();
+      var book = (kind==="guilt") ? (lw.guilt||{}) : (lw.merit||{});
+      var a = Math.max(1, Math.min(1000, Math.abs(Number(amount)||1)));
+      book[facId] = Math.min(1000, (book[facId]||0)+a);
+      if(kind==="guilt") lw.guilt=book; else lw.merit=book;
+      var D=_LWD();
+      var cn=(D.factions&&D.factions[facId])?D.factions[facId].cn:facId;
+      try{ if(window.logMsg) logMsg(kind==="guilt"?"【罪责】你对"+cn+"欠下了一笔账（+"+a+"）。":"【功勋】"+cn+"记下了你的功绩（+"+a+"）。"); }catch(e){}
+      window.LW_journalAdd("faction", (kind==="guilt"?"【罪责】":"【功勋】")+cn+" "+(reason||"")+" +"+a, null);
+    }catch(e){}
+  };
+  /* 每日自然推进（世界自己也在动；偏攻方微漂移 + 五主线阶段修正） */
+  window.LW_warTick = function(){
+    try{
+      var lw=_ld(); if(!lw||!S) return;
+      LW_warInit();
+      var D=_LWD(), wfs=(D.warfronts)||[];
+      for(var i=0;i<wfs.length;i++){
+        var f=wfs[i], w=lw.warfronts[f.id];
+        if(!w || w.phase==="易主" || w.phase==="停战") continue;
+        var drift=(Math.random()-0.48)*f.weight*1.2;
+        if(S.world){
+          if(S.world.purge && f.id==="wf_purge") drift+=0.5;
+          if(S.world.silver && f.id==="wf_silverroad") drift+=0.5;
+          if(S.world.seal && f.id==="wf_abyss") drift+=0.4;
+          if(S.world.orc && f.id==="wf_orc") drift+=0.8;
+        }
+        if(Math.abs(drift)>=1) LW_warShift(f.id, Math.round(drift), "前线推演");
+      }
+    }catch(e){}
+  };
+  /* 战争事件：玩家身处战区城市时按权重抽取（LW_tick 链内每日一次） */
+  window.LW_warEvent = function(){
+    try{
+      var lw = _ld(); if(!lw || !S) return;
+      LW_warInit();
+      var D=_LWD(), evs=(D.warEvents)||[];
+      if(!evs.length) return;
+      var loc=S.loc||"", parts=String(loc).split("_"), city=parts[parts.length-1]||"";
+      var wfs=(D.warfronts)||[], cand=[];
+      for(var i=0;i<wfs.length;i++){
+        var f=wfs[i];
+        if(f.cities && f.cities.indexOf(city)>=0) cand.push(f);
+      }
+      if(!cand.length) return;
+      var total=0, pool=[];
+      for(var k=0;k<cand.length;k++){
+        for(var j=0;j<evs.length;j++){
+          if(evs[j].front===cand[k].id){ total+=evs[j].weight; pool.push(evs[j]); }
+        }
+      }
+      if(!total) return;
+      var roll=Math.random()*total;
+      var pick=pool[0];
+      for(var p=0;p<pool.length;p++){ roll-=pool[p].weight; if(roll<=0){ pick=pool[p]; break; } }
+      if(!pick) return;
+      var key = pick.id+"_"+S.day;
+      if(lw.worldFlags && lw.worldFlags[key]) return;
+      lw.worldFlags = lw.worldFlags||{};
+      lw.worldFlags[key]=true;
+      try{ if(window.logMsg) logMsg("【"+pick.cls+"】"+pick.text); }catch(e){}
+      window.LW_newsAdd(pick.cls, pick.text);
+      window.LW_journalAdd("echo", "【"+pick.cls+"】"+pick.text.slice(0,40), null);
+      if(pick.warDelta) LW_warShift(pick.front, pick.warDelta, pick.cls+"事件");
+      var inf=pick.infl||{};
+      for(var fi in inf){
+        try{ if(window.LW_factionShift) LW_factionShift(fi, inf[fi], pick.cls+"事件"); }catch(e){}
+      }
+    }catch(e){}
+  };
+  /* 战场总览 UI */
+  window.LW_warUI = function(){
+    var lw=_ld(); if(!lw) return;
+    LW_warInit();
+    var D=_LWD(), wfs=(D.warfronts)||[];
+    var box=document.createElement("div"); box.className="box";
+    var h="<h3>⚔ 战场总览</h3><div class='mini'>大陆的战火，正在烧向哪座城。</div>";
+    for(var i=0;i<wfs.length;i++){
+      var f=wfs[i], w=lw.warfronts[f.id]||{phase:"僵持",progress:0};
+      var atkCn=(D.factions&&D.factions[f.atk])?D.factions[f.atk].cn:f.atk;
+      var defCn=(D.factions&&D.factions[f.def])?D.factions[f.def].cn:f.def;
+      var prog=Math.max(-100,Math.min(100,w.progress||0));
+      var bar="";
+      if(prog>=0){
+        bar="<div style='height:6px;background:#3a2f1e;border-radius:3px;position:relative;overflow:hidden'><div style='position:absolute;left:50%;width:"+(prog/2)+"%;background:#c44;height:6px'></div></div>";
+      } else {
+        bar="<div style='height:6px;background:#3a2f1e;border-radius:3px;position:relative;overflow:hidden'><div style='position:absolute;left:"+(50+prog/2)+"%;width:"+(-prog/2)+"%;background:#4a7;height:6px'></div></div>";
+      }
+      var hist=(w.history||[]).slice(-3).map(function(x){return "第"+x.day+"日 "+x.ev;}).join("；");
+      h+="<div style='padding:8px;border-bottom:1px solid rgba(255,255,255,.06)'>"+
+         "<b>"+f.cn+"</b> <span style='color:#9a8a68'>["+w.phase+"]</span> "+
+         "<span style='color:#b8a888;font-size:12px'>"+atkCn+" ⇄ "+defCn+"</span>"+
+         "<div style='margin:6px 0'>"+bar+"</div>"+
+         "<div style='color:#8a7a5a;font-size:12px'>"+f.desc+"<br>"+(hist?hist:"尚未开战")+"</div></div>";
+    }
+    h+="<div style='text-align:center;margin-top:10px'><button class='btn' onclick='closeModal()'>返回</button></div>";
+    box.innerHTML=h;
     if(window.openModal) openModal(box); else document.body.appendChild(box);
   };
   /* S2 NPC 日程查询：按当前时段返回 NPC 所在与动态文本 */
@@ -53340,6 +53573,13 @@ try{
     if(c.flag !== undefined){
       if(!(lw.worldFlags && lw.worldFlags[c.flag])){ r.pass=false; r.reason=c.reason||"世界尚未走到那一步。"; return r; }
     }
+    if(c.deed && c.deed.id){
+      var book = (c.deed.kind==="guilt") ? (lw.guilt||{}) : (lw.merit||{});
+      var dv = book[c.deed.id] || 0;
+      var dop = c.deed.op || ">=";
+      var dok = dop===">" ? dv>c.deed.v : dop==="<" ? dv<c.deed.v : dop==="<=" ? dv<=c.deed.v : dv>=c.deed.v;
+      if(!dok){ r.pass=false; r.reason=c.deed.reason||"你在这方势力面前，还没有那份分量。"; return r; }
+    }
     return r;
   };
   /* LW 总 tick（advanceDays 挂接） */
@@ -53353,6 +53593,8 @@ try{
       window.LW_echoScan();
       window.LW_echoTick();
       window.LW_factionTick();
+      window.LW_warTick();
+      window.LW_warEvent();
     }catch(e){}
   };
   /* LW 自检（轻量检查器） */
@@ -53387,6 +53629,19 @@ try{
         for(var r in D.cityOwn){ if(r==="special") continue; t += (D.cityOwn[r]||[]).length; }
         if(t < 30) out.errors.push("cityOwn covers only "+t+" cities");
       }
+      if(D && D.warfronts){
+        for(var wi=0;wi<D.warfronts.length;wi++){
+          var wf=D.warfronts[wi];
+          if(!wf || !wf.id || !wf.atk || !wf.def || !wf.cities || !wf.cities.length)
+            out.errors.push("warfronts["+wi+"] bad");
+        }
+      }
+      if(lw && lw.cityControl){
+        for(var cityK in lw.cityControl){
+          var owner=lw.cityControl[cityK];
+          if(!owner) out.errors.push("cityControl."+cityK+" empty owner");
+        }
+      }
     }catch(e){ out.pass=false; out.errors.push(String(e)); }
     if(out.errors.length) out.pass = false;
     return out;
@@ -53400,6 +53655,7 @@ try{
         "<button class='btn' onclick='LW_calendarUI()' style='margin:3px'>🗓 世界历</button>"+
         "<button class='btn' onclick='LW_journalUI()' style='margin:3px'>📜 抉择记录</button>"+
         "<button class='btn' onclick='LW_factionUI()' style='margin:3px'>🏰 势力局势</button>"+
+        "<button class='btn' onclick='LW_warUI()' style='margin:3px'>⚔ 战场总览</button>"+
         "</div><div style='text-align:center;margin-top:4px'><button class='btn' onclick='closeModal()'>返回</button></div>";
       if(window.openModal) openModal(box); else document.body.appendChild(box);
     }catch(e){}
@@ -55325,7 +55581,8 @@ N["acad_home_2"]={tags:["region:north"],tag:"main",place:"自由城邦 · 交汇
 "老张塞面包给你的时候，手上的面粉扑了你一襟。你咬了一口，还是那个味道——热、软、带一点炭火的焦。你站在门口，把半个面包吃完，才想起说谢谢。",
 "你坐在老张店里，咬了一口面包——还是那个味道。热乎乎的，带一点炭火的焦香。你忽然觉得，这一路的风尘，都值了。"
 ],options:[
-{t:"先回家看爹娘",effects:{xp:8,flag:"acad_home_visited"},tier:{ok:["你推开家门。母亲正在灶台前忙活，听见动静回头，手里的勺子掉在地上：“……儿？”她快步过来，拉着你的手，上上下下看了好几遍，“瘦了。学院的饭，是不是不合口？”","你鼻子一酸，笑着说：“合口。就是没您做的香。”"]},go:"acad_home_3"},
+{t:"先回家看爹娘",effects:{xp:8,flag:"acad_home_visited"},tier:{ok:["你推开家门。母亲正在灶台前忙活，听见动静回头，手里的勺子掉在地上：“……儿？”她快步过来，拉着你的手，上上下下看了好几遍，“瘦了。学院的饭，是不是不合口？”","你鼻子一酸，笑着说：“合口。就是没您做的香。”",
+    "[[if:world.city=='church'|城门口盘查的是白袍的圣战军，腰刀比话还多。|]]"]},go:"acad_home_3"},
 {t:"先去商会，找李管事聊聊木盒的事",check:{a:"CHA",sk:"persu",label:"探访"},tier:{
  ok:["你去了商会。李管事见到你，笑容热情，但你看得出，他眼底比以前多了一层东西。他绝口不提木盒，只寒暄客套。你试探着提了一句，他的笑容顿了一下：“那个木盒啊……早处理了。陈年旧事，不提也罢。”","他岔开话题，但你知道，木盒的事，没那么简单。"],
  fail:["李管事正在忙，只跟你打了个照面：“回来了？好好歇歇。回头我请你吃饭。”他没给你说话的机会。"],
@@ -55383,7 +55640,8 @@ N["acad_home_6"]={tags:["region:north"],tag:"main",place:"铁门关 · 第三哨
 "纸烧完，灰烬在风里散开，先往北飘，又打着旋落下来。你说完那句话，箭楼里安静了一瞬。墙根下的动静极轻，像呼吸，又像叹气，你侧耳听了一会儿，什么也没有了。",
 "你收拾停当，离开第三哨箭楼，沿着来路踏上行程。"],options:[
 {t:"蹲下，仔细听那动静",check:{a:"AGI",sk:"detect",label:"探查"},tier:{
- ok:["你蹲下来，贴着地面听。那动静时断时续，像水流，又像呼吸。你循着声音，在箭楼角落的地基处，摸到一块松动的青砖——砖后是一个拳头大的洞，洞里塞着一个布包。"],
+ ok:["你蹲下来，贴着地面听。那动静时断时续，像水流，又像呼吸。你循着声音，在箭楼角落的地基处，摸到一块松动的青砖——砖后是一个拳头大的洞，洞里塞着一个布包。",
+    "[[if:world.city=='east'|城楼箭垛上，插的已是东军的黑底金鹰旗。|]]"],
  fail:["你听了一会儿，那动静就消失了。你直起身，箭楼里一片死寂。"],
  crit:["你不仅找到了布包，还发现布包底下压着一块铁牌——和你那两块，形制完全一致。第三块。你摸出来，月光下，铁牌背面刻着一行字：“第七哨 · 永夜 · 点火者，不死。”","三块铁牌，凑成了一面完整的三联牌。"]
 },effects:{xp:20},onCrit:{flag:"acad_token_third_2"},go:"acad_home_7"},
@@ -55397,7 +55655,8 @@ N["acad_home_7"]={tags:["region:north"],tag:"main",place:"铁门关 · 城墙",p
 "纸条卷得极细，塞在钉孔里，抽出来时带着一股铁锈味。纸上的字迹工整，一笔一划，像刻在纸上。“别走官道”那四个字，你看了两遍，把纸条重新卷好，收进怀里。",
 "你用指甲抠了抠，铜钉松动，掉出来一张卷成细条的纸。展开，上面只有一行字，字迹工整：“第七节点的锚，在北边。别走官道。”"
 ],options:[
-{t:"把纸条收好",effects:{xp:12,flag:"acad_wall_note"},tier:{ok:["你把纸条仔细卷好，收进贴身衣袋。“别走官道”——这五个字，你记下了。","你回头看了一眼那堵黑石墙。它像一堵沉默的门，门后藏着什么，只有它知道。"]},go:"acad_home_8"},
+{t:"把纸条收好",effects:{xp:12,flag:"acad_wall_note"},tier:{ok:["你把纸条仔细卷好，收进贴身衣袋。“别走官道”——这五个字，你记下了。","你回头看了一眼那堵黑石墙。它像一堵沉默的门，门后藏着什么，只有它知道。",
+    "[[if:world.city=='east'|墙外东军的营帐连到天边，炊烟压着城墙走。|]]"]},go:"acad_home_8"},
 {t:"再抠一抠旁边的黑石",check:{a:"AGI",sk:"detect",label:"探查"},tier:{
  ok:["你又在附近抠了几块黑石，发现其中一块的缝隙里有干涸的蜡迹——像是有人在这里点过蜡烛。蜡迹旁边，有一道很浅的刻痕，是三个字：“点火者。”"],
  fail:["你抠了半天，一无所获。黑石墙密实得像一整块铁。"],
@@ -57231,7 +57490,8 @@ N["alumni_tie_1"]={tags:["region:north"],tag:"main",place:"北境 · 驿站",whe
 {t:"（收好信，动身回第三哨）",effects:{xp:10},go:"alumni_tie_2"}
 ]};
 
-N["alumni_tie_2"]={tags:["region:north"],tag:"main",place:"北境 · 第三哨",where:"白昼",pace:"deep",text:{default:["第三哨的雪比走时厚了一层。老铁在钟楼下的铁匠棚里等你，手里拎着一把修到一半的铁钎。看见你，他把铁钎往地上一插，站起来，咧嘴笑了笑：“回来了。”","他没多说，领你上了钟楼。铜钟悬在楼顶，钟身上布满了斑驳的刻痕。老铁用指腹摩挲着其中一道：“你看这道痕——三十年没人动过它，可它自己裂开了一道口子，就在你救我那晚。”","他指着钟身上的刻痕：“我小时候听守钟老卒说过，这钟不是铸铁的，是‘镇物’。钟响三声，是示警；钟裂一道，是……‘门开了’。”他顿了顿，“老卒说这话的时候，我当他老糊涂。现在，我不确定了。”","钟楼的风灌进来，铜钟纹丝不动，但钟身那道新裂的口子，在光线下泛着暗红，像一道没愈合的伤。"],ifRelation:{npc:"tie",op:">=",val:80,yes:["他教你握枪的姿势，手把手地调：“虎口要沉，枪是活的。”顿了顿，声音低下去，“我这把年纪，还能教出个像样的，也算没白活。”"],no:{ifRelation:{npc:"tie",op:">=",val:60,yes:["第三哨的校场，老铁把一杆红缨枪抛给你：“接着！当年我在铁门关就是用它挑的旗。”他握着枪杆，眼神难得亮起来。"],no:{ifRelation:{npc:"tie",op:"<=",val:-60,yes:["他背过身去擦枪：“哨上的事，不劳你操心。你是客，该走走。”"],no:null}}}}}},options:[
+N["alumni_tie_2"]={tags:["region:north"],tag:"main",place:"北境 · 第三哨",where:"白昼",pace:"deep",text:{default:["第三哨的雪比走时厚了一层。老铁在钟楼下的铁匠棚里等你，手里拎着一把修到一半的铁钎。看见你，他把铁钎往地上一插，站起来，咧嘴笑了笑：“回来了。”","他没多说，领你上了钟楼。铜钟悬在楼顶，钟身上布满了斑驳的刻痕。老铁用指腹摩挲着其中一道：“你看这道痕——三十年没人动过它，可它自己裂开了一道口子，就在你救我那晚。”","他指着钟身上的刻痕：“我小时候听守钟老卒说过，这钟不是铸铁的，是‘镇物’。钟响三声，是示警；钟裂一道，是……‘门开了’。”他顿了顿，“老卒说这话的时候，我当他老糊涂。现在，我不确定了。”","钟楼的风灌进来，铜钟纹丝不动，但钟身那道新裂的口子，在光线下泛着暗红，像一道没愈合的伤。",
+    "[[if:world.city=='orc'|哨塔上换成了兽人的狼旗，烽火台上堆着干柴。|]]"],ifRelation:{npc:"tie",op:">=",val:80,yes:["他教你握枪的姿势，手把手地调：“虎口要沉，枪是活的。”顿了顿，声音低下去，“我这把年纪，还能教出个像样的，也算没白活。”"],no:{ifRelation:{npc:"tie",op:">=",val:60,yes:["第三哨的校场，老铁把一杆红缨枪抛给你：“接着！当年我在铁门关就是用它挑的旗。”他握着枪杆，眼神难得亮起来。"],no:{ifRelation:{npc:"tie",op:"<=",val:-60,yes:["他背过身去擦枪：“哨上的事，不劳你操心。你是客，该走走。”"],no:null}}}}}},options:[
 {t:"（问老铁那个收古董的人的下落）",effects:{xp:18,flag:"alumni_tie_antique"},go:"alumni_tie_3"},
 {t:"（问铜钟裂口到底是什么征兆）",effects:{xp:15},go:"alumni_tie_3"}
 ]};
@@ -57974,13 +58234,15 @@ N["fc_camp_street"] = {
       "upg16_rep_low": [
         "你走在交汇城的长街上。商贩的叫卖声、车马的辘辘声、铁匠铺的叮当声混成一片。",
         "几个巡丁看见你，下意识握紧了腰间的刀。茶馆里说书人正讲着北境战事，可你一进门，声音就低了下去。",
-        "你在街角停下，把兜帽压了压。这座城市记得你做过的事——那些事，让好人避着你，让坏人想找你。"
+        "你在街角停下，把兜帽压了压。这座城市记得你做过的事——那些事，让好人避着你，让坏人想找你。",
+        "[[if:world.city=='church'|集市上多了穿灰袍的审判官，摊贩们话都少了许多。|]]"
       ]
     }
   },
   options: [
     { t: "（走进茶馆，听一耳朵）", go: "fc_camp_tavern" },
-    { t: "（去集市看看行情）", go: "fc_camp_market" },
+    { t: "（去集市看看行情）",
+     go: "fc_camp_market" },
     { t: "（原路离开，回自己的事）", go: "fc_tavern" }
   ]
 };
@@ -64447,7 +64709,8 @@ N["arrive_desert_lvzhou"] = {
   options:[
     {t:"去城南黑市看看水的行情",go:"desert_lvzhou_market"},
     {t:"打听水源危机的来龙去脉",check:{a:"CHA",sk:"persu",label:"打听"},tier:{
-      ok:["你在城里转了一圈，拼出个大概：绿洲集市的水，一半靠大井，一半靠商队从北方驼来。大井三天前开始干涸——不是枯了，是『被抽的』。","「城南那个老盐商，上月买下了城北三眼井的地。」驼夫压着嗓门，「井水一夜之间浅了一半。有人说他装了水车，夜里往城外拉水。」"],
+      ok:["你在城里转了一圈，拼出个大概：绿洲集市的水，一半靠大井，一半靠商队从北方驼来。大井三天前开始干涸——不是枯了，是『被抽的』。","「城南那个老盐商，上月买下了城北三眼井的地。」驼夫压着嗓门，「井水一夜之间浅了一半。有人说他装了水车，夜里往城外拉水。」",
+    "[[if:world.city=='church'|集市城门口立着教会的圣徽旗，进城要先过一道白袍的盘查。|]]"],
       fail:["城里的人对水的事讳莫如深，你只打听到大井三天前开始见底。老驼夫不愿多说，摆摆手让你自己去黑市看。"],
       crit:["你打听到更深处：那口井不是枯了，是『见了底下的东西』——打水的工人说，第三天夜里，井底露出半块石板，石板上刻着花纹，像某种古老的封印。「工人吓得不敢再打。可第二天，井水就回来了——只回来一半。」","「封印。」你想起黑沙区那条石路。这座城，底下也压着什么。"]
     },effects:{xp:25,infl:{desert:3}},go:"desert_lvzhou_market"},
@@ -66218,7 +66481,8 @@ N["church_deep_01"] = {
     "城门口站着两排圣武士，白甲白盔，一动不动，像两排铸死的雕像。队伍里有人小声念经，有人攥着赎罪券，有人怀里抱着生病的孩子，脸上是同样的疲惫。",
     "圣武士的甲片擦得锃亮，连甲缝里都找不到一点灰。进城的队伍里，有人抱着孩子，孩子已经睡着了，母亲腾出一只手，替他挡着日头。",
 "晨祷钟一声接一声，震得人胸口发闷。你夹在人群里，脚步不由自主地跟着钟声的节奏，像是这座城在替所有人走着路。",
-"你随着人流进城。城里的钟声正响，一声接一声，震得石板路都在发颤。那是圣辉大教堂的晨祷钟——这座城的心脏，一刻不停地跳。"
+"你随着人流进城。城里的钟声正响，一声接一声，震得石板路都在发颤。那是圣辉大教堂的晨祷钟——这座城的心脏，一刻不停地跳。",
+    "[[if:world.city=='abyss'|长街上的白袍圣战军不见了，换成了穿黑袍的巡街人。|]]"
   ],
   options:[
     {t:"（先到广场上看看——圣辉城最热闹的地方）",go:"church_deep_02"},
@@ -66247,7 +66511,8 @@ N["church_deep_03"] = {
     "“看得出？”你问。",
     "饭铺的桌子油亮，素汤面的热气扑在脸上。老朝圣者的褡裢磨得发白，他数铜子时，拇指在每一枚上搓一下，像在确认成色。",
 "他说“圣像底下的影子，也分长短”时，筷子在碗沿上顿了一下。你低头吃面，面汤咸淡正好，街上的钟声在这时候响了一声。",
-"“看得出。”他笑了笑，“头回来的人，看什么都新鲜。住久了就知道——圣城跟别处一样，有好人，也有不好的人。就是圣像底下的影子，也分长短。”"
+"“看得出。”他笑了笑，“头回来的人，看什么都新鲜。住久了就知道——圣城跟别处一样，有好人，也有不好的人。就是圣像底下的影子，也分长短。”",
+    "[[if:world.city=='abyss'|朝圣者绕开了城中心，走路都贴着墙根。|]]"
   ],
   options:[
     {t:"（问他：圣城最近有什么新鲜事）",go:"church_deep_04"},
@@ -71863,7 +72128,8 @@ text:[
 "天没亮透，港口城的南门就排起了长队。运鱼的板车、驮布的骡子、挑盐的脚夫，把城门洞挤得满满当当。",
 "税关的文书伏在桌上，头也不抬：“姓名，来意，带了什么。”他手里的笔在纸上划拉着，写一个字顿一下，像在称每一笔的重量。",
 "你报了姓名和行商的身份。文书抬起眼皮看你一眼，忽然压着嗓门：“港口城最近查得紧。夜里别往船坞那边走——白帆号的案子还没结。”",
-"他在你的路引上盖了个章，章子缺了一角，印出来像半枚月亮。"
+"他在你的路引上盖了个章，章子缺了一角，印出来像半枚月亮。",
+    "[[if:world.city=='east'|税关挂上了东部王国的蓝鹰旗，过港的商船排成长队。|]]"
 ],options:[
 {t:"谢过文书，先到渔行早市看看",go:"south_deep_02"},
 {t:"直接去船坞，看看白帆号的事",go:"south_deep_04"}
@@ -71874,7 +72140,8 @@ text:[
 "渔行早市是港口城醒得最早的地方。湿漉漉的石板地上摆满了鱼筐，鲳鱼银亮，带鱼泛着青光，一筐筐被人潮围着。",
 "渔妇阿翠一边剖鱼一边跟旁边的人说话，刀起刀落，鱼鳞溅到围裙上：“白帆号那事，你们听说了吧？又回来一艘，空的。这是第四艘了。”",
 "旁边收鱼的汉子接话：“船回来了，人呢？连根骨头都没有。海神爷要是收人，也不兴这么收的。”",
-"阿翠看见你站在摊前，擦了擦手：“外乡人，买鱼还是打听事？打听事的话，一条鱼一桩。”她笑的时候，眼角的纹路堆在一起。"
+"阿翠看见你站在摊前，擦了擦手：“外乡人，买鱼还是打听事？打听事的话，一条鱼一桩。”她笑的时候，眼角的纹路堆在一起。",
+    "[[if:world.city=='east'|渔行里多了一队东军的采买，给价压得死低。|]]"
 ],options:[
 {t:"买条鱼，打听白帆号的详情",go:"south_deep_03"},
 {t:"不搭话，绕去船坞",go:"south_deep_04"}
@@ -81863,7 +82130,59 @@ window.LW_DATA = {
     "午":"日头正毒，集市上的吆喝声一阵高过一阵。",
     "昏":"暮色压下来，酒馆的灯一盏盏亮起。",
     "夜":"夜禁之后，街上只剩下巡夜人的梆子声。"
-  }
+  },
+  /* 战局模型（WARFRONTS）：首批 5 战场；atk/def ∈ factions；cities ∈ 城市表；
+     goods = 该战场敏感商品（易主时物价偏移，联动 TRADE_GOODS/w64 市场） */
+  warfronts: [
+    { id:"wf_tiebigate", cn:"铁门关拉锯", atk:"east", def:"north",
+      cities:["tiebi","beijing"], goods:["iron","weapon"],
+      winAt:100, loseAt:-100, weight:1.0,
+      desc:"东军与北方公国的拉锯，铁门关是咽喉。" },
+    { id:"wf_silverroad", cn:"银穗商路", atk:"east", def:"south",
+      cities:["shangzhan","gangkou"], goods:["grain","silk"],
+      winAt:100, loseAt:-100, weight:0.8,
+      desc:"东部王国提高银穗商路税收，商盟在备钱备粮。" },
+    { id:"wf_abyss", cn:"封印七节点", atk:"abyss", def:"church",
+      cities:["shengcheng","shendian","yiji"], goods:["book","potion"],
+      winAt:100, loseAt:-100, weight:0.7,
+      desc:"深渊教团在七处封印节点试探。教会圣战军枕戈待旦。" },
+    { id:"wf_orc", cn:"北境狼旗", atk:"orc", def:"north",
+      cities:["aierda","disanshao"], goods:["fur","iron"],
+      winAt:100, loseAt:-100, weight:1.0,
+      desc:"黑石大汗整合半数部族，狼旗南指。" },
+    { id:"wf_purge", cn:"净化令", atk:"church", def:"free",
+      cities:["jiaohui","jishi"], goods:["potion","book"],
+      winAt:100, loseAt:-100, weight:0.6,
+      desc:"圣痕司审判官在各城邦搜查奥术痕迹，自由城首当其冲。" }
+  ],
+  /* 战争事件模板（WAR_EVENTS）：玩家身处战区城市时按权重抽取触发；
+     warDelta 偏移 warfront.progress；infl 影响势力关系；后果可促成城市易主 */
+  warEvents: [
+    { id:"we_besiege",  cls:"人祸", front:"wf_tiebigate", weight:30,
+      text:"铁门关下，东军的营火连成一条火龙，围了三天三夜。城头的守军把滚油烧得冒烟，就等天亮那一仗。",
+      warDelta:8, infl:{east:2,north:-2} },
+    { id:"we_grain",    cls:"商机", front:"wf_silverroad", weight:25,
+      text:"银穗商路上，三支粮队被拦在税卡外。粮价闻风而动，几个大掌柜连夜改了价牌，手都在抖。",
+      warDelta:4, infl:{east:1,south:-1} },
+    { id:"we_spy",      cls:"人祸", front:"wf_purge", weight:25,
+      text:"自由城夜里抓了几个穿灰袍的探子。第二天一早，城门口贴出告示，悬赏翻了三倍。",
+      warDelta:5, infl:{church:2,free:-2} },
+    { id:"we_fire",     cls:"天灾", front:"wf_orc", weight:20,
+      text:"北境的草场起了大火，烧了三天三夜。狼旗的先锋军绕过火场，从更北的荒原压了下来。",
+      warDelta:6, infl:{orc:2,north:-2} },
+    { id:"we_rite",     cls:"奇遇", front:"wf_abyss", weight:20,
+      text:"圣辉城郊的封印节点夜里渗出了黑雾。教会的圣战军在雾外扎营，火把点了一整夜，没人敢靠近。",
+      warDelta:6, infl:{abyss:2,church:-2} },
+    { id:"we_siege_relief", cls:"人祸", front:"wf_tiebigate", weight:20,
+      text:"北方公国的援军到了。铁门关的城门开了一条缝，送进去的粮车让守军的号子都喊得响了几分。",
+      warDelta:-6, infl:{north:2,east:-2} },
+    { id:"we_truce_rumor", cls:"商机", front:"wf_silverroad", weight:15,
+      text:"商路上有人传，东部王国要放宽税则。消息没坐实，货价已经先软了两成。",
+      warDelta:-4, infl:{south:1,east:-1} },
+    { id:"we_defector", cls:"奇遇", front:"wf_purge", weight:15,
+      text:"一个灰袍审判官深夜逃出圣城，浑身是伤。他说自己看见了不该看的东西——话没说完，人就没了声息。",
+      warDelta:4, infl:{free:1,church:-1,abyss:1} }
+  ]
 };
 
 /* /u1inj:data-nodes:dn_market.js/ */

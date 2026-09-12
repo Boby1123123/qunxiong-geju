@@ -1,0 +1,105 @@
+<html style="margin:0;padding:0;">
+<div style="width:100%;box-sizing:border-box;background:#f5efe0;color:#3a2f1e;font-family:'Microsoft YaHei','PingFang SC',sans-serif;padding:18px 16px 24px;border-radius:10px;">
+  <div style="font-size:20px;font-weight:700;letter-spacing:1px;border-bottom:2px solid #caa;padding-bottom:8px;margin-bottom:14px;">
+    LW 下一步三大方向 · 架构与版本路线
+    <span style="font-size:12px;color:#9a8a68;font-weight:400;margin-left:8px;">示意 · 基于 v95 现状设计</span>
+  </div>
+
+  <!-- 三方向卡片 -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <div style="flex:1 1 30%;min-width:240px;background:#fff8e8;border:1px solid #d8c4a0;border-radius:8px;padding:12px;">
+      <div style="font-size:15px;font-weight:700;color:#8a5a2b;">方向 A · 回响检查器（Echo Vault）</div>
+      <div style="font-size:12px;color:#9a8a68;margin:4px 0 8px;">给世界装"记账的规矩" · v96/v98</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">c_echo 回响健康</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">c_worldstate 白名单</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">c_faction 矩阵</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">echoMap 30+ 双面回响</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">{{echoPending}}</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">账本融合闭环</span>
+      </div>
+    </div>
+    <div style="flex:1 1 30%;min-width:240px;background:#fff8e8;border:1px solid #d8c4a0;border-radius:8px;padding:12px;">
+      <div style="font-size:15px;font-weight:700;color:#8a5a2b;">方向 B · 势力战争引擎（War Engine）</div>
+      <div style="font-size:12px;color:#9a8a68;margin:4px 0 8px;">让世界真正"打起来" · v96/v97</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">warfront 5 战场</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">城市易主 cityControl</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">战争事件入池</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">功罪双轨 merit/guilt</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">战场总览 UI</span>
+      </div>
+    </div>
+    <div style="flex:1 1 30%;min-width:240px;background:#fff8e8;border:1px solid #d8c4a0;border-radius:8px;padding:12px;">
+      <div style="font-size:15px;font-weight:700;color:#8a5a2b;">方向 C · 世界编年史自动化（Chronicle）</div>
+      <div style="font-size:12px;color:#9a8a68;margin:4px 0 8px;">让世界写自己的史书 · v98/v99</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">双册模型（世界/玩家）</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">自动成册规则表</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">时间线双列 UI</span>
+        <span style="background:#efe3d0;border-radius:10px;padding:2px 8px;font-size:12px;">[chron:] / {{chronCount}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 枢纽与数据流 -->
+  <div style="display:flex;align-items:stretch;gap:8px;margin-top:14px;flex-wrap:wrap;">
+    <div style="flex:1 1 18%;min-width:150px;display:flex;flex-direction:column;justify-content:center;background:#e8dcc8;border:1px solid #d8c4a0;border-radius:8px;padding:10px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;">方向 A</div>
+      <div style="font-size:11px;color:#8a7a5a;">校验 flag / echoId / 账本闭环</div>
+      <div style="font-size:18px;margin-top:4px;">⬇</div>
+    </div>
+    <div style="flex:3 1 40%;min-width:260px;background:#fff8e8;border:2px solid #b08a5a;border-radius:8px;padding:12px;text-align:center;">
+      <div style="font-size:15px;font-weight:700;">S.lw 世界状态（枢纽 · 只读 S / 追加渲染）</div>
+      <div style="font-size:12px;color:#9a8a68;margin-top:4px;">season · dayPhase · echoes · echoLog · factionRel · factionState · cityControl · warfronts · merit · guilt · worldChron · journal · worldFlags</div>
+      <div style="font-size:12px;color:#8a7a5a;margin-top:6px;">红线守护：判定公式 / writeNext 核心 / choose / saveVersion=48 不触碰</div>
+    </div>
+    <div style="flex:1 1 18%;min-width:150px;display:flex;flex-direction:column;justify-content:center;background:#e8dcc8;border:1px solid #d8c4a0;border-radius:8px;padding:10px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;">方向 B</div>
+      <div style="font-size:11px;color:#8a7a5a;">写入 cityControl / warfronts / merit</div>
+      <div style="font-size:18px;margin-top:4px;">⬇</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:8px;font-size:13px;">
+    cityOwner 变化 / factionState 转移 / echo 触发
+    <span style="color:#8a5a2b;font-weight:700;">⬇ 自动喂入方向 C 成册</span>
+  </div>
+
+  <!-- 玩家感知 -->
+  <div style="background:#efe3d0;border:1px dashed #b08a5a;border-radius:8px;padding:10px;margin-top:8px;text-align:center;">
+    <span style="font-weight:700;font-size:14px;">玩家感知</span>
+    <span style="font-size:12px;color:#8a7a5a;margin-left:10px;">正文 · 选项（cond.city / cond.deed）· 事件池 · 世界面板（回响在途 / 战场进度 / 编年史时间线）</span>
+    <div style="font-size:12px;color:#6a5a3a;margin-top:6px;">↻ 玩家选择/flag 变更 → 反向驱动 A（回响登记）与 B（warShift 介入战场）</div>
+  </div>
+
+  <!-- 版本路线时间线 -->
+  <div style="margin-top:16px;">
+    <div style="font-size:14px;font-weight:700;color:#8a5a2b;margin-bottom:8px;">推荐版本批次路线（每批独立验收 · 逐批发布）</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;">
+      <div style="flex:1 1 22%;min-width:180px;background:#fff8e8;border-left:4px solid #8a5a2b;border-radius:6px;padding:10px;">
+        <div style="font-weight:700;font-size:14px;">v96</div>
+        <div style="font-size:12px;color:#6a5a3a;">A1 检查器立规矩（c_echo / c_worldstate / c_faction 骨架）</div>
+        <div style="font-size:12px;color:#6a5a3a;">B1 战争引擎地基（5 战场 + warTick/warShift）</div>
+      </div>
+      <div style="flex:1 1 22%;min-width:180px;background:#fff8e8;border-left:4px solid #8a5a2b;border-radius:6px;padding:10px;">
+        <div style="font-weight:700;font-size:14px;">v97</div>
+        <div style="font-size:12px;color:#6a5a3a;">B2 城市易主动态化 + 影响链（desc/物价/回响）</div>
+        <div style="font-size:12px;color:#6a5a3a;">B3 战争事件入池 + 功罪双轨 + 势力界面 v2</div>
+      </div>
+      <div style="flex:1 1 22%;min-width:180px;background:#fff8e8;border-left:4px solid #8a5a2b;border-radius:6px;padding:10px;">
+        <div style="font-weight:700;font-size:14px;">v98</div>
+        <div style="font-size:12px;color:#6a5a3a;">A2 回响生态 30+（双面回响 / 在途分页）</div>
+        <div style="font-size:12px;color:#6a5a3a;">A3 账本融合闭环</div>
+        <div style="font-size:12px;color:#6a5a3a;">C1 编年史双册自动成册</div>
+      </div>
+      <div style="flex:1 1 22%;min-width:180px;background:#fff8e8;border-left:4px solid #8a5a2b;border-radius:6px;padding:10px;">
+        <div style="font-weight:700;font-size:14px;">v99</div>
+        <div style="font-size:12px;color:#6a5a3a;">C2 编年史时间线双列 UI + 手记集成</div>
+        <div style="font-size:12px;color:#6a5a3a;">C3 作者语法 [chron:] / {{chronCount}} + 全量覆盖</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#9a8a68;margin-top:6px;">顺序逻辑：先立规矩（A1）→ 世界动起来（B）→ 素材足够后回响生态（A2/A3）→ 最后编年史把一切写成史书（C）。</div>
+  </div>
+</div>
+</html>

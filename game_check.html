@@ -4514,6 +4514,64 @@ body.v68-immersive #v68-immersive-bar{ display:flex; }
 
 </style>
 <style>
+/* /v94ui:create/ V94 游戏开始主界面 + 捏人分步向导（方案一 v5 羊皮纸延续） */
+/* ===== 主界面 ===== */
+#title-screen{ position:fixed; inset:0; z-index:9000; background:linear-gradient(168deg,#f6eedb 0%,#eddfc3 32%,#e3d0a6 66%,#d8c392 100%); display:flex; align-items:center; justify-content:center; overflow:auto; }
+#title-screen::before{ content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(122,96,52,.07) 1px,transparent 1.2px); background-size:7px 7px; opacity:.65; pointer-events:none; }
+#title-screen .ts-inner{ position:relative; text-align:center; max-width:660px; width:92%; padding:46px 24px 40px; }
+#title-screen .ts-kicker{ font-size:15px; letter-spacing:7px; color:#8b6f47; }
+#title-screen .ts-title{ font-size:58px; font-weight:800; letter-spacing:14px; color:#3d2c17; text-shadow:0 2px 0 rgba(255,255,255,.4),0 8px 22px rgba(96,72,36,.30); margin:12px 0 6px; }
+#title-screen .ts-sub{ font-size:17px; letter-spacing:5px; color:#6b5a3a; }
+#title-screen .ts-rule{ width:230px; height:1px; margin:20px auto; background:linear-gradient(90deg,transparent,#9b7e4f,transparent); }
+#title-screen .ts-verse{ font-size:14.5px; line-height:2.05; color:#57442d; max-width:520px; margin:0 auto 28px; }
+#title-screen .ts-btns{ display:flex; flex-direction:column; gap:13px; align-items:center; }
+#title-screen .ts-btn{ width:256px; padding:13px 0; font-size:16px; letter-spacing:3px; color:#5a4630; background:rgba(255,252,243,.74); border:1px solid rgba(122,96,52,.5); border-radius:999px; cursor:pointer; box-shadow:0 2px 0 rgba(122,96,52,.2),0 6px 16px rgba(96,72,36,.08); transition:all .16s; }
+#title-screen .ts-btn:hover{ background:rgba(255,252,243,.96); border-color:#8b6f47; transform:translateY(-1px); }
+#title-screen .ts-btn.primary{ color:#fdf8ec; background:linear-gradient(180deg,#8b6f47,#6e5535); border-color:#5c4529; }
+#title-screen .ts-btn.primary:hover{ background:linear-gradient(180deg,#9a7d52,#7a6140); }
+#title-screen .ts-foot{ margin-top:28px; font-size:12px; color:#9a8a68; letter-spacing:1px; }
+/* ===== 捏人分步向导 ===== */
+#creation-shell{ width:100%; }
+.c-head{ text-align:center; margin-bottom:14px; }
+.c-title{ font-size:24px; font-weight:800; letter-spacing:6px; color:#3d2c17; }
+.c-sub{ font-size:13px; color:#7a6a4d; margin:6px 0 0; line-height:1.9; }
+.c-steps{ display:flex; gap:6px; margin:14px 0 4px; }
+.c-step{ flex:1; padding:8px 4px; text-align:center; font-size:13px; color:#9a8a68; background:rgba(255,252,243,.5); border:1px solid rgba(122,96,52,.25); border-radius:8px; cursor:pointer; transition:all .15s; line-height:1.5; }
+.c-step b{ font-size:15px; }
+.c-step.on{ background:rgba(139,111,71,.16); border-color:#8b6f47; color:#57442d; }
+.c-step.done{ color:#6e5535; }
+.c-body{ display:flex; gap:14px; margin-top:6px; }
+.c-main{ flex:1 1 auto; min-width:0; }
+.c-side{ flex:0 0 238px; }
+.cstep{ display:none; }
+.cstep.on{ display:block; animation:cFade .22s ease-out; }
+@keyframes cFade{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+.sel-row{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 4px; }
+.sel-card{ flex:1 1 calc(33.33% - 8px); min-width:180px; text-align:left; padding:10px 12px; font-size:13.5px; color:#57442d; background:rgba(255,252,243,.72); border:1px solid rgba(122,96,52,.35); border-radius:10px; cursor:pointer; line-height:1.55; box-shadow:0 1px 0 rgba(122,96,52,.12); transition:all .15s; }
+.sel-card:hover{ border-color:#8b6f47; background:rgba(255,252,243,.95); }
+.sel-card .sc-t{ display:block; font-weight:700; color:#3d2c17; font-size:14px; margin-bottom:2px; }
+.sel-card .sc-d{ display:block; color:#7a6a4d; font-size:12.5px; }
+.sel-card .sc-m{ display:block; font-size:12px; margin-top:2px; }
+.sel-card .sc-s{ display:block; font-size:12px; color:#8b6f47; margin-top:3px; }
+.sel-card.small{ flex:0 0 auto; min-width:0; padding:8px 20px; text-align:center; }
+#subrace-box, #background-box{ flex-direction:column; align-items:stretch; }
+#subrace-box .sel-card, #background-box .sel-card{ flex:1 1 auto; min-width:0; }
+.attr-row{ display:flex; align-items:center; gap:10px; padding:8px 10px; margin:6px 0; background:rgba(255,252,243,.6); border:1px solid rgba(122,96,52,.28); border-radius:10px; }
+.attr-row .nm{ flex:0 0 86px; font-weight:700; color:#3d2c17; }
+.attr-row .val{ flex:0 0 34px; text-align:center; font-size:17px; font-weight:800; color:#8b6f47; }
+.attr-row .btns{ display:flex; gap:5px; }
+.attr-row .btns .btn{ padding:5px 11px; font-size:13px; }
+.attr-row .note{ flex:1; font-size:12px; color:#8a7a5c; line-height:1.5; }
+.c-nav{ display:flex; align-items:center; justify-content:space-between; margin-top:14px; gap:10px; }
+.c-nav .hint{ font-size:12.5px; color:#8a7a5c; }
+/* ===== 捏人右侧预览卡 ===== */
+#v94-preview{ background:rgba(255,252,243,.6); border:1px solid rgba(122,96,52,.3); border-radius:12px; padding:14px 14px 16px; }
+#v94-preview .pv-t{ font-size:13px; font-weight:700; color:#8b6f47; letter-spacing:2px; margin-bottom:10px; padding-bottom:8px; border-bottom:1px dashed rgba(122,96,52,.3); }
+#v94-preview .pv-row{ font-size:12.5px; line-height:1.75; color:#57442d; margin-bottom:9px; }
+#v94-preview .pv-row .k{ font-weight:700; color:#3d2c17; font-size:13px; }
+#v94-preview .pv-row .v{ color:#6b5a3a; }
+</style>
+<style>
 /* /v68ui:frame/ V68 西幻手抄圣典 · 设计令牌与组件（羊皮纸/哥特/烫金，禁国风） */
 body.v68-theme{
   --c-parch-50:#f0e2c4; --c-parch-100:#e6d3a8; --c-ink-900:#2e1f12; --c-ink-700:#4a3420;
@@ -4928,6 +4986,57 @@ body.v68-theme #options .opt:hover{ background:#f2e0b8; border-color:#a08040; tr
 </div>
 
 <div id="flash"></div>
+
+<style>
+/* ===== /v94inj:title/ v94 游戏开始主界面 + 捏人分步向导（主界面全屏层；捏人仍走 #modal box） ===== */
+#title-screen{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;overflow:auto;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(212,160,23,.10), transparent 60%),
+    radial-gradient(900px 400px at 85% 110%, rgba(127,184,168,.10), transparent 60%),
+    linear-gradient(180deg,var(--bg-deep,#ece5d2) 0%,var(--bg-panel,#f2ecd9) 50%,var(--bg-deep,#e6ddc6) 100%);}
+#title-screen .ts-inner{width:min(720px,92vw);margin:40px auto;text-align:center;padding:44px 36px 36px;
+  border:1px solid rgba(120,90,30,.28);border-radius:18px;
+  background:linear-gradient(180deg,rgba(247,241,224,.92),rgba(236,229,210,.92));
+  box-shadow:0 18px 50px rgba(60,42,10,.18),inset 0 0 60px rgba(140,110,50,.10);}
+#title-screen .ts-kicker{font-size:13px;letter-spacing:6px;color:var(--gold-dark,#a8842a);text-transform:uppercase;margin-bottom:8px;}
+#title-screen .ts-title{font-size:54px;font-weight:800;letter-spacing:14px;color:#4a341f;text-shadow:0 2px 0 rgba(212,160,23,.35);}
+#title-screen .ts-sub{font-size:22px;letter-spacing:10px;color:var(--gold-dark,#a8842a);margin:6px 0 18px;}
+#title-screen .ts-rule{width:120px;height:1px;margin:0 auto 18px;background:linear-gradient(90deg,transparent,var(--gold-dark,#a8842a),transparent);}
+#title-screen .ts-verse{font-size:14px;line-height:1.9;color:#6b5a3a;max-width:520px;margin:0 auto 30px;}
+#title-screen .ts-btns{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:0 auto;}
+#title-screen .ts-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 18px;font-size:16px;letter-spacing:4px;
+  border:1px solid rgba(120,90,30,.35);border-radius:10px;cursor:pointer;color:#4a341f;background:rgba(255,250,235,.75);
+  box-shadow:0 3px 10px rgba(60,42,10,.08);transition:all .15s;}
+#title-screen .ts-btn:hover{border-color:var(--gold-dark,#a8842a);color:var(--gold-dark,#a8842a);box-shadow:0 4px 16px rgba(166,124,46,.25);transform:translateY(-1px);}
+#title-screen .ts-btn.primary{background:linear-gradient(180deg,#d9b45c,#c49a3e);color:#3a2a0e;border-color:#a8842a;font-weight:700;}
+#title-screen .ts-btn.primary:hover{background:linear-gradient(180deg,#e2c070,#cfaa4c);}
+#title-screen .ts-btn.dim{opacity:.6;}
+#title-screen .ts-foot{margin-top:26px;font-size:12px;color:#9a8a68;letter-spacing:2px;}
+/* 捏人分步向导 */
+#creation-shell{width:min(920px,94vw);}
+#creation-shell .c-head{text-align:center;padding:4px 0 2px;}
+#creation-shell .c-title{font-size:26px;font-weight:800;letter-spacing:6px;color:var(--gold2,#c49a3e);}
+#creation-shell .c-sub{font-size:13px;color:#7a6a4a;margin:6px 0 4px;line-height:1.8;}
+#creation-shell .c-steps{display:flex;gap:6px;margin:14px 0 4px;justify-content:center;}
+#creation-shell .c-step{flex:1;max-width:150px;padding:8px 6px;border:1px solid rgba(120,90,30,.25);border-radius:8px;
+  font-size:12px;text-align:center;color:#8a7a58;background:rgba(255,250,235,.55);cursor:pointer;transition:all .15s;}
+#creation-shell .c-step.on{border-color:var(--gold-dark,#a8842a);color:#3a2a0e;background:rgba(212,160,23,.14);font-weight:700;}
+#creation-shell .c-step.done{border-color:rgba(120,150,90,.5);color:#5a7a3a;}
+#creation-shell .c-body{display:flex;gap:16px;margin-top:12px;}
+#creation-shell .c-main{flex:1 1 auto;min-width:0;}
+#creation-shell .c-side{flex:0 0 250px;}
+#creation-shell .cstep{display:none;}
+#creation-shell .cstep.on{display:block;}
+#creation-shell .c-nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px;}
+#creation-shell .c-nav .hint{font-size:12px;color:#9a8a68;text-align:left;flex:1;}
+#v94-preview{position:sticky;top:0;border:1px solid rgba(120,90,30,.3);border-radius:12px;padding:14px;font-size:13px;line-height:1.85;
+  background:linear-gradient(180deg,rgba(247,241,224,.9),rgba(236,229,210,.88));color:#5a4a30;}
+#v94-preview .pv-t{font-size:12px;letter-spacing:3px;color:var(--gold-dark,#a8842a);border-bottom:1px solid rgba(120,90,30,.25);padding-bottom:6px;margin-bottom:8px;}
+#v94-preview .pv-row{margin:8px 0;}
+#v94-preview .pv-row .k{font-size:12px;color:#9a8a68;}
+#v94-preview .pv-row .v{color:#4a341f;}
+@media (max-width:860px){#creation-shell .c-body{flex-direction:column;}#creation-shell .c-side{flex:1 1 auto;order:-1;}#v94-preview{position:static;}}
+</style>
 <script>const RULESET_ID = "elda-qunxiong-v3"; window.RULESET_ID = RULESET_ID; /* /v60inj:winx2:RULESET_ID/ */
 
 const ATTRS = ["SPR", "STR", "AGI", "INT", "CHA", "CON"];
@@ -65360,10 +65469,14 @@ async function init(){
           try{ if(typeof v61_clearAll === 'function') v61_clearAll(); }catch(e){} /* /v61inj:perf-clear-init/ */
       S=applyDefaults(d); curNode = S.curNode||"fc_jiaohui_entry"; renderTop(); renderStats(); renderMapPanel(); writeNext(); return;
         }
+        /* /v94inj:init/ 取消继续 → 进入主界面（不再直通捏人） */
+        if(typeof v94_titleScreen==="function"){ v94_titleScreen(); return; }
       }
     }catch(e){}
   }
   S=emptyState();
+  /* /v94inj:init2/ 无存档 → 主界面（开始游戏/读取存档/成就册/设定册），不再直通捏人 */
+  if(typeof v94_titleScreen==="function"){ v94_titleScreen(); return; }
   showCreation();
 }
 
@@ -65710,6 +65823,383 @@ window.v93_worldEcho = function(node){
     }
     return null;
   }catch(e){ try{ console.log("[ws1:err]", e); }catch(_){} return null; }
+};
+/* =====================================================================
+ * /v94inj:main/ v94 游戏开始主界面 + 捏人分步向导 + 设定册
+ * 铁律：saveVersion=48 不变；判定公式/writeNext/choose 零改动；旧档兼容（全独立键）
+ * ===================================================================== */
+
+/* ---------- 捏人分步：creationHTML v94 版（覆盖旧声明；判定/结算零改动，仅展示层分步） ---------- */
+function creationHTML(){
+  let h="<div id='creation-shell'>";
+  h+="<div class='c-head'><div class='c-title'>无名旅者 · 建号</div>";
+  h+="<p class='c-sub'>艾尔达历4037年，群雄割据之世。你从灰港的渡船上走下来，身无长物，唯有一身尚未定型的天资。你叫——</p></div>";
+  h+="<div class='c-steps'><div class='c-step' data-step='1'><b>壹</b>　名讳与血脉<br><span style='font-size:11px;color:#9a8a68'>姓名·性别·种族</span></div><div class='c-step' data-step='2'><b>贰</b>　出身<br><span style='font-size:11px;color:#9a8a68'>九地·谱系</span></div><div class='c-step' data-step='3'><b>叁</b>　职业<br><span style='font-size:11px;color:#9a8a68'>一生的路</span></div><div class='c-step' data-step='4'><b>肆</b>　天资与志趣<br><span style='font-size:11px;color:#9a8a68'>天赋·爱好·理想</span></div><div class='c-step' data-step='5'><b>伍</b>　属性与启程<br><span style='font-size:11px;color:#9a8a68'>分配·开始旅程</span></div></div>";
+  h+="<div class='c-body'><div class='c-main'>";
+  /* 步骤一：名讳与血脉 */
+  h+="<div class='cstep' data-step='1'>";
+  h+="<div class='mt10'><input type='text' id='in-name' maxlength='12' placeholder='输入你的名讳' value='"+esc(S.name||"")+"'></div>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>性别</h3><div class='sel-row'>";
+  for(const g of ["男","女","隐秘"]){ h+="<button class='sel-card small' data-gender='"+g+"' "+(S.gender===g?"style='border-color:var(--gold)'":"")+">"+g+"</button>"; }
+  h+="</div>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>种族 · 七选一（决定血统天赋）</h3><div class='sel-row'>";
+  for(const rk in RACES){ const r=RACES[rk]; h+="<button class='sel-card' data-race='"+rk+"' "+(S.race===rk?"style='border-color:var(--gold);color:var(--gold2)'":"")+"><span class='sc-t'>"+r.ic+" "+r.cn+"</span><span class='sc-d'>"+r.desc+"</span></button>"; }
+  h+="</div>";
+  h+="<div class='sel-row' id='subrace-box'><h3 class='mt10' style='color:var(--gold2)'>亚种族 · "+(RACES[S.race]?RACES[S.race].cn:"")+"（细选血统，决定属性/特性）</h3>";
+  for(const sk in SUBRACES){ const sb=SUBRACES[sk]; if(sb.race!==S.race) continue;
+    h+="<button class='sel-card' data-subrace='"+sk+"' "+(S.subrace===sk?"style='border-color:var(--gold);color:var(--gold2)'":"")+"><span class='sc-t'>"+sb.cn+"</span><span class='sc-d'>"+sb.desc+"</span>"+(sb.attrs&&Object.keys(sb.attrs).length?("<span class='sc-m' style='color:var(--cyan)'>"+Object.keys(sb.attrs).map(k=>ATTR_CN[k]+"+"+sb.attrs[k]).join(" ")+"</span>"):"")+(sb.skills&&Object.keys(sb.skills).length?("<span class='sc-m' style='color:var(--gold2)'>"+Object.keys(sb.skills).map(k=>skillCn(k)+"+"+sb.skills[k]).join(" ")+"</span>"):"")+(sb.traits&&sb.traits.length?("<span class='sc-m' style='color:var(--ok)'>特性："+sb.traits.join("·")+"</span>"):"")+"</button>";
+  }
+  h+="</div></div>";
+  /* 步骤二：出身 */
+  h+="<div class='cstep' data-step='2'>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>出身 · 九地（影响初始金币/技能/好感/序章）</h3><div class='sel-row'>";
+  for(const hk in HOMELANDS) h+=selCard(hk,HOMELANDS[hk],"homeland");
+  h+="</div>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>出身谱系 · "+(RACES[S.race]?RACES[S.race].cn:"")+"（决定初始状态/人际关系/入学标签/序章剧情）</h3><div class='sel-row' id='background-box'>";
+  for(const bk in BACKGROUNDS_FULL){ const bg=BACKGROUNDS_FULL[bk];
+    if(bg.race!==S.race && bg.race!=="半身人" && bg.race!=="龙裔" && bg.race!=="混血") continue;
+    if(bg.race==="半身人" && S.race!=="半身人") continue;
+    if(bg.race==="龙裔" && S.race!=="龙裔") continue;
+    if(bg.race==="混血" && S.race!=="混血") continue;
+    h+="<button class='sel-card' data-background='"+bk+"' "+(S.background===bk?"style='border-color:var(--gold);color:var(--gold2)'":"")+"><span class='sc-t'>"+bg.icon+" "+bg.cn+"</span><span class='sc-d'>"+bg.desc+"</span><span class='sc-m' style='color:var(--gold2)'>初始金币："+bg.gold+" · 标签："+bg.label+"</span>"+(bg.attrs&&Object.keys(bg.attrs).length?("<span class='sc-m' style='color:var(--cyan)'>"+Object.keys(bg.attrs).map(k=>ATTR_CN[k]+"+"+bg.attrs[k]).join(" ")+"</span>"):"")+"</button>";
+  }
+  h+="</div></div>";
+  /* 步骤三：职业 */
+  h+="<div class='cstep' data-step='3'>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>主修职业 · 九选一</h3><div class='sel-row'>";
+  for(const jk in JOBS){ const j=JOBS[jk]; h+="<button class='sel-card' data-job='"+jk+"' "+(S.job===jk?"style='border-color:var(--gold)'":"")+"><span class='sc-t'>"+j.cn+"</span><span class='sc-d'>"+j.desc+"</span><span class='sc-m' style='color:var(--cyan)'>准则："+j.criterion+"</span></button>"; }
+  h+="</div>";
+  h+="<p class='sub mt5' style='color:var(--bad);font-size:12px'>※ 职业一生唯一，不可兼修。唯有神明能以神恩强行扭转凡人的职业根基；而神明不会轻易干涉世事。请慎重抉择。</p></div>";
+  /* 步骤四：天资与志趣 */
+  h+="<div class='cstep' data-step='4'>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>天赋 · 四等（决定属性池与起跑线）</h3><div class='sel-row'>";
+  for(const tk in TALENTS) h+=selCard(tk,TALENTS[tk],"talent");
+  h+="</div>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>爱好 · 十选一（决定擅长技能与专属际遇）</h3><div class='sel-row'>";
+  for(const hk in HOBBIES) h+=selCard(hk,HOBBIES[hk],"hobby");
+  h+="</div>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>理想 · 八选一（决定结局归宿）</h3><div class='sel-row'>";
+  for(const ik in IDEALS) h+=selCard(ik,IDEALS[ik],"ideal");
+  h+="</div></div>";
+  /* 步骤五：属性与启程 */
+  h+="<div class='cstep' data-step='5'>";
+  h+="<h3 class='mt10' style='color:var(--gold2)'>六大属性分配　<span style='color:var(--dim);font-size:12px'>余 <span id='poolv'>"+pool+"</span> 点（20-80，判定按对应属性）</span></h3>";
+  h+="<p class='sub mt5' style='font-size:12px'>货币："+CURRENCY.rate+"（"+CURRENCY.sub+"）。"+CURRENCY.note+"</p>";
+  for(const a of ATTRS){ h+="<div class='attr-row' data-a='"+a+"'><span class='nm'>"+ATTR_CN[a]+"</span><span class='val' id='val-"+a+"'>"+S.attrs[a]+"</span><span class='btns'><button class='btn ab' data-a='"+a+"' data-d='1'>+1</button><button class='btn ab' data-a='"+a+"' data-d='5'>+5</button><button class='btn' data-a='"+a+"' data-d='-1'>−1</button><button class='btn' data-a='"+a+"' data-d='-5'>−5</button></span><span class='note'>"+ATTR_DESC[a]+"</span></div>"; }
+  h+="<div class='mt10' style='text-align:center'><button class='btn gold' id='btn-start' style='padding:10px 30px'>踏入4037年 · 开始旅程</button></div>";
+  h+="<p class='sub center mt10'>d100 六档判定 · 大成功01 / 极成功≤目标1/5 / 困难成功≤目标1/2 / 普通成功≤目标 / 失败 / 大失败=100或目标<50时≥96</p>";
+  h+="</div>";
+  h+="</div>";
+  h+="<div class='c-side'><div id='v94-preview'><div class='pv-t'>✦ 此行将引向</div><div id='v94-preview-body'><div class='pv-row' style='color:#9a8a68'>选择出身、职业、理想与天资，这里会预告你序章与学院的开局走向。</div></div></div></div>";
+  h+="</div>";
+  h+="<div class='c-nav'><span class='hint' id='v94-nav-hint'>选择即定命运，之后仍可在旅途中改变活法。</span><span style='display:flex;gap:8px'><button class='btn' id='c-prev' style='visibility:hidden'>← 上一步</button><button class='btn gold' id='c-next'>下一步 →</button></span></div>";
+  h+="</div>";
+  return h;
+}
+
+/* ---------- 捏人分步：bindCreation v94 版（覆盖旧声明；保留全部判定与结算链） ---------- */
+function bindCreation(){
+  document.querySelectorAll("[data-gender]").forEach(b=>{
+    b.onclick=()=>{ S.gender=b.dataset.gender; document.querySelectorAll("[data-gender]").forEach(x=>{x.style.borderColor="";}); b.style.borderColor="var(--gold)"; v94_creationPreview(); };
+  });
+  document.querySelectorAll("[data-homeland]").forEach(b=>{
+    b.onclick=()=>{ S.homeland=b.dataset.homeland; document.querySelectorAll("[data-homeland]").forEach(x=>{x.style.borderColor="";x.style.color="";}); b.style.borderColor="var(--gold)"; b.style.color="var(--gold2)"; v94_creationPreview(); };
+  });
+  document.querySelectorAll("[data-background]").forEach(b=>{
+    b.onclick=()=>{ S.background=b.dataset.background; document.querySelectorAll("[data-background]").forEach(x=>{x.style.borderColor="";x.style.color="";}); b.style.borderColor="var(--gold)"; b.style.color="var(--gold2)"; v94_creationPreview(); };
+  });
+  document.querySelectorAll("[data-job]").forEach(b=>{
+    b.onclick=()=>{ S.job=b.dataset.job; document.querySelectorAll("[data-job]").forEach(x=>{x.style.borderColor="";x.style.color="";}); b.style.borderColor="var(--gold)"; b.style.color="var(--gold2)"; v94_creationPreview(); };
+  });
+  document.querySelectorAll("[data-race]").forEach(b=>{
+    b.onclick=()=>{ S.race=b.dataset.race; S.subrace=null; document.querySelectorAll("[data-race]").forEach(x=>{x.style.borderColor="";x.style.color="";}); b.style.borderColor="var(--gold)"; b.style.color="var(--gold2)";
+      const box=document.getElementById("subrace-box");
+      if(box){ box.innerHTML="";
+        const rc=RACES[S.race];
+        const hd=document.createElement("h3"); hd.className="mt10"; hd.style.color="var(--gold2)"; hd.textContent="亚种族 · "+(rc?rc.cn:"")+"（细选血统，决定属性/特性）";
+        box.appendChild(hd);
+        for(const sk in SUBRACES){
+          const sb=SUBRACES[sk]; if(sb.race!==S.race) continue;
+          const btn=document.createElement("button"); btn.className="sel-card"; btn.dataset.subrace=sk;
+          btn.innerHTML="<span class='sc-t'>"+sb.cn+"</span><span class='sc-d'>"+sb.desc+"</span>";
+          if(sb.attrs&&Object.keys(sb.attrs).length){
+            const s=Object.keys(sb.attrs).map(k=>ATTR_CN[k]+"+"+sb.attrs[k]).join(" ");
+            btn.innerHTML+="<span class='sc-m' style='color:var(--cyan)'>"+s+"</span>";
+          }
+          if(sb.skills&&Object.keys(sb.skills).length){
+            const s=Object.keys(sb.skills).map(k=>skillCn(k)+"+"+sb.skills[k]).join(" ");
+            btn.innerHTML+="<span class='sc-m' style='color:var(--gold2)'>"+s+"</span>";
+          }
+          if(sb.traits&&sb.traits.length) btn.innerHTML+="<span class='sc-m' style='color:var(--ok)'>特性："+sb.traits.join("·")+"</span>";
+          btn.onclick=()=>{ S.subrace=sk; box.querySelectorAll("[data-subrace]").forEach(x=>{x.style.borderColor="";x.style.color="";}); btn.style.borderColor="var(--gold)"; btn.style.color="var(--gold2)"; v94_creationPreview(); };
+          box.appendChild(btn);
+        }
+      }
+      v94_creationPreview();
+    };
+  });
+  document.querySelectorAll("[data-talent]").forEach(b=>{
+    b.onclick=()=>{ S.talent=b.dataset.talent; document.querySelectorAll("[data-talent]").forEach(x=>{x.style.borderColor="";x.style.color="";}); b.style.borderColor="var(--gold)"; b.style.color="var(--gold2)"; const np=300+talentPoolBonus()-(S.attrs.SPR+S.attrs.STR+S.attrs.AGI+S.attrs.INT+S.attrs.CHA+S.attrs.CON); pool=np; const pv=document.getElementById("poolv"); if(pv) pv.textContent=np; v94_creationPreview(); };
+  });
+  document.querySelectorAll("[data-hobby]").forEach(b=>{
+    b.onclick=()=>{ S.hobby=b.dataset.hobby; document.querySelectorAll("[data-hobby]").forEach(x=>{x.style.borderColor="";x.style.color="";}); b.style.borderColor="var(--gold)"; b.style.color="var(--gold2)"; v94_creationPreview(); };
+  });
+  document.querySelectorAll("[data-ideal]").forEach(b=>{
+    b.onclick=()=>{ S.ideal=b.dataset.ideal; document.querySelectorAll("[data-ideal]").forEach(x=>{x.style.borderColor="";x.style.color="";}); b.style.borderColor="var(--gold)"; b.style.color="var(--gold2)"; v94_creationPreview(); };
+  });
+  document.querySelectorAll(".ab").forEach(b=>{
+    b.onclick=()=>{
+      const a=b.dataset.a, d=parseInt(b.dataset.d);
+      const old=S.attrs[a];
+      const np = pool - d;
+      const nv = old + d;
+      if(nv<20||nv>80){ flashMsg("超出范围（20-80）"); return; }
+      if(np<0){ flashMsg("点数不足"); return; }
+      S.attrs[a]=nv; pool=np;
+      const v=$("val-"+a); if(v) v.textContent=nv;
+      const pv=document.getElementById("poolv"); if(pv) pv.textContent=np;
+    };
+  });
+  const bp=$("btn-start");
+  if(bp) bp.onclick=()=>{
+    const name = $("in-name").value.trim();
+    if(!name){ flashMsg("请先写下你的名讳"); return; }
+    if(!S.job){ flashMsg("请选择主修职业"); return; }
+    if(!S.ideal){ flashMsg("请选择你的理想"); return; }
+    if(pool<0){ flashMsg("点数分配有误"); return; }
+    S.name = name.slice(0,12);
+    if(!S.subrace){ flashMsg("请选择亚种族"); return; }
+    S.maxSan = Math.round(S.attrs.SPR*1.5);
+    if(!S.san) S.san=S.maxSan;
+    const SR = SUBRACES[S.subrace]||{};
+    for(const k in (SR.attrs||{})) S.attrs[k]=Math.min(80,S.attrs[k]+SR.attrs[k]);
+    for(const k in (SR.skills||{})) S.skills[k]=(S.skills[k]||0)+SR.skills[k];
+    for(const k in (SR.flags||[])) S.flags[SR.flags[k]]=true;
+    const H = HOMELANDS[S.homeland]||{};
+    S.gold = Math.max(5, S.gold + (H.gold||0));
+    for(const k in (H.attrs||{})) S.attrs[k]=Math.min(80,S.attrs[k]+H.attrs[k]);
+    for(const k in (H.skills||{})) S.skills[k]=(S.skills[k]||0)+H.skills[k];
+    for(const k in (H.infl||{})) S.infl[k]=(S.infl[k]||0)+H.infl[k];
+    if(H.san) S.san = Math.max(0, S.maxSan + H.san);
+    if(H.flag) S.flags[H.flag]=true;
+    if(!S.background) S.background = "human_orphan";
+    const BG = BACKGROUNDS_FULL[S.background]||{};
+    S.gold = Math.max(0, S.gold + (BG.gold||0));
+    for(const k in (BG.attrs||{})) S.attrs[k]=Math.min(80,S.attrs[k]+BG.attrs[k]);
+    for(const k in (BG.skills||{})) S.skills[k]=(S.skills[k]||0)+BG.skills[k];
+    if(BG.label) S.flags.enrollment_label = BG.label;
+    if(BG.hidden) S.flags[BG.hidden]=true;
+    if(!S.settings) S.settings={};
+    if(S.settings.pagedReading===undefined) S.settings.pagedReading=true;
+    S.prologueState = {background:S.background, day:1, opportunitiesTriggered:[], crisisTriggered:false, admissionReceived:false};
+    const T = TALENTS[S.talent]||{};
+    if(typeof T.apply==="function"){ T.apply(); }
+    else{
+      for(const k in (T.skills||{})) S.skills[k]=(S.skills[k]||0)+T.skills[k];
+      if(T.xp) S.xp+=T.xp;
+      if(T.flag) S.flags[T.flag]=true;
+    }
+    const HB = S.hobby?HOBBIES[S.hobby]:null;
+    if(HB){ if(HB.s) S.skills[HB.s]=(S.skills[HB.s]||0)+(HB.v||0); if(HB.flag) S.flags[HB.flag]=true; }
+    const j=JOBS[S.job]; if(j&&j.skill) S.skills[j.skill]=Math.max(S.skills[j.skill]||0,15);
+    S.san = (S.san>0 && S.san<=S.maxSan) ? S.san : S.maxSan;
+    S.hp = maxHp();
+    S.flags.job_chosen=true;
+    logMsg("旅者 "+S.name+" 诞生 · "+(SUBRACES[S.subrace]?SUBRACES[S.subrace].cn:"")+" · 主修："+j.cn+" · 出身："+(HOMELANDS[S.homeland]?HOMELANDS[S.homeland].cn:"")+" · 理想："+(IDEALS[S.ideal]?IDEALS[S.ideal].cn:""),"l");
+    closeModal();
+    if(typeof initForeshadowingV27 === 'function') initForeshadowingV27();
+    if(typeof initMoralChoicesV27 === 'function') initMoralChoicesV27();
+    if(typeof initTimeV26 === 'function') initTimeV26();
+    const originMapV27 = {free:"origin_free_city_1",north:"origin_northern_1",south:"origin_southern_1",church:"origin_church_1",elf:"origin_elf_1",dwarf:"origin_dwarf_1",orc:"origin_orc_1",east:"origin_eastern_1",desert:"origin_desert_1"};
+    const originNode = originMapV27[S.homeland];
+    if(originNode && (N[originNode] || (typeof NODE_MAP!=="undefined" && NODE_MAP[originNode]))){
+      curNode = originNode;
+      S.flags.prologueV27 = true;
+    } else if(originNode){
+      curNode = originNode;
+      S.flags.prologueV27 = true;
+    } else {
+      curNode = "prologue_start";
+    }
+    S.day = 1; S.date = fmtDate(S.day);
+    renderTop(); renderStats();
+    try{ if(typeof v92_sessionClear === 'function') v92_sessionClear(); }catch(e){}
+    writeNext();
+  };
+  /* /v94inj:stepnav/ 分步导航 */
+  const prev=document.getElementById("c-prev"), next=document.getElementById("c-next");
+  if(prev) prev.onclick=()=>v94_showStep(v94_step-1);
+  if(next) next.onclick=()=>{ if(v94_step>=5){ if(window.v94_creationReady) v94_creationReady(); } else v94_showStep(v94_step+1); };
+  document.querySelectorAll("#creation-shell .c-step").forEach(el=>{ el.onclick=()=>v94_showStep(+el.dataset.step); });
+  v94_showStep(1);
+}
+
+/* ---------- 分步导航 + 剧情对齐预览 ---------- */
+let v94_step=1;
+function v94_showStep(n){
+  v94_step=Math.max(1,Math.min(5,n));
+  document.querySelectorAll("#creation-shell .cstep").forEach(el=>{ el.classList.toggle("on", +el.dataset.step===v94_step); });
+  document.querySelectorAll("#creation-shell .c-step").forEach(el=>{
+    const s=+el.dataset.step;
+    el.classList.toggle("on", s===v94_step);
+    el.classList.toggle("done", s<v94_step);
+  });
+  const prev=document.getElementById("c-prev");
+  if(prev) prev.style.visibility = v94_step<=1 ? "hidden":"visible";
+  const next=document.getElementById("c-next");
+  if(next){ if(v94_step>=5){ next.textContent="✦ 开始旅程"; } else { next.textContent="下一步 →"; } }
+  const hint=document.getElementById("v94-nav-hint");
+  if(hint){
+    if(v94_step===1) hint.textContent="先定名讳与血统。亚种族决定你的天赋与起跑线。";
+    else if(v94_step===2) hint.textContent="出身决定你的序章开场：九地各有各的起点。";
+    else if(v94_step===3) hint.textContent="职业一生唯一，决定你的戒律与路径。";
+    else if(v94_step===4) hint.textContent="理想决定结局归宿；爱好与天资带来专属际遇。";
+    else hint.textContent="分配属性（20-80），余点来自天赋。准备好就踏入4037年。";
+  }
+  v94_creationPreview();
+}
+window.v94_showStep=v94_showStep;
+function v94_creationReady(){ const b=document.getElementById("btn-start"); if(b) b.click(); }
+window.v94_creationReady=v94_creationReady;
+function v94_creationPreview(){
+  try{
+    const body=document.getElementById("v94-preview-body"); if(!body) return;
+    let rows="";
+    const P=window.ORIGIN_PROFILE||{};
+    const add=function(k,v){ if(!v) return; rows+="<div class='pv-row'><span class='k'>"+k+"</span><br><span class='v'>"+v+"</span></div>"; };
+    if(S.subrace){
+      let fam=(P.subrace_to_family&&P.subrace_to_family[S.subrace])||"";
+      let note=(P.subrace_note&&P.subrace_note[fam])||"";
+      const sb=SUBRACES[S.subrace];
+      add("血脉 · "+(sb?sb.cn:""), note||(sb?sb.desc:""));
+    }
+    if(S.homeland){
+      const H=HOMELANDS[S.homeland];
+      const map={free:"自由城邦·灰港线",north:"北境·铁门关线",south:"南方商盟线",church:"教会辖区·圣辉城线",elf:"精灵林邦线",dwarf:"矮人山国线",orc:"兽人草原线",east:"东部王国·帝京线",desert:"死亡沙漠线"};
+      const line=map[S.homeland]||"";
+      add("出身 · "+(H?H.cn:"")+(line?"（"+line+"）":""), (P.identity&&P.identity[S.homeland])?P.identity[S.homeland]:(H?H.start:""));
+    }
+    if(S.job){
+      const j=JOBS[S.job];
+      add("职业 · "+(j?j.cn:""), (P.job_sight&&P.job_sight[S.job])?P.job_sight[S.job]:(j?j.desc:""));
+      if(j&&j.vow) add("戒律", j.vow);
+    }
+    if(S.ideal){
+      const id=IDEALS[S.ideal];
+      add("理想 · "+(id?id.cn:""), (P.ideal_reaction&&P.ideal_reaction[S.ideal])?P.ideal_reaction[S.ideal]:(id?id.desc:""));
+      if(id&&id.echo) add("结局回响", id.echo);
+    }
+    if(S.hobby){
+      const hb=HOBBIES[S.hobby];
+      add("爱好 · "+(hb?hb.cn:""), (P.hobby_note&&P.hobby_note[S.hobby])?P.hobby_note[S.hobby]:(hb?hb.desc:""));
+    }
+    if(S.talent){
+      const t=TALENTS[S.talent];
+      add("天资 · "+(t?t.cn:""), (P.talent_judge&&P.talent_judge[S.talent])?P.talent_judge[S.talent]:(t?t.desc:""));
+    }
+    if(!rows) rows="<div class='pv-row' style='color:#9a8a68'>选择出身、职业、理想与天资，这里会预告你序章与学院的开局走向。</div>";
+    body.innerHTML=rows;
+  }catch(e){}
+}
+window.v94_creationPreview=v94_creationPreview;
+
+/* ---------- 游戏开始主界面 ---------- */
+window.v94_ui={shown:false};
+window.v94_titleScreen=function(){
+  try{
+    if(window.v94_ui.shown) return;
+    const saved=(typeof v61_lzstring!=="undefined"&&v61_lzstring.sniffRaw)?v61_lzstring.sniffRaw(localStorage.getItem(RULESET_ID+"-save")):null;
+    let el=document.getElementById("title-screen");
+    if(el) el.remove();
+    el=document.createElement("div"); el.id="title-screen";
+    el.innerHTML="<div class='ts-inner'>"+
+      "<div class='ts-kicker'>艾尔达大陆 · 九域并立</div>"+
+      "<div class='ts-title'>群雄割据</div>"+
+      "<div class='ts-sub'>艾尔达历 4037 年</div>"+
+      "<div class='ts-rule'></div>"+
+      "<div class='ts-verse'>诸神远去，深渊在封印之下低语。<br>七枚锚镇着大陆的脊梁，金秤世家守着无人知晓的墓园。<br>你从灰港的渡船上走下来——这一刻，大陆的命运尚无定论。</div>"+
+      "<div class='ts-btns'>"+
+      "<button class='ts-btn primary' id='ts-new'>✦ 开始新旅</button>"+
+      "<button class='ts-btn' id='ts-load'>📜 读取存档</button>"+
+      "<button class='ts-btn' id='ts-ach'>⚑ 成就册</button>"+
+      "<button class='ts-btn' id='ts-codex'>📖 设定册</button>"+
+      "</div>"+
+      "<div class='ts-foot'>v94 · 单文件版 · 本地存档"+(saved?" · 检测到存档（第"+(saved.day||"?")+"日，"+(saved.name||"无名")+"）":"")+"</div>"+
+      "</div>";
+    document.body.appendChild(el);
+    window.v94_ui.shown=true;
+    document.getElementById("ts-new").onclick=function(){
+      const s2=(typeof v61_lzstring!=="undefined"&&v61_lzstring.sniffRaw)?v61_lzstring.sniffRaw(localStorage.getItem(RULESET_ID+"-save")):null;
+      if(s2){ askConfirm("检测到存档（第"+(s2.day||"?")+"日，"+(s2.name||"无名")+"）。开始新旅会覆盖此存档，确定？").then(function(ok){ if(ok){ v94_hideTitle(); newGame(); } }); }
+      else { v94_hideTitle(); v94_startNew(); }
+    };
+    document.getElementById("ts-load").onclick=function(){ v94_loadSave(); };
+    document.getElementById("ts-ach").onclick=function(){ if(window.v34_openAchievements) v34_openAchievements(); };
+    document.getElementById("ts-codex").onclick=function(){ v94_settingPanel(); };
+  }catch(e){ try{ console.log("[v94:title:err]",e); }catch(_){} }
+};
+window.v94_hideTitle=function(){ const el=document.getElementById("title-screen"); if(el) el.remove(); window.v94_ui.shown=false; };
+window.v94_startNew=function(){
+  try{
+    S=emptyState();
+    try{ if(typeof u7_ngInherit==="function") u7_ngInherit(); }catch(e){}
+    curNode=null;
+    showCreation();
+  }catch(e){ try{ console.log("[v94:new:err]",e); }catch(_){} }
+};
+window.v94_loadSave=function(){
+  try{
+    const saved=(typeof v61_lzstring!=="undefined"&&v61_lzstring.sniffRaw)?v61_lzstring.sniffRaw(localStorage.getItem(RULESET_ID+"-save")):null;
+    if(!saved){ flashMsg("没有找到存档"); return; }
+    try{
+      const d=saved;
+      if(d.ruleset===RULESET_ID && !d.ending){
+        try{ if(typeof v61_clearAll==="function") v61_clearAll(); }catch(e){}
+        S=applyDefaults(d);
+        curNode=S.curNode||"fc_jiaohui_entry";
+        v94_hideTitle();
+        renderTop(); renderStats();
+        try{ renderMapPanel(); }catch(e){}
+        writeNext();
+      } else { flashMsg("存档无效或已终结"); }
+    }catch(e){ flashMsg("读档失败："+((e&&e.message)||"")); }
+  }catch(e){ flashMsg("读档失败"); }
+};
+/* ---------- 设定册（静态世界一览，S 无关，主界面可用） ---------- */
+window.v94_settingPanel=function(){
+  try{
+    const box=document.createElement("div"); box.className="box";
+    let h="<h2>📖 设定册 · 世界一览</h2><p class='sub'>艾尔达大陆的风物与脉络——不随周目而变。</p>";
+    h+="<div style='max-height:440px;overflow-y:auto'>";
+    h+="<details open><summary style='cursor:pointer;font-weight:700'>世界大势</summary><div style='padding:4px 2px'>";
+    try{
+      const LB=window.LOREBOOK||[];
+      for(let i=0;i<LB.length;i++){ const e=LB[i]; if(!e||!e.constant) continue;
+        h+="<div style='margin:8px 0'><b style='color:var(--gold2,#c49a3e)'>"+(e.title||e.id||"")+"</b><p style='margin:2px 0 0;font-size:13px;line-height:1.8'>"+(e.text||"")+"</p></div>"; }
+    }catch(e){}
+    h+="</div></details>";
+    h+="<details><summary style='cursor:pointer;font-weight:700'>九域与势力</summary><div style='padding:4px 2px'>";
+    try{
+      const R=window.REGIONS||{};
+      for(const k in R){ const r=R[k]; h+="<div style='margin:6px 0;font-size:13px'><b>"+(r.cn||k)+"</b> <span style='color:#9a8a68'>"+(r.desc||"")+"</span></div>"; }
+    }catch(e){}
+    h+="</div></details>";
+    h+="<details><summary style='cursor:pointer;font-weight:700'>大陆纪事 · 五条主线</summary><div style='padding:4px 2px'>";
+    try{
+      const W=window.WORLD_EVENTS||{};
+      for(const k in W){ const w=W[k]; h+="<div style='margin:6px 0;font-size:13px'><b>第"+(w.day||"?")+"日 · "+(w.cn||k)+"</b><br><span style='color:#6b5a3a'>"+(w.text||"")+"</span></div>"; }
+    }catch(e){}
+    h+="</div></details>";
+    h+="<details><summary style='cursor:pointer;font-weight:700'>职业与戒律</summary><div style='padding:4px 2px'>";
+    try{
+      const J=window.JOBS||{};
+      for(const k in J){ const j=J[k]; h+="<div style='margin:6px 0;font-size:13px'><b>"+(j.cn||k)+"</b> <span style='color:#9a8a68'>"+(j.desc||"")+"</span>"+(j.vow?"<br><span style='color:var(--bad,#b25)'>"+j.vow+"</span>":"")+"</div>"; }
+    }catch(e){}
+    h+="</div></details>";
+    h+="</div>";
+    h+="<div style='text-align:center;margin-top:10px'><button class='btn' onclick='closeModal()'>返回</button></div>";
+    box.innerHTML=h; openModal(box);
+  }catch(e){}
 };
 </script>
 <script>

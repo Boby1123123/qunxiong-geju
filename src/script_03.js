@@ -6759,7 +6759,7 @@ function creationHTML(){
   let h="<div id='creation-shell'>";
   h+="<div class='c-head'><div class='c-title'>无名旅者 · 建号</div>";
   h+="<p class='c-sub'>艾尔达历4037年，群雄割据之世。你从灰港的渡船上走下来，身无长物，唯有一身尚未定型的天资。你叫——</p></div>";
-  h+="<div class='c-steps'><div class='c-step' data-step='1'><b>壹</b>　名讳与血脉<br><span style='font-size:11px;color:#9a8a68'>姓名·性别·种族</span></div><div class='c-step' data-step='2'><b>贰</b>　出身<br><span style='font-size:11px;color:#9a8a68'>九地·谱系</span></div><div class='c-step' data-step='3'><b>叁</b>　职业<br><span style='font-size:11px;color:#9a8a68'>一生的路</span></div><div class='c-step' data-step='4'><b>肆</b>　天资与志趣<br><span style='font-size:11px;color:#9a8a68'>天赋·爱好·理想</span></div><div class='c-step' data-step='5'><b>伍</b>　属性与启程<br><span style='font-size:11px;color:#9a8a68'>分配·开始旅程</span></div></div>";
+  h+="<div class='c-steps'><div class='c-step' data-step='1'><b>壹</b>　名讳与血脉<br><span style='font-size:11px;color:#9a8a68'>姓名·性别·种族</span></div><div class='c-step' data-step='2'><b>贰</b>　出身<br><span style='font-size:11px;color:#9a8a68'>九地·谱系</span></div><div class='c-step' data-step='3'><b>叁</b>　职业<br><span style='font-size:11px;color:#9a8a68'>一生的路</span></div><div class='c-step' data-step='4'><b>肆</b>　天资与爱好<br><span style='font-size:11px;color:#9a8a68'>天赋·爱好</span></div><div class='c-step' data-step='5'><b>伍</b>　理想·属性·启程<br><span style='font-size:11px;color:#9a8a68'>归宿·分配·开始旅程</span></div></div>";
   h+="<div class='c-body'><div class='c-main'>";
   /* 步骤一：名讳与血脉 */
   h+="<div class='cstep' data-step='1'>";
@@ -6802,12 +6802,12 @@ function creationHTML(){
   h+="</div>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>爱好 · 十选一（决定擅长技能与专属际遇）</h3><div class='sel-row'>";
   for(const hk in HOBBIES) h+=selCard(hk,HOBBIES[hk],"hobby");
-  h+="</div>";
+  h+="</div></div>";
+  /* 步骤五：理想·属性与启程 */
+  h+="<div class='cstep' data-step='5'>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>理想 · 八选一（决定结局归宿）</h3><div class='sel-row'>";
   for(const ik in IDEALS) h+=selCard(ik,IDEALS[ik],"ideal");
-  h+="</div></div>";
-  /* 步骤五：属性与启程 */
-  h+="<div class='cstep' data-step='5'>";
+  h+="</div>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>六大属性分配　<span style='color:var(--dim);font-size:12px'>余 <span id='poolv'>"+pool+"</span> 点（20-80，判定按对应属性）</span></h3>";
   h+="<p class='sub mt5' style='font-size:12px'>货币："+CURRENCY.rate+"（"+CURRENCY.sub+"）。"+CURRENCY.note+"</p>";
   for(const a of ATTRS){ h+="<div class='attr-row' data-a='"+a+"'><span class='nm'>"+ATTR_CN[a]+"</span><span class='val' id='val-"+a+"'>"+S.attrs[a]+"</span><span class='btns'><button class='btn ab' data-a='"+a+"' data-d='1'>+1</button><button class='btn ab' data-a='"+a+"' data-d='5'>+5</button><button class='btn' data-a='"+a+"' data-d='-1'>−1</button><button class='btn' data-a='"+a+"' data-d='-5'>−5</button></span><span class='note'>"+ATTR_DESC[a]+"</span></div>"; }
@@ -6978,8 +6978,8 @@ function v94_showStep(n){
     if(v94_step===1) hint.textContent="先定名讳与血统。亚种族决定你的天赋与起跑线。";
     else if(v94_step===2) hint.textContent="出身决定你的序章开场：九地各有各的起点。";
     else if(v94_step===3) hint.textContent="职业一生唯一，决定你的戒律与路径。";
-    else if(v94_step===4) hint.textContent="理想决定结局归宿；爱好与天资带来专属际遇。";
-    else hint.textContent="分配属性（20-80），余点来自天赋。准备好就踏入4037年。";
+    else if(v94_step===4) hint.textContent="天资与爱好带来专属际遇；理想将在下一步与属性一同决定。";
+    else hint.textContent="理想决定结局归宿；分配属性（20-80），余点来自天赋。准备好就踏入4037年。";
   }
   v94_creationPreview();
 }

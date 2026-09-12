@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 19094030,
+    "game_html_bytes_max": 19121461,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 19044030,
-    "chunked_html_bytes": 7976240,
+    "game_html_bytes": 19071461,
+    "chunked_html_bytes": 8003671,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "V96-OPT-B5 C11选择记忆回显(v96_choiceEcho) 新增 513B",
+    "reason": "LW S1-S5 模块拆分为 script_19.js 独立块(+<script>包装 16B)",
     "history": [
       {
         "date": "2026-09-09",
@@ -1902,6 +1902,27 @@
         "chunked_bytes": 7976240,
         "nodes": 5636,
         "reason": "V96-OPT-B5 C11选择记忆回显(v96_choiceEcho) 新增 513B"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19071439,
+        "chunked_bytes": 8003649,
+        "nodes": 5636,
+        "reason": "V96-OPT-B5/LW 活的世界模拟层 S1-S5 模块+数据 增长 27KB"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19071445,
+        "chunked_bytes": 8003655,
+        "nodes": 5636,
+        "reason": "LW S1-S5 活的世界模拟层 数据+引擎增长"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19071461,
+        "chunked_bytes": 8003671,
+        "nodes": 5636,
+        "reason": "LW S1-S5 模块拆分为 script_19.js 独立块(+<script>包装 16B)"
       }
     ]
   },

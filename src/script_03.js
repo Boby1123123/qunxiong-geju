@@ -18,6 +18,7 @@ const emptyState = () => ({
   conds:{mat:false,kno:false,pra:false,rit:false,anc:false,work:false},
   choices:[], dice:[],
   world:{purge:false,silver:false,seal:false,academy:false,orc:false},
+  lw:{season:"春",dayPhase:"晨",echoes:[],echoLog:[],npcStates:{},factionRel:{},factionState:{},cityControl:{},worldFlags:{},journal:[],tick:0},
   ending:null, dead:false, ngPlus:1,
   runHistory:[], endingsCollected:[], _endingRecorded:false
 });
@@ -105,6 +106,19 @@ function applyDefaults(s){
   if(s.settings.npcMemory===undefined) s.settings.npcMemory=true;
   /* /v93fest:defaults/ FT-7 节日独立键（旧档兼容） */
   if(!s.festival) s.festival={done:{}};
+  /* /lw1inj:defaults/ LW 活的世界模拟层兜底（旧档兼容；独立键 s.lw） */
+  if(!s.lw) s.lw={};
+  if(!s.lw.season) s.lw.season="春";
+  if(!s.lw.dayPhase) s.lw.dayPhase="晨";
+  if(!s.lw.echoes) s.lw.echoes=[];
+  if(!s.lw.echoLog) s.lw.echoLog=[];
+  if(!s.lw.npcStates) s.lw.npcStates={};
+  if(!s.lw.factionRel) s.lw.factionRel={};
+  if(!s.lw.factionState) s.lw.factionState={};
+  if(!s.lw.cityControl) s.lw.cityControl={};
+  if(!s.lw.worldFlags) s.lw.worldFlags={};
+  if(!s.lw.journal) s.lw.journal=[];
+  if(!s.lw.tick) s.lw.tick=0;
   return s;
 }
 function loadGame(){
@@ -411,6 +425,7 @@ function writePar(p,cls){
   d.innerHTML = rich(p);
   if(typeof p==="string" && window.v96_probeConv){ var _ph = window.v96_probeConv(d.innerHTML); if(_ph !== d.innerHTML){ d.innerHTML = _ph; } } /* /v96inj:probe/ B8 线索锚点（rich 后转换防 esc 转义） */
   if(typeof p==="string" && window.v96_choiceEcho){ var _ce = window.v96_choiceEcho(d.innerHTML); if(_ce !== d.innerHTML){ d.innerHTML = _ce; } } /* /v96inj:choice/ C11 选择记忆回显（rich 后转换） */
+  try{ if(window.LW_render){ var _lr = window.LW_render(d.innerHTML); if(_lr !== d.innerHTML){ d.innerHTML = _lr; } } }catch(e){} /* /lwinj:render/ LW 世界回响/记忆/动态文本渲染 */
   try{ window.v92_highlightNames && window.v92_highlightNames(d); }catch(e){}
   RenderBatch.push(d);
   return d;
@@ -710,6 +725,10 @@ try{
         var f3 = _cmp[c.day.op]||_cmp["<="];
         if(!f3(day, c.day.v)){ r.locked = true; }
       }
+      if(c.world && !r.locked){
+        var _wr = window.LW_cond ? window.LW_cond(c.world, S) : {pass:true, reason:""};
+        if(!_wr.pass){ r.locked = true; r.reason = _wr.reason || "世界尚未走到那一步。"; }
+      } /* /lwinj:cond/ S5 叙事门控：cond.world.*（season/dayPhase/faction/city/echo/flag） */
       if(r.locked){ r.reason = c.reason || "条件不足。"; }
     }
     /* A6 隐藏：默认不渲染，解锁后出现 */
@@ -5600,6 +5619,7 @@ function advanceDays(n){
   try{ if(window.v93_festivalTick) window.v93_festivalTick(); }catch(e){}
   try{ if(window.v93g1_woundTick) window.v93g1_woundTick(); }catch(e){}
   try{ if(window.v93g5_chainTick) window.v93g5_chainTick(); }catch(e){}
+  try{ if(window.LW_tick) window.LW_tick(n); }catch(e){} /* /lwinj:tick/ LW 世界时钟/回响/势力推进 */
 }
 function checkWorldEvents(){
   const w = S.world;

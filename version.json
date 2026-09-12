@@ -1,28 +1,28 @@
 {
-  "version": "v94",
-  "from": "v93",
+  "version": "v95",
+  "from": "v94",
   "released": "2026-09-12",
-  "note": "V96-OPT 选项与文本推进链接大型更新（12 项全落地）：A1 条件显隐 / A2 组合判定三档 / A3 后果预览 / A4 一次性选项 / A5 时间敏感 / A6 隐藏选项 / B7 词条卡 / B8 线索锚点 / B9 关系回指 / B10 地点联动 / C11 选择记忆回显 / C12 分支回退",
+  "note": "LW 活的世界模拟层（方向一超大型拓展 S1-S5 全落地）：S1 时间体系（季节/昼夜四时段/换季播报）/ S2 NPC 日程与人物志（12 名宿晨午昏动态）/ S3 世界回响（flag→延迟回响→播报+正文渲染 [echo]/{{echoCount}}/{{npcRecall}}）/ S4 势力动态（factionShift/关系面板/城市归属）/ S5 叙事门控（cond.world 选项条件 season/dayPhase/faction/city/echo/flag）+ 世界面板（世界历/抉择记录/势力局势）+ 主线预热传闻",
   "changes": [
     {
-      "file": "V96-OPT_B1_条件显隐与一次性与时间敏感与隐藏选项.md",
-      "title": "V96-OPT B1：A1 条件显隐 / A4 一次性 / A5 时间敏感 / A6 隐藏选项"
+      "file": "LW_活的世界模拟层_方向设计_20260912.md",
+      "title": "LW 方向一蓝图：S1-S5 五子系统设计/作者语法/五批路线图"
     },
     {
-      "file": "V96-OPT_B2_组合判定与后果预览.md",
-      "title": "V96-OPT B2：A2 组合判定（双属性三档旁路）/ A3 后果预览"
+      "file": "dn_lw_world.js",
+      "title": "LW 数据层：9 势力基线/12 NPC 晨午昏日程/4 回响锚点/季节时段氛围句/主线预热 omens"
     },
     {
-      "file": "V96-OPT_B3_词条卡与关系回指与地点联动.md",
-      "title": "V96-OPT B3：B7 词条卡 / B9 关系回指 / B10 地点联动（151 热词）"
+      "file": "script_19.js",
+      "title": "LW 引擎模块（独立 script 块）：22 个 LW API（时钟/回响/势力/NPC/门控/面板/自检）"
     },
     {
-      "file": "V96-OPT_B4_线索锚点与分支回退.md",
-      "title": "V96-OPT B4：B8 线索锚点（[调查:节点:文案]）/ C12 分支回退（会话级栈）"
+      "file": "script_03.js",
+      "title": "LW 挂接：S.lw 状态兜底（applyDefaults）/ advanceDays→LW_tick / writePar→LW_render / v96_optGate→LW_cond"
     },
     {
-      "file": "V96-OPT_B5_选择记忆回显.md",
-      "title": "V96-OPT B5：C11 选择记忆回显（{{choice:flag|是|否}}）+ 全量回归"
+      "file": "gap_00.html",
+      "title": "顶栏新增「🗓 世界」按钮（btn-lw）→ LW_openHub 世界面板"
     }
   ]
 }

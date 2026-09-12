@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 18561403,
+    "game_html_bytes_max": 18572943,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 18511403,
-    "chunked_html_bytes": 7476311,
+    "game_html_bytes": 18522943,
+    "chunked_html_bytes": 7487851,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "TQ-2/3 第五批 acad_校外魔法剧情 30节点扩写+3900字",
+    "reason": "TQ-2/3 第六批 acad_生活deep人际学年事件校友导师 30节点扩写+3800字",
     "history": [
       {
         "date": "2026-09-09",
@@ -1489,6 +1489,13 @@
         "chunked_bytes": 7476311,
         "nodes": 5636,
         "reason": "TQ-2/3 第五批 acad_校外魔法剧情 30节点扩写+3900字"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 18522943,
+        "chunked_bytes": 7487851,
+        "nodes": 5636,
+        "reason": "TQ-2/3 第六批 acad_生活deep人际学年事件校友导师 30节点扩写+3800字"
       }
     ]
   },

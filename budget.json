@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 19075725,
+    "game_html_bytes_max": 19076287,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 19025725,
-    "chunked_html_bytes": 7957935,
+    "game_html_bytes": 19026287,
+    "chunked_html_bytes": 7958497,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "V95 MP5 导入屏CSS补齐",
+    "reason": "UI-FIX modal 提权修复（gap_00.html #modal z-index 900→10000，+220B 合法增长）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1818,6 +1818,20 @@
         "chunked_bytes": 7957935,
         "nodes": 5636,
         "reason": "V95 MP5 导入屏CSS补齐"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19026067,
+        "chunked_bytes": 7958277,
+        "nodes": 5636,
+        "reason": "UI-FIX 顶栏溢出适配（gap_00.html v68 顶栏防溢出 CSS，+342B 合法增长）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19026287,
+        "chunked_bytes": 7958497,
+        "nodes": 5636,
+        "reason": "UI-FIX modal 提权修复（gap_00.html #modal z-index 900→10000，+220B 合法增长）"
       }
     ]
   },

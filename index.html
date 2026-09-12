@@ -4884,10 +4884,11 @@ body.v68-theme #topbar .stat, body.v68-theme #topbar .sep{ order:auto; }
 
 /* ===== /v93v5/ 方案一·羊皮卷宗 概念图还原：中央大标题 / 右上沉浸+更多 / 纪闻分版块 / 选项卡片 / 底部资源栏 ===== */
 body.v68-theme #topbar{ flex-direction:column; gap:3px; padding-top:10px; padding-bottom:8px; }
-body.v68-theme #topbar .title{ order:0; width:100%; text-align:center; font-size:30px; font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; letter-spacing:8px; font-weight:700; margin-top:8px; text-shadow:0 1px 0 rgba(255,255,255,.5); }
+body.v68-theme #topbar .title{ order:0; width:100%; text-align:center; font-size:30px; font-family:Georgia,"Times New Roman",serif; color:#7a5a1a; letter-spacing:8px; font-weight:700; margin-top:8px; margin-left:0; margin-right:0; padding-left:0; padding-right:0; box-sizing:border-box; text-shadow:0 1px 0 rgba(255,255,255,.5); }
 body.v68-theme #topbar .stat, body.v68-theme #topbar .sep{ order:1; font-size:13px; margin-top:2px; }
-body.v68-theme #topbar .nav{ order:2; justify-content:center; margin-top:4px; }
-body.v68-theme #topbar .v44-topbar2{ order:3; justify-content:center; margin-top:2px; }
+body.v68-theme #topbar .nav{ order:2; justify-content:center; margin-top:4px; margin-left:0; margin-right:0; width:100%; box-sizing:border-box; flex-wrap:wrap; gap:6px; overflow-x:visible; }
+body.v68-theme #topbar .v44-topbar2{ order:3; justify-content:center; margin-top:2px; margin-left:0; margin-right:0; width:100%; box-sizing:border-box; flex-wrap:wrap; }
+body.v68-theme #v66-top-logo{ margin:0 auto; display:block; }
 body.v68-theme #topbar #btn-immersive{ display:none !important; }
 body.v68-theme .v93-top-right{ position:fixed; top:14px; right:14px; display:flex; gap:8px; z-index:135; }
 body.v68-theme .v93-top-right .btn{ font-size:13px; padding:6px 14px; border-radius:8px; background:#fbf5e6; border:1px solid #c8a868; color:#4a3520; cursor:pointer; box-shadow:0 2px 6px rgba(74,52,32,.16); font-family:inherit; }
@@ -5045,6 +5046,8 @@ body.v68-theme #options .opt:hover{ background:#f2e0b8; border-color:#a08040; tr
 
 <style>
 /* ===== /v94inj:title/ v94 游戏开始主界面 + 捏人分步向导（主界面全屏层；捏人仍走 #modal box） ===== */
+/* /v94fix:modal/ 主界面 title-screen(z9998) 之下 #modal(z900) 被遮挡：主界面按钮点开的面板不可见 → #modal 提权至 10000（后置覆盖 gap_00:1035） */
+body.v68-theme #modal{ z-index:10000; }
 #title-screen{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;overflow:auto;
   background:
     radial-gradient(1200px 500px at 50% -10%, rgba(212,160,23,.10), transparent 60%),

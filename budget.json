@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 18780751,
+    "game_html_bytes_max": 18793298,
     "chunked_html_bytes_max": 8500000,
     "node_total_min": 5586,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 18730751,
-    "chunked_html_bytes": 7682789,
+    "game_html_bytes": 18743298,
+    "chunked_html_bytes": 7695336,
     "node_total": 5636,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "TQ25 第二十五批 薄节点扩写 26 节点（学院/理想线/北境/西境/锚线/沙漠/失败线等）",
+    "reason": "TQ26 第二十六批 薄节点扩写 26 节点（哨所/北境/南境/港城/锚线/理想线等）",
     "history": [
       {
         "date": "2026-09-09",
@@ -1657,6 +1657,13 @@
         "chunked_bytes": 7682789,
         "nodes": 5636,
         "reason": "TQ25 第二十五批 薄节点扩写 26 节点（学院/理想线/北境/西境/锚线/沙漠/失败线等）"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 18743298,
+        "chunked_bytes": 7695336,
+        "nodes": 5636,
+        "reason": "TQ26 第二十六批 薄节点扩写 26 节点（哨所/北境/南境/港城/锚线/理想线等）"
       }
     ]
   },

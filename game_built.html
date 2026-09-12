@@ -59924,6 +59924,88 @@ try{
 }catch(e){}
 })();
 
+/* =====v96-hot===== */
+/* V96 正文热词卡：B7 词条卡 / B9 关系回指 / B10 地点联动。点击 v92-name span 弹卡，capture 阶段拦截防误触继续阅读 */
+(function(){
+try{
+  window.v96_closeCard = function(){
+    try{
+      if(window.__v96cardH){ document.removeEventListener("click", window.__v96cardH, true); window.__v96cardH = null; }
+      var b = document.getElementById("v96-card"); if(b && b.parentNode){ b.parentNode.removeChild(b); }
+    }catch(e){}
+  };
+  window.v96_openCard = function(kind, id){
+    try{
+      window.v96_closeCard();
+      var ttl = ""; var body = ""; var foot = "";
+      if(kind === "lore"){
+        var lb = null;
+        try{ if(window.LOREBOOK){ for(var i=0;i<LOREBOOK.length;i++){ if(LOREBOOK[i] && LOREBOOK[i].title === id){ lb = LOREBOOK[i]; break; } } } }catch(e){}
+        ttl = (lb && lb.title) || id;
+        body = (lb && lb.text) ? lb.text : "（暂无词条正文）";
+        foot = "世界书 · 词条";
+      } else if(kind === "npc"){
+        var np = (window.NPC_NET && window.NPC_NET[id]) || null;
+        ttl = (np && np.cn) || id;
+        var rel = (typeof S!=="undefined" && S && S.npcRelations && S.npcRelations[id]) || 0;
+        var lvl = "陌生";
+        try{ if(window.getRelationLevel){ var l = window.getRelationLevel(id); if(l && l.name) lvl = l.name; } }catch(e){}
+        body = (np && np.desc) ? np.desc : "（暂无人物档案）";
+        foot = "关系 " + rel + " · " + lvl;
+      } else if(kind === "place"){
+        var sid = String(id||"");
+        var rk = sid.split("_")[0];
+        var ck = sid.indexOf("_") > 0 ? sid.substring(sid.indexOf("_")+1) : null;
+        var reg = (window.REGIONS && REGIONS[rk]) || null;
+        var cty = (reg && ck && reg.cities && reg.cities[ck]) || null;
+        ttl = (cty && cty.cn) || (reg && reg.cn) || id;
+        body = (cty && cty.desc) ? cty.desc : ((reg && reg.desc) || "（暂无地域简介）");
+        foot = (reg && reg.cn) ? ("九域 · " + reg.cn) : "九域";
+      } else { return; }
+      var box = document.createElement("div");
+      box.id = "v96-card";
+      box.style.cssText = "position:fixed;z-index:10001;max-width:380px;min-width:240px;padding:16px 18px;background:#1b1e28;border:1px solid #8b6f47;border-radius:10px;color:#d8d2c4;font-size:14px;line-height:1.7;box-shadow:0 8px 30px rgba(0,0,0,.55);left:50%;top:40%;transform:translate(-50%,-50%);";
+      box.innerHTML =
+        "<div style='display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #3a3d4a;padding-bottom:8px;margin-bottom:10px'>"+
+        "<b style='color:#e8c86a;font-size:15px'>"+ttl+"</b>"+
+        "<span onclick='window.v96_closeCard()' style='cursor:pointer;color:#9a948a;font-size:16px;line-height:1' title='关闭'>✕</span></div>"+
+        "<div style='max-height:300px;overflow:auto'>"+body+"</div>"+
+        "<div style='margin-top:10px;color:#9a948a;font-size:12px;border-top:1px solid #3a3d4a;padding-top:6px'>"+foot+"</div>";
+      document.body.appendChild(box);
+      setTimeout(function(){
+        try{
+          if(window.__v96cardH){ document.removeEventListener("click", window.__v96cardH, true); }
+          var _h = function(ev){
+            var _t = ev.target;
+            if(!_t) return;
+            if(_t.classList && _t.classList.contains("v92-name")) return;
+            if(_t.id && _t.id === "v96-card") return;
+            if(_t.closest && _t.closest("#v96-card")) return;
+            window.v96_closeCard();
+          };
+          window.__v96cardH = _h;
+          document.addEventListener("click", _h, true);
+        }catch(e){}
+      }, 10);
+    }catch(e){}
+  };
+  /* 点击委托：v92-name span → 弹卡（capture 拦截；选项区不拦截） */
+  document.addEventListener("click", function(e){
+    try{
+      var t = e.target;
+      if(!t || !t.classList || !t.classList.contains("v92-name")) return;
+      if(t.closest && t.closest("#options")) return;
+      var k = t.getAttribute("data-k");
+      var id = t.getAttribute("data-id");
+      if(!k || !id) return;
+      e.stopPropagation();
+      e.preventDefault();
+      window.v96_openCard(k, id);
+    }catch(e2){}
+  }, true);
+}catch(e){}
+})();
+
 /*=====v47-eng=====*/
 (function(){
 try{
@@ -63629,10 +63711,37 @@ window.v92_hlInit = function(){
         if(!map[w]) map[w] = lb.title;
       }
     }
+    /* /v96inj:hotword/ V96 热词扩展：NPC 人名 + 九域地名并入联合正则（词条/关系/地点三合一） */
+    var kindMap = {}; var idMap = {};
+    for(var _k0 in map){ kindMap[_k0]="lore"; idMap[_k0]=map[_k0]; }
+    try{
+      if(window.NPC_NET){
+        for(var nk in NPC_NET){
+          var nn = NPC_NET[nk]; var ncn = (nn && nn.cn) ? String(nn.cn) : "";
+          if(ncn.length>=2 && !map[ncn]){ map[ncn]=(nn.tag||nk); kindMap[ncn]="npc"; idMap[ncn]=nk; }
+        }
+      }
+    }catch(e){}
+    try{
+      if(window.REGIONS){
+        for(var rk2 in REGIONS){
+          var rr = REGIONS[rk2];
+          if(rr && rr.cn && !map[rr.cn]){ map[rr.cn]=(rr.desc||rr.cn); kindMap[rr.cn]="place"; idMap[rr.cn]=rk2; }
+          if(rr && rr.cities){
+            for(var ck in rr.cities){
+              var cc = rr.cities[ck];
+              if(cc && cc.cn && cc.cn.length>=2 && !map[cc.cn]){ map[cc.cn]=(cc.desc||cc.cn); kindMap[cc.cn]="place"; idMap[cc.cn]=rk2+"_"+ck; }
+            }
+          }
+        }
+      }
+    }catch(e){}
     var keys = Object.keys(map);
     keys.sort(function(a,b){ return b.length-a.length; });
     window.v92_hlNames = keys;
     window.v92_hlDesc = map;
+    window.v96_hotKind = kindMap;
+    window.v96_hotId = idMap;
     /* /an3inj:hlfix/ A-N3 高亮修复：构建单次联合正则（长名优先）。原顺序替换会误伤已生成 span 的 title 属性文本（属性值内含触发词），破坏 HTML 结构，正文出现乱码 */
     try{
       window.v92_hlRe = new RegExp(keys.map(function(nm){ return String(nm).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }).join("|"),"g");
@@ -63661,7 +63770,9 @@ window.v92_highlightNames = function(el){
           hit = true;
           var desc = String(window.v92_hlDesc[m]||'');
           try{ if(window.v92_galleryMark){ window.v92_galleryMark("npc_"+m, window.v92_hlDesc[m]||m); } }catch(e){}
-          return "<span class='v92-name' title='"+desc+"'>"+m+"</span>";
+          var _hk = (window.v96_hotKind && window.v96_hotKind[m]) || "lore";
+          var _hid = (window.v96_hotId && window.v96_hotId[m]) || m;
+          return "<span class='v92-name' data-k='"+_hk+"' data-id='"+_hid+"' title='"+desc+"'>"+m+"</span>";
         });
       }catch(e){}
       if(hit){
@@ -63688,7 +63799,7 @@ window.v92_ambCSS = function(){
       ".amb-steppe{box-shadow:inset 0 0 40px rgba(140,160,80,.06);}"+
       ".amb-church{box-shadow:inset 0 0 50px rgba(180,150,90,.10);}"+
       ".amb-tavern{box-shadow:inset 0 0 40px rgba(120,70,30,.10);}"+
-      ".v92-name{border-bottom:1px dotted #a8842a;cursor:help;}"+
+      ".v92-name{border-bottom:1px dotted #a8842a;cursor:pointer;}"+
       ".v92-name:hover{background:rgba(168,132,42,.12);}";
     (document.head||document.documentElement).appendChild(st);
   }catch(e){}

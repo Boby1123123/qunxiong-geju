@@ -9655,6 +9655,32 @@ window.v34_openStatsPanel = v34_openStatsPanel;
 window.v34_renderStatsPanel = v34_renderStatsPanel;
 window.v34_closeStatsPanel = v34_closeStatsPanel;
 
+function v34_achTabsAndGrid(defs, unlocked){
+  var CATS=[["all","全部"],["story","剧情"],["combat","战斗"],["growth","成长"],["bond","羁绊"]];
+  var CAT_FN=function(id){
+    var t=String(id||"").toLowerCase();
+    if(/(fight|battle|duel|combat|war|victory|win)/.test(t)) return "combat";
+    if(/(rich|gold|coin|merchant|trade|scholar|learn|study)/.test(t)) return "growth";
+    if(/(love|friend|bond|relation|companion|ally)/.test(t)) return "bond";
+    return "story";
+  };
+  var ids=Object.keys(defs||{});
+  var un=0, byCat={}, i, j, k;
+  for(i=0;i<CATS.length;i++) byCat[CATS[i][0]]=[];
+  for(i=0;i<ids.length;i++){
+    var id=ids[i], def=defs[id], got=!!unlocked[id];
+    if(got) un++;
+    byCat[CAT_FN(id)].push({id:id,def:def,got:got,t:(typeof unlocked[id]==="number")?unlocked[id]:0});
+  }
+  var h='<div style="display:flex;align-items:center;gap:10px;margin:4px 0 8px"><div style="flex:1;height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+Math.round(un*100/(ids.length||1))+'%;background:linear-gradient(90deg,#c49a3e,#e0b45c)"></div></div><span style="font-size:12px;color:var(--dim,#888)">'+un+'/'+ids.length+'</span></div>';
+  h+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">';
+  for(i=0;i<CATS.length;i++){ h+='<button class="v95-ach-tab'+(CATS[i][0]==="all"?' on':'')+'" data-cat="'+CATS[i][0]+'" style="padding:3px 10px;border:1px solid var(--border,rgba(0,0,0,0.15));border-radius:12px;background:transparent;cursor:pointer;font-size:12px">'+CATS[i][1]+'</button>'; }
+  h+='</div><div id="v95-ach-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px">';
+  for(i=0;i<CATS.length;i++){ k=CATS[i][0]; if(k==="all") continue; var list=byCat[k]||[]; for(j=0;j<list.length;j++){ var it=list[j];
+    h+='<div class="achievement-card '+(it.got?'unlocked':'locked')+'" data-cat="'+k+'" style="text-align:center;padding:8px;border:1px solid var(--border,rgba(0,0,0,0.1));border-radius:10px;font-size:12px">'+(it.got?'🏆':'❓')+'<div>'+(it.got?(it.def?it.def.name:it.id):'???')+'</div><div style="color:var(--dim,#888);font-size:11px">'+(it.got?(it.def?it.def.desc:'')+(it.t?('<br>解锁于 '+new Date(it.t).toLocaleDateString("zh-CN")):''):'未解锁')+'</div></div>'; } }
+  h+='</div>';
+  return h;
+}
 function v34_openAchievements(){
   try{
     /* /upg06inj:panel/ UPG-06 结局图鉴 + 成就面板（跨周目累积；独立键 elda_achievements） */
@@ -9672,15 +9698,6 @@ function v34_openAchievements(){
         + '<span style="color:' + (got ? '#52C41A' : 'var(--dim,#888)') + '">' + (got ? '已见证' : '未解锁') + '</span></div>';
     }
     const defIds = Object.keys(defs);
-    let achRows = '';
-    for(let i=0;i<defIds.length;i++){
-      const id = defIds[i];
-      const def = defs[id];
-      const got = !!d.achievements[id];
-      achRows += '<div style="display:flex;justify-content:space-between;padding:4px 2px;border-bottom:1px solid var(--border,rgba(0,0,0,0.06));font-size:13px">'
-        + '<span>' + (got ? '🏆 ' : '· ') + (def ? def.name : id) + '<span style="color:var(--dim,#888);font-size:12px">　' + (def ? def.desc : '') + '</span></span>'
-        + '<span style="color:' + (got ? '#52C41A' : 'var(--dim,#888)') + '">' + (got ? '达成' : '未达成') + '</span></div>';
-    }
     const box = document.createElement('div');
     box.className = 'box';
     box.innerHTML = '<h2>🏆 结局图鉴与成就</h2>'
@@ -9689,11 +9706,18 @@ function v34_openAchievements(){
       + '<div style="flex:1 1 140px;background:rgba(0,0,0,0.04);border-radius:10px;padding:10px;text-align:center"><div style="font-size:24px;font-weight:700">' + Object.keys(d.achievements).length + ' <span style="font-size:13px;color:var(--dim,#888)">/ ' + defIds.length + '</span></div><div style="font-size:12px;color:var(--dim,#888)">成就</div></div>'
       + '<div style="flex:1 1 140px;background:rgba(0,0,0,0.04);border-radius:10px;padding:10px;text-align:center"><div style="font-size:24px;font-weight:700">' + ((d.stats && d.stats.decisions)||0) + '</div><div style="font-size:12px;color:var(--dim,#888)">决策次数</div></div>'
       + '</div>'
-      + '<div style="max-height:300px;overflow-y:auto;border:1px solid var(--border,rgba(0,0,0,0.08));border-radius:10px;padding:6px 10px;margin-bottom:12px"><div style="font-weight:700;font-size:14px;margin:6px 0">成就进度</div>' + achRows + '</div>'
+      + '<div style="max-height:320px;overflow-y:auto;border:1px solid var(--border,rgba(0,0,0,0.08));border-radius:10px;padding:8px 10px;margin-bottom:12px"><div style="font-weight:700;font-size:14px;margin:6px 0">成就进度</div>' + v34_achTabsAndGrid(defs, d.achievements) + '</div>'
       + '<details style="margin-bottom:12px"><summary style="cursor:pointer;font-size:14px;font-weight:700">结局图鉴（' + seen.length + '/' + endIds.length + '）</summary><div style="max-height:260px;overflow-y:auto;border:1px solid var(--border,rgba(0,0,0,0.08));border-radius:10px;padding:6px 10px;margin-top:6px">' + rows + '</div></details>'
       + '<div style="color:var(--dim,#888);font-size:12px;text-align:center;margin-bottom:10px">成就与图鉴跨周目保留（独立存储，与存档分离）</div>'
       + '<div style="text-align:center"><button class="btn btn-back" onclick="closeModal()">返回游戏</button></div>';
     openModal(box);
+    try{
+      document.querySelectorAll('.v95-ach-tab').forEach(function(tb){ tb.onclick=function(){
+        const c=tb.dataset.cat;
+        document.querySelectorAll('.v95-ach-tab').forEach(function(x){ x.classList.remove('on'); }); tb.classList.add('on');
+        document.querySelectorAll('#v95-ach-grid .achievement-card').forEach(function(cd){ cd.style.display=(c==='all'||cd.dataset.cat===c)?'':'none'; });
+      }; });
+    }catch(e2){}
   }catch(e){}
 }
 
@@ -10469,21 +10493,36 @@ var V34_ACHIEVEMENTS = {
   survivor:{id:"survivor",name:"幸存者",desc:"从大失败中恢复",icon:"🛡️",rarity:"common"}
 };
 
+function v34_achCard(it,cat){
+  var isUnlocked=it.isUnlocked, t=it.t;
+  var timeStr = isUnlocked ? (t ? (new Date(t).toLocaleDateString("zh-CN")) : "较早") : "";
+  return '<div class="achievement-card '+(isUnlocked?'unlocked':'locked')+' achievement-rarity-'+it.ach.rarity+'" data-cat="'+cat+'">'+
+    '<div class="achievement-icon">'+(isUnlocked?it.ach.icon:'❓')+'</div>'+
+    '<div class="achievement-name">'+(isUnlocked?it.ach.name:'???')+'</div>'+
+    '<div class="achievement-desc">'+(isUnlocked?it.ach.desc:'未解锁')+'</div>'+
+    (isUnlocked?('<div class="achievement-time">解锁于 '+timeStr+'</div>'):'')+
+    '</div>';
+}
 function v34_renderAchievements(){
+  var CATS=[["all","全部"],["story","剧情"],["combat","战斗"],["growth","成长"],["bond","羁绊"]];
+  var CAT={first_step:"story",academy_grad:"story",seal_master:"story",abyss_lord:"story",peacemaker:"story",survivor:"story",warrior:"combat",rich:"growth",scholar:"growth",loved:"bond"};
   var html = '<h2>成就墙</h2>';
   var unlocked = 0, total = 0;
-  html += '<div class="achievement-grid">';
+  var byCat={}; for(var i=0;i<CATS.length;i++) byCat[CATS[i][0]]=[];
   for(var id in V34_ACHIEVEMENTS){
     var ach = V34_ACHIEVEMENTS[id];
     total++;
-    var isUnlocked = V34.codex.achievements[id] || false;
+    var isUnlocked = V34.codex.achievements[id] ? true : false;
     if(isUnlocked) unlocked++;
-    html += '<div class="achievement-card ' + (isUnlocked?'unlocked':'locked') + ' achievement-rarity-' + ach.rarity + '">';
-    html += '<div class="achievement-icon">' + (isUnlocked ? ach.icon : '❓') + '</div>';
-    html += '<div class="achievement-name">' + (isUnlocked ? ach.name : '???') + '</div>';
-    html += '<div class="achievement-desc">' + (isUnlocked ? ach.desc : '未解锁') + '</div>';
-    html += '</div>';
+    var t=CAT[id]||"story";
+    byCat[t].push({id:id,ach:ach,isUnlocked:isUnlocked,t:(typeof V34.codex.achievements[id]==="number")?V34.codex.achievements[id]:0});
   }
+  html += '<div class="achievement-summary"><div class="progress-bar"><div class="progress-fill" style="width:'+Math.round(unlocked*100/total)+'%"></div></div><div style="margin-top:6px;font-size:13px;color:#5a4a30">已解锁 '+unlocked+' / '+total+'</div></div>';
+  html += '<div class="achievement-tabs">';
+  for(var i=0;i<CATS.length;i++){ var k=CATS[i][0],n=CATS[i][1]; html+='<button class="ach-tab'+(k==="all"?' on':'')+'" data-cat="'+k+'">'+n+'</button>'; }
+  html += '</div>';
+  html += '<div class="achievement-grid" id="ach-grid">';
+  for(var i=0;i<CATS.length;i++){ var k=CATS[i][0]; if(k==="all") continue; var list=byCat[k]||[]; for(var j=0;j<list.length;j++){ html+=v34_achCard(list[j],k); } }
   html += '</div>';
     try{
     var _leg=null; try{ _leg=(window.legacySave)?legacySave():null; }catch(_){}
@@ -10499,7 +10538,7 @@ html += '<div style="text-align:center;margin:14px 0;font-size:14px;color:#5a4a3
 
 function v34_unlockAchievement(id){
   if(V34.codex.achievements[id]) return;
-  V34.codex.achievements[id] = true;
+  V34.codex.achievements[id] = Date.now();
   v34_playSfx('levelup');
   // 可以添加成就解锁通知
 }

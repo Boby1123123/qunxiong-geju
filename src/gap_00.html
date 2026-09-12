@@ -783,6 +783,62 @@ body.v68-immersive #v68-immersive-bar{ display:flex; }
 #v94-preview .pv-row{ font-size:12.5px; line-height:1.75; color:#57442d; margin-bottom:9px; }
 #v94-preview .pv-row .k{ font-weight:700; color:#3d2c17; font-size:13px; }
 #v94-preview .pv-row .v{ color:#6b5a3a; }
+/* ===== V95 捏人/主界面增强（MP-3/4/8/9/10/11） ===== */
+.v95-name-cands{ display:flex; gap:6px; align-items:center; margin-top:6px; flex-wrap:wrap; min-height:26px; }
+.v95-nc-label{ font-size:12px; color:#8a7a5c; }
+.v95-nc{ padding:3px 10px; font-size:13px; }
+.v95-tpls{ display:flex; gap:6px; align-items:center; margin:4px 0 6px; flex-wrap:wrap; }
+.v95-tpl-label{ font-size:12px; color:#8a7a5c; }
+.v95-final{ border:1px solid rgba(122,96,52,.5); border-radius:10px; padding:8px 10px; margin:6px 0 10px; background:rgba(122,96,52,.08); }
+.v95-final-row{ display:flex; gap:8px; align-items:baseline; width:100%; background:transparent; border:none; border-bottom:1px dashed rgba(122,96,52,.25); padding:4px 2px; cursor:pointer; text-align:left; color:#57442d; font-size:13px; }
+.v95-final-row:hover{ color:#8b6f47; }
+.v95-final-row .k{ flex:0 0 52px; color:#8a7a5c; font-size:12px; }
+.v95-final-row .v{ flex:1; color:#3d2c17; }
+.v95-final-row .h{ color:#8a7a5c; font-size:11px; }
+.pv-attrline{ display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px; }
+.pv-attr{ display:flex; flex-direction:column; align-items:center; background:rgba(122,96,52,.08); border:1px solid rgba(122,96,52,.25); border-radius:8px; padding:3px 6px; min-width:44px; }
+.pv-attr i{ font-size:10px; font-style:normal; color:#8a7a5c; }
+.pv-attr b{ font-size:14px; color:#8b6f47; }
+.pv-pool{ font-size:12px; color:#8a7a5c; margin-bottom:4px; }
+.pv-dim{ font-size:12px; color:#8b6f47; margin-bottom:4px; }
+.fit-badge{ font-size:11px; color:#8b6f47; }
+.fit-3{ color:#a67c2e; }
+.fit-2{ color:#8b6f47; }
+.fit-1{ color:#8a7a5c; }
+.v95-set-entry{ border-bottom:1px solid rgba(122,96,52,.15); padding:6px 2px; }
+.v95-overlay{ position:fixed; inset:0; z-index:9999; background:rgba(46,31,18,.9); display:flex; align-items:center; justify-content:center; }
+.v95-birth-card{ max-width:620px; width:92%; background:linear-gradient(180deg,#f3ecdc,#e6d3a8); border:2px solid var(--c-gold-600,#a67c2e); border-radius:14px; padding:26px 30px; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,.45); color:#2e1f12; }
+.v95-birth-kicker{ font-size:12px; letter-spacing:3px; color:#8a7a5c; margin-bottom:6px; }
+.v95-birth-title{ font-size:34px; color:var(--c-gold-600,#a67c2e); letter-spacing:8px; margin-bottom:14px; font-family:Georgia,"Times New Roman",serif; }
+.v95-birth-body{ text-align:left; font-size:14px; line-height:2; color:#4a3420; }
+.v95-birth-body p{ margin:0 0 10px; }
+.achievement-tabs{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+.ach-tab{ padding:3px 12px; border:1px solid rgba(122,96,52,.5); border-radius:12px; background:transparent; color:#8a7a5c; cursor:pointer; font-size:12px; }
+.ach-tab.on{ color:#8b6f47; border-color:#8b6f47; }
+.achievement-summary{ margin-bottom:8px; }
+.progress-bar{ height:8px; background:rgba(0,0,0,.12); border-radius:4px; overflow:hidden; }
+.progress-fill{ height:100%; background:linear-gradient(90deg,#a67c2e,#d4a94f); }
+.achievement-time{ font-size:10px; color:#8a7a5c; margin-top:2px; }
+/* ===== V95 世界导入屏（MP-5）与槽位弹层（MP-2） ===== */
+.v95-intro{ position:fixed; inset:0; z-index:9800; background:linear-gradient(180deg,#2e1f12,#1a1510); display:flex; align-items:center; justify-content:center; color:#e6d3a8; }
+.v95-intro-inner{ max-width:760px; width:92%; max-height:86vh; display:flex; flex-direction:column; background:rgba(240,226,196,.07); border:1px solid rgba(196,154,62,.45); border-radius:16px; padding:22px 26px; box-shadow:0 10px 50px rgba(0,0,0,.55); }
+.v95-intro-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.v95-intro-brand{ font-family:Georgia,"Times New Roman",serif; letter-spacing:2px; color:var(--gold,#c49a3e); font-size:15px; }
+.v95-intro-skip{ background:transparent; border:1px solid rgba(196,154,62,.4); color:#9a8a68; border-radius:14px; padding:4px 14px; cursor:pointer; font-size:12px; }
+.v95-intro-slide{ min-height:300px; display:flex; flex-direction:column; justify-content:center; }
+.v95-intro-kicker{ font-size:12px; letter-spacing:4px; color:#8a7a5c; text-align:center; margin-bottom:8px; }
+.v95-intro-tit{ font-size:30px; text-align:center; color:var(--gold,#c49a3e); letter-spacing:6px; margin-bottom:16px; font-family:Georgia,"Times New Roman",serif; }
+.v95-intro-body{ font-size:14px; line-height:2; color:#e6d3a8; }
+.v95-intro-body p{ margin:0 0 10px; }
+.v95-intro-dim{ color:#8a7a5c; font-size:13px; text-align:center; margin-top:12px; }
+.v95-intro-nav{ display:flex; align-items:center; justify-content:space-between; margin-top:16px; }
+.v95-dots{ display:flex; gap:6px; }
+.v95-dot{ width:8px; height:8px; border-radius:50%; background:rgba(196,154,62,.25); }
+.v95-dot.on{ background:var(--gold,#c49a3e); }
+.v95-region-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; }
+.v95-region-card{ border:1px solid rgba(196,154,62,.3); border-radius:10px; padding:8px 10px; font-size:12px; }
+.v95-region-card b{ color:var(--gold,#c49a3e); display:block; margin-bottom:4px; }
+.v95-slot-card{ max-width:440px; width:92%; background:linear-gradient(180deg,#f3ecdc,#e6d3a8); border:2px solid var(--c-gold-600,#a67c2e); border-radius:14px; padding:20px 22px; color:#2e1f12; box-shadow:0 10px 40px rgba(0,0,0,.5); }
 </style>
 <style>
 /* /v68ui:frame/ V68 西幻手抄圣典 · 设计令牌与组件（羊皮纸/哥特/烫金，禁国风） */

@@ -6763,7 +6763,7 @@ function creationHTML(){
   h+="<div class='c-body'><div class='c-main'>";
   /* 步骤一：名讳与血脉 */
   h+="<div class='cstep' data-step='1'>";
-  h+="<div class='mt10'><input type='text' id='in-name' maxlength='12' placeholder='输入你的名讳' value='"+esc(S.name||"")+"'></div>";
+  h+="<div class='mt10' style='display:flex;gap:8px;align-items:center'><input type='text' id='in-name' maxlength='12' placeholder='输入你的名讳' value='"+esc(S.name||"")+"' style='flex:1;min-width:0'><button class='btn' id='v95-name-dice' type='button' title='按种族随机取名'>🎲 随机</button></div><div class='v95-name-cands' id='v95-name-cands'></div>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>性别</h3><div class='sel-row'>";
   for(const g of ["男","女","隐秘"]){ h+="<button class='sel-card small' data-gender='"+g+"' "+(S.gender===g?"style='border-color:var(--gold)'":"")+">"+g+"</button>"; }
   h+="</div>";
@@ -6777,8 +6777,10 @@ function creationHTML(){
   h+="</div></div>";
   /* 步骤二：出身 */
   h+="<div class='cstep' data-step='2'>";
-  h+="<h3 class='mt10' style='color:var(--gold2)'>出身 · 九地（影响初始金币/技能/好感/序章）</h3><div class='sel-row'>";
-  for(const hk in HOMELANDS) h+=selCard(hk,HOMELANDS[hk],"homeland");
+  h+="<h3 class='mt10' style='color:var(--gold2)'>出身 · 九地（影响初始金币/技能/好感/序章；带★为适配职业推荐）</h3><div class='sel-row'>";
+  for(const hk in HOMELANDS){ let _fit=""; try{ const F=window.FIT_MATRIX&&FIT_MATRIX[hk]||null; if(F){ const _top=[]; for(const jk in F){ if(F[jk].star>=3&&_top.length<3) _top.push(jk+" ★★★"); } if(_top.length<3){ for(const jk in F){ if(F[jk].star===2&&_top.length<3) _top.push(jk+" ★★"); } } if(_top.length) _fit="<span class='sc-m fit-badge'>适配："+_top.join(" · ")+"</span>"; } }catch(_){}
+    h+=selCard(hk,HOMELANDS[hk],"homeland").replace("</button>",_fit+"</button>");
+  }
   h+="</div>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>出身谱系 · "+(RACES[S.race]?RACES[S.race].cn:"")+"（决定初始状态/人际关系/入学标签/序章剧情）</h3><div class='sel-row' id='background-box'>";
   for(const bk in BACKGROUNDS_FULL){ const bg=BACKGROUNDS_FULL[bk];
@@ -6792,9 +6794,10 @@ function creationHTML(){
   /* 步骤三：职业 */
   h+="<div class='cstep' data-step='3'>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>主修职业 · 九选一</h3><div class='sel-row'>";
-  for(const jk in JOBS){ const j=JOBS[jk]; h+="<button class='sel-card' data-job='"+jk+"' "+(S.job===jk?"style='border-color:var(--gold)'":"")+"><span class='sc-t'>"+j.cn+"</span><span class='sc-d'>"+j.desc+"</span><span class='sc-m' style='color:var(--cyan)'>准则："+j.criterion+"</span></button>"; }
+  for(const jk in JOBS){ const j=JOBS[jk]; let _fit=""; try{ if(S.homeland&&window.FIT_MATRIX&&FIT_MATRIX[S.homeland]&&FIT_MATRIX[S.homeland][jk]){ const f=FIT_MATRIX[S.homeland][jk]; _fit="<span class='sc-m fit-badge fit-"+f.star+"'>"+("★".repeat(f.star))+""+(f.star>=2?"":"·冷门")+" "+(f.why||"")+"</span>"; } }catch(_){}
+    h+="<button class='sel-card' data-job='"+jk+"' "+(S.job===jk?"style='border-color:var(--gold)'":"")+"><span class='sc-t'>"+j.cn+"</span><span class='sc-d'>"+j.desc+"</span><span class='sc-m' style='color:var(--cyan)'>准则："+j.criterion+"</span>"+_fit+"</button>"; }
   h+="</div>";
-  h+="<p class='sub mt5' style='color:var(--bad);font-size:12px'>※ 职业一生唯一，不可兼修。唯有神明能以神恩强行扭转凡人的职业根基；而神明不会轻易干涉世事。请慎重抉择。</p></div>";
+  h+="<p class='sub mt5' style='color:var(--bad);font-size:12px'>※ 职业一生唯一，不可兼修。唯有神明能以神恩强行扭转凡人的职业根基；而神明不会轻易干涉世事。请慎重抉择。</p><p class='sub mt5' style='color:var(--gold2);font-size:12px'>※ "+(S.homeland?"已选出身："+(HOMELANDS[S.homeland]?HOMELANDS[S.homeland].cn:S.homeland)+"——卡片底部的★为适配提示。":"回到「贰 出身」选定故乡后，本页会显示每个职业的适配推荐（★★★契合 / ★★尚可 / ★冷门）。")+"</p></div>";
   /* 步骤四：天资与志趣 */
   h+="<div class='cstep' data-step='4'>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>天赋 · 四等（决定属性池与起跑线）</h3><div class='sel-row'>";
@@ -6808,10 +6811,12 @@ function creationHTML(){
   h+="<h3 class='mt10' style='color:var(--gold2)'>理想 · 八选一（决定结局归宿）</h3><div class='sel-row'>";
   for(const ik in IDEALS) h+=selCard(ik,IDEALS[ik],"ideal");
   h+="</div>";
+  h+="<div class='v95-final' id='v95-final'></div>";
   h+="<h3 class='mt10' style='color:var(--gold2)'>六大属性分配　<span style='color:var(--dim);font-size:12px'>余 <span id='poolv'>"+pool+"</span> 点（20-80，判定按对应属性）</span></h3>";
+  h+="<div class='v95-tpls'><span class='v95-tpl-label'>快速模板：</span><button class='btn sm' data-tpl='balanced'>均衡</button><button class='btn sm' data-tpl='str'>力量</button><button class='btn sm' data-tpl='agi'>敏捷</button><button class='btn sm' data-tpl='int'>法师</button><button class='btn sm' data-tpl='cha'>魅力</button></div>";
   h+="<p class='sub mt5' style='font-size:12px'>货币："+CURRENCY.rate+"（"+CURRENCY.sub+"）。"+CURRENCY.note+"</p>";
   for(const a of ATTRS){ h+="<div class='attr-row' data-a='"+a+"'><span class='nm'>"+ATTR_CN[a]+"</span><span class='val' id='val-"+a+"'>"+S.attrs[a]+"</span><span class='btns'><button class='btn ab' data-a='"+a+"' data-d='1'>+1</button><button class='btn ab' data-a='"+a+"' data-d='5'>+5</button><button class='btn' data-a='"+a+"' data-d='-1'>−1</button><button class='btn' data-a='"+a+"' data-d='-5'>−5</button></span><span class='note'>"+ATTR_DESC[a]+"</span></div>"; }
-  h+="<div class='mt10' style='text-align:center'><button class='btn gold' id='btn-start' style='padding:10px 30px'>踏入4037年 · 开始旅程</button></div>";
+  h+="<div class='mt10' style='text-align:center'><button class='btn gold' id='btn-start' style='padding:10px 30px'>确认并踏入4037年 · 开始旅程</button></div>";
   h+="<p class='sub center mt10'>d100 六档判定 · 大成功01 / 极成功≤目标1/5 / 困难成功≤目标1/2 / 普通成功≤目标 / 失败 / 大失败=100或目标<50时≥96</p>";
   h+="</div>";
   h+="</div>";
@@ -6949,13 +6954,40 @@ function bindCreation(){
     S.day = 1; S.date = fmtDate(S.day);
     renderTop(); renderStats();
     try{ if(typeof v92_sessionClear === 'function') v92_sessionClear(); }catch(e){}
-    writeNext();
+    if(window.v94_birthCard&&window.v94_birthCardText){
+      const __birth=v94_birthCardText();
+      v94_birthCard(__birth,function(){ try{ writeNext(); }catch(e){ try{ console.log("[v95:birth:writeNext]",e); }catch(_){} } });
+    } else { writeNext(); }
   };
   /* /v94inj:stepnav/ 分步导航 */
   const prev=document.getElementById("c-prev"), next=document.getElementById("c-next");
   if(prev) prev.onclick=()=>v94_showStep(v94_step-1);
   if(next) next.onclick=()=>{ if(v94_step>=5){ if(window.v94_creationReady) v94_creationReady(); } else v94_showStep(v94_step+1); };
   document.querySelectorAll("#creation-shell .c-step").forEach(el=>{ el.onclick=()=>v94_showStep(+el.dataset.step); });
+  /* /v95inj:mp9a/ 随机名按钮 */
+  const dice=document.getElementById("v95-name-dice");
+  if(dice) dice.onclick=()=>v94_rollName();
+  /* /v95inj:mp9b/ 属性模板 */
+  document.querySelectorAll("[data-tpl]").forEach(b=>{
+    b.onclick=()=>{
+      const presets={balanced:{STR:40,CON:40,AGI:40,INT:40,SPR:40,CHA:40},str:{STR:60,CON:45,AGI:35,INT:30,SPR:30,CHA:35},agi:{AGI:60,STR:40,CON:35,INT:35,SPR:35,CHA:30},int:{INT:60,SPR:40,STR:30,CON:35,AGI:30,CHA:35},cha:{CHA:60,SPR:40,STR:30,CON:35,AGI:30,INT:35}};
+      const p=presets[b.dataset.tpl]; if(!p) return;
+      const sum=Object.keys(p).reduce((a,k)=>a+p[k],0);
+      const cap=300+talentPoolBonus();
+      if(sum>cap){ flashMsg("该模板超出当前属性池（"+cap+"），请先选择更高的天资"); return; }
+      for(const k in p) S.attrs[k]=p[k];
+      pool=cap-sum;
+      for(const a of ATTRS){ const v=document.getElementById("val-"+a); if(v) v.textContent=S.attrs[a]; }
+      const pv=document.getElementById("poolv"); if(pv) pv.textContent=pool;
+      v94_creationPreview(); if(window.v94_renderFinalCheck) v94_renderFinalCheck();
+      if(window.v94_sfx) v94_sfx("click");
+    };
+  });
+  /* /v95inj:mp10a/ 选卡音效（委托） */
+  document.addEventListener("click",function(e){ const c=e.target.closest(".sel-card"); if(c&&window.v94_sfx) v94_sfx("click"); });
+  /* 名字输入即时刷新终审卡 */
+  const ni=document.getElementById("in-name");
+  if(ni) ni.addEventListener("input",function(){ if(window.v94_renderFinalCheck) v94_renderFinalCheck(); });
   v94_showStep(1);
 }
 
@@ -6982,6 +7014,8 @@ function v94_showStep(n){
     else hint.textContent="理想决定结局归宿；分配属性（20-80），余点来自天赋。准备好就踏入4037年。";
   }
   v94_creationPreview();
+  if(window.v94_renderFinalCheck) v94_renderFinalCheck();
+  if(window.v94_sfx) v94_sfx("step");
 }
 window.v94_showStep=v94_showStep;
 function v94_creationReady(){ const b=document.getElementById("btn-start"); if(b) b.click(); }
@@ -7023,10 +7057,103 @@ function v94_creationPreview(){
       add("天资 · "+(t?t.cn:""), (P.talent_judge&&P.talent_judge[S.talent])?P.talent_judge[S.talent]:(t?t.desc:""));
     }
     if(!rows) rows="<div class='pv-row' style='color:#9a8a68'>选择出身、职业、理想与天资，这里会预告你序章与学院的开局走向。</div>";
-    body.innerHTML=rows;
+    let head="<div class='pv-attrline'>";
+    for(const a of ATTRS){ head+="<span class='pv-attr'><i>"+ATTR_CN[a]+"</i><b>"+S.attrs[a]+"</b></span>"; }
+    head+="</div><div class='pv-pool'>余 <b>"+(typeof pool!=="undefined"?pool:"?")+"</b> 点</div>";
+    const _slots=["race","subrace","homeland","background","job","talent","hobby","ideal"];
+    const _miss=_slots.filter(k=>!S[k]);
+    const _sum="<div class='pv-dim'>已定 "+(8-_miss.length)+"/8"+( _miss.length?(" · 待定："+_miss.map(k=>k==="race"?"种族":k==="subrace"?"亚种":k==="homeland"?"出身":k==="background"?"谱系":k==="job"?"职业":k==="talent"?"天资":k==="hobby"?"爱好":"理想").join("、")):"")+"</div>";
+    body.innerHTML=head+_sum+rows;
   }catch(e){}
 }
 window.v94_creationPreview=v94_creationPreview;
+
+/* ============ /v95inj:mp4/ MP-4 终审卡 ============ */
+window.v94_renderFinalCheck=function(){
+  try{
+    const box=document.getElementById("v95-final"); if(!box) return;
+    const name=(function(){ const i=document.getElementById("in-name"); return i?(i.value||"").trim():(S.name||""); })();
+    const items=[
+      {k:"名讳", v:name||"未定", s:1, hint:"写下你的名字"},
+      {k:"性别", v:S.gender||"未定", s:1},
+      {k:"种族", v:S.race?(RACES[S.race]?RACES[S.race].cn:S.race):"未定", s:1},
+      {k:"亚种", v:S.subrace?(SUBRACES[S.subrace]?SUBRACES[S.subrace].cn:S.subrace):"未定", s:1},
+      {k:"出身", v:S.homeland?(HOMELANDS[S.homeland]?HOMELANDS[S.homeland].cn:S.homeland):"未定", s:2, hint:"决定序章开场与初始金币"},
+      {k:"谱系", v:S.background?(BACKGROUNDS_FULL[S.background]?BACKGROUNDS_FULL[S.background].cn:S.background):"未定", s:2},
+      {k:"职业", v:S.job||"未定", s:3, hint:"一生唯一，含戒律"},
+      {k:"天资", v:S.talent?(TALENTS[S.talent]?TALENTS[S.talent].cn:S.talent):"未定", s:4},
+      {k:"爱好", v:S.hobby?(HOBBIES[S.hobby]?HOBBIES[S.hobby].cn:S.hobby):"未定", s:4},
+      {k:"理想", v:S.ideal?(IDEALS[S.ideal]?IDEALS[S.ideal].cn:S.ideal):"未定", s:5, hint:"决定结局归宿"}
+    ];
+    let h="<div class='pv-t'>✦ 终审 · 十项</div>";
+    for(let i=0;i<items.length;i++){ const it=items[i];
+      h+="<button class='v95-final-row' data-go='"+(it.s||1)+"'><span class='k'>"+(it.k)+"</span><span class='v'>"+(it.v||"")+"</span>"+(it.hint?"<span class='h'>"+(it.hint)+"</span>":"")+"</button>";
+    }
+    box.innerHTML=h;
+    box.querySelectorAll("[data-go]").forEach(b=>{ b.onclick=()=>{ if(window.v94_showStep) v94_showStep(+b.dataset.go); }; });
+  }catch(e){}
+};
+/* ============ /v95inj:mp9/ MP-9 随机名 ============ */
+window.v94_rollName=function(){
+  try{
+    const box=document.getElementById("v95-name-cands"); if(!box) return;
+    const rc=(S.race&&RACES&&RACES[S.race])?S.race:"human";
+    const poolArr=((window.NAME_POOL&&NAME_POOL[rc])||(window.NAME_POOL&&NAME_POOL.human)||[]);
+    if(!poolArr.length) return;
+    const pick=[];
+    for(let i=0;i<3;i++){ const n=poolArr[Math.floor(Math.random()*poolArr.length)]; if(pick.indexOf(n)<0) pick.push(n); if(pick.length>=3) break; }
+    let h="<span class='v95-nc-label'>候选：</span>";
+    for(let i=0;i<pick.length;i++){ h+="<button class='btn sm v95-nc' data-n='"+pick[i]+"'>"+pick[i]+"</button>"; }
+    box.innerHTML=h;
+    box.querySelectorAll("[data-n]").forEach(b=>{ b.onclick=()=>{ const i=document.getElementById("in-name"); if(i){ i.value=b.dataset.n; if(window.v94_renderFinalCheck) v94_renderFinalCheck(); } }; });
+    if(window.v94_sfx) v94_sfx("click");
+  }catch(e){}
+};
+/* ============ /v95inj:mp10/ MP-10 捏人音效 ============ */
+window.v94_sfx=function(type){
+  try{
+    if(!window.V34||!V34.audioSettings) return;
+    if(!V34.audioSettings.audioEnabled) return;
+    const vol=(V34.audioSettings.sfxVolume!==undefined)?V34.audioSettings.sfxVolume:0.6;
+    if(!window.AC){ try{ if(typeof acInit==="function") acInit(); }catch(e){} }
+    const ac=window.AC; if(!ac) return;
+    const t0=ac.currentTime;
+    const o=ac.createOscillator(), g=ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    let f=440, dur=0.09, v=0.05*vol;
+    if(type==="step"){ f=330; dur=0.07; }
+    else if(type==="click"){ f=520; dur=0.05; }
+    else if(type==="start"){ f=220; dur=0.5; }
+    g.gain.setValueAtTime(v,t0);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    o.frequency.setValueAtTime(f,t0);
+    if(type==="start"){ o.frequency.exponentialRampToValueAtTime(440,t0+0.4); }
+    o.type="triangle";
+    o.start(t0); o.stop(t0+dur);
+  }catch(e){}
+};
+/* ============ /v95inj:mp11/ MP-11 出生微叙事 ============ */
+window.v94_birthCardText=function(){
+  try{
+    const P=window.ORIGIN_PROFILE||{};
+    const parts=[];
+    if(S.homeland&&P.identity&&P.identity[S.homeland]) parts.push(P.identity[S.homeland][0]||P.identity[S.homeland]);
+    else if(S.homeland&&HOMELANDS[S.homeland]) parts.push(HOMELANDS[S.homeland].start||"");
+    if(S.job&&P.job_sight&&P.job_sight[S.job]) parts.push(P.job_sight[S.job][0]||P.job_sight[S.job]);
+    if(S.ideal&&P.ideal_reaction&&P.ideal_reaction[S.ideal]) parts.push(P.ideal_reaction[S.ideal][0]||P.ideal_reaction[S.ideal]);
+    if(!parts.length) parts.push("你从灰港的渡船上醒来，晨雾未散，潮水正漫过栈桥的木桩。船工们把缆绳扔给你，没人问你的名字。");
+    return parts.join("\n\n");
+  }catch(e){ return "你从灰港的渡船上醒来，晨雾未散。"; }
+};
+window.v94_birthCard=function(txt,cb){
+  try{
+    const old=document.getElementById("v95-birth"); if(old) old.remove();
+    const el=document.createElement("div"); el.id="v95-birth"; el.className="v95-overlay";
+    el.innerHTML="<div class='v95-birth-card'><div class='v95-birth-kicker'>艾尔达历 4037 年 · 灰港</div><div class='v95-birth-title'>启程</div><div class='v95-birth-body'>"+(txt||"").split("\n\n").map(p=>"<p>"+p+"</p>").join("")+"</div><button class='btn gold' id='v95-birth-go' style='padding:10px 26px'>启程 →</button></div>";
+    document.body.appendChild(el);
+    document.getElementById("v95-birth-go").onclick=function(){ el.remove(); if(window.v94_sfx) v94_sfx("start"); if(cb) cb(); };
+  }catch(e){ if(cb) cb(); }
+};
 
 /* ---------- 游戏开始主界面 ---------- */
 window.v94_ui={shown:false};
@@ -7043,34 +7170,109 @@ window.v94_titleScreen=function(){
       "<div class='ts-sub'>艾尔达历 4037 年</div>"+
       "<div class='ts-rule'></div>"+
       "<div class='ts-verse'>诸神远去，深渊在封印之下低语。<br>七枚锚镇着大陆的脊梁，金秤世家守着无人知晓的墓园。<br>你从灰港的渡船上走下来——这一刻，大陆的命运尚无定论。</div>"+
+      (saved?("<button class='ts-btn continue' id='ts-continue'>▶ 继续旅程</button>"):"")+
       "<div class='ts-btns'>"+
       "<button class='ts-btn primary' id='ts-new'>✦ 开始新旅</button>"+
       "<button class='ts-btn' id='ts-load'>📜 读取存档</button>"+
       "<button class='ts-btn' id='ts-ach'>⚑ 成就册</button>"+
       "<button class='ts-btn' id='ts-codex'>📖 设定册</button>"+
       "</div>"+
-      "<div class='ts-foot'>v94 · 单文件版 · 本地存档"+(saved?" · 检测到存档（第"+(saved.day||"?")+"日，"+(saved.name||"无名")+"）":"")+"</div>"+
+      "<div class='ts-foot'>v94 · 单文件版 · 本地存档"+(saved?" · 检测到存档（第"+(saved.day||"?")+"日，"+(saved.name||"无名")+""+(saved.job?" · "+saved.job:"")+"）":"")+"</div>"+
       "</div>";
     document.body.appendChild(el);
     window.v94_ui.shown=true;
+    const _c=document.getElementById("ts-continue");
+    if(_c) _c.onclick=function(){ v94_loadSave(); };
     document.getElementById("ts-new").onclick=function(){
       const s2=(typeof v61_lzstring!=="undefined"&&v61_lzstring.sniffRaw)?v61_lzstring.sniffRaw(localStorage.getItem(RULESET_ID+"-save")):null;
-      if(s2){ askConfirm("检测到存档（第"+(s2.day||"?")+"日，"+(s2.name||"无名")+"）。开始新旅会覆盖此存档，确定？").then(function(ok){ if(ok){ v94_hideTitle(); newGame(); } }); }
-      else { v94_hideTitle(); v94_startNew(); }
+      const go=function(){ v94_hideTitle(); v94_introFlow(); };
+      if(s2){
+        v94_askSlot(function(n){
+          if(!n) return;
+          window.__v95_newSlot="slot"+n;
+          askConfirm("将覆盖「"+((n===1)?(s2.name||"当前存档"):("槽位"+n))+"」。确定开始新旅？").then(function(ok){ if(ok){ go(); } });
+        });
+      } else { go(); }
     };
-    document.getElementById("ts-load").onclick=function(){ v94_loadSave(); };
+    document.getElementById("ts-load").onclick=function(){ if(window.v34_openSavePanel){ v34_openSavePanel(); } else { v94_loadSave(); } };
     document.getElementById("ts-ach").onclick=function(){ if(window.v34_openAchievements) v34_openAchievements(); };
     document.getElementById("ts-codex").onclick=function(){ v94_settingPanel(); };
   }catch(e){ try{ console.log("[v94:title:err]",e); }catch(_){} }
 };
 window.v94_hideTitle=function(){ const el=document.getElementById("title-screen"); if(el) el.remove(); window.v94_ui.shown=false; };
+/* /v95inj:slot/ MP-2 槽位选择弹层（ts-new 新建前选槽；纯独立 DOM） */
+window.v94_askSlot=function(cb){
+  try{
+    const old=document.getElementById("v95-slot-pick"); if(old) old.remove();
+    const el=document.createElement("div"); el.id="v95-slot-pick"; el.className="v95-overlay";
+    const names=["槽位一","槽位二","槽位三"];
+    let h="<div class='v95-slot-card'><div class='pv-t'>✦ 存档槽位</div><p style='font-size:13px;color:#9a8a68;margin:6px 0 12px'>新的旅程将写入所选槽位。</p>";
+    for(let i=0;i<3;i++){
+      const _raw=localStorage.getItem(i===0?RULESET_ID+"-save":("elda-save-slot-slot"+(i+1)));
+      let _d=null; try{ _d=_raw?v61_lzstring.sniffRaw(_raw):null; }catch(_){}
+      h+="<button class='sel-card' data-slot='"+(i+1)+"' style='width:100%;text-align:left;margin:6px 0'><span class='sc-t'>"+names[i]+"</span><span class='sc-d'>"+(_d?(("第"+(_d.day||1)+"日 · "+(_d.name||"无名"))):"（空）")+"</span></button>";
+    }
+    h+="<div style='margin-top:10px;text-align:center'><button class='btn' id='v95-slot-cancel'>取消</button></div></div>";
+    el.innerHTML=h;
+    document.body.appendChild(el);
+    el.querySelectorAll("[data-slot]").forEach(function(b){ b.onclick=function(){ const n=+b.dataset.slot; el.remove(); cb(n); }; });
+    document.getElementById("v95-slot-cancel").onclick=function(){ el.remove(); cb(null); };
+  }catch(e){ try{ console.log("[v95:slot:err]",e); }catch(_){} }
+};
 window.v94_startNew=function(){
   try{
     S=emptyState();
     try{ if(typeof u7_ngInherit==="function") u7_ngInherit(); }catch(e){}
+    if(window.__v95_newSlot){ try{ S.slotId=window.__v95_newSlot; }catch(_){} window.__v95_newSlot=null; }
     curNode=null;
     showCreation();
   }catch(e){ try{ console.log("[v94:new:err]",e); }catch(_){} }
+};
+/* ================= /v95inj:intro/ MP-5 世界导入屏（4 屏幻灯片） ================= */
+window.v94_introFlow=function(){
+  try{
+    const old=document.getElementById("v95-intro"); if(old) old.remove();
+    const el=document.createElement("div"); el.id="v95-intro"; el.className="v95-intro";
+    const _veteran=(function(){ try{ const d=JSON.parse(localStorage.getItem(window.ELDA_ACHIEVEMENTS_KEY||"elda_achievements")||"null"); return !!(d&&((d.achievements&&Object.keys(d.achievements).length)||(d.unlockedEndings&&Object.keys(d.unlockedEndings).length))); }catch(_){ return false; } })();
+    let slides=[];
+    /* 屏1 · 世界大势（LOREBOOK constant 前 4 条） */
+    let s1="<div class='v95-intro-kicker'>艾尔达历 4037 年 · 世界大势</div><div class='v95-intro-tit'>诸神远去之后</div><div class='v95-intro-body'>";
+    try{ const LB=window.LOREBOOK||[]; let c=0; for(let i=0;i<LB.length&&c<3;i++){ const e=LB[i]; if(!e||!e.constant) continue; s1+="<p>◆ "+(e.title||"")+"："+(e.text||"")+"</p>"; c++; } }catch(_){}
+    s1+="</div>";
+    slides.push(s1);
+    /* 屏2 · 九域 */
+    let s2="<div class='v95-intro-kicker'>大陆舆图</div><div class='v95-intro-tit'>九域并立</div><div class='v95-intro-body v95-region-grid'>";
+    try{ const R=window.REGIONS||{}; const order=["north","free","south","east","west","desert","elf","dwarf","orc"]; for(let i=0;i<order.length;i++){ const k=order[i]; const r=R[k]; if(!r) continue; s2+="<div class='v95-region-card'><b>"+(r.cn||k)+"</b><span>"+(r.desc||"")+"</span></div>"; } }catch(_){}
+    s2+="</div>";
+    slides.push(s2);
+    /* 屏3 · 五主线 */
+    let s3="<div class='v95-intro-kicker'>时代洪流</div><div class='v95-intro-tit'>命运的五根线</div><div class='v95-intro-body'>";
+    try{ const W=window.WORLD_EVENTS||{}; const order=["purge","silver","seal","academy","orc"]; for(let i=0;i<order.length;i++){ const k=order[i]; const w=W[k]; if(!w) continue; s3+="<p>◇ 第"+(w.day||"?")+"日 · "+(w.cn||k)+"："+(w.text||"")+"</p>"; } }catch(_){}
+    s3+="</div>";
+    slides.push(s3);
+    /* 屏4 · 你的开局 */
+    slides.push("<div class='v95-intro-kicker'>旅程起点</div><div class='v95-intro-tit'>灰港的渡船</div><div class='v95-intro-body'><p>你在灰港的渡船上醒来。身无长物，唯有一身尚未定型的天资。</p><p>名讳、血脉、出身、职业、理想——五道抉择将决定你以何种面目踏入这个时代。</p><p class='v95-intro-dim'>命运不会等你准备好，它只会等你下船。</p></div>");
+    let cur=0;
+    const render=function(){
+      const p=document.getElementById("v95-intro-page");
+      if(!p) return;
+      p.innerHTML="<div class='v95-intro-slide'>"+slides[cur]+"</div>";
+      const dots=document.getElementById("v95-intro-dots");
+      if(dots){ let d=""; for(let i=0;i<slides.length;i++){ d+="<span class='v95-dot"+(i===cur?" on":"")+"'></span>"; } dots.innerHTML=d; }
+      const back=document.getElementById("v95-intro-back"), fwd=document.getElementById("v95-intro-fwd");
+      if(back) back.style.visibility = cur<=0?"hidden":"visible";
+      if(fwd){ fwd.textContent = cur>=slides.length-1?"开始捏人 →":"下一页 →"; }
+      const sk=document.getElementById("v95-intro-skip");
+      if(sk){ sk.textContent=_veteran?"跳过 >>（老旅人）":"跳过 >>"; sk.style.borderColor=_veteran?"var(--gold)":""; }
+    };
+    el.innerHTML="<div class='v95-intro-inner'><div class='v95-intro-top'><span class='v95-intro-brand'>艾尔达大陆 · 群雄割据</span><button class='v95-intro-skip' id='v95-intro-skip'>跳过 >></button></div><div id='v95-intro-page'></div><div class='v95-intro-nav'><button class='btn' id='v95-intro-back'>← 上页</button><div class='v95-dots' id='v95-intro-dots'></div><button class='btn gold' id='v95-intro-fwd'>下一页 →</button></div></div>";
+    document.body.appendChild(el);
+    render();
+    const done=function(){ el.remove(); v94_startNew(); };
+    document.getElementById("v95-intro-back").onclick=function(){ if(cur>0){ cur--; render(); } };
+    document.getElementById("v95-intro-fwd").onclick=function(){ if(cur<slides.length-1){ cur++; render(); } else { done(); } };
+    document.getElementById("v95-intro-skip").onclick=done;
+  }catch(e){ try{ console.log("[v95:intro:err]",e); v94_startNew(); }catch(_){} }
 };
 window.v94_loadSave=function(){
   try{
@@ -7090,39 +7292,75 @@ window.v94_loadSave=function(){
     }catch(e){ flashMsg("读档失败："+((e&&e.message)||"")); }
   }catch(e){ flashMsg("读档失败"); }
 };
-/* ---------- 设定册（静态世界一览，S 无关，主界面可用） ---------- */
+/* ---------- 设定册（MP-7 增强：8 分类 + 搜索；S 无关，主界面可用） ---------- */
 window.v94_settingPanel=function(){
   try{
     const box=document.createElement("div"); box.className="box";
     let h="<h2>📖 设定册 · 世界一览</h2><p class='sub'>艾尔达大陆的风物与脉络——不随周目而变。</p>";
-    h+="<div style='max-height:440px;overflow-y:auto'>";
+    h+="<div style='margin:8px 0'><input type='text' id='v95-set-search' placeholder='🔍 搜索词条（人物 / 地名 / 术语）' style='width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid #6b5a3a;border-radius:6px;background:#1a1510;color:#e8dcc0'></div>";
+    h+="<div style='max-height:430px;overflow-y:auto'>";
+    const _entry=function(id,title,body){ return "<div class='v95-set-entry' data-q='"+(title+" "+body).replace(/'/g,"")+"'><b style='color:var(--gold2,#c49a3e)'>"+title+"</b><p style='margin:2px 0 0;font-size:13px;line-height:1.8'>"+body+"</p></div>"; };
+    /* 1 世界大势 */
     h+="<details open><summary style='cursor:pointer;font-weight:700'>世界大势</summary><div style='padding:4px 2px'>";
+    try{ const LB=window.LOREBOOK||[]; for(let i=0;i<LB.length;i++){ const e=LB[i]; if(!e||!e.constant) continue; h+=_entry(e.id,e.title||e.id,e.text||""); } }catch(e){}
+    h+="</div></details>";
+    /* 2 人物志（账本人物类 + 金秤等关键人物） */
+    h+="<details><summary style='cursor:pointer;font-weight:700'>人物志</summary><div style='padding:4px 2px'>";
     try{
-      const LB=window.LOREBOOK||[];
-      for(let i=0;i<LB.length;i++){ const e=LB[i]; if(!e||!e.constant) continue;
-        h+="<div style='margin:8px 0'><b style='color:var(--gold2,#c49a3e)'>"+(e.title||e.id||"")+"</b><p style='margin:2px 0 0;font-size:13px;line-height:1.8'>"+(e.text||"")+"</p></div>"; }
+      const LG=window.CAUSALITY_LEDGER||[];
+      let c=0;
+      for(let i=0;i<LG.length&&c<24;i++){ const g=LG[i]; if(!g||g.type!=="人物") continue; h+=_entry("led_"+i,g.name||g.desc||g.id,""+(g.desc||"")+(g.world?(" · 属："+g.world):"")); c++; }
+      if(!c){ h+="<div style='font-size:13px;color:#9a8a68'>金秤 · 老莫里茨 · 灰鬃 · 阿岩 · 秦·长风 —— 各势力与支线的关键人物，会在旅途中逐步相遇。</div>"; }
     }catch(e){}
     h+="</div></details>";
-    h+="<details><summary style='cursor:pointer;font-weight:700'>九域与势力</summary><div style='padding:4px 2px'>";
+    /* 3 关键地点 */
+    h+="<details><summary style='cursor:pointer;font-weight:700'>关键地点</summary><div style='padding:4px 2px'>";
     try{
       const R=window.REGIONS||{};
-      for(const k in R){ const r=R[k]; h+="<div style='margin:6px 0;font-size:13px'><b>"+(r.cn||k)+"</b> <span style='color:#9a8a68'>"+(r.desc||"")+"</span></div>"; }
+      for(const k in R){ const r=R[k]; h+=_entry("reg_"+k,(r.cn||k),r.desc||""); }
+      const _key=["灰港","自由城邦","铁门关","北境王都","圣辉城","晨天故都","第三哨","七锚","无字碑","银月祭坛","铁砧议会","圣山","祖灵洞","死亡沙漠"];
+      for(let i=0;i<_key.length;i++){ h+=_entry("loc_"+i,_key[i],"（在旅途中揭晓）"); }
     }catch(e){}
     h+="</div></details>";
+    /* 4 术语与神器 */
+    h+="<details><summary style='cursor:pointer;font-weight:700'>术语与神器</summary><div style='padding:4px 2px'>";
+    try{
+      const LG=window.CAUSALITY_LEDGER||[];
+      let c=0;
+      for(let i=0;i<LG.length&&c<30;i++){ const g=LG[i]; if(!g||g.type!=="设定") continue; h+=_entry("leds_"+i,g.name||g.desc||g.id,""+(g.desc||"")); c++; }
+      if(!c){ h+="<div style='font-size:13px;color:#9a8a68'>铁牌 · 七锚 · 神谕 · 腐光 —— 大陆深处的旧名，将在主线中揭开。</div>"; }
+    }catch(e){}
+    h+="</div></details>";
+    /* 5 势力矩阵 */
+    h+="<details><summary style='cursor:pointer;font-weight:700'>势力矩阵</summary><div style='padding:4px 2px'>";
+    try{
+      const F=[["金秤家族","守门人世家，守着无字碑与七锚的旧约。"],["圣光教会","以圣光为纲，对深渊与异端绝不宽宥。"],["艾尔达魔法学院","北境的奥术圣地，知识与野心并存。"],["北境联军","铁门关后的军团，战争的第一道墙。"],["沙漠诸部","死亡沙漠的部族，信奉先祖与绿洲。"],["兽人诸部","草原的战士，与教会的圣光天然对立。"],["精灵林邦","长寿的森林之民，魔法天赋流淌在血脉里。"],["矮人山国","铁砧与熔炉之子，重信用与手艺。"],["东境帝京","承天城的主人，科举与官署维系着王朝的架子。"]];
+      for(let i=0;i<F.length;i++){ h+=_entry("fac_"+i,F[i][0],F[i][1]); }
+    }catch(e){}
+    h+="</div></details>";
+    /* 6 五条主线 */
     h+="<details><summary style='cursor:pointer;font-weight:700'>大陆纪事 · 五条主线</summary><div style='padding:4px 2px'>";
     try{
       const W=window.WORLD_EVENTS||{};
-      for(const k in W){ const w=W[k]; h+="<div style='margin:6px 0;font-size:13px'><b>第"+(w.day||"?")+"日 · "+(w.cn||k)+"</b><br><span style='color:#6b5a3a'>"+(w.text||"")+"</span></div>"; }
+      for(const k in W){ const w=W[k]; h+="<div class='v95-set-entry' data-q='"+((w.cn||k)+" "+(w.text||"")).replace(/'/g,"")+"'><b>第"+(w.day||"?")+"日 · "+(w.cn||k)+"</b><br><span style='color:#6b5a3a'>"+(w.text||"")+"</span></div>"; }
     }catch(e){}
     h+="</div></details>";
+    /* 7 职业与戒律 */
     h+="<details><summary style='cursor:pointer;font-weight:700'>职业与戒律</summary><div style='padding:4px 2px'>";
     try{
       const J=window.JOBS||{};
-      for(const k in J){ const j=J[k]; h+="<div style='margin:6px 0;font-size:13px'><b>"+(j.cn||k)+"</b> <span style='color:#9a8a68'>"+(j.desc||"")+"</span>"+(j.vow?"<br><span style='color:var(--bad,#b25)'>"+j.vow+"</span>":"")+"</div>"; }
+      for(const k in J){ const j=J[k]; h+="<div class='v95-set-entry' data-q='"+((j.cn||k)+" "+(j.desc||"")+" "+(j.vow||"")).replace(/'/g,"")+"'><b>"+(j.cn||k)+"</b> <span style='color:#9a8a68'>"+(j.desc||"")+"</span>"+(j.vow?"<br><span style='color:var(--bad,#b25)'>"+j.vow+"</span>":"")+"</div>"; }
     }catch(e){}
     h+="</div></details>";
     h+="</div>";
     h+="<div style='text-align:center;margin-top:10px'><button class='btn' onclick='closeModal()'>返回</button></div>";
     box.innerHTML=h; openModal(box);
+    const si=document.getElementById("v95-set-search");
+    if(si) si.addEventListener("input",function(){
+      const q=(si.value||"").trim().toLowerCase();
+      document.querySelectorAll("#v95-set-search ~ div .v95-set-entry").forEach(function(e2){
+        e2.style.display=(!q||(e2.dataset.q||"").toLowerCase().indexOf(q)>=0)?"":"none";
+      });
+    });
   }catch(e){}
 };

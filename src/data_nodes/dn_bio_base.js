@@ -84,6 +84,7 @@ options:[
 {t:"看动物纲的标本墙（12 种超凡动物图鉴）",go:"beast_intro"},
 {t:"看植物纲的标本架（8 种灵草灵木图鉴）",go:"herb_intro"},
 {t:"看特殊生物纲的封条柜（8 种异种档案）",go:"special_intro"},
+{t:"看灵体纲的瓷瓶架（8 种灵体图谱）",go:"spirit_intro"},
 {t:"（原路退回大厅）",go:"bio_intro_0"}
 ]};
 

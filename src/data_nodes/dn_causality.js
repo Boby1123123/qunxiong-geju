@@ -5563,7 +5563,13 @@ window.CAUSALITY_LEDGER = [
 { id:"led_bio_20", type:"伏笔", desc:"雷晶傀儡·魔械城——发明家协会旧试验体，雷晶法杖材料线", plant:"node:special_lei_hunt", reap:"future（P5 打造台）", status:"open", world:"魔械城" },
 { id:"led_bio_21", type:"伏笔", desc:"铁砧地底蠕兽——地脉引出的熔核兽，锻造火候神器与矮人铁砧线", plant:"node:special_worm_hunt", reap:"node:special_forge_hint", status:"open", world:"铁砧议会" },
 { id:"led_bio_22", type:"伏笔", desc:"钟楼地下“它”·七锚锚眼守护者——铁牌开战，旧印残片与七锚/封印线（承接 led_f1_seal）", plant:"node:special_bell_hunt", reap:"future（P5 七锚终局）", status:"open", world:"交汇城" },
-{ id:"led_bio_23", type:"伏笔", desc:"时光裂隙守卫·承天山——黄林晶的眼泪回收点（承接 02b 贤者之石三材料），玄机子/黄林晶线", plant:"node:special_time_hunt", reap:"future（P5 贤者之石线）", status:"open", world:"承天山" }
+{ id:"led_bio_23", type:"伏笔", desc:"时光裂隙守卫·承天山——黄林晶的眼泪回收点（承接 02b 贤者之石三材料），玄机子/黄林晶线", plant:"node:special_time_hunt", reap:"future（P5 贤者之石线）", status:"open", world:"承天山" },
+{ id:"led_bio_24", type:"伏笔", desc:"钟楼第十三下的声音·交汇城——守钟人回声，旧声封铃警示器", plant:"node:spirit_bell", reap:"node:spirit_echo", status:"open", world:"交汇城" },
+{ id:"led_bio_25", type:"伏笔", desc:"铁门关英灵——灵魂之灰回收点（贤者之石三材料最后一味，承接 P3 special_trophy 线索），三问答心", plant:"node:spirit_veteran", reap:"future（P5 贤者之石线）", status:"open", world:"铁门关" },
+{ id:"led_bio_26", type:"伏笔", desc:"银月祭坛月灵——月华露药引与月池线，林歌引路（衔接 led_bio_13 月华露）", plant:"node:spirit_moon", reap:"future（P5 炼药/精灵线）", status:"open", world:"精灵" },
+{ id:"led_bio_27", type:"伏笔", desc:"铁牌器灵——锚印认主，魂契代价（旧物/记忆/承诺），七锚线（承接 led_f1_seal）", plant:"node:spirit_talisman", reap:"future（P5 七锚终局）", status:"open", world:"交汇城" },
+{ id:"led_bio_28", type:"伏笔", desc:"血藤怨魂·深渊裂隙——渡怨灵牵挂，怨气结炼药辅料", plant:"node:spirit_vine", reap:"future（P5 炼药/深渊线）", status:"open", world:"深渊裂隙" },
+{ id:"led_bio_29", type:"伏笔", desc:"神性残响·大教堂地窖——教皇遗言，问心者得，教会线", plant:"node:spirit_divine", reap:"future（P5 教会终局）", status:"open", world:"圣辉城" }
 ];
 
 /* ===== /v91inj:ledger:end/ ===== */

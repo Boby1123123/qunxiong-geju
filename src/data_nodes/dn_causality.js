@@ -5360,6 +5360,72 @@ window.CAUSALITY_LEDGER = [
         "importance": 1,
         "keywords": ["以血还血", "灰袍", "齐记木行", "旧宅"],
         "irreversible": false
+  },
+  {
+    "id": "led_om_keepsake",
+    "desc": "九出身信物（旧布包/铁牌/铜钥匙/旧圣徽/银叶书签/炉火护符/狼牙吊坠/金秤玉牌/铜秤牌）皆系身世线索载体",
+    "plant": "flag:keepsake_free",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_origin",
+    "importance": 2,
+    "keywords": ["旧布包", "铁牌", "铜钥匙", "旧圣徽", "银叶书签", "炉火护符", "狼牙吊坠", "金秤玉牌", "铜秤牌"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_scale",
+    "desc": "起源记忆母题：反复出现的天平/秤与『称过了，没缺分量』（金秤线贯穿性伏笔）",
+    "plant": "flag:mem_tide_scale",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_origin",
+    "importance": 2,
+    "keywords": ["称过了，没缺分量", "天平", "秤钩"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_medici",
+    "desc": "起源记忆直呼普路托斯之名，与美第奇继承人线（origin_medici_hint）暗连",
+    "plant": "node:mem_free_city_1",
+    "reap": "flag:medici_heir",
+    "status": "open",
+    "world": "vol_origin",
+    "importance": 2,
+    "keywords": ["普路托斯", "天平纹", "金秤"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_jona",
+    "desc": "教会线伏笔：约拿的旧圣徽（三十七号·忏悔室）与约拿腕上被刮去的圣痕",
+    "plant": "node:mem_church_2",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_church",
+    "importance": 2,
+    "keywords": ["旧圣徽", "约拿", "忏悔室"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_stranger",
+    "desc": "灰斗篷陌生人（北线中间人）：铁门关旧钟楼暗线，与守望者密探呼应",
+    "plant": "node:mem_northern_2",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 2,
+    "keywords": ["灰斗篷", "旧钟楼", "铁牌"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_flask",
+    "desc": "沙漠水瓶（内藏『称』，圣辉城才能见光）与金敏北行暗线",
+    "plant": "node:mem_desert_2",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_desert",
+    "importance": 2,
+    "keywords": ["水瓶", "金敏", "圣辉城"],
+    "irreversible": false
   }
 ];
 

@@ -5911,14 +5911,28 @@ function bindCreation(){
       const pv=document.getElementById("poolv"); if(pv) pv.textContent=np;
     };
   });
+  /* /v99inj:create-hint/ V99 捏人必填项醒目提示（纯 UI 反馈层，不改判定公式/存档语义）
+     挂 window.v99FlashLack：两套捏人流程（bindCreation 与 v94/v95 新版）共用 */
+  window.v99FlashLack = function(sel, msg){
+    try{
+      flashMsg(msg);
+      var el = (typeof sel==="string") ? document.querySelector(sel) : sel;
+      if(el){
+        el.style.borderColor="var(--bad)";
+        el.style.boxShadow="0 0 0 2px rgba(200,60,50,.45)";
+        try{ el.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
+        setTimeout(function(){ el.style.borderColor=""; el.style.boxShadow=""; }, 2200);
+      }
+    }catch(e){}
+  }
   $("btn-start").onclick=()=>{
     const name = $("in-name").value.trim();
-    if(!name){ flashMsg("请先写下你的名讳"); return; }
-    if(!S.job){ flashMsg("请选择主修职业"); return; }
-    if(!S.ideal){ flashMsg("请选择你的理想"); return; }
+    if(!name){ window.v99FlashLack("#in-name","请先写下你的名讳"); return; }
+    if(!S.job){ window.v99FlashLack('[data-job]',"请选择主修职业"); return; }
+    if(!S.ideal){ window.v99FlashLack('[data-ideal]',"请选择你的理想"); return; }
     if(pool<0){ flashMsg("点数分配有误"); return; }
     S.name = name.slice(0,12);
-    if(!S.subrace){ flashMsg("请选择亚种族"); return; }
+    if(!S.subrace){ window.v99FlashLack("#subrace-box","请选择亚种族"); return; }
     S.maxSan = Math.round(S.attrs.SPR*1.5);
     if(!S.san) S.san=S.maxSan; /* M2b 新档san初始化修复：原逻辑仅故乡带H.san才赋值，否则新档san=0直接疯狂结局 */
     // 种族亚种生效
@@ -5968,7 +5982,7 @@ function bindCreation(){
     if(typeof initForeshadowingV27 === 'function') initForeshadowingV27();
     if(typeof initMoralChoicesV27 === 'function') initMoralChoicesV27();
     if(typeof initTimeV26 === 'function') initTimeV26();
-    const originMapV27 = {free:"origin_free_city_1",north:"origin_northern_1",south:"origin_southern_1",church:"origin_church_1",elf:"origin_elf_1",dwarf:"origin_dwarf_1",orc:"origin_orc_1",east:"origin_eastern_1",desert:"origin_desert_1"};
+    const originMapV27 = {free:"mem_free_city_start",north:"mem_northern_start",south:"mem_southern_start",church:"mem_church_start",elf:"mem_elf_start",dwarf:"mem_dwarf_start",orc:"mem_orc_start",east:"mem_eastern_start",desert:"mem_desert_start"};
     const originNode = originMapV27[S.homeland];
     if(originNode && (N[originNode] || (typeof NODE_MAP!=="undefined" && NODE_MAP[originNode]))){
       curNode = originNode;
@@ -7288,15 +7302,30 @@ function bindCreation(){
       const pv=document.getElementById("poolv"); if(pv) pv.textContent=np;
     };
   });
+  /* /v99inj:create-hint2/ V99 捏人必填醒目提示（新版捏人流程；定义就近，避免依赖 bindCreation 执行时序） */
+  if(typeof window.v99FlashLack !== "function"){
+    window.v99FlashLack = function(sel, msg){
+      try{
+        flashMsg(msg);
+        var el = (typeof sel==="string") ? document.querySelector(sel) : sel;
+        if(el){
+          el.style.borderColor="var(--bad)";
+          el.style.boxShadow="0 0 0 2px rgba(200,60,50,.45)";
+          try{ el.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
+          setTimeout(function(){ el.style.borderColor=""; el.style.boxShadow=""; }, 2200);
+        }
+      }catch(e){}
+    }
+  }
   const bp=$("btn-start");
   if(bp) bp.onclick=()=>{
     const name = $("in-name").value.trim();
-    if(!name){ flashMsg("请先写下你的名讳"); return; }
-    if(!S.job){ flashMsg("请选择主修职业"); return; }
-    if(!S.ideal){ flashMsg("请选择你的理想"); return; }
+    if(!name){ (window.v99FlashLack||flashMsg)("#in-name","请先写下你的名讳"); return; }
+    if(!S.job){ (window.v99FlashLack||flashMsg)('[data-job]',"请选择主修职业"); return; }
+    if(!S.ideal){ (window.v99FlashLack||flashMsg)('[data-ideal]',"请选择你的理想"); return; }
     if(pool<0){ flashMsg("点数分配有误"); return; }
     S.name = name.slice(0,12);
-    if(!S.subrace){ flashMsg("请选择亚种族"); return; }
+    if(!S.subrace){ (window.v99FlashLack||flashMsg)("#subrace-box","请选择亚种族"); return; }
     S.maxSan = Math.round(S.attrs.SPR*1.5);
     if(!S.san) S.san=S.maxSan;
     const SR = SUBRACES[S.subrace]||{};
@@ -7338,7 +7367,7 @@ function bindCreation(){
     if(typeof initForeshadowingV27 === 'function') initForeshadowingV27();
     if(typeof initMoralChoicesV27 === 'function') initMoralChoicesV27();
     if(typeof initTimeV26 === 'function') initTimeV26();
-    const originMapV27 = {free:"origin_free_city_1",north:"origin_northern_1",south:"origin_southern_1",church:"origin_church_1",elf:"origin_elf_1",dwarf:"origin_dwarf_1",orc:"origin_orc_1",east:"origin_eastern_1",desert:"origin_desert_1"};
+    const originMapV27 = {free:"mem_free_city_start",north:"mem_northern_start",south:"mem_southern_start",church:"mem_church_start",elf:"mem_elf_start",dwarf:"mem_dwarf_start",orc:"mem_orc_start",east:"mem_eastern_start",desert:"mem_desert_start"};
     const originNode = originMapV27[S.homeland];
     if(originNode && (N[originNode] || (typeof NODE_MAP!=="undefined" && NODE_MAP[originNode]))){
       curNode = originNode;

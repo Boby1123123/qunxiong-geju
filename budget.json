@@ -4,21 +4,21 @@
   "updated": "2026-09-09",
   "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
   "budgets": {
-    "game_html_bytes_max": 19159791,
+    "game_html_bytes_max": 19258921,
     "chunked_html_bytes_max": 8500000,
-    "node_total_min": 5586,
+    "node_total_min": 5640,
     "dead_links_max": 0,
     "full_seconds_max": 24.0
   },
   "baseline": {
-    "game_html_bytes": 19109791,
-    "chunked_html_bytes": 8042001,
-    "node_total": 5636,
+    "game_html_bytes": 19208921,
+    "chunked_html_bytes": 8141203,
+    "node_total": 5690,
     "full_seconds": 9.2
   },
   "meta": {
     "last_updated": "2026-09-09",
-    "reason": "v98 编年史/回响引擎 修正 led_ 回响 id 与触发 合法增长",
+    "reason": "v99 UI修复就近定义v99FlashLack",
     "history": [
       {
         "date": "2026-09-09",
@@ -1951,6 +1951,34 @@
         "chunked_bytes": 8042001,
         "nodes": 5636,
         "reason": "v98 编年史/回响引擎 修正 led_ 回响 id 与触发 合法增长"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19206279,
+        "chunked_bytes": 8138561,
+        "nodes": 5690,
+        "reason": "v99 起源记忆54节点+账本6项+沉浸表现层script_20+注册表"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19207949,
+        "chunked_bytes": 8140231,
+        "nodes": 5690,
+        "reason": "v99 UI修复：捏人必填醒目提示+已选选项清扫"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19208240,
+        "chunked_bytes": 8140522,
+        "nodes": 5690,
+        "reason": "v99 UI修复双套捏人统一flashLack"
+      },
+      {
+        "date": "2026-09-09",
+        "game_bytes": 19208921,
+        "chunked_bytes": 8141203,
+        "nodes": 5690,
+        "reason": "v99 UI修复就近定义v99FlashLack"
       }
     ]
   },

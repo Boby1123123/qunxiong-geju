@@ -36549,14 +36549,28 @@ function bindCreation(){
       const pv=document.getElementById("poolv"); if(pv) pv.textContent=np;
     };
   });
+  /* /v99inj:create-hint/ V99 捏人必填项醒目提示（纯 UI 反馈层，不改判定公式/存档语义）
+     挂 window.v99FlashLack：两套捏人流程（bindCreation 与 v94/v95 新版）共用 */
+  window.v99FlashLack = function(sel, msg){
+    try{
+      flashMsg(msg);
+      var el = (typeof sel==="string") ? document.querySelector(sel) : sel;
+      if(el){
+        el.style.borderColor="var(--bad)";
+        el.style.boxShadow="0 0 0 2px rgba(200,60,50,.45)";
+        try{ el.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
+        setTimeout(function(){ el.style.borderColor=""; el.style.boxShadow=""; }, 2200);
+      }
+    }catch(e){}
+  }
   $("btn-start").onclick=()=>{
     const name = $("in-name").value.trim();
-    if(!name){ flashMsg("请先写下你的名讳"); return; }
-    if(!S.job){ flashMsg("请选择主修职业"); return; }
-    if(!S.ideal){ flashMsg("请选择你的理想"); return; }
+    if(!name){ window.v99FlashLack("#in-name","请先写下你的名讳"); return; }
+    if(!S.job){ window.v99FlashLack('[data-job]',"请选择主修职业"); return; }
+    if(!S.ideal){ window.v99FlashLack('[data-ideal]',"请选择你的理想"); return; }
     if(pool<0){ flashMsg("点数分配有误"); return; }
     S.name = name.slice(0,12);
-    if(!S.subrace){ flashMsg("请选择亚种族"); return; }
+    if(!S.subrace){ window.v99FlashLack("#subrace-box","请选择亚种族"); return; }
     S.maxSan = Math.round(S.attrs.SPR*1.5);
     if(!S.san) S.san=S.maxSan; /* M2b 新档san初始化修复：原逻辑仅故乡带H.san才赋值，否则新档san=0直接疯狂结局 */
     // 种族亚种生效
@@ -36606,7 +36620,7 @@ function bindCreation(){
     if(typeof initForeshadowingV27 === 'function') initForeshadowingV27();
     if(typeof initMoralChoicesV27 === 'function') initMoralChoicesV27();
     if(typeof initTimeV26 === 'function') initTimeV26();
-    const originMapV27 = {free:"origin_free_city_1",north:"origin_northern_1",south:"origin_southern_1",church:"origin_church_1",elf:"origin_elf_1",dwarf:"origin_dwarf_1",orc:"origin_orc_1",east:"origin_eastern_1",desert:"origin_desert_1"};
+    const originMapV27 = {free:"mem_free_city_start",north:"mem_northern_start",south:"mem_southern_start",church:"mem_church_start",elf:"mem_elf_start",dwarf:"mem_dwarf_start",orc:"mem_orc_start",east:"mem_eastern_start",desert:"mem_desert_start"};
     const originNode = originMapV27[S.homeland];
     if(originNode && (N[originNode] || (typeof NODE_MAP!=="undefined" && NODE_MAP[originNode]))){
       curNode = originNode;
@@ -37926,15 +37940,30 @@ function bindCreation(){
       const pv=document.getElementById("poolv"); if(pv) pv.textContent=np;
     };
   });
+  /* /v99inj:create-hint2/ V99 捏人必填醒目提示（新版捏人流程；定义就近，避免依赖 bindCreation 执行时序） */
+  if(typeof window.v99FlashLack !== "function"){
+    window.v99FlashLack = function(sel, msg){
+      try{
+        flashMsg(msg);
+        var el = (typeof sel==="string") ? document.querySelector(sel) : sel;
+        if(el){
+          el.style.borderColor="var(--bad)";
+          el.style.boxShadow="0 0 0 2px rgba(200,60,50,.45)";
+          try{ el.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
+          setTimeout(function(){ el.style.borderColor=""; el.style.boxShadow=""; }, 2200);
+        }
+      }catch(e){}
+    }
+  }
   const bp=$("btn-start");
   if(bp) bp.onclick=()=>{
     const name = $("in-name").value.trim();
-    if(!name){ flashMsg("请先写下你的名讳"); return; }
-    if(!S.job){ flashMsg("请选择主修职业"); return; }
-    if(!S.ideal){ flashMsg("请选择你的理想"); return; }
+    if(!name){ (window.v99FlashLack||flashMsg)("#in-name","请先写下你的名讳"); return; }
+    if(!S.job){ (window.v99FlashLack||flashMsg)('[data-job]',"请选择主修职业"); return; }
+    if(!S.ideal){ (window.v99FlashLack||flashMsg)('[data-ideal]',"请选择你的理想"); return; }
     if(pool<0){ flashMsg("点数分配有误"); return; }
     S.name = name.slice(0,12);
-    if(!S.subrace){ flashMsg("请选择亚种族"); return; }
+    if(!S.subrace){ (window.v99FlashLack||flashMsg)("#subrace-box","请选择亚种族"); return; }
     S.maxSan = Math.round(S.attrs.SPR*1.5);
     if(!S.san) S.san=S.maxSan;
     const SR = SUBRACES[S.subrace]||{};
@@ -37976,7 +38005,7 @@ function bindCreation(){
     if(typeof initForeshadowingV27 === 'function') initForeshadowingV27();
     if(typeof initMoralChoicesV27 === 'function') initMoralChoicesV27();
     if(typeof initTimeV26 === 'function') initTimeV26();
-    const originMapV27 = {free:"origin_free_city_1",north:"origin_northern_1",south:"origin_southern_1",church:"origin_church_1",elf:"origin_elf_1",dwarf:"origin_dwarf_1",orc:"origin_orc_1",east:"origin_eastern_1",desert:"origin_desert_1"};
+    const originMapV27 = {free:"mem_free_city_start",north:"mem_northern_start",south:"mem_southern_start",church:"mem_church_start",elf:"mem_elf_start",dwarf:"mem_dwarf_start",orc:"mem_orc_start",east:"mem_eastern_start",desert:"mem_desert_start"};
     const originNode = originMapV27[S.homeland];
     if(originNode && (N[originNode] || (typeof NODE_MAP!=="undefined" && NODE_MAP[originNode]))){
       curNode = originNode;
@@ -53902,6 +53931,194 @@ try{
   try{ if(window.LW_install && typeof S!=="undefined" && S) window.LW_install(); }catch(e){}
 }catch(e){} })();
 
+</script><script>/* =========================================================================
+ * script_20.js · v99 沉浸表现层（方向五：序章→学院表现层贯通）
+ * 功能：段落浮现动画 / 梦境沉浸模式 / 章节转场遮罩 / 平滑自动滚动 / 记忆碎片题头
+ * 性质：纯表现层。全部钩子 try/catch 只读包裹，不触碰判定公式 / writeNext
+ *       核心语义 / choose / 存档结构；saveVersion 不变；仅桌面端。
+ * 挂载方式：DOMContentLoaded 自初始化 + MutationObserver 观察 #story。
+ * ========================================================================= */
+(function () {
+  "use strict";
+  if (window.V99_UI) return;
+  var UI = (window.V99_UI = {});
+
+  var TITLE_MARK = "v99-memory-title";   // 记忆碎片题头
+  var CURTAIN = "v99-curtain";           // 章节转场遮罩
+  var DREAM = "v99-dream";               // 梦境沉浸模式 body 类
+  var PAR = "v99-par";                   // 段落浮现动画类
+
+  /* ---------- CSS 注入（桌面端，不改变既有布局宽度） ---------- */
+  function injectCSS() {
+    var style = document.createElement("style");
+    style.id = "v99-immersive-css";
+    style.textContent =
+      /* 段落浮现 */
+      "#story p.v99-par{animation:v99FadeUp .55s ease-out both}" +
+      "@keyframes v99FadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}" +
+      /* 记忆碎片题头 */
+      ".v99-memory-title{display:block;margin:18px 0 6px;padding:6px 0;border-top:1px solid rgba(190,165,120,.35);border-bottom:1px solid rgba(190,165,120,.35);color:#b6a377;font-size:13px;letter-spacing:.3em;text-align:center}" +
+      /* 梦境沉浸模式（仅 .v99-dream 生效） */
+      "body.v99-dream #story{background:rgba(8,10,18,.55);box-shadow:inset 0 0 120px rgba(0,0,0,.5);border-radius:6px}" +
+      "body.v99-dream #story p{color:#d8d4c8}" +
+      "body.v99-dream #story p:first-child{color:#b6a377}" +
+      /* 章节转场遮罩 */
+      ".v99-curtain{position:fixed;left:0;right:0;top:0;z-index:9999;padding:10px 0;background:linear-gradient(180deg,rgba(6,8,14,.92),rgba(6,8,14,.55));color:#cfc4a8;font-size:15px;letter-spacing:.35em;text-align:center;pointer-events:none;opacity:0;transform:translateY(-100%);transition:opacity .5s ease,transform .5s ease}" +
+      ".v99-curtain.on{opacity:1;transform:none}" +
+      ".v99-curtain.out{opacity:0;transform:translateY(-100%)}";
+    (document.head || document.documentElement).appendChild(style);
+  }
+
+  /* ---------- 章节转场遮罩 ---------- */
+  function showCurtain(text) {
+    var bar = document.getElementById("v99-curtain-bar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "v99-curtain-bar";
+      bar.className = CURTAIN;
+      document.body.appendChild(bar);
+    }
+    bar.textContent = text || "";
+    /* 重启动画 */
+    bar.classList.remove("on", "out");
+    void bar.offsetWidth;
+    bar.classList.add("on");
+    setTimeout(function () {
+      bar.classList.remove("on");
+      bar.classList.add("out");
+    }, 1400);
+  }
+
+  /* ---------- 已选选项清扫：v67 保留 opt-chosen 供 writeNext 自然清空；
+     分页（v45）模式下 showOptions 未到前会残留「旧选项 + 继续阅读」两行 →
+     表现层隐藏已 disabled 的已选按钮（纯展示，不触碰引擎语义） ---------- */
+  function sweepChosen() {
+    try {
+      var o = document.getElementById("options");
+      if (!o) return;
+      var c = o.querySelectorAll("button.opt-chosen");
+      for (var i = 0; i < c.length; i++) {
+        if (c[i].disabled) c[i].style.display = "none";
+      }
+    } catch (e) { /* 表现层容错 */ }
+  }
+
+  /* ---------- 文本追加后的表现处理（观察 #story） ---------- */
+  function onStoryChanged(mutations) {
+    try {
+      for (var i = 0; i < mutations.length; i++) {
+        var m = mutations[i];
+        for (var j = 0; j < m.addedNodes.length; j++) {
+          var n = m.addedNodes[j];
+          if (n.nodeType !== 1) continue;
+          if (n.tagName === "P") {
+            n.classList.add(PAR);
+          } else if (n.tagName === "DIV" || n.tagName === "SECTION") {
+            var ps = n.querySelectorAll("p");
+            for (var k = 0; k < ps.length; k++) ps[k].classList.add(PAR);
+          }
+        }
+      }
+      sweepChosen();
+    } catch (e) { /* 表现层容错 */ }
+  }
+
+  /* ---------- 平滑滚动到底（增强 RenderBatch 的瞬移滚动） ---------- */
+  var lastHeight = -1;
+  function smoothScrollToBottom() {
+    try {
+      var story = document.getElementById("story");
+      if (!story) return;
+      var h = story.scrollHeight;
+      if (h === lastHeight) return;
+      lastHeight = h;
+      var scroller = story;
+      while (scroller && scroller.scrollHeight <= scroller.clientHeight && scroller.parentElement) {
+        scroller = scroller.parentElement;
+      }
+      if (scroller && scroller.scrollHeight > scroller.clientHeight) {
+        scroller.scrollTo({ top: scroller.scrollHeight, behavior: "smooth" });
+      }
+    } catch (e) { /* 容错 */ }
+  }
+
+  /* ---------- 梦境沉浸模式切换（文本窗口检测，v45_sceneTitle 已负责标题） ---------- */
+  function updateDreamMode() {
+    try {
+      var story = document.getElementById("story");
+      if (!story) return;
+      var els = story.querySelectorAll("p,div,section,h1,h2,h3,h4");
+      if (!els.length) return;
+      var tail = "";
+      for (var i = Math.max(0, els.length - 4); i < els.length; i++) {
+        tail += (els[i].textContent || "") + "\n";
+      }
+      var isDream = /记忆的渡口|梦境|回忆 \u00b7/.test(tail);
+      var body = document.body;
+      if (isDream && !body.classList.contains(DREAM)) {
+        body.classList.add(DREAM);
+      } else if (!isDream && body.classList.contains(DREAM)) {
+        body.classList.remove(DREAM);
+      }
+    } catch (e) { /* 容错 */ }
+  }
+
+  /* ---------- 章节转场：S.day 变化时出遮罩 ---------- */
+  var lastDay = null;
+  function watchDay() {
+    try {
+      if (typeof window.S === "undefined" || !window.S) return;
+      var d = window.S.day;
+      if (d === undefined || d === null) return;
+      if (lastDay === null) { lastDay = d; return; }
+      if (d !== lastDay) {
+        var label = "第 " + d + " 天";
+        if (window.S.curCity) label += " · " + (typeof window.S.curCity === "string" ? window.S.curCity : "");
+        showCurtain(label);
+        lastDay = d;
+      }
+    } catch (e) { /* 容错 */ }
+  }
+
+  /* ---------- 初始化 ---------- */
+  UI.init = function () {
+    try {
+      injectCSS();
+      var story = document.getElementById("story");
+      if (story) {
+        var mo = new MutationObserver(onStoryChanged);
+        mo.observe(story, { childList: true, subtree: true });
+      }
+      /* 平滑滚动 + 梦境模式 + 日变化：文本变化后 rAF 节流处理 */
+      var ticking = false;
+      var observer = new MutationObserver(function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          smoothScrollToBottom();
+          updateDreamMode();
+          watchDay();
+        });
+      });
+      if (story) observer.observe(story, { childList: true, subtree: true, characterData: true });
+      /* 选项容器：v67 已选反馈（opt-chosen）与选项追加 → 清扫已选残留 */
+      var opts = document.getElementById("options");
+      if (opts) {
+        var oobs = new MutationObserver(function () {
+          try { sweepChosen(); } catch (e) {}
+        });
+        oobs.observe(opts, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "disabled"] });
+      }
+    } catch (e) { /* 容错 */ }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", UI.init);
+  } else {
+    UI.init();
+  }
+})();
 /* /u1inj:data-nodes/ */
 /* /u1inj:data-nodes:dn_acad_extra.js/ */
 /* CP-3 学院生活加密：acad_extra_y1~y5（dn_acad_extra.js）
@@ -63974,6 +64191,72 @@ window.CAUSALITY_LEDGER = [
         "importance": 1,
         "keywords": ["以血还血", "灰袍", "齐记木行", "旧宅"],
         "irreversible": false
+  },
+  {
+    "id": "led_om_keepsake",
+    "desc": "九出身信物（旧布包/铁牌/铜钥匙/旧圣徽/银叶书签/炉火护符/狼牙吊坠/金秤玉牌/铜秤牌）皆系身世线索载体",
+    "plant": "flag:keepsake_free",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_origin",
+    "importance": 2,
+    "keywords": ["旧布包", "铁牌", "铜钥匙", "旧圣徽", "银叶书签", "炉火护符", "狼牙吊坠", "金秤玉牌", "铜秤牌"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_scale",
+    "desc": "起源记忆母题：反复出现的天平/秤与『称过了，没缺分量』（金秤线贯穿性伏笔）",
+    "plant": "flag:mem_tide_scale",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_origin",
+    "importance": 2,
+    "keywords": ["称过了，没缺分量", "天平", "秤钩"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_medici",
+    "desc": "起源记忆直呼普路托斯之名，与美第奇继承人线（origin_medici_hint）暗连",
+    "plant": "node:mem_free_city_1",
+    "reap": "flag:medici_heir",
+    "status": "open",
+    "world": "vol_origin",
+    "importance": 2,
+    "keywords": ["普路托斯", "天平纹", "金秤"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_jona",
+    "desc": "教会线伏笔：约拿的旧圣徽（三十七号·忏悔室）与约拿腕上被刮去的圣痕",
+    "plant": "node:mem_church_2",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_church",
+    "importance": 2,
+    "keywords": ["旧圣徽", "约拿", "忏悔室"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_stranger",
+    "desc": "灰斗篷陌生人（北线中间人）：铁门关旧钟楼暗线，与守望者密探呼应",
+    "plant": "node:mem_northern_2",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_north",
+    "importance": 2,
+    "keywords": ["灰斗篷", "旧钟楼", "铁牌"],
+    "irreversible": false
+  },
+  {
+    "id": "led_om_flask",
+    "desc": "沙漠水瓶（内藏『称』，圣辉城才能见光）与金敏北行暗线",
+    "plant": "node:mem_desert_2",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_desert",
+    "importance": 2,
+    "keywords": ["水瓶", "金敏", "圣辉城"],
+    "irreversible": false
   }
 ];
 
@@ -84470,6 +84753,941 @@ options:[
 
 })();
 
+/* /u1inj:data-nodes:dn_origin_memory.js/ */
+/* ============================================================
+   dn_origin_memory.js  v99 起源记忆 + 出生地三日
+   挂载点：捏人完成 → originMapV27 → mem_<出身>_start（梦境开场）
+           → mem_<出身>_1/2（童年记忆碎片）→ day_<出身>_1/2/3（出发前三天）
+           → 梦醒 → 原序章 origin_<出身>_1（零改动衔接）
+   铁律：不触碰判定公式/writeNext核心/choose/存档语义；节点只增不降；
+         全部正文按 V66 白描 + 去 AI 味（潜台词/慢镜头/关键帧/环境功能化）。
+   伏笔：每出身信物 = 身世线索载体（账本 led_om_keepsake 等），
+         与 FORESHADOWING_V27（watcher_spy/origin_clue/time_anomaly/npc_lie）呼应。
+   ============================================================ */
+(function(){
+  /* ============ 自由城邦·交汇城（市井跑腿出身） ============ */
+  N["mem_free_city_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "船底的水声先于梦来。",
+      "你裹着旧毯子，蜷在货舱一角。舱板硌着后背，一下一下，像有人在船底敲鼓。你在灰港上了这条渡船，往北，去交汇城——去一个你只在别人的话里听过的地方。",
+      "夜里的河风从舷缝灌进来，带着水腥气。你数着船工的号子，数着数着，眼皮沉下去。",
+      "黑暗里有什么东西响了一声。像木盒，又像心跳。你来不及想，梦已经兜头罩下来——",
+      "你看见一条石板路。路很窄，两边是晾着的布料，蓝的、灰的，在风里哗啦啦响，像无数面小旗。",
+      "那是你长大的那条街。",
+      "【梦境】你朝那条街走过去。有人在你身后喊了一个名字——很轻，像怕惊动什么。"
+    ],
+    options:[
+      {t:"（循着那个声音，走进梦里）", go:"mem_free_city_1", effect:{time:0}}
+    ]
+  };
+  N["mem_free_city_1"] = {
+    tag:"branch", place:"梦境 · 交汇城 · 旧巷", where:"黑夜", pace:"deep",
+    text:[
+      "巷口的面包炉还热着，天却还没亮。老张坐在门槛上，拿蒲扇扇炉子，扇一下，回头看你一眼，扇一下，又看你一眼。",
+      "「普路托斯，」他说，「你又起这么早。」",
+      "你没有回答。你蹲在炉边，看他把第一炉麦饼铲出来，油纸包一个，塞进你怀里：「跑腿的路远，揣着，饿了垫垫。」",
+      "你咬了一口。麦饼烫嘴，面粉的甜味混着柴火气。你忽然想起来——那天之后，你好像再没吃过这么烫的麦饼。",
+      "王婆的裁缝铺子亮着灯。她站在梯子上挂布，头也不回：「给你娘缝的那件，后襟多留了三寸。她腰不好，弯腰费劲，你记得提醒她。」",
+      "你的脚步停住了。你娘——你努力想，只能想起一双在灯下穿针的手，手指上缠着顶针，顶针磕在木桌上，笃，笃，笃。",
+      "【记忆回闪】你记不清她的脸。只记得那顶针磕桌子的声音，和她说「别怕」的时候，嗓子是哑的。"
+    ],
+    options:[
+      {t:"（蹲在炉边，把麦饼吃完）", go:"mem_free_city_2", effect:{time:0}}
+    ]
+  };
+  N["mem_free_city_2"] = {
+    tag:"branch", place:"梦境 · 交汇城 · 旧屋", where:"黑夜", pace:"deep",
+    text:[
+      "梦里的屋子总是那几件家具：一张窄床，一口旧箱，窗台上搁着一只缺了口的陶碗。",
+      "你打开那只箱子。箱底压着一块布料，洗得发白，边角绣着半枚图案——像一杆秤，秤盘上托着什么。你娘从来不让你看这块布，她说那是「别人家的东西」。",
+      "你捻着那块布，忽然听见屋外有脚步声。不是老张，不是王婆。那脚步声走得很稳，一下一下，在你的门前停住，没有敲门，只是站着。",
+      "你屏住呼吸。门缝里透进来一道光，又消失了。脚步声重新响起，走远了。",
+      "你娘后来告诉你，那天夜里，有个穿灰袍的人来过。「他问了你的事，」你娘说，「我说你不在。他没再问，就走了。」",
+      "你娘说这话的时候，手里的针停了一停。你没有问她为什么停。你那时候还小，以为大人不说话，就是没事。",
+      "【内心低语】有些答案，不是没人告诉你。是你当年，没有问。"
+    ],
+    options:[
+      {t:"（记下那块布上的天平纹，继续睡）", go:"day_free_city_1", effect:{time:0, flag:"mem_tide_scale"}}
+    ]
+  };
+  N["day_free_city_1"] = {
+    tag:"branch", place:"回忆 · 交汇城 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子倒退到出发前三天。",
+      "商会仓库门口贴了张告示：北边打仗，货栈要清点，东家们把积货挪到内河仓。李管事站在台阶上，手拢在袖子里，看伙计们搬箱子。",
+      "他看见你，下巴朝地上那摞账册一抬：「闲着也是闲着，去把旧账誊一份。字写正，别让人笑话我们仓库的伙计。」",
+      "你坐到门槛上誊账。日头从东边挪到头顶，又从头顶挪到西边。王婆路过，往你手边搁了碗凉茶，没说话，走了。",
+      "账册翻到第三本，有一页的边角被墨水洇了，露出底下一行字，被涂掉大半，只认得出一个「金」字，和一个「秤」字。",
+      "你盯着那两个字看了一会儿。旁边记账的伙计探过头：「看什么呢？李管事的东西，别乱翻。」",
+      "你合上账册。那行字在你心里搁了一下午，像一粒硌鞋的沙。"
+    ],
+    options:[
+      {t:"（把账册誊完，把那行字记在心里）", go:"day_free_city_2", effect:{time:0, flag:"mem_ledger_scale"}}
+    ]
+  };
+  N["day_free_city_2"] = {
+    tag:"branch", place:"回忆 · 交汇城 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "出发前两天，你替王婆跑了一趟城西。",
+      "她给你一枚铜星，托你送一包料子给西城的周裁缝。路过密语客栈门口的时候，你看见一辆盖着黑布的货车停在巷口，车把式蹲在墙根抽烟，眼睛却一直瞟着客栈二楼。",
+      "你没有停。你娘教过你：在这条街上，不该看的东西，眼睛要自己绕开。",
+      "回来的时候，天擦黑。老张的铺子收了炉，他坐在门槛上，拿烟杆敲鞋底，看见你，招招手。",
+      "「要出远门了？」他问。",
+      "你点头。他没问去哪，也没问什么时候回来。他从怀里摸出一块油纸包着的麦饼，塞进你手里：「路上凉了，就着热水吃。」",
+      "他顿了顿，又说：「你娘当年走的时候，也说是出远门。你比她强，你说了去哪。」",
+      "你攥着那块麦饼，没有接话。你忽然很想知道，你娘当年，到底去了哪。"
+    ],
+    options:[
+      {t:"（把麦饼收好，问老张你娘的事）", go:"day_free_city_3", effect:{time:0}}
+    ]
+  };
+  N["day_free_city_3"] = {
+    tag:"branch", place:"回忆 · 交汇城 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "老张没有回答你娘的事。他吸了口烟，把烟杆在门槛上磕了磕，说：「她托我，等你大了，把这个给你。」",
+      "他从怀里掏出一只旧布包，灰蓝的料子，边角缝着细细的针脚。布包里是一角布料——就是你娘箱底那块，绣着半枚天平的旧布。",
+      "「她说，等你走的那天再给。别问为什么。」老张把布包放进你手心，合上你的手指，「她说，到了北边，要是有人问起这块布，就说——」",
+      "他停住了，像是在记一句背了很久的话：「就说，『称过了，没缺分量。』」",
+      "你不懂这句话的意思。你娘走了四年，这话在你心里，像一枚落进深井的石子，连个响动都没有。",
+      "当天夜里，你收拾好包袱，把那块旧布贴身收好。窗外的月亮缺了一角，街上的狗叫了两声，又安静下去。",
+      "你吹灭灯。黑暗里，你听见自己的心跳，一下，一下——像那天在密语客栈门口，黑布货车里传来的，若有若无的震动。",
+      "【梦境渐淡】你醒来的时候，枕头潮了一片。灰港的晨光从舷窗漏进来，船工在甲板上吆喝，说交汇城的码头快到了。"
+    ],
+    options:[
+      {t:"（贴身收好旧布包，走上甲板）", go:"origin_free_city_1", effect:{item:"旧布包", flag:"keepsake_free", time:0}}
+    ]
+  };
+
+  /* ============ 北方公国联盟·铁门关（冰原难民出身） ============ */
+  N["mem_northern_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从一阵冷风开始的。",
+      "你还在渡船上。北边的河风比南边硬，像刀子，从舷缝里进来，刮得你脸上生疼。你裹紧毯子，听见船工压低嗓子说话：「北边又打起来了，铁门关外头，尸首都没人收。」",
+      "你闭着眼。风里有雪味，还有一点烧焦的、说不上来的味道。",
+      "你想起铁门关的冬天。那年的雪下得比城墙还高，你缩在难民棚里，听见外面的马蹄声一拨一拨过去，蹄铁敲在冻土上，梆，梆，梆，像敲在人的心口上。",
+      "黑暗里，有人掀开棚子的门帘，探进一张脸。那人的胡子挂着霜，眼睛却在暗处亮了一下：「小崽子，还活着呢？」",
+      "【梦境】你认出那张脸。你张了张嘴，想喊他，声音却哑在喉咙里。"
+    ],
+    options:[
+      {t:"（跟着那张脸，走进梦里）", go:"mem_northern_1", effect:{time:0}}
+    ]
+  };
+  N["mem_northern_1"] = {
+    tag:"branch", place:"梦境 · 铁门关 · 难民棚", where:"黑夜", pace:"deep",
+    text:[
+      "棚子里生着一堆火，火苗不高，烤得人前半身热，后半身还是冰的。",
+      "守门老兵巴顿坐在火边，拿匕首削一根木棍。他左手缺了两根手指，削起来不利索，削几下，停一下，骂一句。",
+      "「看什么看，」他头也不抬，「过来烤火。冻死了，你娘该找我算账。」",
+      "你凑过去。火光照见巴顿的膝盖上摊着一件旧皮袄，他拿匕首在皮袄内侧又划了一道——那上面密密麻麻，全是刀痕。",
+      "「一道一道，是你娘的。」他说，「她送你来那天，往这上头划一道。说等你长大了，数数有多少道，就知道她来了多少回。」",
+      "你数了数。三十七道。你娘在你七岁那年走的，你今年……你忽然算不清了。",
+      "巴顿把皮袄丢给你：「她走的时候，让我看着你。老子看了五年，够了。你要去学院，就去。别回头，回头就长不大。」",
+      "【记忆回闪】你娘走的那天，也是这么说的。她说：「别回头。」你那时候不懂，现在还是不太懂。"
+    ],
+    options:[
+      {t:"（把皮袄叠好，数完那三十七道刀痕）", go:"mem_northern_2", effect:{time:0}}
+    ]
+  };
+  N["mem_northern_2"] = {
+    tag:"branch", place:"梦境 · 铁门关 · 城墙根", where:"黑夜", pace:"deep",
+    text:[
+      "梦又换了个地方。城墙根下，雪积到小腿。你蹲在一堵塌了半边的墙后面，听见墙那边有人在说话。",
+      "「……那孩子，不能留在这。城破了，第一个死的就是他。」",
+      "「他娘把他托给我。我答应过。」",
+      "「你答应过有什么用。你连自己都保不住。」",
+      "说话的声音你认得：一个是巴顿，另一个很陌生，嗓子哑得像砂纸。你从墙缝里看过去，看见巴顿对面站着个披灰斗篷的人，兜帽压得很低，看不清脸。",
+      "灰斗篷的人从怀里摸出一样东西，递到巴顿手里：「等他大了，把这个给他。告诉他，往北，找『金秤』。」",
+      "巴顿攥着那东西，半天没说话。雪落在他肩上，积了薄薄一层。",
+      "灰斗篷的人转身走了。巴顿站在原地，把那样东西塞进怀里，回头看了一眼你藏身的墙——",
+      "你猛地缩回头。心跳得厉害。你那时候不明白他们说的「金秤」是什么，只知道巴顿从此多了个习惯：每个月十五，他都要去一趟城北的旧钟楼，回来的时候，怀里总鼓着一块。",
+      "【内心低语】有些话，大人以为孩子听不懂。可孩子什么都记得，只是不说。"
+    ],
+    options:[
+      {t:"（记住那个灰斗篷的人，继续睡）", go:"day_northern_1", effect:{time:0, flag:"mem_goldscale_stranger"}}
+    ]
+  };
+  N["day_northern_1"] = {
+    tag:"branch", place:"回忆 · 铁门关 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子退回到出发前三天。",
+      "铁门关的城门洞半开着，出城的人排成一队，进城的人挤成一团。你背着一捆柴，在城门边等巴顿——他说今天带你去见一个人。",
+      "巴顿从城楼上下来，靴子上的雪都踩化了。他领着你绕到城墙根，钻进一条窄巷。巷子尽头是一扇铁门，门上挂着铜锁，锁孔里塞着枯草。",
+      "他掏出钥匙开锁，铁门吱呀一声。里头是个塌了半边的柴房，堆着旧兵器。巴顿从墙角翻出一柄短刀，刀鞘上缠着旧布，抽出来，刃口还有一道豁。",
+      "「你娘留给你的。」他把短刀塞进你手里，「她说不许你拿刀。但我说，北边这世道，身上没点硬东西，活不长。」",
+      "你握着那柄短刀。刀柄的木头磨得发亮，像是握过很多年。巴顿看着你，忽然说：「你娘走的那天，就是握着这把刀，把那个想抢你行李的兵痞捅了个对穿。」",
+      "你抬头看他。他笑了一下，笑里有点苦：「她说，她可以死，你不可以。」"
+    ],
+    options:[
+      {t:"（把短刀收进包袱，问巴顿你娘后来去了哪）", go:"day_northern_2", effect:{time:0, item:"旧短刀"}}
+    ]
+  };
+  N["day_northern_2"] = {
+    tag:"branch", place:"回忆 · 铁门关 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "巴顿没有回答你娘去了哪。他坐在柴房的门槛上，拿雪搓手，搓了半天，说：「我欠你娘一条命。她让我守着你，我就守着。别的，你长大了自己查。」",
+      "第二天，你去城北的旧钟楼还巴顿的钥匙。钟楼底下围了一群人，说是前夜里有人在钟楼顶上点了堆火，天亮就灭了，城防军查了一早上，没查出名堂。",
+      "你站在人群外面，看见钟楼门缝里塞着一角纸。你趁着没人注意，把那角纸抽出来——上面只写了一行字，字迹潦草：",
+      "「十五。老地方。货到了。」",
+      "你把纸折好，塞进怀里。你那时候不知道这是什么意思，但你记得巴顿每个月十五都来钟楼——你忽然有点明白，他怀里鼓着的那块东西，是什么了。",
+      "晚上，巴顿回来了。他看见你坐在柴房门口，愣了一下，什么都没说，从怀里掏出一块烤得焦黄的面饼，掰了一半给你。",
+      "你们坐在雪地里，就着冷风吃面饼。巴顿吃完，拿袖子抹了抹嘴，说：「明天你就走了。我没什么可给你的——」",
+      "他把那柄短刀的刀鞘解下来，重新缠了缠布，递给你：「刀鞘给你。刀，等你到了学院，再拿。」"
+    ],
+    options:[
+      {t:"（收下刀鞘，把那张纸条也收好）", go:"day_northern_3", effect:{time:0, flag:"mem_north_note"}}
+    ]
+  };
+  N["day_northern_3"] = {
+    tag:"branch", place:"回忆 · 铁门关 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "出发那天，铁门关下了一场雪，不大，细碎的雪粒落在肩上，化了，留下一小块湿印子。",
+      "巴顿送你到底。他站在城门口，背着手，没说话。雪落在他花白的头发上，他也不拍。",
+      "你走出几步，回头。他还在原地。你想起他说的那句「别回头，回头就长不大」，可你还是回了头。",
+      "「巴顿叔，」你说，「我娘是不是去找『金秤』了？」",
+      "巴顿脸上的笑收住了。他沉默了很久，久到你以为他不会回答。然后他说：「你娘是去找一个答案。那个答案，不在铁门关。」",
+      "他从怀里摸出一样东西——是那天夜里，灰斗篷的人给他的那样。一块巴掌大的铁牌，牌面磨得发亮，刻着一杆秤，秤盘上压着一颗星。",
+      "「这个，你娘让我等你大了再给你。」他把铁牌放进你手心，合上你的手指，「她说，等你知道『金秤』是什么了，就把它带在身上，去找他们。」",
+      "你攥着那块铁牌。铁牌还带着他的体温。城门在身后合拢，铁门关的雪越下越大，你的脚印很快就被盖住了。",
+      "【梦境渐淡】你醒来的时候，手心里攥着那块铁牌。渡船已经在灰港的码头靠了岸，船工在收缆绳，北风从岸上刮过来，带着雪味——还有一点，若有若无的、铁锈的味道。"
+    ],
+    options:[
+      {t:"（把铁牌贴身收好，走下渡船）", go:"origin_northern_1", effect:{item:"铁牌", flag:"keepsake_north", time:0}}
+    ]
+  };
+
+  /* ============ 南方商业城邦·黄金城（账房学徒出身） ============ */
+  N["mem_southern_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从算盘声开始的。",
+      "渡船晃了一下，你从浅眠里惊醒。舱里有人翻身，有人咳嗽，船底的水声哗啦哗啦。你闭上眼，听见的却是另一串声音——珠子撞木杆的脆响，一下，一下，快得不像人拨的。",
+      "那是陈先生的算盘。",
+      "你在南方港城的账房里做了三年学徒。陈先生教你的第一句话不是怎么记账，是「账房里的数字，只有两种：能对上的，和不能对上的。」",
+      "你那时候不懂。你只知道算盘珠子在指间跳，跳得顺了，一天就过去了；跳得不顺，陈先生的戒尺就会落下来，打在指节上，一下，一下，跟算盘一样准。",
+      "黑暗里，算盘声停了。有人在你耳边说了一句话，声音很轻，像怕吵醒谁——",
+      "「那笔账，别碰。」",
+      "【梦境】你猛地睁开眼。船还在晃。你翻了个身，想再睡，可那算盘声又响起来，这回，慢了很多，一下，一下，像在数你的心跳。"
+    ],
+    options:[
+      {t:"（循着算盘声，走进梦里）", go:"mem_southern_1", effect:{time:0}}
+    ]
+  };
+  N["mem_southern_1"] = {
+    tag:"branch", place:"梦境 · 黄金城 · 账房", where:"黑夜", pace:"deep",
+    text:[
+      "账房里只点了一盏灯。陈先生坐在灯下，背挺得笔直，手指在算盘上走，快得看不清。他面前摊着一本旧账册，纸页发黄，边角卷了。",
+      "他抬头看你一眼，又低下头去：「来了。坐。」",
+      "你在他对面坐下。他把账册推到你面前，指着一页：「看看，哪里不对。」",
+      "你顺着他的手指看下去。那是一笔赊账，记的是十年前，黄金城码头，三船香料，收贷人那一栏写着一个名字——涂掉了，只剩一个字的尾巴，像一个钩子。",
+      "「十年前，」陈先生说，「有人在码头提了三船香料，没有付钱。收货人留下一个名字。第二天，那名字就被人从账册上涂掉了。」",
+      "他合上账册：「涂掉名字的人，是当时的账房，我的师父。他涂完那笔账，第二天就病死了。死之前，他跟我说了一句话。」",
+      "陈先生看着你，灯光在他脸上投下深深的影子：「他说，『那笔账，等有人能对上了，再对。』」",
+      "你没有问那名字是什么。你只是盯着那个像钩子的笔画，忽然觉得，它像一杆秤的秤钩。"
+    ],
+    options:[
+      {t:"（记住那页账，问陈先生那名字是谁）", go:"mem_southern_2", effect:{time:0}}
+    ]
+  };
+  N["mem_southern_2"] = {
+    tag:"branch", place:"梦境 · 黄金城 · 旧码头", where:"黑夜", pace:"deep",
+    text:[
+      "陈先生没有回答你的问题。他把那本旧账册锁进柜子最底层，钥匙挂在脖子上，说：「有些账，不是记在本子上的。你长大了，自然会对上。」",
+      "梦又换了地方。黄金城的旧码头，退潮的时候，滩涂上露出发黑的木桩，和一只搁浅的小船。你蹲在船边，看见船板内侧刻着一行字，被海水泡得模糊——",
+      "「普路托斯，往北。别回头。」",
+      "你盯着那行字。那是你娘的字迹。你认得——她在你六岁那年教过你写自己的名字，写坏三张纸，最后一张纸上，她握着你的手，一笔一画，写的就是这两个字。",
+      "你伸出手，去摸那行字。指尖触到刻痕的瞬间，船板忽然裂开，海水涌上来，又咸又冷——",
+      "有人在你身后把你拽住。你回头，看见一个披着旧斗篷的身影，兜帽下的脸看不清，只露出一双眼睛，在暗处亮了一下。",
+      "「别下水，」那人说，「水下没有你要的东西。你要找的，在岸上，在北方。」",
+      "【内心低语】你娘的名字，在海水的味道里，慢慢沉下去。你只记住了那双眼睛——灰的，像冬天的海。"
+    ],
+    options:[
+      {t:"（记住那双灰眼睛，从梦里醒过来）", go:"day_southern_1", effect:{time:0, flag:"mem_grey_eyes"}}
+    ]
+  };
+  N["day_southern_1"] = {
+    tag:"branch", place:"回忆 · 黄金城 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子退回到出发前三天。",
+      "黄金城的早市是全世界最吵的。卖鱼的把鲳鱼拍在案板上，报出一个数；买鱼的回一个数，两人隔着三条街讨价还价。你蹲在账房门口，替陈先生看摊——他今早去银号对账，把一摞零散的单据留给你誊。",
+      "你誊到一半，码头领航员老鲣鸟踱过来，蹲在你旁边，捡起一张单据看：「小子，你陈先生教你的？」",
+      "你点头。他弹了弹单据：「账算得清。不过你得记着，南边这地方，最会算账的不是账房，是银号。账房算的是数，银号算的是人心。」",
+      "他把单据还给你，起身走了两步，又回头：「对了，你出发那天，码头有条往北的船，船老大我认得。你要是搭那条船，报我的名字，他给你便宜一个铜星。」",
+      "你记下了。老鲣鸟走远了，你低头看手里的单据，忽然发现最底下那张，边角有个浅浅的印——一杆秤，秤盘上托着一颗星。",
+      "你翻过单据。背面空着，什么也没写。你把那张单据抽出来，折好，放进怀里。"
+    ],
+    options:[
+      {t:"（收好那张带秤印的单据）", go:"day_southern_2", effect:{time:0, flag:"mem_south_bill"}}
+    ]
+  };
+  N["day_southern_2"] = {
+    tag:"branch", place:"回忆 · 黄金城 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "出发前两天，陈先生把账房的钥匙交给你，让你替他跑一趟银号。",
+      "银号在黄金城最宽的街上，门脸不大，门口却常年排着队。你挤过人群，把陈先生的印信递进柜台。柜里的先生拨了拨算盘，抬头看你一眼：「陈先生的学徒？」",
+      "他推出一只木匣：「陈先生存的。他说，你出发那天，把这匣子带给他。」",
+      "你接过木匣。匣子很轻，轻得像空的。你摇了摇，里面没有声响。",
+      "你抱着木匣往回走，路过码头的时候，看见一艘挂着黑帆的船靠了岸。船上下来的水手背着沉甸甸的麻袋，一个接一个，往城西的方向走。麻袋口露出一点——是香料，和你十年前账上那笔，对不上的香料。",
+      "你在巷口站了很久。风吹过来，带着香料的味道。你想起陈先生说的那句话：有些账，不是记在本子上的。",
+      "晚上，你把木匣交给陈先生。他打开看了一眼，又合上，什么都没说，只是把钥匙从脖子上解下来，递给你：「明天你走。这个，你拿着。」",
+      "你接过钥匙。钥匙柄上，刻着一杆小小的秤。"
+    ],
+    options:[
+      {t:"（收下那把钥匙，问他木匣里是什么）", go:"day_southern_3", effect:{time:0, item:"铜钥匙"}}
+    ]
+  };
+  N["day_southern_3"] = {
+    tag:"branch", place:"回忆 · 黄金城 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "陈先生没有告诉你木匣里是什么。他望着窗外的河，说：「匣子是空的。我存的是你师父的一句话：『称过了，没缺分量。』」",
+      "你听不懂。他看着你，难得地笑了一下：「你师父走之前，让我把这句传给你。他说，等你有一天，站在一杆秤面前，觉得自己的分量够重了，就懂了。」",
+      "出发那天，陈先生没有送你去码头。你背着包袱走到巷口，回头看，账房的灯还亮着，人影映在窗纸上，正在拨算盘。",
+      "老鲣鸟给你留了船位。船老大收你半个铜星，多的那个，他塞回你手里：「老鲣鸟的账，我记着。」",
+      "船离岸的时候，你站在船尾。黄金城的灯火渐渐远了，变成水面上一片晃动的碎金。",
+      "你摸了摸怀里——那把铜钥匙，那张带秤印的单据，还有陈先生昨晚塞给你的、半块干硬的桂花糕。",
+      "船往北去。你忽然想起你娘在那只旧船板上刻的字：往北。别回头。",
+      "【梦境渐淡】你醒来的时候，船已经在灰港靠了岸。晨雾里，码头的灯笼一盏一盏亮着，有人在高声招呼卸货，声音带着南边的口音。你摸了摸胸口，铜钥匙还在，硌着心口，有点凉。"
+    ],
+    options:[
+      {t:"（握紧那把铜钥匙，走下渡船）", go:"origin_southern_1", effect:{item:"铜钥匙", flag:"keepsake_south", time:0}}
+    ]
+  };
+
+  /* ============ 光明教会辖区·圣城（唱诗班出身） ============ */
+  N["mem_church_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从钟声开始的。",
+      "渡船在夜里靠了一次岸，又离了岸。你半梦半醒，听见船工吆喝，听见水声，然后——一声钟响，隔着水，远远地荡过来，一下，又一下，像有人拿锤子敲在铁上。",
+      "那是圣城的钟。你听过二十年。",
+      "你是在光明大教堂的唱诗班里长大的。修女们说你是被放在圣坛台阶上的，裹着一件旧袍子，袍子口袋里塞着一张字条，只写着一行字：「愿主看顾这孩子。」",
+      "你在圣城住了二十年，唱了二十年的赞美诗。你知道圣堂每一块石板的裂痕，知道钟楼上一共有三百七十六级台阶，知道告解室里哪个角落的光最暗。",
+      "可你不知道自己是谁。",
+      "钟声停了。黑暗里，有人在唱诗——是你自己，小时候的声音，尖细，跑调，却唱得格外认真。",
+      "【梦境】你循着那歌声，走进圣堂侧廊。告解室的门帘还在晃，像是刚有人进去。"
+    ],
+    options:[
+      {t:"（掀开告解室的门帘，走进梦里）", go:"mem_church_1", effect:{time:0}}
+    ]
+  };
+  N["mem_church_1"] = {
+    tag:"branch", place:"梦境 · 圣城 · 告解室", where:"黑夜", pace:"deep",
+    text:[
+      "告解室里只亮着一盏小灯。你小时候觉得这里很可怕，黑，窄，木板上有股陈年的蜡油味。后来你习惯了——你在这间小室里听过无数人的忏悔，有偷东西的厨娘，有撒谎的商人，有半夜跑出军营的士兵。",
+      "可今晚，坐在对面的是你自己。",
+      "小隔板那边，一个声音说：「孩子，你来了。」",
+      "那声音你认得。约拿——教堂的杂役，一个总在深夜扫地的中年人。修女们说他来历不明，教长说他「灵魂有瑕疵」。可你见过他做的事：那年冬天，他把一个发烧的小乞丐背进教堂后巷，喂水，喂药，守了一夜。",
+      "「约拿叔，」你说，「为什么是你坐在这边？」",
+      "他没有回答。沉默了一会儿，他说：「你走之前，来听我说一件事。」",
+      "「十年前，有人把一个孩子放在圣坛台阶上。教长要把他送进育幼院，有个修女拦住了，说这孩子『有圣光』。那修女是你娘。」",
+      "你攥紧了自己的手。你娘——你在圣城长大，可从来没人告诉过你，你有娘。"
+    ],
+    options:[
+      {t:"（问约拿，你娘后来怎么样了）", go:"mem_church_2", effect:{time:0}}
+    ]
+  };
+  N["mem_church_2"] = {
+    tag:"branch", place:"梦境 · 圣城 · 钟楼", where:"黑夜", pace:"deep",
+    text:[
+      "约拿没有回答你娘后来怎么样了。他说：「你娘把你放在圣坛上，是因为有人要抓你。她把你藏进教会，自己往北走了。她说，等你有能力自保了，再去找她。」",
+      "梦里的场景换了。你站在钟楼上，往下看，圣城的屋顶像一片灰色的鱼鳞。钟楼底下，两个穿黑袍的人并肩走过，脚步很快，像是赶着去什么地方。",
+      "「净化令」三个字，你听过无数次。圣痕司的人拿着它在各城邦搜查「奥术与灵魂魔法的痕迹」。他们说，灵魂魔法是异端，修习它的人要进审判所。",
+      "你看着那两个黑袍人走进圣堂。约拿在门廊下扫地，看见他们，手里的扫帚停了一下，又继续扫。",
+      "你忽然想起来——约拿的左手腕上，有一道细疤，藏在袖口里。你问过他一次，他说是「旧伤」。可你记得，那疤的形状，像一枚烙上去的圣痕，又被刀刮掉了。",
+      "【内心低语】圣城教了你二十年「诚实」。可你越来越觉得，这座城，藏着比谁都多的秘密。"
+    ],
+    options:[
+      {t:"（记住约拿腕上的疤，从梦里退出来）", go:"day_church_1", effect:{time:0, flag:"mem_jona_scar"}}
+    ]
+  };
+  N["day_church_1"] = {
+    tag:"branch", place:"回忆 · 圣城 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子退回到出发前三天。",
+      "圣城这几天不太平。圣痕司的执事们隔三差五在街巷里搜查，说是「有异端潜入了圣城」。白袍的巡夜人多了两班，集市上的人说话声都低了几分。",
+      "你在圣堂侧廊打扫。约拿蹲在廊柱底下，拿一块旧布擦地砖。他擦得很慢，像是在想什么事。",
+      "「约拿叔，」你说，「圣痕司在找谁？」",
+      "他没有抬头：「找不该在这城里的人。」",
+      "你正要再问，侧廊尽头传来脚步声。约拿的手在布上停了一下，你看见他飞快地把左手腕的袖口往下拉了拉，又继续擦地。",
+      "来的是教长。他看了你们一眼，眼神在约拿身上停了一瞬：「约拿，今晚圣堂要通宵弥撒，你把侧廊的灯都点上。」",
+      "约拿应了一声。教长走远了，他直起身，看着教长的背影，半天没动。",
+      "你走过去，帮他把桶里的水换了。他没有说谢谢，只说：「你走之前，别在夜里出教堂。」"
+    ],
+    options:[
+      {t:"（记下他的话，问他为什么）", go:"day_church_2", effect:{time:0}}
+    ]
+  };
+  N["day_church_2"] = {
+    tag:"branch", place:"回忆 · 圣城 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "约拿没有回答你「为什么」。他看了你一会儿，说：「你走之前，帮我做一件事。」",
+      "他给你一个布包，让你送到城西的一户人家。布包不大，沉甸甸的，像是一本书。",
+      "「别打开，」他说，「到了门口，放下就走。」",
+      "你揣着布包出了教堂。城西的路你熟，穿过两条街，绕过一口枯井，就到了。门板很旧，门缝里透出一线光。你把布包放在门槛上，正要走，门忽然开了一条缝。",
+      "一只枯瘦的手伸出来，把布包拿进去。门缝里露出一双眼睛，看了你一眼，又缩回去。门重新关上。",
+      "你往回走。路过集市的时候，听见两个巡夜人在说话：",
+      "「……昨夜里城西又搜出一家。那家男人跑了，留下老婆孩子。」",
+      "「搜出什么了？」",
+      "「一本册子。抄的，全是些禁忌的文字。」",
+      "你的脚步停了一下。你没有回头，继续走，走得比刚才快。",
+      "晚上，你躺在床上，想着那个布包。约拿叔让你送的，到底是不是那本「册子」？你想问，又不敢问。圣城教会你诚实，可也教会你——有些诚实，会害死人。"
+    ],
+    options:[
+      {t:"（闭眼，把那个布包的事吞进肚子里）", go:"day_church_3", effect:{time:0, flag:"mem_jona_errand"}}
+    ]
+  };
+  N["day_church_3"] = {
+    tag:"branch", place:"回忆 · 圣城 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "出发前一天夜里，约拿在钟楼底下的杂物间等你。",
+      "他递给你一样东西——一枚旧圣徽，铜的，磨得发亮，背面刻着一行小字：「三十七号 · 忏悔室」。",
+      "「你娘留给你的。」他说，「她把你放在圣坛上的时候，把这枚圣徽缝在你的袍子口袋里。修女们以为是圣物，没敢动，一直收着。」",
+      "你接过圣徽。铜的表面很凉，可握久了，就暖了。你翻过来看正面——刻的是太阳神的圣徽，光芒万丈。可你总觉得，那光芒的纹路，看着像别的东西。",
+      "「你娘说，」约拿顿了顿，「等你有一天想找她了，就带着这枚圣徽，去北边的圣辉城。到了那里，有人会认。」",
+      "他把圣徽放进你手心，合上你的手指。他的手很凉，指尖有常年握扫帚磨出的茧。",
+      "「还有一句话，」他说，「你娘让我转告你：『别信教会说的。你爹不是罪人，你也不是罪人的孩子。』」",
+      "你攥着圣徽，喉咙发紧。你想问的话太多了：你爹是谁？你娘为什么走？圣辉城在哪里？可你张了张嘴，一个字也没问出来。",
+      "约拿看着你，像是知道你在想什么。他拍了拍你的肩：「走吧。有些答案，得你自己去找。」",
+      "【梦境渐淡】你醒来的时候，手里攥着那枚圣徽。渡船在灰港靠了岸，晨雾里，教堂的钟声隔着水传来——不是圣城的钟，是灰港小礼拜堂的。你把它翻过来，背面那行字，在晨光里看得清清楚楚：三十七号 · 忏悔室。"
+    ],
+    options:[
+      {t:"（把圣徽贴身收好，走下渡船）", go:"origin_church_1", effect:{item:"旧圣徽", flag:"keepsake_church", time:0}}
+    ]
+  };
+
+  /* ============ 精灵王国·银叶城（半精灵出身） ============ */
+  N["mem_elf_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从一片银色的叶子开始的。",
+      "渡船在夜里安静下来，只有水声。你缩在毯子里，忽然觉得耳朵发痒——你伸手摸了摸，指腹碰到尖尖的耳廓。你长年把它藏在头发底下，可梦里，风一吹，它就露了出来。",
+      "半精灵的耳朵，在人类的城里是麻烦。你七岁那年，有个孩子扯着你的耳朵，说你是「杂种」。你把他揍了一顿，回家路上，你娘——你养母——什么都没说，只是把你的头发拢了拢，遮住耳朵。",
+      "可在这艘往北的渡船上，没有人在意你的耳朵。风从舷缝里灌进来，带着森林的味道——松脂，苔藓，还有一点雨后泥土的腥。",
+      "你闭上眼。那味道越来越浓。有人在梦里唱一支歌，用的不是人类的语言，音节又轻又长，像树叶在风里互相碰。",
+      "你听不懂那首歌。可你的心跳，跟着那调子，一下，一下，慢下来。",
+      "【梦境】你睁开眼。眼前是一片林子，树高得看不见顶，光从叶缝里漏下来，碎成一片一片，像落了一地的银币。"
+    ],
+    options:[
+      {t:"（走进那片林子）", go:"mem_elf_1", effect:{time:0}}
+    ]
+  };
+  N["mem_elf_1"] = {
+    tag:"branch", place:"梦境 · 银叶城 · 林缘", where:"黑夜", pace:"deep",
+    text:[
+      "林子边缘有一间小木屋，屋顶长满了青苔。树篱婆婆坐在门口，拿一把草在编什么。她是个半精灵，比你大很多，耳朵也比你尖，可她不藏——她说，藏了半辈子，累了。",
+      "你小时候常在她这里蹭草药。她认得一百种治跌打损伤的草，也认得十种让人睡不着的草。她说：「认得药，比认得人有用。人会说谎，药不会。」",
+      "她看见你，没抬头：「来了。坐下。」",
+      "你在她旁边坐下。她把手里的东西编完，递给你——一只草编的环，编着银色的叶子。",
+      "「你娘留下的。」她说，「那年你被抱来，裹着的襁褓里夹着这片叶子。是银叶城的叶子，但银叶城不养半精灵。」",
+      "她把草环套在你手腕上：「你娘不是银叶城的人。她是来银叶城躲什么的。躲了三年，把你托给我，走了。」",
+      "你低头看着手腕上的草环。你一直以为自己是人类城里长大的孤儿——你养母也从来不说你娘的事。原来你知道的每一件事，都是别人挑着告诉你的。"
+    ],
+    options:[
+      {t:"（问树篱婆婆，你娘为什么要躲）", go:"mem_elf_2", effect:{time:0}}
+    ]
+  };
+  N["mem_elf_2"] = {
+    tag:"branch", place:"梦境 · 银叶城 · 世界树影", where:"黑夜", pace:"deep",
+    text:[
+      "树篱婆婆没有回答你娘为什么要躲。她望着林子深处，说：「她没告诉我。她只说，等叶子再落三回，就有人来接你。可她等了两回，就等不了了。」",
+      "梦里的林子忽然暗下来。树影拉长，像无数只伸向天空的手。你听见水声——不是河，是井。很深很深的井，水在底下响，咕咚，咕咚。",
+      "你站在一口井边。井沿的石头上刻着花纹，你凑近了看——是树叶，和一只睁着的眼睛。",
+      "「别往下看。」有人在身后说。",
+      "你回头。一个披着灰袍的身影站在几步外，兜帽压得很低，只露出一截下巴。他说：「井底有东西在看你。你看了，它就知道你来了。」",
+      "你攥紧井沿。你娘也说过差不多的话——「别回头看井。」那时候你以为是吓唬你的。",
+      "灰袍人转身走进林子。走了几步，他停下来，没有回头：「你娘往北去了。她让我告诉你——」",
+      "「你要是想找她，就带着那片叶子，去北境。到了地方，有人认得出。」",
+      "【内心低语】你娘留给你的，从来不是答案。是一张地图，和一串等你长大的路标。"
+    ],
+    options:[
+      {t:"（摘下那片银叶，从梦里醒过来）", go:"day_elf_1", effect:{time:0, flag:"mem_elf_leaf"}}
+    ]
+  };
+  N["day_elf_1"] = {
+    tag:"branch", place:"回忆 · 银叶城 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子退回到出发前三天。",
+      "银叶城在精灵王国边界，林子和人城交界的地方。你养母在这里开了间杂货铺，卖些针线、盐、铁钉，也收山货。半精灵的孩子在人类的城里日子不好过，她护着你，护了十五年。",
+      "那天，铺子里来了个精灵商人。他穿得干净，说话也客气，买了两斤盐，付钱的时候，盯着你看了很久。",
+      "「这孩子，」他对你养母说，「耳朵的形状，像银叶城老贵族家的。」",
+      "你养母把盐袋子系好，没接话。商人识趣地走了。他走后，你养母站在柜台后面，半天没动。",
+      "你问她：「娘，什么是老贵族家？」",
+      "她低头擦柜台，擦了很久，才说：「是银叶城里，很早就住在那里的精灵家。他们有长耳朵，有长姓氏，也有——很多不想让人知道的事。」",
+      "她没有看你。你忽然发现，你养母擦柜台的手，有点抖。"
+    ],
+    options:[
+      {t:"（走过去，把她的手按停）", go:"day_elf_2", effect:{time:0}}
+    ]
+  };
+  N["day_elf_2"] = {
+    tag:"branch", place:"回忆 · 银叶城 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "出发前两天，你养母把你叫进里屋。她从床底拖出一只旧木箱，锁着。她拿钥匙开锁，箱子里是一叠旧衣裳，最底下压着一个布包。",
+      "「你娘的东西，」她说，「她说，等你走的那天，再给你。」",
+      "布包打开，是一枚书签——银叶做的，薄得透光，叶脉里嵌着一行细字。你养母不认得精灵文，你也不认得。",
+      "「你娘说，这上面写的是她住过的地方。」你养母顿了顿，「她没说在哪。她说，等你到了学院，找个懂精灵文的，一读就知道了。」",
+      "你收下书签。你养母又拿出一只旧荷包，塞到你手里：「这个是我的。路上买口热饭吃。」",
+      "荷包里是十几个铜星，和你打零工攒的碎钱。你攥着那只荷包，忽然不知道该说什么。",
+      "你养母背过身去，假装收拾箱子：「别说了。你跟你娘一样，都是留不住的人。」",
+      "她顿了顿，声音低下去：「可你记着，不管你走到哪，这儿都有个铺子，有个人，等你回来吃口热饭。」"
+    ],
+    options:[
+      {t:"（收好书签和荷包，把眼泪憋回去）", go:"day_elf_3", effect:{time:0, item:"银叶书签"}}
+    ]
+  };
+  N["day_elf_3"] = {
+    tag:"branch", place:"回忆 · 银叶城 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "出发那天，你养母送你到林子的路口。她没哭，也没说什么话，只是把你的领子整了整，把头发拢了拢，遮住耳朵。",
+      "「到了人多的地方，别让人扯你耳朵。」她说，「扯了也别动手，报官。」",
+      "你点点头。她站在路口，看着你走。你走出十几步，回头，她还站在那里，风吹着她的围裙，一下，一下。",
+      "你忽然跑回去，抱了她一下。她僵了一下，然后，把手搭在你背上，拍了拍。",
+      "「去吧，」她说，「去当个能护住自己耳朵的人。」",
+      "你松开她，头也不回地走了。你怕一回头，就走不动了。",
+      "走到林子边上，你摸了摸怀里的银叶书签。那枚书签贴着胸口，凉凉的。你想起树篱婆婆说的：你娘不是银叶城的人。她是来躲什么的。",
+      "你娘到底在躲什么？你带着这个问题，走进了往北的渡船。",
+      "【梦境渐淡】你醒来的时候，手指正搭在耳朵上。渡船靠了岸，灰港的晨雾还没散。你放下手，把那枚银叶书签从怀里摸出来看了一眼——叶脉里的字，在光底下，像是活的一样。"
+    ],
+    options:[
+      {t:"（收好银叶书签，走下渡船）", go:"origin_elf_1", effect:{item:"银叶书签", flag:"keepsake_elf", time:0}}
+    ]
+  };
+
+  /* ============ 矮人王国·铁峰堡（炉边学徒出身） ============ */
+  N["mem_dwarf_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从炉火声开始的。",
+      "渡船的货舱里没有炉子，可你睡得迷迷糊糊，耳朵里全是风箱的声音——呼，呼，呼，一下一下，像巨人在喘气。",
+      "你在铁峰堡的锻炉边长大。老锻师胡尔说，你学会的第一句话不是「娘」，是「铁要趁热」。你两岁就会拿锤子敲铁砧，敲出火星来，胡尔气得胡子都翘了，可你娘——你养母，锻炉边的厨娘——笑得很高兴。",
+      "你在炉边听了十五年的锤声。铁峰堡的锤声从早响到晚，从不停，像是山的脉搏。你记得每一种锤声：重的，是打粗坯；轻的，是修刃口；密的，是赶工，锤声连成一片，像下雨。",
+      "黑暗里，锤声停了。有人在梦里喊你的名字，用的是矮人语的叫法，又长又拗口——",
+      "「普路托斯·铁砧之子。」",
+      "你睁不开眼。那声音又说：「起来，火要灭了。」",
+      "【梦境】你猛地睁开眼。眼前是一座熟悉的锻炉，炉膛里的火已经暗了，只剩一点余烬，红得发黑。"
+    ],
+    options:[
+      {t:"（去拨炉子里的火）", go:"mem_dwarf_1", effect:{time:0}}
+    ]
+  };
+  N["mem_dwarf_1"] = {
+    tag:"branch", place:"梦境 · 铁峰堡 · 锻炉间", where:"黑夜", pace:"deep",
+    text:[
+      "你拨开灰烬，炉膛里露出一块铁——巴掌大，形状不规则，像是从什么地方砸下来的。铁面上刻着花纹，被火烧得发黑，看不清刻的是什么。",
+      "胡尔坐在角落里，叼着烟斗，看着你：「捡的。十年前，你娘走的那天，这铁块从她包袱里掉出来，掉进炉灰里，我捡起来，一直压着。」",
+      "你拿起那块铁。很沉，比同体积的铁沉。铁面上有一道裂，裂口处露出一点不一样的颜色——像银，又不完全是银。",
+      "「你娘说，」胡尔吐了口烟，「这东西不能见光。她说，等铁峰堡的雪化了七回，再给你。你数数，多少回了。」",
+      "你数不出来。你只知道，你娘走的时候，你九岁。你今年十六，雪化了七回。",
+      "胡尔看着你手里的铁块，忽然说：「你娘走之前，在炉边坐了一夜。天快亮的时候，她跟我说，『胡尔，你记着——这孩子的爹，不是矮人。』」",
+      "你攥紧那块铁。你从来没有问过你爹是谁。你一直以为，你爹就是铁峰堡的某一块矿石——和你一样，是炉边长大的。"
+    ],
+    options:[
+      {t:"（问胡尔，你爹是谁）", go:"mem_dwarf_2", effect:{time:0}}
+    ]
+  };
+  N["mem_dwarf_2"] = {
+    tag:"branch", place:"梦境 · 铁峰堡 · 地脉", where:"黑夜", pace:"deep",
+    text:[
+      "胡尔没有回答你爹是谁。他把烟斗在铁砧上磕了磕，说：「你娘没说。她只说，你爹把这块铁留给你，是让你『认』的。认出来了，就去找他；认不出来，就当它是一块废铁。」",
+      "梦里的锻炉消失了。你站在铁峰堡最深的矿道里，头顶的石壁上画着一幅壁画——很古老，颜料剥落了大半，只剩下一个轮廓：一杆秤，秤盘上托着一颗星。",
+      "你见过这图案。在铁块上，在账房的单据上，在巴顿给的那块铁牌上。它像是烙在你命里的一个印记，走到哪，跟到哪。",
+      "矿道深处传来水声。一滴，两滴，滴在石头上，又慢又响。你循着声音走过去，看见矿道尽头有一面石壁，壁上刻着一行字，字迹已经模糊：",
+      "「称过了，没缺分量。」",
+      "你盯着那行字。你听不懂它在说什么，可你的心跳，忽然快起来，像是认出了什么。",
+      "身后有人咳了一声。你回头，看见胡尔站在矿道口，手里提着灯笼，火光在他脸上明明灭灭：「看够了就上来。矿道深处不能待，老规矩。」",
+      "你最后看了一眼那行字，转身跟上胡尔。灯笼的光在矿道里晃着，你数着脚步，一步，两步——你忽然发现，胡尔走路的姿势，有点瘸，左腿，像是受过很重的伤。"
+    ],
+    options:[
+      {t:"（记下那行字和胡尔的腿伤，从梦里醒过来）", go:"day_dwarf_1", effect:{time:0, flag:"mem_dwarf_carving"}}
+    ]
+  };
+  N["day_dwarf_1"] = {
+    tag:"branch", place:"回忆 · 铁峰堡 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子退回到出发前三天。",
+      "铁峰堡的集市开在矿道口。矮人们把打好的铁器摆出来，锄头、锅、刀、钉，堆得像小山。你替胡尔守摊，一上午卖出三把菜刀、一口锅，换了半袋麦子。",
+      "快收摊的时候，来了个外乡人。他穿得和铁峰堡的人不一样，料子细，靴子干净，一开口，带着南边的口音：「小师傅，打听个地方——城里的『金秤行』，怎么走？」",
+      "你愣了一下。铁峰堡没有「金秤行」。你摇摇头。外乡人也不追问，买了把匕首，走了。",
+      "他走后，旁边摊子的老铁匠凑过来，压着嗓子：「别搭理那种人。这半年来，铁峰堡来了三拨打听『金秤』的，都是外乡人。问了就走，可每个都打听同一个地方。」",
+      "你问他：「『金秤』是什么？」",
+      "老铁匠看了你一眼，眼神有点怪：「你在这长大，你不知道？」他顿了顿，「金秤是南边的一个家族，有钱，有势，听说还管着一些……见不得光的东西。你别掺和。」",
+      "他把摊子收了，走了。你坐在空地上，想着那个外乡人的话。你怀里的那块铁——那上面刻的，正是一杆秤。"
+    ],
+    options:[
+      {t:"（把那块铁摸出来，又看了一遍）", go:"day_dwarf_2", effect:{time:0}}
+    ]
+  };
+  N["day_dwarf_2"] = {
+    tag:"branch", place:"回忆 · 铁峰堡 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "出发前两天，胡尔把你叫到锻炉间，让你帮他打一把刀。",
+      "不是普通的刀。胡尔画了个样子，刀身窄，刃口长，不是矮人惯用的款式。你问他这是给谁打的，他说：「给一个故人。欠了十年的。」",
+      "你拉风箱，他掌锤。火星溅起来，落在皮围裙上，烫出一个个黑点。胡尔打铁的时候不说话，只是锤。锤到一半，他忽然停了一下，看着刀坯，说：",
+      "「你娘走的那年，也让我打过一把刀。同样的样子。她说，是给『北边一个朋友』的。」",
+      "你没有接话。风箱呼哧呼哧地响，火苗一窜一窜。",
+      "「后来我听说，」胡尔把刀坯翻了个面，「你娘那把刀，没送到。她在半路上，被人截了。」",
+      "你的手在风箱把上停了一下，又继续拉。你问：「截她的人，是谁？」",
+      "胡尔没有回答。他举起锤子，砸下去，火星四溅：「打完这把刀，你就上路。路上，别打听你娘的事。打听的人，都不在了。」",
+      "那晚，刀打好了。胡尔把它插进鞘里，挂在墙上，没有给你。他说：「这把刀，不是给你的。是你的路引——等你到了该到的地方，自然会有人认。」"
+    ],
+    options:[
+      {t:"（把刀的样子记在心里）", go:"day_dwarf_3", effect:{time:0, flag:"mem_dwarf_blade"}}
+    ]
+  };
+  N["day_dwarf_3"] = {
+    tag:"branch", place:"回忆 · 铁峰堡 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "出发那天，铁峰堡下着细雨。山里的雨，带着硫磺味，落在人身上，黏糊糊的。",
+      "胡尔送你到山门口。他背着手，什么都没带，和平时一样，叼着烟斗。",
+      "「东西都带齐了？」他问。",
+      "你点点头。他看了你一会儿，从怀里摸出一样东西，塞进你手里——是那块铁，你娘留下的那块，炉火护符。",
+      "「带上。」他说，「你娘说，让你『认』它。认不出来也没事，它跟着你，总比跟着我强。」",
+      "你攥着那块铁。铁的棱角硌着手心，是凉的。",
+      "「还有这个。」胡尔又从怀里摸出一只布袋，沉甸甸的，塞进你包袱里，「路上别饿着。」",
+      "你打开看了一眼——是干粮，还有一小袋矿石，铁峰堡最硬的铁矿。你抬头看他，他别过脸去，咳了一声：「走吧。炉子还等着我回去生火。」",
+      "你走出十几步，听见他在身后喊：「喂——」",
+      "你回头。他站在山门口，烟斗里的火星一明一灭：「你娘走的时候，跟我说过一句话，我一直没告诉你。」",
+      "「她说，『我这辈子，欠两个人：一个在铁峰堡，一个在北边。』」",
+      "他顿了顿：「我替她记着。你到了北边，替她看看——那个她欠着的人，还在不在。」",
+      "【梦境渐淡】你醒来的时候，手心里攥着那块铁。渡船在灰港靠了岸，晨雾里，码头的铁匠铺已经开始生火，锤声隔着水传过来，一下，一下，像铁峰堡的山脉，在很远的地方，替谁跳着心。"
+    ],
+    options:[
+      {t:"（把炉火护符贴身收好，走下渡船）", go:"origin_dwarf_1", effect:{item:"炉火护符", flag:"keepsake_dwarf", time:0}}
+    ]
+  };
+
+  /* ============ 兽人草原·黑石部族（游牧出身） ============ */
+  N["mem_orc_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从马蹄声开始的。",
+      "渡船在夜里的河面上漂着，你裹着毯子，睡得并不安稳。马蹄声——很远，很密，像一片贴着地面滚过来的雷。你在梦里翻身，攥紧了毯子的一角，像攥着缰绳。",
+      "你在黑石部族的营地里长大。草原上的孩子，会走就会上马，会跑就会射箭。你七岁那年，老萨满柯骨牵着你的手，让你在营地外的草地上站了一夜，听风。",
+      "「风里有话，」柯骨说，「听得懂风，你就听得懂人。」",
+      "你听了九年风。你听得懂北风要下雪，南风要起沙，听得懂马群在夜里不安分的响鼻——可你听不懂，你娘走的那天，风里那句话。",
+      "你娘是部族里少见的半兽人。她走的那天，天没亮，她把你从睡梦里摇醒，塞给你一样东西，说：「等你长大，往北走。别让任何人看见这个。」",
+      "你那时候还小，只知道哭。你娘没有回头。她上马，走了，马蹄声很快被草原吞掉。",
+      "【梦境】马蹄声近了。你睁开眼，看见一匹马站在你面前，马背上没有人。马鞍上，挂着一枚狼牙吊坠，牙根上套着铜环，在风里晃。"
+    ],
+    options:[
+      {t:"（伸手去够那枚吊坠）", go:"mem_orc_1", effect:{time:0}}
+    ]
+  };
+  N["mem_orc_1"] = {
+    tag:"branch", place:"梦境 · 黑石部族 · 营地", where:"黑夜", pace:"deep",
+    text:[
+      "吊坠在你指尖晃了一下，你没有抓住。马儿打了个响鼻，转身跑进雾里。你追了两步，脚下的草地忽然变了——变成营地中央的篝火堆。",
+      "柯骨坐在火边，手里拿着那枚狼牙吊坠，翻来覆去地看。看见你，他把吊坠收进怀里：「你娘的东西，我给你收着。」",
+      "你在他对面坐下。篝火噼啪响，火星往天上飞。柯骨看着火，说：「你娘走之前，来找过我。」",
+      "「她说，『柯骨，这孩子不能留在草原。他爹的人，迟早会找来。』」",
+      "你问：「我爹的人？我爹是谁？」",
+      "柯骨没有看你。他往火里添了根柴：「你爹不是草原上的人。你娘不肯说他的名字。她只说，他是『北边来的』，身上有『秤的印记』。」",
+      "你听不懂。柯骨接着说：「你娘走的时候，把这枚吊坠留给我，让我等你十六岁再给你。她说，吊坠里有你爹的信物，等你见了『金秤』的人，他们会认。」",
+      "篝火的光在柯骨脸上跳。他忽然压着嗓子：「还有一句话，你娘让我告诉你——『草原养大了你，但你的命，不在草原。』」"
+    ],
+    options:[
+      {t:"（问柯骨，我娘现在在哪）", go:"mem_orc_2", effect:{time:0}}
+    ]
+  };
+  N["mem_orc_2"] = {
+    tag:"branch", place:"梦境 · 黑石部族 · 狼丘", where:"黑夜", pace:"deep",
+    text:[
+      "柯骨没有回答你娘在哪。他望着篝火，说：「她走的那天，往北去的。那之后，草原上再没有她的消息。」",
+      "梦里的篝火熄了。你站在狼丘上——那是黑石部族的祖地，埋着历代萨满和战死的勇士。丘顶立着一根石柱，柱上刻着狼头。",
+      "你小时候常来这里。柯骨说，你娘也常来，一个人，坐在石柱底下，一坐就是半天。",
+      "你走过去，在石柱底下坐下。风从草原上刮过来，带着草籽和沙土的味道。你低头，看见石柱根部压着一块石头，石头下面，露出一角布。",
+      "你把布抽出来——是一块旧布，洗得发白，边角绣着半枚图案：一杆秤，秤盘上托着一颗星。",
+      "和你娘留在你记忆里的那块布，一模一样。",
+      "你攥着那块布，忽然听见风声里有人说话。很轻，很远，像从石头缝里漏出来的——",
+      "「往北。别回头。等你够了分量，就来称。」",
+      "你猛地抬头。草原上没有人。风还在刮，石柱上的狼头，在暮色里静静看着你。",
+      "【内心低语】你娘把一句话留在了石头底下。你十四岁才听懂：有些话，不是用嘴说的，是让人用一辈子去猜的。"
+    ],
+    options:[
+      {t:"（把那块布收好，从梦里醒过来）", go:"day_orc_1", effect:{time:0, flag:"mem_orc_cloth"}}
+    ]
+  };
+  N["day_orc_1"] = {
+    tag:"branch", place:"回忆 · 黑石部族 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子退回到出发前三天。",
+      "黑石部族的营地在草原深处，一年迁徙两次。你十五岁，已经能单独放牧三十匹马。柯骨说，你训马的天赋「不像草原上的人」，他说这话的时候，语气有点怪。",
+      "那天傍晚，营地外来了几个陌生人。他们穿着北边的皮甲，领头的汉子骑一匹黑马，在营地外勒住缰绳，扬声喊：「借个火，讨碗水！」",
+      "柯骨让族人放他们进来。那汉子下马，接过水囊，喝了一口，眼睛却往营地里扫了一圈——扫到你的时候，停了一下。",
+      "「你家小子？」他问柯骨。",
+      "柯骨没接话。那汉子笑了笑，说：「像。像他爹。」",
+      "你手里的缰绳攥紧了。你刚要开口，柯骨先一步说：「他爹死了，早死了。客人喝碗水，歇够了就上路。」",
+      "那汉子没再说什么。他喝完水，上马走了。走了很远，你还能看见他的背影——他在马上，回头看了你一眼。",
+      "你问柯骨：「他认识我爹？」",
+      "柯骨蹲在火边，拿棍子拨火，半天才说：「认不认识，都是过去的事。你记住，草原上的人，不问来路，只看马蹄。」"
+    ],
+    options:[
+      {t:"（把那个汉子的模样记在心里）", go:"day_orc_2", effect:{time:0}}
+    ]
+  };
+  N["day_orc_2"] = {
+    tag:"branch", place:"回忆 · 黑石部族 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "出发前两天，柯骨带你去狼丘。",
+      "他很少带人去狼丘。你跟在马后面，看他下马，走到石柱前，跪下，用额头抵着石柱，小声念了几句。你听不清，只听见风把他的话吹散了。",
+      "念完，他站起来，从怀里摸出那枚狼牙吊坠，递给你：「戴上。」",
+      "你接过吊坠。狼牙很尖，牙根套着铜环，环上刻着细纹。你翻过来看，环内侧刻着一个字，不是草原的文字——弯弯曲曲的，像某种古老的符号。",
+      "「你娘说，」柯骨看着吊坠，「这上面刻的，是你爹家的姓氏。」",
+      "你问：「什么姓氏？」",
+      "柯骨摇摇头：「你娘没说。她说，等你见到能认出这个字的人，就知道了。」",
+      "他把吊坠挂到你脖子上。铜环贴着锁骨，凉得你打了个激灵。",
+      "「还有，」柯骨忽然说，「你娘走之前，把你这辈子的事，都托付给我了。我只应了她一件——」",
+      "他看着你，眼睛在暮色里亮了一下：「等你找到你爹，替她问一句：当年为什么不来找她。」"
+    ],
+    options:[
+      {t:"（戴上吊坠，点头）", go:"day_orc_3", effect:{time:0, item:"狼牙吊坠"}}
+    ]
+  };
+  N["day_orc_3"] = {
+    tag:"branch", place:"回忆 · 黑石部族 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "出发那天，草原上刮着南风。草浪一层一层翻过去，像海。",
+      "柯骨送你到营地外的河边。他牵着马，走得很慢。你十六岁了，已经和他一样高了。",
+      "「马给你牵到渡口。」他说，「到了灰港，马卖了，换船钱。别心疼，马识途，人也得识途。」",
+      "你点点头。他忽然停下来，从怀里摸出一样东西，塞进你手里——是一把短刀，刀鞘是旧的，缠着皮绳。",
+      "「你娘的刀。」他说，「她走的时候没带走，留在营地。我替她收着，现在给你。」",
+      "你接过刀，抽出来看。刃口磨得很亮，刀柄上缠着的皮绳，已经磨得发黑了。",
+      "「你娘说过一句话，」柯骨看着那把刀，「她说，这把刀，是『北边那个人』给她的定情信物。她说，她这辈子，就欠这一把刀的情。」",
+      "你攥着刀，忽然想起那个在营地外说「像他爹」的汉子。你问柯骨：「我爹，是不是也有一把这样的刀？」",
+      "柯骨没有回答。他翻身上马，居高临下地看着你，说：「记住，你是草原养大的。草原的孩子，头可以低，马蹄不能停。」",
+      "他拨转马头，走了。马蹄声很快消失在草浪里。",
+      "你站在河边，握着那把刀，站了很久。风把你的头发吹乱，你想起你娘走的那天，也是这样，一个人，一匹马，一个背影。",
+      "【梦境渐淡】你醒来的时候，手正按在胸前——狼牙吊坠还在，硌着锁骨。渡船在灰港靠了岸，晨雾里，有人在吆喝着卸货，有人在骂马。你摸了摸吊坠，铜环还是凉的，像草原上的风，隔着千里，追到了这里。"
+    ],
+    options:[
+      {t:"（握紧狼牙吊坠，走下渡船）", go:"origin_orc_1", effect:{item:"狼牙吊坠", flag:"keepsake_orc", time:0}}
+    ]
+  };
+
+  /* ============ 东部王国·承天城（帝京学子出身） ============ */
+  N["mem_eastern_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从翻书声开始的。",
+      "渡船的夜里，只有水声和船工的鼾声。你闭着眼，耳朵里却全是纸页翻动的声音——唰，唰，唰，像有人在灯下翻一本永远翻不完的书。",
+      "你在承天城的书斋里长大。帝京的孩子们六岁启蒙，你四岁就跟着童先生认字。童先生说你「心静」，别的孩子坐不住，你能在书斋里坐一整天，把一本《帝京风物志》从头翻到尾，再从尾翻到头。",
+      "你养父是承天城的小吏，在礼部当差，一辈子没升过官。他说，读书人的命，写在纸上，也锁在纸上。你从小就不太懂这句话，直到你娘——你养母——走的那天。",
+      "那天，你养母把你叫到里屋，塞给你一封叠得方方正正的信：「等你大了，往北走，把这封信，交给一个姓『金』的人。」",
+      "你问她姓金的人是谁。她没回答，只是看着窗外，看了很久。",
+      "【梦境】翻书声停了。有人在灯下说话，声音很轻：「普路托斯，你来了。」"
+    ],
+    options:[
+      {t:"（循着那声音，走进灯下的书斋）", go:"mem_eastern_1", effect:{time:0}}
+    ]
+  };
+  N["mem_eastern_1"] = {
+    tag:"branch", place:"梦境 · 承天城 · 书斋", where:"黑夜", pace:"deep",
+    text:[
+      "书斋里的灯还亮着。童先生坐在案后，面前摊着一本旧书。他抬头看你，扶了扶眼镜：「坐。今晚不讲书，讲一件事。」",
+      "你在他对面坐下。童先生把书合上，推到你面前。封面已经磨白了，没有书名。他翻开某一页，指着一行字：「认得吗？」",
+      "你凑过去看。那是一行很旧的字，墨色发灰，写的是：「承天十二年，金氏女入京，携一子，暂居城南。次年春，金氏女亡故，子由礼部录为孤，收养。」",
+      "你的手在纸页上停住了。你养母——金氏女——不是你的生母？",
+      "「你养母走之前，来找过我，」童先生说，「她把这页书托给我，让我等你大了给你看。她说，你生母的事，她本来想带进棺材里，可你大了，该知道了。」",
+      "「你生母，是『金秤』家的人。」",
+      "你抬起头。童先生看着你，镜片后的眼睛很平静：「她叫金敏，是金秤家的旁支。十六年前，她带着你逃出南边，一路逃到承天城，把你托给了你养母。」",
+      "「她不是『亡故』。」童先生说，「她把你安顿好，就走了。往北，去找一个人。」"
+    ],
+    options:[
+      {t:"（问童先生，她去找谁）", go:"mem_eastern_2", effect:{time:0}}
+    ]
+  };
+  N["mem_eastern_2"] = {
+    tag:"branch", place:"梦境 · 承天城 · 旧宅", where:"黑夜", pace:"deep",
+    text:[
+      "童先生没有回答你生母去找谁。他把那页书从旧书上撕下来，折好，放进你手里：「她去找谁，我不知道。她只说，等你在北边站稳了，自然会有人来找你。」",
+      "梦里的书斋暗下去。你站在承天城城南的一间旧宅前。门板上着锁，锁已经锈了。你养父说，这间宅子是「金氏女」租的，她走后，房东再没租出去。",
+      "你翻墙进去。院子里长满了草，堂屋的桌子还在，桌上放着一只茶碗，碗底积着一圈茶垢。你推开里屋的门——",
+      "墙上挂着一幅字，装裱已经发黄。你凑近看，写的是八个字：「称过了，没缺分量。」落款是一个小小的印章，刻着两个字：金敏。",
+      "你伸手去摸那幅字。手指碰到纸面的瞬间，你听见身后有脚步声——很轻，但确实在靠近。你回头，门口站着一个人影，逆着光，看不清脸。",
+      "「你终于来了。」那人说。声音像砂纸，像磨了很久的刀。",
+      "你退后一步，手按上腰间。那人没有动，只是站在那里，说：「你娘让我等你。等了十六年。」",
+      "你问：「你是谁？」",
+      "那人没有回答。他抬起手，把一样东西放在门框上——是一枚玉牌，巴掌大，刻着一杆秤。然后他转身，走进了院子深处。",
+      "你追出去，院子里已经没有人了。只有那枚玉牌，在门框上，被风一吹，晃了晃。",
+      "【内心低语】你十六岁这年才知道：你生母姓金，你生母还活着，而且，有人在等你去找她。"
+    ],
+    options:[
+      {t:"（取下那枚玉牌，从梦里醒过来）", go:"day_eastern_1", effect:{time:0, flag:"mem_eastern_jade"}}
+    ]
+  };
+  N["day_eastern_1"] = {
+    tag:"branch", place:"回忆 · 承天城 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "梦里的日子退回到出发前三天。",
+      "承天城的初秋，街上落着梧桐叶。你蹲在礼部档房门口，等你养父下值。他每天酉时出衙门，领着你走两条街回家，路上会给你买一支糖葫芦。",
+      "那天，你养父出来得比平时晚。他脸色不好看，一路上没说话。快到家门口，他忽然停下来，说：「今天，有人来打听你了。」",
+      "你问：「打听我什么？」",
+      "「打听你娘。」他说，「来了两个人，穿着南边的衣裳，说是『金氏故人』，问你娘当年住过的地方。」",
+      "你养父看着你，眼神里有你从没见过的警惕：「我告诉他们，你娘已经死了，坟在城北。他们走了，但我总觉得，还会有人来。」",
+      "他顿了顿：「你娘当年走得急，什么都没交代。只留了一句话——『若有人来打听，就说我死了。』」",
+      "你没有接话。你养父也没有再说。他推开家门，屋里飘出饭菜的香气。你看着他的背影，忽然想起书斋里那行字：「金氏女亡故」——原来「亡故」，是很多人一起替她撒的谎。"
+    ],
+    options:[
+      {t:"（把那些来打听的人记在心里）", go:"day_eastern_2", effect:{time:0}}
+    ]
+  };
+  N["day_eastern_2"] = {
+    tag:"branch", place:"回忆 · 承天城 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "出发前两天，你养父破例让你进了一次他的书房。",
+      "书房很小，堆满了文书。他从柜子最底下翻出一只木匣，锁着两把锁。他拿两把钥匙开了半天，才打开，从里面取出一封信——信封已经发黄，封口处压着一枚蜡印，印着天平的图案。",
+      "「你娘走之前，托我保管的。」他把信递给你，「她说，等你十六岁，要往北走的时候，再给你。」",
+      "你接过信。信封上没有收信人的名字，只写着四个字：「北行亲启」。",
+      "你养父说：「你娘说，这封信，不是给你的。是让你带到北边，交给一个人的。至于交给谁——她说，等你到了地方，自然知道。」",
+      "你把信收好。你养父坐在椅子上，看着窗外，忽然说：「你娘是个好人。她救过我一家人的命。」",
+      "「那年闹饥荒，承天城饿殍遍野。她一个女人，带着你，还能匀出粮食接济邻居。她走的那天，全巷子的人都出来送她。」",
+      "他顿了顿：「可她从不说自己从哪来，要去哪。她只说——『称过了，没缺分量。』」",
+      "你攥着那封信。这已经是第几次听到这句话了。你娘——你的生母——到底留下了多少句话，等着你去解开？"
+    ],
+    options:[
+      {t:"（收好那封信）", go:"day_eastern_3", effect:{time:0, item:"北行亲启信"}}
+    ]
+  };
+  N["day_eastern_3"] = {
+    tag:"branch", place:"回忆 · 承天城 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "出发那天，承天城下着细雨。梧桐叶湿漉漉地贴在地上，踩上去，不留脚印。",
+      "你养父送你到城门。他站在雨里，没打伞，头发一会儿就湿了。",
+      "「书都带齐了？」他问。",
+      "你点点头。他沉默了一会儿，说：「到了学院，好好读书。你娘说，你的路，在纸上，也在马背上。」",
+      "他把一样东西塞进你手里——是那枚玉牌，昨夜梦里那个人放在门框上的。你猛地抬头看他。",
+      "你养父移开眼：「昨夜有人把它放在门口。我看见了，没有声张。」",
+      "他顿了顿：「你娘当年，也收过这样一枚玉牌。她说，这是『金秤』的信物。拿着它，金秤家的人会认你。」",
+      "你攥着玉牌，雨水顺着指缝流下来。你想问的话太多了，可城门在等着，雨在等着，往北的路在等着。",
+      "「爹，」你喊了一声，「你早就知道，我不是你亲生的？」",
+      "你养父没有回答。他抬起手，拍了拍你的肩，像小时候一样：「是不是亲生的，我养了十六年，就是亲生的。」",
+      "你低下头，把玉牌贴身收好，转身走进雨里。走出很远，你回头——他还站在城门口，像一尊淋湿的石像。",
+      "【梦境渐淡】你醒来的时候，手正按着胸口——玉牌和那封信，都在。渡船靠了岸，灰港的晨雾里，有人在卖热豆浆，有人在喊「承天城的信差到了」。你听着那声音，忽然想起你养父最后说的那句话——「你的路，在纸上，也在马背上。」"
+    ],
+    options:[
+      {t:"（把玉牌贴身收好，走下渡船）", go:"origin_eastern_1", effect:{item:"金秤玉牌", flag:"keepsake_eastern", time:0}}
+    ]
+  };
+
+  /* ============ 死亡沙漠·绿洲集市（驼队遗孤出身） ============ */
+  N["mem_desert_start"] = {
+    tag:"branch", place:"记忆的渡口", where:"黑夜", pace:"deep",
+    text:[
+      "梦是从沙子漏过指缝的声音开始的。",
+      "渡船的夜里，你躺在舱板上，听见水声。可你闭着眼，耳朵里全是另一种声音——沙子在风里磨，磨得又细又长，像有人拿砂纸擦铜器。",
+      "你在死亡沙漠边上的绿洲集市长大。集市叫「三道沙丘」，因为它在三道沙丘环抱的地方，像一口碗底。你是个孤儿——驼队把你丢在井边，井婆捡了你，用羊奶喂大。",
+      "沙漠教会你两件事：水的分量，和活人的不可信。井婆说，这是沙漠送给每个孩子的礼。",
+      "你十二岁那年，井婆病了一场。她躺在毡子上，拉着你的手，说：「你娘把你放在井边的时候，怀里塞了一样东西。我收着，等你十六岁再给你。」",
+      "你问她：「我娘长什么样？」",
+      "井婆闭上眼睛，想了很久，说：「瘦，黑，眼睛很亮。她把你放在井边，喝了口水，就走了。走的时候，她回头看了一眼——那一眼，我记了十二年。」",
+      "【梦境】沙子声停了。有人在梦里喊你的名字，用的是沙漠里那种又哑又长的调子：「普路托斯——」",
+      "你睁开眼。眼前是一片黄沙，天是青灰色的，沙丘的脊线在远处起伏，像一头睡着的巨兽。"
+    ],
+    options:[
+      {t:"（踩进那片黄沙）", go:"mem_desert_1", effect:{time:0}}
+    ]
+  };
+  N["mem_desert_1"] = {
+    tag:"branch", place:"梦境 · 沙漠 · 三道沙丘", where:"黑夜", pace:"deep",
+    text:[
+      "你走在那片沙地上。风把沙粒吹起来，打在脸上，生疼。可你知道这是梦——梦里的疼，不真。",
+      "你走到井边。井是干的，井口围着一圈矮石。你小时候常趴在这口井边，往里喊，听回声。井婆说，别喊太深，井底有东西。",
+      "你趴在井沿，往下看。井底黑漆漆的，什么都看不见。你正要站起来，忽然听见井底传来一个声音——",
+      "不是回声。是一个人的声音，很轻，像从很深的地方浮上来：",
+      "「普路托斯，别往北去。」",
+      "你猛地攥紧井沿。那声音继续说：「北边的人在找你。你往北去，就是把命送到他们手里。」",
+      "你问：「你是谁？」",
+      "井底的声音沉默了一会儿，说：「我是把你放在井边的人。」",
+      "「你娘？」",
+      "「别喊我娘。」那声音忽然冷下来，「你娘已经死了。我是在你娘死后，把你带到这里的人。」",
+      "你愣住了。井婆说你娘把你放在井边——可井底的人说，你娘已经死了。",
+      "「你娘死之前，让我把你带到沙漠里，藏起来。」那声音说，「她说，等你能自保了，再让你出去。可你十六岁了，还是想往北去。」",
+      "「你拦不住我，」你说，「我要去找我娘。」",
+      "井底没有声音了。过了很久，那声音才说：「你娘留给你的东西，在井婆手里。拿到它，你就知道，你该往哪去了。」"
+    ],
+    options:[
+      {t:"（从梦里醒过来，去找井婆）", go:"mem_desert_2", effect:{time:0}}
+    ]
+  };
+  N["mem_desert_2"] = {
+    tag:"branch", place:"梦境 · 沙漠 · 井底", where:"黑夜", pace:"deep",
+    text:[
+      "你没有醒。梦把你往井底拽。",
+      "你顺着井壁往下爬。石壁很凉，越往下越凉。你数着刻度，数到很深的地方，井底忽然亮了——不是光，是一块石头的颜色，灰白，像月光浸过的。",
+      "井底不是干的。有一层浅浅的水，水面映着天。你站在水里，看见水面上映出一个人的影子——不是你。是一个女人，瘦，黑，眼睛很亮。",
+      "她站在你身后，看着你。你们之间隔着那层水，谁也没有动。",
+      "「你长得像我，」她说，「又不完全像。」",
+      "你的喉咙发紧。你想喊她，可你张了张嘴，喊出来的是：「你为什么不来找我？」",
+      "她没有回答。她低头，从怀里摸出一样东西，放进水里。那东西沉下去，落在你的脚边——是一只水瓶，陶的，瓶口缠着旧布。",
+      "「拿着，」她说，「往北走。走到一个叫『圣辉城』的地方，把瓶里的东西，交给一个姓金的人。」",
+      "你弯腰，从水里捡起那只水瓶。瓶身很沉，里面好像装着什么。你问她：「瓶里是什么？」",
+      "她看着你，笑了一下。那笑容在井底的水光里，一闪就没了：「是称。」",
+      "【内心低语】你醒来的时候，手里攥着那只水瓶。井婆坐在你床边，看着你，像是已经等了你很久。"
+    ],
+    options:[
+      {t:"（问井婆，这只水瓶是什么时候放下的）", go:"day_desert_1", effect:{time:0, flag:"mem_desert_flask"}}
+    ]
+  };
+  N["day_desert_1"] = {
+    tag:"branch", place:"回忆 · 沙漠 · 第三天", where:"白昼", pace:"normal",
+    text:[
+      "井婆说，那只水瓶，是你娘留在她那里的。你娘走的时候说：「等他十六岁，把瓶子给他。他要是往北走，就让他带上。」",
+      "梦里的日子退回到出发前三天。",
+      "三道沙丘的集市，靠着一口活井活着。驼队在这里补给，商人在井边讨价还价。你替井婆看摊，卖水、卖干粮、收旧货。",
+      "那天，集市上来了一个驼队，领队是个瘦高的汉子，鹰钩鼻，手上戴着三枚银戒。他买了两袋水，蹲在摊边，忽然压着嗓子问：「小兄弟，打听个事——前些年，有没有一个带孩子的女人，在这附近经过？她姓金。」",
+      "你的手在水瓢上停了一下，又继续舀水：「路过的人多了，记不清。」",
+      "那汉子盯着你看了很久，笑了笑，没再问，走了。",
+      "他走后，井婆从棚子里出来，站在你身边，看着那人的背影：「你答得好。」",
+      "你问她：「他是谁？」",
+      "井婆说：「南边来的人。这些年，隔三差五就有人来打听你娘。你娘当年走的时候，跟我说，『要是有人打听，就说我死了，尸首喂了狼。』」",
+      "你问：「她为什么要这样说？」",
+      "井婆看了你一眼：「你娘说，打听她的人，不是想找她，是想找你。」"
+    ],
+    options:[
+      {t:"（把那个戴银戒的汉子记在心里）", go:"day_desert_2", effect:{time:0}}
+    ]
+  };
+  N["day_desert_2"] = {
+    tag:"branch", place:"回忆 · 沙漠 · 第二天", where:"白昼", pace:"normal",
+    text:[
+      "出发前两天，井婆把你叫进棚子。她从毡子底下摸出一只旧布包，一层一层打开，露出一枚铜牌——巴掌大，铜面磨得发亮，刻着一杆秤。",
+      "「你娘留下的。」她说，「她说，这枚铜牌，是她从一个姓金的人那里拿的。那个人欠她一条命，说拿这个可以找他。」",
+      "你接过铜牌。牌面很重，边角被磨圆了。你翻过来，背面刻着一行小字：「圣辉城 · 金」。",
+      "「你娘说，」井婆看着铜牌，「她这辈子，就欠这个人一句话没问出口。你替她问了。」",
+      "你问：「什么话？」",
+      "井婆摇摇头：「她没说。她说，等你见到那个人，自然知道该问什么。」",
+      "你把铜牌收进怀里。井婆又从床底下拖出一只陶罐，倒出一把干枣，塞进你包袱里：「路上吃。沙漠里的东西，到了北边就不常见了。」",
+      "你收好干枣。井婆坐在毡子上，看着你收拾行李，忽然说：「你娘走的时候，也是这个时节。她走之前，在井边坐了一夜，天亮才走。」",
+      "「她跟我说了一句话，让我等你大了告诉你——」",
+      "井婆顿了顿，学着那个女人的语气，一字一字地说：「『告诉那孩子，别恨北边。北边有他的家，也有他的仇。』」"
+    ],
+    options:[
+      {t:"（把铜牌和那句话都记在心里）", go:"day_desert_3", effect:{time:0, item:"铜秤牌"}}
+    ]
+  };
+  N["day_desert_3"] = {
+    tag:"branch", place:"回忆 · 沙漠 · 最后一天", where:"白昼", pace:"deep",
+    text:[
+      "出发那天，天没亮。井婆站在井边，看着你往水囊里灌水，一瓢一瓢，灌得满满的。",
+      "「水要省着喝，」她说，「出了三道沙丘，再往北，过了沙漠边缘就是绿洲。记住，水比钱硬，人比水硬。」",
+      "你点点头。她把一只旧布包递给你——里面是干粮、铜牌，还有那只水瓶。",
+      "「瓶子里的东西，别打开看。」她说，「你娘说，那东西，得等到圣辉城才能见光。」",
+      "你收好布包。井婆站在井边，看着你，风吹起她的头巾，露出花白的头发。",
+      "「走吧，」她说，「别回头。回头，沙子会迷眼睛。」",
+      "你走出几步，还是回了头。井婆还站在原地，在晨曦里，像一尊站了很久的石像。",
+      "你喊她：「婆婆，我娘叫什么名字？」",
+      "井婆沉默了一会儿，说：「她没告诉我名字。她只说——」",
+      "「叫她『金敏』。等她到了圣辉城，这个名字，有人认得。」",
+      "你记住这个名字。你转身，往北走。风从沙漠里吹过来，带着沙粒，打在脸上，生疼。你没有回头。",
+      "【梦境渐淡】你醒来的时候，天已经亮了。渡船靠了岸，灰港的晨雾里，有人在喊「北行的船，半个时辰后开」。你摸了摸怀里的铜牌和水瓶，然后站起来，走到甲板上，看着北边灰蒙蒙的岸线。"
+    ],
+    options:[
+      {t:"（握紧铜牌，走下渡船）", go:"origin_desert_1", effect:{item:"铜秤牌", flag:"keepsake_desert", time:0}}
+    ]
+  };
+})();
+
 /* /u1inj:data-nodes:dn_origin_profile.js/ */
 /* ============================================================
    A-1 个性化开局系统（五维搭配专属剧情）
@@ -85036,7 +86254,7 @@ const NODE_REGISTRY = {
     files: []
   },
   system: {
-    name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "fs", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "gold", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
+    name: "引擎/系统/全局", prefixes: ["origin", "prologue", "sub", "arc", "npc", "ending", "travel", "arrive", "branch", "evt", "world", "event", "quest", "job", "goal", "deity", "class", "pol", "moral", "karma", "attr", "realm", "item", "battle", "combat", "foreshadow", "memory", "mem", "day", "chronicle", "hook", "fsh", "p12", "sp8", "w64", "ngplus", "u8", "wait", "dialogue", "past", "hidden", "ripple", "chapter", "transition", "consequence", "aftermath", "encounter", "plague", "vacation", "relation", "mat", "council", "knowledge", "landmark", "prophecy", "magic", "letter", "fate", "time", "journey", "reunion", "watcher", "watchers", "primordial", "noble", "house", "language", "v65", "v652", "v653", "v654", "v655", "v56s", "v24", "v25", "v47", "i", "h", "faction", "fs", "eclipse", "extinct", "board", "south", "pro", "disaster", "moxie", "gold", "post", "final", "dungeon", "causality", "hlj", "missed", "game", "haigang", "mother", "rumor", "silence", "timeline", "adventure", "u1", "v23", "sleep", "act", "open", "document", "successor", "unresolved", "title", "pov", "id", "god", "story", "daily", "llm", "seven", "continent", "parallel", "demigod", "race", "epilogue", "countdown"],
     desc: "建号/序章/职业分支/好感/结局/事件池/系统检查前缀；v65* 为历史版本遗留前缀（WARN 豁免）",
     files: []
   },
@@ -89652,7 +90870,61 @@ window.STORY_BLUEPRINT = {
   "goal_revenge_p2": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "goal_revenge_p3": {tag:"branch", vol:"vol_free", arc:null, pace:"normal"},
   "goal_revenge_trial": {tag:"main", vol:"vol_free", arc:null, pace:"deep"},
-  "goal_revenge_done": {tag:"main", vol:"vol_free", arc:null, pace:"normal"}
+  "goal_revenge_done": {tag:"main", vol:"vol_free", arc:null, pace:"normal"},
+  "mem_free_city_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_free_city_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_free_city_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_free_city_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_free_city_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_free_city_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_northern_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_northern_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_northern_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_northern_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_northern_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_northern_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_southern_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_southern_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_southern_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_southern_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_southern_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_southern_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_church_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_church_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_church_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_church_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_church_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_church_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_elf_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_elf_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_elf_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_elf_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_elf_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_elf_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_dwarf_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_dwarf_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_dwarf_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_dwarf_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_dwarf_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_dwarf_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_orc_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_orc_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_orc_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_orc_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_orc_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_orc_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_eastern_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_eastern_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_eastern_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_eastern_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_eastern_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_eastern_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_desert_start": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_desert_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "mem_desert_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "day_desert_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_desert_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
+  "day_desert_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"}
 };
 
 /* /u1inj:data-nodes:dn_thoughts.js/ */

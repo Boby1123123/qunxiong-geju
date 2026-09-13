@@ -1,32 +1,32 @@
 {
-  "version": "v98",
-  "from": "v96",
+  "version": "v99",
+  "from": "v98",
   "released": "2026-09-13",
-  "note": "LW-A2 回响生态 30+ / LW-A3 账本融合 / LW-C1 世界编年史双册 / LW-C2 时间线双列 UI / LW-C3 作者语法全覆盖：echoMap 4→30（账本伏笔转回响 10 + 主线账户 5 + 既有 flag 6 + 双面回响 5，flip 双面按后续选择分支报答/反噬）+ LW-A3 账本源动态回响（CAUSALITY_LEDGER plant flag: 成立自动登记 led_<id>，纯时间触发）+ echoPending 三态语法 + 抉择记录册 v2（在途回响/伏笔/抉择三分页）+ worldChron 世界册自动成册（季节/主线/易主/回响/传闻/节日，上限 300 滚动，chronAuto 规则表 6 条）+ 时间线双列 UI（左世界右玩家按日对齐+过滤+分组）+ [chron:世界|文案]/[chron:玩家|文案]/{{chronCount:tag}} 作者语法 + 新检查器 c_lwchron（C1-C6，检查器总数 46）",
+  "note": "批次A·序章起源记忆+出生地三日（方向一/二）+沉浸表现层贯通（方向五）：dn_origin_memory.js 新增 54 节点（9 出身×6：mem_<出身>_start/_1/_2 梦境开场与记忆碎片 + day_<出身>_1/_2/_3 出生地三日回溯），每出身末日给信物 item 与 keepsake_<出身> flag，零引擎改动衔接到原序章；账本 +6 open（led_om_keepsake/scale/medici/jona/stranger/flask），蓝图 nodeIndex +54 登记，registry prefixes +mem/day；script_20.js v99 沉浸表现层（段落浮现 v99-par/梦境模式 v99-dream/章节转场遮罩 v99-curtain/rAF 平滑滚动/RenderBatch 增强/watchDay 日转换遮罩）；UI 修复：捏人必填项 v99FlashLack 醒目提示（红框+滚动+flashMsg，两套捏人流程统一）+ sweepChosen 已选选项清扫（分页模式下旧选项残留两行问题）；游戏打不开 hotfix 已含（SW network-first）",
   "changes": [
     {
-      "file": "dn_lw_world.js",
-      "title": "LW 数据层：echoMap 4→30（账本伏笔10/主线账户5/既有flag6/双面flip5）+ chronAuto 规则表 6 条（season/mainEvent/cityOwner/echo/omen/festival）"
+      "file": "src/data_nodes/dn_origin_memory.js",
+      "title": "新增：序章起源记忆 54 节点（9 出身×6：梦境开场/记忆碎片/出生地三日回溯/末日信物+keepsake flag，衔接原序章）"
     },
     {
-      "file": "script_19.js",
-      "title": "LW 引擎：echoScan 账本源 led_ 动态登记+flip 存储 / echoTick 双面分支+回响成册 / LW_render 新语法（echoPending 三态+chron 双册+chronCount）/ LW_chronAdd/Tick/UI/Filter 编年史引擎 / 抉择记录册 v2 三分页 / LW_tick 挂 chronTick / hub 编年史入口 / selfcheck 扩展"
+      "file": "src/data_nodes/dn_causality.js",
+      "title": "账本 +6 open（keepsake/scale/medici/jona/stranger/flask 伏笔）"
     },
     {
-      "file": "script_03.js",
-      "title": "LW 挂接：S.lw 兜底 worldChron/chronSnap"
+      "file": "src/data_nodes/dn_registry.js",
+      "title": "system 域 prefixes +mem/day（分区覆盖率 97.51%）"
     },
     {
-      "file": "tools/eldacheck/checks/c_lwchron.py",
-      "title": "新检查器：LW 世界编年史（C1 规则表/C2 schema 上限/C3 引擎存在/C4 触发覆盖/C5 300 上限/C6 双册隔离）"
+      "file": "src/data_nodes/dn_story_blueprint.js",
+      "title": "nodeIndex +54 条 vol_origin/branch 登记"
     },
     {
-      "file": "tools/eldacheck/checks/c_echo.py",
-      "title": "检查器扩展：E6 语法（echoPending 引用合法+flip.flag 写入集）"
+      "file": "src/script_03.js",
+      "title": "originMapV27 两处指向 mem_*_start；v99FlashLack 捏人必填醒目提示（两套捏人统一，红框+滚动+flashMsg）"
     },
     {
-      "file": "tools/eldacheck/checks/c_worldstate.py",
-      "title": "检查器扩展：W1 白名单 +worldChron/chronSnap（16 键）"
+      "file": "src/script_20.js",
+      "title": "v99 沉浸表现层（段落浮现/平滑滚动/梦境模式/日转换遮罩）+ sweepChosen 已选选项清扫（修复分页模式旧选项残留）"
     }
   ]
 }

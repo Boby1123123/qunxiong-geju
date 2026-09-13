@@ -561,10 +561,12 @@ window.STORY_BLUEPRINT = {
 
 
 
-    {id: "arc_west_ranger", type: "branch", name: "西境 · 游侠学院", act: "act3", vol: "vol_war", prefixes: ["sp8_ranger_"], stages: {setup: ["sp8_ranger_00"], rising: ["sp8_ranger_04"], climax: ["sp8_ranger_12"], resolution: ["sp8_ranger_16"]}, cond: "travel_west_start -> sp8_ranger_00"}
+    {id: "arc_west_ranger", type: "branch", name: "西境 · 游侠学院", act: "act3", vol: "vol_war", prefixes: ["sp8_ranger_"], stages: {setup: ["sp8_ranger_00"], rising: ["sp8_ranger_04"], climax: ["sp8_ranger_12"], resolution: ["sp8_ranger_16"]}, cond: "travel_west_start -> sp8_ranger_00"},
 
 
-  ],
+  
+          {id: "arc_bestiary", type: "branch", name: "万灵谱 · 超凡生物", act: "act2", vol: "vol_free", prefixes: ["bio_"], stages: {setup: ["bio_intro_0"], rising: ["bio_region_hub"], climax: [], resolution: []}, cond: "fc_jiaohui_entry -> bio_intro_0"}
+     ],
 
 
 
@@ -623,7 +625,7 @@ window.STORY_BLUEPRINT = {
   "frontier_pt_17":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},
   "frontier_pt_18":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},
   "frontier_pt_19":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},
-  "frontier_pt_20":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"}},
+  "frontier_pt_20":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},"bio_intro_0":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_categories":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_tiers":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_rarity":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_why":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_hub":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_north":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_west":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_desert":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_elf_dwarf":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_abyss":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"}},
 
 
   "acad_road_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},

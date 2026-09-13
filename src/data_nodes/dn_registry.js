@@ -11,7 +11,7 @@ const NODE_REGISTRY = {
     files: ["dn_frontier.js", "dn_graduate.js", "dn_warphase.js", "dn_anchor.js"]
   },
   free: {
-    name: "自由城邦", prefixes: ["fc", "city", "cityev", "guild", "tavern", "gangkou", "hewan", "shop", "house", "echo", "hub"],
+    name: "自由城邦", prefixes: ["fc", "city", "cityev", "guild", "tavern", "gangkou", "hewan", "shop", "house", "echo", "hub", "bio"],
     desc: "交汇城/自由城汇流段/行会/夜巷/下水道",
     files: ["dn_camp.js"]
   },

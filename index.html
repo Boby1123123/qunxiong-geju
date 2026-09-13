@@ -9787,7 +9787,7 @@ const DREAM_EVENTS = [
   {cn:"无梦之夜",sanLoss:0,text:"这一夜，你睡得很沉，没有做梦。醒来的时候，精神饱满，神清气爽。",eff:{san:2,hp:5,fatigue:-2}}
 ]; window.DREAM_EVENTS = DREAM_EVENTS;</script>
 <script src="chunks/NODE_MAP.js"></script>
-<script src="chunks/story_core.6202be81.js"></script>
+<script src="chunks/story_core.909feed2.js"></script>
 <script src="chunks/story_academy.da99e9f5.js"></script>
 <script src="chunks/story_mainland.876d90ec.js"></script>
 <script src="chunks/story_misc.5c46ff64.js"></script>
@@ -60051,6 +60051,216 @@ N["ap3_return"]={tag:"branch",place:"自由城邦 · 交汇城 · 码头",pace:"
 {t:"（把这话记下，收好木签）",go:"fc_innkeep"}
 ]};
 
+/* /u1inj:data-nodes:dn_bio_base.js/ */
+/* ===== /bioinj:dn_bio_base.js/ P0 超凡生物生态地基（万灵谱） =====
+ * 万灵谱：四纲分类 / 六阶位 / 五稀有度 / 九域生态表 + 图鉴馆十节点。
+ * 数据表供 P1-P5 引用；节点全部 bio_ 前缀（registry: free 域）。
+ * 联动：境界 LMS / 市场 TRADE_GOODS / 账本七锚与深渊封印 / 天灾调度器。
+ * 文本 V66 文风；不触碰引擎判定。
+ */
+
+/* ---- 四纲分类 ---- */
+window.BIO_TAXONOMY = [
+  {id:"beast", cn:"超凡动物纲", subs:["兽","禽","虫","水族"], desc:"血肉之躯，循天地灵机而生智。可猎、可驯、可骑。"},
+  {id:"herb", cn:"超凡植物纲", subs:["灵草","灵木","菌","藤"], desc:"扎根大地，吞吐灵机。可采、可育、可炼。"},
+  {id:"special", cn:"特殊生物纲", subs:["异种","元素造物","深渊魔物","封印兽"], desc:"非生非死。或天地产物，或封印余孽。"},
+  {id:"spirit", cn:"灵体纲", subs:["怨灵","英灵","元素灵","器灵"], desc:"无形无质，唯意志与执念存续。刀剑难伤，灵魂可触。"}
+];
+
+/* ---- 六阶位（对齐境界 LMS） ---- */
+window.BIO_TIERS = [
+  {id:"mortal", cn:"凡品", lv:0, desc:"循常理而活，人可力取。"},
+  {id:"qiling", cn:"启灵", lv:100, desc:"初生灵机，与启灵修士相类。"},
+  {id:"ningyuan", cn:"凝元", lv:300, desc:"内蕴元核，兽核自此可用。"},
+  {id:"huayi", cn:"化意", lv:800, desc:"知行合一，一兽可敌一队。"},
+  {id:"zongshi", cn:"宗师", lv:0, desc:"兽中豪杰，寻常军阵困不住。"},
+  {id:"legend", cn:"传奇", lv:-1, desc:"大陆数得出的存在，鬃吼即此列。"}
+];
+
+/* ---- 五稀有度（价格系数） ---- */
+window.BIO_RARITY = [
+  {id:"common", cn:"常见", mul:1},
+  {id:"seldom", cn:"少见", mul:3},
+  {id:"rare", cn:"稀有", mul:10},
+  {id:"legend", cn:"传说", mul:30},
+  {id:"unique", cn:"唯一", mul:100}
+];
+
+/* ---- 九域生态表（区域 × 代表生物 × 生态链） ---- */
+window.BIO_ECOLOGY = [
+  {region:"北境", beasts:["雪鳞狼","雪原巨熊","雪枭","冰鸦"], tier:"启灵~化意",
+   chain:"雪枭捕雪鼠，冰鸦食腐，雪鳞狼群猎巨熊幼崽", note:"铁门关战事一起，兽群南迁，狼群跟着军粮走。"},
+  {region:"西境", beasts:["风隼","雷鬃马","风暴元素体"], tier:"启灵~宗师",
+   chain:"风隼巢筑风暴眼边缘，雷鬃马逐风食雷草", note:"元素风暴刮过，风暴眼里能刮出结晶。"},
+  {region:"死亡沙漠", beasts:["沙蛹蝶","沙鳞蛇","驼兽","沙蜘蛛"], tier:"凡品~凝元",
+   chain:"沙蜘蛛结网捕沙蛹蝶，驼兽背商队穿沙", note:"商队总在绿洲与遗迹之间丢人。"},
+  {region:"精灵林邦", beasts:["月池银鲛","月灵","晨星鹿"], tier:"凝元~宗师",
+   chain:"银鲛啜月池灵液，月灵栖银桂之上", note:"晨星之泪与树底封印同源。"},
+  {region:"矮人山国", beasts:["地底蠕兽","晶蛾","矿鼠"], tier:"凡品~凝元",
+   chain:"矿鼠食矿渣，晶蛾扑灯火，蠕兽拱穿岩层", note:"南矿洞铁门之下，另有一道封印。"},
+  {region:"兽人草原", beasts:["雷鬃狼","圣山白狼","草原角驼"], tier:"启灵~传奇",
+   chain:"雷鬃狼群逐角驼，白狼守圣山神谕石林", note:"鬃吼，百兽之王，草原最高意志。"},
+  {region:"东境", beasts:["青鳞鹤","锦鲤灵","雾林鹿"], tier:"凡品~凝元",
+   chain:"青鳞鹤栖晨天故都残殿，锦鲤灵游御河", note:"故都旧池，鱼会认旧主。"},
+  {region:"深渊边缘", beasts:["黑鳞魔物幼体","腐蚀藤","影鸦"], tier:"凝元~宗师",
+   chain:"腐蚀藤缠枯木为巢，影鸦啄食腐气", note:"黑鳞魔物过处，草木枯死，水井变浑。"}
+];
+
+/* ================= 万灵谱馆 · 十节点 ================= */
+
+N["bio_intro_0"]={tag:"main",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"万灵谱馆藏在交汇城老城区的一条窄巷里，门脸不大，招牌是块乌木，刻着一只衔着书卷的鸟。推门进去，一股干燥的草药气和旧纸味混着扑面而来。四面墙钉满标本：鹰翅、兽骨、干枯的藤、装在玻璃瓶里的一团灰雾。",
+"柜台后头坐着个老头，皮围裙上全是刀痕和药渍。他正用镊子剔一块骨头上的碎肉，听见门响也不抬头，只说了句：“标本也要吃饭，别拿手碰。”",
+"你说明来意——想打听这大陆上的超凡生物。老头放下镊子，擦了擦手，上下打量你：“超凡生物？四纲六阶，九域遍地都是。你要听哪一门的？”他指了指墙：那边是飞禽走兽，那边是草是木，墙角那瓶灰雾，是灵体。",
+"你盯着那瓶灰雾多看了一眼。雾气里有什么东西，也在看你。"
+],
+options:[
+{t:"请教四纲分类（动物·植物·特殊·灵体）",effects:{flag:"bio_intro_met"},go:"bio_intro_categories"},
+{t:"问六阶位，兽也有境界之分？",go:"bio_intro_tiers"},
+{t:"问稀罕程度与价钱",go:"bio_intro_rarity"},
+{t:"问这图鉴到底有什么用",go:"bio_intro_why"},
+{t:"看墙上的九域生态图",go:"bio_region_hub"},
+{t:"（谢过老柯，离开万灵谱馆）",go:"fc_jiaohui_entry"}
+]};
+
+N["bio_intro_categories"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"老柯拄着镊子站起来，走到墙边，指头挨个点过标本：“超凡动物纲，血肉之躯，跟人一样吃食睡觉，只是多了灵机——狼、隼、鲛、蝶，都算。超凡植物纲，扎根在一个地方不动，吞吐灵气过日子，草、木、菌、藤。”",
+"他顿了顿，指头停在墙角那瓶灰雾上：“特殊生物纲，非生非死——元素里长出来的、深渊里爬出来的、老封印底下镇着的。至于灵体纲，”他指节叩了叩玻璃瓶，“没有身子，只有念头。刀砍不中，火烧不着。想对付它们，得用魂术、银器，或者——讲道理。”",
+"你问讲道理是什么意思。老柯咧嘴一笑，露出一口黄牙：“灵体大多是执念。执念了了，它自己就走了。比杀它省事，也比杀它安全。”",
+"他说完这话，馆里安静了一会儿。那瓶灰雾贴着玻璃，像是也在听。"
+],
+options:[
+{t:"“哪个纲最值钱？”",go:"bio_intro_rarity"},
+{t:"“哪个纲最难缠？”",go:"bio_region_abyss"},
+{t:"“四纲之外，有没有对不上的东西？”",effects:{flag:"bio_taxonomy_met"},go:"bio_intro_0"},
+{t:"（原路退回大厅）",go:"bio_intro_0"}
+]};
+
+N["bio_intro_tiers"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"老柯从柜台底下摸出一块石板，上面刻着一串刻痕：“兽也分境界。凡品，普通人拿棍子就能撵；启灵，初生灵机，跟刚开窍的修士差不多；凝元，肚子里凝了元核，兽核就是那东西——矿山城收二十二银一颗，法杖药炉都抢着要。”",
+"他指头往上移：“化意，知行合一，一兽能敌一队佣兵；宗师，兽中豪杰，寻常军阵困不住。再往上——”他敲了敲石板顶端的空处，“传奇。整片大陆数得出来的存在。草原那位百兽之王，鬃吼，就是这个数。”",
+"你想起草原上的传说：狼旗军绕着圣山走，从不敢在神谕石林过夜。有人说白狼在石林里低头认过主，那天的风，三天没停。",
+"老柯把石板翻过去，背面刻着一行小字：“猎兽先看境界。境界不够，猎兽就变成兽猎你。”"
+],
+options:[
+{t:"“兽核能做什么？”",go:"bio_intro_rarity"},
+{t:"“鬃吼到底是什么来头？”",go:"bio_region_elf_dwarf"},
+{t:"“我这种修为，能猎哪一阶？”",effects:{flag:"bio_tier_met"},go:"bio_intro_0"},
+{t:"（原路退回大厅）",go:"bio_intro_0"}
+]};
+
+N["bio_intro_rarity"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"老柯从柜台下摸出五只木匣，一字排开。第一只装着灰扑扑的兽皮：“常见。一张十二银，裁缝铺常年收。”第二只是根蓝纹羽毛：“少见。风隼的，三倍价。”第三只打开，一股寒气扑出来，里面是一颗浑圆的珠子：“稀有。雪原巨熊的熊胆珠，药店抢着收。”",
+"第四只木匣他用手掌压着，没掀盖：“传说级。你最好别问价，怕你听了睡不着。”第五只匣子是空的，里面垫着黑绒：“唯一。整片大陆就一件。草原那位兽王的牙，够换一座城，问题是没人敢去拔。”",
+"他合上匣子：“行情会变。兽潮一来，皮毛先涨；瘟疫年，灵草比命值钱；打起来了，兽核、龙鳞都往军械行跑。你要是懂行，光是倒腾材料，就能吃一辈子。”",
+"你听出他话里的意思：这万灵谱馆不止是图鉴，还是一本账。"
+],
+options:[
+{t:"“怎么才能弄到这些材料？”",go:"bio_intro_why"},
+{t:"“行情哪里最灵？”",go:"bio_intro_0"},
+{t:"（记下行情，退回大厅）",effects:{flag:"bio_rarity_met"},go:"bio_intro_0"}
+]};
+
+N["bio_intro_why"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"老柯给炉子添了块炭，炭火噼啪响：“你问图鉴有什么用？我说三件事。”他伸出三根手指，“第一件：兽潮来了，皮毛先涨价，消息比刀快——懂兽的人，不会被行情坑。第二件：灵草能炼突破丹。启灵草、凝元花、化意果，一味对一境。你想往上走，就得知道东西在哪儿长。”",
+"他伸出第三根手指，顿了顿：“第三件：有些东西，不该猎。深渊边缘那几样——黑鳞的、会淌腐蚀汁的、夜里跟着影子走的。猎它们的人，坟头草都老高了。材料贵，是因为拿命换的。”",
+"他说到这儿，从炉边摸出一本手抄册子，翻了翻：“传说有种草，叫霓裳草，十三片圆筒卷叶，每百年展开一片，散一股怪味，能把妖兽勾过来。老辈猎人就靠它布套。你以后要是在野外遇见卷叶子的草，别手贱去拔——那可能是别人的诱饵。”",
+"他合上册子，火光在他脸上跳了一下：“图鉴是死的，兽是活的。记着这个，比记一百种名字管用。”"
+],
+options:[
+{t:"“霓裳草在哪儿能找着？”",go:"bio_region_west"},
+{t:"“深渊边缘到底有什么？”",go:"bio_region_abyss"},
+{t:"“我该从哪片地方开始？”",effects:{flag:"bio_why_met"},go:"bio_region_hub"},
+{t:"（退回大厅）",go:"bio_intro_0"}
+]};
+
+N["bio_region_hub"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"万灵谱馆最里头的墙上，挂着一幅九域生态图。图是整张牛皮画的，边缘卷了毛，墨线勾着大陆轮廓，每个区域都钉着几枚小标本：北境钉着一撮灰白狼毛，西境钉着半片焦黑的风隼羽，死亡沙漠钉着干枯的蝶翅，深渊边缘那一角，用铁钉钉着一片黑鳞——鳞片周围的地图，比其他地方黑了一截。",
+"老柯举着油灯站在图前：“九域，各有各的活法。北境冷，兽就长厚毛；西境风大，兽就长翅膀；沙漠缺水，兽就学会躲在沙底下。看懂了图，你就知道去哪儿找什么。”",
+"他指了指深渊边缘那角：“这一块，我只画轮廓，不画明细。有些东西，知道它存在就够了，别去数它有几只。”",
+"油灯的光在图上晃了晃。那枚黑鳞的反光，看着不像铁，倒像某种还活着的、会呼吸的东西。"
+],
+options:[
+{t:"看北境生态（雪鳞狼·巨熊·雪枭）",effects:{flag:"bio_ecol_north"},go:"bio_region_north"},
+{t:"看西境生态（风隼·雷鬃马·元素体）",effects:{flag:"bio_ecol_west"},go:"bio_region_west"},
+{t:"看死亡沙漠生态（沙蛹蝶·沙鳞蛇）",effects:{flag:"bio_ecol_desert"},go:"bio_region_desert"},
+{t:"看精灵月池与矮人铁砧生态",effects:{flag:"bio_ecol_elfdwarf"},go:"bio_region_elf_dwarf"},
+{t:"看深渊边缘生态（危险）",effects:{flag:"bio_ecol_abyss"},go:"bio_region_abyss"},
+{t:"（退回大厅）",go:"bio_intro_0"}
+]};
+
+N["bio_region_north"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"牛皮图上，北境画着连绵的雪山。老柯的指头点在雪线附近：“雪鳞狼，灰白毛，鳞片一样紧，群居，头狼说了算。雪原巨熊，入冬前拼命吃，一睡半冬，醒来第一件事是找水。雪枭，夜里巡空，专抓雪鼠——它扑下来的时候，雪地上连影子都没有。”",
+"他顺着图往下划：“冰鸦食腐，狼群猎不到的东西，它来收尾。一片雪原，猎的、被猎的、吃剩饭的，各吃各的，谁也不多谁也不少。”",
+"他说到这儿，顿了顿：“不过这两年北境乱了。铁门关在打仗，军粮一车车往北运，兽群跟着人走——狼群不猎鹿了，改猎驮马。猎户说，狼学会了蹲在商路边上等。”",
+"你想起铁门关方向传来的风声。战争不光改人，也改兽。"
+],
+options:[
+{t:"“雪鳞狼的毛皮值钱吗？”",go:"bio_intro_rarity"},
+{t:"看西境生态",go:"bio_region_west"},
+{t:"（退回生态图前）",go:"bio_region_hub"}
+]};
+
+N["bio_region_west"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"牛皮图的西境一角，画着旋涡状的风纹，边上钉着半片焦黑的风隼羽。老柯的手指在风纹上转了一圈：“西境，元素风暴说来就来。风隼把巢筑在风暴眼边上——风越大，它飞得越稳，猎人都说风隼的翅骨是风刮出来的。”",
+"他指头移到草原与荒原交界：“雷鬃马，鬃毛带电，逐风吃一种带雷光的草。有人想抓来当坐骑，马没训成，人先被电了个跟头。还有元素体——风暴眼里刮出来的东西，有形无魂，打散了过阵子又聚起来。你要是看见一团风里有眼睛，别靠近，它在看你，也是在等你。”",
+"老柯凑近两步：“风暴眼里能刮出元素结晶，蓝光那种，炼金炉的燃料，一捧能换三袋粮。所以总有人拿命去风暴眼边上捡漏——十个人去，回来三四个，剩下的，风里多几团新的元素体。”",
+"他把风隼羽放回原处：“西境的东西，能飞、带电、会变。想在那儿混，先学会抬头看天。”"
+],
+options:[
+{t:"“元素结晶怎么卖？”",go:"bio_intro_rarity"},
+{t:"看死亡沙漠生态",go:"bio_region_desert"},
+{t:"（退回生态图前）",go:"bio_region_hub"}
+]};
+
+N["bio_region_desert"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"牛皮图的沙漠地带，画着连绵的沙丘，中间钉着一片干枯的蝶翅，薄得透光。老柯用镊子尖拨了拨蝶翅：“沙蛹蝶。幼虫藏在沙下，结一个沙茧，蜕皮的时候翅膀一张，能从绿洲飞到遗迹——商队的人说，沙漠里看到蝶群，就说明水脉近了。”",
+"他的指头移到沙丘之间：“沙鳞蛇，跟沙子一个颜色，伏着不动的时候，走过去都发现不了。驼兽倒是老实，认路，认人，商队全靠它——沙漠里那些丢人的商队，多半不是死在强盗手里。”",
+"老柯顿了顿：“你知道死亡沙漠为什么丢人丢得凶？那些商队走的路线，都绕着一片古代遗迹。遗迹底下有什么，没人说得清。有驼队回来说，夜里听见地下有敲石头的声音，一声一声，像在数数。”",
+"他合上图册：“沙漠里的东西，看着干，底下湿。别贪。”"
+],
+options:[
+{t:"“地下敲石头的声音……是什么？”",go:"bio_region_abyss"},
+{t:"看精灵月池与矮人铁砧生态",go:"bio_region_elf_dwarf"},
+{t:"（退回生态图前）",go:"bio_region_hub"}
+]};
+
+N["bio_region_elf_dwarf"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"牛皮图的东北角，画着密林与群山，老柯的指头点了点林间一片银色湖泊：“精灵的月池。月池里养着银鲛——鲛人一族，性子凉，认月不认人。月灵栖在池边的银桂树上，夜里发淡光，精灵拿它们当灯使。精灵管着晨星之泪，那是月池底下渗出来的东西，跟树根的封印同源——他们看那些东西，比看自己的命还重。”",
+"他指头移到山国：“矮人那边，地底下养着东西。矿鼠，吃矿渣，见人就跑；晶蛾，扑灯火，翅膀上全是矿粉，烧起来一股硫磺味；地底蠕兽，拱穿岩层，南矿洞铁门底下那条道，就是它拱出来的。矮人说那铁门是一道封印，守了几百年。”",
+"老柯的声音低了些：“铁门、月池、草原的石林……有人管它们叫锚。锚底下镇着什么，老辈人讳莫如深。我只知道，谁要是动了那些兽、那些草，等于去拔锚上的钉子。”",
+"他说完，馆外不知什么时候起了风，吹得门板吱呀响。"
+],
+options:[
+{t:"“动了锚会怎样？”",go:"bio_region_abyss"},
+{t:"看深渊边缘生态",go:"bio_region_abyss"},
+{t:"（退回生态图前）",go:"bio_region_hub"}
+]};
+
+N["bio_region_abyss"]={tag:"branch",place:"自由城邦 · 交汇城 · 万灵谱馆",where:"任意",pace:"normal",
+text:[
+"牛皮图的角落里，深渊边缘那一块，老柯用铁钉钉着一片黑鳞。他站在图前，没伸手碰那片鳞：“黑鳞魔物。你大概听过——三丈高，黑甲，血眼，从地底下钻出来。成年体一口能吞三个人。这片鳞，是一个佣兵从铁门关废墟带回来的，带回来第三天，他就病倒了，嘴里一直念‘井水浑了’。”",
+"他的指头移到旁边画着的几根扭曲藤蔓：“腐蚀藤。贴着魔物的巢长，藤汁滴到哪儿，哪儿就枯死，水井变浑，草木绝收。老辈人说，这种东西过处，土地几年缓不过来——像有人往地里种了毒。”",
+"他指头最后点了点图上一团墨迹：“影鸦。夜里跟着影子走，啄食腐气。看到它，说明附近有东西烂了——不是尸体，是那种不该烂的东西。”",
+"老柯把油灯挪开，那片黑鳞的光立刻暗下去：“这三样，凝元以下见了就跑，凝元以上掂量着打。它们身上的材料值钱，但拿命换的，我不劝你。”",
+"你盯着那片黑鳞，想起老柯之前的话：猎兽先看境界。这片鳞的主人，显然不在这张图的规矩里。"
+],
+options:[
+{t:"“铁门关废墟……那边现在什么样？”",go:"bio_intro_0"},
+{t:"“有没有人能治这种东西？”",go:"bio_intro_0"},
+{t:"（记住这个警告，退回大厅）",effects:{flag:"bio_ecol_all"},go:"bio_intro_0"}
+]};
+
 /* /u1inj:data-nodes:dn_camp.js/ */
 /* /u1inj:data-nodes:dn_camp.js/ UPG-16 阵营态度文本变体（数据驱动内容）
  * 6 个阵营感知节点：同一场景按玩家声望/影响力（S.rep / S.infl）与关键 flag 呈现不同正文。
@@ -65876,6 +66086,78 @@ window.CAUSALITY_WORDS = [
     "world": "vol_church",
     "importance": 2,
     "keywords": ["圣辉城", "封蜡", "铁牌"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_01",
+    "type": "设定",
+    "desc": "万灵谱：超凡生物四纲（动物/植物/特殊/灵体）与六阶位体系，九域生态各有所属",
+    "plant": "node:bio_intro_0",
+    "reap": "node:bio_region_hub",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 2,
+    "keywords": ["万灵谱", "超凡生物", "四纲六阶"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_02",
+    "type": "伏笔",
+    "desc": "霓裳草（诱妖草）：十三片圆筒卷叶，每百年展开一片，散怪味可诱妖兽——老猎人布套用",
+    "plant": "node:bio_intro_why",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 3,
+    "keywords": ["霓裳草", "诱妖草", "诱兽"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_03",
+    "type": "伏笔",
+    "desc": "深渊边缘三物：黑鳞魔物（铁门关废墟同源）/腐蚀藤（过处草木枯死）/影鸦（啄食腐气）",
+    "plant": "node:bio_region_abyss",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_abyss",
+    "importance": 4,
+    "keywords": ["黑鳞魔物", "腐蚀藤", "影鸦", "深渊边缘"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_04",
+    "type": "伏笔",
+    "desc": "死亡沙漠遗迹地下敲石声，一声一声像在数数——商队丢人未必死于强盗",
+    "plant": "node:bio_region_desert",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_desert",
+    "importance": 3,
+    "keywords": ["遗迹", "敲石声", "沙漠商队"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_05",
+    "type": "伏笔",
+    "desc": "月池银鲛啜灵液、月灵栖银桂，晨星之泪与树底封印同源（呼应 led_a3_04）",
+    "plant": "node:bio_region_elf_dwarf",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_elf",
+    "importance": 3,
+    "keywords": ["月池银鲛", "月灵", "晨星之泪"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_06",
+    "type": "伏笔",
+    "desc": "矮人南矿洞铁门由地底蠕兽拱出，铁门即封印——封印兽概念与 led_fac_07 呼应",
+    "plant": "node:bio_region_elf_dwarf",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_dwarf",
+    "importance": 3,
+    "keywords": ["地底蠕兽", "南矿洞铁门", "封印兽"],
     "irreversible": false
   }
 ];
@@ -84003,7 +84285,11 @@ window.LOREBOOK = [
    text:"学院山下的墓园立着无字碑，三代守墓人守着它。碑下埋的不是尸骨，是一段被刻意抹去的家族史。"},
   {id:"lb_necromancy", title:"死灵禁忌", constant:false, depth:0, triggers:["死灵","亡者","安魂","招魂"],
    recursive:[],
-   text:"死灵法术在教会治下是重罪，只有禁书区与暗蚀会还在传习。学院为此专设安魂科，专管亡者异动。"}
+   text:"死灵法术在教会治下是重罪，只有禁书区与暗蚀会还在传习。学院为此专设安魂科，专管亡者异动。"},
+  {id:"lb_bestiary", title:"万灵谱·超凡生物", constant:false, depth:0,
+   triggers:["超凡生物","万灵谱","灵兽","魔兽","异兽","灵草","灵体"],
+   recursive:[],
+   text:"大陆超凡生物分四纲：超凡动物纲（血肉灵智，可猎可驯）、超凡植物纲（扎根吞吐灵机，可采可育）、特殊生物纲（元素造物、深渊魔物、封印兽，非生非死）、灵体纲（无形执念，刀剑难伤，唯灵魂可触）。境界自凡品至传奇分六阶，与修士境界相对。万灵谱馆在交汇城老巷，藏有九域生态图。"}
 ];
 /* ===== /v92inj:lorebook:end/ ===== */
 
@@ -87712,7 +87998,7 @@ const NODE_REGISTRY = {
     files: ["dn_frontier.js", "dn_graduate.js", "dn_warphase.js", "dn_anchor.js"]
   },
   free: {
-    name: "自由城邦", prefixes: ["fc", "city", "cityev", "guild", "tavern", "gangkou", "hewan", "shop", "house", "echo", "hub"],
+    name: "自由城邦", prefixes: ["fc", "city", "cityev", "guild", "tavern", "gangkou", "hewan", "shop", "house", "echo", "hub", "bio"],
     desc: "交汇城/自由城汇流段/行会/夜巷/下水道",
     files: ["dn_camp.js"]
   },
@@ -89164,10 +89450,12 @@ window.STORY_BLUEPRINT = {
 
 
 
-    {id: "arc_west_ranger", type: "branch", name: "西境 · 游侠学院", act: "act3", vol: "vol_war", prefixes: ["sp8_ranger_"], stages: {setup: ["sp8_ranger_00"], rising: ["sp8_ranger_04"], climax: ["sp8_ranger_12"], resolution: ["sp8_ranger_16"]}, cond: "travel_west_start -> sp8_ranger_00"}
+    {id: "arc_west_ranger", type: "branch", name: "西境 · 游侠学院", act: "act3", vol: "vol_war", prefixes: ["sp8_ranger_"], stages: {setup: ["sp8_ranger_00"], rising: ["sp8_ranger_04"], climax: ["sp8_ranger_12"], resolution: ["sp8_ranger_16"]}, cond: "travel_west_start -> sp8_ranger_00"},
 
 
-  ],
+  
+          {id: "arc_bestiary", type: "branch", name: "万灵谱 · 超凡生物", act: "act2", vol: "vol_free", prefixes: ["bio_"], stages: {setup: ["bio_intro_0"], rising: ["bio_region_hub"], climax: [], resolution: []}, cond: "fc_jiaohui_entry -> bio_intro_0"}
+     ],
 
 
 
@@ -89226,7 +89514,7 @@ window.STORY_BLUEPRINT = {
   "frontier_pt_17":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},
   "frontier_pt_18":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},
   "frontier_pt_19":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},
-  "frontier_pt_20":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"}},
+  "frontier_pt_20":{arc:"arc_frontier",vol:"vol_north",act:null,ch:null,type:"branch"},"bio_intro_0":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_categories":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_tiers":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_rarity":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_intro_why":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_hub":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_north":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_west":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_desert":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_elf_dwarf":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"},"bio_region_abyss":{arc:"arc_bestiary",vol:"vol_free",act:null,ch:null,type:"branch"}},
 
 
   "acad_road_1": {tag:"main", vol:"vol_academy", arc:"arc_academy", pace:"normal"},

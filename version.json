@@ -1,32 +1,32 @@
 {
-  "version": 101,
-  "from": "v99",
+  "version": 102,
+  "from": "v101",
   "released": "2026-09-13",
-  "note": "批次B·学院生活沙盒（方向三）+学院暗流与阴谋（方向四）：dn_acd_life.js 新增 20 节点（食堂三餐/宿舍夜谈怪谈与家乡/晨练请教老教习/三种打工（图书馆纸条·后厨传言·炼金室三锁柜）/学院祭旧书摊/塞西莉亚·星辉与耗子双同学支线/深夜图书馆第十三下钟声线索），dn_acd_plot.js 新增 17 节点（公告栏寻人启事→子夜钟楼第十三下→影子学生（灰袍银月草粉）→秤砣社招募（天平记号呼应金秤母题）→墨丘利考验（旧案+黄铜钥匙）→炼金室地下实验记录（莫教授反对拿学生当柴烧）→钟楼密室真相（莫遗书）→三选一 payoff（交墨丘利得铜哨/交秤砣社得天平别针/公开捅到院长）），全部挂入学院 hub 三入口（去食堂/回宿舍/公告栏寻人启事条件项，零引擎改动）；账本 +6 open（led_acd_scales/clock/lab/shadow/mercury/professor），蓝图 nodeIndex +37 登记，registry prefixes +acd；性能预算随内容合法上调（budget.json 更新）；本地全量验证链 46 检查器全绿（节点 5727≥5677、死链 0、幂等 verify PASS、四路字节一致、smoke PASS）",
+  "note": "P0·万灵谱超凡生物生态地基（超大型更新第 0 批）：dn_bio_base.js 新增 10 节点 + 4 数据表（四纲分类 BIO_TAXONOMY / 六阶位 BIO_TIERS 对齐境界 LMS / 五稀有度 BIO_RARITY / 九域生态表 BIO_ECOLOGY），交汇城入口挂载（fc_jiaohui_entry 追加万灵谱馆选项）；新弧 arc_bestiary（蓝图 arcs +1、nodeIndex +11 登记），registry free 域 prefixes +bio，账本 +6 open（led_bio_01~06：四纲设定/霓裳草诱妖草伏笔/深渊边缘三物/沙漠遗迹敲石声/月池银鲛晨星之泪/铁砧铁门封印兽），lorebook +1 词条（lb_bestiary 万灵谱超凡生物）；正文深度融入凡人修仙传灵草图鉴结构、魔兽世界生态布怪逻辑、山海经以形赋意（腐蚀藤过处成泽）；本地全量验证链 46 检查器全绿（节点 5793≥5677、死链 0、V66 风格锁全绿、幂等 verify PASS、四路字节一致、smoke PASS）",
   "changes": [
     {
-      "file": "src/data_nodes/dn_acd_life.js",
-      "title": "新增：学院生活沙盒 20 节点（食堂三餐/宿舍夜谈/晨练/三种打工/学院祭/双同学支线/深夜图书馆），hub 三入口直达"
+      "file": "src/data_nodes/dn_bio_base.js",
+      "title": "新增：万灵谱馆 10 节点（四纲/六阶/稀有度/图鉴之用/九域生态图五区域）+ 4 数据表（BIO_TAXONOMY/BIO_TIERS/BIO_RARITY/BIO_ECOLOGY）"
     },
     {
-      "file": "src/data_nodes/dn_acd_plot.js",
-      "title": "新增：学院暗流与阴谋 17 节点（寻人启事→子夜钟声→影子学生→秤砣社→墨丘利考验→地下实验→钟楼真相→三选一 payoff 信物线）"
-    },
-    {
-      "file": "src/data_nodes/dn_causality.js",
-      "title": "账本 +6 open（scales/clock/lab/shadow/mercury/professor 学院暗流伏笔）"
+      "file": "src/script_02.js",
+      "title": "交汇城入口 fc_jiaohui_entry 追加选项：去老城巷万灵谱馆看标本墙"
     },
     {
       "file": "src/data_nodes/dn_story_blueprint.js",
-      "title": "nodeIndex +37 条 vol_academy/arc_academy 登记"
+      "title": "新弧 arc_bestiary 万灵谱·超凡生物（vol_free）+ nodeIndex +11 登记"
     },
     {
       "file": "src/data_nodes/dn_registry.js",
-      "title": "academy 域 prefixes +acd（分区覆盖率 97.53%）"
+      "title": "free 域 prefixes +bio（节点分区 97.56%）"
     },
     {
-      "file": "chunks/v62_academy.js",
-      "title": "学院 hub 追加三入口（去食堂/回宿舍/公告栏寻人启事条件项，函数式 effect 旧式写法兼容）"
+      "file": "src/data_nodes/dn_causality.js",
+      "title": "账本 +6 open（led_bio_01~06 万灵谱设定与五条生态伏笔）"
+    },
+    {
+      "file": "src/data_nodes/dn_lorebook.js",
+      "title": "世界书 +1 词条 lb_bestiary（万灵谱四纲六阶，触发词：超凡生物/万灵谱/灵兽/灵草等）"
     }
   ]
 }

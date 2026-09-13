@@ -5654,6 +5654,78 @@ window.CAUSALITY_WORDS = [
     "importance": 2,
     "keywords": ["圣辉城", "封蜡", "铁牌"],
     "irreversible": false
+  },
+  {
+    "id": "led_bio_01",
+    "type": "设定",
+    "desc": "万灵谱：超凡生物四纲（动物/植物/特殊/灵体）与六阶位体系，九域生态各有所属",
+    "plant": "node:bio_intro_0",
+    "reap": "node:bio_region_hub",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 2,
+    "keywords": ["万灵谱", "超凡生物", "四纲六阶"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_02",
+    "type": "伏笔",
+    "desc": "霓裳草（诱妖草）：十三片圆筒卷叶，每百年展开一片，散怪味可诱妖兽——老猎人布套用",
+    "plant": "node:bio_intro_why",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_free",
+    "importance": 3,
+    "keywords": ["霓裳草", "诱妖草", "诱兽"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_03",
+    "type": "伏笔",
+    "desc": "深渊边缘三物：黑鳞魔物（铁门关废墟同源）/腐蚀藤（过处草木枯死）/影鸦（啄食腐气）",
+    "plant": "node:bio_region_abyss",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_abyss",
+    "importance": 4,
+    "keywords": ["黑鳞魔物", "腐蚀藤", "影鸦", "深渊边缘"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_04",
+    "type": "伏笔",
+    "desc": "死亡沙漠遗迹地下敲石声，一声一声像在数数——商队丢人未必死于强盗",
+    "plant": "node:bio_region_desert",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_desert",
+    "importance": 3,
+    "keywords": ["遗迹", "敲石声", "沙漠商队"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_05",
+    "type": "伏笔",
+    "desc": "月池银鲛啜灵液、月灵栖银桂，晨星之泪与树底封印同源（呼应 led_a3_04）",
+    "plant": "node:bio_region_elf_dwarf",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_elf",
+    "importance": 3,
+    "keywords": ["月池银鲛", "月灵", "晨星之泪"],
+    "irreversible": false
+  },
+  {
+    "id": "led_bio_06",
+    "type": "伏笔",
+    "desc": "矮人南矿洞铁门由地底蠕兽拱出，铁门即封印——封印兽概念与 led_fac_07 呼应",
+    "plant": "node:bio_region_elf_dwarf",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_dwarf",
+    "importance": 3,
+    "keywords": ["地底蠕兽", "南矿洞铁门", "封印兽"],
+    "irreversible": false
   }
 ];
 

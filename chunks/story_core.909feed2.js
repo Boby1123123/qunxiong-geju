@@ -67,7 +67,9 @@ N["fc_jiaohui_entry"] = {tag:"main",
 
       crit:["一个货郎压着嗓子告诉你三件事：其一，城西的酒馆昨夜死过人，死相古怪；其二，银月商会的船这几天夜夜卸货，从不点灯；其三，下水道里近来有人听见'念经声'，夜里巡城的卫兵都绕着那段走。","你谢过货郎。这三件事，像三根线头，垂在你面前。"]
 
-    },effects:{},onCrit:{flag:"rumor_three"},go:"echo_floating_tower_banished"}
+    },effects:{},onCrit:{flag:"rumor_three"},go:"echo_floating_tower_banished"},
+
+    {t:"去老城巷里的万灵谱馆，看看那面标本墙（超凡生物图鉴）",go:"bio_intro_0"}
 
   ]
 

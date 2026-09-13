@@ -5426,6 +5426,126 @@ window.CAUSALITY_LEDGER = [
     "importance": 2,
     "keywords": ["水瓶", "金敏", "圣辉城"],
     "irreversible": false
+  },
+{
+    "id": "led_acd_scales",
+    "type": "事件",
+    "desc": "秤砣社：学院旧案查案社团，以天平为记，与金秤血脉母题（led_om_scale）同源呼应",
+    "plant": "node:acd_plot_scales_recruit",
+    "reap": "flag:acd_scales_guild_master",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["秤砣社", "天平", "旧案", "莫教授"],
+    "irreversible": false
+  },
+{
+    "id": "led_acd_clock",
+    "type": "事件",
+    "desc": "第十三下钟声：钟楼实验暗号，听见者不可声张（学院怪谈成真）",
+    "plant": "node:acd_plot_clue_clock",
+    "reap": "flag:acd_clock_silenced",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["第十三下", "钟声", "钟楼", "暗号"],
+    "irreversible": false
+  },
+{
+    "id": "led_acd_lab",
+    "type": "事件",
+    "desc": "灵魂嫁接实验重启：以学生为样本，与暗蚀线同源（净化令阴影延伸）",
+    "plant": "node:acd_plot_lab_record",
+    "reap": "flag:acd_lab_sealed",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["实验记录", "样本", "灵魂嫁接", "血"],
+    "irreversible": false
+  },
+{
+    "id": "led_acd_shadow",
+    "type": "人物",
+    "desc": "影子学生：灰袍身影沾银月草粉，穿行学院暗处",
+    "plant": "node:acd_plot_clue_shadow",
+    "reap": "flag:acd_shadow_identity",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 2,
+    "keywords": ["影子学生", "灰袍", "银月草粉"],
+    "irreversible": false
+  },
+{
+    "id": "led_acd_mercury",
+    "type": "人物",
+    "desc": "墨丘利守望者考验：钟楼旧事知情者，守望者密探线在学院的落点",
+    "plant": "node:acd_plot_mercury_test",
+    "reap": "flag:acd_mercury_done",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 2,
+    "keywords": ["墨丘利", "守望者", "黄铜钥匙", "哨子"],
+    "irreversible": false
+  },
+{
+    "id": "led_acd_professor",
+    "type": "人物",
+    "desc": "莫教授：二十年前钟楼自尽的炼金教授，真相在密室信中（被灭口而非自尽）",
+    "plant": "node:acd_plot_truth_2",
+    "reap": "flag:acd_professor_truth_public",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["莫教授", "自尽", "钟楼密室", "真相"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_malco",
+    "type": "人物",
+    "desc": "马尔科下落：第三个失踪学生，被锁在钟楼密室里间，第三阶实验进行中",
+    "plant": "node:acd_plot_malco_room",
+    "reap": "flag:acd_malco_found",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["马尔科", "失踪", "第三阶", "密室"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_warden",
+    "type": "人物",
+    "desc": "温教员：深夜出入钟楼的灰袍人，实验的现场执行者，假面温和",
+    "plant": "node:acd_plot_clock_wait2",
+    "reap": "flag:acd_warden_malco",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["温教员", "灰袍", "钟楼", "实验"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_dean",
+    "type": "势力",
+    "desc": "学院高层：实验重启的幕后批单人（院长办公室），账目在秤砣社账册留痕",
+    "plant": "node:acd_plot_lab_page2",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["院长", "实验经费", "高层", "账册"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_bell",
+    "type": "因果",
+    "desc": "第十三下钟声：人为暗号，钟舌绑麻绳+二楼铜丝机关，非灵异",
+    "plant": "node:acd_plot_clock_bell",
+    "reap": "future",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 2,
+    "keywords": ["第十三下", "钟舌", "暗号", "铜丝"],
+    "irreversible": false
   }
 ];
 
@@ -5437,45 +5557,26 @@ window.CAUSALITY_LEDGER = [
 
 window.CAUSALITY_WORDS = [
 
-  {word:"金秤", world:"金秤线", file:"script_02a.js"},
-
-  {word:"晨天", world:"东境", file:"script_02.js"},
-
-  {word:"鬃吼", world:"兽人草原", file:"dn_orc_deep.js"},
-
-  {word:"腐光", world:"暗蚀线", file:"script_02b.js"},
-
-  {word:"秦·长风", world:"铁门关", file:"script_02d.js"},
-
-  {word:"七枚锚", world:"精灵线", file:"dn_elf_dwarf.js"},
-
-  {word:"铁牌", world:"七锚线", file:"script_02.js"},
-
-  {word:"神谕", world:"兽人草原", file:"script_02.js"},
-
-  {word:"灰鬃", world:"兽人草原", file:"dn_orc_deep.js"},
-
-  {word:"林歌", world:"精灵线", file:"dn_elf_dwarf.js"},
-
-  {word:"银月", world:"精灵线", file:"script_02.js"},
-
-  {word:"铁门关", world:"铁门关", file:"script_02.js"},
-
-  {word:"圣山", world:"兽人草原", file:"script_02.js"},
-
-  {word:"狼旗", world:"兽人草原", file:"script_02d.js"},
-
-  {word:"月池", world:"精灵线", file:"dn_elf_dwarf.js"},
-
-  {word:"树根", world:"精灵线", file:"script_02e.js"},
-
-  {word:"祖灵", world:"兽人草原", file:"script_02a.js"},
-
-  {word:"大汗", world:"兽人草原", file:"script_02a.js"},
-
-  {word:"青叶", world:"精灵线", file:"dn_elf_dwarf.js"},
-
-  {word:"净化令", world:"净化令线", file:"script_02g.js"}
+  {"word":"金秤", "world":"金秤线", "file":"script_02a.js"},
+  {"word":"晨天", "world":"东境", "file":"script_02.js"},
+  {"word":"鬃吼", "world":"兽人草原", "file":"dn_orc_deep.js"},
+  {"word":"腐光", "world":"暗蚀线", "file":"script_02b.js"},
+  {"word":"秦·长风", "world":"铁门关", "file":"script_02d.js"},
+  {"word":"七枚锚", "world":"精灵线", "file":"dn_elf_dwarf.js"},
+  {"word":"铁牌", "world":"七锚线", "file":"script_02.js"},
+  {"word":"神谕", "world":"兽人草原", "file":"script_02.js"},
+  {"word":"灰鬃", "world":"兽人草原", "file":"dn_orc_deep.js"},
+  {"word":"林歌", "world":"精灵线", "file":"dn_elf_dwarf.js"},
+  {"word":"银月", "world":"精灵线", "file":"script_02.js"},
+  {"word":"铁门关", "world":"铁门关", "file":"script_02.js"},
+  {"word":"圣山", "world":"兽人草原", "file":"script_02.js"},
+  {"word":"狼旗", "world":"兽人草原", "file":"script_02d.js"},
+  {"word":"月池", "world":"精灵线", "file":"dn_elf_dwarf.js"},
+  {"word":"树根", "world":"精灵线", "file":"script_02e.js"},
+  {"word":"祖灵", "world":"兽人草原", "file":"script_02a.js"},
+  {"word":"大汗", "world":"兽人草原", "file":"script_02a.js"},
+  {"word":"青叶", "world":"精灵线", "file":"dn_elf_dwarf.js"},
+  {"word":"净化令", "world":"净化令线", "file":"script_02g.js"}
 ,
   {
     "id": "led_c2_hub",
@@ -5552,78 +5653,6 @@ window.CAUSALITY_WORDS = [
     "world": "vol_church",
     "importance": 2,
     "keywords": ["圣辉城", "封蜡", "铁牌"],
-    "irreversible": false
-  },
-  {
-    "id": "led_acd_scales",
-    "type": "事件",
-    "desc": "秤砣社：学院旧案查案社团，以天平为记，与金秤血脉母题（led_om_scale）同源呼应",
-    "plant": "node:acd_plot_scales_recruit",
-    "reap": "flag:acd_scales_guild_master",
-    "status": "open",
-    "world": "vol_academy",
-    "importance": 3,
-    "keywords": ["秤砣社", "天平", "旧案", "莫教授"],
-    "irreversible": false
-  },
-  {
-    "id": "led_acd_clock",
-    "type": "事件",
-    "desc": "第十三下钟声：钟楼实验暗号，听见者不可声张（学院怪谈成真）",
-    "plant": "node:acd_plot_clue_clock",
-    "reap": "flag:acd_clock_silenced",
-    "status": "open",
-    "world": "vol_academy",
-    "importance": 3,
-    "keywords": ["第十三下", "钟声", "钟楼", "暗号"],
-    "irreversible": false
-  },
-  {
-    "id": "led_acd_lab",
-    "type": "事件",
-    "desc": "灵魂嫁接实验重启：以学生为样本，与暗蚀线同源（净化令阴影延伸）",
-    "plant": "node:acd_plot_lab_record",
-    "reap": "flag:acd_lab_sealed",
-    "status": "open",
-    "world": "vol_academy",
-    "importance": 3,
-    "keywords": ["实验记录", "样本", "灵魂嫁接", "血"],
-    "irreversible": false
-  },
-  {
-    "id": "led_acd_shadow",
-    "type": "人物",
-    "desc": "影子学生：灰袍身影沾银月草粉，穿行学院暗处",
-    "plant": "node:acd_plot_clue_shadow",
-    "reap": "flag:acd_shadow_identity",
-    "status": "open",
-    "world": "vol_academy",
-    "importance": 2,
-    "keywords": ["影子学生", "灰袍", "银月草粉"],
-    "irreversible": false
-  },
-  {
-    "id": "led_acd_mercury",
-    "type": "人物",
-    "desc": "墨丘利守望者考验：钟楼旧事知情者，守望者密探线在学院的落点",
-    "plant": "node:acd_plot_mercury_test",
-    "reap": "flag:acd_mercury_done",
-    "status": "open",
-    "world": "vol_academy",
-    "importance": 2,
-    "keywords": ["墨丘利", "守望者", "黄铜钥匙", "哨子"],
-    "irreversible": false
-  },
-  {
-    "id": "led_acd_professor",
-    "type": "人物",
-    "desc": "莫教授：二十年前钟楼自尽的炼金教授，真相在密室信中（被灭口而非自尽）",
-    "plant": "node:acd_plot_truth_2",
-    "reap": "flag:acd_professor_truth_public",
-    "status": "open",
-    "world": "vol_academy",
-    "importance": 3,
-    "keywords": ["莫教授", "自尽", "钟楼密室", "真相"],
     "irreversible": false
   }
 ];

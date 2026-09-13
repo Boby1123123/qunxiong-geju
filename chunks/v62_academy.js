@@ -2135,6 +2135,15 @@ options:[
       opts.push({t:"查看学院排名/势力", go:"academy_rankings_view", effect:{}});
       opts.push({t:"去食堂吃饭", go:"acd_life_dining", effect:{timeCost:"1period"}});
       opts.push({t:"回宿舍休息/夜谈", go:"acd_life_dorm_night", effect:{timeCost:"1period"}});
+      opts.push({t:"去训练场晨练", go:"acd_life_morning_enter", effect:{timeCost:"1period"}});
+      opts.push({t:"去找点活干", go:"acd_life_job_hub", effect:{timeCost:"1period"}});
+      opts.push({t:"和同学们闲聊（塞西莉亚/耗子）", go:"acd_life_social_hub", effect:{timeCost:"1period"}});
+      opts.push({t:"学院祭广场逛逛", go:"acd_life_festival2", effect:{timeCost:"1period"}});
+      opts.push({t:"深夜去图书馆", go:"acd_life_lib_hub", effect:{timeCost:"1period"}});
+      if((S.flags.acd_board_seen||S.flags.acd_tale_heard||S.flags.acd_kitchen_rumor) && !S.flags.acd_investigate_done) opts.push({t:"去调查失踪案", go:"acd_plot_investigate", effect:{flag:"acd_investigate_done", timeCost:"1period"}});
+      if(!S.flags.acd_bell_day) opts.push({t:"去钟楼附近转转", go:"acd_plot_bell_day", effect:{timeCost:"1period"}});
+      if(S.flags.acd_benefactor_seen && !S.flags.acd_benefactor_known) opts.push({t:"去食堂角落坐坐", go:"acd_life_dining_benefactor", effect:{timeCost:"1period"}});
+      if(S.flags.acd_dined_plain && !S.flags.acd_cook_talked) opts.push({t:"去后厨找玛丽婶说话", go:"acd_life_dining_cook", effect:{flag:"acd_cook_talked", timeCost:"1period"}});
       if(!S.flags.acd_plot_hint) opts.push({t:"（注意到公告栏上一张撕了一半的寻人启事）", go:"acd_plot_clue_board", effect:{flag:"acd_plot_hint", timeCost:"1period"}});
       opts.push({t:"等待/休息", go:"wait_1period", effect:{}});
       return opts;

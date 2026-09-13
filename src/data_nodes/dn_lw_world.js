@@ -106,13 +106,52 @@ window.LW_DATA = {
     {ev:"academy",before:3, text:"学院的访问学者们忽然都不露面了。门房说，禁书区的钥匙换了一把新的。"},
     {ev:"orc",    before:3, text:"北境的猎户说，草原上的狼群在往南跑。狼旗的影子，已经压到了地平线上。"}
   ],
-  /* 回响锚点表（flag 变更 -> 世界回响；首批示例，作者可扩展）
-     delay: 延迟天数（day+）；at: 地点条件；after: 前置事件 id */
+  /* 回响锚点表（flag 变更 -> 世界回响；LW-A2 扩到 30 条：账本伏笔 10 + 主线账户 5 + 既有 flag 6 + 双面回响 5 + 首批 4）
+     delay: 延迟天数（day+）；at: 地点条件；flip: 双面回响（登记同一条，触发时按 flip.flag 是否成立分支渲染） */
   echoMap: [
     {flag:"lw_help_harbor", echoId:"echo_harbor_debt", delay:6, at:"free_huigang", text:"码头上那个你帮过的水手，托人捎来一句话：欠你的人情，我记着。城东的货栈，有你的东西。"},
     {flag:"lw_betray_guild", echoId:"echo_guild_grudge", delay:8, at:"free_gonghui", text:"公会大厅里，你出卖过的那位佣兵长没有露面。他的旧部下看你的眼神，像淬过火。"},
     {flag:"lw_church_favor", echoId:"echo_church_eye", delay:5, at:"church_shengcheng", text:"圣城的告解室里，神父在你离开后翻开了一本灰皮册子，添了一笔。"},
-    {flag:"lw_orc_truce", echoId:"echo_orc_whisper", delay:7, at:"orc_heishi", text:"黑石部族的营火边，有人压着嗓门说起你的名字，用的是敬语。"}
+    {flag:"lw_orc_truce", echoId:"echo_orc_whisper", delay:7, at:"orc_heishi", text:"黑石部族的营火边，有人压着嗓门说起你的名字，用的是敬语。"},
+    /* LW-A2 账本伏笔转回响（10 条；flag 用 CAUSALITY_LEDGER plant 既有 flag） */
+    {flag:"oracle_fake", echoId:"echo_oracle_ash", delay:9, at:"north_aierda", text:"占星塔的灰烬里，有人用指尖画了一只眼睛，正对着你常坐的位置。"},
+    {flag:"khan_aware", echoId:"echo_khan_eye", delay:7, at:"orc_heishi", text:"黑石大汗的斥候混在人群里看了你很久，走时留下一个狼头骨做的记号。"},
+    {flag:"spared_robber", echoId:"echo_robber_repay", delay:10, at:"free_huigang", text:"你放走的那伙人，把一件偷来的羊皮斗篷连夜挂在你住的客栈窗下，压着一块石头。"},
+    {flag:"bandit_leader_killed", echoId:"echo_bandit_grudge", delay:8, at:"north_tiebi", text:"铁门关外新立了一块碑，碑上刻着盗贼头目的名字，底下还有一行小字——记住这张脸。"},
+    {flag:"gave_all_to_refugees", echoId:"echo_refugee_altar", delay:11, at:"church_shengcheng", text:"圣城外的难民棚里，有人给你供了一盏油灯。灯芯是用你旧斗篷的线搓的。"},
+    {flag:"father_truth_denied", echoId:"echo_father_ghost", delay:12, at:"north_tiebi", text:"铁门关老屋的锁孔里，塞着一封没写完的信。字迹到一半，像是被风停了笔。"},
+    {flag:"prophecy_defied", echoId:"echo_prophecy_crack", delay:9, at:"north_aierda", text:"学院的占星镜上多了一道裂纹，从镜心一直裂到边框，像一句被抹掉的预言。"},
+    {flag:"betrayed_classmate", echoId:"echo_classmate_gaze", delay:13, at:"north_aierda", text:"旧课室的角落还留着那个空位。每当有人推门，你总觉得有一道目光先你一步落下来。"},
+    {flag:"aquan_liberated", echoId:"echo_aquan_people", delay:8, at:"north_hewan", text:"阿奎的渔民在船头刻了你的名字，用朱漆。他们说，等风平浪静的那天，要请你喝头一碗酒。"},
+    {flag:"let_mercury_go", echoId:"echo_mercury_parting", delay:10, at:"free_huigang", text:"水银走的那天夜里，码头系缆桩上多了半块银币，缺的那半，正好嵌进你旧怀表的豁口。"},
+    /* LW-A2 主线账户 flag 回响（5 条；五主线密档感知） */
+    {flag:"purge_account", echoId:"echo_purge_account", delay:6, at:"church_shengcheng", text:"圣痕司的密档室里，你的卷宗比旁人的厚了三倍。有人夜里翻它，翻得很慢。"},
+    {flag:"silver_account", echoId:"echo_silver_account", delay:7, at:"south_gangkou", text:"银穗商路的往来账册里，你的名字被红笔勾了又勾。掌柜们关起门来，谁也不肯先说。"},
+    {flag:"seal_talisman", echoId:"echo_seal_talisman", delay:8, at:"desert_yiji", text:"你身上那道封印符咒，夜里会自己发烫。烫痕的位置，正好压着第一印的方向。"},
+    {flag:"academy_vault", echoId:"echo_academy_vault", delay:9, at:"north_aierda", text:"学院地库的访客名册里，你那一页被人折了角。折角处，正对着你的名字。"},
+    {flag:"orc_ledger", echoId:"echo_orc_ledger", delay:10, at:"orc_shengshan", text:"狼旗的萨满在皮卷上添了你的名字，蘸的是狼血。写完后，他把皮卷对着火烤了烤，字迹渗进皮里。"},
+    /* LW-A2 既有 flag 回响（6 条；v92/v93 系列重大选择） */
+    {flag:"watchmen_invited", echoId:"echo_watchmen_trust", delay:6, at:"free_jiaohui", text:"守夜人换班的火把，在你家门口停了一停。火光一闪，像是打了个招呼。"},
+    {flag:"giant_helper", echoId:"echo_giant_wave", delay:12, at:"orc_heishi", text:"巨人氏族的孩子远远看见你，朝你挥了挥手，用的还是你教的那个手势。"},
+    {flag:"seal3_queen_freed", echoId:"echo_seal_queen", delay:9, at:"desert_lvzhou", text:"绿洲的旅人说起第三印的女王——她在晨光里站了很久，最后朝南方点了点头。"},
+    {flag:"thieves_guild_member", echoId:"echo_guild_badge", delay:7, at:"free_jishi", text:"公会的暗号换了新的一套，可集市口那个老伙计，还是先认出了你的步伐。"},
+    {flag:"f_f2_heretic_ledger", echoId:"echo_heretic_book", delay:11, at:"church_shengcheng", text:"圣痕司的灰皮册子上，你的名字被人用炭笔圈了两道。圈痕很新，像是昨天才画的。"},
+    {flag:"dragon_companion", echoId:"echo_dragon_wing", delay:8, at:"dwarf_wangdu", text:"龙裔同伴蹲在矮人王都的城墙上等你，鳞片映着晚霞，见你来了，先咧了咧嘴。"},
+    /* LW-A2 双面回响（5 条；同一旧账，按后续选择分支报答/反噬） */
+    {flag:"gold_scale_blacklisted", echoId:"echo_goldscale_ledger", delay:9, at:"free_huigang", text:"金秤家的账房远远看见你，把账本往怀里一拢，绕道走了。他记得你，也记得你欠的那笔账。", flip:{flag:"thieves_guild_member", text:"金秤家的账房远远看见你，脚步一顿，却还是拱了拱手。他听说你在公会里混出了名堂——这笔账，他要重新掂量掂量。"}},
+    {flag:"east_wanted", echoId:"echo_east_wanted", delay:7, at:"north_tiebi", text:"铁门关的告示栏上贴着你的画像，画得不太像，可守关的兵卒还是一眼认出了你。", flip:{flag:"beijing_saved", text:"铁门关的告示栏上贴着你的画像。可你救过的那家北京城百姓，趁着换岗把告示撕了下来，卷成一卷塞进了怀里。"}},
+    {flag:"council_support_purification", echoId:"echo_purge_ledger", delay:8, at:"church_shengcheng", text:"圣痕司的功劳簿上，你的名字被誊在头一页，用的是金漆。", flip:{flag:"council_oppose_purification", text:"圣痕司的功劳簿上本有你的名字，又被人拿刀刮掉了。刮痕很深，像是不肯忘记。"}},
+    {flag:"floating_tower_blessed", echoId:"echo_tower_bless", delay:10, at:"north_aierda", text:"浮空塔顶的法师往你的旧物里放了一枚银叶书签——塔上的人，记得你的名字。", flip:{flag:"floating_tower_banished", text:"浮空塔的结界在你面前嗡地响了一声。塔门开着，可你知道，那扇门不是为你开的了。"}},
+    {flag:"mercury_ally", echoId:"echo_mercury_ally", delay:9, at:"free_gonghui", text:"水银商会在码头给你留了一间房，钥匙放在窗台上，钥匙穗是新编的。", flip:{flag:"mercury_disappointed", text:"水银商会的伙计在码头见了你，话到嘴边又咽回去。他掌柜说过：这个人，不能再深交了。"}}
+  ],
+  /* 编年史世界册自动成册规则（LW-C1/C3；match 为可监控事件类型） */
+  chronAuto: [
+    { match:"season",    kind:"season",    tag:"季节", tpl:"时令入{season}。{line}" },
+    { match:"mainEvent", kind:"main",      tag:"主线", tpl:"{cn}爆发——{text}" },
+    { match:"cityOwner", kind:"war",       tag:"城市易主", tpl:"{city}落入{owner}之手。" },
+    { match:"echo",      kind:"echo",      tag:"回响", tpl:"{text}" },
+    { match:"omen",      kind:"omen",      tag:"传闻", tpl:"{text}" },
+    { match:"festival",  kind:"festival",  tag:"节日", tpl:"今日{name}：{desc}" }
   ],
   /* 季节氛围句（advanceDays 换季时播报；V66 白描） */
   seasonLine: {

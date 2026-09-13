@@ -122,6 +122,8 @@ function applyDefaults(s){
   if(!s.lw.warfronts) s.lw.warfronts={};
   if(!s.lw.merit) s.lw.merit={};
   if(!s.lw.guilt) s.lw.guilt={};
+  if(!s.lw.worldChron) s.lw.worldChron=[];
+  if(!s.lw.chronSnap) s.lw.chronSnap={};
   try{ if(window.LW_warInit) window.LW_warInit(); }catch(e){}
   return s;
 }

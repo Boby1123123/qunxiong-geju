@@ -173,6 +173,28 @@ def run(html):
         problems.append({'name': '悬空回响', 'line': 0, 'cat': 'E2',
                          'msg': '引用不存在的回响 id %d 个: %s' % (len(dangling), ','.join(dangling[:8]))})
 
+    # E6 语法扩展：{{echoPending:id|A|B}} 引用合法（id ∈ echoMap ∪ 账本 id；三段齐备）
+    e6 = []
+    pend_refs = re.findall(r'\{\{echoPending:([\w\-]+)\|([^|]+)\|([^}]+)\}\}', html)
+    for pid, pa, pb in pend_refs:
+        if pid in ('id', 'xxx'):
+            continue  # 注释/文档占位示例，跳过
+        if pid not in known:
+            e6.append('echoPending 悬空 id: %s' % pid)
+        if not pa.strip() or not pb.strip():
+            e6.append('echoPending 空分支: %s' % pid)
+    detail['e6_pending'] = len(pend_refs)
+    # 双面回响 flip 合法性（flip.flag 亦须在 effects 写入集）
+    e6_flip = []
+    for c in echo_map:
+        fl = c.get('flip') if isinstance(c, dict) else None
+        if fl and fl.get('flag') and fl.get('flag') not in flags:
+            e6_flip.append('flip.flag 未在 effects 写入: %s（echoId=%s）' % (fl.get('flag'), c.get('echoId')))
+    detail['e6_flip'] = e6_flip
+    if e6 or e6_flip:
+        problems.append({'name': '语法扩展', 'line': 0, 'cat': 'E6',
+                         'msg': '; '.join((e6 + e6_flip)[:6])})
+
     # E3 账本闭环（登记制 WARN，不阻断）
     ledger = None
     lseg = _extract_js_array(html, 'CAUSALITY_LEDGER')

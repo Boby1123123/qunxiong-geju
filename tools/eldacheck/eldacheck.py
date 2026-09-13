@@ -23,7 +23,7 @@ def C(code, s):
 
 def load_checks():
     sys.path.insert(0, HERE)
-    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements, c_observe, c_stats, c_persist, c_map, c_style, c_hooks, c_chronicle, c_fantasy, c_regions, c_clue, c_crlf, c_nodecover, c_echo, c_worldstate, c_faction, c_warfront
+    from checks import c_syntax, c_links, c_refhealth, c_nodes, c_markers, c_structure, c_text, c_save, c_dead, c_speed, c_dialog, c_chunks, c_world, c_war, c_narr, c_cast, c_lore, c_ui, c_v68ui, c_causality, c_pace, c_textguard, c_skeleton, c_arc, c_report, c_anchor, c_tags, c_lorebook, c_memorybank, c_achievements, c_observe, c_stats, c_persist, c_map, c_style, c_hooks, c_chronicle, c_fantasy, c_regions, c_clue, c_crlf, c_nodecover, c_echo, c_worldstate, c_faction, c_warfront, c_lwchron
     return {
         'quick': [
             ('语法检查', c_syntax.run),
@@ -79,6 +79,7 @@ def load_checks():
             ('LW世界状态', c_worldstate.run),
             ('LW势力矩阵', c_faction.run),
             ('LW战争引擎', c_warfront.run),
+            ('LW世界编年史', c_lwchron.run),
         ],
     }
 

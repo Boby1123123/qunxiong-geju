@@ -14,7 +14,7 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
 ALLOWED = {
     'season', 'dayPhase', 'echoes', 'echoLog', 'npcStates', 'factionRel',
     'factionState', 'cityControl', 'worldFlags', 'journal', 'tick',
-    'warfronts', 'merit', 'guilt',
+    'warfronts', 'merit', 'guilt', 'worldChron', 'chronSnap',
 }
 
 

@@ -38,6 +38,7 @@
       var line = D.seasonLine[ns];
       try{ if(window.logMsg) logMsg("【"+ns+"】"+line); }catch(e){}
       LW_newsAdd("season", "时令入"+ns+"。"+line);
+      try{ if(window.LW_chronAdd) LW_chronAdd("season", "时令入"+ns+"。"+line, {tag:"季节"}); }catch(e){}
     }
     if(np !== oldPhase && D.phaseLine && D.phaseLine[np]){
       var pl = D.phaseLine[np];
@@ -58,11 +59,12 @@
           lw.worldFlags[key] = true;
           try{ if(window.logMsg) logMsg("【传闻】"+o.text); }catch(e){}
           LW_newsAdd("omen", o.text);
+          try{ if(window.LW_chronAdd) LW_chronAdd("omen", o.text, {tag:"传闻"}); }catch(e){}
         }
       }
     }
   };
-  /* S3 回响：登记 flag->echo（tick 轮询 echoMap） */
+  /* S3 回响：登记 flag->echo（tick 轮询 echoMap + LW-A3 账本源 led_ 动态登记） */
   window.LW_echoScan = function(){
     var lw = _ld(); if(!lw || !S) return;
     var D = _LWD(), map = D.echoMap || [];
@@ -75,12 +77,37 @@
       for(var k=0;k<lw.echoLog.length;k++){ if(lw.echoLog[k]===c.echoId) logHas = true; }
       if(!has && !logHas){
         if(lw.echoes.length >= 100) return; /* 队列上限（c_echo E4） */
-        lw.echoes.push({id:c.echoId, at:c.at||null, delay:c.delay||3, dueDay:(S.day||1)+(c.delay||3), text:c.text||""});
+        var eo = {id:c.echoId, at:c.at||null, delay:c.delay||3, dueDay:(S.day||1)+(c.delay||3), text:c.text||""};
+        if(c.flip && c.flip.flag) eo.flip = {flag:c.flip.flag, text:c.flip.text||c.text||""};
+        lw.echoes.push(eo);
         try{ if(window.logMsg) logMsg("【命运的线】一笔旧账，被世界记下了。"); }catch(e){}
       }
     }
+    /* LW-A3 账本源：CAUSALITY_LEDGER plant 以 flag: 开头且已成立的伏笔 -> 动态回响 led_<id>（白名单动态回响） */
+    try{
+      var LG = window.CAUSALITY_LEDGER || [];
+      for(var x=0;x<LG.length;x++){
+        var item = LG[x];
+        if(!item || !item.id || !item.plant) continue;
+        var pm = /^flag:(.+)$/.exec(String(item.plant));
+        if(!pm) continue;
+        var pf = pm[1];
+        if(!S.flags || !S.flags[pf]) continue;
+        if(item.status === "closed") continue;
+        var lid = String(item.id||"");
+        if(lid.indexOf("led_") !== 0) continue; /* 账本 id 即 led_xx，直接作回响 id */
+        var lhas = false, llog = false;
+        for(var a=0;a<lw.echoes.length;a++){ if(lw.echoes[a].id===lid) lhas = true; }
+        for(var b=0;b<lw.echoLog.length;b++){ if(lw.echoLog[b]===lid) llog = true; }
+        if(!lhas && !llog){
+          if(lw.echoes.length >= 100) return;
+          /* 账本伏笔回响纯时间触发（不设地点条件，避免 node 锚点与 loc 格式不匹配永不到期） */
+          lw.echoes.push({id:lid, at:null, delay:5, dueDay:(S.day||1)+5, text:(item.desc||"一笔旧账，还在路上。"), led:item.id});
+        }
+      }
+    }catch(e){}
   };
-  /* 回响触发检查（tick；delay 到期或 at 地点命中） */
+  /* 回响触发检查（tick；delay 到期或 at 地点命中；双面回响按 flip.flag 分支） */
   window.LW_echoTick = function(){
     var lw = _ld(); if(!lw || !S) return;
     lw.echoes = lw.echoes || [];
@@ -96,12 +123,16 @@
       lw.echoes.splice(idx,1);
       lw.echoLog = lw.echoLog || [];
       if(lw.echoLog.indexOf(e.id) < 0) lw.echoLog.push(e.id);
-      try{ if(window.writePar) writePar("（"+e.text+"）","res"); else if(window.logMsg) logMsg(e.text); }catch(err){}
-      LW_newsAdd("echo", e.text);
-      window.LW_journalAdd("echo", e.text, null);
+      var txt = e.text||"";
+      if(e.flip && e.flip.flag && S.flags && S.flags[e.flip.flag]) txt = e.flip.text||txt; /* 双面回响：另一笔账成立则反噬 */
+      try{ if(window.writePar) writePar("（"+txt+"）","res"); else if(window.logMsg) logMsg(txt); }catch(err){}
+      LW_newsAdd("echo", txt);
+      window.LW_journalAdd("echo", txt, null);
+      try{ if(window.LW_chronAdd) LW_chronAdd("echo", txt, {tag:"回响"}); }catch(ce){}
     }
   };
-  /* 作者语法渲染（writePar 后挂接）：[echo:id:文案] / {{echoCount:id}} / {{npcRecall:角色|记忆id}} / [[if:world.x==v|A|B]] */
+  /* 作者语法渲染（writePar 后挂接）：[echo:id:文案] / {{echoCount:id}} / {{echoPending:id|在途句|已了句}} /
+     {{npcRecall:角色|记忆id}} / [[if:world.x==v|A|B]] / [chron:世界|文案] / [chron:玩家|文案] / {{chronCount:tag}} */
   window.LW_render = function(p){
     if(typeof p !== "string") return p;
     var lw = _ld();
@@ -114,6 +145,17 @@
       var n = 0;
       if(lw && lw.echoLog){ for(var i=0;i<lw.echoLog.length;i++){ if(lw.echoLog[i]===id) n++; } }
       return String(n);
+    });
+    /* {{echoPending:id|在途句|已了句}}：回响在途 -> 句A；已触发 -> 句B；不存在 -> 剔除 */
+    p = p.replace(/\{\{echoPending:([\w\-]+)\|([^|]+)\|([^}]+)\}\}/g, function(m, id, a, b){
+      var pending = false, done = false;
+      if(lw){
+        if(lw.echoes){ for(var i=0;i<lw.echoes.length;i++){ if(lw.echoes[i].id===id) pending = true; } }
+        if(lw.echoLog){ for(var j=0;j<lw.echoLog.length;j++){ if(lw.echoLog[j]===id) done = true; } }
+      }
+      if(done) return String(b);
+      if(pending) return String(a);
+      return "";
     });
     p = p.replace(/\{\{npcRecall:([\w\-]+)\|([\w\-]+)\}\}/g, function(m, npc, memId){
       try{
@@ -130,9 +172,23 @@
       else if(k==="city") cur = (window.LW_cityOwner && LW_cityOwner(S.loc||"")) || "";
       return String(cur)===String(v) ? String(a) : String(b);
     });
+    /* LW-C3 作者语法：节点内显式追加编年史（世界册/玩家册；去重由 LW_chronAdd 内做） */
+    p = p.replace(/\[chron:世界\|([^\]]+)\]/g, function(m, txt){
+      try{ if(window.LW_chronAdd) LW_chronAdd("world", String(txt), {tag:"作者"}); }catch(e){}
+      return "";
+    });
+    p = p.replace(/\[chron:玩家\|([^\]]+)\]/g, function(m, txt){
+      try{ if(window.v92_chronicleAdd) v92_chronicleAdd("抉择", String(txt), 2); }catch(e){}
+      return "";
+    });
+    p = p.replace(/\{\{chronCount:([\w\-]+)\}\}/g, function(m, tag){
+      var n = 0;
+      if(lw && lw.worldChron){ for(var i=0;i<lw.worldChron.length;i++){ if(lw.worldChron[i].tag===tag) n++; } }
+      return String(n);
+    });
     return p;
   };
-  /* 抉择记录册 */
+  /* 抉择记录册 v2（LW-A2/A3：在途回响分页 + 伏笔分页 + 已响区） */
   window.LW_journalAdd = function(kind, text, flag){
     var lw = _ld(); if(!lw || !S) return;
     lw.journal = lw.journal || [];
@@ -142,18 +198,71 @@
   window.LW_journalUI = function(){
     var lw = _ld();
     var box = document.createElement("div"); box.className = "box";
-    var h = "<h3>📜 抉择记录册</h3><div class='mini'>世界记住了你做过的事。</div><div style='max-height:46vh;overflow:auto;margin-top:8px'>";
-    var arr = (lw && lw.journal) ? lw.journal.slice().reverse() : [];
-    if(!arr.length){ h += "<div style='color:#9a8a68;padding:10px'>命运的线，尚未落笔。</div>"; }
-    for(var i=0;i<arr.length;i++){
-      var j = arr[i];
-      var tag = j.kind==="echo" ? "回响" : j.kind==="faction" ? "立场" : "抉择";
-      h += "<div style='border-left:3px solid var(--gold2,#caa);padding:6px 8px;margin:6px 0;background:rgba(0,0,0,.18)'>"+
-           "<span style='color:#9a8a68;font-size:12px'>第"+j.day+"日 · "+tag+"</span><br>"+String(j.text||"")+"</div>";
-    }
-    h += "</div><div style='text-align:center;margin-top:10px'><button class='btn' onclick='closeModal()'>返回</button></div>";
+    var h = "<h3>📜 抉择记录册</h3><div class='mini'>世界记住了你做过的事。</div>";
+    h += "<div style='margin:6px 0'>"+
+         "<button class='btn' onclick='LW_journalTab(\"journal\")' style='margin:2px'>📜 抉择</button>"+
+         "<button class='btn' onclick='LW_journalTab(\"pending\")' style='margin:2px'>⏳ 在途回响</button>"+
+         "<button class='btn' onclick='LW_journalTab(\"ledger\")' style='margin:2px'>🕸 伏笔</button>"+
+         "</div><div id='lw-journal-body' style='max-height:46vh;overflow:auto;margin-top:8px'>";
+    h += "<div style='color:#9a8a68;padding:10px'>命运的线，尚未落笔。</div></div>";
+    h += "<div style='text-align:center;margin-top:10px'><button class='btn' onclick='closeModal()'>返回</button></div>";
     box.innerHTML = h;
+    box.setAttribute("data-tab","journal");
     if(window.openModal) openModal(box); else document.body.appendChild(box);
+    window.LW_journalTab("journal");
+  };
+  window.LW_journalTab = function(tab){
+    try{
+      var body = document.getElementById("lw-journal-body");
+      if(!body) return;
+      var lw = _ld();
+      var h = "";
+      if(tab==="pending"){
+        h += "<div class='mini'>命运的线还在路上——第 N 日到期，或需前往某地。</div>";
+        var es = (lw && lw.echoes) ? lw.echoes.slice() : [];
+        if(!es.length){ h += "<div style='color:#9a8a68;padding:10px'>没有在途的线。世界暂时不欠你，也不躲你。</div>"; }
+        for(var i=0;i<es.length;i++){
+          var e = es[i];
+          h += "<div style='border-left:3px solid var(--gold2,#caa);padding:6px 8px;margin:6px 0;background:rgba(0,0,0,.18)'>"+
+               "<span style='color:#9a8a68;font-size:12px'>第"+e.dueDay+"日到期"+(e.at?(" · 需至 "+(e.at.split("_").pop())):"")+"</span><br>"+
+               String(e.text||"").slice(0,60)+(String(e.text||"").length>60?"…":"")+"</div>";
+        }
+      } else if(tab==="ledger"){
+        h += "<div class='mini'>因果账本 open 项 + 对应回响状态（呼应伏笔体系）。</div>";
+        var LG = window.CAUSALITY_LEDGER || [];
+        var shown = 0;
+        for(var x=0;x<LG.length && shown<40;x++){
+          var item = LG[x];
+          if(!item || !item.id || item.status!=="open") continue;
+          var pf = String(item.plant||"");
+          var mark = "未落";
+          var id = String(item.id||"");
+          var inQueue=false, done=false;
+          if(lw){
+            if(lw.echoes){ for(var a=0;a<lw.echoes.length;a++){ if(lw.echoes[a].id===id) inQueue=true; } }
+            if(lw.echoLog){ for(var b=0;b<lw.echoLog.length;b++){ if(lw.echoLog[b]===id) done=true; } }
+            for(var c2=0;c2<(lw.echoLog||[]).length;c2++){ if(String(lw.echoLog[c2]).indexOf(id)>=0) done=true; }
+          }
+          if(done) mark = "<span style='color:#6d6'>已了</span>";
+          else if(inQueue) mark = "<span style='color:#caa'>在途</span>";
+          h += "<div style='border-left:3px solid #665;padding:5px 8px;margin:4px 0;background:rgba(0,0,0,.14);font-size:13px'>"+
+               "<span style='color:#9a8a68'>"+id+"</span> "+(mark)+"<br>"+
+               "<span style='color:#b8a888'>"+pf.replace(/^node:/,"抵达：").replace(/^flag:/,"选择：")+(item.desc?(" · "+item.desc.slice(0,40)):"")+"</span></div>";
+          shown++;
+        }
+        if(!shown) h += "<div style='color:#9a8a68;padding:10px'>账本上没有未了的伏笔。</div>";
+      } else {
+        var arr = (lw && lw.journal) ? lw.journal.slice().reverse() : [];
+        if(!arr.length){ h += "<div style='color:#9a8a68;padding:10px'>命运的线，尚未落笔。</div>"; }
+        for(var i2=0;i2<arr.length;i2++){
+          var j = arr[i2];
+          var tag = j.kind==="echo" ? "回响" : j.kind==="faction" ? "立场" : "抉择";
+          h += "<div style='border-left:3px solid var(--gold2,#caa);padding:6px 8px;margin:6px 0;background:rgba(0,0,0,.18)'>"+
+               "<span style='color:#9a8a68;font-size:12px'>第"+j.day+"日 · "+tag+"</span><br>"+String(j.text||"")+"</div>";
+        }
+      }
+      body.innerHTML = h;
+    }catch(e){}
   };
   /* S1 世界历面板 */
   window.LW_calendarUI = function(){
@@ -332,6 +441,7 @@
         try{ if(window.logMsg) logMsg("【战报】"+cityCn+" 落入"+wCn+"之手！"+lCn+"的旗帜被换了下来。"); }catch(e){}
         window.LW_newsAdd("war", "【战报】"+cityCn+"易主："+lCn+"→"+wCn+(reason?("（"+reason+"）"):""));
         window.LW_journalAdd("faction", "【战报】"+cityCn+"易主，"+lCn+"的旗帜被换下。", null);
+        try{ if(window.LW_chronAdd) LW_chronAdd("war", cityCn+"落入"+wCn+"之手。", {tag:"城市易主"}); }catch(e){}
         try{ if(window.LW_factionShift){ LW_factionShift(winner, 5, "夺取"+cityCn); LW_factionShift(loser, -5, "丢失"+cityCn); } }catch(e){}
         LW_warPrice(f, winner);
         try{ if(window.LW_echoScan) LW_echoScan(); }catch(e){}
@@ -456,7 +566,114 @@
     box.innerHTML=h;
     if(window.openModal) openModal(box); else document.body.appendChild(box);
   };
-  /* S2 NPC 日程查询：按当前时段返回 NPC 所在与动态文本 */
+  /* 方向C：世界编年史（双册自动成册；worldChron 上限 300 滚动；去重：同日+kind+tag+text） */
+  window.LW_chronAdd = function(kind, text, opts){
+    try{
+      var lw = _ld(); if(!lw || !S || !text) return;
+      lw.worldChron = lw.worldChron || [];
+      var o = opts || {};
+      var tag = o.tag || "事件";
+      var d = S.day||1;
+      var dup = false;
+      for(var i=lw.worldChron.length-1;i>=Math.max(0,lw.worldChron.length-8);i--){
+        var x = lw.worldChron[i];
+        if(x && x.day===d && x.tag===tag && x.text===String(text)){ dup = true; break; }
+      }
+      if(dup) return;
+      lw.worldChron.push({
+        day:d, season:(lw.season||LW_season()), phase:(lw.dayPhase||LW_dayPhase()),
+        kind:kind||"world", tag:tag, text:String(text), date:(S.date||"")
+      });
+      if(lw.worldChron.length > 300) lw.worldChron.splice(0, lw.worldChron.length-300);
+    }catch(e){}
+  };
+  /* 每日差异监控：季节切换/主线爆发/易主由调用方直喂；此处兜底 season/omen 快照差 */
+  window.LW_chronTick = function(){
+    try{
+      var lw = _ld(); if(!lw || !S) return;
+      var D = _LWD();
+      lw.chronSnap = lw.chronSnap || {};
+      var ns = LW_season();
+      if(lw.chronSnap.season && lw.chronSnap.season !== ns && D && D.seasonLine && D.seasonLine[ns]){
+        window.LW_chronAdd("season", "时令入"+ns+"。"+D.seasonLine[ns], {tag:"季节"});
+      }
+      lw.chronSnap.season = ns;
+      /* 主线爆发成册（WORLD_EVENTS 触发后；S.world.xxx 已置位且未记录） */
+      var mains = {purge:"净化令", silver:"银穗商路", seal:"封印七节点", academy:"学院密谋", orc:"北境狼旗"};
+      for(var k in mains){
+        if(S.world && S.world[k] && !lw.chronSnap["main_"+k]){
+          var ev = (window.WORLD_EVENTS && WORLD_EVENTS[k]) || null;
+          var cn = (ev && ev.cn) ? ev.cn : mains[k];
+          var txt = (ev && ev.text) ? ev.text : (cn+"爆发。");
+          window.LW_chronAdd("main", cn+"爆发——"+txt, {tag:"主线"});
+          lw.chronSnap["main_"+k] = true;
+        }
+      }
+      /* 节日成册（v93_festival 今日触发） */
+      try{
+        if(S.festival && S.festival.today && !lw.chronSnap["fest_"+S.day]){
+          var ft = S.festival.today;
+          var fname = (ft.name||"节日"), fdesc = (ft.desc||"");
+          if(fname) window.LW_chronAdd("festival", "今日"+fname+"："+fdesc, {tag:"节日"});
+          lw.chronSnap["fest_"+S.day] = true;
+        }
+      }catch(e){}
+    }catch(e){}
+  };
+  /* 编年史时间线 UI v2（双列：左世界册 / 右玩家册，按 day 对齐 + 过滤 + 章节分组） */
+  window.LW_chronUI = function(){
+    try{
+      var lw = _ld(); if(!lw) return;
+      var box = document.createElement("div"); box.className = "box";
+      var wc = (lw.worldChron||[]).slice();
+      var pc = (S && S.chronicle) ? S.chronicle.slice() : [];
+      var cwCount = 0;
+      for(var ci=0;ci<wc.length;ci++){ if(wc[ci].tag==="城市易主") cwCount++; }
+      var h = "<h3>📖 世界编年史</h3><div class='mini'>左：大陆大事 · 右：你的足迹（按日对齐）</div>";
+      h += "<div style='margin:6px 0'><select id='chron-filter' style='background:#1c1710;color:#cbb;border:1px solid #4a3c28;padding:3px 8px' onchange='LW_chronFilter(this.value)'>"+
+           "<option value=''>全部</option><option value='season'>季节</option><option value='main'>主线</option><option value='war'>战争</option>"+
+           "<option value='echo'>回响</option><option value='omen'>传闻</option><option value='festival'>节日</option><option value='player'>玩家足迹</option></select> "+
+           "<span style='color:#8a7a5a;font-size:12px'>你见证过 "+cwCount+" 次城市易主</span></div>";
+      h += "<div style='display:flex;gap:8px;max-height:46vh;overflow:auto'><div style='flex:1;border-right:1px solid rgba(255,255,255,.08);padding-right:8px'>";
+      var lastGroup = "";
+      for(var i=0;i<wc.length;i++){
+        var e = wc[i];
+        var g = "第"+e.day+"日";
+        if(e.season) g = e.season+" · 第"+e.day+"日";
+        if(g !== lastGroup){ h += "<div class='chron-group' style='color:var(--gold2,#caa);font-size:13px;margin:8px 0 4px;border-bottom:1px solid rgba(255,255,255,.08)'>"+g+"</div>"; lastGroup = g; }
+        h += "<div class='chron-item' data-kind='"+(e.kind||"world")+"' style='border-left:3px solid "+(e.kind==="war"?"#c44":e.kind==="main"?"#caa":e.kind==="season"?"#4a7":"#666")+";padding:4px 8px;margin:4px 0;font-size:13px'>"+
+             "<span style='color:#9a8a68'>["+e.tag+"]</span> "+String(e.text||"")+"</div>";
+      }
+      if(!wc.length) h += "<div style='color:#9a8a68;padding:10px'>世界的史书，尚未落笔。</div>";
+      h += "</div><div style='flex:1;padding-left:8px'>";
+      lastGroup = "";
+      for(var q=0;q<pc.length;q++){
+        var c = pc[q];
+        var g2 = "第"+c.date+"日";
+        if(g2 !== lastGroup){ h += "<div class='chron-group' style='color:#caa;font-size:13px;margin:8px 0 4px;border-bottom:1px solid rgba(255,255,255,.08)'>"+g2+"</div>"; lastGroup = g2; }
+        h += "<div class='chron-item' data-kind='player' style='padding:4px 8px;margin:4px 0;font-size:13px;color:#b8a888'>"+String(c.description||"")+"</div>";
+      }
+      if(!pc.length) h += "<div style='color:#9a8a68;padding:10px'>你的足迹，尚未落笔。</div>";
+      h += "</div></div>";
+      h += "<div style='text-align:center;margin-top:10px'><button class='btn' onclick='closeModal()'>返回</button></div>";
+      box.innerHTML = h;
+      if(window.openModal) openModal(box); else document.body.appendChild(box);
+    }catch(e){}
+  };
+  window.LW_chronFilter = function(kind){
+    try{
+      var items = document.querySelectorAll(".chron-item");
+      var groups = document.querySelectorAll(".chron-group");
+      for(var i=0;i<items.length;i++){
+        var show = !kind || items[i].getAttribute("data-kind")===kind;
+        items[i].style.display = show ? "" : "none";
+      }
+      /* 隐藏空分组 */
+      var seen = {};
+      for(var j=0;j<items.length;j++){ if(items[j].style.display!=="none"){ var prev = items[j].previousElementSibling; while(prev && prev.classList && prev.classList.contains("chron-item")){ prev = prev.previousElementSibling; } if(prev && prev.classList && prev.classList.contains("chron-group")) seen[prev.textContent]=true; } }
+      for(var g=0;g<groups.length;g++){ groups[g].style.display = seen[groups[g].textContent] ? "" : "none"; }
+    }catch(e){}
+  };
   window.LW_npcWhere = function(id){
     var lw = _ld(); if(!lw || !S) return null;
     var D = _LWD(), sch = (D.npcSchedule && D.npcSchedule[id]) || [];
@@ -521,6 +738,7 @@
       window.LW_factionTick();
       window.LW_warTick();
       window.LW_warEvent();
+      window.LW_chronTick();
     }catch(e){}
   };
   /* LW 自检（轻量检查器） */
@@ -562,6 +780,16 @@
             out.errors.push("warfronts["+wi+"] bad");
         }
       }
+      if(D && D.chronAuto){
+        for(var ca=0;ca<D.chronAuto.length;ca++){
+          var r= D.chronAuto[ca];
+          if(!r || !r.match || !r.tpl) out.errors.push("chronAuto["+ca+"] bad");
+        }
+      }
+      if(lw){
+        if(!lw.worldChron) out.errors.push("lw.worldChron missing");
+        if(!lw.chronSnap) out.errors.push("lw.chronSnap missing");
+      }
       if(lw && lw.cityControl){
         for(var cityK in lw.cityControl){
           var owner=lw.cityControl[cityK];
@@ -582,6 +810,7 @@
         "<button class='btn' onclick='LW_journalUI()' style='margin:3px'>📜 抉择记录</button>"+
         "<button class='btn' onclick='LW_factionUI()' style='margin:3px'>🏰 势力局势</button>"+
         "<button class='btn' onclick='LW_warUI()' style='margin:3px'>⚔ 战场总览</button>"+
+        "<button class='btn' onclick='LW_chronUI()' style='margin:3px'>📖 世界编年史</button>"+
         "</div><div style='text-align:center;margin-top:4px'><button class='btn' onclick='closeModal()'>返回</button></div>";
       if(window.openModal) openModal(box); else document.body.appendChild(box);
     }catch(e){}

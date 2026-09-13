@@ -443,10 +443,12 @@ function writePar(p,cls){
 
   const d = document.createElement("p");
   if(cls) d.className=cls;
-  d.innerHTML = rich(p);
-  if(typeof p==="string" && window.v96_probeConv){ var _ph = window.v96_probeConv(d.innerHTML); if(_ph !== d.innerHTML){ d.innerHTML = _ph; } } /* /v96inj:probe/ B8 线索锚点（rich 后转换防 esc 转义） */
-  if(typeof p==="string" && window.v96_choiceEcho){ var _ce = window.v96_choiceEcho(d.innerHTML); if(_ce !== d.innerHTML){ d.innerHTML = _ce; } } /* /v96inj:choice/ C11 选择记忆回显（rich 后转换） */
-  try{ if(window.LW_render){ var _lr = window.LW_render(d.innerHTML); if(_lr !== d.innerHTML){ d.innerHTML = _lr; } } }catch(e){} /* /lwinj:render/ LW 世界回响/记忆/动态文本渲染 */
+  /* /perf04:writepar/ 性能：innerHTML 只赋值一次（三个后处理钩子改为字符串链式，语义逐字节不变） */
+  let _html = rich(p);
+  if(typeof p==="string" && window.v96_probeConv){ var _ph = window.v96_probeConv(_html); if(_ph !== _html){ _html = _ph; } } /* /v96inj:probe/ B8 线索锚点（rich 后转换防 esc 转义） */
+  if(typeof p==="string" && window.v96_choiceEcho){ var _ce = window.v96_choiceEcho(_html); if(_ce !== _html){ _html = _ce; } } /* /v96inj:choice/ C11 选择记忆回显（rich 后转换） */
+  try{ if(window.LW_render){ var _lr = window.LW_render(_html); if(_lr !== _html){ _html = _lr; } } }catch(e){} /* /lwinj:render/ LW 世界回响/记忆/动态文本渲染 */
+  d.innerHTML = _html;
   try{ window.v92_highlightNames && window.v92_highlightNames(d); }catch(e){}
   RenderBatch.push(d);
   return d;

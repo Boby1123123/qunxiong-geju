@@ -1,2020 +1,2020 @@
 {
-  "name": "群雄割据性能预算门",
-  "version": 81,
-  "updated": "2026-09-13",
-  "note": "超大型扩充：用户确认后续 20+ 批内容（贵族P-B~F、文化语言礼仪C-1~5、战争引擎W-1~5、旅途荒野R-1~5、B5接入）将持续增长，预算上限大幅上调以容纳（game 21.5M→32M，chunked 9.8M→15M，full_seconds 30→45）",
-  "budgets": {
-    "game_html_bytes_max": 32000000,
-    "chunked_html_bytes_max": 15000000,
-    "node_total_min": 5869,
-    "dead_links_max": 0,
-    "full_seconds_max": 45.0
-  },
-  "baseline": {
-    "game_html_bytes": 20448631,
-    "chunked_html_bytes": 9377457,
-    "node_total": 5919,
-    "full_seconds": 22.53
-  },
-  "meta": {
-    "last_updated": "2026-09-13",
-    "reason": "v109 B1物种深度卡：88兽12字段深度卡（stats六维/traits/potential/niche/behavior/weakness/loot/description/interactions/stars/myth/tags），约3.9万字白描描述，game.html 19998254B合法增长",
-    "history": [
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6069783,
-        "chunked_bytes": 3437896,
-        "nodes": 3789,
-        "reason": "U9 预算自动化脚本上线测试"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6029525,
-        "chunked_bytes": 3418195,
-        "nodes": 3789,
-        "reason": "T0-1 引号规范化（无体积增长，复核用）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6074958,
-        "chunked_bytes": 3438776,
-        "nodes": 3789,
-        "reason": "T0-1 引号规范化完成（1635 处单引号/转义引号转中文引号，UTF-8 字节自然增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6075117,
-        "chunked_bytes": 3440261,
-        "nodes": 3789,
-        "reason": "I1-1 分段阅读渲染+建号兜底完成"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6082301,
-        "chunked_bytes": 3447445,
-        "nodes": 3789,
-        "reason": "I1-2 章节标题卡 dn_chapters.js 数据表"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6082472,
-        "chunked_bytes": 3447616,
-        "nodes": 3789,
-        "reason": "I1-2 修复v45_sceneTitle导出+章节卡"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6088175,
-        "chunked_bytes": 3453319,
-        "nodes": 3789,
-        "reason": "I1-3 冒险手记实现"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6089100,
-        "chunked_bytes": 3454244,
-        "nodes": 3789,
-        "reason": "I1-4 沉浸联动+分段阅读开关"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6126926,
-        "chunked_bytes": 3488393,
-        "nodes": 3803,
-        "reason": "PE-1 兽人草原深度包 16节点+5事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6159227,
-        "chunked_bytes": 3520694,
-        "nodes": 3816,
-        "reason": "PE-2 精灵矮人扩展包 10节点+4事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6176781,
-        "chunked_bytes": 3538248,
-        "nodes": 3823,
-        "reason": "PE-3 铁门关战争前线包 7节点+6事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6177367,
-        "chunked_bytes": 3538588,
-        "nodes": 3823,
-        "reason": "PE 入口连通修复 6处+选项扩展"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6188934,
-        "chunked_bytes": 3550155,
-        "nodes": 3823,
-        "reason": "CM-1 记忆注入 模板库+钩子"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6188940,
-        "chunked_bytes": 3550161,
-        "nodes": 3823,
-        "reason": "CM-1 记忆注入 console marker 唯一化"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6188927,
-        "chunked_bytes": 3550148,
-        "nodes": 3823,
-        "reason": "CM-1 console 调试串去 marker 前缀"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6196016,
-        "chunked_bytes": 3557237,
-        "nodes": 3823,
-        "reason": "CM-2 状态感知变体 20节点挂载"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6204172,
-        "chunked_bytes": 3565393,
-        "nodes": 3823,
-        "reason": "CM-3 因果账本+设定词冻结 19检查器"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6221943,
-        "chunked_bytes": 3573097,
-        "nodes": 3823,
-        "reason": "CM-4 pace标注+会话计数器+20检查器"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6221943,
-        "chunked_bytes": 3573097,
-        "nodes": 3823,
-        "reason": "CM-4 会话计数器入口归零"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6265575,
-        "chunked_bytes": 3616590,
-        "nodes": 3838,
-        "reason": "BD-1西境内容包: +15节点/5事件/支线, 节点3838"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6265867,
-        "chunked_bytes": 3616590,
-        "nodes": 3838,
-        "reason": "BD-1收尾: 账本led_36西境伏笔+292B, 节点3838"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6307286,
-        "chunked_bytes": 3658085,
-        "nodes": 3854,
-        "reason": "BD-2沙漠深化包: +16节点/5事件/支线, 节点3854"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6338913,
-        "chunked_bytes": 3689712,
-        "nodes": 3867,
-        "reason": "BD-3光明教会包: +13节点/5事件/支线, 节点3867"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6365489,
-        "chunked_bytes": 3716203,
-        "nodes": 3877,
-        "reason": "BD-4东部承天城包: +10节点/5事件/晨天故都线, 节点3877, 账本38/38"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6369267,
-        "chunked_bytes": 3716203,
-        "nodes": 3877,
-        "reason": "CS-1加密导出导入: 无节点变化, StorageKit+UI"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6378571,
-        "chunked_bytes": 3716203,
-        "nodes": 3877,
-        "reason": "CS-2云存档三函数+设置面板云区: v63_cloud实现"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6380701,
-        "chunked_bytes": 3716203,
-        "nodes": 3877,
-        "reason": "CS-2b补注9850版设置面板云区"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6382059,
-        "chunked_bytes": 3716203,
-        "nodes": 3877,
-        "reason": "CS-3冲突处理: 上传确认+时间戳裁决+冲突备份"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6382061,
-        "chunked_bytes": 3716203,
-        "nodes": 3877,
-        "reason": "CS-3b修复\\n转义"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6382063,
-        "chunked_bytes": 3716203,
-        "nodes": 3877,
-        "reason": "CS-3c修复冲突确认换行转义"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6382063,
-        "chunked_bytes": 3732777,
-        "nodes": 3877,
-        "reason": "CS-3d分片重建(CS批分片版同步)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6406889,
-        "chunked_bytes": 3732777,
-        "nodes": 3877,
-        "reason": "SP1-blueprint dn_story_blueprint.js 纳入权威源（79弧+36章+10卷+5幕），合法内容层增长 +24.8KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6785268,
-        "chunked_bytes": 3732777,
-        "nodes": 3877,
-        "reason": "SP2-annotate nodeIndex 3877 节点全量标注（91%弧/91%卷），合法内容层增长 +374KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6786993,
-        "chunked_bytes": 3732777,
-        "nodes": 3877,
-        "reason": "SP3-arcs 弧线生命周期：S.arcs 状态 + v91_arcAdvance 推进钩子（+1.7KB 合法引擎层增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6794832,
-        "chunked_bytes": 3732777,
-        "nodes": 3877,
-        "reason": "SP4-node-templates NODE_TEMPLATES 12 类模板工厂（+7.8KB 合法数据层增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6819424,
-        "chunked_bytes": 3732777,
-        "nodes": 3905,
-        "reason": "SP-8 示范章 30 节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6864846,
-        "chunked_bytes": 3732777,
-        "nodes": 3937,
-        "reason": "A1_20260909"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6882577,
-        "chunked_bytes": 3732777,
-        "nodes": 3954,
-        "reason": "A2_20260909"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6969150,
-        "chunked_bytes": 4317894,
-        "nodes": 3914,
-        "reason": "A3 origin-expand 56 nodes"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 6979062,
-        "chunked_bytes": 4317894,
-        "nodes": 3919,
-        "reason": "B1 acad-road 5 nodes + 3 entries"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7039183,
-        "chunked_bytes": 4327658,
-        "nodes": 3953,
-        "reason": "B2 acad-life 34 nodes"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7086899,
-        "chunked_bytes": 4387627,
-        "nodes": 3987,
-        "reason": "B3 acad people/mentors/forbidden 34 nodes"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7086911,
-        "chunked_bytes": 4387627,
-        "nodes": 3987,
-        "reason": "B3 wording fix +12B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7089422,
-        "chunked_bytes": 4438178,
-        "nodes": 3987,
-        "reason": "B-4 学院/北境事件池+12"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7098961,
-        "chunked_bytes": 4447888,
-        "nodes": 3987,
-        "reason": "C-3 薄节点密度重写（16 节点扩写 25 万字计划的文本增量）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7104818,
-        "chunked_bytes": 4453997,
-        "nodes": 3991,
-        "reason": "E-1 过渡章四去向旅途链（+4 节点）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7414128,
-        "chunked_bytes": 4763398,
-        "nodes": 4150,
-        "reason": "B-5 补缺：学院生活/外界/人际/修行/剧情 159 新节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7414172,
-        "chunked_bytes": 4763442,
-        "nodes": 4150,
-        "reason": "B-5 死链与治理词修复后重建"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7449323,
-        "chunked_bytes": 4798593,
-        "nodes": 4176,
-        "reason": "M1 第三哨区域骨架 26节点+4事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7507611,
-        "chunked_bytes": 4856881,
-        "nodes": 4220,
-        "reason": "M2 钥匙寻踪+封印抉择+双支线+守卫战 44节点5事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7507611,
-        "chunked_bytes": 4856881,
-        "nodes": 4220,
-        "reason": "M2 账本修复(误注入修正)+44节点5事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7507533,
-        "chunked_bytes": 4856803,
-        "nodes": 4220,
-        "reason": "M2 去重修复+完整交付"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7507675,
-        "chunked_bytes": 4856945,
-        "nodes": 4220,
-        "reason": "M2b san初始化修复"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7564100,
-        "chunked_bytes": 4904823,
-        "nodes": 4274,
-        "reason": "M3 毕业四去向53节点+5事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7639032,
-        "chunked_bytes": 4982855,
-        "nodes": 4335,
-        "reason": "M4 同学第二幕：61 节点 + 10 事件 + 10 账本项"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7639059,
-        "chunked_bytes": 4982882,
-        "nodes": 4335,
-        "reason": "M4 治理词替换微增 27B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7671610,
-        "chunked_bytes": 5015433,
-        "nodes": 4359,
-        "reason": "M5 锚线 24 节点+6 事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7671640,
-        "chunked_bytes": 5015463,
-        "nodes": 4359,
-        "reason": "M5 治理词替换微增 30B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7713724,
-        "chunked_bytes": 5057547,
-        "nodes": 4389,
-        "reason": "M6 锚5-7+金秤真相 30节点+3事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7713724,
-        "chunked_bytes": 5057547,
-        "nodes": 4389,
-        "reason": "M6 治理词微调"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7744911,
-        "chunked_bytes": 5088734,
-        "nodes": 4415,
-        "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7744913,
-        "chunked_bytes": 5088736,
-        "nodes": 4415,
-        "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7811504,
-        "chunked_bytes": 5160417,
-        "nodes": 4469,
-        "reason": "M8 战争推进+前四势力：warphase14+faction40+traitor4+事件15+账本5"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7940471,
-        "chunked_bytes": 5289384,
-        "nodes": 4601,
-        "reason": "M9 卷D后四势力+战后章+尾声：131节点/18事件/5账本"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7940504,
-        "chunked_bytes": 5289417,
-        "nodes": 4601,
-        "reason": "M9 治理词修复后重建"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7964521,
-        "chunked_bytes": 5300431,
-        "nodes": 4601,
-        "reason": "TQ-1 天气系统+pace补标：新增48条天气模板约4KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7964548,
-        "chunked_bytes": 5300458,
-        "nodes": 4601,
-        "reason": "TQ-1 修正天气模板治理词"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 7999027,
-        "chunked_bytes": 5330812,
-        "nodes": 4601,
-        "reason": "TQ-2 序章27节点+自由城/北上链94节点扩写注入"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8003677,
-        "chunked_bytes": 5332645,
-        "nodes": 4601,
-        "reason": "TQ-3 学院67节点+城市hub 27节点薄节点扩写注入"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8059963,
-        "chunked_bytes": 5379541,
-        "nodes": 4601,
-        "reason": "TQ-4 五主线+七锚+金秤+终局 deep 化 26 节点扩写"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8066379,
-        "chunked_bytes": 5385957,
-        "nodes": 4601,
-        "reason": "CON-1 记忆注入 v2：模板库扩充+触发⑤⑥"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8066385,
-        "chunked_bytes": 5385963,
-        "nodes": 4601,
-        "reason": "CON-1 marker 修正后字节微调"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8066661,
-        "chunked_bytes": 5386239,
-        "nodes": 4601,
-        "reason": "CON-1 设置面板加记忆注入开关"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8161865,
-        "chunked_bytes": 5443217,
-        "nodes": 4601,
-        "reason": "CON-2 过渡链：1212 节点注入过渡白描 + transition 命令"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8211129,
-        "chunked_bytes": 5478166,
-        "nodes": 4631,
-        "reason": "CON-2 回响节点：30 决策回响 + 账本登记 + 蓝图登记"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8211127,
-        "chunked_bytes": 5478164,
-        "nodes": 4631,
-        "reason": "CON-2 回响节点修复尾逗号：字节微调"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8211142,
-        "chunked_bytes": 5478179,
-        "nodes": 4631,
-        "reason": "CON-2 回响文本微调"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8211142,
-        "chunked_bytes": 5478191,
-        "nodes": 4631,
-        "reason": "CON-2 分片修复：FREE_BOARD 提前 + v62 死链选项移除"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8245104,
-        "chunked_bytes": 5508155,
-        "nodes": 4631,
-        "reason": "DEEP-1 好感四态变体 48 节点 + v91_resolveText 递归增强"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8278835,
-        "chunked_bytes": 5539859,
-        "nodes": 4631,
-        "reason": "DEEP-2 176事件微叙事化+combat受创段补齐"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8284914,
-        "chunked_bytes": 5545659,
-        "nodes": 4631,
-        "reason": "EXP-1 结局deep化+临终视野"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8286462,
-        "chunked_bytes": 5547090,
-        "nodes": 4631,
-        "reason": "EXP-2 突破场景句+v92_breakthroughScene"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8316269,
-        "chunked_bytes": 5574776,
-        "nodes": 4631,
-        "reason": "UPG-03 账本四字段"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8342461,
-        "chunked_bytes": 5589774,
-        "nodes": 4631,
-        "reason": "UPG-04 节点tag通道"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8355762,
-        "chunked_bytes": 5603075,
-        "nodes": 4631,
-        "reason": "UPG-01 世界书Lorebook 29条"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8358938,
-        "chunked_bytes": 5606251,
-        "nodes": 4631,
-        "reason": "UPG-02 记忆注入v3"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8363480,
-        "chunked_bytes": 5610585,
-        "nodes": 4631,
-        "reason": "UPG-05 回退系统+伏笔超期"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8371694,
-        "chunked_bytes": 5618715,
-        "nodes": 4631,
-        "reason": "UPG-06 结局图鉴+成就系统"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8387781,
-        "chunked_bytes": 5621756,
-        "nodes": 4631,
-        "reason": "UPG-07 响应式UI同步"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8393210,
-        "chunked_bytes": 5627108,
-        "nodes": 4631,
-        "reason": "UPG-08 属性总览面板"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8401390,
-        "chunked_bytes": 5635125,
-        "nodes": 4631,
-        "reason": "UPG-10 三级持久化+会话恢复"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8401605,
-        "chunked_bytes": 5635338,
-        "nodes": 4631,
-        "reason": "UPG-10 三级持久化+会话恢复(补init)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8404536,
-        "chunked_bytes": 5638115,
-        "nodes": 4631,
-        "reason": "UPG-09 九域地图可视化"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8410376,
-        "chunked_bytes": 5643897,
-        "nodes": 4631,
-        "reason": "UPG-14 事件池全局钩子 5钩子+引擎扫描+账本提醒"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8419115,
-        "chunked_bytes": 5652536,
-        "nodes": 4631,
-        "reason": "UPG-17 编年史系统 20规则+3API+面板分页"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8445317,
-        "chunked_bytes": 5678426,
-        "nodes": 4637,
-        "reason": "UPG-16 西幻体系：6种族特长+12法术四系+18职业事件+6阵营变体+法术书"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8445317,
-        "chunked_bytes": 5678426,
-        "nodes": 4637,
-        "reason": "UPG-16 fix: 职业事件day错开"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8448814,
-        "chunked_bytes": 5681923,
-        "nodes": 4637,
-        "reason": "UPG-15 节点物理分区：dn_registry九域注册表+命名规范检查器"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8449310,
-        "chunked_bytes": 5682365,
-        "nodes": 4637,
-        "reason": "UPG-15 节点物理分区：注册表100%覆盖"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8455111,
-        "chunked_bytes": 5688069,
-        "nodes": 4637,
-        "reason": "PN1-PN2 线程状态机+编织引用引擎钩子与注册表（+9.2KB 合法增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8457538,
-        "chunked_bytes": 5690460,
-        "nodes": 4637,
-        "reason": "PN3 叙事线面板+顶栏按钮（+0.8KB 合法增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8457560,
-        "chunked_bytes": 5690481,
-        "nodes": 4637,
-        "reason": "PN-FIX threadTick 惰性初始化（+0.06KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8478184,
-        "chunked_bytes": 5710821,
-        "nodes": 4637,
-        "reason": "W-N1~3 世界局势快照+NPC状态机+状态回指（数据+引擎+面板，+8.6KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8478184,
-        "chunked_bytes": 5710821,
-        "nodes": 4637,
-        "reason": "WN-fix 面板结构修复（字节不变级）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8489541,
-        "chunked_bytes": 5721991,
-        "nodes": 4637,
-        "reason": "T-N1~3 节点编辑器作者工具（搜索/编辑/脚手架/导出，+12KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8497304,
-        "chunked_bytes": 5729598,
-        "nodes": 4637,
-        "reason": "A-N1~3 演出层：场景环境音+氛围主题+专名高亮（+10KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8497343,
-        "chunked_bytes": 5729634,
-        "nodes": 4637,
-        "reason": "A-N1~3 演出层：场景环境音+氛围主题+专名高亮（+10KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8497645,
-        "chunked_bytes": 5729933,
-        "nodes": 4637,
-        "reason": "A-N 钩子补挂 v45 分页渲染（+0.3KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8508404,
-        "chunked_bytes": 5740522,
-        "nodes": 4637,
-        "reason": "G-N1 商路经营小循环（+8KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8511779,
-        "chunked_bytes": 5743851,
-        "nodes": 4637,
-        "reason": "G-N2 收集图鉴（+6KB）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8511811,
-        "chunked_bytes": 5743883,
-        "nodes": 4637,
-        "reason": "G-N1+G-N2 商路图鉴（TRADE_GOODS_V92 避冲突）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8511819,
-        "chunked_bytes": 5743891,
-        "nodes": 4637,
-        "reason": "G-N1+G-N2 商路图鉴（sell 引用改名修复）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8520223,
-        "chunked_bytes": 5752201,
-        "nodes": 4637,
-        "reason": "G-N3 数值台阶（+6KB）：战力评级+九域难度参考层"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8521717,
-        "chunked_bytes": 5753681,
-        "nodes": 4637,
-        "reason": "G-C1-C3 内容深化（+6货/+4事件/图鉴触点/实力行）：商路与收集系统内容扩充"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8575002,
-        "chunked_bytes": 5802699,
-        "nodes": 4657,
-        "reason": "F-1 主线三幕 20节点 新增文本"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8575818,
-        "chunked_bytes": 5803515,
-        "nodes": 4657,
-        "reason": "F-1 ifJob变体重构 文本微增"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8593878,
-        "chunked_bytes": 5821506,
-        "nodes": 4662,
-        "reason": "F-2 抉择代价节点 5事件5节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8629813,
-        "chunked_bytes": 5857370,
-        "nodes": 4680,
-        "reason": "F-3 NPC弧线18节点 文本增长"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8650818,
-        "chunked_bytes": 5878337,
-        "nodes": 4689,
-        "reason": "F-4 身世暗线+回响15节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8656836,
-        "chunked_bytes": 5888623,
-        "nodes": 4693,
-        "reason": "F-5 自由城第二幕+旅途事件：hub入口3处/事件池+4/city链4节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8673794,
-        "chunked_bytes": 5905575,
-        "nodes": 4699,
-        "reason": "F-6 结局互锁+战役战斗：battle/medici/2结局/epilogue 6节点+事件2"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8676825,
-        "chunked_bytes": 5908606,
-        "nodes": 4699,
-        "reason": "v92空态欢迎主界面：story区未开始不再空白（标题/引言/开始·读档·设置按钮）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8692816,
-        "chunked_bytes": 5924407,
-        "nodes": 4699,
-        "reason": "UI93 v4 方案一落地：齿轮设置/主书签收纳/旁白栏/指引条/功能入口，节点内容未变"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8692806,
-        "chunked_bytes": 5924396,
-        "nodes": 4699,
-        "reason": "UI93 v4 成就收集度改用 window.N 统计"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8693832,
-        "chunked_bytes": 5925409,
-        "nodes": 4699,
-        "reason": "UI93 v4 收纳兜底+动态按钮CSS隐藏，代码层增长 1032B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8693880,
-        "chunked_bytes": 5925455,
-        "nodes": 4699,
-        "reason": "UI93 v4 成就收集度判空加固+动态收纳兜底"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8693881,
-        "chunked_bytes": 5925456,
-        "nodes": 4699,
-        "reason": "UI93 v4 齿轮z-index提升至120"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8707748,
-        "chunked_bytes": 5938091,
-        "nodes": 4699,
-        "reason": "UI93-v5 概念图还原：右上更多菜单+纪闻分版块+底部资源栏+选项卡片 CSS/JS"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8707854,
-        "chunked_bytes": 5938199,
-        "nodes": 4699,
-        "reason": "UI93-v5 fix2：statrow 横排 + 纪闻空态基调句"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8707854,
-        "chunked_bytes": 5938199,
-        "nodes": 4699,
-        "reason": "UI93-v5 fix3：更多菜单项先关菜单"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8707875,
-        "chunked_bytes": 5938220,
-        "nodes": 4699,
-        "reason": "UI93-v5.1 正文加宽对齐书签行（story 42em→76em+94%）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8715201,
-        "chunked_bytes": 5945441,
-        "nodes": 4699,
-        "reason": "ACT1+ACT2 行动系统P0：行动日志容器+刷新函数拆分"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8715314,
-        "chunked_bytes": 5945553,
-        "nodes": 4699,
-        "reason": "ACT1+ACT2 行动日志与刷新函数拆分：+113B（#v93-actlog 容器与 v93_refreshAfterAct IIFE）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8723717,
-        "chunked_bytes": 5953840,
-        "nodes": 4699,
-        "reason": "WS-1 世界状态回路：v93_worldState/v93_worldEcho + dn_worldstate_tpl.js 注入"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8724045,
-        "chunked_bytes": 5954164,
-        "nodes": 4699,
-        "reason": "WS-1 seal维度防剧透门槛(+328B)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8733967,
-        "chunked_bytes": 5963826,
-        "nodes": 4699,
-        "reason": "CB-2 指令环战斗v2(战斗面板+状态机+6战斗节点)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8737495,
-        "chunked_bytes": 5967301,
-        "nodes": 4699,
-        "reason": "EC-3 经济闭环(S.market+商路面板+商会分红)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8755559,
-        "chunked_bytes": 5985073,
-        "nodes": 4699,
-        "reason": "EC-3经济闭环+WD-4日报+AU-5环境音+NM-6记忆+FT-7节日+SM-8冒烟v2 八批注入完成"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8759930,
-        "chunked_bytes": 5989362,
-        "nodes": 4699,
-        "reason": "NM-6 IIFE补注后重建"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8769658,
-        "chunked_bytes": 6000039,
-        "nodes": 4709,
-        "reason": "REL-1 送礼系统：+10节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8769664,
-        "chunked_bytes": 6000045,
-        "nodes": 4709,
-        "reason": "REL-1 送礼系统：治理词替换字数微调"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8776678,
-        "chunked_bytes": 6007394,
-        "nodes": 4715,
-        "reason": "REL-2 邀约同行：+6节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8784589,
-        "chunked_bytes": 6015305,
-        "nodes": 4723,
-        "reason": "REL-3 跨城书信：+8节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8802870,
-        "chunked_bytes": 6033586,
-        "nodes": 4745,
-        "reason": "REL-4 关系事件链：+22节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8809505,
-        "chunked_bytes": 6040221,
-        "nodes": 4750,
-        "reason": "REL-5 关系影响世界：+5节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8815193,
-        "chunked_bytes": 6045909,
-        "nodes": 4757,
-        "reason": "WDR-1 世界状态仪表盘：+7节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8822082,
-        "chunked_bytes": 6052798,
-        "nodes": 4761,
-        "reason": "WDR-2 决策长期后果：+4节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8829283,
-        "chunked_bytes": 6059999,
-        "nodes": 4768,
-        "reason": "WDR-3 玩家据点：+7节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8845835,
-        "chunked_bytes": 6076551,
-        "nodes": 4784,
-        "reason": "AP1-3 战后/深渊/神谕：+17节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8850336,
-        "chunked_bytes": 6081052,
-        "nodes": 4788,
-        "reason": "NG-1 多周目变奏：+4节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8860140,
-        "chunked_bytes": 6090856,
-        "nodes": 4796,
-        "reason": "NG-2 结局后日谈+NG-3 周目旧账：+8节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8871721,
-        "chunked_bytes": 6102750,
-        "nodes": 4806,
-        "reason": "FEEL 节奏手感：+10节点(3越级战+3前夜+3插曲+收束)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8871769,
-        "chunked_bytes": 6102798,
-        "nodes": 4806,
-        "reason": "FEEL 节奏手感：+10节点 3越级战+3前夜+3插曲"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8859699,
-        "chunked_bytes": 6104985,
-        "nodes": 4806,
-        "reason": "FS-1 双系统合一：S.faction 对象化迁移 + v35_doJoin 统一入口"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8870988,
-        "chunked_bytes": 6108759,
-        "nodes": 4806,
-        "reason": "FS-2 加入路径机制：V35补north/desert+V35_JOIN_PATHS+startJoinPath+面板路径卡"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8909948,
-        "chunked_bytes": 6150610,
-        "nodes": 4806,
-        "reason": "FS-3 入伙前置链：11势力独特加入路径39节点+蓝图登记"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8916408,
-        "chunked_bytes": 6157070,
-        "nodes": 4849,
-        "reason": "FS-3 入伙前置链43节点N直赋+蓝图+FS-4 势力任务与叛逃按钮"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8916360,
-        "chunked_bytes": 6157076,
-        "nodes": 4849,
-        "reason": "FS-3 注册 fs 前缀进 NODE_REGISTRY system 域"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8916372,
-        "chunked_bytes": 6157088,
-        "nodes": 4849,
-        "reason": "FS 修复 v35_startJoinPath 未设 curNode 导致路径卡跳转失效（加 curNode 赋值 12B）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8919689,
-        "chunked_bytes": 6157428,
-        "nodes": 4849,
-        "reason": "FS-3 蓝图补登记 fs_north_01~04（四路 +3317B）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8948511,
-        "chunked_bytes": 6168922,
-        "nodes": 4856,
-        "reason": "FS-5/6 势力面板未知态+专属技能显示 + 考核链深化7节点（兽人角斗/精灵信物/守望者邀请链）+ 账本2项"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 8972353,
-        "chunked_bytes": 6191742,
-        "nodes": 4856,
-        "reason": "G-1~G-7 大型增量：伤口系统/技能熟练度/城市作息/渐进教学/事件连锁/关系网回指/抉择回顾 新增数据与引擎钩子"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9029356,
-        "chunked_bytes": 6273830,
-        "nodes": 4869,
-        "reason": "N4-8 叙事人格革命：结局卡牌/大历史/全书/冲突池/名场面/典故/情绪注入"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9029459,
-        "chunked_bytes": 6273933,
-        "nodes": 4869,
-        "reason": "N-8 收尾：藏书惰性合并修复（+103B）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9029702,
-        "chunked_bytes": 6274172,
-        "nodes": 4869,
-        "reason": "N-8 flip 分页修复（+243B）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9103582,
-        "chunked_bytes": 6349623,
-        "nodes": 4869,
-        "reason": "F8八工程开工基线：N批后体积更新（game=9103582B）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9159215,
-        "chunked_bytes": 6329626,
-        "nodes": 4918,
-        "reason": "F1 失败开门专线：+49 节点/+9 账本项（dn_failpath.js），文本增量 ~1.5 万字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9159419,
-        "chunked_bytes": 6329825,
-        "nodes": 4918,
-        "reason": "F1 第二轮构建：registry 域注册后产物 9,159,419B，baseline 对齐"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9221470,
-        "chunked_bytes": 6390985,
-        "nodes": 4979,
-        "reason": "F-2 failpath2 61 nodes + 19 ledger + 16 fail fields"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9222225,
-        "chunked_bytes": 6391080,
-        "nodes": 4979,
-        "reason": "F-2 failpath2 修复死链回接+蓝图尾逗号修复后重建体积"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9242759,
-        "chunked_bytes": 6414868,
-        "nodes": 4976,
-        "reason": "E-2 多年回响：+27 回响节点 + 注入钩子 + 蓝图登记"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9242862,
-        "chunked_bytes": 6414971,
-        "nodes": 4976,
-        "reason": "E-2 钩子修复：echoLine 用 curNode 兜底（+103B）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9292870,
-        "chunked_bytes": 6466635,
-        "nodes": 4994,
-        "reason": "S-1 人格声音：dn_voices.js 14声音x7情境模板库 + 10 hub 专属选项 + 注入钩子（合法内容增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9294980,
-        "chunked_bytes": 6480647,
-        "nodes": 4994,
-        "reason": "T-1 心念殿：dn_thoughts.js 20概念 + 引擎钩子 t1inj/t2inj + 设置面板心念殿区（合法内容增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9311563,
-        "chunked_bytes": 6488794,
-        "nodes": 4997,
-        "reason": "L 线索拼合：CLUE_TRACKS 12->30 probes + 3 拼合枢纽 + l1inj 钩子 + 3 接线（合法内容增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9322649,
-        "chunked_bytes": 6566989,
-        "nodes": 4997,
-        "reason": "P 情感搭档：dn_partner.js 20互动节点 + v93p_judge 四态无声评判 + S.trust + p1inj 钩子 + 账本2项（合法内容增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9328639,
-        "chunked_bytes": 6510917,
-        "nodes": 5017,
-        "reason": "P 情感搭档 build 后基线（frontier_pt_ 20节点 + 引擎）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9329064,
-        "chunked_bytes": 6511342,
-        "nodes": 5017,
-        "reason": "P 情感搭档 二次校准（改名后基线）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9345454,
-        "chunked_bytes": 6589794,
-        "nodes": 5017,
-        "reason": "W 事件扩充：W-1 65则（四类均衡）+ W-2 67则（阶段专属30+通用37）+ 账本4项（合法内容增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9376580,
-        "chunked_bytes": 6552117,
-        "nodes": 5017,
-        "reason": "W 事件扩充 校准2（隐约词修复后基线）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9386402,
-        "chunked_bytes": 6630742,
-        "nodes": 5017,
-        "reason": "ACT-2 收尾：mechMine/Forge/Patrol 行动后轻量刷新（正文零重绘），与 explore/hear/train/quest 对齐"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9418482,
-        "chunked_bytes": 6599393,
-        "nodes": 5051,
-        "reason": "CP1 内容补足 34 个 deep 节点（自由城深巷/第三哨雪原/学院四季）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9463201,
-        "chunked_bytes": 6636154,
-        "nodes": 5071,
-        "reason": "CP-2 战争线深写 20 节点 + 事件池 +30 则"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9495137,
-        "chunked_bytes": 6663752,
-        "nodes": 5091,
-        "reason": "CP-3 学院生活加密 20 节点（五学年×4）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9531087,
-        "chunked_bytes": 6714863,
-        "nodes": 5121,
-        "reason": "CP-4 自由城市井12+李管事支线8+铁门关市井10+事件+20"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9596919,
-        "chunked_bytes": 6780696,
-        "nodes": 5161,
-        "reason": "CP-5 四地域深写40节点+事件+25（承天/绿洲/圣辉/北境，七锚秤线织网）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9677553,
-        "chunked_bytes": 6849129,
-        "nodes": 5201,
-        "reason": "CP-6 三族生活深写40节点+事件+20（精灵林邦/矮人山国/兽人草原，七锚秤线种族侧织网）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9741663,
-        "chunked_bytes": 6912437,
-        "nodes": 5237,
-        "reason": "CP-7 西境深写36节点+事件20（元素荒原/游侠学院/守井人支线，西境秤线织网）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9702880,
-        "chunked_bytes": 6975189,
-        "nodes": 5277,
-        "reason": "CP-8 死亡沙漠深写 40节点+20事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9702884,
-        "chunked_bytes": 6975193,
-        "nodes": 5277,
-        "reason": "CP-8 死链修复后重建"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9751976,
-        "chunked_bytes": 7023079,
-        "nodes": 5317,
-        "reason": "CP-9 东境承天城深写 40节点+20事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9751977,
-        "chunked_bytes": 7023080,
-        "nodes": 5317,
-        "reason": "CP-9 蓝图位置修正（east 40条移至nodeIndex末尾）+1B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9803160,
-        "chunked_bytes": 7073647,
-        "nodes": 5357,
-        "reason": "CP-10 圣辉城教会深写 40节点+20事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9803163,
-        "chunked_bytes": 7073650,
-        "nodes": 5357,
-        "reason": "CP-10 治理词修正后重建"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9878396,
-        "chunked_bytes": 7148252,
-        "nodes": 5418,
-        "reason": "CP-11 北境王都深写: +61节点 +20事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9930771,
-        "chunked_bytes": 7199571,
-        "nodes": 5458,
-        "reason": "CP-12 灰港深写: +40节点 +20事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9982289,
-        "chunked_bytes": 7250278,
-        "nodes": 5498,
-        "reason": "CP-13 南境港口城深写: +40节点 +20事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 9982293,
-        "chunked_bytes": 7250278,
-        "nodes": 5498,
-        "reason": "CP-13 南境港口城深写 重挂入口: +4B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 10070708,
-        "chunked_bytes": 7337710,
-        "nodes": 5580,
-        "reason": "CP14 南境三城+交汇城深写 82节点 20事件"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 10070735,
-        "chunked_bytes": 7337737,
-        "nodes": 5580,
-        "reason": "CP14 注册表补三前缀 gold/acadcity/hub"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 10070739,
-        "chunked_bytes": 7337737,
-        "nodes": 5580,
-        "reason": "CP14 重挂修复后重建"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18371707,
-        "chunked_bytes": 7337737,
-        "nodes": 5580,
-        "reason": "GR-1 单文件全量化：内嵌全部分片节点，game.html 体积升至 18.37MB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18399848,
-        "chunked_bytes": 7365924,
-        "nodes": 5601,
-        "reason": "A1-I1 理想线长线化 wealth/might/guard"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18447056,
-        "chunked_bytes": 7413132,
-        "nodes": 5636,
-        "reason": "A1-I2 理想线剩余五线 35 节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18458288,
-        "chunked_bytes": 7424364,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第一批 27节点+3622字(学院19+理想intro8)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18472462,
-        "chunked_bytes": 7437361,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第二批 25节点+4331字(fc链10+frontier链15)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18472453,
-        "chunked_bytes": 7437361,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第二批 25节点+4331字(fc链10+frontier链15) 治理词回容差"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18484775,
-        "chunked_bytes": 7449683,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第三批 acad_学院场景34节点扩写+3910字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18499616,
-        "chunked_bytes": 7464524,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第四批 grad_毕业链+goal_理想线 38节点扩写+4800字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18511403,
-        "chunked_bytes": 7476311,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第五批 acad_校外魔法剧情 30节点扩写+3900字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18522943,
-        "chunked_bytes": 7487851,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第六批 acad_生活deep人际学年事件校友导师 30节点扩写+3800字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18533257,
-        "chunked_bytes": 7498165,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第七批 origin亚种开局扩展 30节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18540671,
-        "chunked_bytes": 7502522,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第八批 fc自由城north北境 23节点扩写+2600字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18543728,
-        "chunked_bytes": 7502522,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第八批 fc自由城north北境 23节点扩写+2600字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18550356,
-        "chunked_bytes": 7509150,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第九批 城市hub交汇城 20节点扩写+2200字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18559601,
-        "chunked_bytes": 7515011,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十批 圣城东境沙漠铁门关学院 25节点扩写+2800字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18559601,
-        "chunked_bytes": 7515011,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十批 圣城东境沙漠铁门关学院 25节点扩写+2800字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18562979,
-        "chunked_bytes": 7515011,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十批 圣城东境沙漠铁门关学院 25节点扩写+2800字(含低声修正)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18573525,
-        "chunked_bytes": 7525563,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十一批 学院生活人际 26节点扩写+3200字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18583813,
-        "chunked_bytes": 7535851,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十二批 学院魔法剧情 26节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18593400,
-        "chunked_bytes": 7545438,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十三批 北境东境教会深写 26节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18603361,
-        "chunked_bytes": 7555399,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十四批 毕业理想线 26节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18613891,
-        "chunked_bytes": 7565929,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十五批 学院社交课外教会 26节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18624561,
-        "chunked_bytes": 7576599,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十六批 西境游侠支线 26节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18624564,
-        "chunked_bytes": 7576602,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十六批 西境游侠支线 26节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18635593,
-        "chunked_bytes": 7587631,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十七批 北境艾尔达深写 26节点扩写+3300字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18648596,
-        "chunked_bytes": 7600634,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十八批 教会+东境深写 26节点扩写+4000字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18661252,
-        "chunked_bytes": 7613290,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第十九批 学院生活+战争前线 26节点扩写+4000字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18673700,
-        "chunked_bytes": 7625738,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第二十批 终局+沙漠+东境+教会+西境 26节点扩写+4000字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18685374,
-        "chunked_bytes": 7637412,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第二十一批 情感搭档+锚线+东境 26节点扩写+4000字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18696718,
-        "chunked_bytes": 7648756,
-        "nodes": 5636,
-        "reason": "TQ-2/3 第二十二批 教会+北境+毕业+理想线 26节点扩写+4000字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18707242,
-        "chunked_bytes": 7659280,
-        "nodes": 5636,
-        "reason": "TQ23 第二十三批 薄节点扩写 26 节点"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18718672,
-        "chunked_bytes": 7670710,
-        "nodes": 5636,
-        "reason": "TQ24 第二十四批 薄节点扩写 26 节点（学院/毕业/锚线/沙漠/东境/西境/战后）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18730751,
-        "chunked_bytes": 7682789,
-        "nodes": 5636,
-        "reason": "TQ25 第二十五批 薄节点扩写 26 节点（学院/理想线/北境/西境/锚线/沙漠/失败线等）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18743298,
-        "chunked_bytes": 7695336,
-        "nodes": 5636,
-        "reason": "TQ26 第二十六批 薄节点扩写 26 节点（哨所/北境/南境/港城/锚线/理想线等）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18756162,
-        "chunked_bytes": 7708200,
-        "nodes": 5636,
-        "reason": "TQ27 第二十七批 薄节点扩写 26 节点（学院课堂/毕业去向/五主线/理想线/同学支线/失败线等）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18769147,
-        "chunked_bytes": 7721185,
-        "nodes": 5636,
-        "reason": "TQ28 第二十八批薄节点扩写"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18781603,
-        "chunked_bytes": 7733641,
-        "nodes": 5636,
-        "reason": "TQ29 第二十九批薄节点扩写"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18794890,
-        "chunked_bytes": 7740000,
-        "nodes": 5636,
-        "reason": "TQ30 第三十批薄节点扩写"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18801844,
-        "chunked_bytes": 7740013,
-        "nodes": 5636,
-        "reason": "TQ30 第三十批薄节点扩写"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18801857,
-        "chunked_bytes": 7740013,
-        "nodes": 5636,
-        "reason": "TQ30 第三十批薄节点扩写"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18826330,
-        "chunked_bytes": 7761513,
-        "nodes": 5636,
-        "reason": "TQ31 第三十一批薄节点扩写（26 节点 +16,781 字）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18829303,
-        "chunked_bytes": 7761513,
-        "nodes": 5636,
-        "reason": "TQ31 第三十一批薄节点扩写（26 节点 +16,781 字，verify 闭环修正后字节）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18845024,
-        "chunked_bytes": 7777234,
-        "nodes": 5636,
-        "reason": "b32 薄节点扩写 26 节点 +15.7KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18876308,
-        "chunked_bytes": 7808518,
-        "nodes": 5636,
-        "reason": "b33 failpath2 61节点扩写 +9节点补段"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18905474,
-        "chunked_bytes": 7837684,
-        "nodes": 5636,
-        "reason": "TQ34 faction2四势力线53节点扩写 文本+1.2万字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18905471,
-        "chunked_bytes": 7837681,
-        "nodes": 5636,
-        "reason": "TQ34 faction2四势力线53节点扩写 文本+1.2万字"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18937981,
-        "chunked_bytes": 7870191,
-        "nodes": 5636,
-        "reason": "TQ35 fs_join 47节点扩写 +32KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18948763,
-        "chunked_bytes": 7880973,
-        "nodes": 5636,
-        "reason": "TQ36 failpath 45节点扩写 +10.8KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18979785,
-        "chunked_bytes": 7911995,
-        "nodes": 5636,
-        "reason": "V94-主界面捏人+31KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18985354,
-        "chunked_bytes": 7917564,
-        "nodes": 5636,
-        "reason": "V94-主界面捏人+CSS"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18986059,
-        "chunked_bytes": 7918269,
-        "nodes": 5636,
-        "reason": "V94b-捏人向导滚动修复"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18986119,
-        "chunked_bytes": 7918329,
-        "nodes": 5636,
-        "reason": "V94b-捏人向导滚动+理想移步"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 18986342,
-        "chunked_bytes": 7918329,
-        "nodes": 5636,
-        "reason": "V94c-捏人全屏flex布局"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19023450,
-        "chunked_bytes": 7955660,
-        "nodes": 5636,
-        "reason": "V95 MP1-11 主界面与捏人增强"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19023459,
-        "chunked_bytes": 7955669,
-        "nodes": 5636,
-        "reason": "V95 MP1-11 主界面与捏人增强(修订)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19025725,
-        "chunked_bytes": 7957935,
-        "nodes": 5636,
-        "reason": "V95 MP5 导入屏CSS补齐"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19026067,
-        "chunked_bytes": 7958277,
-        "nodes": 5636,
-        "reason": "UI-FIX 顶栏溢出适配（gap_00.html v68 顶栏防溢出 CSS，+342B 合法增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19026287,
-        "chunked_bytes": 7958497,
-        "nodes": 5636,
-        "reason": "UI-FIX modal 提权修复（gap_00.html #modal z-index 900→10000，+220B 合法增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19027335,
-        "chunked_bytes": 7959545,
-        "nodes": 5636,
-        "reason": "UI-FIX2_20260912 高亮单次正则修复+分页滚动兜底+世界书常驻会话去重（+1048B 合法增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19030800,
-        "chunked_bytes": 7963010,
-        "nodes": 5636,
-        "reason": "V96-OPT-B1 选项门控模块(v96_optGate)+A1/A4/A5/A6 新增 3465B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19034037,
-        "chunked_bytes": 7966247,
-        "nodes": 5636,
-        "reason": "V96-OPT-B2 组合判定(v96_dualResolve)+后果预览(v96_preview) 新增 3237B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19039232,
-        "chunked_bytes": 7971442,
-        "nodes": 5636,
-        "reason": "V96-OPT-B3 热词卡模块(v96_hotword:词条/NPC关系/地点)+hlInit扩展 新增 5195B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19039528,
-        "chunked_bytes": 7971738,
-        "nodes": 5636,
-        "reason": "V96-OPT-B3 热词卡监听残留修复(__v96cardH统一管理) 新增 296B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19043277,
-        "chunked_bytes": 7975487,
-        "nodes": 5636,
-        "reason": "V96-OPT-B4 B8线索锚点(v96_probeConv/委托)+C12分支回退(栈/按钮) 新增 3749B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19043361,
-        "chunked_bytes": 7975571,
-        "nodes": 5636,
-        "reason": "V96-OPT-B4 线索锚点转换移至rich后(防esc转义) 新增 84B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19043482,
-        "chunked_bytes": 7975692,
-        "nodes": 5636,
-        "reason": "V96-OPT-B4 回退栈语义修正(栈顶=当前节点,pop两次) 新增 121B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19043517,
-        "chunked_bytes": 7975727,
-        "nodes": 5636,
-        "reason": "V96-OPT-B4 回退目标保留栈顶语义 新增 35B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19044030,
-        "chunked_bytes": 7976240,
-        "nodes": 5636,
-        "reason": "V96-OPT-B5 C11选择记忆回显(v96_choiceEcho) 新增 513B"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19071439,
-        "chunked_bytes": 8003649,
-        "nodes": 5636,
-        "reason": "V96-OPT-B5/LW 活的世界模拟层 S1-S5 模块+数据 增长 27KB"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19071445,
-        "chunked_bytes": 8003655,
-        "nodes": 5636,
-        "reason": "LW S1-S5 活的世界模拟层 数据+引擎增长"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19071461,
-        "chunked_bytes": 8003671,
-        "nodes": 5636,
-        "reason": "LW S1-S5 模块拆分为 script_19.js 独立块(+<script>包装 16B)"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19088734,
-        "chunked_bytes": 8020944,
-        "nodes": 5636,
-        "reason": "v96 LW战争引擎：warfronts5+战争事件8+功罪双轨+4新检查器+10城市场景易主标注（合法内容增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19088868,
-        "chunked_bytes": 8021078,
-        "nodes": 5636,
-        "reason": "v96 LW战争引擎 clamp 收口（LW_factionShift/LW_deed 值域 +134B，合法内容增长）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19109673,
-        "chunked_bytes": 8041883,
-        "nodes": 5636,
-        "reason": "v98 LW-A2回响生态30条+A3账本融合+C1世界编年史双册 合法内容/引擎增长"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19109791,
-        "chunked_bytes": 8042001,
-        "nodes": 5636,
-        "reason": "v98 编年史/回响引擎 修正 led_ 回响 id 与触发 合法增长"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19206279,
-        "chunked_bytes": 8138561,
-        "nodes": 5690,
-        "reason": "v99 起源记忆54节点+账本6项+沉浸表现层script_20+注册表"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19207949,
-        "chunked_bytes": 8140231,
-        "nodes": 5690,
-        "reason": "v99 UI修复：捏人必填醒目提示+已选选项清扫"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19208240,
-        "chunked_bytes": 8140522,
-        "nodes": 5690,
-        "reason": "v99 UI修复双套捏人统一flashLack"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19208921,
-        "chunked_bytes": 8141203,
-        "nodes": 5690,
-        "reason": "v99 UI修复就近定义v99FlashLack"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19265127,
-        "chunked_bytes": 8196645,
-        "nodes": 5727,
-        "reason": "v100 学院生活沙盒+暗流阴谋 37 节点注入"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19966451,
-        "chunked_bytes": 8196645,
-        "nodes": 5727,
-        "reason": "v101 学院生活沙盒+暗流深化 55 节点注入+账本重构(223项)+蓝图+hub入口，合法内容增长"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19681206,
-        "chunked_bytes": 8610032,
-        "nodes": 5916,
-        "reason": "百兽百草 v108：game_chunked 8610KB 超 8500KB 上限，合法内容增长（新增 35 节点/180 生物）"
-      },
-      {
-        "date": "2026-09-09",
-        "game_bytes": 19693503,
-        "chunked_bytes": 8622329,
-        "nodes": 5919,
-        "reason": "百兽百草 v108 收尾：补 3 深节点+3 事件+6 账本+35 蓝图，game.html 19693503B 合法增长"
-      }
-    ]
-  },
-  "limits": {
-    "game_html_bytes_max": 6120000,
-    "chunked_html_bytes_max": 3500000,
-    "node_total_min": 2618,
-    "dead_links_max": 0,
-    "full_seconds_max": 20.0
-  }
+ "name": "群雄割据性能预算门",
+ "version": 82,
+ "updated": "2026-09-13",
+ "note": "超大型扩充：用户确认后续 20+ 批内容（贵族P-B~F、文化语言礼仪C-1~5、战争引擎W-1~5、旅途荒野R-1~5、B5接入）将持续增长，预算上限大幅上调以容纳（game 21.5M→32M，chunked 9.8M→15M，full_seconds 30→45）",
+ "budgets": {
+  "game_html_bytes_max": 32000000,
+  "chunked_html_bytes_max": 15000000,
+  "node_total_min": 5869,
+  "dead_links_max": 0,
+  "full_seconds_max": 45.0
+ },
+ "baseline": {
+  "game_html_bytes": 20450292,
+  "chunked_html_bytes": 9377457,
+  "node_total": 5919,
+  "full_seconds": 22.53
+ },
+ "meta": {
+  "last_updated": "2026-09-13",
+  "reason": "perf3-6 批：writePar 单次 innerHTML + v93 aside(双版)/guide/foot 内容指纹去重 + 收容循环自停（+407B 为覆盖版 renderAside 去重，累计 +661B 合法增长）",
+  "history": [
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6069783,
+    "chunked_bytes": 3437896,
+    "nodes": 3789,
+    "reason": "U9 预算自动化脚本上线测试"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6029525,
+    "chunked_bytes": 3418195,
+    "nodes": 3789,
+    "reason": "T0-1 引号规范化（无体积增长，复核用）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6074958,
+    "chunked_bytes": 3438776,
+    "nodes": 3789,
+    "reason": "T0-1 引号规范化完成（1635 处单引号/转义引号转中文引号，UTF-8 字节自然增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6075117,
+    "chunked_bytes": 3440261,
+    "nodes": 3789,
+    "reason": "I1-1 分段阅读渲染+建号兜底完成"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6082301,
+    "chunked_bytes": 3447445,
+    "nodes": 3789,
+    "reason": "I1-2 章节标题卡 dn_chapters.js 数据表"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6082472,
+    "chunked_bytes": 3447616,
+    "nodes": 3789,
+    "reason": "I1-2 修复v45_sceneTitle导出+章节卡"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6088175,
+    "chunked_bytes": 3453319,
+    "nodes": 3789,
+    "reason": "I1-3 冒险手记实现"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6089100,
+    "chunked_bytes": 3454244,
+    "nodes": 3789,
+    "reason": "I1-4 沉浸联动+分段阅读开关"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6126926,
+    "chunked_bytes": 3488393,
+    "nodes": 3803,
+    "reason": "PE-1 兽人草原深度包 16节点+5事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6159227,
+    "chunked_bytes": 3520694,
+    "nodes": 3816,
+    "reason": "PE-2 精灵矮人扩展包 10节点+4事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6176781,
+    "chunked_bytes": 3538248,
+    "nodes": 3823,
+    "reason": "PE-3 铁门关战争前线包 7节点+6事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6177367,
+    "chunked_bytes": 3538588,
+    "nodes": 3823,
+    "reason": "PE 入口连通修复 6处+选项扩展"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6188934,
+    "chunked_bytes": 3550155,
+    "nodes": 3823,
+    "reason": "CM-1 记忆注入 模板库+钩子"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6188940,
+    "chunked_bytes": 3550161,
+    "nodes": 3823,
+    "reason": "CM-1 记忆注入 console marker 唯一化"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6188927,
+    "chunked_bytes": 3550148,
+    "nodes": 3823,
+    "reason": "CM-1 console 调试串去 marker 前缀"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6196016,
+    "chunked_bytes": 3557237,
+    "nodes": 3823,
+    "reason": "CM-2 状态感知变体 20节点挂载"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6204172,
+    "chunked_bytes": 3565393,
+    "nodes": 3823,
+    "reason": "CM-3 因果账本+设定词冻结 19检查器"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6221943,
+    "chunked_bytes": 3573097,
+    "nodes": 3823,
+    "reason": "CM-4 pace标注+会话计数器+20检查器"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6221943,
+    "chunked_bytes": 3573097,
+    "nodes": 3823,
+    "reason": "CM-4 会话计数器入口归零"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6265575,
+    "chunked_bytes": 3616590,
+    "nodes": 3838,
+    "reason": "BD-1西境内容包: +15节点/5事件/支线, 节点3838"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6265867,
+    "chunked_bytes": 3616590,
+    "nodes": 3838,
+    "reason": "BD-1收尾: 账本led_36西境伏笔+292B, 节点3838"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6307286,
+    "chunked_bytes": 3658085,
+    "nodes": 3854,
+    "reason": "BD-2沙漠深化包: +16节点/5事件/支线, 节点3854"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6338913,
+    "chunked_bytes": 3689712,
+    "nodes": 3867,
+    "reason": "BD-3光明教会包: +13节点/5事件/支线, 节点3867"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6365489,
+    "chunked_bytes": 3716203,
+    "nodes": 3877,
+    "reason": "BD-4东部承天城包: +10节点/5事件/晨天故都线, 节点3877, 账本38/38"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6369267,
+    "chunked_bytes": 3716203,
+    "nodes": 3877,
+    "reason": "CS-1加密导出导入: 无节点变化, StorageKit+UI"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6378571,
+    "chunked_bytes": 3716203,
+    "nodes": 3877,
+    "reason": "CS-2云存档三函数+设置面板云区: v63_cloud实现"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6380701,
+    "chunked_bytes": 3716203,
+    "nodes": 3877,
+    "reason": "CS-2b补注9850版设置面板云区"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6382059,
+    "chunked_bytes": 3716203,
+    "nodes": 3877,
+    "reason": "CS-3冲突处理: 上传确认+时间戳裁决+冲突备份"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6382061,
+    "chunked_bytes": 3716203,
+    "nodes": 3877,
+    "reason": "CS-3b修复\\n转义"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6382063,
+    "chunked_bytes": 3716203,
+    "nodes": 3877,
+    "reason": "CS-3c修复冲突确认换行转义"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6382063,
+    "chunked_bytes": 3732777,
+    "nodes": 3877,
+    "reason": "CS-3d分片重建(CS批分片版同步)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6406889,
+    "chunked_bytes": 3732777,
+    "nodes": 3877,
+    "reason": "SP1-blueprint dn_story_blueprint.js 纳入权威源（79弧+36章+10卷+5幕），合法内容层增长 +24.8KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6785268,
+    "chunked_bytes": 3732777,
+    "nodes": 3877,
+    "reason": "SP2-annotate nodeIndex 3877 节点全量标注（91%弧/91%卷），合法内容层增长 +374KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6786993,
+    "chunked_bytes": 3732777,
+    "nodes": 3877,
+    "reason": "SP3-arcs 弧线生命周期：S.arcs 状态 + v91_arcAdvance 推进钩子（+1.7KB 合法引擎层增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6794832,
+    "chunked_bytes": 3732777,
+    "nodes": 3877,
+    "reason": "SP4-node-templates NODE_TEMPLATES 12 类模板工厂（+7.8KB 合法数据层增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6819424,
+    "chunked_bytes": 3732777,
+    "nodes": 3905,
+    "reason": "SP-8 示范章 30 节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6864846,
+    "chunked_bytes": 3732777,
+    "nodes": 3937,
+    "reason": "A1_20260909"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6882577,
+    "chunked_bytes": 3732777,
+    "nodes": 3954,
+    "reason": "A2_20260909"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6969150,
+    "chunked_bytes": 4317894,
+    "nodes": 3914,
+    "reason": "A3 origin-expand 56 nodes"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 6979062,
+    "chunked_bytes": 4317894,
+    "nodes": 3919,
+    "reason": "B1 acad-road 5 nodes + 3 entries"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7039183,
+    "chunked_bytes": 4327658,
+    "nodes": 3953,
+    "reason": "B2 acad-life 34 nodes"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7086899,
+    "chunked_bytes": 4387627,
+    "nodes": 3987,
+    "reason": "B3 acad people/mentors/forbidden 34 nodes"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7086911,
+    "chunked_bytes": 4387627,
+    "nodes": 3987,
+    "reason": "B3 wording fix +12B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7089422,
+    "chunked_bytes": 4438178,
+    "nodes": 3987,
+    "reason": "B-4 学院/北境事件池+12"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7098961,
+    "chunked_bytes": 4447888,
+    "nodes": 3987,
+    "reason": "C-3 薄节点密度重写（16 节点扩写 25 万字计划的文本增量）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7104818,
+    "chunked_bytes": 4453997,
+    "nodes": 3991,
+    "reason": "E-1 过渡章四去向旅途链（+4 节点）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7414128,
+    "chunked_bytes": 4763398,
+    "nodes": 4150,
+    "reason": "B-5 补缺：学院生活/外界/人际/修行/剧情 159 新节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7414172,
+    "chunked_bytes": 4763442,
+    "nodes": 4150,
+    "reason": "B-5 死链与治理词修复后重建"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7449323,
+    "chunked_bytes": 4798593,
+    "nodes": 4176,
+    "reason": "M1 第三哨区域骨架 26节点+4事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7507611,
+    "chunked_bytes": 4856881,
+    "nodes": 4220,
+    "reason": "M2 钥匙寻踪+封印抉择+双支线+守卫战 44节点5事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7507611,
+    "chunked_bytes": 4856881,
+    "nodes": 4220,
+    "reason": "M2 账本修复(误注入修正)+44节点5事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7507533,
+    "chunked_bytes": 4856803,
+    "nodes": 4220,
+    "reason": "M2 去重修复+完整交付"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7507675,
+    "chunked_bytes": 4856945,
+    "nodes": 4220,
+    "reason": "M2b san初始化修复"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7564100,
+    "chunked_bytes": 4904823,
+    "nodes": 4274,
+    "reason": "M3 毕业四去向53节点+5事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7639032,
+    "chunked_bytes": 4982855,
+    "nodes": 4335,
+    "reason": "M4 同学第二幕：61 节点 + 10 事件 + 10 账本项"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7639059,
+    "chunked_bytes": 4982882,
+    "nodes": 4335,
+    "reason": "M4 治理词替换微增 27B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7671610,
+    "chunked_bytes": 5015433,
+    "nodes": 4359,
+    "reason": "M5 锚线 24 节点+6 事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7671640,
+    "chunked_bytes": 5015463,
+    "nodes": 4359,
+    "reason": "M5 治理词替换微增 30B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7713724,
+    "chunked_bytes": 5057547,
+    "nodes": 4389,
+    "reason": "M6 锚5-7+金秤真相 30节点+3事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7713724,
+    "chunked_bytes": 5057547,
+    "nodes": 4389,
+    "reason": "M6 治理词微调"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7744911,
+    "chunked_bytes": 5088734,
+    "nodes": 4415,
+    "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7744913,
+    "chunked_bytes": 5088736,
+    "nodes": 4415,
+    "reason": "M7 终局章+5新结局 26节点+3事件+c_anchor检查器"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7811504,
+    "chunked_bytes": 5160417,
+    "nodes": 4469,
+    "reason": "M8 战争推进+前四势力：warphase14+faction40+traitor4+事件15+账本5"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7940471,
+    "chunked_bytes": 5289384,
+    "nodes": 4601,
+    "reason": "M9 卷D后四势力+战后章+尾声：131节点/18事件/5账本"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7940504,
+    "chunked_bytes": 5289417,
+    "nodes": 4601,
+    "reason": "M9 治理词修复后重建"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7964521,
+    "chunked_bytes": 5300431,
+    "nodes": 4601,
+    "reason": "TQ-1 天气系统+pace补标：新增48条天气模板约4KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7964548,
+    "chunked_bytes": 5300458,
+    "nodes": 4601,
+    "reason": "TQ-1 修正天气模板治理词"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 7999027,
+    "chunked_bytes": 5330812,
+    "nodes": 4601,
+    "reason": "TQ-2 序章27节点+自由城/北上链94节点扩写注入"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8003677,
+    "chunked_bytes": 5332645,
+    "nodes": 4601,
+    "reason": "TQ-3 学院67节点+城市hub 27节点薄节点扩写注入"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8059963,
+    "chunked_bytes": 5379541,
+    "nodes": 4601,
+    "reason": "TQ-4 五主线+七锚+金秤+终局 deep 化 26 节点扩写"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8066379,
+    "chunked_bytes": 5385957,
+    "nodes": 4601,
+    "reason": "CON-1 记忆注入 v2：模板库扩充+触发⑤⑥"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8066385,
+    "chunked_bytes": 5385963,
+    "nodes": 4601,
+    "reason": "CON-1 marker 修正后字节微调"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8066661,
+    "chunked_bytes": 5386239,
+    "nodes": 4601,
+    "reason": "CON-1 设置面板加记忆注入开关"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8161865,
+    "chunked_bytes": 5443217,
+    "nodes": 4601,
+    "reason": "CON-2 过渡链：1212 节点注入过渡白描 + transition 命令"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8211129,
+    "chunked_bytes": 5478166,
+    "nodes": 4631,
+    "reason": "CON-2 回响节点：30 决策回响 + 账本登记 + 蓝图登记"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8211127,
+    "chunked_bytes": 5478164,
+    "nodes": 4631,
+    "reason": "CON-2 回响节点修复尾逗号：字节微调"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8211142,
+    "chunked_bytes": 5478179,
+    "nodes": 4631,
+    "reason": "CON-2 回响文本微调"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8211142,
+    "chunked_bytes": 5478191,
+    "nodes": 4631,
+    "reason": "CON-2 分片修复：FREE_BOARD 提前 + v62 死链选项移除"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8245104,
+    "chunked_bytes": 5508155,
+    "nodes": 4631,
+    "reason": "DEEP-1 好感四态变体 48 节点 + v91_resolveText 递归增强"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8278835,
+    "chunked_bytes": 5539859,
+    "nodes": 4631,
+    "reason": "DEEP-2 176事件微叙事化+combat受创段补齐"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8284914,
+    "chunked_bytes": 5545659,
+    "nodes": 4631,
+    "reason": "EXP-1 结局deep化+临终视野"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8286462,
+    "chunked_bytes": 5547090,
+    "nodes": 4631,
+    "reason": "EXP-2 突破场景句+v92_breakthroughScene"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8316269,
+    "chunked_bytes": 5574776,
+    "nodes": 4631,
+    "reason": "UPG-03 账本四字段"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8342461,
+    "chunked_bytes": 5589774,
+    "nodes": 4631,
+    "reason": "UPG-04 节点tag通道"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8355762,
+    "chunked_bytes": 5603075,
+    "nodes": 4631,
+    "reason": "UPG-01 世界书Lorebook 29条"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8358938,
+    "chunked_bytes": 5606251,
+    "nodes": 4631,
+    "reason": "UPG-02 记忆注入v3"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8363480,
+    "chunked_bytes": 5610585,
+    "nodes": 4631,
+    "reason": "UPG-05 回退系统+伏笔超期"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8371694,
+    "chunked_bytes": 5618715,
+    "nodes": 4631,
+    "reason": "UPG-06 结局图鉴+成就系统"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8387781,
+    "chunked_bytes": 5621756,
+    "nodes": 4631,
+    "reason": "UPG-07 响应式UI同步"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8393210,
+    "chunked_bytes": 5627108,
+    "nodes": 4631,
+    "reason": "UPG-08 属性总览面板"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8401390,
+    "chunked_bytes": 5635125,
+    "nodes": 4631,
+    "reason": "UPG-10 三级持久化+会话恢复"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8401605,
+    "chunked_bytes": 5635338,
+    "nodes": 4631,
+    "reason": "UPG-10 三级持久化+会话恢复(补init)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8404536,
+    "chunked_bytes": 5638115,
+    "nodes": 4631,
+    "reason": "UPG-09 九域地图可视化"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8410376,
+    "chunked_bytes": 5643897,
+    "nodes": 4631,
+    "reason": "UPG-14 事件池全局钩子 5钩子+引擎扫描+账本提醒"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8419115,
+    "chunked_bytes": 5652536,
+    "nodes": 4631,
+    "reason": "UPG-17 编年史系统 20规则+3API+面板分页"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8445317,
+    "chunked_bytes": 5678426,
+    "nodes": 4637,
+    "reason": "UPG-16 西幻体系：6种族特长+12法术四系+18职业事件+6阵营变体+法术书"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8445317,
+    "chunked_bytes": 5678426,
+    "nodes": 4637,
+    "reason": "UPG-16 fix: 职业事件day错开"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8448814,
+    "chunked_bytes": 5681923,
+    "nodes": 4637,
+    "reason": "UPG-15 节点物理分区：dn_registry九域注册表+命名规范检查器"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8449310,
+    "chunked_bytes": 5682365,
+    "nodes": 4637,
+    "reason": "UPG-15 节点物理分区：注册表100%覆盖"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8455111,
+    "chunked_bytes": 5688069,
+    "nodes": 4637,
+    "reason": "PN1-PN2 线程状态机+编织引用引擎钩子与注册表（+9.2KB 合法增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8457538,
+    "chunked_bytes": 5690460,
+    "nodes": 4637,
+    "reason": "PN3 叙事线面板+顶栏按钮（+0.8KB 合法增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8457560,
+    "chunked_bytes": 5690481,
+    "nodes": 4637,
+    "reason": "PN-FIX threadTick 惰性初始化（+0.06KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8478184,
+    "chunked_bytes": 5710821,
+    "nodes": 4637,
+    "reason": "W-N1~3 世界局势快照+NPC状态机+状态回指（数据+引擎+面板，+8.6KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8478184,
+    "chunked_bytes": 5710821,
+    "nodes": 4637,
+    "reason": "WN-fix 面板结构修复（字节不变级）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8489541,
+    "chunked_bytes": 5721991,
+    "nodes": 4637,
+    "reason": "T-N1~3 节点编辑器作者工具（搜索/编辑/脚手架/导出，+12KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8497304,
+    "chunked_bytes": 5729598,
+    "nodes": 4637,
+    "reason": "A-N1~3 演出层：场景环境音+氛围主题+专名高亮（+10KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8497343,
+    "chunked_bytes": 5729634,
+    "nodes": 4637,
+    "reason": "A-N1~3 演出层：场景环境音+氛围主题+专名高亮（+10KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8497645,
+    "chunked_bytes": 5729933,
+    "nodes": 4637,
+    "reason": "A-N 钩子补挂 v45 分页渲染（+0.3KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8508404,
+    "chunked_bytes": 5740522,
+    "nodes": 4637,
+    "reason": "G-N1 商路经营小循环（+8KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8511779,
+    "chunked_bytes": 5743851,
+    "nodes": 4637,
+    "reason": "G-N2 收集图鉴（+6KB）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8511811,
+    "chunked_bytes": 5743883,
+    "nodes": 4637,
+    "reason": "G-N1+G-N2 商路图鉴（TRADE_GOODS_V92 避冲突）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8511819,
+    "chunked_bytes": 5743891,
+    "nodes": 4637,
+    "reason": "G-N1+G-N2 商路图鉴（sell 引用改名修复）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8520223,
+    "chunked_bytes": 5752201,
+    "nodes": 4637,
+    "reason": "G-N3 数值台阶（+6KB）：战力评级+九域难度参考层"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8521717,
+    "chunked_bytes": 5753681,
+    "nodes": 4637,
+    "reason": "G-C1-C3 内容深化（+6货/+4事件/图鉴触点/实力行）：商路与收集系统内容扩充"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8575002,
+    "chunked_bytes": 5802699,
+    "nodes": 4657,
+    "reason": "F-1 主线三幕 20节点 新增文本"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8575818,
+    "chunked_bytes": 5803515,
+    "nodes": 4657,
+    "reason": "F-1 ifJob变体重构 文本微增"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8593878,
+    "chunked_bytes": 5821506,
+    "nodes": 4662,
+    "reason": "F-2 抉择代价节点 5事件5节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8629813,
+    "chunked_bytes": 5857370,
+    "nodes": 4680,
+    "reason": "F-3 NPC弧线18节点 文本增长"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8650818,
+    "chunked_bytes": 5878337,
+    "nodes": 4689,
+    "reason": "F-4 身世暗线+回响15节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8656836,
+    "chunked_bytes": 5888623,
+    "nodes": 4693,
+    "reason": "F-5 自由城第二幕+旅途事件：hub入口3处/事件池+4/city链4节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8673794,
+    "chunked_bytes": 5905575,
+    "nodes": 4699,
+    "reason": "F-6 结局互锁+战役战斗：battle/medici/2结局/epilogue 6节点+事件2"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8676825,
+    "chunked_bytes": 5908606,
+    "nodes": 4699,
+    "reason": "v92空态欢迎主界面：story区未开始不再空白（标题/引言/开始·读档·设置按钮）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8692816,
+    "chunked_bytes": 5924407,
+    "nodes": 4699,
+    "reason": "UI93 v4 方案一落地：齿轮设置/主书签收纳/旁白栏/指引条/功能入口，节点内容未变"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8692806,
+    "chunked_bytes": 5924396,
+    "nodes": 4699,
+    "reason": "UI93 v4 成就收集度改用 window.N 统计"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8693832,
+    "chunked_bytes": 5925409,
+    "nodes": 4699,
+    "reason": "UI93 v4 收纳兜底+动态按钮CSS隐藏，代码层增长 1032B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8693880,
+    "chunked_bytes": 5925455,
+    "nodes": 4699,
+    "reason": "UI93 v4 成就收集度判空加固+动态收纳兜底"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8693881,
+    "chunked_bytes": 5925456,
+    "nodes": 4699,
+    "reason": "UI93 v4 齿轮z-index提升至120"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8707748,
+    "chunked_bytes": 5938091,
+    "nodes": 4699,
+    "reason": "UI93-v5 概念图还原：右上更多菜单+纪闻分版块+底部资源栏+选项卡片 CSS/JS"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8707854,
+    "chunked_bytes": 5938199,
+    "nodes": 4699,
+    "reason": "UI93-v5 fix2：statrow 横排 + 纪闻空态基调句"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8707854,
+    "chunked_bytes": 5938199,
+    "nodes": 4699,
+    "reason": "UI93-v5 fix3：更多菜单项先关菜单"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8707875,
+    "chunked_bytes": 5938220,
+    "nodes": 4699,
+    "reason": "UI93-v5.1 正文加宽对齐书签行（story 42em→76em+94%）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8715201,
+    "chunked_bytes": 5945441,
+    "nodes": 4699,
+    "reason": "ACT1+ACT2 行动系统P0：行动日志容器+刷新函数拆分"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8715314,
+    "chunked_bytes": 5945553,
+    "nodes": 4699,
+    "reason": "ACT1+ACT2 行动日志与刷新函数拆分：+113B（#v93-actlog 容器与 v93_refreshAfterAct IIFE）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8723717,
+    "chunked_bytes": 5953840,
+    "nodes": 4699,
+    "reason": "WS-1 世界状态回路：v93_worldState/v93_worldEcho + dn_worldstate_tpl.js 注入"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8724045,
+    "chunked_bytes": 5954164,
+    "nodes": 4699,
+    "reason": "WS-1 seal维度防剧透门槛(+328B)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8733967,
+    "chunked_bytes": 5963826,
+    "nodes": 4699,
+    "reason": "CB-2 指令环战斗v2(战斗面板+状态机+6战斗节点)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8737495,
+    "chunked_bytes": 5967301,
+    "nodes": 4699,
+    "reason": "EC-3 经济闭环(S.market+商路面板+商会分红)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8755559,
+    "chunked_bytes": 5985073,
+    "nodes": 4699,
+    "reason": "EC-3经济闭环+WD-4日报+AU-5环境音+NM-6记忆+FT-7节日+SM-8冒烟v2 八批注入完成"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8759930,
+    "chunked_bytes": 5989362,
+    "nodes": 4699,
+    "reason": "NM-6 IIFE补注后重建"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8769658,
+    "chunked_bytes": 6000039,
+    "nodes": 4709,
+    "reason": "REL-1 送礼系统：+10节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8769664,
+    "chunked_bytes": 6000045,
+    "nodes": 4709,
+    "reason": "REL-1 送礼系统：治理词替换字数微调"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8776678,
+    "chunked_bytes": 6007394,
+    "nodes": 4715,
+    "reason": "REL-2 邀约同行：+6节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8784589,
+    "chunked_bytes": 6015305,
+    "nodes": 4723,
+    "reason": "REL-3 跨城书信：+8节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8802870,
+    "chunked_bytes": 6033586,
+    "nodes": 4745,
+    "reason": "REL-4 关系事件链：+22节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8809505,
+    "chunked_bytes": 6040221,
+    "nodes": 4750,
+    "reason": "REL-5 关系影响世界：+5节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8815193,
+    "chunked_bytes": 6045909,
+    "nodes": 4757,
+    "reason": "WDR-1 世界状态仪表盘：+7节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8822082,
+    "chunked_bytes": 6052798,
+    "nodes": 4761,
+    "reason": "WDR-2 决策长期后果：+4节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8829283,
+    "chunked_bytes": 6059999,
+    "nodes": 4768,
+    "reason": "WDR-3 玩家据点：+7节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8845835,
+    "chunked_bytes": 6076551,
+    "nodes": 4784,
+    "reason": "AP1-3 战后/深渊/神谕：+17节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8850336,
+    "chunked_bytes": 6081052,
+    "nodes": 4788,
+    "reason": "NG-1 多周目变奏：+4节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8860140,
+    "chunked_bytes": 6090856,
+    "nodes": 4796,
+    "reason": "NG-2 结局后日谈+NG-3 周目旧账：+8节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8871721,
+    "chunked_bytes": 6102750,
+    "nodes": 4806,
+    "reason": "FEEL 节奏手感：+10节点(3越级战+3前夜+3插曲+收束)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8871769,
+    "chunked_bytes": 6102798,
+    "nodes": 4806,
+    "reason": "FEEL 节奏手感：+10节点 3越级战+3前夜+3插曲"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8859699,
+    "chunked_bytes": 6104985,
+    "nodes": 4806,
+    "reason": "FS-1 双系统合一：S.faction 对象化迁移 + v35_doJoin 统一入口"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8870988,
+    "chunked_bytes": 6108759,
+    "nodes": 4806,
+    "reason": "FS-2 加入路径机制：V35补north/desert+V35_JOIN_PATHS+startJoinPath+面板路径卡"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8909948,
+    "chunked_bytes": 6150610,
+    "nodes": 4806,
+    "reason": "FS-3 入伙前置链：11势力独特加入路径39节点+蓝图登记"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8916408,
+    "chunked_bytes": 6157070,
+    "nodes": 4849,
+    "reason": "FS-3 入伙前置链43节点N直赋+蓝图+FS-4 势力任务与叛逃按钮"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8916360,
+    "chunked_bytes": 6157076,
+    "nodes": 4849,
+    "reason": "FS-3 注册 fs 前缀进 NODE_REGISTRY system 域"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8916372,
+    "chunked_bytes": 6157088,
+    "nodes": 4849,
+    "reason": "FS 修复 v35_startJoinPath 未设 curNode 导致路径卡跳转失效（加 curNode 赋值 12B）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8919689,
+    "chunked_bytes": 6157428,
+    "nodes": 4849,
+    "reason": "FS-3 蓝图补登记 fs_north_01~04（四路 +3317B）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8948511,
+    "chunked_bytes": 6168922,
+    "nodes": 4856,
+    "reason": "FS-5/6 势力面板未知态+专属技能显示 + 考核链深化7节点（兽人角斗/精灵信物/守望者邀请链）+ 账本2项"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 8972353,
+    "chunked_bytes": 6191742,
+    "nodes": 4856,
+    "reason": "G-1~G-7 大型增量：伤口系统/技能熟练度/城市作息/渐进教学/事件连锁/关系网回指/抉择回顾 新增数据与引擎钩子"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9029356,
+    "chunked_bytes": 6273830,
+    "nodes": 4869,
+    "reason": "N4-8 叙事人格革命：结局卡牌/大历史/全书/冲突池/名场面/典故/情绪注入"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9029459,
+    "chunked_bytes": 6273933,
+    "nodes": 4869,
+    "reason": "N-8 收尾：藏书惰性合并修复（+103B）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9029702,
+    "chunked_bytes": 6274172,
+    "nodes": 4869,
+    "reason": "N-8 flip 分页修复（+243B）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9103582,
+    "chunked_bytes": 6349623,
+    "nodes": 4869,
+    "reason": "F8八工程开工基线：N批后体积更新（game=9103582B）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9159215,
+    "chunked_bytes": 6329626,
+    "nodes": 4918,
+    "reason": "F1 失败开门专线：+49 节点/+9 账本项（dn_failpath.js），文本增量 ~1.5 万字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9159419,
+    "chunked_bytes": 6329825,
+    "nodes": 4918,
+    "reason": "F1 第二轮构建：registry 域注册后产物 9,159,419B，baseline 对齐"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9221470,
+    "chunked_bytes": 6390985,
+    "nodes": 4979,
+    "reason": "F-2 failpath2 61 nodes + 19 ledger + 16 fail fields"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9222225,
+    "chunked_bytes": 6391080,
+    "nodes": 4979,
+    "reason": "F-2 failpath2 修复死链回接+蓝图尾逗号修复后重建体积"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9242759,
+    "chunked_bytes": 6414868,
+    "nodes": 4976,
+    "reason": "E-2 多年回响：+27 回响节点 + 注入钩子 + 蓝图登记"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9242862,
+    "chunked_bytes": 6414971,
+    "nodes": 4976,
+    "reason": "E-2 钩子修复：echoLine 用 curNode 兜底（+103B）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9292870,
+    "chunked_bytes": 6466635,
+    "nodes": 4994,
+    "reason": "S-1 人格声音：dn_voices.js 14声音x7情境模板库 + 10 hub 专属选项 + 注入钩子（合法内容增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9294980,
+    "chunked_bytes": 6480647,
+    "nodes": 4994,
+    "reason": "T-1 心念殿：dn_thoughts.js 20概念 + 引擎钩子 t1inj/t2inj + 设置面板心念殿区（合法内容增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9311563,
+    "chunked_bytes": 6488794,
+    "nodes": 4997,
+    "reason": "L 线索拼合：CLUE_TRACKS 12->30 probes + 3 拼合枢纽 + l1inj 钩子 + 3 接线（合法内容增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9322649,
+    "chunked_bytes": 6566989,
+    "nodes": 4997,
+    "reason": "P 情感搭档：dn_partner.js 20互动节点 + v93p_judge 四态无声评判 + S.trust + p1inj 钩子 + 账本2项（合法内容增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9328639,
+    "chunked_bytes": 6510917,
+    "nodes": 5017,
+    "reason": "P 情感搭档 build 后基线（frontier_pt_ 20节点 + 引擎）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9329064,
+    "chunked_bytes": 6511342,
+    "nodes": 5017,
+    "reason": "P 情感搭档 二次校准（改名后基线）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9345454,
+    "chunked_bytes": 6589794,
+    "nodes": 5017,
+    "reason": "W 事件扩充：W-1 65则（四类均衡）+ W-2 67则（阶段专属30+通用37）+ 账本4项（合法内容增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9376580,
+    "chunked_bytes": 6552117,
+    "nodes": 5017,
+    "reason": "W 事件扩充 校准2（隐约词修复后基线）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9386402,
+    "chunked_bytes": 6630742,
+    "nodes": 5017,
+    "reason": "ACT-2 收尾：mechMine/Forge/Patrol 行动后轻量刷新（正文零重绘），与 explore/hear/train/quest 对齐"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9418482,
+    "chunked_bytes": 6599393,
+    "nodes": 5051,
+    "reason": "CP1 内容补足 34 个 deep 节点（自由城深巷/第三哨雪原/学院四季）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9463201,
+    "chunked_bytes": 6636154,
+    "nodes": 5071,
+    "reason": "CP-2 战争线深写 20 节点 + 事件池 +30 则"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9495137,
+    "chunked_bytes": 6663752,
+    "nodes": 5091,
+    "reason": "CP-3 学院生活加密 20 节点（五学年×4）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9531087,
+    "chunked_bytes": 6714863,
+    "nodes": 5121,
+    "reason": "CP-4 自由城市井12+李管事支线8+铁门关市井10+事件+20"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9596919,
+    "chunked_bytes": 6780696,
+    "nodes": 5161,
+    "reason": "CP-5 四地域深写40节点+事件+25（承天/绿洲/圣辉/北境，七锚秤线织网）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9677553,
+    "chunked_bytes": 6849129,
+    "nodes": 5201,
+    "reason": "CP-6 三族生活深写40节点+事件+20（精灵林邦/矮人山国/兽人草原，七锚秤线种族侧织网）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9741663,
+    "chunked_bytes": 6912437,
+    "nodes": 5237,
+    "reason": "CP-7 西境深写36节点+事件20（元素荒原/游侠学院/守井人支线，西境秤线织网）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9702880,
+    "chunked_bytes": 6975189,
+    "nodes": 5277,
+    "reason": "CP-8 死亡沙漠深写 40节点+20事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9702884,
+    "chunked_bytes": 6975193,
+    "nodes": 5277,
+    "reason": "CP-8 死链修复后重建"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9751976,
+    "chunked_bytes": 7023079,
+    "nodes": 5317,
+    "reason": "CP-9 东境承天城深写 40节点+20事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9751977,
+    "chunked_bytes": 7023080,
+    "nodes": 5317,
+    "reason": "CP-9 蓝图位置修正（east 40条移至nodeIndex末尾）+1B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9803160,
+    "chunked_bytes": 7073647,
+    "nodes": 5357,
+    "reason": "CP-10 圣辉城教会深写 40节点+20事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9803163,
+    "chunked_bytes": 7073650,
+    "nodes": 5357,
+    "reason": "CP-10 治理词修正后重建"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9878396,
+    "chunked_bytes": 7148252,
+    "nodes": 5418,
+    "reason": "CP-11 北境王都深写: +61节点 +20事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9930771,
+    "chunked_bytes": 7199571,
+    "nodes": 5458,
+    "reason": "CP-12 灰港深写: +40节点 +20事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9982289,
+    "chunked_bytes": 7250278,
+    "nodes": 5498,
+    "reason": "CP-13 南境港口城深写: +40节点 +20事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 9982293,
+    "chunked_bytes": 7250278,
+    "nodes": 5498,
+    "reason": "CP-13 南境港口城深写 重挂入口: +4B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 10070708,
+    "chunked_bytes": 7337710,
+    "nodes": 5580,
+    "reason": "CP14 南境三城+交汇城深写 82节点 20事件"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 10070735,
+    "chunked_bytes": 7337737,
+    "nodes": 5580,
+    "reason": "CP14 注册表补三前缀 gold/acadcity/hub"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 10070739,
+    "chunked_bytes": 7337737,
+    "nodes": 5580,
+    "reason": "CP14 重挂修复后重建"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18371707,
+    "chunked_bytes": 7337737,
+    "nodes": 5580,
+    "reason": "GR-1 单文件全量化：内嵌全部分片节点，game.html 体积升至 18.37MB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18399848,
+    "chunked_bytes": 7365924,
+    "nodes": 5601,
+    "reason": "A1-I1 理想线长线化 wealth/might/guard"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18447056,
+    "chunked_bytes": 7413132,
+    "nodes": 5636,
+    "reason": "A1-I2 理想线剩余五线 35 节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18458288,
+    "chunked_bytes": 7424364,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第一批 27节点+3622字(学院19+理想intro8)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18472462,
+    "chunked_bytes": 7437361,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第二批 25节点+4331字(fc链10+frontier链15)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18472453,
+    "chunked_bytes": 7437361,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第二批 25节点+4331字(fc链10+frontier链15) 治理词回容差"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18484775,
+    "chunked_bytes": 7449683,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第三批 acad_学院场景34节点扩写+3910字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18499616,
+    "chunked_bytes": 7464524,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第四批 grad_毕业链+goal_理想线 38节点扩写+4800字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18511403,
+    "chunked_bytes": 7476311,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第五批 acad_校外魔法剧情 30节点扩写+3900字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18522943,
+    "chunked_bytes": 7487851,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第六批 acad_生活deep人际学年事件校友导师 30节点扩写+3800字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18533257,
+    "chunked_bytes": 7498165,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第七批 origin亚种开局扩展 30节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18540671,
+    "chunked_bytes": 7502522,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第八批 fc自由城north北境 23节点扩写+2600字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18543728,
+    "chunked_bytes": 7502522,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第八批 fc自由城north北境 23节点扩写+2600字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18550356,
+    "chunked_bytes": 7509150,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第九批 城市hub交汇城 20节点扩写+2200字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18559601,
+    "chunked_bytes": 7515011,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十批 圣城东境沙漠铁门关学院 25节点扩写+2800字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18559601,
+    "chunked_bytes": 7515011,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十批 圣城东境沙漠铁门关学院 25节点扩写+2800字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18562979,
+    "chunked_bytes": 7515011,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十批 圣城东境沙漠铁门关学院 25节点扩写+2800字(含低声修正)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18573525,
+    "chunked_bytes": 7525563,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十一批 学院生活人际 26节点扩写+3200字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18583813,
+    "chunked_bytes": 7535851,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十二批 学院魔法剧情 26节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18593400,
+    "chunked_bytes": 7545438,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十三批 北境东境教会深写 26节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18603361,
+    "chunked_bytes": 7555399,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十四批 毕业理想线 26节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18613891,
+    "chunked_bytes": 7565929,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十五批 学院社交课外教会 26节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18624561,
+    "chunked_bytes": 7576599,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十六批 西境游侠支线 26节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18624564,
+    "chunked_bytes": 7576602,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十六批 西境游侠支线 26节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18635593,
+    "chunked_bytes": 7587631,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十七批 北境艾尔达深写 26节点扩写+3300字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18648596,
+    "chunked_bytes": 7600634,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十八批 教会+东境深写 26节点扩写+4000字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18661252,
+    "chunked_bytes": 7613290,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第十九批 学院生活+战争前线 26节点扩写+4000字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18673700,
+    "chunked_bytes": 7625738,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第二十批 终局+沙漠+东境+教会+西境 26节点扩写+4000字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18685374,
+    "chunked_bytes": 7637412,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第二十一批 情感搭档+锚线+东境 26节点扩写+4000字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18696718,
+    "chunked_bytes": 7648756,
+    "nodes": 5636,
+    "reason": "TQ-2/3 第二十二批 教会+北境+毕业+理想线 26节点扩写+4000字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18707242,
+    "chunked_bytes": 7659280,
+    "nodes": 5636,
+    "reason": "TQ23 第二十三批 薄节点扩写 26 节点"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18718672,
+    "chunked_bytes": 7670710,
+    "nodes": 5636,
+    "reason": "TQ24 第二十四批 薄节点扩写 26 节点（学院/毕业/锚线/沙漠/东境/西境/战后）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18730751,
+    "chunked_bytes": 7682789,
+    "nodes": 5636,
+    "reason": "TQ25 第二十五批 薄节点扩写 26 节点（学院/理想线/北境/西境/锚线/沙漠/失败线等）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18743298,
+    "chunked_bytes": 7695336,
+    "nodes": 5636,
+    "reason": "TQ26 第二十六批 薄节点扩写 26 节点（哨所/北境/南境/港城/锚线/理想线等）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18756162,
+    "chunked_bytes": 7708200,
+    "nodes": 5636,
+    "reason": "TQ27 第二十七批 薄节点扩写 26 节点（学院课堂/毕业去向/五主线/理想线/同学支线/失败线等）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18769147,
+    "chunked_bytes": 7721185,
+    "nodes": 5636,
+    "reason": "TQ28 第二十八批薄节点扩写"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18781603,
+    "chunked_bytes": 7733641,
+    "nodes": 5636,
+    "reason": "TQ29 第二十九批薄节点扩写"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18794890,
+    "chunked_bytes": 7740000,
+    "nodes": 5636,
+    "reason": "TQ30 第三十批薄节点扩写"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18801844,
+    "chunked_bytes": 7740013,
+    "nodes": 5636,
+    "reason": "TQ30 第三十批薄节点扩写"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18801857,
+    "chunked_bytes": 7740013,
+    "nodes": 5636,
+    "reason": "TQ30 第三十批薄节点扩写"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18826330,
+    "chunked_bytes": 7761513,
+    "nodes": 5636,
+    "reason": "TQ31 第三十一批薄节点扩写（26 节点 +16,781 字）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18829303,
+    "chunked_bytes": 7761513,
+    "nodes": 5636,
+    "reason": "TQ31 第三十一批薄节点扩写（26 节点 +16,781 字，verify 闭环修正后字节）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18845024,
+    "chunked_bytes": 7777234,
+    "nodes": 5636,
+    "reason": "b32 薄节点扩写 26 节点 +15.7KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18876308,
+    "chunked_bytes": 7808518,
+    "nodes": 5636,
+    "reason": "b33 failpath2 61节点扩写 +9节点补段"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18905474,
+    "chunked_bytes": 7837684,
+    "nodes": 5636,
+    "reason": "TQ34 faction2四势力线53节点扩写 文本+1.2万字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18905471,
+    "chunked_bytes": 7837681,
+    "nodes": 5636,
+    "reason": "TQ34 faction2四势力线53节点扩写 文本+1.2万字"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18937981,
+    "chunked_bytes": 7870191,
+    "nodes": 5636,
+    "reason": "TQ35 fs_join 47节点扩写 +32KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18948763,
+    "chunked_bytes": 7880973,
+    "nodes": 5636,
+    "reason": "TQ36 failpath 45节点扩写 +10.8KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18979785,
+    "chunked_bytes": 7911995,
+    "nodes": 5636,
+    "reason": "V94-主界面捏人+31KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18985354,
+    "chunked_bytes": 7917564,
+    "nodes": 5636,
+    "reason": "V94-主界面捏人+CSS"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18986059,
+    "chunked_bytes": 7918269,
+    "nodes": 5636,
+    "reason": "V94b-捏人向导滚动修复"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18986119,
+    "chunked_bytes": 7918329,
+    "nodes": 5636,
+    "reason": "V94b-捏人向导滚动+理想移步"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 18986342,
+    "chunked_bytes": 7918329,
+    "nodes": 5636,
+    "reason": "V94c-捏人全屏flex布局"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19023450,
+    "chunked_bytes": 7955660,
+    "nodes": 5636,
+    "reason": "V95 MP1-11 主界面与捏人增强"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19023459,
+    "chunked_bytes": 7955669,
+    "nodes": 5636,
+    "reason": "V95 MP1-11 主界面与捏人增强(修订)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19025725,
+    "chunked_bytes": 7957935,
+    "nodes": 5636,
+    "reason": "V95 MP5 导入屏CSS补齐"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19026067,
+    "chunked_bytes": 7958277,
+    "nodes": 5636,
+    "reason": "UI-FIX 顶栏溢出适配（gap_00.html v68 顶栏防溢出 CSS，+342B 合法增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19026287,
+    "chunked_bytes": 7958497,
+    "nodes": 5636,
+    "reason": "UI-FIX modal 提权修复（gap_00.html #modal z-index 900→10000，+220B 合法增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19027335,
+    "chunked_bytes": 7959545,
+    "nodes": 5636,
+    "reason": "UI-FIX2_20260912 高亮单次正则修复+分页滚动兜底+世界书常驻会话去重（+1048B 合法增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19030800,
+    "chunked_bytes": 7963010,
+    "nodes": 5636,
+    "reason": "V96-OPT-B1 选项门控模块(v96_optGate)+A1/A4/A5/A6 新增 3465B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19034037,
+    "chunked_bytes": 7966247,
+    "nodes": 5636,
+    "reason": "V96-OPT-B2 组合判定(v96_dualResolve)+后果预览(v96_preview) 新增 3237B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19039232,
+    "chunked_bytes": 7971442,
+    "nodes": 5636,
+    "reason": "V96-OPT-B3 热词卡模块(v96_hotword:词条/NPC关系/地点)+hlInit扩展 新增 5195B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19039528,
+    "chunked_bytes": 7971738,
+    "nodes": 5636,
+    "reason": "V96-OPT-B3 热词卡监听残留修复(__v96cardH统一管理) 新增 296B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19043277,
+    "chunked_bytes": 7975487,
+    "nodes": 5636,
+    "reason": "V96-OPT-B4 B8线索锚点(v96_probeConv/委托)+C12分支回退(栈/按钮) 新增 3749B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19043361,
+    "chunked_bytes": 7975571,
+    "nodes": 5636,
+    "reason": "V96-OPT-B4 线索锚点转换移至rich后(防esc转义) 新增 84B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19043482,
+    "chunked_bytes": 7975692,
+    "nodes": 5636,
+    "reason": "V96-OPT-B4 回退栈语义修正(栈顶=当前节点,pop两次) 新增 121B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19043517,
+    "chunked_bytes": 7975727,
+    "nodes": 5636,
+    "reason": "V96-OPT-B4 回退目标保留栈顶语义 新增 35B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19044030,
+    "chunked_bytes": 7976240,
+    "nodes": 5636,
+    "reason": "V96-OPT-B5 C11选择记忆回显(v96_choiceEcho) 新增 513B"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19071439,
+    "chunked_bytes": 8003649,
+    "nodes": 5636,
+    "reason": "V96-OPT-B5/LW 活的世界模拟层 S1-S5 模块+数据 增长 27KB"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19071445,
+    "chunked_bytes": 8003655,
+    "nodes": 5636,
+    "reason": "LW S1-S5 活的世界模拟层 数据+引擎增长"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19071461,
+    "chunked_bytes": 8003671,
+    "nodes": 5636,
+    "reason": "LW S1-S5 模块拆分为 script_19.js 独立块(+<script>包装 16B)"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19088734,
+    "chunked_bytes": 8020944,
+    "nodes": 5636,
+    "reason": "v96 LW战争引擎：warfronts5+战争事件8+功罪双轨+4新检查器+10城市场景易主标注（合法内容增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19088868,
+    "chunked_bytes": 8021078,
+    "nodes": 5636,
+    "reason": "v96 LW战争引擎 clamp 收口（LW_factionShift/LW_deed 值域 +134B，合法内容增长）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19109673,
+    "chunked_bytes": 8041883,
+    "nodes": 5636,
+    "reason": "v98 LW-A2回响生态30条+A3账本融合+C1世界编年史双册 合法内容/引擎增长"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19109791,
+    "chunked_bytes": 8042001,
+    "nodes": 5636,
+    "reason": "v98 编年史/回响引擎 修正 led_ 回响 id 与触发 合法增长"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19206279,
+    "chunked_bytes": 8138561,
+    "nodes": 5690,
+    "reason": "v99 起源记忆54节点+账本6项+沉浸表现层script_20+注册表"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19207949,
+    "chunked_bytes": 8140231,
+    "nodes": 5690,
+    "reason": "v99 UI修复：捏人必填醒目提示+已选选项清扫"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19208240,
+    "chunked_bytes": 8140522,
+    "nodes": 5690,
+    "reason": "v99 UI修复双套捏人统一flashLack"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19208921,
+    "chunked_bytes": 8141203,
+    "nodes": 5690,
+    "reason": "v99 UI修复就近定义v99FlashLack"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19265127,
+    "chunked_bytes": 8196645,
+    "nodes": 5727,
+    "reason": "v100 学院生活沙盒+暗流阴谋 37 节点注入"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19966451,
+    "chunked_bytes": 8196645,
+    "nodes": 5727,
+    "reason": "v101 学院生活沙盒+暗流深化 55 节点注入+账本重构(223项)+蓝图+hub入口，合法内容增长"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19681206,
+    "chunked_bytes": 8610032,
+    "nodes": 5916,
+    "reason": "百兽百草 v108：game_chunked 8610KB 超 8500KB 上限，合法内容增长（新增 35 节点/180 生物）"
+   },
+   {
+    "date": "2026-09-09",
+    "game_bytes": 19693503,
+    "chunked_bytes": 8622329,
+    "nodes": 5919,
+    "reason": "百兽百草 v108 收尾：补 3 深节点+3 事件+6 账本+35 蓝图，game.html 19693503B 合法增长"
+   }
+  ]
+ },
+ "limits": {
+  "game_html_bytes_max": 6120000,
+  "chunked_html_bytes_max": 3500000,
+  "node_total_min": 2618,
+  "dead_links_max": 0,
+  "full_seconds_max": 20.0
+ }
 }

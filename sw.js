@@ -12,8 +12,11 @@
      新增 chunks.json 清单（tools\\gen_chunk_manifest.py 生成，随构建更新），
      install 阶段把全部 23 个分片一次性预缓存，二次进入接近秒开；
      预缓存失败逐片 catch 不阻塞安装，断网仍可玩已缓存分片。
-   CACHE 名 = 'elda-qxg-v99-h1'：每次发版如需强制清缓存，手动 bump 此名即可。 */
-const CACHE = 'elda-qxg-v99-h1';
+   v100 性能批（2026-09-13 perf3-6）：
+     writePar 单次 innerHTML（省 2 次 DOM 写）· v93 aside/guide/foot 内容指纹去重（5s 轮询幂等跳过 DOM 写）
+     · 收容循环自停（3s 兜底 30s 停）——引擎内联已更新，bump 缓存名强制刷新。
+   CACHE 名 = 'elda-qxg-v100-h1'：每次发版如需强制清缓存，手动 bump 此名即可。 */
+const CACHE = 'elda-qxg-v100-h1';
 const CORE = [
   './index.html',
   './game.html',

@@ -10911,7 +10911,8 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
             if(e.day > day && e.day - day <= 5){ if(!near || e.day < near.day) near = e; }
           }
           if(near){ wout = '<div class="v93-aside-warn-card">⚠ 距『' + near.cn + '』还有 ' + (near.day-day) + ' 日</div>'; }
-          if(wout){ warn.innerHTML = wout; } else { warn.innerHTML = ''; }
+          /* /perf06:dedup/ 性能：内容指纹去重，未变化不写 DOM（5s 轮询幂等跳过） */
+          if(wout !== window.__v93AsideWarnLast){ warn.innerHTML = wout; window.__v93AsideWarnLast = wout; }
         }
       }
       /* 最近事件（day<=今日，取最近 5 则） */
@@ -10937,7 +10938,8 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       } else {
         out = '<div class="v93-aside-item" style="cursor:default">纪闻待启。</div>';
       }
-      list.innerHTML = out;
+      /* /perf06:dedup/ 性能：事件列表内容指纹去重（5s 轮询幂等跳过 DOM 写） */
+      if(out !== window.__v93AsideLast){ list.innerHTML = out; window.__v93AsideLast = out; }
       window.__v93AsideItems = show || [];
     }catch(e){}
   };
@@ -10972,10 +10974,13 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       }
       if(Sd.curCity){ parts.push('📍 当前：' + Sd.curCity); }
       if(parts.length){
-        g.innerHTML = parts.join('　·　');
-        g.style.display = 'block';
+        var _gu = parts.join('　·　');
+        /* /perf06:dedup/ 性能：内容指纹去重（5s 轮询幂等跳过 DOM 写） */
+        if(_gu !== window.__v93GuideLast){ g.innerHTML = _gu; window.__v93GuideLast = _gu; }
+        if(g.style.display !== 'block') g.style.display = 'block';
       } else {
-        g.innerHTML = ''; g.style.display = 'none';
+        if(window.__v93GuideLast !== '' ){ g.innerHTML = ''; window.__v93GuideLast = ''; }
+        if(g.style.display !== 'none') g.style.display = 'none';
       }
     }catch(e){}
   };
@@ -11026,14 +11031,19 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       setInterval(t0, 5000);
       /* 动态按钮可能晚于本 init 注入：定时兜底收容（不触碰 btn-acts 行动按钮） */
       try{
-        setInterval(function(){
+        /* /perf06:selfstop/ 性能：全部就绪或 30s 后自停，避免永久 3s 空转 */
+        var _ghostIv = setInterval(function(){
           var _ids = ['btn-gallery','btn-spellbook','btn-journal','btn-rollback','btn-stats','btn-stealth','btn-sound','btn-story'];
+          var _done = true;
           for(var _i=0;_i<_ids.length;_i++){
             var _el = document.getElementById(_ids[_i]);
             if(_el && _el.className.indexOf('v93-ghost')<0 && _el.className.indexOf('v93-main')<0){
               _el.className += ' v93-ghost';
+              _done = false;
             }
           }
+          window.__v93GhostT = (window.__v93GhostT||0) + 1;
+          if(_done || window.__v93GhostT >= 10){ try{ clearInterval(_ghostIv); }catch(_){} }
         }, 3000);
       }catch(_){}
 
@@ -11101,11 +11111,12 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
             if(e.day>day&&e.day-day<=6){ if(!near||e.day<near.day) near=e; }
           }
           if(near) wout='<div class="v93-aside-warn-card">⚠ 距『'+_esc5(near.cn)+'』还有 '+(near.day-day)+' 日</div>';
-          warn.innerHTML=wout||'';
+          /* /perf06:dedup2/ 性能：内容指纹去重（5s 轮询幂等跳过 DOM 写） */
+          if((wout||'')!==window.__v93AsideWarnLast){ warn.innerHTML=wout||''; window.__v93AsideWarnLast=wout||''; }
         }
       }
       var pool=_pool5();
-      if(!pool||!pool.length){ list.innerHTML='<div class="v93-aside-item" style="cursor:default">纪闻待启。</div>'; return; }
+      if(!pool||!pool.length){ var _ek='<div class="v93-aside-item" style="cursor:default">纪闻待启。</div>'; if(_ek!==window.__v93AsideLast){ list.innerHTML=_ek; window.__v93AsideLast=_ek; } return; }
       var evs=pool.filter(function(ev){ return ev&&typeof ev.day==='number'&&ev.day<=day; });
       evs.sort(function(a,b){ return (b.day||0)-(a.day||0); });
       var recent=evs.slice(0,16);
@@ -11137,7 +11148,8 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
         }
         html+='</div>';
       }
-      list.innerHTML=html;
+      /* /perf06:dedup2/ 性能：内容指纹去重（5s 轮询幂等跳过 DOM 写） */
+      if(html!==window.__v93AsideLast){ list.innerHTML=html; window.__v93AsideLast=html; }
       window.__v93AsideItems=recent;
     }catch(e){}
   };
@@ -11158,12 +11170,14 @@ try{ if(window.v74_guardPanels) v74_guardPanels(); }catch(e){}
       if(de) dateStr=de.textContent;
       var wd=document.getElementById('tb-weather');
       var wTxt=wd?wd.textContent:'';
-      f.innerHTML='<span class="fb">💰 <b>'+gold+'</b> 金龙</span>'+
+      var _fh='<span class="fb">💰 <b>'+gold+'</b> 金龙</span>'+
         '<span class="fb">⚡ 行动 <b>'+acts+'</b></span>'+
         '<span class="fb">📍 '+_esc5(loc)+'</span>'+
         '<span class="fb">📅 '+dateStr+'</span>'+
         (wTxt?'<span class="fb">'+wTxt+'</span>':'');
-      f.style.display='flex';
+      /* /perf06:dedup/ 性能：内容指纹去重（5s 轮询幂等跳过 DOM 写） */
+      if(_fh !== window.__v93FootLast){ f.innerHTML = _fh; window.__v93FootLast = _fh; }
+      if(f.style.display !== 'flex') f.style.display='flex';
     }catch(e){}
   };
 

@@ -1,20 +1,28 @@
 {
- "version": 112,
- "from": "v111",
+ "version": 113,
+ "from": "v112",
  "released": "2026-09-13",
- "note": "物种深度卡超大型更新·B3特殊纲+灵体纲深度卡：16种（特殊纲8种+灵体纲8种）从名录式升级为12字段怪物图鉴卡。特殊纲（深渊黑鳞魔物/风暴元素体/雷晶傀儡/铁砧地底蠕兽/钟楼地下的它/沙渊噬魂虫/时光裂隙守卫/腐化木灵）behavior适配为activity/trigger/attack三子字段，突出异化感/造物感/封印感，取材克苏鲁深渊气息/魔兽元素核心破核/山海经守山木精/七锚封印线/贤者之石三材料伏笔；灵体纲（钟楼第十三下的声音/铁门关英灵/银月祭坛月灵/铁牌器灵/血藤怨魂/神性残响/深渊魔魂/旧刀器灵）behavior适配为manifest/trigger/interaction三子字段，突出虚无感/执念感/契约感，取材修仙魂契/冥修魂道/器灵认主/魂幡收魂/鬼修渡化；16种description合计约6143字V66白描；共存追加方案（SPECIAL_DEPTH_CARDS/SPIRIT_DEPTH_CARDS全局对象，Object.assign合并不覆盖既有）；本地全量验证链46检查器全绿（节点5932、死链0、V66防回潮、前缀覆盖率97.39%、四路字节一致、smoke PASS、CRLF全LF）",
+ "note": "物种深度卡超大型更新·B5图鉴展示UI改版与引擎接入：①13个神话传说图鉴卡节点从孤岛接入万灵谱导航（beast100_v10_myth追加8选项指向beast_card_*，herb100_v10_myth追加5选项指向herb_card_*）；②新建dn_bio_depth_viewer.js，含BioDepthViewer纯展示层渲染模块（render+lookup两方法，读BEAST/HERB/SPECIAL/SPIRIT_DEPTH_CARDS全局对象）+40个新节点（动物纲11：hub+10卷级摘要；植物纲11：hub+10卷级摘要；特殊纲9：hub+8物种摘要；灵体纲9：hub+8物种摘要），卷级摘要节点静态写入各物种深度卡关键数据（星级/段位/六维/特性/弱点/战利品），不依赖运行时JS渲染；③bio_intro_categories四纲页追加4个深度卡总览入口；严守红线：未触碰判定公式/writeNext核心语义/choose/存档结构语义，UI改动仅限图鉴展示层，未新增移动端内容；节点5932→5972（+40），go引用15047→15176（+129），死链0；本地全量验证链46检查器全绿（V66防回潮、文本治理、前缀覆盖率、四路字节一致、smoke PASS、CRLF全LF）",
  "changes": [
   {
-   "file": "src/data_nodes/dn_bio_special_depth.js",
-   "title": "新增：特殊纲8种深度卡（深渊黑鳞魔物/风暴元素体/雷晶傀儡/铁砧地底蠕兽/钟楼它/沙渊噬魂虫/时光裂隙守卫/腐化木灵），behavior用activity/trigger/attack，约3220字描述"
+   "file": "src/data_nodes/dn_bio_depth_viewer.js",
+   "title": "新建：深度卡渲染模块BioDepthViewer + 40个节点（4纲hub + 20卷级摘要 + 16物种摘要），纯展示层不碰引擎核心"
   },
   {
-   "file": "src/data_nodes/dn_bio_spirit_depth.js",
-   "title": "新增：灵体纲8种深度卡（钟楼声音/铁门关英灵/银月月灵/铁牌器灵/血藤怨魂/神性残响/深渊魔魂/旧刀器灵），behavior用manifest/trigger/interaction，约2923字描述"
+   "file": "src/data_nodes/dn_bio_beast100.js",
+   "title": "Edit：beast100_v10_myth options追加8个神话图鉴卡入口（芬里尔/九头蛇/狮鹫/克拉肯/凤凰/白狼/斯芬克斯/独角兽）"
+  },
+  {
+   "file": "src/data_nodes/dn_bio_herb100_nodes.js",
+   "title": "Edit：herb100_v10_myth options追加5个神话图鉴卡入口（曼德拉草/槲寄生/金苹果/蕨花/世界树苗）"
+  },
+  {
+   "file": "src/data_nodes/dn_bio_base.js",
+   "title": "Edit：bio_intro_categories options追加4个深度卡总览入口（动物/植物/特殊/灵体）"
   },
   {
    "file": "budget.json",
-   "title": "性能预算更新（game.html 20403043B/chunked 9331869B，合法内容增长）"
+   "title": "性能预算更新（game.html 20448631B/chunked 9377457B，合法内容增长）"
   }
  ]
 }

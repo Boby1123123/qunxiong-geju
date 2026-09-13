@@ -284,6 +284,14 @@ text:[
 options:[
 {t:"（记下神话十种）",effects:{flag:"beast100_myth",xp:20},go:"beast100_intro"},
 {t:"“我信。传说会醒。”",go:"beast_myth_fenrir"},
+{t:"翻芬里尔之裔的传说图鉴卡（金卡）",go:"beast_card_fenrir"},
+{t:"翻九头蛇的传说图鉴卡（银卡）",go:"beast_card_hydra"},
+{t:"翻狮鹫的传说图鉴卡（银卡）",go:"beast_card_griffin"},
+{t:"翻克拉肯的传说图鉴卡（金卡）",go:"beast_card_kraken"},
+{t:"翻凤凰的传说图鉴卡（金卡）",go:"beast_card_phoenix"},
+{t:"翻圣山白狼的传说图鉴卡（银卡）",go:"beast_card_whitewolf"},
+{t:"翻沙上斯芬克斯的传说图鉴卡（金卡）",go:"beast_card_sphinx"},
+{t:"翻林间独角兽的传说图鉴卡（银卡）",go:"beast_card_unicorn"},
 {t:"（回百兽卷目录）",go:"beast100_intro"}
 ]};
 

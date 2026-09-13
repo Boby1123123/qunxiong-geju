@@ -1,18 +1,18 @@
 {
   "name": "群雄割据性能预算门",
-  "version": 80,
+  "version": 81,
   "updated": "2026-09-13",
-  "note": "v109 物种深度卡B1：88兽12字段深度卡（约3.9万字描述），game.html合法增长至19998254B",
+  "note": "超大型扩充：用户确认后续 20+ 批内容（贵族P-B~F、文化语言礼仪C-1~5、战争引擎W-1~5、旅途荒野R-1~5、B5接入）将持续增长，预算上限大幅上调以容纳（game 21.5M→32M，chunked 9.8M→15M，full_seconds 30→45）",
   "budgets": {
-    "game_html_bytes_max": 21500000,
-    "chunked_html_bytes_max": 9800000,
+    "game_html_bytes_max": 32000000,
+    "chunked_html_bytes_max": 15000000,
     "node_total_min": 5869,
     "dead_links_max": 0,
-    "full_seconds_max": 30.0
+    "full_seconds_max": 45.0
   },
   "baseline": {
-    "game_html_bytes": 20403043,
-    "chunked_html_bytes": 9331869,
+    "game_html_bytes": 20448631,
+    "chunked_html_bytes": 9377457,
     "node_total": 5919,
     "full_seconds": 22.53
   },

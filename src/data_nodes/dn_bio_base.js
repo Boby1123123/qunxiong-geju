@@ -87,6 +87,10 @@ options:[
 {t:"看百草卷的全匣（百草·百种全图鉴）",go:"herb100_intro"},
 {t:"看特殊生物纲的封条柜（8 种异种档案）",go:"special_intro"},
 {t:"看灵体纲的瓷瓶架（8 种灵体图谱）",go:"spirit_intro"},
+{t:"翻看动物纲深度卡总览（88兽12字段）",go:"beast_depth_hub"},
+{t:"翻看植物纲深度卡总览（92草12字段）",go:"herb_depth_hub"},
+{t:"翻看特殊纲深度卡总览（8种12字段）",go:"special_depth_hub"},
+{t:"翻看灵体纲深度卡总览（8种12字段）",go:"spirit_depth_hub"},
 {t:"上二楼看市场与打造（系统总览）",go:"system_intro"},
 {t:"（原路退回大厅）",go:"bio_intro_0"}
 ]};

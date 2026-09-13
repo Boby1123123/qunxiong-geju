@@ -155,6 +155,11 @@ text:[
 options:[
 {t:"（记下神话十种）",effects:{flag:"herb100_myth",xp:20},go:"herb100_intro"},
 {t:"听世界树苗的传闻（传说·唯一）",go:"herb_myth_worldtree"},
+{t:"翻曼德拉草的传说图鉴卡（金卡）",go:"herb_card_mandrake"},
+{t:"翻槲寄生的传说图鉴卡（金卡）",go:"herb_card_mistletoe"},
+{t:"翻金苹果的传说图鉴卡（金卡）",go:"herb_card_goldapple"},
+{t:"翻蕨花的传说图鉴卡（金卡）",go:"herb_card_fernflower"},
+{t:"翻世界树苗的传说图鉴卡（金卡）",go:"herb_card_worldtree"},
 {t:"（回百草卷目录）",go:"herb100_intro"}
 ]};
 

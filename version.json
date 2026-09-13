@@ -1,32 +1,44 @@
 {
-  "version": 107,
-  "from": "v103",
-  "released": "2026-09-13",
-  "note": "P2·万灵谱超凡植物纲（超大型更新第 2 批）：dn_bio_herb.js 新增 16 节点 + HERB_ENCYCLOPEDIA 8 种灵草灵木表（启灵草/银月草/凝元花/血根/化意果/血藤/魂菇/月桂木，启灵→宗师四阶覆盖）；采集线：药园培育（习性与年份/玉器采摘/时辰规矩）+ 八地采集判定（朝阳坡/银月祭坛夜采/北境寒谷/草原旧战场/西境风暴眼越级/深渊裂隙/沙漠洞窟/月池精灵）；炼药线：炼药房三座丹炉 + 晋级丹四配方（凡人→启灵启灵丹/启灵→凝元凝元丹/凝元→化意化意丹/化意→宗师宗师丹·黄林晶伏笔引线），alchemy/medic 判定 tier 成败；蓝图 nodeIndex +16、registry +herb、账本 +5 open（led_bio_13~17 呼应贤者之石笔记/月灵/英灵/灵体纲/银鲛晨星泪）；事件池 +2（灵草盛花商机 day50/化意果风暴减产天灾 day170）；正文深度融入凡人修仙传灵草年份价值与炼丹五步法、文火武火、丹炉分级；本地全量验证链 46 检查器全绿（节点 5831≥5677、死链 0、V66 防回潮、四路字节一致、smoke PASS）",
-  "changes": [
-    {
-      "file": "src/data_nodes/dn_bio_herb.js",
-      "title": "新增：超凡植物纲 16 节点 + HERB_ENCYCLOPEDIA 8 种灵草灵木表（培育园/采集八地/炼药房/晋级丹四配方）"
-    },
-    {
-      "file": "src/script_01.js",
-      "title": "事件池 +2：灵草盛花商机(day50)/化意果风暴减产天灾(day170)"
-    },
-    {
-      "file": "src/data_nodes/dn_bio_base.js",
-      "title": "万灵谱馆四纲页追加入口：看植物纲的标本架"
-    },
-    {
-      "file": "src/data_nodes/dn_story_blueprint.js",
-      "title": "nodeIndex +16 条 herb_* 登记（arc_bestiary）"
-    },
-    {
-      "file": "src/data_nodes/dn_registry.js",
-      "title": "free 域 prefixes +herb"
-    },
-    {
-      "file": "src/data_nodes/dn_causality.js",
-      "title": "账本 +5 open（led_bio_13~17 启灵草/月华露/血根/魂菇/月桂木伏笔）"
-    }
-  ]
+ "version": 108,
+ "from": "v107",
+ "released": "2026-09-13",
+ "note": "P6·百兽百草·超大型图鉴（万灵谱内容超大规模扩充）：BEAST_ENCYCLOPEDIA_EXT 88 兽（十卷：北境雪原/兽人草原/西境荒原/死亡沙漠/东境林野/南境湿地/深渊裂隙/学院钟楼/自由港海域/神话传说，凡品→传奇、常见→唯一，含化意/化形两阶）+ HERB_ENCYCLOPEDIA_EXT 92 草（十卷：学院药圃/精灵月池/北境寒谷/兽人草原/西境荒原/死亡沙漠/东境林野/南境湿地/深渊腐化/神话传说，九字段含习性/采集/传说）+ 16 浏览节点 + 8 神话深节点（北欧芬里尔白狼/希腊九头蛇狮鹫斯芬克斯/凯尔特独角兽/挪威海怪克拉肯/不死鸟凤凰等，带 check/tier/effects 判定与 crit 深写）；事件池 +3（鹰狮羽 day175/曼德拉草夜鸣 day135/金苹果金光 day210）；账本 +6 open（led_bio_31~36）；蓝图 +35、registry +beast100/herb100；取材欧洲神话（北欧/希腊/凯尔特/斯拉夫/圣经/波斯/埃及/纹章）+ 巫师3/宝可梦/魔兽/DND 游戏侧生态；本地全量验证链 46 检查器全绿（节点 5919、死链 0、V66 防回潮、前缀覆盖率 97.38%、四路字节一致、smoke PASS）",
+ "changes": [
+  {
+   "file": "src/data_nodes/dn_bio_beast100.js",
+   "title": "新增：BEAST_ENCYCLOPEDIA_EXT 88 兽 + 百兽卷 10 浏览节点 + 8 神话深节点（白狼/九头蛇/狮鹫/克拉肯/凤凰/斯芬克斯/独角兽，含判定与 crit）"
+  },
+  {
+   "file": "src/data_nodes/dn_bio_herb100_data.js",
+   "title": "新增：HERB_ENCYCLOPEDIA_EXT 92 草（九字段：习性/采集规矩/神话传说）"
+  },
+  {
+   "file": "src/data_nodes/dn_bio_herb100_nodes.js",
+   "title": "新增：百草卷 10 浏览节点 + 5 神话深节点（曼德拉草/槲寄生/金苹果/蕨花/世界树苗）"
+  },
+  {
+   "file": "src/data_nodes/dn_bio_base.js",
+   "title": "万灵谱馆四纲页追加百兽卷/百草卷全图鉴入口"
+  },
+  {
+   "file": "src/script_01.js",
+   "title": "事件池 +3：鹰狮峰金影(day175)/药圃夜鸣(day135)/伊顿果园金光(day210)"
+  },
+  {
+   "file": "src/data_nodes/dn_causality.js",
+   "title": "账本 +6 open（led_bio_31~36 金苹果/蕨花/世界树苗/曼德拉草/槲寄生/凤凰）"
+  },
+  {
+   "file": "src/data_nodes/dn_story_blueprint.js",
+   "title": "nodeIndex +35 条 beast100_/herb100_ 登记（arc_bestiary）"
+  },
+  {
+   "file": "src/data_nodes/dn_registry.js",
+   "title": "free 域 prefixes +beast100/herb100"
+  },
+  {
+   "file": "budget.json",
+   "title": "性能预算更新（game.html 19693503B/chunked 8622329B，合法内容增长）"
+  }
+ ]
 }

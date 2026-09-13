@@ -5750,7 +5750,13 @@ window.CAUSALITY_WORDS = [
     "keywords": ["地底蠕兽", "南矿洞铁门", "封印兽"],
     "irreversible": false
   },
-  { id:"led_bio_30", type:"伏笔", desc:"贤者之石埋藏处·尼古拉手稿——三材料集齐后取石线（承接 02b 与 P3/P4 三材料回收），问心者得", plant:"node:system_ledger", reap:"future（贤者之石终局）", status:"open", world:"自由港" }
+  { id:"led_bio_30", type:"伏笔", desc:"贤者之石埋藏处·尼古拉手稿——三材料集齐后取石线（承接 02b 与 P3/P4 三材料回收），问心者得", plant:"node:system_ledger", reap:"future（贤者之石终局）", status:"open", world:"自由港" },
+  { id:"led_bio_31", type:"道具", desc:"金苹果·伊顿果园——北境神话之物，吃下可得金色血脉之力，万灵谱馆旧账第一枚", plant:"node:herb_myth_goldapple", reap:"future（金苹果支线）", status:"open", world:"北境" },
+  { id:"led_bio_32", type:"道具", desc:"蕨花·库帕拉之夜——斯拉夫传说，夏至夜绽放一朵，食之见真灵", plant:"node:herb_myth_fernflower", reap:"future（蕨花支线）", status:"open", world:"兽人草原" },
+  { id:"led_bio_33", type:"道具", desc:"世界树苗——神话之木的种子，种下可成新锚，与七枚锚呼应", plant:"node:herb_myth_worldtree", reap:"future（世界树支线）", status:"open", world:"北境" },
+  { id:"led_bio_34", type:"道具", desc:"曼德拉草根——会尖叫的根，炼金至宝，学院药圃夜鸣", plant:"node:herb_myth_mandrake", reap:"future（曼德拉草支线）", status:"open", world:"学院" },
+  { id:"led_bio_35", type:"道具", desc:"槲寄生圣枝——凯尔特神话，挂在门楣可避灾，精灵圣地所出", plant:"node:herb_myth_mistletoe", reap:"future（槲寄生支线）", status:"open", world:"精灵" },
+  { id:"led_bio_36", type:"生物", desc:"凤凰·太阳轨迹——不死鸟传说，浴火重生，万灵谱馆最高一栏", plant:"node:beast_myth_phoenix", reap:"future（凤凰支线）", status:"open", world:"全境" }
 ];
 
 /* ===== /v91inj:ledgerwords:end/ ===== */

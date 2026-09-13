@@ -11,8 +11,8 @@
     "full_seconds_max": 30.0
   },
   "baseline": {
-    "game_html_bytes": 20277540,
-    "chunked_html_bytes": 9206366,
+    "game_html_bytes": 20337284,
+    "chunked_html_bytes": 9266110,
     "node_total": 5919,
     "full_seconds": 22.53
   },

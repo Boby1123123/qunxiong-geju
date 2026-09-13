@@ -1,28 +1,20 @@
 {
- "version": 110,
- "from": "v109",
+ "version": 111,
+ "from": "v110",
  "released": "2026-09-13",
- "note": "物种深度卡超大型更新·B2植物纲：万灵谱92草从名录式升级为怪物图鉴卡，每草12字段（stats六维STR根系/CON抗逆/AGI生长/INT灵性/SPR药力/CHA外观与玩家对齐、traits 1-3条被动特性、potential段位上限+年份进阶路径、niche生长地/共生寄生/生态位、behavior生长周期/季节行为/与动物人互动、weakness弱点与抗性、loot部位材料根/茎/叶/花/果/籽/汁/粉+用途与药铺市场价、description 300-500字V66白描、interactions每草≥2种采集/培育/鉴定/药用带check/tier判定、stars图鉴星级1-5、myth神话原型挂接希腊/凯尔特/北欧/斯拉夫/圣经/埃及/波斯/巫师炼金草药学、tags生态联动habitat/season/region）；92草description合计约3.84万字；共存追加方案（HERB_DEPTH_CARDS全局对象，4文件depth1~4，Object.assign合并不覆盖既有HERB_ENCYCLOPEDIA_EXT）；植物behavior字段适配为growth/season/interaction三子字段；本地全量验证链46检查器全绿（节点5919、死链0、V66防回潮、前缀覆盖率97.38%、四路字节一致、smoke PASS、CRLF全LF）",
+ "note": "物种深度卡超大型更新·B4神话深节点升级传说图鉴卡：13个神话生物（8兽+5草）从深节点升级为传说图鉴卡节点，每卡5段白描（图鉴柜开卡→六维种族值→特性生态位→神话挂接→战利品市场）+3-4个互动选项（挑战传说/缔结契约/记录图鉴/采集传说/培育移植/鉴定药用），每个选项带check属性+技能+tier段位判定+ok/fail/crit三档结果，crit各给独特flag印记（挣链之印/九首冠印/守宝之印/浮岛之契/涅槃灰印/神谕石眼印/守门瞳印/银角残印/认主人形根/圣橡枝/白兽护金苹果/萨满礼蕨花/树契世界树苗）+秘药方残图；8兽卡（芬里尔之裔/九头蛇/狮鹫/克拉肯/凤凰/圣山白狼/沙上斯芬克斯/林间独角兽）写入dn_bio_myth_cards_beast.js，5草卡（曼德拉草/槲寄生/金苹果/蕨花/世界树苗）写入dn_bio_myth_cards_herb.js；不重复既有beast_myth_*/herb_myth_*深节点剧情，聚焦翻图鉴柜的卡片互动；go目标全部指向已存在的卷浏览节点无死链；本地全量验证链46检查器全绿（节点5932、死链0、V66防回潮、前缀覆盖率97.39%、四路字节一致、smoke PASS、CRLF全LF）",
  "changes": [
   {
-   "file": "src/data_nodes/dn_bio_herb_depth1.js",
-   "title": "新增：植物纲深度卡批1（23草：学院药圃9+精灵月池8+北境寒谷前6），约9500字描述"
+   "file": "src/data_nodes/dn_bio_myth_cards_beast.js",
+   "title": "新增：8兽类传说图鉴卡节点（芬里尔/九头蛇/狮鹫/克拉肯/凤凰/圣山白狼/斯芬克斯/独角兽），每卡5段白描+3选项+ok/fail/crit三档判定+独特crit印记"
   },
   {
-   "file": "src/data_nodes/dn_bio_herb_depth2.js",
-   "title": "新增：植物纲深度卡批2（23草：北境寒谷后3+兽人草原9+西境荒原10+死亡沙漠前1），约8445字描述"
-  },
-  {
-   "file": "src/data_nodes/dn_bio_herb_depth3.js",
-   "title": "新增：植物纲深度卡批3（23草：死亡沙漠后9+东境林野10+南境湿地前4），约10247字描述"
-  },
-  {
-   "file": "src/data_nodes/dn_bio_herb_depth4.js",
-   "title": "新增：植物纲深度卡批4（23草：南境湿地后6+深渊腐化9+神话传说8），约10209字描述"
+   "file": "src/data_nodes/dn_bio_myth_cards_herb.js",
+   "title": "新增：5草类传说图鉴卡节点（曼德拉草/槲寄生/金苹果/蕨花/世界树苗），每卡5段白描+3选项+ok/fail/crit三档判定+独特crit奖励"
   },
   {
    "file": "budget.json",
-   "title": "性能预算更新（game.html 20277540B/chunked 9206366B，合法内容增长；上限放宽至21.5MB/9.8MB预留后续批次）"
+   "title": "性能预算更新（game.html 20337284B/chunked 9266110B，合法内容增长）"
   }
  ]
 }

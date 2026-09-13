@@ -1,9 +1,34 @@
 # -*- coding: utf-8 -*-
 """分片构建实现（批 P0-1 收编）：_v62_merge / _v42_build_chunks / _v42_verify_chunks / _v42_chk_syntax
 统一入口，供 elda.py cmd_chunks 调用；不再依赖根目录历史脚本。UTF-8，无 SyntaxWarning。
+
+v98-CHUNKHASH（2026-09-13）：
+  story_*.js / v62_origin.js 文件名改为「<基名>.<sha1前8>.js」内容哈希版，
+  杜绝发版后 chunk 文件名复用导致的浏览器旧缓存混版（配合 sw.js network-first 双保险）。
+  NODE_MAP.js 保留原名（检查器 c_dead 依赖其路径）。
 """
 import io, os, re, subprocess, sys
 from collections import Counter
+import hashlib
+
+
+def _h8(text):
+    """内容 sha1 前 8 位（chunk 文件名哈希后缀）。"""
+    return hashlib.sha1(text.encode('utf-8')).hexdigest()[:8]
+
+
+def _clean_hash_old(d, base, keep):
+    """删除 chunks/<base>.<8位hash>.js 中非本次 keep 的旧哈希文件（v98-CHUNKHASH）。
+    只匹配「基名.8位hex.js」，绝不动无哈希后缀的权威源 <base>.js。"""
+    if not os.path.isdir(d):
+        return
+    pat = re.compile(r'^' + re.escape(base) + r'\.[0-9a-f]{8}\.js$')
+    for fn in os.listdir(d):
+        if fn != keep and pat.match(fn):
+            try:
+                os.remove(os.path.join(d, fn))
+            except OSError:
+                pass
 
 
 def _read(p, enc='utf-8'):
@@ -195,13 +220,19 @@ def build_chunks(proj, src_path=None):
     d = os.path.join(proj, 'chunks')
     os.makedirs(d, exist_ok=True)
     total = 0
+    chunk_file = {}
     for c, items in chunks.items():
         body_all = ('/* 艾尔达大陆·群雄割据 v42 分片：%s（由 elda chunks 自动生成，勿手改） */\n' % c)
         body_all += '\n'.join(b for _, b in sorted(items, key=lambda x: x[0]))
         body_all += '\n'
-        _write(os.path.join(d, c + '.js'), body_all)
+        # v98-CHUNKHASH：内容哈希文件名 <基名>.<h8>.js，内容变则文件名变（旧缓存永不命中）
+        h = _h8(body_all)
+        fname = '%s.%s.js' % (c, h)
+        _clean_hash_old(d, c, fname)
+        _write(os.path.join(d, fname), body_all)
+        chunk_file[c] = fname
         total += len(body_all)
-        print('  %-16s %4d 节点 %8d 字符' % (c, len(items), len(body_all)))
+        print('  %-16s %4d 节点 %8d 字符  %s' % (c, len(items), len(body_all), fname))
     nm_lines = ['/* 节点→分片映射表（自动生成） */', 'const NODE_MAP = {']
     for nid in sorted(node_map):
         nm_lines.append('  "%s":"%s",' % (nid, node_map[nid]))
@@ -210,12 +241,16 @@ def build_chunks(proj, src_path=None):
     print('NODE_MAP.js:', len(node_map), '条映射')
 
     # 引用全部 8 个 story_* 分片（story_core 最先，其余按名排序，保证分片版节点完整）
-    ordered = ['story_core.js'] + sorted(c + '.js' for c in chunks if c != 'story_core')
+    ordered = [chunk_file['story_core']] + sorted(chunk_file[c] for c in chunks if c != 'story_core')
     # GR-3：追加 v62_origin.js（历史 IIFE 序章分片，含 story_* 未覆盖的 origin_* 全量节点；
-    # 不补则分片版缺 96 个序章节点，线上建号链不完整）
+    # 不补则分片版缺 96 个序章节点，线上建号链不完整）。
+    # 注意：v62_origin.js 保持原名引用，不生成哈希副本——build/merge_v62/c_chunks 均按
+    # v62_ 前缀遍历注入，副本会造成单文件版重复注入（+282KB）与"主片重复"误报。
+    # 其内容为历史稳定产物 + sw.js network-first 兜底，无混版风险。
     if os.path.exists(os.path.join(d, 'v62_origin.js')):
         ordered = ordered + ['v62_origin.js']
     src_refs = ''.join('<script src="chunks/%s"></script>\n' % f for f in ordered)
+    print('分片引用顺序:', ' -> '.join(ordered))
     # N 必须先于分片定义：把 non_node_text 里的 N 定义段拆出提前
     n_head = ''
     n_tail = non_node_text

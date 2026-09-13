@@ -97,7 +97,9 @@ def _collect_root_chunks():
         return ''
     seg = ['/* /u1inj:chunks-root/ */']
     for f in fps:
-        name = os.path.basename(f)
+        # v98-CHUNKHASH：注释用分类基名（去 .<8位hash>.js 后缀），
+        # 否则 chunks 重生成（文件名随内容变）会破坏 build 幂等环（verify 字节比对 FAIL）
+        name = re.sub(r'\.[0-9a-f]{8}\.js$', '.js', os.path.basename(f))
         content = _read(f).rstrip('\n') + '\n'
         seg.append('/* /u1inj:chunks-root:%s/ */' % name)
         seg.append(content)

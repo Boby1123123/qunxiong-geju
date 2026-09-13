@@ -1,20 +1,20 @@
 {
- "version": 111,
- "from": "v110",
+ "version": 112,
+ "from": "v111",
  "released": "2026-09-13",
- "note": "物种深度卡超大型更新·B4神话深节点升级传说图鉴卡：13个神话生物（8兽+5草）从深节点升级为传说图鉴卡节点，每卡5段白描（图鉴柜开卡→六维种族值→特性生态位→神话挂接→战利品市场）+3-4个互动选项（挑战传说/缔结契约/记录图鉴/采集传说/培育移植/鉴定药用），每个选项带check属性+技能+tier段位判定+ok/fail/crit三档结果，crit各给独特flag印记（挣链之印/九首冠印/守宝之印/浮岛之契/涅槃灰印/神谕石眼印/守门瞳印/银角残印/认主人形根/圣橡枝/白兽护金苹果/萨满礼蕨花/树契世界树苗）+秘药方残图；8兽卡（芬里尔之裔/九头蛇/狮鹫/克拉肯/凤凰/圣山白狼/沙上斯芬克斯/林间独角兽）写入dn_bio_myth_cards_beast.js，5草卡（曼德拉草/槲寄生/金苹果/蕨花/世界树苗）写入dn_bio_myth_cards_herb.js；不重复既有beast_myth_*/herb_myth_*深节点剧情，聚焦翻图鉴柜的卡片互动；go目标全部指向已存在的卷浏览节点无死链；本地全量验证链46检查器全绿（节点5932、死链0、V66防回潮、前缀覆盖率97.39%、四路字节一致、smoke PASS、CRLF全LF）",
+ "note": "物种深度卡超大型更新·B3特殊纲+灵体纲深度卡：16种（特殊纲8种+灵体纲8种）从名录式升级为12字段怪物图鉴卡。特殊纲（深渊黑鳞魔物/风暴元素体/雷晶傀儡/铁砧地底蠕兽/钟楼地下的它/沙渊噬魂虫/时光裂隙守卫/腐化木灵）behavior适配为activity/trigger/attack三子字段，突出异化感/造物感/封印感，取材克苏鲁深渊气息/魔兽元素核心破核/山海经守山木精/七锚封印线/贤者之石三材料伏笔；灵体纲（钟楼第十三下的声音/铁门关英灵/银月祭坛月灵/铁牌器灵/血藤怨魂/神性残响/深渊魔魂/旧刀器灵）behavior适配为manifest/trigger/interaction三子字段，突出虚无感/执念感/契约感，取材修仙魂契/冥修魂道/器灵认主/魂幡收魂/鬼修渡化；16种description合计约6143字V66白描；共存追加方案（SPECIAL_DEPTH_CARDS/SPIRIT_DEPTH_CARDS全局对象，Object.assign合并不覆盖既有）；本地全量验证链46检查器全绿（节点5932、死链0、V66防回潮、前缀覆盖率97.39%、四路字节一致、smoke PASS、CRLF全LF）",
  "changes": [
   {
-   "file": "src/data_nodes/dn_bio_myth_cards_beast.js",
-   "title": "新增：8兽类传说图鉴卡节点（芬里尔/九头蛇/狮鹫/克拉肯/凤凰/圣山白狼/斯芬克斯/独角兽），每卡5段白描+3选项+ok/fail/crit三档判定+独特crit印记"
+   "file": "src/data_nodes/dn_bio_special_depth.js",
+   "title": "新增：特殊纲8种深度卡（深渊黑鳞魔物/风暴元素体/雷晶傀儡/铁砧地底蠕兽/钟楼它/沙渊噬魂虫/时光裂隙守卫/腐化木灵），behavior用activity/trigger/attack，约3220字描述"
   },
   {
-   "file": "src/data_nodes/dn_bio_myth_cards_herb.js",
-   "title": "新增：5草类传说图鉴卡节点（曼德拉草/槲寄生/金苹果/蕨花/世界树苗），每卡5段白描+3选项+ok/fail/crit三档判定+独特crit奖励"
+   "file": "src/data_nodes/dn_bio_spirit_depth.js",
+   "title": "新增：灵体纲8种深度卡（钟楼声音/铁门关英灵/银月月灵/铁牌器灵/血藤怨魂/神性残响/深渊魔魂/旧刀器灵），behavior用manifest/trigger/interaction，约2923字描述"
   },
   {
    "file": "budget.json",
-   "title": "性能预算更新（game.html 20337284B/chunked 9266110B，合法内容增长）"
+   "title": "性能预算更新（game.html 20403043B/chunked 9331869B，合法内容增长）"
   }
  ]
 }

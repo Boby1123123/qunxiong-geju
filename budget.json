@@ -1,6 +1,6 @@
 {
  "name": "群雄割据性能预算门",
- "version": 82,
+ "version": 84,
  "updated": "2026-09-13",
  "note": "超大型扩充：用户确认后续 20+ 批内容（贵族P-B~F、文化语言礼仪C-1~5、战争引擎W-1~5、旅途荒野R-1~5、B5接入）将持续增长，预算上限大幅上调以容纳（game 21.5M→32M，chunked 9.8M→15M，full_seconds 30→45）",
  "budgets": {
@@ -11,14 +11,14 @@
   "full_seconds_max": 45.0
  },
  "baseline": {
-  "game_html_bytes": 20450292,
-  "chunked_html_bytes": 9377457,
-  "node_total": 5919,
+  "game_html_bytes": 20490471,
+  "chunked_html_bytes": 9418897,
+  "node_total": 5992,
   "full_seconds": 22.53
  },
  "meta": {
   "last_updated": "2026-09-13",
-  "reason": "perf3-6 批：writePar 单次 innerHTML + v93 aside(双版)/guide/foot 内容指纹去重 + 收容循环自停（+407B 为覆盖版 renderAside 去重，累计 +661B 合法增长）",
+  "reason": "noble-PB 批：贵族内容包 20 节点+5 事件+账本5 项（承天城宫廷线 14 + 北境军事线 6），内容合法增长",
   "history": [
    {
     "date": "2026-09-09",

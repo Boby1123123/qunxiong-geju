@@ -5951,7 +5951,12 @@ const EVENT_POOL_EXT = [
 {id:"ev_system_auction", day:145, cls:"商机", text:"自由港拍卖行挂出一枚完整的元素核心，起拍三张元素符纸——不到半日，价翻了两倍。伙计说，是西境元素司和学院炼金工房在抢。老柯看了行情，把万灵谱馆的灵髓也挂了上去：灵体材料，今年头一回进拍卖行。"},
 {id:"griffin_sight", day:175, cls:"奇遇", text:"万灵谱馆收到一枚鹰狮羽——传说东境鹰狮峰的狮鹫，三百年没有落过羽。老柯把羽压在镇馆石下，说这是百兽卷新卷的引子。"},
 {id:"mandrake_night", day:135, cls:"奇遇", text:"学院药圃的曼德拉草在满月夜里尖叫，看圃人吓得不敢值夜，托你查一查根下埋了什么。"},
-{id:"goldapple_omen", day:210, cls:"奇遇", text:"北境风雪里有人见伊顿果园方向金光一夜——金苹果的传说，老柯说那是万灵谱馆的旧账，该清了。"}];;;;; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
+{id:"goldapple_omen", day:210, cls:"奇遇", text:"北境风雪里有人见伊顿果园方向金光一夜——金苹果的传说，老柯说那是万灵谱馆的旧账，该清了。"},
+{id:"noble_crown_delay", day:24, cls:"人祸", text:"新皇的加冕礼，枢机团以‘吉日未定’为由一推再推。京里传遍了：教廷在等皇帝让步，皇帝在等教廷低头。使节馆的门槛被说客踏平了。有人问：这皇位，到底算谁封的？"},
+{id:"noble_investiture", day:68, cls:"人祸", text:"承天城大主教的位子空悬。皇权递了三次名帖，教廷退了三次——圣职归圣职，皇权归皇权。两边都派人来请你递话。你手里的字条，忽然比军令还重。"},
+{id:"noble_tithe", day:95, cls:"人祸", text:"教廷的什一税和朝廷的皇税同一个月下来，东境的农人两头交。有村子把税官打了出去。县衙的告示贴了又撕，撕了又贴。你路过时，有人往你车辙里吐了口唾沫——分不清是恨哪一边。"},
+{id:"noble_sanctum", day:130, cls:"人祸", text:"圣痕司要审一个‘皇权庇护的异端’——商人，捐过钱，给宫里修过钟楼。宗教法庭要人，宫廷法不放。两顶轿子在承天门对峙，谁也不让。看热闹的人说：这哪是审人，这是审谁说了算。"},
+{id:"noble_oldcity_gathering", day:175, cls:"奇遇", text:"晨天故都的旧贵族们，择日聚会。请帖没写地址，只画了一枚褪色的家徽。听说要去的，都是‘还记得故都’的人。你摸了摸怀里的旧银币——它忽然有了分量。"}];;;;; window.EVENT_POOL_EXT = EVENT_POOL_EXT; /* /v76inj:eventpool/ */
 
 const RACES = {"human": {"cn": "人类", "desc": "大陆数量最多、适应力最强的种族。七大地域孕育出七种截然不同的活法。", "ic": "🧑"}, "half": {"cn": "混血", "desc": "人类与其他种族的血脉交汇。长寿与短命、偏见与机遇，都写在血脉里。", "ic": "🌓"}, "elf": {"cn": "精灵", "desc": "长寿的森林之民。魔法天赋流淌在血脉里，岁月在他们脸上刻下宁静。", "ic": "🧝"}, "dwarf": {"cn": "矮人", "desc": "山腹与熔炉之子。短矮的身躯里装着铁一般的意志与手艺。", "ic": "🧔"}, "orc": {"cn": "兽人", "desc": "草原与蛮荒的战士。力量与战意是他们的第一语言。", "ic": "👹"}, "halfling": {"cn": "半身人", "desc": "田野与市井间的小个子。幸运仿佛偏爱他们，麻烦也总绕着他们走。", "ic": "🍀"}, "dragon": {"cn": "龙裔", "desc": "体内流淌着巨龙血脉的古老种族。鳞片、吐息与血脉的骄傲。", "ic": "🐉"}}; window.RACES = RACES; /* /v60inj:winx2:RACES/ */
 
@@ -13503,7 +13508,8 @@ N["arrive_east_chengtian"] = function(){
 
       {t:"（先进城——顺着东市的晨钟，听听承天城的声音）",go:"east_deep_01"}
 
-    ]
+    ,
+      {t:"打听帝京贵族的门路（贵族内容包·帝国卷）",go:"noble_emp_enter"}]
 
   };
 
@@ -13760,7 +13766,8 @@ N["arrive_east_tiemen"] = {tag:"main",
 
     {t:"（在铁门关一带再走一走，听关里关外的消息）",go:"east_deep_31"}
 
-  ]
+  ,
+      {t:"以贵族身份拜访秦·长风一系（贵族内容包·北境卷）",go:"noble_north_gate"}]
 
 };
 
@@ -103081,7 +103088,12 @@ window.CAUSALITY_WORDS = [
   { id:"led_bio_33", type:"道具", desc:"世界树苗——神话之木的种子，种下可成新锚，与七枚锚呼应", plant:"node:herb_myth_worldtree", reap:"future（世界树支线）", status:"open", world:"北境" },
   { id:"led_bio_34", type:"道具", desc:"曼德拉草根——会尖叫的根，炼金至宝，学院药圃夜鸣", plant:"node:herb_myth_mandrake", reap:"future（曼德拉草支线）", status:"open", world:"学院" },
   { id:"led_bio_35", type:"道具", desc:"槲寄生圣枝——凯尔特神话，挂在门楣可避灾，精灵圣地所出", plant:"node:herb_myth_mistletoe", reap:"future（槲寄生支线）", status:"open", world:"精灵" },
-  { id:"led_bio_36", type:"生物", desc:"凤凰·太阳轨迹——不死鸟传说，浴火重生，万灵谱馆最高一栏", plant:"node:beast_myth_phoenix", reap:"future（凤凰支线）", status:"open", world:"全境" }
+  { id:"led_bio_36", type:"生物", desc:"凤凰·太阳轨迹——不死鸟传说，浴火重生，万灵谱馆最高一栏", plant:"node:beast_myth_phoenix", reap:"future（凤凰支线）", status:"open", world:"全境" },
+{ id:"led_noble_01", type:"设定", desc:"帝国七级爵制与虚职实职双轨——承天城授爵体系，平民三通道入爵", plant:"node:noble_emp_court", reap:"future", status:"open", world:"东境" },
+{ id:"led_noble_02", type:"伏笔", desc:"虚职被实权轻看半格——社交矛盾发生器，宴席位次即暗斗舞台", plant:"node:noble_emp_banquet", reap:"flag:noble_fief_waste", status:"open", world:"东境" },
+{ id:"led_noble_03", type:"伏笔", desc:"晨天故都旧族暗中供养一方（教廷或皇权）——暗子浮出，P-F 暗斗线前置", plant:"node:noble_emp_oldcity", reap:"flag:noble_papal_eye", status:"open", world:"东境" },
+{ id:"led_noble_04", type:"因果", desc:"加冕权：枢机团可拖延加冕施压皇权——王教暗斗第一杠杆", plant:"node:noble_emp_cardinal", reap:"node:noble_emp_oath", status:"open", world:"东境" },
+{ id:"led_noble_05", type:"因果", desc:"叙任权：主教任命拉锯（皇权提名亲信 vs 教廷坚称圣职归教廷）", plant:"node:noble_emp_banquet", reap:"future", status:"open", world:"东境" }
 ];
 
 /* ===== /v91inj:ledgerwords:end/ ===== */
@@ -121811,6 +121823,297 @@ N["ng3_note"]={tag:"branch",place:"自由城邦 · 交汇城 · 城东小院",pa
 {t:"（把册子收进床底木箱，睡觉）",effects:{flag:"ng3_note_done",xp:10},go:"fc_innkeep"}
 ]};
 
+/* /u1inj:data-nodes:dn_noble_empire.js/ */
+/* ============================================================
+ * dn_noble_empire.js —— 贵族内容包 P-B：承天城宫廷与北境军事贵族
+ * 依据：docs/贵族与权柄_设定基座.md（P-A）+ docs/贵族P-B_承天城与北境_写作蓝图_20260913.md
+ * 弧：arc_noble_empire；卷域：east（承天城 14 节点）+ north（北境 6 节点）
+ * 铁律：只增不降；不触碰引擎判定；金秤家族零出现；V66 白描；30 治理词避让
+ * 设定咬合：承天城七级爵制/虚职实职双轨/北境军功授爵/王权×教权暗斗
+ * ============================================================ */
+
+N["noble_emp_enter"]={tag:"branch",place:"东境 · 帝京承天城 · 承天门",where:"白昼",pace:"normal",
+text:[
+"承天门高九丈，门洞能并排赶过三辆粮车。石缝里塞着多年的车辙泥，泥里混着金粉——是进贡的车队掉的。",
+"门吏坐在条凳上，一碗茶从热喝到凉。他翻你递上的文书，翻得很慢，慢得像在数纸上的字。",
+"你身后排着三队人：一队是进贡的车夫，车上盖着各城的税印；一队是教廷使节的仪仗，白袍的书记官捏着蜡封的公文；还有一队，马车黑漆，帘子垂得严实，车角挂着一面褪色的家徽。",
+"门吏终于抬眼，把文书推回来：“名目。”"
+],
+options:[
+{t:"亮出爵印——有爵者入京",effects:{flag:{noble_has_title:true}},go:"noble_emp_court"},
+{t:"亮出虚职文书——荣誉头衔入京",effects:{flag:{noble_honorary:true}},go:"noble_emp_inn"},
+{t:"以平民身份入城，暂不暴露",effects:{flag:{noble_incognito:true}},go:"noble_emp_inn"}
+]
+};
+
+N["noble_emp_inn"]={tag:"branch",place:"东境 · 帝京承天城 · 朱雀街 · 京畿客栈",where:"任意",pace:"normal",
+text:[
+"朱雀街的客栈分三档。你选了中间那档——楼下灶房飘着姜汤味，楼上隔间能听见隔壁的茶碗声。",
+"掌柜报完价，压低嗓子补了一句：“客官要是进京办事，先别急着递牌子。”他指了指墙角的告示栏，“加冕的日子，枢机团还没定。宫里的人天天来问。”",
+"邻桌坐着两个教廷的书记官，白袍袖口沾着墨。其中一个说：“大主教的人选，陛下催了三次。”另一个把声音放得更低：“催有什么用。圣职归圣职，皇权归皇权——这账，得拿日子来算。”",
+"墙上悬赏榜贴着一角旧纸：鹰狮峰的狮鹫羽，万灵谱馆常年收。"
+],
+options:[
+{t:"打赏掌柜，买三条京中情报",check:{a:"CHA",sk:"bargain",label:"问路"},tier:{ok:["掌柜收下铜子，凑过来：“第一条，摄政公爵姓萧，皇帝的舅舅，朝里一半的折子先过他的手。第二条，枢机·克莱门特前日入京，住在使节馆，门禁森严。第三条——”他顿住，“第三条不要钱，白送：御宴的日子定下来了，请帖在纹章院发。”"],fail:["掌柜把钱推回来：“客官这问法，我可不敢接。京里的水，深得很。”他到底还是说了两条——枢机·克莱门特入京了，御宴的日子定在纹章院发帖。"]},effects:{gold:-1},go:"noble_emp_court"},
+{t:"旁听邻桌，记住关键词",check:{a:"INT",sk:"lore",label:"听记"},tier:{ok:["你记下了三个词：叙任、拖延、使节馆。教廷和皇权，正在为一件事拉扯——大主教的任命。"],fail:["邻桌忽然都不说话了。书记官回头看了你一眼，那眼神让客栈的姜汤味都凉了半截。你只记得‘使节馆’三个字。"]},go:"noble_emp_court"},
+{t:"直接入睡，明日再说",go:"noble_emp_court"}
+]
+};
+
+N["noble_emp_court"]={tag:"branch",place:"东境 · 帝京承天城 · 议政殿",where:"白昼",pace:"deep",
+text:[
+"议政殿的柱子要两人合抱。殿门两侧站着持戟的禁卫，戟尖朝下，一动不动——朝见时，任何人带刃入殿，视同刺驾。",
+"御座在上首。皇帝很年轻，看着不过十六七岁，坐得端正，眼神却总往殿角的帘子后面飘。帘后坐着摄政公爵萧氏，四旬年纪，面白无须，两道眉毛压得很低。",
+"你行觐见礼时，殿里静得能听见自己衣料摩擦的声音。枢机使节站在侧列——白袍，金线，手里托着一只银匣，眼睛却始终没离开皇帝的右手。",
+"礼毕，年轻的皇帝开口，声音比年龄稳：“外来的游侠？还是来求官的？”"
+],
+options:[
+{t:"按礼数答话，自称‘草民/微臣’",check:{a:"CHA",sk:"speech",label:"觐见"},tier:{ok:["你的答话四平八稳，进退有度。皇帝点了点头，命人记下你的名字。帘后的摄政公爵看了你一眼——那一眼很平淡，像看一件还不错的物件。枢机使节的银匣动了一下，又停住。你被引到殿中偏位。"],fail:["你答话时把‘承蒙圣恩’说成了‘承蒙天恩’。殿上静了一瞬，引座官上前，客客气气地把你‘请’回末席。皇帝没看你，帘后的公爵倒是多看了你一眼——是失望的那种看。"],crit:["你答得从容，末了补了一句‘圣辉在上，神恩与皇恩同沐’。皇帝笑起来，是真的笑，殿角的帘子动了一下。枢机使节托着银匣向你欠了欠身。引座官亲自把你引到上首——这个位置，虚职的贵人坐不到。"]},effects:{xp:15},go:"noble_emp_herald"},
+{t:"礼数周全，但故意慢半拍——试探",check:{a:"INT",sk:"detect",label:"试探"},tier:{ok:["你比规定的节奏慢了半拍。皇帝没察觉，摄政公爵的眼皮动了一下，枢机使节的银匣却稳稳地托着——他在记你。你从殿侧退下时，一个小侍从追上来，塞给你一张字条：使节馆，今夜。"],fail:["你慢的那半拍太明显，引座官直接上前把你引到末席。皇帝没说话，枢机使节看了你一眼，记下了你的脸。"]},effects:{flag:{noble_court_probe:true}},go:"noble_emp_cardinal"},
+{t:"失礼试探——故意触犯佩刃禁令的边缘",check:{a:"CHA",sk:"speech",label:"失礼"},tier:{ok:["你只是把佩剑的剑柄碰到门槛，禁卫的戟立刻横过来。殿上哗然。皇帝摆了摆手：“年轻人，不知轻重。”你被请出殿——但这一出，让枢机使节记住了你。"],fail:["剑柄碰门槛的动静太大，禁卫的戟尖几乎戳到你鼻尖。皇帝沉了脸，摄政公爵冷笑一声。你被禁卫架出议政殿，门吏在你背后把‘失礼’两个字记进了名册。"]},effects:{xp:5,infl:{east:-3}},go:"noble_emp_petition"}
+]
+};
+
+N["noble_emp_herald"]={tag:"branch",place:"东境 · 帝京承天城 · 纹章院",where:"白昼",pace:"normal",
+text:[
+"纹章院在皇城东侧，门脸不大，进去却别有天地——四壁挂满盾牌，每面盾上刻着不同的徽记，从雄狮到天秤，从银月到荆棘。",
+"掌纹章的官儿约莫六十岁，眼皮耷拉着，可你看他的眼睛——他看你的眼神，像看一张没写字的纸。",
+"“家徽是祖辈挣的，也是后代要守的。”他慢悠悠地说，“你今日选定的图案，将来若有人践踏它，那是开战的由头；你若辱没它，那是全族的笑柄。想好了再选。”",
+"案上摊着一卷羊皮：元素与底色的配法，密密麻麻写了一整页。"
+],
+options:[
+{t:"选定家徽——雄狮/金底",effects:{flag:{noble_crest_lion:true,noble_crest:"雄狮金底"}},go:"noble_emp_salon"},
+{t:"选定家徽——天秤/银底",effects:{flag:{noble_crest_balance:true,noble_crest:"天秤银底"}},go:"noble_emp_salon"},
+{t:"问纹章学，辨认名门徽记",check:{a:"INT",sk:"lore",label:"纹章学"},tier:{ok:["你认出墙上七八面名门徽记，连某家三十年前改过底色的旧事都说得出来。掌纹章官第一次抬了抬眼皮：“有点眼力。记着——宴会上的徽记，绣工不对，多半是冒的。”他在你名下记了一笔。"],fail:["你认错了两面徽记，把某伯爵家的狮子说成了某侯爵家的。掌纹章官没说话，只把羊皮卷翻回去：“再看一遍。”"]},go:"noble_emp_salon"}
+]
+};
+
+N["noble_emp_salon"]={tag:"branch",place:"东境 · 帝京承天城 · 萧公爵府 · 晚宴沙龙",where:"黑夜",pace:"deep",
+text:[
+"萧公爵府的宴会厅点着十二盏银灯。灯下人人带徽——有人的徽记绣在衣襟，有人的绣在袖口，有一位老贵族把它绣在手套背面，举杯时才露出来。",
+"你注意到角落里有位绅士，衣襟上的徽记绣工不对——那狮子绣得太圆，名门世家的狮子是瘦的。",
+"主母端着酒盏过来，笑得很得体：“客人面生。祖上哪一支？封地在哪里？”这话问得轻巧，满厅的耳朵都竖着。",
+"邻席有人用精灵语敬酒，音节拉得很长。你听懂了一半——另一半是双关，像刀锋藏在花束里。"
+],
+options:[
+{t:"指出那人的徽记绣工不对",check:{a:"INT",sk:"lore",label:"辨徽"},tier:{ok:["你走到那人面前，只说了一句：“尊驾的狮子，绣圆了。”厅里静了一瞬。那人脸色变了几变，起身告辞，走得很快。主母多看了你一眼，往你杯里添了酒：“客人有胆量。”但你得罪了那人的来头——有人记住了你的脸。"],fail:["你走过去刚开口，那人笑着打断：“小友看错了，这是家父传下来的旧绣，年头久了，走线而已。”满厅人跟着笑。你被反将一军，末席的虚职贵族悄悄给你使了个眼色。"]},effects:{xp:15,infl:{east:2}},go:"noble_emp_banquet"},
+{t:"用精灵语回敬——听懂那句双关",check:{a:"INT",sk:"lore",label:"听辨古语"},tier:{ok:["你用精灵语回了半句，点破他敬酒辞里的双关——那是句暗语，说的是教廷使节今夜的行踪。敬酒的人怔住，随即举杯向你致意。主母的笑里多了几分真：“客人藏得深。”满厅的徽记，都在重新打量你。"],fail:["你用精灵语回了一句，但韵脚错了。敬酒的人笑着举杯，席间有人咬耳朵：“东境人学的野精灵语。”你听不懂的那半句，从此再没人当着你面说。"]},go:"noble_emp_banquet"},
+{t:"以虚职身份周旋——被问‘采邑在哪儿’",go:"noble_emp_banquet"}
+]
+};
+
+N["noble_emp_petition"]={tag:"branch",place:"东境 · 帝京承天城 · 请愿厅",where:"白昼",pace:"normal",
+text:[
+"请愿厅比菜市场还热闹。求官的人挤在长案前，案后的文书官头也不抬，笔尖在纸上划拉，嘴里只重复一句话：“名目。凭证。候着。”",
+"墙上贴着一张价目表，字写得规整：荣誉男爵——五百金；荣誉伯爵——两千金；封号不附采邑，不世袭，不入朝议。表下用朱笔添了一行小字：军功授爵另议，需功勋簿盖章。",
+"你前面有个商人，捐了两千金，文书官给了他一卷文书，他捧着像捧圣旨。后面有人嘀咕：“两千金，买个逢年过节进宫磕头的位子。”",
+"角落里有个人一直站着，腰间的刀鞘磨得发亮。他没往价目表那儿去，只盯着那行朱笔小字。"
+],
+options:[
+{t:"捐纳虚职——荣誉伯爵（花 2000 金）",check:{a:"SPR",sk:"bargain",label:"议价"},tier:{ok:["文书官第一次抬头看你：“两千金，实收一千八。剩余两百，算给朝廷添瓦。”你捧着荣誉伯爵的文书走出请愿厅，门口的引路人问你：“大人，府上怎么称呼？”——你知道，这称呼值一千八。"],fail:["文书官按价目表收了两千金，一个铜子没让。你捧着文书出来时，前面的商人回头看了你一眼，眼神像看一个冤大头。"]},effects:{gold:-1800,flag:{noble_honorary_up:true}},go:"noble_emp_banquet"},
+{t:"出示功勋簿——走军功授爵线",effects:{flag:{noble_merit_show:true}},go:"noble_emp_banquet"},
+{t:"离开请愿厅",go:"noble_emp_banquet"}
+]
+};
+
+N["noble_emp_banquet"]={tag:"branch",place:"东境 · 帝京承天城 · 紫宸殿 · 御宴",where:"黑夜",pace:"epic",
+text:[
+"紫宸殿的御宴，席位是有规矩的。实职在前，虚职末席——你坐下时，对面的老贵族用杯底敲了两下桌面，那是末席之间的暗号，意思是：自己人，别露怯。",
+"皇帝坐在上首，枢机使节坐在他右侧。两人共席，互敬圣酒——敬得极其周全，酒是同一壶，杯是同一式，连举杯的高度都一般齐。可你看见，使节的杯沿比皇帝的矮了半寸。那半寸，是教廷在告诉满殿的人：神权在上。",
+"席间三次交锋。第一次，皇帝祝酒：“圣辉照我承天土。”使节接道：“亦照我圣山雪。”——平平两句，满殿静默，因为圣山雪归教廷管。第二次，皇帝说“国士无双”，使节说“天下有主”。第三次，谁也没接话，只听见杯盏相碰。",
+"末席有个虚职伯爵，喝多了，拉着你说：“你瞧那帘子后面——”他顿住，把后半句咽了回去，“算了，京里的话，说一半漏一半。”",
+"席散时，枢机使节从你身边经过，脚步顿了顿。那半寸的杯沿，忽然有了重量。"
+],
+options:[
+{t:"按席位规矩行事，不站队——守礼",effects:{xp:20},go:"noble_emp_oath"},
+{t:"主动与枢机使节攀谈——教廷党倾向",check:{a:"CHA",sk:"persu",label:"攀谈"},tier:{ok:["你走过去敬了一杯酒，话说得含糊，但方向明确——“圣辉的旨意，凡尘该听。”使节看你一眼，回敬了你半杯：“使者馆的门，今夜不关。”"],fail:["你开口说“久仰圣辉”，使节淡淡接了句“圣辉不与凡尘互称久仰”。你被晾在原地，满殿的徽记都记住了你的冒失。"]},effects:{flag:{noble_faction_church:true}},go:"noble_emp_cardinal"},
+{t:"与末席虚职贵族结交——收买人心",check:{a:"CHA",sk:"speech",label:"结交"},tier:{ok:["你和末席的几个虚职贵人喝了一轮。他们告诉你末席的规矩、进宫的路子、还有谁家是靠捐纳上来的——这些人没有实权，可消息比实权者灵通。“记着，”那喝多的伯爵拍你肩膀，“京里的事，末席先知道。”"],fail:["你敬了一圈酒，回来发现位子被一个宫廷侍从挪到了更靠门的地方。末席的老贵族们照旧喝酒，只是不再同你碰杯。"]},effects:{infl:{east:2}},go:"noble_emp_oldcity"}
+]
+};
+
+N["noble_emp_cardinal"]={tag:"branch",place:"东境 · 帝京承天城 · 使节馆 · 密会",where:"黑夜",pace:"deep",
+text:[
+"使节馆的灯罩着黑纱，光只照桌面一圈。桌对面坐着一个穿便衣的中年人，领口绣着一枚极小的银十字——是枢机·克莱门特的人。",
+"“陛下想往枢机团里安插亲信。”那人把一杯茶推到你面前，“教廷知道。教廷不想点破——圣辉的面子要留。但我们缺一双在俗世的眼睛。”",
+"茶是热的，话是凉的：“你替教廷看这京里的暗流。事成，圣辉记得你的名字；事败——”他没说完，把茶端回去自己喝了。",
+"窗外传来更声。他忽然换了个口吻，像闲聊：“听说皇帝连议政殿的帘子都要管。帘子后面坐着谁，你知道吗？”"
+],
+options:[
+{t:"应承教廷——当世俗眼线",effects:{flag:{noble_papal_eye:true}},go:"noble_emp_oath"},
+{t:"假意应承，转头通报皇权——双面",check:{a:"CHA",sk:"persu",label:"周旋"},tier:{ok:["你当着使节馆的面应得滴水不漏，出了门却往皇城递了张字条。两头都以为你站在他们那边——但这事若败露，两边都会同时清算你。你怀里那张字条的墨迹，比茶还烫。"],fail:["你应承的时候，使节馆那人看了你很久，久到你以为他看穿了。他最后只说：“那就这么说定了。”你出了门，回头看见二楼的灯，还亮着。"]},effects:{flag:{noble_double_agent:true}},go:"noble_emp_oath"},
+{t:"婉拒——保持中立",effects:{flag:{noble_neutral:true}},go:"noble_emp_oath"}
+]
+};
+
+N["noble_emp_oldcity"]={tag:"branch",place:"东境 · 故都晨天城 · 旧贵族宴",where:"黑夜",pace:"deep",
+text:[
+"晨天故都的老宅，墙皮斑驳，檐角的兽头缺了一只。宴席设在正厅，烛火昏黄，照见墙上挂着一排家徽——都褪色了，像一排站累了的老兵。",
+"座上的旧族说话慢，敬酒也慢，说一半留一半。你听出他们在供养某方势力——有人提“北边那位使节”，有人接“宫里那顶帘子”，说的人点到为止，听的人会心一笑。",
+"席间有个老妇人，是这一家辈分最高的。她端详你半天，忽然问：“你祖上，是东境哪一支？”你答不上来。她也不追问，只把一块刻着旧纹的银币推到你面前：“故都的东西，见者有份。拿去，将来用得着。”",
+"烛火跳了一下。满座的人都在等你接这枚银币——接了，就是故都的人。"
+],
+options:[
+{t:"探旧族口风——他们暗中供养的是谁",check:{a:"CHA",sk:"persu",label:"探口风"},tier:{ok:["你顺着“北边那位使节”的话头绕了三圈，终于套出一句实在的：故都旧族在往教廷的账上供银子，换的是“他日圣辉重临故都”的一句话。老妇人看你一眼：“年轻人，话到这里，够你喝三壶酒了。”"],fail:["你问得太直。老妇人把银币收了回去：“故都的事，故都人说。”满座的人照旧喝酒，只是看你的眼神，都带上了隔阂。"]},effects:{flag:{noble_oldcity_known:true}},go:"noble_emp_archives"},
+{t:"收下银币，不趟浑水",effects:{flag:{noble_oldcity_coin:true}},go:"noble_emp_archives"},
+{t:"把消息卖给皇权或教廷——情报交易",effects:{flag:{noble_oldcity_sold:true},gold:50},go:"noble_emp_archives"}
+]
+};
+
+N["noble_emp_archives"]={tag:"branch",place:"东境 · 帝京承天城 · 御档房",where:"白昼",pace:"normal",
+text:[
+"御档房的架子上堆着成捆的羊皮卷，灰尘厚得能写字。管档的老吏打着哈欠，把一卷族谱摊在案上：“长子承袭，嫡庶有别，旁支出继需宗正寺核准——条文都在这里，自己看。”",
+"你翻到某页时，他忽然伸手压住：“这一页，别看了。”你看见那页上有一行被墨涂掉的名字，涂得很用力，墨都渗到了纸背。",
+"“旁支、私生子，”老吏用气声说，“朝廷的规矩是死的，人是活的。有的家，暗地里把私生子启用——不记档，不入谱，但官印照发。这种事，你当没看见。”",
+"另一沓是封地档案。边缘荒地：税轻，盗匪多，兽潮边缘；富庶河谷：税重，邻地倾轧，教廷什一税上门。两沓档案摆在一起，像两盘秤。"
+],
+options:[
+{t:"查自己祖上那支——身世线索",check:{a:"INT",sk:"lore",label:"查谱"},tier:{ok:["你在族谱里找到一行与你相关的记载——只半行，墨色与别处不同，像后来补的。你记住了那个名字，却想不起何时听过。老吏把卷宗抽走：“查到这儿，够了。再往下，要宗正寺的印。”"],fail:["你翻了半天，一无所获。老吏把卷宗合上：“查谱这事，讲究缘分。今日缘分不到。”"],crit:["你不但找到了那半行记载，还认出记载里提到的旧封地——正是你某个旧识提起过的地方。身世的线头，第一次攥在你手里。"]},effects:{flag:{noble_lineage_hint:true}},go:"noble_emp_villa"},
+{t:"查封地档案——为授爵选地做准备",effects:{flag:{noble_fief_read:true}},go:"noble_emp_villa"},
+{t:"离开御档房",go:"noble_emp_villa"}
+]
+};
+
+N["noble_emp_villa"]={tag:"branch",place:"东境 · 帝京承天城 · 赐第",where:"任意",pace:"normal",
+text:[
+"赐第在皇城西街，门脸不大，地段却好——推开后窗，能看见议政殿的飞檐。宅子是旧的，门轴吱呀响，墙皮有几处潮斑。",
+"你刚把行李放下，门口来了三个人。",
+"一个退役老兵，左手缺了两根手指，腰板挺得笔直：“老爷府上缺不缺看门的？刀我还能提得动。”",
+"一个账房先生，袖口磨得发亮，怀里揣着算盘：“府上的账，得有人管。小的在绸缎行干了二十年。”",
+"一个机灵小厮，十五六岁，眼珠转得快：“老爷出门，总得有个跑腿的。京里的路，小的熟。”",
+"三个人站在门廊下，都不催你。老兵望着天，账房拨着算盘珠，小厮盯着你的钱袋。"
+],
+options:[
+{t:"都留下（各 1 银月）",effects:{gold:-3,flag:{noble_retinue_full:true}},go:"noble_emp_oath"},
+{t:"只留老兵和账房",effects:{gold:-2,flag:{noble_retinue_two:true}},go:"noble_emp_oath"},
+{t:"先不招——省着",effects:{flag:{noble_retinue_none:true}},go:"noble_emp_oath"}
+]
+};
+
+N["noble_emp_oath"]={tag:"branch",place:"东境 · 帝京承天城 · 授爵大典 · 紫宸殿",where:"白昼",pace:"epic",
+text:[
+"授爵大典在紫宸殿正殿举行。你站在殿心，两侧是满朝文武——实职的甲胄在身，虚职的袍服在身，都看着你。",
+"年轻的皇帝坐在御座上，手里托着授爵的文书。枢机使节站在他身侧，托着银匣——匣里是圣油。涂油，是教廷在替神背书：这爵位，神也认。",
+"“以血立誓，以荣为纲。”皇帝念出誓词，声音不高，殿里却响得很。他顿了一下，看着你，“你愿向朕宣誓效忠么？”",
+"殿角的帘子动了一下——摄政公爵在听。你忽然明白，这一句誓词，殿里至少有四双眼睛在等着你的答法：皇帝、枢机、摄政，还有末席那些虚职的贵人。",
+"剑尖触上你的肩头。冰凉的铁，隔着衣料，压得人心跳都慢了一拍。"
+],
+options:[
+{t:"宣誓效忠皇权——“以血立誓，以荣为纲”",effects:{flag:{noble_sworn_crown:true},infl:{east:5}},go:"noble_emp_seal"},
+{t:"加一句“若违神谕则天罚”——教廷倾向",check:{a:"CHA",sk:"speech",label:"宣誓"},tier:{ok:["你把誓词念完，补了一句：“若违神谕，天罚我身。”皇帝脸上的笑淡了一瞬，枢机使节的银匣却晃了一下——那是满意。殿角的帘子后传来一声极轻的咳嗽。"],fail:["你补那句话时，声音发颤，念得不像誓词，像求饶。皇帝没接话，枢机使节也没接话。剑尖在你肩上多停了一息——你在满殿的沉默里，听见了自己的心跳。"]},effects:{flag:{noble_sworn_church:true},relation:{npc:"church_pope",v:3}},go:"noble_emp_seal"},
+{t:"宣誓前反悔——当众撕毁文书",effects:{flag:{noble_refused:true},infl:{east:-8}},go:"noble_emp_end"}
+]
+};
+
+N["noble_emp_seal"]={tag:"branch",place:"东境 · 帝京承天城 · 宗正寺 · 封地册",where:"白昼",pace:"normal",
+text:[
+"宗正寺的册子摊在你面前，两页纸，两行字。",
+"第一页：西境边缘荒地。税轻——一年三成；盗匪多，兽潮边缘；无主之地，先到先得。旁边用朱笔批了四个字：赏功之地。",
+"第二页：东境富庶河谷。税重——一年七成；邻地倾轧，教廷什一税按年上门；出产丰，商路通。旁边批了两个字：膏腴。",
+"管册的宗正官员把笔递给你：“选吧。荒地，是挣来的；河谷，是接来的。两条路，走的不是一个活法。”"
+],
+options:[
+{t:"选边缘荒地——自己挣",effects:{flag:{noble_fief_waste:true}},go:"noble_emp_end"},
+{t:"选富庶河谷——接手经营",effects:{flag:{noble_fief_rich:true}},go:"noble_emp_end"},
+{t:"暂缓——爵位先留着",effects:{flag:{noble_fief_pending:true}},go:"noble_emp_end"}
+]
+};
+
+N["noble_emp_end"]={tag:"branch",place:"东境 · 帝京承天城 · 离京",where:"任意",pace:"normal",
+text:[
+"离京前夜，你站在赐第的院子里。后窗的飞檐还亮着灯——议政殿今夜有会。",
+"门吏在城门处见你，换了称呼：“大人，出京？”你应了一声。他让到一边，比进城时多弯了弯腰。称呼这东西，像一层新贴的金箔，凉，但亮。",
+"你怀里揣着三样东西：授爵的文书、封地的册页，还有一张没写地址的字条——使节馆给的，或皇城给的，看你在宴上怎么选的。",
+"出城时，晨光正落在承天门的石缝上。那混着金粉的车辙泥，如今看着，比进城时真切了些。"
+],
+options:[
+{t:"带北境的任务出京——接军事线",go:"noble_north_gate"},
+{t:"自由离京——继续闯荡",go:"arrive_east_chengtian"}
+]
+};
+
+N["noble_north_gate"]={tag:"branch",place:"北境 · 铁门关",where:"任意",pace:"normal",
+text:[
+"铁门关的城砖缝里嵌着旧血。关城的门一开，北风灌进来，带着草原的腥气。",
+"军功官坐在门洞侧的石案后，面前摊着三卷功勋簿。他翻你的文书时，拇指在页角磨了两下：“战功？还是来吃军饷的？”",
+"门洞里进出的军汉都往你这边看。有爵的，他们多看两眼；没爵的，他们掂量你的腰刀。",
+"城头传来号角声，短促的两响。军功官头也不抬：“兽潮斥候回来了。”他合上功勋簿，“要入军籍，先去军营报到。铁门关的规矩：刀先认人，人再认官。”"
+],
+options:[
+{t:"出示战功凭证",check:{a:"CHA",sk:"persu",label:"验功"},tier:{ok:["军功官看了你的凭证，拇指在页角一停：“有东西。”他把一卷文书推给你，“去军营，找什长报到——就说是铁门关军功官荐的。”门洞里的军汉看你的眼神，多了几分实。"],fail:["军功官把你的凭证翻了两遍，推回来：“年份对不上，印章是东境的。”他把声音压低，“铁门关认的是北境的章。你要想挣，就从守城兵做起。”"]},effects:{flag:{noble_north_merit_ok:true}},go:"noble_north_barracks"},
+{t:"从守城兵做起——低起点",go:"noble_north_barracks"},
+{t:"以贵族身份拜访秦·长风一系",go:"noble_north_warchief"}
+]
+};
+
+N["noble_north_barracks"]={tag:"branch",place:"北境 · 铁门关 · 军营",where:"任意",pace:"deep",
+text:[
+"军营的伙房大锅里炖着杂粮粥，掺了盐和干菜，热气顶得棚顶滴水。老兵们围着火塘，人手一只豁口的碗。",
+"你刚落座，对面一个独眼的军头把碗往桌上一顿：“新来的？会握剑吗？”满棚的人都看过来。北境的规矩，新兵先过一关：讲自己最险的一仗，或者拔剑打一场。",
+"火塘里的柴火噼啪响。有人补了一句：“讲不出仗的，就讲讲你的伤。铁门关的兵，伤疤就是军功章。”",
+"你注意到棚角坐着一个人，年纪不小，左臂的袖管空荡荡的，正用右手慢慢掰一块干饼。他没看你，但火塘边的人都时不时看他一眼。"
+],
+options:[
+{t:"讲自己最险的一仗",check:{a:"CHA",sk:"speech",label:"讲仗"},tier:{ok:["你讲完，火塘边静了一瞬。独眼军头把碗里的酒倒给你半碗：“行，有东西。”他指指棚角那人，“那是老石头，铁门关守了二十年，左臂丢在北境草原上。他点头，你就算半个铁门关的人。”老石头掰饼的手停了停，没回头，但点了点头。你感觉到，棚里的气氛松了。"],fail:["你讲到一半，独眼军头打断：“等等——你说是三个人守的谷口？”他摇摇头，“三人守谷口，那是送死。要么你记错了，要么你编的。”棚里有人笑，有人低头喝粥。你这一仗，讲砸了。"]},effects:{xp:15,infl:{north:2}},go:"noble_north_warchief"},
+{t:"拔剑应战——军中较量",check:{a:"STR",sk:"martial",label:"比武"},tier:{ok:["你拔出剑，独眼军头抄起一杆木枪。棚里腾出空地。你攻了两剑，他挡了两枪——第三剑你卖了个破绽，他枪尖追进来，你侧身让过，剑背拍在他手腕上。木枪落地。棚里静了一瞬，随即有人喝了一声好。独眼军头甩着手腕，脸上却有了笑模样：“行，是个会打的。”"],fail:["你攻得太急。独眼军头的木枪像条活蛇，两下就挑飞了你的剑。剑落在火塘边，火星溅起来。棚里没人笑——北境的兵不笑话输的人，只笑话不敢打的人。他把木枪扔回来：“再来。”你捡起剑，手腕还在发麻。"],crit:["你让了三招，摸清他枪路，第四招一剑压住枪杆，把他顶退半步。棚里轰然叫好。独眼军头丢了木枪，捶了你肩膀一下：“好小子！老石头！”棚角那人终于回头看了你一眼——那一眼，比叫好声还重。"]},effects:{xp:25,infl:{north:3}},go:"noble_north_warchief"},
+{t:"认怂——走后勤线",effects:{flag:{noble_north_logistics:true}},go:"noble_north_warchief"}
+]
+};
+
+N["noble_north_warchief"]={tag:"branch",place:"北境 · 铁门关 · 军头宴",where:"黑夜",pace:"deep",
+text:[
+"军头宴设在关城议事厅，菜是炖肉，酒是烈酒。在座的都是各营军头，说话靠吼，敬酒靠碗。",
+"上首坐着一个人，甲胄半卸，露出里衬的旧棉袍——秦·长风。北境的名将，铁门关对峙的主角。他比你想的瘦，眉间一道旧疤，说话声不大，但一开口，满厅都静。",
+"席间你听出两桩旧怨：一桩是战利品分配——北营说东营多拿了兽潮的皮子；一桩是抚恤——阵亡兄弟的银子，有人克扣过，查了，没查到底。",
+"秦·长风把一碗酒推到你面前：“新来的。铁门关的兵，我不问出身，只看能不能扛事。你扛得住么？”"
+],
+options:[
+{t:"向秦·长风请战",check:{a:"CHA",sk:"persu",label:"请战"},tier:{ok:["你站起来，把酒碗举过眉：“将军指哪儿，我打哪儿。”秦·长风看着你，那一眼像在掂一柄刀的斤两，但点了点头：“好。明天去前线营，找赵都尉。”满厅的军头都多看了你一眼——能被秦·长风点名，铁门关没几个。"],fail:["你请战的话说得太满，秦·长风没接。他低头喝了口酒：“话满的人，血薄。先去前线营待几天，再说。”厅里有人笑了一声，又压下去。"]},effects:{flag:{noble_north_request:true},relation:{npc:"qin_changfeng",v:5}},go:"noble_north_front"},
+{t:"调解军头旧怨",check:{a:"CHA",sk:"persu",label:"调解"},tier:{ok:["你把战利品那桩旧怨摆开说，两头各让一步，账目当场算清。秦·长风看着你算了半天账，忽然说：“铁门关缺个会算账的。”厅里哄笑，但笑声里带着认可。抚恤那桩，他没让你碰——“那桩事，水太深。你今日够了。”"],fail:["你刚开口，北营军头就拍了桌子：“新来的，关里的事轮不到你插嘴！”秦·长风没拦，只看了你一眼。你坐下时，碗里的酒还满着。"]},effects:{xp:20,infl:{north:3}},go:"noble_north_front"},
+{t:"只吃酒听消息",effects:{flag:{noble_north_watch:true}},go:"noble_north_front"}
+]
+};
+
+N["noble_north_front"]={tag:"branch",place:"北境 · 铁门关 · 前线营",where:"任意",pace:"deep",
+text:[
+"前线营扎在关外十里，帐篷背风，栅栏朝北。傍晚的草原泛着灰青色，地平线上有烟——不是炊烟，是兽群扬起的土尘。",
+"赵都尉是个矮壮汉子，蹲在栅栏边擦刀：“斥候报了两趟了。草原那边的狼群在集结，少说几百头。按往年，这是兽潮的前兆。”",
+"他把刀翻了个面，指着远处的土丘：“看见那堆石头没？前年兽潮，一个整营压在那儿，回来七个人。”",
+"风从北边来，带着腥味。营里的狗夹着尾巴，趴在帐篷根下，一动不动。"
+],
+options:[
+{t:"参与布防——搬石设障",check:{a:"CON",sk:"survival",label:"布防"},tier:{ok:["你跟着老兵搬了一天石头，把栅栏缺口补了三处。赵都尉检查时，在你补的那段多看了两眼：“行，是个干活的料。”他记了你的名字——布防有功，功勋簿上添了一笔。"],fail:["你搬石头搬得手起泡，补的栅栏被赵都尉一推就晃：“结实？晃的。”他让你重来。天黑了，你还在栅栏边和泥。功勋簿上没添字，但营里的狗认识你了。"]},effects:{xp:15,flag:{noble_front_defend:true}},go:"noble_north_merit"},
+{t:"撤回城内——稳妥",go:"noble_north_merit"},
+{t:"独自出城侦察——草原深处",check:{a:"AGI",sk:"stealth",label:"侦察"},tier:{ok:["你趁着夜色摸出土丘，在狼群外围转了一圈，数清了大概的数目和方位。回来时，赵都尉听完你的描述，半晌没说话，最后说：“这些数目，够救一个营。”功勋簿上，记了你头一笔大功。"],fail:["你在草原上迷了路，天亮才摸回营。赵都尉在栅栏边等了一夜：“还活着？”他把热粥递给你，“记着——侦察是给有命回来的人记功的。”你连惊带冻，病了两天。"]},effects:{xp:20,flag:{noble_front_scout:true}},go:"noble_north_merit"}
+]
+};
+
+N["noble_north_merit"]={tag:"branch",place:"北境 · 铁门关 · 功勋簿",where:"白昼",pace:"normal",
+text:[
+"功勋簿在军需官的案头，一本羊皮册，页角磨得发毛。军需官拨着算盘，把你的战绩一项项核进去。",
+"“兽潮斥候、布防、比武，”他抬眼，“够换的了。换什么？”他翻开价目册：晋爵——骑士到男爵，需功勋十二笔；北境军械——兽潮材料打的刀，需功勋六笔；存着——攒大功，换实职封地。",
+"窗外传来号角声，又是两短一长。军需官把笔搁下：“兽潮，三日内必到。换不换，你趁早。”"
+],
+options:[
+{t:"兑爵位——骑士晋男爵",effects:{flag:{noble_north_baron:true}},go:"noble_north_leave"},
+{t:"兑北境军械",effects:{flag:{noble_north_gear:true}},go:"noble_north_leave"},
+{t:"存着——等大功",effects:{flag:{noble_north_save:true}},go:"noble_north_leave"}
+]
+};
+
+N["noble_north_leave"]={tag:"branch",place:"北境 · 铁门关 · 离营",where:"任意",pace:"normal",
+text:[
+"你收拾行囊出营时，独眼军头叫住你：“铁门关的刀认人。你算半个自己人了。”他往你怀里塞了一块烙着关徽的铜牌，“凭这个，关里的粥，你随时来喝。”",
+"老石头坐在棚角，还是掰他的干饼。你走过去，他把半块饼递给你。没说话，但接过的饼是温的。",
+"出关时，你回头看了一眼。铁门关的城砖还是老样子，缝里的旧血已经发黑。你怀里多了几样东西：功勋的册页、关徽的铜牌，还有半块干饼。",
+"北风又起。草原那边的烟，比昨日近了些。"
+],
+options:[
+{t:"接北境长期军职——战功线",effects:{flag:{noble_north_career:true}},go:"noble_north_front"},
+{t:"回承天城——宫廷线",go:"noble_emp_end"},
+{t:"自由行动",go:"arrive_east_tiemen"}
+]
+};
+
 /* /u1inj:data-nodes:dn_npc_lives.js/ */
 /* N-5 NPC 独立近况（世界人物：NPC 不在场时世界也在转）
  * 键=阶段起点 day（0/61/151/281），v93n5_npcLifeLine 按 S.day 取阶段，注入近况句。
@@ -126376,7 +126679,7 @@ window.STORY_BLUEPRINT = {
 
 
   
-          {id: "arc_bestiary", type: "branch", name: "万灵谱 · 超凡生物", act: "act2", vol: "vol_free", prefixes: ["bio_"], stages: {setup: ["bio_intro_0"], rising: ["bio_region_hub"], climax: [], resolution: []}, cond: "fc_jiaohui_entry -> bio_intro_0"}
+          {id: "arc_bestiary", type: "branch", name: "万灵谱 · 超凡生物", act: "act2", vol: "vol_free", prefixes: ["bio_"], stages: {setup: ["bio_intro_0"], rising: ["bio_region_hub"], climax: [], resolution: []}, cond: "fc_jiaohui_entry -> bio_intro_0"}, {id: "arc_noble_empire", type: "branch", name: "贵族与权柄 · 帝国卷", act: "act3", vol: "vol_east", prefixes: ["noble_"], stages: {setup: ["noble_emp_enter"], rising: ["noble_emp_banquet"], climax: ["noble_emp_oath"], resolution: ["noble_emp_end"]}, cond: "arrive_east_chengtian -> noble_emp_enter"}
      ],
 
 
@@ -129846,7 +130149,27 @@ window.STORY_BLUEPRINT = {
 "herb_myth_goldapple":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
 "herb_myth_fernflower":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
 "herb_myth_worldtree":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
-"herb100_intro":{arc:"arc_bestiary",vol:"vol_free",type:"branch"}
+"herb100_intro":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
+"noble_emp_enter":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_inn":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_court":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_herald":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_salon":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_petition":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_banquet":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_cardinal":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_oldcity":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_archives":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_villa":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_oath":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_seal":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_end":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_north_gate":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_barracks":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_warchief":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_front":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_merit":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_leave":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"}
 };
 
 /* /u1inj:data-nodes:dn_thoughts.js/ */
@@ -193410,7 +193733,8 @@ N["arrive_east_chengtian"] = function(){
 
       {t:"（先进城——顺着东市的晨钟，听听承天城的声音）",go:"east_deep_01"}
 
-    ]
+    ,
+      {t:"打听帝京贵族的门路（贵族内容包·帝国卷）",go:"noble_emp_enter"}]
 
   };
 
@@ -193470,7 +193794,8 @@ N["arrive_east_tiemen"] = {tag:"main",
 
     {t:"（在铁门关一带再走一走，听关里关外的消息）",go:"east_deep_31"}
 
-  ]
+  ,
+      {t:"以贵族身份拜访秦·长风一系（贵族内容包·北境卷）",go:"noble_north_gate"}]
 
 };
 

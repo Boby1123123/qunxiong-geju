@@ -1,8 +1,8 @@
 {
- "version": 113,
- "from": "v112",
+ "version": 114,
+ "from": "v113",
  "released": "2026-09-13",
- "note": "物种深度卡超大型更新·B5图鉴展示UI改版与引擎接入：①13个神话传说图鉴卡节点从孤岛接入万灵谱导航（beast100_v10_myth追加8选项指向beast_card_*，herb100_v10_myth追加5选项指向herb_card_*）；②新建dn_bio_depth_viewer.js，含BioDepthViewer纯展示层渲染模块（render+lookup两方法，读BEAST/HERB/SPECIAL/SPIRIT_DEPTH_CARDS全局对象）+40个新节点（动物纲11：hub+10卷级摘要；植物纲11：hub+10卷级摘要；特殊纲9：hub+8物种摘要；灵体纲9：hub+8物种摘要），卷级摘要节点静态写入各物种深度卡关键数据（星级/段位/六维/特性/弱点/战利品），不依赖运行时JS渲染；③bio_intro_categories四纲页追加4个深度卡总览入口；严守红线：未触碰判定公式/writeNext核心语义/choose/存档结构语义，UI改动仅限图鉴展示层，未新增移动端内容；节点5932→5972（+40），go引用15047→15176（+129），死链0；本地全量验证链46检查器全绿（V66防回潮、文本治理、前缀覆盖率、四路字节一致、smoke PASS、CRLF全LF）",
+ "note": "贵族内容包 P-B：承天城宫廷线 14 节点 + 北境军事贵族线 6 节点 + 5 事件（加冕拖延24/叙任权68/什一税95/圣痕司130/故都旧族宴175）+ 账本 led_noble_01~05 登记；arc_noble_empire 弧注册 + nodeIndex 20 条 + 入口挂接（承天门/铁门关）；王权×教权暗斗首章（杯沿半寸/末席规矩/虚职轻看半格）",
  "changes": [
   {
    "file": "src/data_nodes/dn_bio_depth_viewer.js",

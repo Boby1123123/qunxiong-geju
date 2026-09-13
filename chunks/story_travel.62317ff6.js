@@ -686,7 +686,8 @@ N["arrive_east_chengtian"] = function(){
 
       {t:"（先进城——顺着东市的晨钟，听听承天城的声音）",go:"east_deep_01"}
 
-    ]
+    ,
+      {t:"打听帝京贵族的门路（贵族内容包·帝国卷）",go:"noble_emp_enter"}]
 
   };
 
@@ -746,7 +747,8 @@ N["arrive_east_tiemen"] = {tag:"main",
 
     {t:"（在铁门关一带再走一走，听关里关外的消息）",go:"east_deep_31"}
 
-  ]
+  ,
+      {t:"以贵族身份拜访秦·长风一系（贵族内容包·北境卷）",go:"noble_north_gate"}]
 
 };
 

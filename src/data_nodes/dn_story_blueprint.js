@@ -565,7 +565,7 @@ window.STORY_BLUEPRINT = {
 
 
   
-          {id: "arc_bestiary", type: "branch", name: "万灵谱 · 超凡生物", act: "act2", vol: "vol_free", prefixes: ["bio_"], stages: {setup: ["bio_intro_0"], rising: ["bio_region_hub"], climax: [], resolution: []}, cond: "fc_jiaohui_entry -> bio_intro_0"}
+          {id: "arc_bestiary", type: "branch", name: "万灵谱 · 超凡生物", act: "act2", vol: "vol_free", prefixes: ["bio_"], stages: {setup: ["bio_intro_0"], rising: ["bio_region_hub"], climax: [], resolution: []}, cond: "fc_jiaohui_entry -> bio_intro_0"}, {id: "arc_noble_empire", type: "branch", name: "贵族与权柄 · 帝国卷", act: "act3", vol: "vol_east", prefixes: ["noble_"], stages: {setup: ["noble_emp_enter"], rising: ["noble_emp_banquet"], climax: ["noble_emp_oath"], resolution: ["noble_emp_end"]}, cond: "arrive_east_chengtian -> noble_emp_enter"}
      ],
 
 
@@ -4035,5 +4035,25 @@ window.STORY_BLUEPRINT = {
 "herb_myth_goldapple":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
 "herb_myth_fernflower":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
 "herb_myth_worldtree":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
-"herb100_intro":{arc:"arc_bestiary",vol:"vol_free",type:"branch"}
+"herb100_intro":{arc:"arc_bestiary",vol:"vol_free",type:"branch"},
+"noble_emp_enter":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_inn":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_court":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_herald":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_salon":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_petition":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_banquet":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_cardinal":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_oldcity":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_archives":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_villa":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_oath":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_seal":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_emp_end":{arc:"arc_noble_empire",vol:"vol_east",act:"act3",ch:"ch_east_chengtian",type:"branch"},
+"noble_north_gate":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_barracks":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_warchief":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_front":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_merit":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"},
+"noble_north_leave":{arc:"arc_noble_empire",vol:"vol_north",act:"act2",ch:"ch_north_tiemen",type:"branch"}
 };

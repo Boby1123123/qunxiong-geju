@@ -5756,7 +5756,12 @@ window.CAUSALITY_WORDS = [
   { id:"led_bio_33", type:"道具", desc:"世界树苗——神话之木的种子，种下可成新锚，与七枚锚呼应", plant:"node:herb_myth_worldtree", reap:"future（世界树支线）", status:"open", world:"北境" },
   { id:"led_bio_34", type:"道具", desc:"曼德拉草根——会尖叫的根，炼金至宝，学院药圃夜鸣", plant:"node:herb_myth_mandrake", reap:"future（曼德拉草支线）", status:"open", world:"学院" },
   { id:"led_bio_35", type:"道具", desc:"槲寄生圣枝——凯尔特神话，挂在门楣可避灾，精灵圣地所出", plant:"node:herb_myth_mistletoe", reap:"future（槲寄生支线）", status:"open", world:"精灵" },
-  { id:"led_bio_36", type:"生物", desc:"凤凰·太阳轨迹——不死鸟传说，浴火重生，万灵谱馆最高一栏", plant:"node:beast_myth_phoenix", reap:"future（凤凰支线）", status:"open", world:"全境" }
+  { id:"led_bio_36", type:"生物", desc:"凤凰·太阳轨迹——不死鸟传说，浴火重生，万灵谱馆最高一栏", plant:"node:beast_myth_phoenix", reap:"future（凤凰支线）", status:"open", world:"全境" },
+{ id:"led_noble_01", type:"设定", desc:"帝国七级爵制与虚职实职双轨——承天城授爵体系，平民三通道入爵", plant:"node:noble_emp_court", reap:"future", status:"open", world:"东境" },
+{ id:"led_noble_02", type:"伏笔", desc:"虚职被实权轻看半格——社交矛盾发生器，宴席位次即暗斗舞台", plant:"node:noble_emp_banquet", reap:"flag:noble_fief_waste", status:"open", world:"东境" },
+{ id:"led_noble_03", type:"伏笔", desc:"晨天故都旧族暗中供养一方（教廷或皇权）——暗子浮出，P-F 暗斗线前置", plant:"node:noble_emp_oldcity", reap:"flag:noble_papal_eye", status:"open", world:"东境" },
+{ id:"led_noble_04", type:"因果", desc:"加冕权：枢机团可拖延加冕施压皇权——王教暗斗第一杠杆", plant:"node:noble_emp_cardinal", reap:"node:noble_emp_oath", status:"open", world:"东境" },
+{ id:"led_noble_05", type:"因果", desc:"叙任权：主教任命拉锯（皇权提名亲信 vs 教廷坚称圣职归教廷）", plant:"node:noble_emp_banquet", reap:"future", status:"open", world:"东境" }
 ];
 
 /* ===== /v91inj:ledgerwords:end/ ===== */

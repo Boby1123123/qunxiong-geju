@@ -5749,7 +5749,8 @@ window.CAUSALITY_WORDS = [
     "importance": 3,
     "keywords": ["地底蠕兽", "南矿洞铁门", "封印兽"],
     "irreversible": false
-  }
+  },
+  { id:"led_bio_30", type:"伏笔", desc:"贤者之石埋藏处·尼古拉手稿——三材料集齐后取石线（承接 02b 与 P3/P4 三材料回收），问心者得", plant:"node:system_ledger", reap:"future（贤者之石终局）", status:"open", world:"自由港" }
 ];
 
 /* ===== /v91inj:ledgerwords:end/ ===== */

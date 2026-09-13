@@ -1,36 +1,28 @@
 {
- "version": 109,
- "from": "v108",
+ "version": 110,
+ "from": "v109",
  "released": "2026-09-13",
- "note": "物种深度卡超大型更新·B1动物纲：万灵谱88兽从名录式升级为怪物图鉴卡，每兽12字段（stats六维STR/CON/AGI/INT/SPR/CHA与玩家对齐、traits 1-3条被动天赋、potential段位上限+进阶路径、niche生态位栖息地/群居/食物链、behavior行为学昼夜/季节/攻击方式、weakness弱点与抗性、loot战利品部位材料+用途/市场、description 300-500字V66白描、interactions每兽≥2种观察/驯养/猎杀/采集带check/tier判定、stars图鉴星级1-5、myth神话原型挂接北欧/希腊/凯尔特/斯拉夫/圣经/波斯/埃及/纹章、tags生态联动habitat/season/region）；88兽description合计约3.9万字，取材巫师3怪物图鉴/宝可梦图鉴/DND怪物卡/怪物猎人生态；共存追加方案（BEAST_DEPTH_CARDS全局对象，5文件seed+depth1~4，不动既有BEAST_ENCYCLOPEDIA_EXT）；本地全量验证链46检查器全绿（节点5919、死链0、V66防回潮、前缀覆盖率97.38%、四路字节一致、smoke PASS、CRLF全LF）",
+ "note": "物种深度卡超大型更新·B2植物纲：万灵谱92草从名录式升级为怪物图鉴卡，每草12字段（stats六维STR根系/CON抗逆/AGI生长/INT灵性/SPR药力/CHA外观与玩家对齐、traits 1-3条被动特性、potential段位上限+年份进阶路径、niche生长地/共生寄生/生态位、behavior生长周期/季节行为/与动物人互动、weakness弱点与抗性、loot部位材料根/茎/叶/花/果/籽/汁/粉+用途与药铺市场价、description 300-500字V66白描、interactions每草≥2种采集/培育/鉴定/药用带check/tier判定、stars图鉴星级1-5、myth神话原型挂接希腊/凯尔特/北欧/斯拉夫/圣经/埃及/波斯/巫师炼金草药学、tags生态联动habitat/season/region）；92草description合计约3.84万字；共存追加方案（HERB_DEPTH_CARDS全局对象，4文件depth1~4，Object.assign合并不覆盖既有HERB_ENCYCLOPEDIA_EXT）；植物behavior字段适配为growth/season/interaction三子字段；本地全量验证链46检查器全绿（节点5919、死链0、V66防回潮、前缀覆盖率97.38%、四路字节一致、smoke PASS、CRLF全LF）",
  "changes": [
   {
-   "file": "src/data_nodes/dn_bio_beast_depth_seed.js",
-   "title": "新增：动物纲深度卡种子样本3种（冰锥虫凡品/霜巨人獒化意/芬里尔之裔传奇），确立12字段数据结构与V66白描文风模式"
+   "file": "src/data_nodes/dn_bio_herb_depth1.js",
+   "title": "新增：植物纲深度卡批1（23草：学院药圃9+精灵月池8+北境寒谷前6），约9500字描述"
   },
   {
-   "file": "src/data_nodes/dn_bio_beast_depth1.js",
-   "title": "新增：动物纲深度卡批1（21兽：北境雪原7+兽人草原7+西境荒原7），约9600字描述"
+   "file": "src/data_nodes/dn_bio_herb_depth2.js",
+   "title": "新增：植物纲深度卡批2（23草：北境寒谷后3+兽人草原9+西境荒原10+死亡沙漠前1），约8445字描述"
   },
   {
-   "file": "src/data_nodes/dn_bio_beast_depth2.js",
-   "title": "新增：动物纲深度卡批2（21兽：死亡沙漠7+东境林野10+南境湿地前4），约7978字描述"
+   "file": "src/data_nodes/dn_bio_herb_depth3.js",
+   "title": "新增：植物纲深度卡批3（23草：死亡沙漠后9+东境林野10+南境湿地前4），约10247字描述"
   },
   {
-   "file": "src/data_nodes/dn_bio_beast_depth3.js",
-   "title": "新增：动物纲深度卡批3（21兽：南境湿地后6+深渊裂隙10+学院钟楼前5），约9320字描述"
-  },
-  {
-   "file": "src/data_nodes/dn_bio_beast_depth4.js",
-   "title": "新增：动物纲深度卡批4（25兽：学院钟楼后5+自由港海域10+神话传说10），约12278字描述"
-  },
-  {
-   "file": "docs/深度卡规格说明.md",
-   "title": "新增：物种深度卡12字段规格说明（数据结构/段位基准/写作铁律/文件命名）"
+   "file": "src/data_nodes/dn_bio_herb_depth4.js",
+   "title": "新增：植物纲深度卡批4（23草：南境湿地后6+深渊腐化9+神话传说8），约10209字描述"
   },
   {
    "file": "budget.json",
-   "title": "性能预算更新（game.html 19997734B/chunked 8926560B，合法内容增长；full_seconds_max 24→30）"
+   "title": "性能预算更新（game.html 20277540B/chunked 9206366B，合法内容增长；上限放宽至21.5MB/9.8MB预留后续批次）"
   }
  ]
 }

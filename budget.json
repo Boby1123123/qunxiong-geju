@@ -4,15 +4,15 @@
   "updated": "2026-09-13",
   "note": "v109 物种深度卡B1：88兽12字段深度卡（约3.9万字描述），game.html合法增长至19998254B",
   "budgets": {
-    "game_html_bytes_max": 20500000,
-    "chunked_html_bytes_max": 9300000,
+    "game_html_bytes_max": 21500000,
+    "chunked_html_bytes_max": 9800000,
     "node_total_min": 5869,
     "dead_links_max": 0,
     "full_seconds_max": 30.0
   },
   "baseline": {
-    "game_html_bytes": 19998254,
-    "chunked_html_bytes": 8926560,
+    "game_html_bytes": 20277540,
+    "chunked_html_bytes": 9206366,
     "node_total": 5919,
     "full_seconds": 22.53
   },

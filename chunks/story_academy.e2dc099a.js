@@ -2387,6 +2387,9 @@ N["academy_elda_hub"] = function(){
       opts.push({t:"参加社团活动", go:"academy_elda_club", effect:{timeCost:"1period"}});
       opts.push({t:"元素塔·学习魔法", go:"academy_magic_class", effect:{timeCost:"1period"}});
       opts.push({t:"查看学院排名/势力", go:"academy_rankings_view", effect:{}});
+      opts.push({t:"去食堂吃饭", go:"acd_life_dining", effect:{timeCost:"1period"}});
+      opts.push({t:"回宿舍休息/夜谈", go:"acd_life_dorm_night", effect:{timeCost:"1period"}});
+      if(!S.flags.acd_plot_hint) opts.push({t:"（注意到公告栏上一张撕了一半的寻人启事）", go:"acd_plot_clue_board", effect:{flag:"acd_plot_hint", timeCost:"1period"}});
       opts.push({t:"等待/休息", go:"wait_1period", effect:{}});
       return opts;
     }

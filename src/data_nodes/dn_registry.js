@@ -16,7 +16,7 @@ const NODE_REGISTRY = {
     files: ["dn_camp.js"]
   },
   academy: {
-    name: "学院", prefixes: ["academy", "acad", "acadcity", "classmate", "alumni", "orientation", "facility", "xueshu"],
+    name: "学院", prefixes: ["academy", "acad", "acd", "acadcity", "classmate", "alumni", "orientation", "facility", "xueshu"],
     desc: "艾尔达魔法学院五学年/同学/导师/禁书区/毕业四去向",
     files: ["dn_alumni.js", "dn_graduate.js"]
   },

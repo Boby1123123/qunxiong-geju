@@ -5553,6 +5553,78 @@ window.CAUSALITY_WORDS = [
     "importance": 2,
     "keywords": ["圣辉城", "封蜡", "铁牌"],
     "irreversible": false
+  },
+  {
+    "id": "led_acd_scales",
+    "type": "事件",
+    "desc": "秤砣社：学院旧案查案社团，以天平为记，与金秤血脉母题（led_om_scale）同源呼应",
+    "plant": "node:acd_plot_scales_recruit",
+    "reap": "flag:acd_scales_guild_master",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["秤砣社", "天平", "旧案", "莫教授"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_clock",
+    "type": "事件",
+    "desc": "第十三下钟声：钟楼实验暗号，听见者不可声张（学院怪谈成真）",
+    "plant": "node:acd_plot_clue_clock",
+    "reap": "flag:acd_clock_silenced",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["第十三下", "钟声", "钟楼", "暗号"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_lab",
+    "type": "事件",
+    "desc": "灵魂嫁接实验重启：以学生为样本，与暗蚀线同源（净化令阴影延伸）",
+    "plant": "node:acd_plot_lab_record",
+    "reap": "flag:acd_lab_sealed",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["实验记录", "样本", "灵魂嫁接", "血"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_shadow",
+    "type": "人物",
+    "desc": "影子学生：灰袍身影沾银月草粉，穿行学院暗处",
+    "plant": "node:acd_plot_clue_shadow",
+    "reap": "flag:acd_shadow_identity",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 2,
+    "keywords": ["影子学生", "灰袍", "银月草粉"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_mercury",
+    "type": "人物",
+    "desc": "墨丘利守望者考验：钟楼旧事知情者，守望者密探线在学院的落点",
+    "plant": "node:acd_plot_mercury_test",
+    "reap": "flag:acd_mercury_done",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 2,
+    "keywords": ["墨丘利", "守望者", "黄铜钥匙", "哨子"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_professor",
+    "type": "人物",
+    "desc": "莫教授：二十年前钟楼自尽的炼金教授，真相在密室信中（被灭口而非自尽）",
+    "plant": "node:acd_plot_truth_2",
+    "reap": "flag:acd_professor_truth_public",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["莫教授", "自尽", "钟楼密室", "真相"],
+    "irreversible": false
   }
 ];
 

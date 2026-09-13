@@ -85962,6 +85962,574 @@ N["acad_story_tutor"]={tags:["region:north"],tag:"main",place:"学院 · 深夜�
 {t:"（给他出主意：先回乡帮阿爸，再北上汇合）",check:{a:"CHA",sk:"persu",label:"出主意"},tier:{ok:["阿塔听完，眼睛一亮：“对啊！草原和北边又不隔一条河。我先回去稳住家里，入秋再北上，正好赶上铁门关的秋防。”他用力拍了拍你的肩，“到时候，咱们第三哨见！”你笑着说好。这个约定，后来在你心里存了很久。"],fail:["阿塔挠挠头：“你说得倒轻巧……”他叹了口气，“算了，船到桥头自然直。”他收起地图，吹了灯。回去的路上，你俩谁也没说话，但步子都走得很稳。"]},effects:{xp:8,flag:"acad_story_tutor_done"},go:"acad_story_end"}
 ]};
 
+/* /u1inj:data-nodes:dn_acd_life.js/ */
+/* ===== /v100inj:acd-life/ 方向三 · 学院生活沙盒（纯数据；引擎零改动） =====
+ * 艾尔达学院日常：食堂三餐/宿舍夜谈/晨练/打工/学院祭/同学支线/深夜图书馆。
+ * 挂载：academy_elda_hub 追加入口；go 回 academy_elda_hub。
+ * 规范：V66 白描 / 治理词约束 / 四段式 / 引号成对。 */
+(function () {
+  if (typeof N === "undefined") return;
+  N["acd_life_dining"] = {
+    tag: "branch", place: "学院 · 食堂大厅", where: "白昼", pace: "normal",
+    text: [
+      "晚饭的钟声刚响过，食堂里已经排起三条长队。铁皮屋顶下全是碗碟的碰响和说话声，混着炖肉和烤面包的气味，热烘烘地压在每个人脸上。",
+      "窗口挂了三块木牌：丰盛一餐，十五个铜星；普通一餐，五个铜星；干面包配凉水，一个铜星。掌勺的胖厨娘把大勺往锅里一插，头也不抬地喊：“下一位。”",
+      "你排到窗口前，闻到那锅炖肉的味道，胃先替你做了决定。身后有人推了你一把：“同学，往前挪挪，后头还排着十几个呢。”",
+      "钱袋在腰间晃了晃。你想起离家时带的盘缠，又想起这座学院里的日子还长——一顿饭怎么吃，其实也是一门功课。"
+    ],
+    options: [
+      { t: "要一份丰盛的（15铜星）", go: "acd_life_dining_fine", timeCost: "1period", effects: { gold: -15, flag: "acd_dined_fine"} },
+      { t: "普通一餐就好（5铜星）", go: "acd_life_dining_plain", timeCost: "1period", effects: { gold: -5, flag: "acd_dined_plain"} },
+      { t: "干面包配凉水（1铜星）", go: "acd_life_dining_cheap", timeCost: "1period", effects: { gold: -1, flag: "acd_dined_cheap"} }
+    ]
+  };
+
+  N["acd_life_dining_fine"] = {
+    tag: "branch", place: "学院 · 食堂", where: "白昼", pace: "normal",
+    text: [
+      "盘子里的炖肉堆得冒尖，浇了厚厚一层肉汁，配两块烤得焦黄的白面包。你找了个靠窗的位子坐下，掰开面包，热气腾腾地冒上来。邻桌两个学生正压着嗓子说话——",
+      "“……昨晚钟楼二楼的灯，又亮到半夜。”",
+      "“嘘。别说了，上回议论这事的人，下个月就申请调去别院了。”",
+      "他们看见你，立刻住了嘴，低头吃饭。窗外的暮色正一层层沉下去，钟楼在远处立着，安安静静的，像个什么都没听见的哑巴。你咬了一口面包，肉汁烫了舌头。"
+    ],
+    options: [
+      { t: "凑过去打听钟楼的事", check: { a: "CHA", sk: "persu", label: "打听" }, tier: { ok: ["那两人对视一眼，其中一个压着嗓子：“你新来的吧？学院有条规矩——子夜之后，别往钟楼那边走。”你记住了这句话。"], fail: ["他们看你一眼，端着盘子走了。你只听到半句“……第三个了”。"] }, go: "acd_plot_clue_board", effects: { flag: "acd_tale_heard", san: -1 } },
+      { t: "安安静静吃完这顿饭", go: "academy_elda_hub", timeCost: "1period", effects: { hp: 8, san: 4} },
+      { t: "再打包一份带走", go: "academy_elda_hub", timeCost: "1period", effects: { gold: -2, item: "dried_meal"} }
+    ]
+  };
+
+  N["acd_life_dining_plain"] = {
+    tag: "branch", place: "学院 · 食堂", where: "白昼", pace: "light",
+    text: [
+      "土豆炖肉，一碗，配一块硬得能敲桌子的黑面包。你拿勺子戳开土豆，发现肉块比别桌少了一半——胖厨娘瞥了你一眼：“新来的？肉是按人头分的，别嫌少。”",
+      "你把面包掰碎了泡进汤里。身后传来厨娘压低的声音：“……多给你舀一勺，吃快点，后头还排着队。”你回头，她已经在招呼下一位了，好像刚才那句话不是她说的。",
+      "一碗热汤下肚，身上有了力气。食堂的喧闹渐渐远了，你抹了抹嘴，想着晚上还有一摞书要看。"
+    ],
+    options: [
+      { t: "去道声谢再走", go: "academy_elda_hub", timeCost: "1period", effects: { san: 3, relation: {npc: "acd_cook", delta: 5}} },
+      { t: "直接回宿舍看书", go: "acd_life_dorm_night", timeCost: "1period", effects: { hp: 4} }
+    ]
+  };
+
+  N["acd_life_dining_cheap"] = {
+    tag: "branch", place: "学院 · 食堂角落", where: "白昼", pace: "light",
+    text: [
+      "干面包，凉水。你坐在食堂最偏的角落里啃，面包屑掉在桌上，得用手拢着。旁边桌的炖肉香气一阵阵飘过来，你不去看它，只盯着手里那块越来越小的面包。",
+      "一个穿旧袍子的学生端着碗在你对面坐下，也没说话，把自己碗里的土豆拨了两块到你盘子里。你抬头，他低着头吃饭，像什么都没发生。",
+      "你看着那两块土豆，忽然就不觉得这顿饭有多难以下咽了。"
+    ],
+    options: [
+      { t: "记下这个人的样子", go: "academy_elda_hub", timeCost: "1period", effects: { san: -2, flag: "acd_benefactor_seen"} },
+      { t: "吃完饭去图书馆（看书能忘掉饿）", go: "acd_life_lib_night", timeCost: "1period", effects: { hp: 1} }
+    ]
+  };
+
+  N["acd_life_dorm_night"] = {
+    tag: "branch", place: "学院 · 宿舍", where: "黑夜", pace: "normal",
+    text: [
+      "宿舍的灯熄了，月光从窗台爬进来，在两张床之间划了一道白线。你的室友还没睡着，翻了个身，床板吱呀响了一声。",
+      "“喂，”他开口，声音闷在枕头里，“你睡了吗？”",
+      "窗外是学院的操场，再远一点，钟楼的尖顶戳在夜空里。夜风从窗缝钻进来，带着草叶和露水的味道。你盯着天花板，想起白天食堂里那两个人说的钟楼，想说点什么，又咽了回去。",
+      "黑暗里，室友又说：“我刚来那会儿，听高年级的说——这楼里有个规矩。”他停了一下，“子夜之后，别数钟楼的钟声。”"
+    ],
+    options: [
+      { t: "追问这个规矩", go: "acd_life_dorm_tale", timeCost: "1period" },
+      { t: "聊起各自的家乡", go: "acd_life_dorm_story", timeCost: "1period" },
+      { t: "翻个身，各自睡下", go: "academy_elda_hub", timeCost: "1period", effects: { san: 5, hp: 6} }
+    ]
+  };
+
+  N["acd_life_dorm_story"] = {
+    tag: "branch", place: "学院 · 宿舍", where: "黑夜", pace: "normal",
+    text: [
+      "“我老家在河湾镇，”室友说，“镇口有棵老槐树，树底下埋着我家一坛酒。我爹说，等我出息了，回去挖出来喝。”他笑了一声，“我估计等我出息了，那酒早就被雨水泡坏了。”",
+      "你沉默了一会儿，也讲了一件家乡的事——讲的时候，手不自觉地按了按贴身藏着的那件旧物。黑暗里，这个动作没人看见。",
+      "室友听完了，没评价，只“嗯”了一声。过了很久，他说：“能带在身上的东西，都是拿不下来的。”",
+      "这句话砸在黑暗里，半天没人接。你睁着眼，听着他的呼吸渐渐均匀。窗外有风，钟楼的方向，好像有什么东西，响了一下。"
+    ],
+    options: [
+      { t: "也问问他身上的旧物", go: "academy_elda_hub", timeCost: "1period", effects: { relation: {npc: "acd_roommate", delta: 12}} },
+      { t: "把话记在心里，睡下", go: "academy_elda_hub", timeCost: "1period", effects: { san: 4, hp: 4} }
+    ]
+  };
+
+  N["acd_life_dorm_tale"] = {
+    tag: "branch", place: "学院 · 宿舍", where: "黑夜", pace: "normal",
+    text: [
+      "“学院的钟楼，白天敲半点，晚上敲整点，从来不多一下，也不少一下。”室友的声音压得很低，“可老生说，有一年冬天，有个学生在子夜听见钟响了十三下。”",
+      "“第二天，那个学生就退学了。没人知道他听见了什么，也没人再提起他。”",
+      "“后来每年都有人说，子夜听见了第十三下。每次说完这话的人，没过多久就调走、退学，或者——不见了。”",
+      "他说完，宿舍里安静得能听见自己的心跳。月光在地板上挪了半寸。你忽然想起白天那两个人说的“第三个了”，后背一阵发凉。"
+    ],
+    options: [
+      { t: "把这个怪谈记下来", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_tale_heard", xp: 1, san: -2} },
+      { t: "嗤笑一声：“故事罢了。”", go: "academy_elda_hub", timeCost: "1period", effects: { san: 1} }
+    ]
+  };
+
+  N["acd_life_morning"] = {
+    tag: "branch", place: "学院 · 训练场", where: "白昼", pace: "normal",
+    text: [
+      "天刚蒙蒙亮，训练场上已经有人了。晨雾还没散，刀剑碰撞的声音一下一下，闷闷的，像有人在远处劈柴。",
+      "靠墙的老教习坐在一条长凳上，面前摆着个缺了口的茶碗。他不看任何人，只时不时喊一句：“下盘！下盘又飘了！”声音不高，整个场子却都听得见。",
+      "你走到场边，正看见两个高年级学生在切磋。一个使剑，一个使棍，你来我往了十几个回合，忽然那使棍的卖了个破绽，使剑的抢攻一步，棍影一翻，反而敲在他腕子上。剑脱了手，在地上弹了两下。",
+      "“看明白了？”老教习不知什么时候站在你旁边，端着茶碗，“剑快了没用，得先学会让人家把破绽送给你。”他喝了口茶，走开了。"
+    ],
+    options: [
+      { t: "跟着晨跑的人跑几圈", go: "academy_elda_hub", timeCost: "1period", effects: { hp: 3} },
+      { t: "留下来看切磋，琢磨打法", go: "academy_elda_hub", timeCost: "1period", effects: { xp: 12} },
+      { t: "去向老教习请教", go: "acd_life_morning_ask", timeCost: "1period" }
+    ]
+  };
+
+  N["acd_life_morning_ask"] = {
+    tag: "branch", place: "学院 · 训练场", where: "白昼", pace: "normal",
+    text: [
+      "老教习听了你的来意，上下打量你一眼，把茶碗往长凳上一放：“想学？先说你打算拿什么换。”",
+      "你没说话，从怀里摸出那件贴身的旧物，想了想，又放了回去。他看在眼里，哼了一声：“行，有点意思。教你三招，够你在学院里撑到毕业——第一招，挨打要站直。”",
+      "他做了个极慢的动作，你跟着学，才做一半就觉出不对——重心全偏了。他又示范一遍，这回你看清了：他的脚踝始终绷着，像一根压弯的弓。",
+      "“剑也好，拳头也好，根在脚下。下盘稳了，挨打不疼，打人才疼。”他捡起茶碗，“明天还来，晚了没位置。”"
+    ],
+    options: [
+      { t: "认真学，回去自己练", go: "academy_elda_hub", timeCost: "1period", effects: { skill: {s: "martial", v: 10}, relation: {npc: "acd_coach", delta: 8}} },
+      { t: "谢过他，明天再来", go: "academy_elda_hub", timeCost: "1period", effects: { relation: {npc: "acd_coach", delta: 5}} }
+    ]
+  };
+
+  N["acd_life_job_lib"] = {
+    tag: "branch", place: "学院 · 图书馆", where: "白昼", pace: "normal",
+    text: [
+      "图书馆的兼职，说白了就是整理还回来的书，顺便把借阅卡归档。馆长是个戴圆眼镜的老头，交代完规矩，就缩回他那间小屋里去喝茶了。",
+      "你抱着一摞书往书架上塞，忽然从一本《度量衡史》里滑出一张纸条。纸条对折着，边缘发黄，上面画着一个符号——像一杆秤，秤钩朝下，底下压着一行小字：“天平从不倾斜。除非有人加了砝码。”",
+      "你捏着纸条，指腹能摸到纸上一道折痕，那是被人反复折过的痕迹。老馆长在小屋里咳了一声，你手一抖，纸条差点掉进书缝里。",
+      "窗外的光照进来，把纸条上的墨迹照得发亮。那行字写得工整，一笔一划，像是怕人认不出——又像是，故意要人认出来。"
+    ],
+    options: [
+      { t: "把纸条交给馆长", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_note_clean", relation: {npc: "acd_librarian", delta: 6}, gold: 4} },
+      { t: "把纸条收进怀里", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_note_kept", gold: 4} },
+      { t: "当作没看见，继续整理", go: "academy_elda_hub", timeCost: "1period", effects: { gold: 4, san: -1} }
+    ]
+  };
+
+  N["acd_life_job_kitchen"] = {
+    tag: "branch", place: "学院 · 后厨", where: "白昼", pace: "light",
+    text: [
+      "后厨比前厅热十倍。大锅里的水汽往上扑，墙角的木架子上码着一排排腌菜坛子。掌勺的胖厨娘把一块猪油丢进锅里，油星子溅起来，她眼都不眨。",
+      "你负责削土豆。厨娘一边掌勺一边和帮工说话，声音被锅铲的响动盖着：“……昨儿夜里，又有人瞧见钟楼二楼亮灯了。”",
+      "“嘘——”帮工压着嗓子，“你这嘴，上回要不是我兜着……”",
+      "“行行行，不说了。反正啊，”厨娘把锅一颠，“这学院里的事，知道得越少，睡得越香。”她转身，往你面前放了一碗热汤，“土豆削完，把汤喝了再走。”"
+    ],
+    options: [
+      { t: "把厨娘的话记在心里", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_kitchen_rumor", gold: 3, relation: {npc: "acd_cook", delta: 6}} },
+      { t: "喝汤，谢过，离开", go: "academy_elda_hub", timeCost: "1period", effects: { gold: 3, san: 3} }
+    ]
+  };
+
+  N["acd_life_job_apoth"] = {
+    tag: "branch", place: "学院 · 炼金室", where: "白昼", pace: "normal",
+    text: [
+      "炼金室的活计是磨药。月光草晒干了，要在石臼里碾成粉，得碾足三百下，不能多也不能少。你磨到两百下的时候，手臂已经酸了。",
+      "负责带你的学姐在一旁配药剂，头也不抬地说：“银月草只准白天磨，记住了。晚上磨出来的粉，会发青——那样的药，没人敢用。”",
+      "你应了一声，余光扫到墙角一只柜子，上面挂了三把锁。学姐像是背后长了眼睛：“别看那个。看多了，教授会找你谈话。”",
+      "石臼里的草粉渐渐细了，泛着淡淡的银光。你把粉倒进瓷瓶里，封好口，忽然想起白天听到的那些事，手顿了顿。"
+    ],
+    options: [
+      { t: "问学姐柜子里是什么", go: "acd_life_job_apoth_ask", timeCost: "1period" },
+      { t: "专心磨药，不问不该问的", go: "academy_elda_hub", timeCost: "1period", effects: { skill: {s: "alchemy", v: 10}, gold: 5} }
+    ]
+  };
+
+  N["acd_life_job_apoth_ask"] = {
+    tag: "branch", place: "学院 · 炼金室", where: "白昼", pace: "light",
+    text: [
+      "学姐听了你的问题，手里的滴管停了半拍。她没抬头，声音平平的：“那柜子里是教授年轻时收集的标本。有些药草，已经绝种了。”",
+      "“只是标本？”你追问。她终于抬起头看你，眼神里有点说不清的东西：“你这人，怎么爱问不该问的。药磨好了就走吧，明儿还有一筐要磨。”",
+      "你被她看得有些不自在，把瓷瓶放好，转身要走。身后传来她极轻的一声：“……别学上个月那个学生。”",
+      "你回头，她已经低头配药了，像那句话不是她说的。"
+    ],
+    options: [
+      { t: "把这句话记下", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_apoth_hint", gold: 3, san: -1} },
+      { t: "只当没听见，回去休息", go: "academy_elda_hub", timeCost: "1period", effects: { gold: 3} }
+    ]
+  };
+
+  N["acd_life_festival"] = {
+    tag: "branch", place: "学院 · 中央广场", where: "黑夜", pace: "deep",
+    text: [
+      "学院祭是每年春祭后第一个满月的夜晚。广场上挂满了灯笼，红的、黄的、白的，风一过，整片光海晃动起来。摊位从食堂门口一路摆到钟楼脚下，烤肉、糖画、旧书、护符，什么都有。",
+      "比武台那边围满了人，两个高年级学生正打得热闹，喝彩声一阵接一阵。烟花在钟楼顶炸开的时候，人群齐刷刷仰起头，火光在每一张脸上跳了跳，又落下去。",
+      "你在人流里走着，忽然被人撞了一下。一个戴兜帽的学生擦肩而过，袍角带起一阵风——你好像看见他袖口里，露出一角折得整整齐齐的纸，边缘发黄，和图书馆里那张纸条一样。",
+      "他走远了，汇进人群，像一滴水落进河里。你站在原地，灯笼的光晃了晃，烟花又炸开一朵，这一次，人群的欢呼声里，好像夹着一声很轻的、不像欢呼的声响。"
+    ],
+    options: [
+      { t: "追上去看看那个人", go: "acd_plot_clue_shadow", timeCost: "1period" },
+      { t: "去旧书摊逛逛", go: "acd_life_festival_stall", timeCost: "1period" },
+      { t: "留在广场看烟火", go: "academy_elda_hub", timeCost: "1period", effects: { san: 6, relation: {npc: "acd_roommate", delta: 5}} }
+    ]
+  };
+
+  N["acd_life_festival_stall"] = {
+    tag: "branch", place: "学院 · 旧书摊", where: "黑夜", pace: "normal",
+    text: [
+      "旧书摊的老板是个精瘦的老头，面前铺一块油布，上面堆着几十本书，最便宜的三个铜星一本。你蹲下来翻，大多是些看旧了的课本和小说，角落里压着一本封皮都烂了的笔记。",
+      "你抽出来一看，扉页上写着一行褪色的字：“赠吾友——钟楼一别，竟成永诀。”下面没有署名，只画了个小小的符号，像一杆秤。",
+      "你翻了两页，里面夹着一张泛黄的纸，叠成四折。老板凑过来看了一眼，说：“这本是前几年收的，也不知道是谁的。你要是喜欢，八个铜星拿走。”",
+      "烟花又在头顶炸开了。你捏着那本笔记，指尖能感觉到封皮下的硬纸板里，好像还夹着什么别的东西。"
+    ],
+    options: [
+      { t: "买下这本笔记（8铜星）", go: "acd_plot_lab_record", timeCost: "1period", effects: { gold: -8, flag: "acd_plot_map_hint", item: "old_notebook"} },
+      { t: "放回去，只看不买", go: "academy_elda_hub", timeCost: "1period" }
+    ]
+  };
+
+  N["acd_life_classmate_celia"] = {
+    tag: "branch", place: "学院 · 图书馆自习区", where: "白昼", pace: "normal",
+    text: [
+      "塞西莉亚·星辉坐在自习区最里面的位子上，面前摊着四本书、两沓笔记，一支羽毛笔在她指间转得飞快。她是这届新生里公认的天才——上课从不记笔记，考试从不出前三。",
+      "你走近，她头也不抬：“笔记在桌上，自己抄，抄完放回原位。”她甚至没问你是谁。你低头一看，那沓笔记字迹工整得像印出来的，每一页边缘还有小字批注，都是课本上找不到的东西。",
+      "你抄了两页，她忽然停下笔，抬头看了你一眼：“你手上有茧。练剑的？”没等你回答，她又低下头，“练剑的人来抄我的魔法笔记，有意思。”",
+      "窗外的光落在她发梢上。她没再说话，但那支转着的笔，不知什么时候停了。"
+    ],
+    options: [
+      { t: "请教一个不懂的问题", go: "acd_life_classmate_celia_ask", timeCost: "1period" },
+      { t: "道谢，抄完就离开", go: "academy_elda_hub", timeCost: "1period", effects: { relation: {npc: "acd_celia", delta: 8}, xp: 1} },
+      { t: "请她喝杯热茶", go: "academy_elda_hub", timeCost: "1period", effects: { gold: -3, relation: {npc: "acd_celia", delta: 6}} }
+    ]
+  };
+
+  N["acd_life_classmate_celia_ask"] = {
+    tag: "branch", place: "学院 · 图书馆自习区", where: "白昼", pace: "normal",
+    text: [
+      "你指着笔记里关于灵魂感知的一段，问了一个憋了一下午的问题。塞西莉亚停下笔，看了你两秒，忽然从书堆底下抽出一本更旧的书：“你问的这个，课本上写的是错的。”",
+      "她翻开书，指着一行小字：“灵魂感知的媒介不是意识，是呼吸。你先稳住呼吸，再谈感知。”她讲得很慢，和传闻里那个冷淡的天才判若两人。",
+      "你听懂了七八成，她讲完，又变回那副冷淡的样子：“行了，抄完走吧。再问下去，我得收你学费了。”",
+      "你抱着笔记离开的时候，听见她在背后嘟囔了一句：“……练剑的，学魔法倒挺快。”声音很小，像是说给自己听的。"
+    ],
+    options: [
+      { t: "回去照她说的练", go: "academy_elda_hub", timeCost: "1period", effects: { skill: {s: "soul", v: 10}, relation: {npc: "acd_celia", delta: 12}} },
+      { t: "改天带点吃的谢她", go: "academy_elda_hub", timeCost: "1period", effects: { relation: {npc: "acd_celia", delta: 8}} }
+    ]
+  };
+
+  N["acd_life_classmate_hao"] = {
+    tag: "branch", place: "学院 · 廊道角落", where: "任意", pace: "light",
+    text: [
+      "耗子蹲在廊道拐角的阴影里，嘴里叼着一根草茎。他真名不叫耗子，但所有人都这么叫他——贫民窟出来的，消息比猫还灵，想找什么消息，找他就对了。",
+      "你走近，他眼睛一亮，凑上来压着嗓子：“嘿，听说你最近老往图书馆跑？巧了，我也听说图书馆最近出了点事——借书的人少了，还书的人，也少了。”",
+      "他吐掉草茎，伸出一只手：“消息不白给，三个铜星。或者——”他上下打量你，“你告诉我，你身上那件旧东西，到底是什么？好多人在打听呢。”",
+      "他笑得很随意，但眼睛里的光，一点不像在开玩笑。"
+    ],
+    options: [
+      { t: "花三个铜星买消息", go: "academy_elda_hub", timeCost: "1period", effects: { gold: -3, flag: "acd_hao_tip"} },
+      { t: "反问他：谁在打听？", go: "acd_life_classmate_hao_ask", timeCost: "1period" },
+      { t: "不理他，走开", go: "academy_elda_hub", timeCost: "1period" }
+    ]
+  };
+
+  N["acd_life_classmate_hao_ask"] = {
+    tag: "branch", place: "学院 · 廊道角落", where: "任意", pace: "normal",
+    text: [
+      "耗子听了你的反问，先是一愣，然后笑了，笑声里带着点别的味道：“你胆子不小啊。行，告诉你——”",
+      "他凑到你耳边，声音压得几乎听不见：“打听你旧东西的人，不是学生。是穿着灰袍的，半夜在钟楼那边走动。我亲眼见过两回。”",
+      "“钟楼那边不是封了吗？”你问。他摇头：“封的是门，又不是墙根底下的路。老话讲，钟楼下头有暗道，直通……”他忽然住了嘴，警觉地朝廊道那头看了一眼，“有人来了，改天再说。”",
+      "他缩回阴影里，一眨眼就不见了。你站在原地，廊道里空荡荡的，只有风从尽头吹过来。"
+    ],
+    options: [
+      { t: "把这件事记下", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_hao_hint", san: -1} },
+      { t: "去找灰袍的线索", go: "acd_plot_clue_shadow", timeCost: "1period" }
+    ]
+  };
+
+  N["acd_life_lib_night"] = {
+    tag: "branch", place: "学院 · 图书馆 · 深夜", where: "黑夜", pace: "deep",
+    text: [
+      "深夜的图书馆比白天安静一百倍。长桌上一盏油灯，你一个人坐在灯下，书页翻动的声音响得吓人。老馆长早锁门去睡了，只给你留了一盏灯和一句“走的时候把门带上”。",
+      "你读的是白天借的一本《元素编年史》，正翻到“封印”那一章，忽然听见书架深处传来一声响——像书页翻动，又像什么东西磕在木头上。",
+      "你抬起头。书架尽头，灯照不到的地方，一片漆黑。你走过去，一排排书脊在黑暗里沉默地站着。没有人。只有一本《元素编年史》的副本，翻开着，停在和你看的同一页——“封印”。",
+      "油灯的火苗晃了一下。你低头看那一页，有一段话被人用铅笔划了线：“……钟楼的第十三下钟声，是旧约的余响。听见者，不可声张。”你忽然觉得，这间图书馆，比白天大了很多。"
+    ],
+    options: [
+      { t: "把那页书抄下来", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_seal_page", xp: 2, san: -2} },
+      { t: "合上书，回宿舍", go: "academy_elda_hub", timeCost: "1period", effects: { san: -1} },
+      { t: "循着声音找过去", go: "acd_plot_mercury_test", timeCost: "1period" }
+    ]
+  };
+})();
+
+/* /u1inj:data-nodes:dn_acd_plot.js/ */
+/* ===== /v100inj:acd-plot/ 方向四 · 学院暗流与阴谋（纯数据；引擎零改动） =====
+ * 学院暗流：失踪学生/第十三下钟声/影子学生/秤砣社（呼应 led_om_scale 天平母题）/
+ * 墨丘利守望者考验/禁忌实验/钟楼密室真相。挂载：academy_elda_hub + 生活节点引线。
+ * 规范：V66 白描 / 治理词约束 / 四段式 / 引号成对。 */
+(function () {
+  if (typeof N === "undefined") return;
+  N["acd_plot_clue_board"] = {
+    tag: "branch", place: "学院 · 公告栏", where: "白昼", pace: "normal",
+    text: [
+      "公告栏是学院的消息集散地：社团招新、寻物启事、旧书转让，贴得层层叠叠。你本来只是路过，却被角落里一张纸钉住了脚。",
+      "那是一张寻人启事，撕了一半，只剩下半截：“炼金系二年级生·马尔科，三日前外出未归，知其下落者请告知教务处。”纸张边缘发黄，贴了有几天了。",
+      "启事下面，不知谁用炭笔写了两行小字：“第三个了。”“别问。问了，你就是第四个。”字迹潦草，像是写完就跑。",
+      "风把纸边吹得翘起来。你伸手摸了摸那两行炭笔字，指腹沾上一层黑灰。公告栏前面人来人往，没有一个人在这张启事前停留。"
+    ],
+    options: [
+      { t: "撕下启事，收进怀里", go: "acd_plot_clue_clock", timeCost: "1period", effects: { flag: "acd_board_kept"} },
+      { t: "拦住路过的学生打听", go: "acd_plot_clue_board_ask", timeCost: "1period" },
+      { t: "记下名字，转身离开", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_board_seen", san: -1} }
+    ]
+  };
+
+  N["acd_plot_clue_board_ask"] = {
+    tag: "branch", place: "学院 · 公告栏", where: "白昼", pace: "light",
+    text: [
+      "你拦住一个抱着一摞书的学生，指了指那张寻人启事。他看了一眼，脸色就变了：“马尔科？他……”他压着嗓子，“他是炼金系的，上个月还好好的，突然就不来上课了。”",
+      "“有人说他去了钟楼那边，有人说他退学了。教务处只说‘外出未归’，也没人再追问。”他把书抱紧了些，像在抱一件防身的东西，“劝你别管。上一个打听这事的人……”他住了嘴，“反正，现在没人见过他了。”",
+      "他急匆匆走了，留下你站在公告栏前。午后的阳光照在那张泛黄的纸上，那两行炭笔字在光里格外清楚：“第三个了。”"
+    ],
+    options: [
+      { t: "决定查下去", go: "acd_plot_clue_clock", timeCost: "1period", effects: { flag: "acd_board_kept", san: -1} },
+      { t: "暂时按下，从长计议", go: "academy_elda_hub", timeCost: "1period" }
+    ]
+  };
+
+  N["acd_plot_clue_clock"] = {
+    tag: "branch", place: "学院 · 钟楼外", where: "黑夜", pace: "deep",
+    text: [
+      "子夜的学院安静得像一口井。你站在钟楼对面的回廊下，等着。",
+      "钟楼是学院最老的建筑，石头缝里爬满青苔，尖顶刺破夜空。老生都说，它的钟声比学院的规矩还准——白天半点，夜里整点，从来不多一下。",
+      "十二下。钟声一下一下，沉甸甸地落进夜色里，最后一下拖得很长，余音在空气里嗡嗡地转。你数着，数到十二，钟声停了。",
+      "你松了口气，正要转身——钟声又响了。第十三下。",
+      "这一下比前面十二下都轻，像有人按住了钟舌，只让钟身发出一声闷响。可它确实响了。你听得清清楚楚，后颈的汗毛一根根竖了起来。",
+      "钟楼二楼的窗子，透出一线极淡的光，亮了一瞬，又灭了。"
+    ],
+    options: [
+      { t: "走近钟楼看看", go: "acd_plot_truth_2", timeCost: "1period", effects: { flag: "acd_clock_heard", san: -2} },
+      { t: "记下时间，退回宿舍", go: "acd_plot_clue_shadow", timeCost: "1period", effects: { flag: "acd_clock_heard", san: -1} }
+    ]
+  };
+
+  N["acd_plot_clue_shadow"] = {
+    tag: "branch", place: "学院 · 宿舍走廊", where: "黑夜", pace: "normal",
+    text: [
+      "你回到宿舍楼的时候，走廊里的灯已经灭了大半，只剩尽头一盏，昏黄地亮着。脚步声在木地板上响，每一下都有回音。",
+      "拐过墙角，你看见一个人影——穿着灰袍，快步往走廊另一头走。袍角在灯光下一闪，沾着一片白花花的粉末，像是面粉，又比面粉粗，在暗处泛着一点银光。",
+      "你从没见过这个人。学院里穿灰袍的不是没有，可这个人的步子太快了，快得不像在走路，倒像在逃。",
+      "他走到走廊尽头，推开一扇门——那扇门白天是锁着的，你记得清楚——闪了进去，门合上了。走廊里重新安静下来，只有你的心跳。"
+    ],
+    options: [
+      { t: "追上去", check: { a: "AGI", sk: "athletic", label: "追踪" }, tier: { ok: ["你快步追到那扇门前，推开门——里面是一间空的储藏室，落满灰尘。窗台上有一片白色的粉末，在月光下泛着银光。你捻起一点，是银月草粉。"], fail: ["你追过去，门已经关死了。你贴着门板听了一会儿，里面什么声音都没有。你只好记下这扇门的位置，回宿舍去了。"] }, go: "acd_plot_lab_record", timeCost: "1period", effects: { flag: "acd_shadow_seen", san: -2 }},
+      { t: "记下这件事，回宿舍", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_shadow_seen", san: -2} },
+      { t: "告诉自己：看花了眼", go: "academy_elda_hub", timeCost: "1period", effects: { san: 1} }
+    ]
+  };
+
+  N["acd_plot_scales_recruit"] = {
+    tag: "branch", place: "学院 · 图书馆还书处", where: "白昼", pace: "normal",
+    text: [
+      "你还书的时候，一本《度量衡史》里滑出一张纸条，落在地上，你弯腰捡起来。",
+      "纸条对折，边缘发黄，和你白天在书堆里见过的那张一模一样的纸。展开，上面画着一杆秤，秤钩朝下，旁边一行字：“天平从不倾斜——除非有人加了砝码。”",
+      "背面还有一行，字迹更小：“你带来的东西，还在吗？明日子时，旧仓库。只带那一样东西来。”",
+      "你捏着纸条，忽然明白过来：这不是偶然夹错的书签。有人知道你身上藏着什么。你知道，在学院里，被人知道这件事，和被人看见深夜进钟楼，一样危险。"
+    ],
+    options: [
+      { t: "赴约（带上你贴身的旧物）", go: "acd_plot_scales_test", timeCost: "1period" },
+      { t: "把纸条烧掉", go: "academy_elda_hub", timeCost: "1period", effects: { san: -1, flag: "acd_scales_refused"} },
+      { t: "收好纸条，再等等看", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_note_kept"} }
+    ]
+  };
+
+  N["acd_plot_scales_test"] = {
+    tag: "branch", place: "学院 · 旧仓库", where: "黑夜", pace: "deep",
+    text: [
+      "子时的旧仓库没有灯，月光从破了一半的屋顶漏下来，在地板上画出一块惨白的光斑。三个人站在阴影里，兜帽压得很低，看不清脸。",
+      "中间那个人开口，声音很轻，却每个字都清楚：“你来了。东西，带来了吗？”",
+      "你没说话，手按在怀里那件旧物上。空气像凝住了一样。",
+      "“不用怕。”那人说，“我们只想知道——你带来的那件东西上，有没有一杆秤的记号？”他抬手，从衣领里扯出一枚铜别针，月光落在上面：一杆小秤，秤钩朝下。和你那件旧物上的记号，一模一样。",
+      "“学院里每隔几年，就会来一个带着这种记号的人。”他放下别针，“我们都以为自己是独一个，直到发现，这记号会把人往同一个地方引。”"
+    ],
+    options: [
+      { t: "出示你的旧物", go: "acd_plot_scales_first", timeCost: "1period", effects: { flag: "acd_scales_shown", relation: {npc: "acd_scales", delta: 10}} },
+      { t: "反问：你们是谁？", check: { a: "CHA", sk: "persu", label: "试探" }, tier: { ok: ["那人沉默了一下：“秤砣社。学院里查旧案的学生——有些事，教授不做，教务处不做，我们做。”他语气里带着点自嘲，“听起来像少年人做梦，对吧。”"], fail: ["那人说：“这问题，等你先让我们信你，再问。”他语气平了，“东西拿不出来，那就走吧。”"] }, go: "acd_plot_scales_first", timeCost: "1period", effects: { flag: "acd_scales_shown", relation: { npc: "acd_scales", delta: 3 } }},
+      { t: "转身离开", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_scales_refused", san: -1} }
+    ]
+  };
+
+  N["acd_plot_scales_first"] = {
+    tag: "branch", place: "学院 · 地下教室", where: "黑夜", pace: "deep",
+    text: [
+      "旧仓库的暗门通向一条石阶，往下走了两层，是一间废弃的地下教室。桌椅积着灰，墙上还挂着一块没擦干净的黑板，上面写着半道没解完的方程式。",
+      "秤砣社的人不多——算上你，七个。中间那人自我介绍叫“秤砣”，说这是代号，谁也不知道谁的真名：“社团的规矩只有一条：天平从不倾斜。查案只查真相，不站队，不受贿，不替人遮掩。”",
+      "他摊开一张泛黄的纸，上面是一份旧档案的抄件：“二十年前，学院有位教授，姓莫，教炼金。一个冬夜，他在钟楼自尽了。档案上这么写的。”",
+      "“可我们查到，他死前一周，正在查一件事——那件事的卷宗，后来从教务处档案室消失了。和教授一起，消失了二十年。”",
+      "“这几年，学院开始有人失踪。第一个，第三个，我们查了两年，线索都指向同一个地方。”他顿了顿，“钟楼。”",
+      "窗外，不知哪里的钟声遥遥响了一下。黑板上的方程式，在烛光里投下一道长长的影子。"
+    ],
+    options: [
+      { t: "答应加入秤砣社", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_scales_joined", relation: {npc: "acd_scales", delta: 15}} },
+      { t: "只做线人，不正式加入", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_scales_informant", relation: {npc: "acd_scales", delta: 8}} },
+      { t: "推辞，不掺和", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_scales_refused", san: -2} }
+    ]
+  };
+
+  N["acd_plot_mercury_test"] = {
+    tag: "branch", place: "学院 · 灵魂魔法塔顶层", where: "任意", pace: "deep",
+    text: [
+      "墨丘利的办公室在灵魂魔法塔顶层，窗子正对着钟楼。你敲门进去的时候，他正站在窗边，背对着你。",
+      "“你身上有旧东西的味道。”他没回头，声音淡淡的，“从你进学院那天，我就闻到了。布料，金属，还有——一点旧年的尘土。”",
+      "你站在原地，没动。他转过身，视线落在你胸口的位置：“我没兴趣打听你的身世。但最近，有人在打听。”",
+      "他从桌上拿起一张纸条，和你见过的那张一样的纸：“秤砣社，对吧。一群学生查二十年前的旧案，勇气可嘉——但他们查的事，不是学生能碰的。”",
+      "“我只要你做一件事：找到第三个失踪的学生。找到了，告诉我他在哪儿，别碰，别惊动。做得到，我告诉你这学院的钟楼底下，藏着什么。”",
+      "窗外的钟楼立在暮色里，安安静静的。他看你的眼神很平，平得像一潭水，看不出深浅。"
+    ],
+    options: [
+      { t: "接下这个任务", go: "acd_plot_lab_record", timeCost: "1period", effects: { flag: "acd_mercury_task", relation: {npc: "mercury", delta: 8}} },
+      { t: "推辞：“我不替人查案。”", go: "academy_elda_hub", timeCost: "1period", effects: { relation: {npc: "mercury", delta: -5}} },
+      { t: "问他：你知道钟楼底下有什么？", go: "acd_plot_mercury_test_ask", timeCost: "1period" }
+    ]
+  };
+
+  N["acd_plot_mercury_test_ask"] = {
+    tag: "branch", place: "学院 · 灵魂魔法塔顶层", where: "任意", pace: "normal",
+    text: [
+      "墨丘利听了你的问题，看了你很久。久到你觉得他要把你看穿了，他才说：“钟楼底下，有一间密室。二十年前，有人在那间密室里做实验——拿活人做的实验。”",
+      "“莫教授发现了那件事。然后，他‘自尽’了。”他说最后两个字的时候，语气很轻，像在念一个笑话。",
+      "“你信我吗？”他问。你还没回答，他又说，“你不必回答。去查，查到了，你就知道我说的，是真的还是假的。”",
+      "他递给你一把钥匙，黄铜的，很旧：“钟楼一楼工具间，有个锁着的柜子。里面是我这些年收集的东西。需要的时候，自己拿。”",
+      "钥匙在你手心里，沉甸甸的，带着一点陈年的铜锈味。"
+    ],
+    options: [
+      { t: "收下钥匙，接下任务", go: "acd_plot_lab_record", timeCost: "1period", effects: { flag: "acd_mercury_task", item: "old_brass_key", relation: {npc: "mercury", delta: 10}} },
+      { t: "收下钥匙，但不承诺", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_mercury_key", item: "old_brass_key"} }
+    ]
+  };
+
+  N["acd_plot_lab_record"] = {
+    tag: "branch", place: "学院 · 炼金室地下", where: "黑夜", pace: "deep",
+    text: [
+      "你顺着影子学生留下的银月草粉，一路找到炼金室地下一间废弃的药房。门没锁，锁孔里塞着一团布——有人来过，刚走不久。",
+      "药房里一股陈年的药味，混着说不清的血腥气。桌上摊着一本实验记录，皮面发黑，页角卷着，有人反复翻过。你翻开来，字迹潦草得几乎认不出：",
+      "“……第一阶成功。样本情绪稳定，无异常。但夜半总是惊醒，说钟楼里有声音叫他。”",
+      "“……第二阶失败。样本开始拒绝进食，瞳孔对光无反应。按院方要求，记录封存。”",
+      "“……第三阶，需要更多的血。院长已经批了。莫教授反对——他说这是拿学生当柴烧。他不懂，这一炉火，烧的是整个学院的将来。”",
+      "记录到这里断了。最后一行字被人用力划掉，墨迹在纸上洇开一团，像一块干涸的疤。你翻到扉页，角落里有一个名字，被墨水涂了几遍，还是能看出轮廓——莫。"
+    ],
+    options: [
+      { t: "带走这本记录", go: "acd_plot_truth_1", timeCost: "1period", effects: { flag: "acd_record_taken", item: "lab_record", san: -3} },
+      { t: "只抄下关键几页", go: "acd_plot_truth_1", timeCost: "1period", effects: { flag: "acd_record_copied", san: -2} },
+      { t: "原样放回，不动", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_record_seen", san: -3} }
+    ]
+  };
+
+  N["acd_plot_truth_1"] = {
+    tag: "branch", place: "学院 · 宿舍", where: "黑夜", pace: "deep",
+    text: [
+      "深夜，你把所有线索摊在桌上：图书馆的纸条、公告栏的启事、墨丘利的钥匙、炼金室地下那本实验记录。",
+      "纸条上的秤钩、启事上的“第三个”、记录里的“需要更多的血”——三样东西，慢慢拼成一条线。失踪的学生，都去过钟楼。钟楼的第十三下钟声，是暗号。而炼金室的银月草粉，沾在一个灰袍人的袍角上。",
+      "你忽然想起秤砣社说的：二十年前，莫教授在钟楼“自尽”，他死前正在查一件事，那件事的卷宗消失了。",
+      "而实验记录里，莫教授反对的“那一炉火”，烧的是学生。他查到了不该查的，于是“自尽”了。如今，火又烧起来了。",
+      "窗外，钟楼的黑影立在夜色里。你捏着墨丘利给的黄铜钥匙，指腹摩过钥匙齿上磨损的痕迹——这把钥匙，被人用过很多次。",
+      "你吹灭灯，黑暗里，你听见自己的心跳，一下，一下，像在数着什么。"
+    ],
+    options: [
+      { t: "去钟楼，用钥匙打开那扇门", go: "acd_plot_truth_2", timeCost: "1period" },
+      { t: "先找秤砣社商量", go: "acd_plot_scales_first", timeCost: "1period" },
+      { t: "把线索交给墨丘利", go: "acd_plot_payoff_mercury", timeCost: "1period" }
+    ]
+  };
+
+  N["acd_plot_truth_2"] = {
+    tag: "branch", place: "学院 · 钟楼地下", where: "黑夜", pace: "deep",
+    text: [
+      "钟楼底层的工具间里，锁着的柜子打开了。里面没有工具，只有一段向下的石阶，黑漆漆的，通向地底。",
+      "你举着油灯走下去。石阶很旧，每一级都被人踩得发亮。尽头是一扇铁门，门上挂着一把大锁——锁孔的形状，和你那把黄铜钥匙严丝合缝。",
+      "钥匙插进去，咔哒一声，锁开了。你推开门，一股陈年的灰尘和铁锈味扑出来。",
+      "密室不大。墙上刻着一排名字，你数了数，七个。前六个下面都画着一道横线，第七个名字——“马尔科”——下面空着。",
+      "墙角有一架铜天平，秤盘上落满灰。秤杆断了一截，断口很新。天平旁边的地上，有一封信，信封上没署名，只画着一杆秤。",
+      "你拆开信，纸页泛黄，字迹工整：“吾友：我知我时日无多。他们让我‘自尽’，我便自尽——但真相不能随我入土。钟楼的钟，子夜会多响一下，那是我留的记号。听见者，请替我做完我未做完的事。——莫”"
+    ],
+    options: [
+      { t: "读完信，把名字和信记下", go: "acd_plot_truth_3", timeCost: "1period", effects: { flag: "acd_professor_letter", san: -2} },
+      { t: "带上断天平，原路返回", go: "acd_plot_truth_3", timeCost: "1period", effects: { flag: "acd_professor_letter", item: "broken_scale", san: -2} }
+    ]
+  };
+
+  N["acd_plot_truth_3"] = {
+    tag: "branch", place: "学院 · 钟楼地下", where: "黑夜", pace: "deep",
+    text: [
+      "你把信读完，又读了一遍。二十年前的事，终于拼全了——",
+      "莫教授发现学院里有人在用学生做灵魂实验，反对无效，被人灭口，伪装成自尽。他的“遗书”被篡改，卷宗被销毁，名字从学院的史册上抹去。",
+      "如今，实验重启了。失踪的学生，是新的样本。钟楼的第十三下钟声，是实验开始的暗号。马尔科——第三个失踪者——就是最新的样本。",
+      "而这一切的幕后，指向一个你无法忽视的方向：学院的高层，有人和二十年前“那一炉火”有关。实验记录里那句“院长已经批了”，像一根刺，扎在你心里。",
+      "油灯的火苗跳了跳。密室深处，传来一声极轻的响动——像是有人，在黑暗中呼吸。你猛地抬头，灯光照过去，墙角那架断天平后面，有什么东西，动了一下。"
+    ],
+    options: [
+      { t: "握紧灯，走过去看看", go: "acd_plot_choice", timeCost: "1period", effects: { san: -2} },
+      { t: "先退出去，从长计议", go: "acd_plot_choice", timeCost: "1period", effects: { san: -1} }
+    ]
+  };
+
+  N["acd_plot_choice"] = {
+    tag: "branch", place: "学院 · 钟楼", where: "黑夜", pace: "deep",
+    text: [
+      "你站在钟楼的阴影里，手里攥着那封信和实验记录。真相像一块烧红的铁，握在手里烫，放下来又不甘心。",
+      "你知道，这件事一旦说出去，学院会像一锅被搅动的粥——失踪的学生、二十年前的旧案、实验记录里那句“院长已经批了”，每一件都能掀翻半个学院。",
+      "你也知道，有些话，说给对的人听，是伸冤；说给错的人听，是送死。莫教授当年，大概也想过这个问题。",
+      "风从钟楼的窗缝灌进来，吹得手里的信纸哗哗响。远处的宿舍楼亮着零星的灯，每一盏灯下，都睡着一个不知道自己可能成为“样本”的学生。",
+      "你吐出一口气。这个决定，你做。"
+    ],
+    options: [
+      { t: "把证据交给墨丘利（守望者线）", go: "acd_plot_payoff_mercury", timeCost: "1period", effects: { flag: "acd_choice_mercury"} },
+      { t: "把证据交给秤砣社（社团线）", go: "acd_plot_payoff_scales", timeCost: "1period", effects: { flag: "acd_choice_scales"} },
+      { t: "直接捅到院长面前（公开线）", go: "acd_plot_payoff_open", timeCost: "1period", effects: { flag: "acd_choice_open"} }
+    ]
+  };
+
+  N["acd_plot_payoff_mercury"] = {
+    tag: "ending", place: "学院 · 灵魂魔法塔顶层", where: "任意", pace: "deep",
+    text: [
+      "墨丘利接过那封信和实验记录，一页一页看完。他看得很慢，看完最后一页，他合上记录，放在桌上，沉默了很久。",
+      "“二十年了。”他说，声音第一次没有了那种轻飘飘的从容，“莫教授写这封信的时候，我还在学院里教书。他是我朋友。”",
+      "他起身，走到窗边，背对着你：“你做的这件事，我会记住。学院不会公开表彰你——但守望者会记住你。”",
+      "他转过身，从抽屉里拿出一枚铜哨，递给你：“哨子。吹响它，学院里会有人来帮你——三次。三次之后，你是你，我们是我们。”",
+      "你接过哨子，铜的，凉丝丝的，上面刻着一杆小秤。和秤砣社的别针、和你旧物上的记号，是一样的秤。",
+      "“还有，”他最后说，“钟楼那间密室，我会处理。马尔科……”他顿了顿，“我会找到他。活要见人。”",
+      "窗外，钟楼的尖顶在晨光里镀上一层金边。天快亮了。"
+    ],
+    options: [
+      { t: "收好哨子，离开", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_mercury_done", item: "copper_whistle", relation: {npc: "mercury", delta: 20}, xp: 30, san: 5} }
+    ]
+  };
+
+  N["acd_plot_payoff_scales"] = {
+    tag: "ending", place: "学院 · 地下教室", where: "黑夜", pace: "deep",
+    text: [
+      "秤砣社的人传阅着那封信和实验记录，地下教室里安静得能听见烛花爆裂的声音。",
+      "秤砣把信放在桌上，手指在纸上按了很久：“二十年。我们查了两年，只查到钟楼两个字。你一个人，查到了这封信。”",
+      "他抬起头看你，兜帽下那双眼睛第一次没有藏起来：“秤砣社的规矩，天平从不倾斜。可这一次，天平的一端，压上了你。”",
+      "他从怀里取出一枚铜天平别针，和领口那枚一样：“收下。以后秤砣社的门，为你开着——不是线人，是兄弟。”",
+      "你接过别针，针尖在他拇指上扎了一下，他没缩手，反而笑了：“扎一下好。记住了——有些事，流血才记得住。”",
+      "走出地下教室的时候，天已经蒙蒙亮。你摸着胸前的别针，想起莫教授信里那句“替我做完我未做完的事”。这件事，还远没有做完。"
+    ],
+    options: [
+      { t: "收下别针，加入他们的路", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_scales_done", item: "scales_pin", relation: {npc: "acd_scales", delta: 25}, xp: 30, san: 4} }
+    ]
+  };
+
+  N["acd_plot_payoff_open"] = {
+    tag: "ending", place: "学院 · 院长办公室", where: "白昼", pace: "deep",
+    text: [
+      "你把信和实验记录放在院长桌上。院长是位头发花白的老人，他戴上眼镜，一页一页看完，摘了眼镜，擦了擦，又戴上，又看了一遍。",
+      "“这封信，”他开口，声音有点哑，“二十年了。我当年接任的时候，教务处说莫教授是自尽。我信了。”",
+      "他站起来，走到窗前，站了很久：“你出去以后，就当没来过。这件事，学院会查——但不会很快，不会声张。”他转过身，眼神里有你读不懂的东西，“有些账，不能一次算清。算急了，会连累不该连累的人。”",
+      "你离开办公室的时候，门在你身后合上了。走廊里很安静，你听见自己的脚步声，一下一下，在空荡荡的走廊里回响。",
+      "你知道，这件事没有结束——它只是从明处，转到了暗处。而暗处，从来都是另一场较量的开始。"
+    ],
+    options: [
+      { t: "离开学院，让时间给出答案", go: "academy_elda_hub", timeCost: "1period", effects: { flag: "acd_open_done", rep: 15, san: 3, xp: 20} }
+    ]
+  };
+})();
+
 /* /u1inj:data-nodes:dn_allusions.js/ */
 /* N-8 典故库（按 place 注入 1 句典故句；v93n15_allusionLine）+ 情绪连续性模板（v93n16_moodLine）
  * 纯数据只读；典故句 V66 文风，禁 30 治理词。
@@ -92888,6 +93456,78 @@ window.CAUSALITY_WORDS = [
     "world": "vol_church",
     "importance": 2,
     "keywords": ["圣辉城", "封蜡", "铁牌"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_scales",
+    "type": "事件",
+    "desc": "秤砣社：学院旧案查案社团，以天平为记，与金秤血脉母题（led_om_scale）同源呼应",
+    "plant": "node:acd_plot_scales_recruit",
+    "reap": "flag:acd_scales_guild_master",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["秤砣社", "天平", "旧案", "莫教授"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_clock",
+    "type": "事件",
+    "desc": "第十三下钟声：钟楼实验暗号，听见者不可声张（学院怪谈成真）",
+    "plant": "node:acd_plot_clue_clock",
+    "reap": "flag:acd_clock_silenced",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["第十三下", "钟声", "钟楼", "暗号"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_lab",
+    "type": "事件",
+    "desc": "灵魂嫁接实验重启：以学生为样本，与暗蚀线同源（净化令阴影延伸）",
+    "plant": "node:acd_plot_lab_record",
+    "reap": "flag:acd_lab_sealed",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["实验记录", "样本", "灵魂嫁接", "血"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_shadow",
+    "type": "人物",
+    "desc": "影子学生：灰袍身影沾银月草粉，穿行学院暗处",
+    "plant": "node:acd_plot_clue_shadow",
+    "reap": "flag:acd_shadow_identity",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 2,
+    "keywords": ["影子学生", "灰袍", "银月草粉"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_mercury",
+    "type": "人物",
+    "desc": "墨丘利守望者考验：钟楼旧事知情者，守望者密探线在学院的落点",
+    "plant": "node:acd_plot_mercury_test",
+    "reap": "flag:acd_mercury_done",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 2,
+    "keywords": ["墨丘利", "守望者", "黄铜钥匙", "哨子"],
+    "irreversible": false
+  },
+  {
+    "id": "led_acd_professor",
+    "type": "人物",
+    "desc": "莫教授：二十年前钟楼自尽的炼金教授，真相在密室信中（被灭口而非自尽）",
+    "plant": "node:acd_plot_truth_2",
+    "reap": "flag:acd_professor_truth_public",
+    "status": "open",
+    "world": "vol_academy",
+    "importance": 3,
+    "keywords": ["莫教授", "自尽", "钟楼密室", "真相"],
     "irreversible": false
   }
 ];
@@ -114729,7 +115369,7 @@ const NODE_REGISTRY = {
     files: ["dn_camp.js"]
   },
   academy: {
-    name: "学院", prefixes: ["academy", "acad", "acadcity", "classmate", "alumni", "orientation", "facility", "xueshu"],
+    name: "学院", prefixes: ["academy", "acad", "acd", "acadcity", "classmate", "alumni", "orientation", "facility", "xueshu"],
     desc: "艾尔达魔法学院五学年/同学/导师/禁书区/毕业四去向",
     files: ["dn_alumni.js", "dn_graduate.js"]
   },
@@ -119429,7 +120069,44 @@ window.STORY_BLUEPRINT = {
   "mem_desert_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
   "day_desert_1": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
   "day_desert_2": {tag:"branch", vol:"vol_origin", arc:null, pace:"normal"},
-  "day_desert_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"}
+  "day_desert_3": {tag:"branch", vol:"vol_origin", arc:null, pace:"deep"},
+  "acd_life_dining": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_dining_fine": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_dining_plain": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"light"},
+  "acd_life_dining_cheap": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"light"},
+  "acd_life_dorm_night": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_dorm_story": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_dorm_tale": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_morning": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_morning_ask": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_job_lib": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_job_kitchen": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"light"},
+  "acd_life_job_apoth": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_job_apoth_ask": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"light"},
+  "acd_life_festival": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_life_festival_stall": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_classmate_celia": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_classmate_celia_ask": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_classmate_hao": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"light"},
+  "acd_life_classmate_hao_ask": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_life_lib_night": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_clue_board": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_plot_clue_board_ask": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"light"},
+  "acd_plot_clue_clock": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_clue_shadow": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_plot_scales_recruit": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_plot_scales_test": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_scales_first": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_mercury_test": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_mercury_test_ask": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"normal"},
+  "acd_plot_lab_record": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_truth_1": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_truth_2": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_truth_3": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_choice": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_payoff_mercury": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_payoff_scales": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"},
+  "acd_plot_payoff_open": {tag:"branch", vol:"vol_academy", arc:"arc_academy", pace:"deep"}
 };
 
 /* /u1inj:data-nodes:dn_thoughts.js/ */
@@ -124393,6 +125070,9 @@ N["academy_elda_hub"] = function(){
       opts.push({t:"参加社团活动", go:"academy_elda_club", effect:{timeCost:"1period"}});
       opts.push({t:"元素塔·学习魔法", go:"academy_magic_class", effect:{timeCost:"1period"}});
       opts.push({t:"查看学院排名/势力", go:"academy_rankings_view", effect:{}});
+      opts.push({t:"去食堂吃饭", go:"acd_life_dining", effect:{timeCost:"1period"}});
+      opts.push({t:"回宿舍休息/夜谈", go:"acd_life_dorm_night", effect:{timeCost:"1period"}});
+      if(!S.flags.acd_plot_hint) opts.push({t:"（注意到公告栏上一张撕了一半的寻人启事）", go:"acd_plot_clue_board", effect:{flag:"acd_plot_hint", timeCost:"1period"}});
       opts.push({t:"等待/休息", go:"wait_1period", effect:{}});
       return opts;
     }
@@ -186881,6 +187561,9 @@ options:[
       opts.push({t:"参加社团活动", go:"academy_elda_club", effect:{timeCost:"1period"}});
       opts.push({t:"元素塔·学习魔法", go:"academy_magic_class", effect:{timeCost:"1period"}});
       opts.push({t:"查看学院排名/势力", go:"academy_rankings_view", effect:{}});
+      opts.push({t:"去食堂吃饭", go:"acd_life_dining", effect:{timeCost:"1period"}});
+      opts.push({t:"回宿舍休息/夜谈", go:"acd_life_dorm_night", effect:{timeCost:"1period"}});
+      if(!S.flags.acd_plot_hint) opts.push({t:"（注意到公告栏上一张撕了一半的寻人启事）", go:"acd_plot_clue_board", effect:{flag:"acd_plot_hint", timeCost:"1period"}});
       opts.push({t:"等待/休息", go:"wait_1period", effect:{}});
       return opts;
     }

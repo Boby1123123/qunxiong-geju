@@ -1,0 +1,30 @@
+{
+ "version": 113,
+ "count": 23,
+ "generated": "2026-09-13",
+ "files": [
+  "chunks/NODE_MAP.js",
+  "chunks/story_academy.da99e9f5.js",
+  "chunks/story_core.909feed2.js",
+  "chunks/story_mainland.876d90ec.js",
+  "chunks/story_misc.5c46ff64.js",
+  "chunks/story_origin.032709b4.js",
+  "chunks/story_seal.12d32691.js",
+  "chunks/story_system.4fd2c15a.js",
+  "chunks/story_travel.154b8ec1.js",
+  "chunks/v62_abyss.js",
+  "chunks/v62_academy.js",
+  "chunks/v62_arc.js",
+  "chunks/v62_city.js",
+  "chunks/v62_dun.js",
+  "chunks/v62_evt.js",
+  "chunks/v62_narr.js",
+  "chunks/v62_npc.js",
+  "chunks/v62_origin.js",
+  "chunks/v62_relic.js",
+  "chunks/v62_seal.js",
+  "chunks/v62_war.js",
+  "chunks/v62_west.js",
+  "chunks/v62_world.js"
+ ]
+}

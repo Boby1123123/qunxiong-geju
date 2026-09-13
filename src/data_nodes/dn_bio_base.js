@@ -81,6 +81,7 @@ options:[
 {t:"“哪个纲最值钱？”",go:"bio_intro_rarity"},
 {t:"“哪个纲最难缠？”",go:"bio_region_abyss"},
 {t:"“四纲之外，有没有对不上的东西？”",effects:{flag:"bio_taxonomy_met"},go:"bio_intro_0"},
+{t:"看动物纲的标本墙（12 种超凡动物图鉴）",go:"beast_intro"},
 {t:"（原路退回大厅）",go:"bio_intro_0"}
 ]};
 

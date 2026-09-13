@@ -5546,7 +5546,13 @@ window.CAUSALITY_LEDGER = [
     "importance": 2,
     "keywords": ["第十三下", "钟舌", "暗号", "铜丝"],
     "irreversible": false
-  }
+  },
+{ id:"led_bio_07", type:"伏笔", desc:"北境雪鳞狼群与兽潮前兆——驿站猎户口述冬狼夜袭哨所", plant:"node:beast_snowwolf_hunt", reap:"future（兽潮天灾事件联动）", status:"open", world:"北境" },
+{ id:"led_bio_08", type:"伏笔", desc:"雷鬃马断角与认主——老牧民所言“马留角给想再来的人”，坐骑进化伏笔", plant:"node:beast_thundermane_hunt", reap:"future（异兽卵/坐骑喂食线 P5）", status:"open", world:"草原" },
+{ id:"led_bio_09", type:"伏笔", desc:"黄鬃狮让食狼王角——草原霸主将战利品让给未伤它的猎手，狮线伏笔", plant:"node:beast_lion_hunt", reap:"future（草原势力/鬃吼线联动）", status:"open", world:"草原" },
+{ id:"led_bio_10", type:"伏笔", desc:"沙蝎毒囊与绿洲药价——老妇人点明毒性越大越值钱，沙漠商机", plant:"node:beast_sandscorpion", reap:"future（沙漠行情/商机事件）", status:"open", world:"死亡沙漠" },
+{ id:"led_bio_11", type:"伏笔", desc:"风隼旧羽与风暴崖——风隼换羽留羽，西境游侠箭矢材料线", plant:"node:beast_falcon_hunt", reap:"future（西境游侠/元素风暴联动）", status:"open", world:"西境" },
+{ id:"led_bio_12", type:"伏笔", desc:"月池银鲛与晨星之泪——老柯提及银鲛鳞与眼泪凝珠传闻，承接 led_a3_04", plant:"node:beast_trophy_altar", reap:"node:bio_region_elf_dwarf（P3 回收）", status:"open", world:"精灵" }
 ];
 
 /* ===== /v91inj:ledger:end/ ===== */

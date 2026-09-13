@@ -1,32 +1,32 @@
 {
-  "version": 102,
-  "from": "v101",
+  "version": 103,
+  "from": "v102",
   "released": "2026-09-13",
-  "note": "P0·万灵谱超凡生物生态地基（超大型更新第 0 批）：dn_bio_base.js 新增 10 节点 + 4 数据表（四纲分类 BIO_TAXONOMY / 六阶位 BIO_TIERS 对齐境界 LMS / 五稀有度 BIO_RARITY / 九域生态表 BIO_ECOLOGY），交汇城入口挂载（fc_jiaohui_entry 追加万灵谱馆选项）；新弧 arc_bestiary（蓝图 arcs +1、nodeIndex +11 登记），registry free 域 prefixes +bio，账本 +6 open（led_bio_01~06：四纲设定/霓裳草诱妖草伏笔/深渊边缘三物/沙漠遗迹敲石声/月池银鲛晨星之泪/铁砧铁门封印兽），lorebook +1 词条（lb_bestiary 万灵谱超凡生物）；正文深度融入凡人修仙传灵草图鉴结构、魔兽世界生态布怪逻辑、山海经以形赋意（腐蚀藤过处成泽）；本地全量验证链 46 检查器全绿（节点 5793≥5677、死链 0、V66 风格锁全绿、幂等 verify PASS、四路字节一致、smoke PASS）",
+  "note": "P1·万灵谱超凡动物纲（超大型更新第 1 批）：dn_bio_beast.js 新增 22 节点 + BEAST_ENCYCLOPEDIA 12 种动物材料表（北境雪原3/兽人草原3/西境荒原3/死亡沙漠3，凡品→化意四阶覆盖），狩猎 4 段式战斗（雪鳞狼群/冰原巨熊越级/雷鬃马猎驯双线/黄鬃狮越级让食/风隼换羽/沙蝎淬毒/岩甲蜥换鳞）+ 战利品剖取分支 + 材料用途链；万灵谱馆四纲页追加动物纲入口；事件池 +4（雪鳞狼兽潮前兆/雷鬃马迁徙/风隼集群/沙蝎商机，day 40/100/160/230 与五主线错开）；蓝图 nodeIndex +22、registry +beast、账本 +6 open（led_bio_07~12）；正文深度融入修仙御兽心通认主、魔兽稀有精英与驯服、山海经以形赋意；本地全量验证链 46 检查器全绿（节点 5815≥5677、死链 0、V66 防回潮、四路字节一致、smoke PASS）",
   "changes": [
     {
-      "file": "src/data_nodes/dn_bio_base.js",
-      "title": "新增：万灵谱馆 10 节点（四纲/六阶/稀有度/图鉴之用/九域生态图五区域）+ 4 数据表（BIO_TAXONOMY/BIO_TIERS/BIO_RARITY/BIO_ECOLOGY）"
+      "file": "src/data_nodes/dn_bio_beast.js",
+      "title": "新增：超凡动物纲 22 节点 + BEAST_ENCYCLOPEDIA 12 种动物材料表（四猎场目录/狩猎四段式/战利品剖取/战利品台）"
     },
     {
-      "file": "src/script_02.js",
-      "title": "交汇城入口 fc_jiaohui_entry 追加选项：去老城巷万灵谱馆看标本墙"
+      "file": "src/script_01.js",
+      "title": "事件池 +4：雪鳞狼兽潮前兆(day40)/雷鬃马迁徙(day100)/风隼集群(day160)/沙蝎商机(day230)"
+    },
+    {
+      "file": "src/data_nodes/dn_bio_base.js",
+      "title": "万灵谱馆四纲页追加入口：看动物纲标本墙"
     },
     {
       "file": "src/data_nodes/dn_story_blueprint.js",
-      "title": "新弧 arc_bestiary 万灵谱·超凡生物（vol_free）+ nodeIndex +11 登记"
+      "title": "nodeIndex +22 条 beast_* 登记（arc_bestiary）"
     },
     {
       "file": "src/data_nodes/dn_registry.js",
-      "title": "free 域 prefixes +bio（节点分区 97.56%）"
+      "title": "free 域 prefixes +beast"
     },
     {
       "file": "src/data_nodes/dn_causality.js",
-      "title": "账本 +6 open（led_bio_01~06 万灵谱设定与五条生态伏笔）"
-    },
-    {
-      "file": "src/data_nodes/dn_lorebook.js",
-      "title": "世界书 +1 词条 lb_bestiary（万灵谱四纲六阶，触发词：超凡生物/万灵谱/灵兽/灵草等）"
+      "title": "账本 +6 open（led_bio_07~12 兽潮/认主/让食/商机/风羽/银鲛伏笔）"
     }
   ]
 }

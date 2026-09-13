@@ -1,24 +1,24 @@
 {
   "name": "群雄割据性能预算门",
-  "version": 79,
-  "updated": "2026-09-09",
-  "note": "G-CI1 死代码检测器优化（count 158GB -> 正则 Counter 1.52s）：总耗时 27.87->16.35s，full_seconds_max 30->24（优化后收紧）",
+  "version": 80,
+  "updated": "2026-09-13",
+  "note": "v109 物种深度卡B1：88兽12字段深度卡（约3.9万字描述），game.html合法增长至19998254B",
   "budgets": {
-    "game_html_bytes_max": 19743503,
-    "chunked_html_bytes_max": 8722329,
+    "game_html_bytes_max": 20500000,
+    "chunked_html_bytes_max": 9300000,
     "node_total_min": 5869,
     "dead_links_max": 0,
-    "full_seconds_max": 24.0
+    "full_seconds_max": 30.0
   },
   "baseline": {
-    "game_html_bytes": 19693503,
-    "chunked_html_bytes": 8622329,
+    "game_html_bytes": 19998254,
+    "chunked_html_bytes": 8926560,
     "node_total": 5919,
-    "full_seconds": 9.2
+    "full_seconds": 22.53
   },
   "meta": {
-    "last_updated": "2026-09-09",
-    "reason": "百兽百草 v108 收尾：补 3 深节点+3 事件+6 账本+35 蓝图，game.html 19693503B 合法增长",
+    "last_updated": "2026-09-13",
+    "reason": "v109 B1物种深度卡：88兽12字段深度卡（stats六维/traits/potential/niche/behavior/weakness/loot/description/interactions/stars/myth/tags），约3.9万字白描描述，game.html 19998254B合法增长",
     "history": [
       {
         "date": "2026-09-09",

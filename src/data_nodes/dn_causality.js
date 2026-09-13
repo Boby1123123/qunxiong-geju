@@ -5557,7 +5557,13 @@ window.CAUSALITY_LEDGER = [
 { id:"led_bio_14", type:"伏笔", desc:"银月草·月华露——月光凝露，银月祭坛月灵与精灵线伏笔", plant:"node:herb_yinyue_cao", reap:"future（P4 灵体/月灵线）", status:"open", world:"精灵" },
 { id:"led_bio_15", type:"伏笔", desc:"血根·旧战场吸过血——根须轻颤，与铁门关英灵/旧战场怨气线伏笔", plant:"node:herb_xuegen", reap:"future（P4 英灵/怨灵线）", status:"open", world:"草原" },
 { id:"led_bio_16", type:"伏笔", desc:"魂菇·被它记住——灵魂系材料，沙漠洞窟旧主与灵体纲联动", plant:"node:herb_hungu", reap:"future（P4 灵体纲）", status:"open", world:"死亡沙漠" },
-{ id:"led_bio_17", type:"伏笔", desc:"月桂木·百年一寸——精灵工艺与月池银鲛/晨星之泪线（承接 led_bio_12）", plant:"node:herb_yuegui_mu", reap:"node:bio_region_elf_dwarf（P3 回收）", status:"open", world:"精灵" }
+{ id:"led_bio_17", type:"伏笔", desc:"月桂木·百年一寸——精灵工艺与月池银鲛/晨星之泪线（承接 led_bio_12）", plant:"node:herb_yuegui_mu", reap:"node:bio_region_elf_dwarf（P3 回收）", status:"open", world:"精灵" },
+{ id:"led_bio_18", type:"伏笔", desc:"深渊黑鳞魔物·铁门关废墟——深渊之血回收点（承接 02b 贤者之石三材料），第一印破碎产物", plant:"node:special_abyss_hunt", reap:"future（P5 贤者之石线）", status:"open", world:"铁门关" },
+{ id:"led_bio_19", type:"伏笔", desc:"风暴元素体·西境——元素核心与元素风暴天灾联动，破核机制", plant:"node:special_storm_hunt", reap:"future（P5 附魔/元素线）", status:"open", world:"西境" },
+{ id:"led_bio_20", type:"伏笔", desc:"雷晶傀儡·魔械城——发明家协会旧试验体，雷晶法杖材料线", plant:"node:special_lei_hunt", reap:"future（P5 打造台）", status:"open", world:"魔械城" },
+{ id:"led_bio_21", type:"伏笔", desc:"铁砧地底蠕兽——地脉引出的熔核兽，锻造火候神器与矮人铁砧线", plant:"node:special_worm_hunt", reap:"node:special_forge_hint", status:"open", world:"铁砧议会" },
+{ id:"led_bio_22", type:"伏笔", desc:"钟楼地下“它”·七锚锚眼守护者——铁牌开战，旧印残片与七锚/封印线（承接 led_f1_seal）", plant:"node:special_bell_hunt", reap:"future（P5 七锚终局）", status:"open", world:"交汇城" },
+{ id:"led_bio_23", type:"伏笔", desc:"时光裂隙守卫·承天山——黄林晶的眼泪回收点（承接 02b 贤者之石三材料），玄机子/黄林晶线", plant:"node:special_time_hunt", reap:"future（P5 贤者之石线）", status:"open", world:"承天山" }
 ];
 
 /* ===== /v91inj:ledger:end/ ===== */

@@ -5552,7 +5552,12 @@ window.CAUSALITY_LEDGER = [
 { id:"led_bio_09", type:"伏笔", desc:"黄鬃狮让食狼王角——草原霸主将战利品让给未伤它的猎手，狮线伏笔", plant:"node:beast_lion_hunt", reap:"future（草原势力/鬃吼线联动）", status:"open", world:"草原" },
 { id:"led_bio_10", type:"伏笔", desc:"沙蝎毒囊与绿洲药价——老妇人点明毒性越大越值钱，沙漠商机", plant:"node:beast_sandscorpion", reap:"future（沙漠行情/商机事件）", status:"open", world:"死亡沙漠" },
 { id:"led_bio_11", type:"伏笔", desc:"风隼旧羽与风暴崖——风隼换羽留羽，西境游侠箭矢材料线", plant:"node:beast_falcon_hunt", reap:"future（西境游侠/元素风暴联动）", status:"open", world:"西境" },
-{ id:"led_bio_12", type:"伏笔", desc:"月池银鲛与晨星之泪——老柯提及银鲛鳞与眼泪凝珠传闻，承接 led_a3_04", plant:"node:beast_trophy_altar", reap:"node:bio_region_elf_dwarf（P3 回收）", status:"open", world:"精灵" }
+{ id:"led_bio_12", type:"伏笔", desc:"月池银鲛与晨星之泪——老柯提及银鲛鳞与眼泪凝珠传闻，承接 led_a3_04", plant:"node:beast_trophy_altar", reap:"node:bio_region_elf_dwarf（P3 回收）", status:"open", world:"精灵" },
+{ id:"led_bio_13", type:"伏笔", desc:"启灵草·朝阳坡药圃——贤者之石实验笔记四味材料之一（启灵草×3），丹药主料线", plant:"node:herb_lingqi_cao", reap:"future（P5 炼金/贤者之石线）", status:"open", world:"学院" },
+{ id:"led_bio_14", type:"伏笔", desc:"银月草·月华露——月光凝露，银月祭坛月灵与精灵线伏笔", plant:"node:herb_yinyue_cao", reap:"future（P4 灵体/月灵线）", status:"open", world:"精灵" },
+{ id:"led_bio_15", type:"伏笔", desc:"血根·旧战场吸过血——根须轻颤，与铁门关英灵/旧战场怨气线伏笔", plant:"node:herb_xuegen", reap:"future（P4 英灵/怨灵线）", status:"open", world:"草原" },
+{ id:"led_bio_16", type:"伏笔", desc:"魂菇·被它记住——灵魂系材料，沙漠洞窟旧主与灵体纲联动", plant:"node:herb_hungu", reap:"future（P4 灵体纲）", status:"open", world:"死亡沙漠" },
+{ id:"led_bio_17", type:"伏笔", desc:"月桂木·百年一寸——精灵工艺与月池银鲛/晨星之泪线（承接 led_bio_12）", plant:"node:herb_yuegui_mu", reap:"node:bio_region_elf_dwarf（P3 回收）", status:"open", world:"精灵" }
 ];
 
 /* ===== /v91inj:ledger:end/ ===== */

@@ -1,32 +1,32 @@
 {
-  "version": 103,
-  "from": "v102",
+  "version": 104,
+  "from": "v103",
   "released": "2026-09-13",
-  "note": "P1·万灵谱超凡动物纲（超大型更新第 1 批）：dn_bio_beast.js 新增 22 节点 + BEAST_ENCYCLOPEDIA 12 种动物材料表（北境雪原3/兽人草原3/西境荒原3/死亡沙漠3，凡品→化意四阶覆盖），狩猎 4 段式战斗（雪鳞狼群/冰原巨熊越级/雷鬃马猎驯双线/黄鬃狮越级让食/风隼换羽/沙蝎淬毒/岩甲蜥换鳞）+ 战利品剖取分支 + 材料用途链；万灵谱馆四纲页追加动物纲入口；事件池 +4（雪鳞狼兽潮前兆/雷鬃马迁徙/风隼集群/沙蝎商机，day 40/100/160/230 与五主线错开）；蓝图 nodeIndex +22、registry +beast、账本 +6 open（led_bio_07~12）；正文深度融入修仙御兽心通认主、魔兽稀有精英与驯服、山海经以形赋意；本地全量验证链 46 检查器全绿（节点 5815≥5677、死链 0、V66 防回潮、四路字节一致、smoke PASS）",
+  "note": "P2·万灵谱超凡植物纲（超大型更新第 2 批）：dn_bio_herb.js 新增 16 节点 + HERB_ENCYCLOPEDIA 8 种灵草灵木表（启灵草/银月草/凝元花/血根/化意果/血藤/魂菇/月桂木，启灵→宗师四阶覆盖）；采集线：药园培育（习性与年份/玉器采摘/时辰规矩）+ 八地采集判定（朝阳坡/银月祭坛夜采/北境寒谷/草原旧战场/西境风暴眼越级/深渊裂隙/沙漠洞窟/月池精灵）；炼药线：炼药房三座丹炉 + 晋级丹四配方（凡人→启灵启灵丹/启灵→凝元凝元丹/凝元→化意化意丹/化意→宗师宗师丹·黄林晶伏笔引线），alchemy/medic 判定 tier 成败；蓝图 nodeIndex +16、registry +herb、账本 +5 open（led_bio_13~17 呼应贤者之石笔记/月灵/英灵/灵体纲/银鲛晨星泪）；事件池 +2（灵草盛花商机 day50/化意果风暴减产天灾 day170）；正文深度融入凡人修仙传灵草年份价值与炼丹五步法、文火武火、丹炉分级；本地全量验证链 46 检查器全绿（节点 5831≥5677、死链 0、V66 防回潮、四路字节一致、smoke PASS）",
   "changes": [
     {
-      "file": "src/data_nodes/dn_bio_beast.js",
-      "title": "新增：超凡动物纲 22 节点 + BEAST_ENCYCLOPEDIA 12 种动物材料表（四猎场目录/狩猎四段式/战利品剖取/战利品台）"
+      "file": "src/data_nodes/dn_bio_herb.js",
+      "title": "新增：超凡植物纲 16 节点 + HERB_ENCYCLOPEDIA 8 种灵草灵木表（培育园/采集八地/炼药房/晋级丹四配方）"
     },
     {
       "file": "src/script_01.js",
-      "title": "事件池 +4：雪鳞狼兽潮前兆(day40)/雷鬃马迁徙(day100)/风隼集群(day160)/沙蝎商机(day230)"
+      "title": "事件池 +2：灵草盛花商机(day50)/化意果风暴减产天灾(day170)"
     },
     {
       "file": "src/data_nodes/dn_bio_base.js",
-      "title": "万灵谱馆四纲页追加入口：看动物纲标本墙"
+      "title": "万灵谱馆四纲页追加入口：看植物纲的标本架"
     },
     {
       "file": "src/data_nodes/dn_story_blueprint.js",
-      "title": "nodeIndex +22 条 beast_* 登记（arc_bestiary）"
+      "title": "nodeIndex +16 条 herb_* 登记（arc_bestiary）"
     },
     {
       "file": "src/data_nodes/dn_registry.js",
-      "title": "free 域 prefixes +beast"
+      "title": "free 域 prefixes +herb"
     },
     {
       "file": "src/data_nodes/dn_causality.js",
-      "title": "账本 +6 open（led_bio_07~12 兽潮/认主/让食/商机/风羽/银鲛伏笔）"
+      "title": "账本 +5 open（led_bio_13~17 启灵草/月华露/血根/魂菇/月桂木伏笔）"
     }
   ]
 }
